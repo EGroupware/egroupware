@@ -277,6 +277,65 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame([base64_encode('INBOX'), base64_encode('INBOX/Sent')], $result['notFound']);
 	}
 
+	/**
+	 * Ticket #126231's own follow-up (2026-10-12, a real customer, live IMAP log): the explicit-ids
+	 * branch's per-mailbox retry loop (added for #125081 above) still passed 'status' through to
+	 * EACH individual retry - so a \NonExistent entry (eg. unsubscribedPassthroughsMissingFrom()'s
+	 * own "user" namespace-root passthrough, which genuinely LISTs fine but can never run STATUS -
+	 * confirmed live: `STATUS user (MESSAGES UNSEEN)` -> `NO Mailbox does not exist`) failed its
+	 * own solo retry identically to the batch, landing it in $notFound instead of ever reaching
+	 * mailboxNode()'s own already-correct graceful per-mailbox status fallback (as the ids:null
+	 * branch's sibling test above already relies on). This is NOT a stale/deleted mailbox like
+	 * #125081/#125161 - "user" is a perfectly valid, intentional, currently-subscribed-to entry
+	 * that simply isn't itself selectable/queryable, and dropping it broke the entire "Other
+	 * Users" branch of the tree for every subscribed mailbox beneath it too.
+	 */
+	public function testMailboxGetInternalRetriesWithoutStatusForANonexistentNamespaceRootPassthrough()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if (is_array($pattern) && count($pattern) > 1)
+			{
+				throw new \Horde_Imap_Client_Exception(
+					'NO [NONEXISTENT] The object could not be deleted because it does not exist.');
+			}
+			$name = $pattern[0];
+			// Real Horde_Imap_Client_Base::listMailboxes() behaviour being emulated here: when
+			// 'status' is requested and the server lacks LIST-STATUS, it internally issues a real
+			// STATUS command per returned name and re-throws on any failure - exactly what a
+			// \NonExistent entry like "user" can never satisfy (confirmed live: `STATUS user
+			// (MESSAGES UNSEEN)` -> `NO Mailbox does not exist`). A real STATUS on "INBOX" would
+			// succeed regardless of 'status' being requested or not.
+			if ($name === 'user' && isset($opts['status']))
+			{
+				throw new \Horde_Imap_Client_Exception('NO Mailbox does not exist');
+			}
+			if ($name === 'user')
+			{
+				return ['user' => ['attributes' => ['\\nonexistent', '\\subscribed', '\\haschildren']]];
+			}
+			return [$name => ['attributes' => ['\\subscribed']]];
+		});
+		$imap->method('status')->willReturnCallback(function($mailbox)
+		{
+			if ($mailbox === 'user')
+			{
+				throw new \Horde_Imap_Client_Exception('NO Mailbox does not exist');
+			}
+			return ['messages' => 3, 'unseen' => 1];
+		});
+
+		$result = $this->invokePrivate('mailboxGetInternal', [
+			$imap, [base64_encode('INBOX'), base64_encode('user')], null,
+		]);
+
+		$this->assertSame([], $result['notFound'], "\"user\" must NOT be dropped as not-found");
+		$this->assertCount(2, $result['list']);
+		$this->assertSame(0, $result['list'][1]['totalEmails'],
+			"the \\NonExistent passthrough gets zero-default counts via mailboxNode()'s own fallback, not dropped entirely");
+	}
+
 	public function testMailboxGetInternalReportsNotFound()
 	{
 		$imap = $this->mockImap();
