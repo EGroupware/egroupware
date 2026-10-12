@@ -651,6 +651,43 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		return parent::deleteMailbox($this->realMailboxName($mailbox));
 	}
 
+	/**
+	 * Re-implements Horde's own DELETE-fails-so-expunge-and-retry recovery (Horde_Imap_Client_
+	 * Socket::_deleteMailbox(), vendor/egroupware/imap-client/lib/Horde/Imap/Client/Socket.php)
+	 * ONLY to stop it discarding the original, more informative DELETE failure when that recovery
+	 * attempt ALSO fails - Horde's own version throws the recovery attempt's exception in that
+	 * case (typically the opaque "Could not open mailbox ..." from its own openMailbox() call
+	 * inside expunge()), completely hiding why the server refused the DELETE in the first place.
+	 * Found live via ticket #126321: a real customer's DELETE was refused by the server for a
+	 * reason specific to that mailbox (confirmed independently via doveadm - a duplicate mailbox
+	 * on their own install), and the only error ever surfaced was the unhelpful "Could not open
+	 * mailbox", a dead end for diagnosing the actual cause.
+	 */
+	protected function _deleteMailbox(\Horde_Imap_Client_Mailbox $mailbox)
+	{
+		if ($mailbox->equals($this->_selected))
+		{
+			$this->close();
+		}
+		$cmd = $this->_command('DELETE')->add($this->_getMboxFormatOb($mailbox));
+		try
+		{
+			$this->_sendCmd($cmd);
+		}
+		catch (\Horde_Imap_Client_Exception $original)
+		{
+			try
+			{
+				$this->expunge($mailbox, ['delete' => true]);
+				$this->_sendCmd($cmd);
+			}
+			catch (\Horde_Imap_Client_Exception $e)
+			{
+				throw $original;
+			}
+		}
+	}
+
 	/** @inheritdoc JMAP-CANONICAL-PATH-FIX, see realMailboxName() */
 	public function createMailbox($mailbox, array $opts = array())
 	{
