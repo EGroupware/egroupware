@@ -1173,6 +1173,37 @@ class Session
 	}
 
 	/**
+	 * Check if further login attempts for $login are currently blocked by the brute-force guard
+	 *
+	 * Public wrapper around login_blocked(), for authentication entry points other than the main
+	 * login path (Session::create()) that verify a password independently and need to share the
+	 * same protection - eg. Auth\Saml::checkJoin(), the SAML account-join flow, which otherwise had
+	 * no throttling of its own at all.
+	 *
+	 * @param string $login account_lid (evtl. with domain)
+	 * @param ?string $ip =null ip of the user, default self::getuser_ip()
+	 * @return bool true if blocked
+	 */
+	public function isLoginBlocked($login, $ip=null)
+	{
+		return $this->login_blocked($login, $ip ?? self::getuser_ip());
+	}
+
+	/**
+	 * Record a failed login attempt for $login, so it counts toward the same brute-force guard
+	 * isLoginBlocked()/the main login path use
+	 *
+	 * @param string $login account_lid (evtl. with domain)
+	 * @param ?string $ip =null ip of the user, default self::getuser_ip()
+	 * @param string $reason ='invalid credentials' reason stored in egw_access_log for diagnostics
+	 * @return void
+	 */
+	public function recordFailedLogin($login, $ip=null, $reason='invalid credentials')
+	{
+		$this->log_access($reason, $login, $ip ?? self::getuser_ip(), 0);
+	}
+
+	/**
 	 * Protect against brute force attacks, block login if too many unsuccessful login attmepts
      *
 	 * @param string $login account_lid (evtl. with domain)

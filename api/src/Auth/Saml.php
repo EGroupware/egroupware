@@ -260,9 +260,13 @@ class Saml implements BackendSSO
 			return null;
 		}
 
-		$backend = Api\Auth::backend($GLOBALS['egw_info']['server']['auth_type'] ?: 'sql', false);
-		if (!$backend->authenticate($login, $password))
+		// share the same brute-force guard the main login path (Session::create()) uses - this is
+		// an independent password check, reachable once past a REAL SAML IdP login (as some other
+		// identity), that previously had no throttling of its own at all
+		if ($GLOBALS['egw']->session->isLoginBlocked($login) ||
+			!($backend = Api\Auth::backend($GLOBALS['egw_info']['server']['auth_type'] ?: 'sql', false))->authenticate($login, $password))
 		{
+			$GLOBALS['egw']->session->recordFailedLogin($login);
 			return false;
 		}
 		return $login;
