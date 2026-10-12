@@ -5086,6 +5086,19 @@ export class MailApp extends EgwApp
 	//	alert(folder);
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')), 'success');
 
+		// Update the client's own cached 'ActiveProfileID' preference immediately, locally -
+		// ajax_changeProfile() below (-> storeActiveProfileIDToPref()) persists the same value
+		// server-side on its own, but never refreshes THIS client's preference cache in any way;
+		// composeMessage()'s own egw.preference('ActiveProfileID','mail') read (and several others,
+		// see its own comment) stayed stale until the next full page load - ticket #125971 (Birgit,
+		// relaying a customer): switching accounts then immediately composing a NEW message used
+		// the PREVIOUS account's identity, "lags behind by one". The client already knows exactly
+		// which account it's switching to (this method's own `folder` param) - no need to wait for
+		// the server to tell it back. set_preferences() (plural), unlike set_preference()
+		// (singular), makes no server call at all - purely a local cache replace, so no redundant
+		// round-trip alongside the one just below.
+		this.egw.set_preferences({...this.egw.preference('*', 'mail'), ActiveProfileID: folder}, 'mail');
+
 		//Open unloaded tree to get loaded
             _widget.getSelectedNode().expanded = true;
 
