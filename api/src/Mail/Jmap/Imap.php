@@ -653,7 +653,7 @@ class Imap extends Jmap\Base
 		// unconditionally using 'personal' left the wildcard pattern below built against the wrong
 		// delimiter for any $parentPath under "user"/"shared" on a server where the two actually
 		// differ, silently returning zero matches for that whole level).
-		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($parentPath) ? 'others' : 'personal');
+		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($imap, $parentPath) ? 'others' : 'personal');
 		// IMAP '%' matches any characters except the hierarchy delimiter - i.e. exactly one
 		// level, never grandchildren, and never the parent itself (which needs at least one
 		// more character after the delimiter to match). '*' is the same but ALSO matches the
@@ -1081,7 +1081,7 @@ class Imap extends Jmap\Base
 		$hasSubscribedChildren = null;
 		if (!$isSubscribed && $hasChildren !== false && (self::$lastQuerySubscribedOnly[spl_object_id($imap)] ?? false))
 		{
-			$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
+			$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($imap, $path) ? 'others' : 'personal');
 			$hasSubscribedChildren = !empty($imap->listMailboxes($mailboxName.$delimiter.'*', \Horde_Imap_Client::MBOX_SUBSCRIBED, []));
 		}
 
@@ -1108,6 +1108,16 @@ class Imap extends Jmap\Base
 			// again - more general (covers any other \Noselect mailbox a server might report, not
 			// just the two known namespace-root names) and free (no extra IMAP round trip).
 			'isSelectable' => !in_array('\\noselect', $attributes, true),
+			// RFC 8621 has no such property either - real JMAP (Stalwart) never sets this at all
+			// (undefined), only the local IMAP shim's own synthetic "user"/"shared" namespace-root
+			// entries do. Computed server-side (via isBareNamespaceRoot(), the server's own advertised
+			// NAMESPACE prefix when it reports one) so the client (folderTree.ts's
+			// isNamespaceRootMailbox()) no longer has to guess from the literal mailbox name alone -
+			// found live 2026-10-12 (Stefan Unverricht, a real customer's own Cyrus `altnamespace`-
+			// style install): a server whose real "Other Users" NAMESPACE prefix isn't literally
+			// "user" was never recognized by the client's old name-only check at all, sorting
+			// alphabetically instead of always last.
+			'isNamespaceRoot' => self::isBareNamespaceRoot($imap, $path),
 			// classic mail_tree.inc.php's own "Set Acl capability for INBOX" - only ever checked
 			// there, since ACL editing is an account-level feature, not a per-folder one; a live
 			// IMAP connection to this account is already open by the time any of its mailboxes are
@@ -1442,22 +1452,72 @@ class Imap extends Jmap\Base
 		// isNamespaceRootPath()) lives in that namespace, not "personal" - its delimiter can differ
 		// (same reasoning as the $calledFor branch above, and unsubscribedPassthroughsMissingFrom()'s
 		// own use of the "others" delimiter for both root names).
-		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
+		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($imap, $path) ? 'others' : 'personal');
 
 		return $delimiter === '/' ? $path : str_replace('/', $delimiter, $path);
 	}
 
 	/**
-	 * Whether $path's first "/"-segment is a shared/other-users namespace root ("user"/"shared") -
-	 * PHP counterpart of folderTree.ts's isNamespaceRootName(), same convention (case-insensitive,
-	 * matched by literal name only, not by the server's advertised NAMESPACE prefixes).
+	 * The canonical-path names of $imap's shared/other-users and shared ("others"/"shared" RFC 2342
+	 * namespaces) roots - the server's own advertised NAMESPACE prefix (stripped of its trailing
+	 * delimiter) when it reports one, falling back to the literal "user"/"shared" EGroupware has
+	 * always assumed otherwise (every server that never advertises a distinct 'others'/'shared'
+	 * NAMESPACE entry at all, per namespaceDelimiter()'s own docblock - still the common case).
 	 *
+	 * Found live 2026-10-12 (Stefan Unverricht, a real customer's own Cyrus install, `altnamespace:
+	 * yes`-style config): isNamespaceRootPath()/isBareNamespaceRoot() used to match the literal
+	 * English words "user"/"shared" ONLY - canonicalPath() itself was never guilty of mistranslating
+	 * anything (it already keeps whatever prefix text the server reports, unchanged), but a server
+	 * whose real NAMESPACE prefix is something else entirely (eg. "Other Users") was never
+	 * recognized as a namespace root by any of the logic keyed on these two functions - sorted
+	 * alphabetically instead of always last (folderTree.ts's sortTopLevel()), among other things.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @return string[] one or two names, each the exact (case as reported) canonical-path segment
+	 *  text identifying that namespace's root - never empty strings
+	 */
+	private static function namespaceRootNames(\Horde_Imap_Client_Socket $imap) : array
+	{
+		static $names = [];
+		$key = spl_object_id($imap);
+		if (isset($names[$key]))
+		{
+			return $names[$key];
+		}
+		$result = [];
+		foreach (['others' => 'user', 'shared' => 'shared'] as $namespace => $default)
+		{
+			$prefix = self::namespacePrefix($imap, $namespace);
+			$name = $prefix !== '' ? rtrim($prefix, self::namespaceDelimiter($imap, $namespace)) : $default;
+			if ($name !== '')
+			{
+				$result[] = $name;
+			}
+		}
+		return $names[$key] = array_unique($result);
+	}
+
+	/**
+	 * Whether $path's first "/"-segment is a shared/other-users namespace root (see
+	 * namespaceRootNames()) - PHP counterpart of folderTree.ts's isNamespaceRootMailbox(), same
+	 * case-insensitive convention.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $path
 	 * @return bool
 	 */
-	private static function isNamespaceRootPath(string $path) : bool
+	private static function isNamespaceRootPath(\Horde_Imap_Client_Socket $imap, string $path) : bool
 	{
-		return (bool)preg_match('#^(user|shared)(/|$)#i', $path);
+		$first = strstr($path, '/', true);
+		$first = $first === false ? $path : $first;
+		foreach (self::namespaceRootNames($imap) as $name)
+		{
+			if (strcasecmp($first, $name) === 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -1477,12 +1537,20 @@ class Imap extends Jmap\Base
 	 * server understandably refused ("Could not open mailbox 'user'"), surfacing as a raw 500 with
 	 * an internal Horde stack trace instead of a clean, documented error.
 	 *
+	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $path
 	 * @return bool
 	 */
-	private static function isBareNamespaceRoot(string $path) : bool
+	private static function isBareNamespaceRoot(\Horde_Imap_Client_Socket $imap, string $path) : bool
 	{
-		return (bool)preg_match('#^(user|shared)$#i', $path);
+		foreach (self::namespaceRootNames($imap) as $name)
+		{
+			if (strcasecmp($path, $name) === 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -1635,17 +1703,17 @@ class Imap extends Jmap\Base
 		{
 			return self::demoEmailQuery($folder, $args, $context);
 		}
+		$imap = self::imapServer($accountId);
 		// found live 2026-09-10: the shared/other-users namespace root itself ("user"/"shared",
 		// see isBareNamespaceRoot()'s own docblock) is a real folder-tree entry (so a client can
 		// navigate INTO it), but never a real, selectable IMAP mailbox - querying it always fails
 		// server-side. Caught here, before ever reaching IMAP, so a REST client gets a clean 400
 		// instead of a raw Horde SELECT-failure stack trace.
-		if (self::isBareNamespaceRoot($folder))
+		if (self::isBareNamespaceRoot($imap, $folder))
 		{
 			throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
 		}
 
-		$imap = self::imapServer($accountId);
 		$mailbox = self::hordeMailbox($imap, $folder);
 
 		$query = self::filterToQuery($filter);
@@ -1936,7 +2004,7 @@ class Imap extends Jmap\Base
 		{
 			$folder = self::folderPath((string)$args['mailboxId']);
 			// same namespace-root guard as emailQuery() - see isBareNamespaceRoot()'s own docblock
-			if (self::isBareNamespaceRoot($folder))
+			if (self::isBareNamespaceRoot($imap, $folder))
 			{
 				throw new \Exception("Folder '$folder' is a shared-mailboxes namespace root, not a real mailbox - list its children instead", 400);
 			}
