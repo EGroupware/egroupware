@@ -83,6 +83,29 @@ class BodyDecodingTest extends TestCase
 		$this->assertSame('', BodyDecoding::getStyles([]));
 	}
 
+	/**
+	 * Ticket #117271: padding every colon to guarantee whitespace inside "{...}" (defeating a
+	 * downstream template mechanism that replaces whitespace-free "{...}" spans) used to also pad
+	 * pseudo-class colons like ":focus", turning them into the invalid ": focus" and breaking the
+	 * selector. The fix pads the opening brace instead, which keeps pseudo-classes intact while
+	 * still guaranteeing whitespace right after "{" for every rule.
+	 */
+	public function testGetStylesPreservesPseudoClassSelectors()
+	{
+		\EGroupware\Api\Mail::$displayCharset = 'utf-8';
+		$bodyParts = [
+			['body' => '<style>a:focus{color:red}a:hover{color:blue}</style>', 'mimeType' => 'text/html', 'charSet' => 'utf-8'],
+		];
+
+		$result = BodyDecoding::getStyles($bodyParts);
+
+		$this->assertStringContainsString('a:focus', $result, 'pseudo-class selector must survive intact');
+		$this->assertStringContainsString('a:hover', $result, 'pseudo-class selector must survive intact');
+		$this->assertStringNotContainsString('a: focus', $result, 'must not pad the pseudo-class colon');
+		$this->assertStringContainsString('{ color:red', $result, 'opening brace must still be padded');
+		$this->assertStringContainsString('{ color:blue', $result, 'every rule\'s opening brace must be padded, not just the first');
+	}
+
 	public function testHtmlentitiesEncodesWithExplicitCharset()
 	{
 		$this->assertSame('&lt;b&gt;', BodyDecoding::htmlentities('<b>', 'utf-8'));
