@@ -103,6 +103,31 @@ if (($mailto = (string)($_GET['mailto'] ?? '')) !== '')
 	], static fn($value) => $value !== null);
 }
 
+// Generic "any app can mail one of its own entries" integration (eg. phpbrain/Knowledge Base's
+// own "Mail article" button, mail/inc/class.mail_integration.inc.php's docblock) - classic
+// mail_compose::compose()'s own handling of this (deleted together with compose() itself,
+// 3bca66cf01) was never ported to this new bootstrap page, breaking every caller of it silently
+// (found live, help.egroupware.org/t/80093: phpbrain's own side of the integration - the
+// `app`/`method`/`id` url + its registered `search_link()` 'fetch' entry + phpbrain_bo::
+// retrieve_article() - was all still perfectly intact; only this missing piece ever broke).
+// $method MUST be a registered Link registry entry for $app (same requirement the classic code
+// had) - an arbitrary caller-supplied method name is never called directly.
+if (($app = (string)($_REQUEST['app'] ?? '')) !== '' && ($mt = (string)($_REQUEST['method'] ?? '')) !== '' &&
+	($id = (string)($_REQUEST['id'] ?? '')) !== '' && ($method = Api\Link::get_registry($app, $mt)))
+{
+	if (($res = ExecMethod($method, [$id, 'html'])))
+	{
+		$preset += array_filter([
+			// same "<app> #<id>: <title>" shape classic mail_compose::compose() built
+			'subject' => lang($app).' #'.($res['id'] ?? $id).': '.($res['subject'] ?? ''),
+			'body' => $res['body'] ?? null,
+			'bodyMimeType' => ($res['mimetype'] ?? 'html') === 'html' ? 'html' : 'plain',
+			'files' => !empty($res['attachments']) ? array_map(
+				static fn($path) => ['path' => $path], (array)$res['attachments']) : null,
+		], static fn($value) => $value !== null);
+	}
+}
+
 Api\Framework::set_extra('mail', 'start', array(
 	'method' => 'app.mail.bootstrapComposePopup',
 	'args'   => array(
