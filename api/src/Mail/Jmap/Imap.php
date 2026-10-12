@@ -982,12 +982,24 @@ class Imap extends Jmap\Base
 			// pre-batching N round trips, but only in this rare failure case, and a single
 			// still-missing name now only drops that ONE id into $notFound below instead of taking
 			// the whole level down.
+			//
+			// 'status' must NOT be reused for these per-mailbox retries, same reasoning as the
+			// ids:null branch above stripping it before ITS retry - found live 2026-10-12, a real
+			// customer's "user" namespace-root passthrough node (ticket #126231's own follow-up:
+			// unsubscribedPassthroughsMissingFrom() correctly re-adds it, but it's \NonExistent, so
+			// the server refuses a direct STATUS on it, "NO Mailbox does not exist") was EXACTLY the
+			// one entry poisoning the batch call in the first place - retrying it alone with
+			// 'status' still set hits the identical failure, landing it in $notFound instead of
+			// ever reaching mailboxNode(), which already has its own correct graceful per-mailbox
+			// status fallback (leaves zero counts) for precisely this case.
+			$retryOptions = $listOptions;
+			unset($retryOptions['status']);
 			$infos = [];
 			foreach ($mailboxNames as $mailboxName)
 			{
 				try
 				{
-					$infos += $imap->listMailboxes([$mailboxName], \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $listOptions);
+					$infos += $imap->listMailboxes([$mailboxName], \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $retryOptions);
 				}
 				catch (\Throwable $e2)
 				{
