@@ -3508,6 +3508,7 @@ class Imap extends Jmap\Base
 		$addressHeaders = $data->getHeaders('addresses', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
 
 		$hasAttachment = $structure && self::structureHasAttachment($structure);
+		$receivedAt = self::imapDate($data->getImapDate());
 
 		$email = [
 			'id' => $uid,
@@ -3520,8 +3521,19 @@ class Imap extends Jmap\Base
 			'mailboxIds' => [base64_encode(self::canonicalPath($imap, $mailbox)) => true],
 			'keywords' => self::flagsToKeywords($data->getFlags()),
 			'size' => $data->getSize(),
-			'receivedAt' => self::imapDate($data->getImapDate()),
-			'sentAt' => self::imapDate($envelope->date),
+			'receivedAt' => $receivedAt,
+			// isset() (not a truthy/null check on $envelope->date itself!): Horde's own
+			// Horde_Imap_Client_Data_Envelope::__get('date') returns a FRESH, valid, non-null
+			// Horde_Imap_Client_DateTime("now") every single call whenever the message's ENVELOPE
+			// has no Date: header at all (documented as a known Horde defect right in that class's
+			// own docblock, "@todo $date should return null if it doesn't exist") - found live via
+			// ticket #126291, a device (no Date: header in its mails at all) whose messages kept
+			// showing "now", re-advancing on every reload, since this previously trusted that fake
+			// value unconditionally. __isset('date') instead reports whether the underlying raw
+			// header was actually present, so it alone can tell a real Date: from Horde's silent
+			// placeholder - fall back to the already INTERNALDATE-based $receivedAt, exactly the
+			// same source classic (non-JMAP) Api\Mail::jmapHeaders() already prefers for this case.
+			'sentAt' => isset($envelope->date) ? self::imapDate($envelope->date) : $receivedAt,
 			'subject' => (string)$envelope->subject,
 			'preview' => $wantPreview ? self::preview($imap, $mailbox, $uid, $structure, $data) : '',
 			'from' => self::addressListFromHeader($addressHeaders, 'From') ?? self::addressList($envelope->from),
