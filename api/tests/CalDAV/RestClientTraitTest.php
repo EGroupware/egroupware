@@ -124,6 +124,13 @@ switch ($path)
 		http_response_code(302);
 		break;
 
+	case '/redirect-scheme-relative-private':
+		// scheme-relative Location ("//host/...") also starts with '/', but resolves against a
+		// DIFFERENT host than an absolute-path redirect would - must still be checked
+		header('Location: //169.254.169.254/secret');
+		http_response_code(302);
+		break;
+
 	case '/sync':
 		parse_str($_SERVER['QUERY_STRING'] ?? '', $q);
 		header('Content-Type: application/json');
@@ -279,6 +286,14 @@ EOT;
 		$this->expectException(\InvalidArgumentException::class);
 		// only_public defaults to true here - the redirect target is a private/link-local IP literal
 		$this->client()->api(self::$server_url.'/redirect-private');
+	}
+
+	public function testApiRejectsSchemeRelativeRedirectToPrivateIp()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		// a "//host/..." Location must be resolved as a different host, not treated as a
+		// same-server absolute path that skips the SSRF guard
+		$this->client()->api(self::$server_url.'/redirect-scheme-relative-private');
 	}
 
 	// --- apiIterator() ---
