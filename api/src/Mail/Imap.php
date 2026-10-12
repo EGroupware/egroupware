@@ -1025,10 +1025,32 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			unset($options['children']);
 			unset($options['special_use']);
 		}
-		$mailboxes = $this->listMailboxes($searchstring,Horde_Imap_Client::MBOX_SUBSCRIBED_EXISTS, $options);
-		//$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
-		//_debug_array($mboxes->count());
-		foreach ((array)$mailboxes as $k =>$box)
+		// Horde_Imap_Client::MBOX_SUBSCRIBED_EXISTS's own LIST-EXTENDED "(SUBSCRIBED)" selection
+		// option - unfortunately fails for some Cyrus servers, the exact same documented defect
+		// getMailboxes()'s own MBOX_ALL_SUBSCRIBED guard already protects against, just never
+		// given to THIS method - found live 2026-10-12 (Stefan Unverricht, a real customer's own
+		// large Cyrus install): the ACL dialog's folder search (mail/src/Compose.php's
+		// ajax_searchFolder(), the sole caller of Mail::getFolderObjects(subscribedOnly:true),
+		// which in turn relies entirely on this method) silently returned zero results for every
+		// search term, language-independent, because this call came back completely empty with
+		// no fallback of any kind - leaving getFolderObjects() with nothing but the synthetic
+		// INBOX entry to search against. Reuses the SAME per-host cache flag getMailboxes() sets/
+		// checks (identical underlying server defect), and reuses getMailboxes()'s OWN already-
+		// guarded ALL+UNSUBSCRIBED fallback (filtered to subscribed only) rather than duplicating
+		// that logic here.
+		$need_cyrus_workaround = Api\Cache::getInstance(__CLASS__, 'cyrus-workaround-'.$this->acc_imap_host);
+		$mailboxes = $need_cyrus_workaround ? [] :
+			(array)$this->listMailboxes($searchstring, Horde_Imap_Client::MBOX_SUBSCRIBED_EXISTS, $options);
+		if (empty($mailboxes))
+		{
+			if (!$need_cyrus_workaround)
+			{
+				Api\Cache::setInstance(__CLASS__, 'cyrus-workaround-'.$this->acc_imap_host, true);
+			}
+			$mailboxes = array_filter($this->getMailboxes($reference, $restriction_search, true),
+				static fn($box) => $box['SUBSCRIBED']);
+		}
+		foreach ($mailboxes as $k =>$box)
 		{
 			//error_log(__METHOD__.__LINE__.' Searched for:'.$mailbox.' got Box:'.$k.'->'.array2string($box).function_backtrace());
 			if ($returnAttributes==false)
@@ -1037,7 +1059,10 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			}
 			else
 			{
-				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'],'delimiter'=>($box['delimiter']?:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
+				// $box's own shape differs depending on which branch above produced it - Horde's
+				// raw listMailboxes() result uses lower-case 'attributes', getMailboxes()'s own
+				// already-transformed fallback result uses 'ATTRIBUTES'
+				$ret[$k]=array('MAILBOX'=>$k,'ATTRIBUTES'=>$box['attributes'] ?? $box['ATTRIBUTES'] ?? [],'delimiter'=>($box['delimiter']?:$this->getDelimiter('personal')),'SUBSCRIBED'=>true);
 			}
 		}
 		return $ret ?? null;
