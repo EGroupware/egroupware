@@ -195,6 +195,9 @@ EOT;
 			'trailing dot' => ['http://127.0.0.1./'],
 			'bracketed IPv6 loopback' => ['http://[::1]/'],
 			'bracketed IPv4-mapped IPv6 loopback' => ['http://[::ffff:127.0.0.1]/'],
+			'IPv6 loopback with zone ID' => ['http://[::1%lo]/'],
+			'IPv6 loopback with percent-encoded zone ID' => ['http://[::1%25lo]/'],
+			'IPv6 link-local with zone ID' => ['http://[fe80::1%eth0]/'],
 		];
 	}
 
