@@ -117,74 +117,81 @@ trait RestClientTrait
 		{
 			$url .= '?' . (is_array($body) ? http_build_query($body) : $body);
 		}
-		if ($only_public)
-		{
-			$this->checkPublicIP($url);
-		}
-		if (!($curl = curl_init($url)))
-		{
-			throw new \Exception(curl_error($curl));
-		}
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HEADER, true);
-		if (!$verify_peer)
-		{
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-		}
-		if (isset($connect_timeout))
-		{
-			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
-		}
-		if ($follow > 0)
-		{
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($curl, CURLOPT_MAXREDIRS, $follow);
-		}
 
-		switch (strtoupper($method))
+		// redirects are followed by hand below, validating (if $only_public) every hop's target
+		// BEFORE connecting to it - CURLOPT_FOLLOWLOCATION would have curl follow the whole chain
+		// internally in one curl_exec(), so by the time this code could inspect a redirect target
+		// the request to it would already have gone out over the network
+		$redirects_left = $follow;
+		while (true)
 		{
-			case 'POST':
-				curl_setopt($curl, CURLOPT_POST, true);
-				break;
-			default:
-			case 'PUT':
-			case 'DELETE':
-			case 'PATCH':
-				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, strtoupper($method));
-				break;
-			case 'GET':
-				curl_setopt($curl, CURLOPT_HTTPGET, true);
-				break;
-			case 'HEAD':
-				curl_setopt($curl, CURLOPT_NOBODY, true);
-				break;
-		}
-		$header = $header+['User-Agent' => static::class];
-		if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT', 'PROPFIND', 'PROPPATCH']))
-		{
-			if (is_resource($body))
+			if ($only_public)
 			{
-				fseek($body, 0, SEEK_END);
-				curl_setopt($curl, CURLOPT_INFILESIZE, ftell($body));
-				fseek($body, 0);
+				$this->checkPublicIP($url);
 			}
-			curl_setopt($curl, is_resource($body) ? CURLOPT_INFILE : CURLOPT_POSTFIELDS, is_array($body) ? json_encode($body) : $body);
-		}
-		if (!isset($header['Accept']) && !array_filter($header, static function($header)
-		{
-			return stripos($header, 'Accept:') === 0;
-		}))
-		{
-			$header[] = 'Accept: application/json';
-		}
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-		$response_header = [];
-		if (($response = curl_exec($curl)) === false)
-		{
-			throw new HttpException(curl_error($curl), 0, $method, $url, $body);
-		}
-		do {
+			if (!($curl = curl_init($url)))
+			{
+				throw new \Exception(curl_error($curl));
+			}
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_HEADER, true);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
+			curl_setopt($curl, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
+			if (!$verify_peer)
+			{
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+			}
+			if (isset($connect_timeout))
+			{
+				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
+			}
+
+			switch (strtoupper($method))
+			{
+				case 'POST':
+					curl_setopt($curl, CURLOPT_POST, true);
+					break;
+				default:
+				case 'PUT':
+				case 'DELETE':
+				case 'PATCH':
+					curl_setopt($curl, CURLOPT_CUSTOMREQUEST, strtoupper($method));
+					break;
+				case 'GET':
+					curl_setopt($curl, CURLOPT_HTTPGET, true);
+					break;
+				case 'HEAD':
+					curl_setopt($curl, CURLOPT_NOBODY, true);
+					break;
+			}
+			// built fresh from the caller's own $header each hop, so re-looping never accumulates
+			// duplicate/stale entries (eg. a second "Accept: application/json" fallback)
+			$request_header = $header+['User-Agent' => static::class];
+			if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT', 'PROPFIND', 'PROPPATCH']))
+			{
+				if (is_resource($body))
+				{
+					fseek($body, 0, SEEK_END);
+					curl_setopt($curl, CURLOPT_INFILESIZE, ftell($body));
+					fseek($body, 0);
+				}
+				curl_setopt($curl, is_resource($body) ? CURLOPT_INFILE : CURLOPT_POSTFIELDS, is_array($body) ? json_encode($body) : $body);
+			}
+			if (!isset($request_header['Accept']) && !array_filter($request_header, static function($h)
+			{
+				return stripos($h, 'Accept:') === 0;
+			}))
+			{
+				$request_header[] = 'Accept: application/json';
+			}
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $request_header);
+			$response_header = [];
+			if (($response = curl_exec($curl)) === false)
+			{
+				throw new HttpException(curl_error($curl), 0, $method, $url, $body);
+			}
+			curl_close($curl);
 			[$rheader, $response] = explode("\r\n\r\n", $response, 2);
 			foreach (explode("\r\n", $rheader) as $line)
 			{
@@ -200,15 +207,19 @@ trait RestClientTrait
 			}
 			[, $http_status] = explode(' ', $response_header[0], 2);
 
-			// if we got a redirect, check that the location is either on the same server or also has a valid public IP
-			// (a 3xx status without a Location header, eg. 304 Not Modified, has nothing to check)
-			if ($only_public && $http_status[0] === '3' && $follow && isset($response_header['location']) &&
-				$response_header['location'][0] !== '/')
+			// a 3xx status without a Location header (eg. 304 Not Modified) has nothing to follow
+			if ($http_status[0] === '3' && $redirects_left > 0 && isset($response_header['location']))
 			{
-				$this->checkPublicIP($response_header['location']);
+				// resolve scheme-relative ("//host/path") and absolute-path ("/path") Locations
+				// against the CURRENT $url first, THEN loop back to the top to validate the
+				// resolved target - a scheme-relative Location also starts with '/', but curl (and
+				// every browser) resolves it against a DIFFERENT host, same as an absolute one
+				$url = self::resolveRedirectUrl($response_header['location'], $url);
+				$redirects_left--;
+				continue;
 			}
+			break;
 		}
-		while ($http_status[0] === '3' && $follow && preg_match('#^HTTP/[\d.]+ \d+#', $response));
 
 		if ($http_status[0] !== '2')
 		{
@@ -224,14 +235,51 @@ trait RestClientTrait
 	}
 
 	/**
+	 * Resolve a redirect Location header against the URL it was received from
+	 *
+	 * @param string $location Location header value: absolute URL, scheme-relative ("//host/path"),
+	 *  absolute-path ("/path") or relative ("path")
+	 * @param string $base URL the response with that Location header came from
+	 * @return string absolute URL
+	 */
+	private static function resolveRedirectUrl(string $location, string $base): string
+	{
+		if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $location))
+		{
+			return $location;
+		}
+		$base_scheme = parse_url($base, PHP_URL_SCHEME);
+		// scheme-relative: resolves against a DIFFERENT host, same as a full absolute URL
+		if (str_starts_with($location, '//'))
+		{
+			return $base_scheme.':'.$location;
+		}
+		$base_authority = $base_scheme.'://'.parse_url($base, PHP_URL_HOST).
+			(($port = parse_url($base, PHP_URL_PORT)) ? ':'.$port : '');
+		if ($location[0] === '/')
+		{
+			return $base_authority.$location;
+		}
+		// relative path: resolve against the base URL's own directory
+		$base_path = parse_url($base, PHP_URL_PATH) ?? '/';
+		return $base_authority.substr($base_path, 0, strrpos($base_path, '/') + 1).$location;
+	}
+
+	/**
 	 * Check host does not resolve to a private or reserved IP address
 	 *
 	 * @param string $url hostname or URL
-	 * @throws \InvalidArgumentException if $host is or resolved to private or reserved IP address
+	 * @throws \InvalidArgumentException if $host is or resolved to private or reserved IP address, or $url has a non-http(s) scheme
 	 * @return void
 	 */
 	public function checkPublicIP(string $url)
 	{
+		// reject any explicit non-http(s) scheme (eg. file://, gopher://) - a bare hostname (no
+		// scheme at all) is left alone, parse_url() then returns null for PHP_URL_SCHEME
+		if (($scheme = parse_url($url, PHP_URL_SCHEME)) !== null && !in_array(strtolower($scheme), ['http', 'https'], true))
+		{
+			throw new \InvalidArgumentException("URL scheme '{$scheme}' is not allowed, only http/https!");
+		}
 		$host = parse_url($url, PHP_URL_HOST) ?? $url;
 
 		// check if host is already an IP address
