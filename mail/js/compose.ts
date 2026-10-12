@@ -1862,7 +1862,25 @@ export class MailCompose
 		// syncMimeTypeContainers() above so it focuses whichever body container is actually visible.
 		if (focusBody)
 		{
-			await this.currentBodyWidget()?.focus?.();
+			const bodyWidget : any = this.currentBodyWidget();
+			await bodyWidget?.focus?.();
+			// Live report 2026-10-12 (ralf): a plain-text reply's freshly populated textarea left
+			// the caret at value.length - the very end, after the quote AND the signature
+			// composeBodyWithSignature() appends below it - instead of at offset 0, where the
+			// leading blank line it builds for a reply is meant to be typed into. A bare focus()
+			// on a native <textarea> (Et2Textarea/Shoelace's SlTextarea) does not reset the caret
+			// the way a contentEditable region does, which is why the HTML/TinyMCE case (Et2HtmlArea.
+			// focus(), also just a plain focus() with no positioning code of its own) happens to
+			// land correctly - incidentally, not from any deliberate positioning either mode has.
+			if (bodyWidget?.id === 'mail_plaintext' && typeof bodyWidget.setSelectionRange === 'function')
+			{
+				bodyWidget.setSelectionRange(0, 0);
+				const textarea = bodyWidget.getDOMNode?.()?.shadowRoot?.querySelector('textarea');
+				if (textarea)
+				{
+					textarea.scrollTop = 0;
+				}
+			}
 		}
 
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
