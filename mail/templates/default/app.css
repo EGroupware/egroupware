@@ -755,7 +755,18 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .tmpPrintDiv {
     margin-top: 10px;
     margin-bottom: 30px;
-    display: block;
+    /* !important: MailApp.preparePrint() sets this element's visibility via an INLINE style
+       (display:none while hidden on screen) - only MailApp.displayPrint() (the in-app Print
+       button) explicitly flips that inline style to 'block' right before window.print(). An
+       inline style always beats a plain external-stylesheet rule regardless of media query, so
+       printing via any OTHER trigger (ctrl+P, the browser's own print menu item) left this stuck
+       hidden - found live 2026-10-12 (Stefan Unverricht, relaying his GL-Assistenz's report:
+       "ctrl+P opens the print dialog, but without the full mail content - the print button's
+       content is complete"). With #mail-display_mailDisplayBodySrc (the iframe) ALSO hidden
+       under print just below, nothing of the actual message body printed at all in that case -
+       only headers/attachments, which aren't gated by this element.
+     */
+    display: block !important;
     overflow: visible;
     height: auto;
   }

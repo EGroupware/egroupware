@@ -767,7 +767,12 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .tmpPrintDiv {
     margin-top: 10px;
     margin-bottom: 30px;
-    display: block;
+    /* !important - see mail/templates/default/app.css's own identical rule for why (ticket live
+       report 2026-10-12, Stefan Unverricht): an inline style (set by MailApp.preparePrint()/
+       displayPrint()) otherwise wins over this plain rule regardless of media query, leaving the
+       print-ready copy hidden whenever printing is triggered any way other than the in-app Print
+       button (eg. ctrl+P). */
+    display: block !important;
     overflow: visible;
     height: auto;
   }
