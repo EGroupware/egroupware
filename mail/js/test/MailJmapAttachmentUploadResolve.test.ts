@@ -560,6 +560,77 @@ describe("MailJmap.getAttachmentViewUrl() - PDF gets wrapped with a real downloa
 		assert.equal(src(html1), src(html2));
 	});
 
+	/**
+	 * Ticket #125641 follow-up (2026-10-12): a customer compared printouts against an older
+	 * EGroupware (native browser PDF viewer, always sharp) and found the new wrapper's printouts
+	 * blurry - the SAME screen-resolution images (fast to render, deliberately low-res) were being
+	 * printed as-is. Fixed by re-rendering at a much higher resolution on demand, only when Print is
+	 * actually clicked (see wrapPdfViewerWithDownload()'s own docblock) - exposed on `window` as
+	 * `__egwRenderPdfPrintImages(token)`, called by the wrapper's own print button script via
+	 * `window.opener` and matched to the right PDF via the wrapper's own `data-pdf-print-token` body
+	 * attribute (never baked into the shared print script itself).
+	 */
+	describe("print-resolution re-render (ticket #125641 follow-up)", () =>
+	{
+		it("exposes a print-token on the wrapper's <body> and registers a working re-render callback for it", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const html = await fetchWrapperHtml(jmap);
+
+			const tokenMatch = html.match(/<body data-pdf-print-token="([^"]+)">/);
+			assert.isNotNull(tokenMatch, "wrapper must carry a token the print script can read from its own document");
+
+			const render = (window as any).__egwRenderPdfPrintImages;
+			assert.isFunction(render, "must be installed on window for the wrapper's window.opener to reach");
+
+			const images = await render(tokenMatch[1]);
+			assert.isArray(images);
+			assert.lengthOf(images, 1, "single-page test fixture");
+			assert.match(images[0], /^data:image\/png;base64,/);
+		});
+
+		it("returns null for an unknown/stale token instead of throwing", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			await fetchWrapperHtml(jmap);
+
+			const images = await (window as any).__egwRenderPdfPrintImages("not-a-real-token");
+			assert.isNull(images);
+		});
+
+		it("renders print-resolution images at a visibly higher pixel size than the screen-resolution ones shown on open", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const html = await fetchWrapperHtml(jmap);
+
+			const screenImg = html.match(/<img src="(data:image\/png;base64,[^"]+)"/)[1];
+			const token = html.match(/<body data-pdf-print-token="([^"]+)">/)[1];
+			const printImages = await (window as any).__egwRenderPdfPrintImages(token);
+
+			const widthOf = (dataUrl : string) : Promise<number> => new Promise((resolve, reject) =>
+			{
+				const img = new Image();
+				img.onload = () => resolve(img.naturalWidth);
+				img.onerror = reject;
+				img.src = dataUrl;
+			});
+			const [screenWidth, printWidth] = await Promise.all([widthOf(screenImg), widthOf(printImages[0])]);
+
+			assert.isAbove(printWidth, screenWidth, "print resolution must be sharper than the fast initial screen render");
+		});
+
+		it("gives two different PDF wraps their own distinct print tokens", async() =>
+		{
+			const jmap1 = new MailJmap(createFakeApp());
+			const html1 = await fetchWrapperHtml(jmap1);
+			const jmap2 = new MailJmap(createFakeApp());
+			const html2 = await fetchWrapperHtml(jmap2);
+
+			const token = (html : string) => html.match(/<body data-pdf-print-token="([^"]+)">/)[1];
+			assert.notEqual(token(html1), token(html2));
+		});
+	});
+
 	it("does NOT wrap a non-PDF type - still returns the plain named-File content url directly", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());
