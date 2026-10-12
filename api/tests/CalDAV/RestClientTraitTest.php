@@ -177,6 +177,41 @@ EOT;
 		$this->addToAssertionCount(1);
 	}
 
+	/**
+	 * Every non-canonical loopback encoding reported against the patched code: curl (via the
+	 * system resolver's inet_aton-style numeric-host parsing, or its own bracketed-IPv6 handling)
+	 * resolves all of these to the loopback address, but filter_var() does not recognize any of
+	 * them as an IP at all - without an explicit reject, they'd fall through to the
+	 * dns_get_record() branch, find no records, and pass unchecked while curl still connects to
+	 * the address they encode.
+	 */
+	public static function nonCanonicalLoopbackEncodings() : array
+	{
+		return [
+			'decimal' => ['http://2130706433/'],
+			'hex' => ['http://0x7f000001/'],
+			'octal' => ['http://0177.0.0.1/'],
+			'short form' => ['http://127.1/'],
+			'trailing dot' => ['http://127.0.0.1./'],
+			'bracketed IPv6 loopback' => ['http://[::1]/'],
+			'bracketed IPv4-mapped IPv6 loopback' => ['http://[::ffff:127.0.0.1]/'],
+		];
+	}
+
+	#[\PHPUnit\Framework\Attributes\DataProvider('nonCanonicalLoopbackEncodings')]
+	public function testCheckPublicIpRejectsNonCanonicalLoopbackEncoding(string $url)
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->client()->checkPublicIP($url);
+	}
+
+	public function testCheckPublicIpAllowsBracketedPublicIpv6Literal()
+	{
+		// must NOT throw - a real public IPv6 literal must still work once brackets are stripped
+		$this->client()->checkPublicIP('http://[2001:4860:4860::8888]/');
+		$this->addToAssertionCount(1);
+	}
+
 	// --- api(): SSRF guard integration ---
 
 	public function testApiRejectsPrivateIpBeforeConnectingWhenOnlyPublic()
