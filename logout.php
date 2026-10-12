@@ -32,7 +32,7 @@ if(!($redirectTarget = Api\Cache::getSession('login', 'referer')))
 {
 	$redirectTarget = $GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain'];
 }
-elseif(strpos($redirectTarget, '[?&]cd=') !== false)
+elseif(preg_match('/[?&]cd=/', $redirectTarget))
 {
 	$redirectTarget = preg_replace('/([?&])cd=[^&]+/', '$1cd=1', $redirectTarget);
 }

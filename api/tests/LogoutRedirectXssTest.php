@@ -116,15 +116,15 @@ class LogoutRedirectXssTest extends LoggedInTest
 	}
 
 	/**
-	 * check_domain() now rejects any breakout character, so api/ntlm/index.php's forward
-	 * parameter can no longer deliver one - but login.php's OTHER writer into the same session
-	 * slot (the request's Referer header, see httpLogin()) has no such gate at all. The sink-level
-	 * htmlspecialchars() fix in logout.php is what protects that writer, and is exercised here
-	 * directly: a real login request whose Referer header carries the breakout payload.
+	 * login.php's Referer-header writer now only stores a SAME-ORIGIN referer (see
+	 * testCrossOriginRefererIsNeverStoredOpenRedirectFix() below) - a same-origin value can still
+	 * carry breakout characters in its path/query, so the sink-level htmlspecialchars() fix in
+	 * logout.php remains necessary and is exercised here directly: a real login request whose
+	 * Referer header is this same server, with a breakout payload in the path.
 	 */
 	public function testLoginRefererPayloadIsEscapedNotExecutable()
 	{
-		$payload = 'https://attacker.example/x"><details open ontoggle=alert(document.domain)>';
+		$payload = $this->egwUrl().'/x"><details open ontoggle=alert(document.domain)>';
 		[$client] = $this->httpLogin($payload) ?? [null];
 		if (!$client) $this->markTestSkipped('Could not log in as phpunit test user');
 
@@ -133,9 +133,28 @@ class LogoutRedirectXssTest extends LoggedInTest
 		$this->assertStringNotContainsString($payload, $body,
 			'The raw, unescaped Referer-derived payload must never appear in logout.php\'s response');
 		$this->assertStringContainsString(htmlspecialchars($payload, ENT_QUOTES), $body,
-			'The htmlspecialchars-escaped payload should appear - proves it was stored (login.php\'s ' .
-			'Referer writer has no check_domain()-style gate) and reflected safely (escaped at the ' .
-			'sink), not silently dropped');
+			'The htmlspecialchars-escaped payload should appear - proves a same-origin referer is '.
+			'still stored (and reflected safely, escaped at the sink), not silently dropped');
+	}
+
+	/**
+	 * Regression test for an open redirect: login.php used to store ANY Referer verbatim (no
+	 * origin check at all), and logout.php later redirects to it unauthenticated - an attacker who
+	 * gets a victim to log in from an attacker-controlled Referer could send them to that attacker
+	 * page right after logout (eg. a cloned "session expired, please log in again" phishing page).
+	 * Fix: login.php now only stores the referer when its host matches the request's own host.
+	 */
+	public function testCrossOriginRefererIsNeverStoredOpenRedirectFix()
+	{
+		$payload = 'https://evil.example/phish';
+		[$client] = $this->httpLogin($payload) ?? [null];
+		if (!$client) $this->markTestSkipped('Could not log in as phpunit test user');
+
+		$body = (string)$client->get($this->egwUrl().'/logout.php')->getBody();
+
+		$this->assertStringNotContainsString($payload, $body,
+			'A cross-origin Referer must never be stored or reflected - it must not appear in '.
+			'logout.php\'s response at all, escaped or not');
 	}
 
 	public function testBreakoutAndProtocolRelativeForwardsAreRejected()

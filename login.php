@@ -280,10 +280,17 @@ else
 
 			$forward = parseForward($extra_vars);
 
-			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
+			if (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
 				// login requuest does not come from login.php
-				// redirect to referer on logout
-				Api\Cache::setSession('login', 'referer', $_SERVER['HTTP_REFERER']);
+				// redirect to referer on logout - only if it's this same server: logout.php uses
+				// the stored value as an unauthenticated redirect target, so an attacker-controlled
+				// cross-origin Referer stored here would become an open-redirect at logout
+				$referer_host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+				$request_host = parse_url('http://'.($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST);
+				if ($referer_host && $request_host && strcasecmp($referer_host, $request_host) === 0)
+				{
+					Api\Cache::setSession('login', 'referer', $_SERVER['HTTP_REFERER']);
+				}
 			}
 			$strength = ($GLOBALS['egw_info']['server']['force_pwd_strength']?$GLOBALS['egw_info']['server']['force_pwd_strength']:false);
 			if ($strength && $strength>5) $strength =5;
