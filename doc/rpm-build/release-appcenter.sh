@@ -3,7 +3,7 @@
 # To update univention-appcenter-control run:
 # curl https://provider-portal.software-univention.de/appcenter-selfservice/univention-appcenter-control > ~/bin/univention-appcenter-control
 
-version="$(date +%y).$(date +%m|sed 's/0//')"
+version="$(date +%y).$(date +%m|sed 's/^0//')"
 packaging=`date +%Y%m%d`
 # default is now Docker!
 postfix=''
