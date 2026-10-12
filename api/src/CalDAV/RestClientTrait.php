@@ -289,6 +289,17 @@ trait RestClientTrait
 		// passes unchecked while curl still connects to it directly
 		$host = trim($host, '[]');
 
+		// an IPv6 literal may carry a zone/scope ID ("%lo", or percent-encoded "%25lo" per RFC
+		// 6874) - curl honors it and still connects to the address it's attached to (which does
+		// not have to be an actually-scoped link-local address - curl accepts a zone ID on any
+		// IPv6 literal, including loopback), but filter_var() rejects the whole string once a zone
+		// ID is appended, so without stripping it here this would fall through to the (always
+		// empty) dns_get_record() branch and pass unchecked
+		if (($zone_pos = strpos($host, '%')) !== false)
+		{
+			$host = substr($host, 0, $zone_pos);
+		}
+
 		// check if host is already an IP address
 		if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4|FILTER_FLAG_IPV6))
 		{
