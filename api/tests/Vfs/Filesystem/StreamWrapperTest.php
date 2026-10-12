@@ -84,6 +84,36 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		$this->assertFalse(Vfs::file_exists($script));
 	}
 
+	/**
+	 * Every suffix SCRIPT_EXTENSIONS_PREG is supposed to cover: an uppercased extension (the
+	 * pattern used to be case-sensitive), the additional executable/server-config extensions added
+	 * alongside the case-insensitivity fix, and a trailing dot some webserver configs strip before
+	 * matching a handler.
+	 */
+	public static function deniedSuffixes() : array
+	{
+		return [
+			'uppercase php' => ['.PHP'],
+			'phtml' => ['.phtml'],
+			'phar' => ['.phar'],
+			'cgi' => ['.cgi'],
+			'sh' => ['.sh'],
+			'htaccess' => ['.htaccess'],
+			'user.ini' => ['.user.ini'],
+			'trailing dot' => ['.php.'],
+		];
+	}
+
+	#[\PHPUnit\Framework\Attributes\DataProvider('deniedSuffixes')]
+	public function testDenyScriptCoversExtendedSuffixes(string $suffix) : void
+	{
+		$script = $this->getFilename() . $suffix;
+		$this->files[] = $script;
+
+		$this->assertFalse(@file_put_contents(Vfs::PREFIX . $script, 'no'));
+		$this->assertFalse(Vfs::file_exists($script));
+	}
+
 	protected function mount(): void
 	{
 		$this->mountFilesystem(static::$mountpoint);

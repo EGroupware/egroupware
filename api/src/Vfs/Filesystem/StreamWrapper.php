@@ -116,8 +116,13 @@ class StreamWrapper implements Vfs\StreamWrapperIface
 
 	/**
 	 * Regular expression identifying scripts, to NOT allow updating them if exec mount option is NOT set
+	 *
+	 * Covers numbered PHP variants and the other extensions a webserver can be configured to
+	 * execute (phtml, phar, cgi, sh), plus server-config filenames (.htaccess, .user.ini) that
+	 * change how a webserver handles a whole directory rather than being executed themselves - and
+	 * a trailing dot/space, which some webserver configs strip before matching a handler.
 	 */
-	const SCRIPT_EXTENSIONS_PREG = '/\.(php[0-9]*|pl|py)$/i';
+	const SCRIPT_EXTENSIONS_PREG = '/\.(php[0-9]*|pl|py|phtml|phar|cgi|sh|htaccess|user\.ini)[. ]*$/i';
 
 	/**
 	 * This method is called immediately after your stream object is created.
