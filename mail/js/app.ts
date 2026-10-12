@@ -8735,7 +8735,15 @@ export class MailApp extends EgwApp
 	 */
 	preparePrint(_iframe?: HTMLIFrameElement)
 	{
-		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
+		// mailDisplayBodySrc only exists in the mail.display popup - mail.index's OWN preview pane
+		// (where this is ALSO called, see its own 'load' listener above) uses messageIFRAME instead,
+		// same fallback mailvelopeDisplay() already needs for the identical reason. Found live
+		// 2026-10-12 (ralf, following up on Stefan Unverricht's ctrl+P report): without this,
+		// tmpPrintDiv still got created/shown for the preview-pane case, just silently empty -
+		// nothing ever populated it - producing a blank printed page once the OTHER half of this
+		// same investigation (hiding the message-list grid under print) stopped it from also
+		// paginating to thousands of pages.
+		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc') || this.et2?.getWidgetById('messageIFRAME');
 		const mainIframe = _iframe || iframeWidget?.iframe;
 		// tmpPrintDiv is attached directly to document.body - NOT as a sibling anywhere inside the
 		// template's own widget tree (mailDisplay vbox -> mailDisplayContainer box -> et2-ai, all
