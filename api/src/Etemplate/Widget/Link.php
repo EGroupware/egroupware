@@ -264,8 +264,11 @@ class Link extends Etemplate\Widget
 
 		// unlike ajax_link()/ajax_delete(), there's no not-yet-saved-entry case to exempt here -
 		// listing links only ever makes sense for an already-saved entry, so $app/$id being set is
-		// always a real entry to check read-access on
-		if ($app && $id && !is_array($id) && !Api\Link::file_access($app, $id))
+		// always a real entry to check read-access on. A non-scalar $id has no real access decision
+		// to make either - reject it rather than silently skipping the check, so it can't become an
+		// access check bypass if a future change to Api\Link::get_links()/title() ever stops
+		// failing closed on that shape by itself.
+		if ($app && $id && (is_array($id) || !Api\Link::file_access($app, $id)))
 		{
 			throw new Api\Exception\NoPermission();
 		}
