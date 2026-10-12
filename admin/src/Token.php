@@ -71,6 +71,14 @@ class Token
 				{
 					Api\Framework::window_close(lang('Token not found!'));
 				}
+				// same ownership check save() already enforces on write - a template (no owner,
+				// account_id empty) stays readable by anyone, matching the template-detection
+				// below and templatesOnly()'s own intent
+				if (empty($GLOBALS['egw_info']['user']['apps']['admin']) && !empty($content['account_id']) &&
+					$content['account_id'] != $GLOBALS['egw_info']['user']['account_id'])
+				{
+					Api\Framework::window_close(lang('Permission denied!'));
+				}
 				// opening a template outside admin app
 				if (static::APP !== 'admin' && !$content['account_id'] && empty($content['token_hash']) && empty($content['token_revoked']))
 				{
