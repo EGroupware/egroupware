@@ -399,6 +399,34 @@ describe("buildFolderLevel()", () =>
 
 			assert.deepEqual(nodes.map((n) => n.label), ["apple", "Zebra", "user"]);
 		});
+
+		/**
+		 * Found live 2026-10-12 (Stefan Unverricht, a real customer's own Cyrus `altnamespace`-style
+		 * install): the server's real "Other Users" NAMESPACE prefix isn't literally "user", so the
+		 * old name-only check never recognized it as the namespace root at all - sorted alphabetically
+		 * (between "Kalender-Prob" and "RA Ablage" in his own screenshot) instead of always last.
+		 * JmapShim::mailboxNode() now computes isNamespaceRoot server-side from the account's real
+		 * advertised NAMESPACE prefix - this is the client side of that same fix.
+		 */
+		it("sorts a differently-named namespace root last too, when the server flags it via isNamespaceRoot", () =>
+		{
+			const nodes = build([
+				mailbox({name: "Zebra"}),
+				mailbox({name: "Other Users", hasChildren: true, isNamespaceRoot: true}),
+				mailbox({name: "apple"}),
+			]);
+
+			assert.deepEqual(nodes.map((n) => n.label), ["apple", "Zebra", "Other Users"]);
+		});
+
+		it("still sorts a same-named ('Other Users') folder alphabetically when the server does NOT flag it as a namespace root", () =>
+		{
+			const nodes = build([
+				mailbox({name: "Zebra"}), mailbox({name: "Other Users"}), mailbox({name: "apple"}),
+			]);
+
+			assert.deepEqual(nodes.map((n) => n.label), ["apple", "Other Users", "Zebra"]);
+		});
 	});
 });
 

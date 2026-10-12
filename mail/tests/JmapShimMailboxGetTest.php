@@ -555,24 +555,58 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testIsBareNamespaceRootMatchesOnlyTheBareRootNames()
 	{
-		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['user']));
-		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['shared']));
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'user']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'shared']));
 		// case-insensitive, matching isNamespaceRootPath()'s own convention
-		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['User']));
-		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', ['SHARED']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'User']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'SHARED']));
 	}
 
 	public function testIsBareNamespaceRootDoesNotMatchARealSubfolderUnderTheNamespace()
 	{
-		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['user/otherperson/INBOX']));
-		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['shared/Public']));
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, 'user/otherperson/INBOX']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, 'shared/Public']));
 	}
 
 	public function testIsBareNamespaceRootDoesNotMatchAFolderThatMerelyStartsWithTheName()
 	{
-		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['usernotreal']));
-		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['INBOX']));
-		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', ['']));
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, 'usernotreal']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, 'INBOX']));
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, '']));
+	}
+
+	/**
+	 * Found live 2026-10-12 (Stefan Unverricht, a real customer's own Cyrus `altnamespace`-style
+	 * install): the server's real "Other Users" NAMESPACE prefix isn't literally "user" - the old
+	 * hardcoded regex never recognized it as a namespace root at all. isBareNamespaceRoot()/
+	 * isNamespaceRootPath() now use the account's own advertised NAMESPACE prefix when it reports
+	 * one (stripped of its trailing delimiter), falling back to the literal "user"/"shared" only
+	 * when no distinct 'others'/'shared' namespace is advertised at all (the common case,
+	 * ticket #126231's own earlier fix).
+	 */
+	public function testIsBareNamespaceRootRecognizesTheAccountsOwnAdvertisedPrefixInstead()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']], 'others' => [['delimiter' => '.', 'name' => 'Other Users.']]]);
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'Other Users']));
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'other users']), 'case-insensitive');
+		// the literal "user" must NOT match any more on a server whose real prefix is something else
+		$this->assertFalse($this->invokePrivate('isBareNamespaceRoot', [$imap, 'user']));
+	}
+
+	public function testIsNamespaceRootPathRecognizesTheAccountsOwnAdvertisedPrefixInstead()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']], 'others' => [['delimiter' => '.', 'name' => 'Other Users.']]]);
+		$this->assertTrue($this->invokePrivate('isNamespaceRootPath', [$imap, 'Other Users/helpdesk']));
+		$this->assertFalse($this->invokePrivate('isNamespaceRootPath', [$imap, 'user/helpdesk']));
+	}
+
+	public function testIsBareNamespaceRootStillFallsBackToLiteralUserWhenOthersNotAdvertised()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]], [], true);
+		$this->assertTrue($this->invokePrivate('isBareNamespaceRoot', [$imap, 'user']));
 	}
 
 	public function testRoleForInbox()

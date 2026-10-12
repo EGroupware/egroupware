@@ -49,6 +49,15 @@ export interface JmapMailboxNode
 	 * for INBOX" precedent. Undefined everywhere else.
 	 */
 	aclCapable? : boolean;
+	/**
+	 * Whether this IS the shared/other-users namespace root itself - server-computed (JmapShim::
+	 * mailboxNode()'s own isBareNamespaceRoot(), via the account's real advertised NAMESPACE prefix
+	 * when it has one) so isNamespaceRootMailbox() below doesn't have to guess from the literal
+	 * mailbox name alone. Undefined for every other node, and for every real-JMAP/Stalwart mailbox
+	 * (no such concept there at all) - isNamespaceRootMailbox() falls back to isNamespaceRootName()
+	 * in both cases.
+	 */
+	isNamespaceRoot? : boolean;
 }
 
 export interface BuildFolderLevelOptions
@@ -190,6 +199,20 @@ export function isNamespaceRootName(name : string) : boolean
 }
 
 /**
+ * Whether `mailbox` IS the shared/other-users namespace root itself - prefers the server-computed
+ * `isNamespaceRoot` field (JmapShim only, see JmapMailboxNode's own docblock) when present, falling
+ * back to the literal-name heuristic above otherwise (every real-JMAP/Stalwart mailbox, which never
+ * sets that field at all). Found live 2026-10-12 (Stefan Unverricht, a real customer's own Cyrus
+ * `altnamespace`-style install): isNamespaceRootName()'s literal "user"/"shared" match alone never
+ * recognized a server whose real NAMESPACE prefix is something else entirely (eg. "Other Users"),
+ * sorting it alphabetically instead of always last (sortTopLevel()).
+ */
+export function isNamespaceRootMailbox(mailbox : JmapMailboxNode) : boolean
+{
+	return mailbox.isNamespaceRoot ?? isNamespaceRootName(mailbox.name);
+}
+
+/**
  * Sort a level's sibling JMAP Mailbox nodes into TOP_LEVEL_SORT_ORDER's fixed sequence:
  * INBOX/Drafts/Templates/Sent/Trash/Junk/Outbox in that exact order, then every other folder
  * alphabetically by name, then the shared/other-users namespace root ("user" on Dovecot/JmapShim's
@@ -205,7 +228,7 @@ export function sortTopLevel(list : JmapMailboxNode[]) : void
 	const priority = (m : JmapMailboxNode) : number =>
 	{
 		if (m.role && m.role in TOP_LEVEL_SORT_ORDER) return TOP_LEVEL_SORT_ORDER[m.role];
-		if (isNamespaceRootName(m.name)) return 8;
+		if (isNamespaceRootMailbox(m)) return 8;
 		return 7;
 	};
 	list.sort((a, b) =>
@@ -255,7 +278,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 	// tooltip" (`title=${selectOption.tooltip || selectOption.title || nothing}`).
 	const tooltipCandidate = roleLabelKey ?? mailbox.name;
 	const tooltip = tooltipCandidate !== label ? tooltipCandidate : '';
-	const isNamespaceRoot = isNamespaceRootName(mailbox.name);
+	const isNamespaceRoot = isNamespaceRootMailbox(mailbox);
 	return {
 		value: profileID + '::' + path,
 		jmapId: mailbox.id,
@@ -331,7 +354,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// unsubscribedPassthroughsMissingFrom()'s own docblock), and real JMAP has no namespace-root
 	// concept at all, so this branch never even applies there.
 	const isVisibleNamespaceRoot = (mailbox : JmapMailboxNode) =>
-		isNamespaceRootName(mailbox.name) && mailbox.hasChildren !== false &&
+		isNamespaceRootMailbox(mailbox) && mailbox.hasChildren !== false &&
 		(!options.subscribedOnly || mailbox.hasSubscribedChildren !== false);
 	// IMAP lets an accessible folder be a child of one this user can't see/subscribe to at all -
 	// not just the namespace root above (the ORIGINAL, narrower version of this same idea), but at
@@ -361,7 +384,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// pattern and would have silently stopped working for Stalwart too).
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
 	const filtered = (mailboxes || [])
-		.filter((mailbox) => isNamespaceRootName(mailbox.name) ? isVisibleNamespaceRoot(mailbox) :
+		.filter((mailbox) => isNamespaceRootMailbox(mailbox) ? isVisibleNamespaceRoot(mailbox) :
 			(!options.subscribedOnly || mailbox.isSubscribed || isVisiblePassthrough(mailbox)));
 	// Found live 2026-09-14 (ralf, relaying a real user's report): autoloaded subfolders showed
 	// in the server's own arbitrary order, not alphabetical-with-special-folders-first. sortTopLevel()
