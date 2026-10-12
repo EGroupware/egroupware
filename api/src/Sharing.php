@@ -227,7 +227,7 @@ class Sharing
 			);
 		}
 		// check password, if required
-		if(!static::check_password($share, $password))
+		if(!static::checkPasswordThrottled($share, $password))
 		{
 			$realm = 'EGroupware share '.$share['share_token'];
 			header('WWW-Authenticate: Basic realm="'.$realm.'"');
@@ -237,6 +237,73 @@ class Sharing
 			);
 		}
 
+	}
+
+	/**
+	 * Prefix for the per-token failed-password-attempt counter cached by checkPasswordThrottled()
+	 */
+	const FAILED_PASSWORD_CACHE_PREFIX = 'share-failed-passwd-';
+
+	/**
+	 * How many wrong passwords for the SAME share token before it gets temporarily locked out
+	 */
+	const MAX_FAILED_PASSWORDS = 5;
+
+	/**
+	 * How long (seconds) a share stays locked out after MAX_FAILED_PASSWORDS wrong guesses -
+	 * also doubles as the failed-attempt counter's own TTL, so it self-clears without needing a
+	 * separate timestamp
+	 */
+	const PASSWORD_LOCKOUT_TIME = 300;
+
+	/**
+	 * check_password(), throttling repeated wrong guesses against the SAME share token
+	 *
+	 * A share token itself (24 CSPRNG bytes) is not practically guessable, so the actual risk once
+	 * an attacker has one is unlimited-speed online guessing of its (often much weaker) password.
+	 * Growing per-attempt delay, then a hard lockout once MAX_FAILED_PASSWORDS is reached - no
+	 * password comparison at all while locked out, both to avoid wasted work and to not leak
+	 * anything via its timing either. The baseline delay on the very first attempt also closes
+	 * most of the gap between this path's timing and the unknown-token path's own sleep(1).
+	 *
+	 * Deliberately per-TOKEN only, not also per-IP: this install's actual deployment topologies
+	 * (reverse proxies, hosting LBs) make a caller's IP unreliable to trust (see checkip()'s own
+	 * history), so a per-IP limit would be both unreliable and trivially rotated around. Throttling
+	 * the one resource actually being attacked - this share's password - closes the real risk
+	 * without depending on IP attribution at all.
+	 *
+	 * @param array $share
+	 * @param ?string $password default $_SERVER['PHP_AUTH_PW']
+	 * @return boolean Password OK (or not needed)
+	 */
+	protected static function checkPasswordThrottled(array $share, $password=null)
+	{
+		if (empty($share['share_passwd']))
+		{
+			return static::check_password($share, $password);
+		}
+		$key = self::FAILED_PASSWORD_CACHE_PREFIX.$share['share_token'];
+		$failures = (int)Cache::getInstance(__CLASS__, $key);
+
+		if ($failures >= self::MAX_FAILED_PASSWORDS)
+		{
+			sleep(1);
+			return false;
+		}
+		sleep(min($failures+1, 5));
+
+		if (static::check_password($share, $password))
+		{
+			Cache::unsetInstance(__CLASS__, $key);
+			return true;
+		}
+		Cache::setInstance(__CLASS__, $key, $failures+1, self::PASSWORD_LOCKOUT_TIME);
+		if ($failures+1 >= self::MAX_FAILED_PASSWORDS)
+		{
+			error_log(__METHOD__."() share token '{$share['share_token']}' locked out for ".
+				self::PASSWORD_LOCKOUT_TIME." seconds after ".($failures+1)." failed password attempts");
+		}
+		return false;
 	}
 
 	/**
