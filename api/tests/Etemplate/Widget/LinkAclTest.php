@@ -488,6 +488,34 @@ class LinkAclTest extends LoggedInTest
 	}
 
 	/**
+	 * Hardening follow-up from the GHSA-5m64-v9gc-fqv3 report: a non-scalar to_id has no real
+	 * access decision to make, so it must be rejected outright rather than silently skipping the
+	 * check - otherwise a future change to Api\Link::get_links()/title() that stops failing closed
+	 * on that shape by itself would silently reopen the disclosure.
+	 */
+	public function testAjaxLinkListDeniedWithArrayToId()
+	{
+		$id1 = $this->makeInfolog();
+		$id2 = $this->makeInfolog();
+		$this->makeLink($id1, $id2);
+
+		$this->makeUser();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		try
+		{
+			Link::ajax_link_list(['to_app' => 'infolog', 'to_id' => [$id1, $id2]]);
+			$this->fail('ajax_link_list() should have thrown Api\Exception\NoPermission for a non-scalar to_id');
+		}
+		catch (Api\Exception\NoPermission $e)
+		{
+			// expected
+		}
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	/**
 	 * Regression test for GHSA-5m64-v9gc-fqv3: ajax_link_existing() used to perform NO access
 	 * check on the target entry before attaching/symlinking into it.
 	 */
