@@ -57,36 +57,49 @@ class XeroxScan
 		if ($base_path === '') $base_path = '/';
 		$operation = $_POST['theOperation'] ?? '';
 
-		try
+		// Vfs::concat() normalizes "/../" segments but does NOT confine the result to $base_path -
+		// a destDir/destName with enough ".." segments resolves outside it entirely. None of the
+		// operations below have a legitimate reason to need one, so reject hard before touching the
+		// VFS at all, rather than trying to detect the escape after normalization.
+		if (strpos($base_path, '..') !== false ||
+			strpos($_POST['destDir'] ?? '', '..') !== false ||
+			strpos($_POST['destName'] ?? '', '..') !== false)
 		{
-			switch ($operation)
-			{
-				case 'ListDir':
-					$status = $this->listDir($base_path);
-					break;
-				case 'MakeDir':
-					$status = $this->makeDir($base_path);
-					break;
-				case 'PutFile':
-					$status = $this->putFile($base_path);
-					break;
-				case 'GetFile':
-					$status = $this->getFile($base_path);
-					break;
-				case 'DeleteFile':
-					$status = $this->deleteFile($base_path);
-					break;
-				case 'RemoveDir':
-					$status = $this->removeDir($base_path);
-					break;
-				default:
-					$status = '400 Bad Request';
-			}
+			$status = '400 Bad Request';
 		}
-		catch (\Throwable $e)
+		else
 		{
-			error_log(__METHOD__.'() '.$e->getMessage());
-			$status = '500 Internal Server Error';
+			try
+			{
+				switch ($operation)
+				{
+					case 'ListDir':
+						$status = $this->listDir($base_path);
+						break;
+					case 'MakeDir':
+						$status = $this->makeDir($base_path);
+						break;
+					case 'PutFile':
+						$status = $this->putFile($base_path);
+						break;
+					case 'GetFile':
+						$status = $this->getFile($base_path);
+						break;
+					case 'DeleteFile':
+						$status = $this->deleteFile($base_path);
+						break;
+					case 'RemoveDir':
+						$status = $this->removeDir($base_path);
+						break;
+					default:
+						$status = '400 Bad Request';
+				}
+			}
+			catch (\Throwable $e)
+			{
+				error_log(__METHOD__.'() '.$e->getMessage());
+				$status = '500 Internal Server Error';
+			}
 		}
 
 		http_response_code((int)$status);
@@ -178,6 +191,14 @@ class XeroxScan
 			return '403 Forbidden';	// can not overwrite a directory with a file
 		}
 		if (Vfs::file_exists($target) && !Vfs::is_writable($target))
+		{
+			return '403 Forbidden';
+		}
+		// same guard the other VFS write paths (StreamWrapper::stream_open/rename,
+		// Widget\Vfs::ajax_vfsSelect_storeFile) already use - a no-op on backends that never map a
+		// path onto something a webserver could execute (Sqlfs, S3, ...), real protection only where
+		// $target resolves onto the Filesystem backend's "exec" mount option
+		if (Vfs::deny_script($target))
 		{
 			return '403 Forbidden';
 		}
