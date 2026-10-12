@@ -282,6 +282,13 @@ trait RestClientTrait
 		}
 		$host = parse_url($url, PHP_URL_HOST) ?? $url;
 
+		// parse_url() keeps a URL's bracketed IPv6 literal ("[::1]") as-is - filter_var() only
+		// recognizes the bare form ("::1"), so without stripping the brackets here, EVERY IPv6
+		// literal (not just loopback/private ones) would silently miss the IP check below and fall
+		// through to the dns_get_record() branch, where a literal address resolves nothing and
+		// passes unchecked while curl still connects to it directly
+		$host = trim($host, '[]');
+
 		// check if host is already an IP address
 		if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4|FILTER_FLAG_IPV6))
 		{
@@ -290,6 +297,17 @@ trait RestClientTrait
 			{
 				throw new \InvalidArgumentException("Host '{$host}' is a private or reserved IP address!");
 			}
+		}
+		// curl (via the system resolver's inet_aton-style numeric-host parsing) also accepts
+		// decimal ("2130706433"), hex ("0x7f000001"), octal ("0177.0.0.1") and "short" dotted
+		// (fewer than 4 parts, eg. "127.1") IPv4 encodings - none of which filter_var() recognizes
+		// as an IP, so they'd otherwise fall through to the dns_get_record() branch below, find no
+		// records, and pass unchecked while curl still resolves and connects to the address they
+		// encode. No legitimate hostname is ever written this way, so reject the whole class
+		// outright rather than replicating that parsing here.
+		elseif (preg_match('/^(0x[0-9a-f]+|0[0-9]+|[0-9]+)(\.(0x[0-9a-f]+|0[0-9]+|[0-9]+)){0,3}\.?$/i', $host))
+		{
+			throw new \InvalidArgumentException("Host '{$host}' uses a non-standard IP notation, which is not allowed!");
 		}
 		// if not try to resolve it
 		else
