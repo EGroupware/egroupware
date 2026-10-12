@@ -65,4 +65,55 @@ describe('MailApp.preparePrint()', () =>
 		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
 		assert.equal(tempPrintDiv.style.display, 'none');
 	});
+
+	/**
+	 * Ticket live report 2026-10-12 (ralf, following up on Stefan Unverricht's ctrl+P report):
+	 * mailDisplayBodySrc only exists in the mail.display popup - mail.index's OWN embedded preview
+	 * pane (where preparePrint() is ALSO called, on the SAME 'load' event, see app.ts's own
+	 * 'mail.index' case) uses a DIFFERENTLY-named widget, messageIFRAME. Without a fallback,
+	 * getWidgetById('mailDisplayBodySrc') returns undefined there, mainIframe stays undefined, and
+	 * tempPrintDiv gets created/shown but never populated - a blank printed page, not an error.
+	 */
+	it('falls back to messageIFRAME (mail.index\'s own preview pane) when mailDisplayBodySrc is absent', async() =>
+	{
+		const fakeBody = {innerHTML : '<p>the real message body</p>', addEventListener : () => {}};
+		app = Object.create(MailAppClass.prototype);
+		Object.assign(app, {
+			appname : 'mail',
+			et2 : {
+				getWidgetById : (id : string) => id === 'messageIFRAME' ?
+					{iframe : {contentDocument : {body : fakeBody}}} : undefined,
+			},
+		});
+
+		(app as any).preparePrint();
+		await new Promise((resolve) => setTimeout(resolve, 700));
+
+		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
+		assert.equal(tempPrintDiv.innerHTML, fakeBody.innerHTML);
+	}).timeout(2000);
+
+	it('still prefers mailDisplayBodySrc over messageIFRAME when both are somehow present', async() =>
+	{
+		const displayBody = {innerHTML : '<p>mail.display\'s own body</p>', addEventListener : () => {}};
+		const previewBody = {innerHTML : '<p>preview pane body - must NOT be used</p>', addEventListener : () => {}};
+		app = Object.create(MailAppClass.prototype);
+		Object.assign(app, {
+			appname : 'mail',
+			et2 : {
+				getWidgetById : (id : string) =>
+				{
+					if (id === 'mailDisplayBodySrc') return {iframe : {contentDocument : {body : displayBody}}};
+					if (id === 'messageIFRAME') return {iframe : {contentDocument : {body : previewBody}}};
+					return undefined;
+				},
+			},
+		});
+
+		(app as any).preparePrint();
+		await new Promise((resolve) => setTimeout(resolve, 700));
+
+		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
+		assert.equal(tempPrintDiv.innerHTML, displayBody.innerHTML);
+	}).timeout(2000);
 });
