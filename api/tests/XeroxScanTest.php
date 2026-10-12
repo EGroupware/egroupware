@@ -260,6 +260,26 @@ class XeroxScanTest extends WebDAVTest
 		$this->assertSame('lock info', (string)$response->getBody());
 	}
 
+	public function testListDirRejectsDestDirTraversal() : void
+	{
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'ListDir'],
+			['name' => 'destDir', 'contents' => '../../'],
+		]);
+		$this->assertHttpStatus(400, $response);
+	}
+
+	public function testPutFileRejectsDestNameTraversal() : void
+	{
+		$response = $this->xeroxPost([
+			['name' => 'theOperation', 'contents' => 'PutFile'],
+			['name' => 'destDir', 'contents' => ''],
+			['name' => 'destName', 'contents' => '../../somewhere/escape.pdf'],
+			['name' => 'sendfile', 'contents' => 'should not be written'],
+		]);
+		$this->assertHttpStatus(400, $response);
+	}
+
 	/**
 	 * The whole point of this session's work: a failed/odd request must be self-explanatory in the
 	 * shared "WebDAV logging" log, without needing another live round-trip to diagnose.
