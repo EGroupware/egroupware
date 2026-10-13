@@ -117,6 +117,7 @@ schedule	common	de	Zeitplan
 schedule import / export	common	de	Zeitplan für Import/Export
 schedule not found	importexport	de	Kein Zeitplan gefunden
 schedule times are server time!  currently %s.	importexport	de	Zeitgesteuerter Import bezieht sich auf die Serverzeit. Aktuell %s.
+scheduling an ical import from a url is no longer supported. please use a subscribed calendar (calendar sidebar: subscribed calendar) instead: it updates existing events by their uid and skips unchanged calendars.	importexport	de	Das zeitgesteuerte Importieren einer iCal-URL wird nicht mehr unterstützt. Bitte stattdessen einen abonnierten Kalender verwenden (Kalender-Seitenleiste: Abonnierter Kalender): dieser aktualisiert vorhandene Termine anhand ihrer UID und überspringt unveränderte Kalender.
 select definition	importexport	de	Definition auswählen
 select groups	importexport	de	Wähle Gruppen
 select owner	importexport	de	Eigentümer auswählen
