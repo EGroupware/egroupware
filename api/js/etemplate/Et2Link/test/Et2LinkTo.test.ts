@@ -52,6 +52,27 @@ describe("Link to widget", () =>
 	{
 		assert.instanceOf(element, Et2LinkTo);
 	});
+
+	// The clipboard can be filled after the dialog was opened (other tab, context menu of a link),
+	// so the button must not depend on what was in it when the widget rendered
+	it('offers the clipboard button of a stored entry even while the clipboard is empty', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: "25412"};
+		await elementUpdated(element);
+
+		const paste = element.shadowRoot.querySelector("#paste");
+		assert.isOk(paste, "No clipboard button");
+		assert.isFalse(paste.hasAttribute("disabled"), "Clipboard button is disabled");
+	});
+
+	// Pasting is only implemented for stored entries, a new one would keep broken links on save
+	it('disables the clipboard button of an entry not yet stored', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: {}};
+		await elementUpdated(element);
+
+		assert.isTrue(element.shadowRoot.querySelector("#paste").hasAttribute("disabled"));
+	});
 });
 
 // value is a plain string | LinkInfo, unmodified by any getter/setter override - a plain string
