@@ -122,20 +122,10 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		// otherwise it only gives an error on server-side
 		let method = null;
 		let method_id = null;
-		let pasteEnabled = false;
-		let pasteTooltip = ""
 		if(this.value && this.value.to_id && typeof this.value.to_id != 'object')
 		{
 			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			method_id = this.value.to_app + ':' + this.value.to_id;
-
-			getClipboardFiles().then((files) =>
-			{
-				if(files.length > 0 && !this.disabled && !this.readonly)
-				{
-					this.pasteButton.removeAttribute("disabled");
-				}
-			});
 		}
 
 		return html`
@@ -176,7 +166,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     image="clipboard-data" noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}
                     ?readonly=${this.readonly}
-                    disabled
+                    ?disabled=${this.disabled || !method_id}
                     multiple
                     @click=${async(e) =>
                             {
