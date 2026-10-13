@@ -506,6 +506,16 @@ export class Et2LinkList extends Et2LinkString
 			this._createMailContextMenu();
 		}
 		this.context.addItem("-", "-", null, null, null);
+		// Same clipboard the list context menus fill, so a linked entry can be pasted elsewhere
+		this.context.addItem("egw_copy", this.egw().lang("Copy to clipboard"), this.egw().image('copy'), () =>
+		{
+			this._copyToClipboard(this.context.data, false);
+		}, null);
+		this.context.addItem("egw_copy_add", this.egw().lang("Add to clipboard"), this.egw().image('copy'), () =>
+		{
+			this._copyToClipboard(this.context.data, true);
+		}, null);
+		this.context.addItem("-", "-", null, null, null);
 		this.context.addItem("delete", this.egw().lang("Delete link"), this.egw().image("delete"), () =>
 		{
 			Et2Dialog.show_dialog(
@@ -567,6 +577,90 @@ export class Et2LinkList extends Et2LinkString
 		});
 	}
 
+	/**
+	 * Clipboard entry for a link, in the format the list context menus store (egw_clipboard)
+	 *
+	 * @param link_data
+	 * @return {type: string[], id: string, data: object}|null null if the link can not be copied (eg. a file not yet stored)
+	 */
+	protected _clipboardEntry(link_data) : { type : string[], id : string, data : any } | null
+	{
+		if(!link_data || !link_data.app || typeof link_data.id != "string" || link_data.id === "")
+		{
+			return null;
+		}
+		if(link_data.app == "file")
+		{
+			// Attached files are copied as their VFS path, like a file from the filemanager
+			const app = link_data.app2 || this.application;
+			const id = link_data.id2 || this.entryId;
+			if(!app || !id || typeof id != "string" && typeof id != "number")
+			{
+				return null;
+			}
+			// The id is the file name as the VFS path component ('%', '#' and '?' encoded), the
+			// path only resolves with it as is. A '/' or a dot segment would point elsewhere.
+			if(link_data.id.includes("/") || link_data.id === "." || link_data.id === "..")
+			{
+				return null;
+			}
+			const path = "/apps/" + app + "/" + id + "/" + link_data.id;
+			let name = link_data.id;
+			try
+			{
+				name = decodeURIComponent(link_data.id);
+			}
+			catch(e)
+			{
+				// not encoded by the VFS (other backend), show it as is
+			}
+			return {
+				type: ["file", "link"],
+				id: "filemanager::" + path,
+				data: {name: name, path: path, mime: link_data.type, download_url: link_data.download_url}
+			};
+		}
+		return {
+			type: ["link"],
+			id: link_data.app + "::" + link_data.id,
+			data: {title: link_data.title}
+		};
+	}
+
+	/**
+	 * Put a link into the EGroupware clipboard
+	 *
+	 * @param link_data
+	 * @param add true: add to what is already in the clipboard, false: replace it
+	 * @return boolean false if the link can not be copied
+	 */
+	protected _copyToClipboard(link_data, add : boolean) : boolean
+	{
+		const entry = this._clipboardEntry(link_data);
+		if(!entry)
+		{
+			return false;
+		}
+		let clipboard = {type: [], selected: []};
+		if(add)
+		{
+			try
+			{
+				clipboard = JSON.parse(this.egw().getSessionItem('phpgwapi', 'egw_clipboard')) || clipboard;
+			}
+			catch(e)
+			{
+				// nothing usable in the clipboard, start a new one
+			}
+		}
+		clipboard.type = [...new Set([...(clipboard.type || []), ...entry.type])].sort();
+		clipboard.selected = (clipboard.selected || []).filter(s => s.id !== entry.id);
+		clipboard.selected.push({id: entry.id, data: entry.data});
+
+		this.egw().setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
+		return true;
+	}
+
 	protected _handleRowContext(_ev)
 	{
 		// Do not trigger expose view if one of the operator keys are held
@@ -591,6 +685,9 @@ export class Et2LinkList extends Et2LinkString
 		this.context.getItem("mail").set_enabled(typeof _link_data.id != 'object' && _link_data.app == 'file');
 		// Zip download only offered if there are at least 2 files
 		this.context.getItem("zip").set_enabled(this._link_list.length >= 2);
+		const can_copy = this._clipboardEntry(_link_data) !== null;
+		this.context.getItem("egw_copy").set_enabled(can_copy);
+		this.context.getItem("egw_copy_add").set_enabled(can_copy);
 		// Show delete item only if the widget is not readonly
 		this.context.getItem("delete").set_enabled(!this.readonly);
 		this.context.getItem("delete").caption = _link_data.app === "file" ? this.egw().lang("Delete file") : this.egw().lang("Delete link");
