@@ -227,6 +227,24 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
+	 * Close the right side and remove what a previously shown page put there
+	 *
+	 * Pages loaded into admin (eg. tracker escalations) may move their detail form into the right
+	 * slot of the egw-app, which is not removed when the page itself is replaced.
+	 */
+	private _clearRight()
+	{
+		// this.et2 is a widget here, and may be gone after a page was cleared
+		const frameworkApp = (this.et2?.closest?.("egw-app") ?? document.querySelector("egw-app[name=admin]")) as any;
+		if(!frameworkApp)
+		{
+			return;
+		}
+		frameworkApp.querySelectorAll(":scope > [slot=right]").forEach((node : HTMLElement) => node.remove());
+		frameworkApp.hideRight?.();
+	}
+
+	/**
 	 * Show given url in (visible) iframe or nextmatch with accounts (!_url)
 	 *
 	 * @param {string} [_url=] url to show in iframe or nothing for showing
@@ -251,6 +269,7 @@ export class AdminApp extends EgwApp
 		{
 			(<EgwFrameworkApp>this.et2.closest("egw-app"))?.hideLeft();
 		}
+		this._clearRight();
 		let ajax : any = false;
 		if (_url)
 		{
