@@ -41,12 +41,12 @@
 	<et2-template  id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" id="participants">
 			<columns>
-				<column width="85"/>
+				<column width="6em"/>
 				<column/>
-				<column width="88"/>
-				<column width="70"/>
-				<column width="100"/>
-				<column width="80"/>
+				<column width="6em"/>
+				<column width="9em"/>
+				<column width="10em"/>
+				<column width="8em"/>
 			</columns>
 			<rows>
 				<row disabled="@no_add" height="60" class="et2_toolbar">
