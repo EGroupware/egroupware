@@ -720,7 +720,9 @@ class User implements UserModule
 	 */
 	set_prompts = (_prompts : any[]) : void =>
 	{
-		this.#prompts = _prompts;
+		// api/user.php calls this from every page, popups included, and popups share the opener's egw:
+		// keeping the popup's own array here would keep the whole closed popup alive
+		this.#prompts = structuredClone(_prompts);
 	}
 
 	/**

@@ -378,6 +378,21 @@ describe('egw_user.js (user)', () =>
 			assert.deepEqual(c.children.map((ch : any) => ch.id), ['c1']);
 		});
 
+		it('keeps its own copy, so a popup that called set_prompts() cannot be retained by the shared egw', () =>
+		{
+			// Popups share the opener's egw and run api/user.php, which calls set_prompts() with an array of
+			// the popup's own realm. Holding that array would keep the whole closed popup in memory.
+			const given = [{id: 'a', label: 'A', children: [{id: 'a1', label: 'A1'}]}];
+			env.egw().set_prompts(given);
+
+			given[0].label = 'changed';
+			given[0].children.push({id: 'a2', label: 'A2'});
+
+			const stored = env.egw().prompts('mail');
+			assert.equal(stored[0].label, 'A');
+			assert.deepEqual(stored[0].children.map((c : any) => c.id), ['a1']);
+		});
+
 		it('returns an empty list before set_prompts() has been called', () =>
 		{
 			assert.deepEqual(env.egw().prompts('anyapp'), []);
