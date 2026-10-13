@@ -25,6 +25,38 @@ function replace(string, terms)
 	return string;
 }
 
+/**
+ * Widgets an app documents itself: `<app>/js/<Widget>/<Widget>.ts` that registers a custom element.
+ *
+ * Only a sub-directory named like its main file is considered, so the rest of an app's js/ (app.ts, et2_widget_*,
+ * helpers, tests) is never analysed. Its <Widget>.md is read from beside it, as for the api widgets.
+ * Apps that are not checked out are simply not found.
+ *
+ * @returns {string[]} paths relative to the repository root
+ */
+function appWidgetFiles()
+{
+	const root = path.resolve('.');
+	const found = [];
+	for (const app of fs.readdirSync(root, {withFileTypes: true}))
+	{
+		const jsDir = path.join(root, app.name, 'js');
+		if (!app.isDirectory() || app.name === 'api' || !fs.existsSync(jsDir))
+		{
+			continue;
+		}
+		for (const dir of fs.readdirSync(jsDir, {withFileTypes: true}))
+		{
+			const file = path.join(jsDir, dir.name, dir.name + '.ts');
+			if (dir.isDirectory() && fs.existsSync(file) && /@customElement\(/.test(fs.readFileSync(file, 'utf8')))
+			{
+				found.push(path.relative(root, file));
+			}
+		}
+	}
+	return found;
+}
+
 export default {
 	// The base glob only matches files whose basename starts with "Et2" - several real mixins
 	// don't (SearchMixin.ts x2, SelectAccountMixin.ts, RowLimitedMixin.ts, ExposeMixin.ts), so they
@@ -47,7 +79,9 @@ export default {
 		// missing the attributes that make a button do anything.
 		"api/js/etemplate/Et2Button/ButtonMixin.ts",
 		"api/js/etemplate/Layout/RowLimitedMixin.ts",
-		"api/js/etemplate/Expose/ExposeMixin.ts"
+		"api/js/etemplate/Expose/ExposeMixin.ts",
+		// Widgets an app supplies itself, found automatically (see appWidgetFiles()).
+		...appWidgetFiles()
 	],
 	/** Globs to exclude */
 	exclude: ["api/js/etemplate/**/test/*","api/js/etemplate/**/Et2*Readonly.ts","api/js/etemplate/**/Et2*Mobile.ts"],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
@@ -83,6 +117,12 @@ export default {
 				{
 					return;
 				}
+				// not api: those are the core widgets
+				const appDir = /^([^/]+)\/js\//.exec(moduleDoc.path || '')?.[1];
+				if (appDir && appDir !== 'api')
+				{
+					classDoc.app = appDir;
+				}
 				node.jsDoc?.forEach(jsDoc =>
 				{
 					jsDoc?.tags?.forEach(tag =>
@@ -90,6 +130,38 @@ export default {
 						if (tag.tagName.getText() === 'category')
 						{
 							classDoc.category = tag.comment?.toString().trim();
+						}
+					});
+				});
+			}
+		},
+
+		// `@app <name>` marks a widget that an app supplies rather than api, eg. `@app SmallParT` (the app's display
+		// name). The widget only exists where that app's JavaScript is loaded, so its page shows the name as a badge
+		// under the title and says so (_includes/component.njk). Like
+		// `@category` it is a single value on the class's docblock. A widget living in `<app>/js/` without the tag
+		// falls back to the app's directory name (`smallpart`), so it is still badged; the tag only sets a nicer name.
+		{
+			name: 'egroupware-app-tag',
+			analyzePhase({ts, node, moduleDoc})
+			{
+				if (node.kind !== ts.SyntaxKind.ClassDeclaration || !node.name)
+				{
+					return;
+				}
+				const className = node.name.getText();
+				const classDoc = moduleDoc?.declarations?.find(declaration => declaration.name === className);
+				if (!classDoc)
+				{
+					return;
+				}
+				node.jsDoc?.forEach(jsDoc =>
+				{
+					jsDoc?.tags?.forEach(tag =>
+					{
+						if (tag.tagName.getText() === 'app')
+						{
+							classDoc.app = tag.comment?.toString().trim();
 						}
 					});
 				});

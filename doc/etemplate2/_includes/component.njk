@@ -44,6 +44,13 @@
       <code>&lt;{{ component.tagName }}&gt; | {{ component.name }}</code>
     </div>
 
+    {# A widget an app supplies (`@app <name>` on the class): say whose it is right under the tag name #}
+    {% if component.app %}
+    <div class="component-header__info">
+      <sl-badge variant="primary" pill>{{ component.app }}</sl-badge>
+    </div>
+    {% endif %}
+
     {# See the badge-variant block above for why these are commented out. #}
     {#
     <div class="component-header__info">
@@ -56,6 +63,14 @@
     </div>
     #}
   </header>
+
+  {# A widget an app supplies (`@app <name>` on the class) only exists where that app's JavaScript is loaded #}
+  {% if component.app %}
+  <div class="callout callout--tip">
+    <p>Provided by the <strong>{{ component.app }}</strong> app. It is only available in that app's templates, where
+      the app's JavaScript registers it, and cannot be used from other apps.</p>
+  </div>
+  {% endif %}
 
   <p class="component-summary">
     {% if component.summary %}

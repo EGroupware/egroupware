@@ -782,6 +782,8 @@ module.exports = async function (eleventyConfig)
 	// source cem.cjs consumes); the previous second run into _data was never read.
 	//
 	eleventyConfig.addWatchTarget("../../api/js/etemplate/**/*.{ts,md}");
+	// widgets an app documents itself, see appWidgetFiles() in custom-elements-manifest.config.mjs
+	eleventyConfig.addWatchTarget("../../*/js/*/*.{ts,md}");
 	eleventyConfig.addWatchTarget("../../api/js/build-manifest.json");
 
 	eleventyConfig.on('eleventy.beforeWatch', (queue) =>
