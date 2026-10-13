@@ -364,6 +364,10 @@ export interface JmapGetRowsQuery
 	// Phase 1). No caller sets this yet - see ProfileHandler::THREADING_ENABLED's docblock - and
 	// getRows() ignores it unless the profile's token also reports supportsThreading.
 	threaded? : boolean;
+	// truthy: "Unseen first" toggle (MailApp.toggleUnseenFirst(), index.xet's "unseenFirst" button) -
+	// not-yet-seen messages first (newest first), then seen messages (newest first), instead of one
+	// flat date order. buildSort() prepends a "hasKeyword"/"$seen" Comparator when this is set.
+	unseenFirst? : boolean;
 }
 
 type EmailFilterCondition = Record<string, any>;
@@ -2103,6 +2107,8 @@ export class MailJmap
 			// as the same '1'/'' string convention as filter2 (MailApp.toggleThreaded()), coerced
 			// to a real boolean here since JmapGetRowsQuery declares it as one
 			threaded: !!_filters.threaded,
+			// same '1'/'' string convention as filter2/threaded (MailApp.toggleUnseenFirst())
+			unseenFirst: !!_filters.unseenFirst,
 		};
 		// sort is only split into order/sort strings server-side (Nextmatch.php), still a
 		// {id, asc} object at this point - same normalisation buildSort() expects as input
@@ -5853,8 +5859,18 @@ export class MailJmap
 	/**
 	 * Map a JMAP Comparator property from $query.order (same values header2gridelements()'s
 	 * $cols columns use).
+	 *
+	 * "Unseen first" (MailApp.toggleUnseenFirst(), feature request 2026-10-13: ralf, "first are
+	 * the not seen messages sorted by date, and then the seen messages sorted by date") prepends a
+	 * "hasKeyword"/"$seen" Comparator ahead of the regular one - RFC 8621 §4.4.2's own sort
+	 * property for "does this message have keyword X", confirmed live against Stalwart to return
+	 * exactly the two-bucket order wanted from a single Email/query call (isAscending: true sorts
+	 * `false` - not-seen - before `true`, matching a plain ascending boolean sort). The shim
+	 * backend (Api\Mail\Jmap\Imap::emailQuery()) has no single-call IMAP equivalent (RFC 5256's
+	 * SORT extension has no flag-based criterion at all) and runs two separate searches instead -
+	 * see its own extractHasKeywordSort()/searchHasKeywordBucketed() docblocks.
 	 */
-	private buildSort(query : JmapGetRowsQuery) : { property : string, isAscending : boolean }[]
+	private buildSort(query : JmapGetRowsQuery) : { property : string, isAscending : boolean, keyword? : string }[]
 	{
 		const isAscending = (query.sort || 'DESC').toUpperCase() !== 'DESC';
 		let property : string;
@@ -5883,7 +5899,8 @@ export class MailJmap
 				property = 'sentAt';
 				break;
 		}
-		return [{property, isAscending}];
+		const sort = [{property, isAscending}];
+		return query.unseenFirst ? [{property : 'hasKeyword', keyword : '$seen', isAscending : true}, ...sort] : sort;
 	}
 
 	/**

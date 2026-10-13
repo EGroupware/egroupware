@@ -439,6 +439,23 @@ export class MailApp extends EgwApp
 
 				this.wireLabelFlagDropdowns(this.et2.getWidgetById('toolbar'));
 
+				// Restore the remembered "Unseen first" toggle state - unlike 'filter2'/'threaded',
+				// nextmatch itself persists nothing for an arbitrary custom filter key like this one
+				// (confirmed live: it resets on every reload without this) - only its OWN sort state
+				// gets an explicit egw.set_preference() call (Et2Nextmatch.ts). toggleUnseenFirst()
+				// is the matching write side. applyFilters() re-fetches once here if this flips the
+				// toggle on - a single harmless extra request, the alternative (seeding it into
+				// whatever provides nextmatch's very first filter values before this point) would
+				// need a server-side change for one client-side-only preference.
+				// String(...) first: egw.preference() auto-casts a purely-numeric stored value like
+				// '1' to the real JS number 1, not the string '1' - same gotcha as ActiveProfileID
+				// elsewhere in this file (confirmed live: a bare === '1' here silently never matched).
+				if (nm && String(this.egw.preference('unseenFirstToggle', 'mail')) === '1')
+				{
+					(nm as unknown as { applyFilters : (f : Record<string, any>) => void }).applyFilters({unseenFirst : '1'});
+				}
+				this.sizeUnseenFirstToggleIcons();
+
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
 				// see rememberUsedFolder()/updateFolderQuickAction().
 				this.updateFolderQuickAction('move');
@@ -10325,6 +10342,61 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * "Unseen first" toggle (id="unseenFirst" in index.xet) - feature request 2026-10-13 (ralf):
+	 * "first are the not seen messages sorted by date, and then the seen messages sorted by date".
+	 * Same mechanism as toggleDetails()/toggleThreaded() above - an independent nextmatch filter
+	 * key. MailJmap.buildSort() (mail/js/jmap.ts) reads `query.unseenFirst` and prepends a
+	 * "hasKeyword"/"$seen" Comparator when set.
+	 *
+	 * Persisted as an implicit (not user-facing in Preferences) 'unseenFirstToggle' preference -
+	 * restored by the 'mail.index' et2_ready case above. Nextmatch itself has no free persistence
+	 * for an arbitrary custom filter key like this one (only its own sort state gets that), unlike
+	 * what 'filter2'/'threaded' might suggest at a glance.
+	 */
+	toggleUnseenFirst(_ev, _widget)
+	{
+		this.nm && this.nm.applyFilters({unseenFirst: _widget.value ? '1' : ''});
+		this.egw.set_preference('mail', 'unseenFirstToggle', _widget.value ? '1' : '');
+		this.sizeUnseenFirstToggleIcons();
+	}
+
+	/**
+	 * Cosmetic sizing for the "unseenFirst" toggle's two icons (ralf, 2026-10-13 follow-up):
+	 * the plain "circle-fill"/"circle" icons default to a font-size inherited from the toolbar
+	 * context (21px live, itself already font-size-preference-relative, NOT a fixed value set by
+	 * Et2SwitchIcon.styles.ts/Et2ButtonToggle.styles.ts - neither actually declares `--width` here)
+	 * - a little large, and the "circle" (outline) glyph's thin stroke nearly disappears under
+	 * anti-aliasing at that weight. Shrinks both icons to 0.75em (relative to that SAME inherited
+	 * font-size, not a fixed px value - confirmed live the row's own unseen-dot, rows.less's
+	 * `.status_img`, is `calc(1em + 2px)` of ITS OWN - different - font-size context, so this is an
+	 * approximate visual match, not a literal shared value, deliberately kept relative so it still
+	 * scales if the user picks a different UI font size) and adds a `-webkit-text-stroke` (also in
+	 * em, same reasoning) to reinforce the thin outline glyph - an inherited property, so setting it
+	 * on the host element reaches its own font-icon `::before` content correctly.
+	 *
+	 * Same "reach into the shadow root directly" approach as the (removed) colour-matching
+	 * attempt's own docblock explained at length - mail/templates/default/app.css is never adopted
+	 * into this toolbar's shadow context at all (confirmed live), and must be re-applied after
+	 * every `.value` change since Et2ButtonToggle's own Lit re-render replaces these exact nodes.
+	 */
+	private sizeUnseenFirstToggleIcons() : void
+	{
+		const toggle = this.et2?.getWidgetById('unseenFirst') as unknown as (HTMLElement & { updateComplete? : Promise<unknown> });
+		if (!toggle) return;
+		const apply = () =>
+		{
+			const onImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.on');
+			const offImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.off');
+			onImage?.style.setProperty('font-size', '0.75em', 'important');
+			offImage?.style.setProperty('font-size', '0.75em', 'important');
+			offImage?.style.setProperty('-webkit-text-stroke-width', '0.05em', 'important');
+			offImage?.style.setProperty('-webkit-text-stroke-color', 'currentColor', 'important');
+		};
+		apply();
+		(toggle.updateComplete ?? Promise.resolve()).then(apply);
+	}
+
+	/**
 	 * Show/hide the "group by thread" toggle (id="threaded" in index.xet) for the given profile -
 	 * hidden by default (see the widget's own `style="display:none"`), only ever revealed once a
 	 * profile's JMAP bootstrap actually reports supportsThreading:true (nothing does yet, see
@@ -10365,11 +10437,42 @@ export class MailApp extends EgwApp
 	getFilterInfo(filterValues : { [id : string] : any }, fwApp : EgwFrameworkApp) : FilterInfo
 	{
 		const values = {...(filterValues ?? {})};
-		for(const key of ['selectedFolder', 'cat_id', 'filter2', 'threaded'])
+		for(const key of ['selectedFolder', 'cat_id', 'filter2', 'threaded', 'unseenFirst'])
 		{
 			delete values[key];
 		}
 		return fwApp.filterInfo(values);
+	}
+
+	/**
+	 * Overwritten to also sync the "unseenFirst" toggle - the base class's own nmFilterChange()
+	 * (api/js/jsapi/egw_app.ts) only ever calls checkNmFilterChanged() for a hardcoded list of
+	 * attribute names ('col_filter', 'filter', 'filter2', 'cat_id', 'search') found in whatever
+	 * changed - an arbitrary custom filter key like 'unseenFirst' (or 'threaded', which has this
+	 * same gap) is simply never passed to checkNmFilterChanged() at all by that base method,
+	 * however many times its OWN override (just below) correctly handles the id once it arrives.
+	 * Confirmed live: calling nm.applyFilters({unseenFirst: '1'}) DID correctly update
+	 * nm.activeFilters (the sort/filter logic worked), but the toolbar toggle's own `.value`
+	 * silently never followed, for exactly this reason, both on a normal toggle click and on the
+	 * preference-restore call in 'mail.index' et2_ready above.
+	 *
+	 * @param _ev
+	 */
+	nmFilterChange(_ev : Event)
+	{
+		super.nmFilterChange(_ev);
+
+		const activeFilters : any = (_ev as any).detail?.activeFilters;
+		if (!activeFilters || !('unseenFirst' in activeFilters)) return;
+		let app_toolbar : any = this.et2.closest('egw-app')?.querySelector('[slot="main-header"]:not([disabled])');
+		if (app_toolbar && app_toolbar.localName !== 'et2-template')
+		{
+			app_toolbar = app_toolbar?.querySelector('et2-template');
+		}
+		if (app_toolbar)
+		{
+			this.checkNmFilterChanged(app_toolbar, 'unseenFirst', activeFilters.unseenFirst ?? '');
+		}
 	}
 
 	/**
@@ -10400,6 +10503,15 @@ export class MailApp extends EgwApp
 			if (threaded_toggle && threaded_toggle.value != (value === '1')) {
 				threaded_toggle.value = value === '1';
 			}
+		}
+		// "Unseen first" toggle (toggleUnseenFirst()) - mirrors the details/threaded toggle sync
+		if (id === 'unseenFirst')
+		{
+			const unseen_first_toggle = this.et2.getWidgetById('unseenFirst');
+			if (unseen_first_toggle && unseen_first_toggle.value != (value === '1')) {
+				unseen_first_toggle.value = value === '1';
+			}
+			this.sizeUnseenFirstToggleIcons();
 		}
 	}
 

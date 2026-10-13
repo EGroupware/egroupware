@@ -1720,11 +1720,19 @@ class Imap extends Jmap\Base
 		// JMAP never exposes messages with the IMAP \Deleted flag (RFC 8621 §4.1.1) - match that
 		$query->flag(\Horde_Imap_Client::FLAG_DELETED, false);
 
-		$sorted = $imap->search($mailbox, $query, [
-			'sort' => self::buildSort((array)($args['sort'] ?? [])),
-		]);
-		$ids = array_values($sorted['match']->ids ?? []);
-		$total = (int)($sorted['count'] ?? count($ids));
+		$sortSpec = (array)($args['sort'] ?? []);
+		if (($hasKeywordSort = self::extractHasKeywordSort($sortSpec)) !== null)
+		{
+			[$ids, $total] = self::searchHasKeywordBucketed($imap, $mailbox, $query, $hasKeywordSort, $sortSpec);
+		}
+		else
+		{
+			$sorted = $imap->search($mailbox, $query, [
+				'sort' => self::buildSort($sortSpec),
+			]);
+			$ids = array_values($sorted['match']->ids ?? []);
+			$total = (int)($sorted['count'] ?? count($ids));
+		}
 
 		if (!empty($args['collapseThreads']))
 		{
@@ -1916,6 +1924,76 @@ class Imap extends Jmap\Base
 			$sort[] = $map[$criterion['property'] ?? ''] ?? \Horde_Imap_Client::SORT_DATE;
 		}
 		return $sort ?: [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_DATE];
+	}
+
+	/**
+	 * Pull a leading "hasKeyword" Comparator out of a sort spec, if present.
+	 *
+	 * RFC 8621 §4.4.2's "hasKeyword" sort property has no IMAP SORT (RFC 5256) equivalent at all -
+	 * the extension's own criteria are ARRIVAL/CC/DATE/FROM/SIZE/SUBJECT/TO only, nothing flag-
+	 * based - confirmed against Horde_Imap_Client's own SORT_* constants, none of which exist for
+	 * a flag. A real JMAP server (Stalwart) supports "hasKeyword" as a genuine sort key natively
+	 * (confirmed live, ticket/feature request 2026-10-13: ralf, ">first are the not seen messages
+	 * sorted by date, and then the seen messages sorted by date<" - found Stalwart returns exactly
+	 * that two-bucket order for `sort: [{hasKeyword, $seen, asc}, {receivedAt, desc}]` in one
+	 * Email/query call) - this shim backend instead runs searchHasKeywordBucketed()'s own two
+	 * separate IMAP searches, one per flag value, concatenated in the requested bucket order.
+	 *
+	 * Only ever the FIRST comparator in the spec is treated this way (matching real JMAP semantics:
+	 * every later comparator is a tie-breaker WITHIN a bucket, same as searchHasKeywordBucketed()
+	 * passes the remaining spec to buildSort() unchanged) - a "hasKeyword" comparator anywhere
+	 * other than first is nonsensical here (there's no bucketing left to subdivide), so it's simply
+	 * left in place for buildSort() to fall through to its own SORT_DATE default, matching JMAP's
+	 * own permissive "ignore what makes no sense" posture elsewhere in this shim.
+	 *
+	 * @param array $sortSpec {property: string, isAscending: bool, keyword?: string}[]
+	 * @return array{keyword: string, isAscending: bool}|null null if no leading hasKeyword comparator
+	 */
+	private static function extractHasKeywordSort(array $sortSpec) : ?array
+	{
+		if (($sortSpec[0]['property'] ?? null) !== 'hasKeyword')
+		{
+			return null;
+		}
+		return [
+			'keyword' => (string)($sortSpec[0]['keyword'] ?? '$seen'),
+			'isAscending' => !empty($sortSpec[0]['isAscending']),
+		];
+	}
+
+	/**
+	 * Two IMAP searches, one per flag value, concatenated - the only way this shim can answer a
+	 * "hasKeyword" sort (see extractHasKeywordSort()'s own docblock for why no single IMAP SORT
+	 * call can do this). Each bucket is independently sorted by the REMAINING comparators (eg.
+	 * receivedAt), matching real JMAP's own tie-breaker semantics for comparators after the first.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox hordeMailbox()'s own return shape, not a Horde_Imap_Client_Mailbox object
+	 * @param \Horde_Imap_Client_Search_Query $query already has every other filter condition applied
+	 * @param array{keyword: string, isAscending: bool} $hasKeywordSort
+	 * @param array $sortSpec the FULL original sort spec - only its [1:] tail (the tie-breakers) is used
+	 * @return array{0: string[], 1: int} [ids, total] - ids in final bucketed order, total across both buckets
+	 */
+	private static function searchHasKeywordBucketed(\Horde_Imap_Client_Socket $imap, string $mailbox,
+		\Horde_Imap_Client_Search_Query $query, array $hasKeywordSort, array $sortSpec) : array
+	{
+		$flag = self::keywordToFlag($hasKeywordSort['keyword']);
+		$tieBreakerSort = self::buildSort(array_slice($sortSpec, 1));
+		// isAscending (JMAP boolean sort: false sorts before true) -> messages WITHOUT the keyword
+		// (eg. not-\Seen) come first; isAscending false -> WITH the keyword first.
+		$bucketOrder = $hasKeywordSort['isAscending'] ? [false, true] : [true, false];
+
+		$ids = [];
+		$total = 0;
+		foreach ($bucketOrder as $flagSet)
+		{
+			$bucketQuery = clone $query;
+			$bucketQuery->flag($flag, $flagSet);
+			$bucketSorted = $imap->search($mailbox, $bucketQuery, ['sort' => $tieBreakerSort]);
+			$ids = array_merge($ids, array_values($bucketSorted['match']->ids ?? []));
+			$total += (int)($bucketSorted['count'] ?? 0);
+		}
+		return [$ids, $total];
 	}
 
 	/**
