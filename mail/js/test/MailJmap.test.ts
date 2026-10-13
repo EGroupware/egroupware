@@ -1571,6 +1571,72 @@ describe("MailJmap.deferCidImages() - move cid: out of src before the iframe eve
 });
 
 /**
+ * Ticket #126181 (Birgit, relaying a customer): an ERP-generated report email's own `.datagrid
+ * table` CSS (borders, header background colour, zebra-striped rows) rendered as a plain
+ * unstyled table - eMClient showed it correctly. Root cause: DOMPurify.sanitize() unconditionally
+ * strips every `<style>` element no matter what, confirmed live that even `ADD_TAGS: ['style']`
+ * has no effect in a real Chrome - assembleBodyHtml() ran the raw body straight through DOMPurify
+ * with no equivalent of the server-side HtmLawed::getStyles()/BodyDecoding::getStyles() extract-
+ * and-reinject step a genuine JMAP (Stalwart) account's body never otherwise gets at all.
+ * extractStyles() pulls `<style>` blocks out before DOMPurify ever sees them, for assembleBodyHtml()
+ * to re-prepend to DOMPurify's own output afterward.
+ */
+describe("MailJmap.extractStyles() - pull <style> out before DOMPurify strips it unconditionally", () =>
+{
+	function extract(html : string) : {html : string, styles : string}
+	{
+		return (MailJmap as any).extractStyles(html);
+	}
+
+	it("extracts a <style> block and removes it from the html", () =>
+	{
+		const {html, styles} = extract('<style>.datagrid table {border: 1px solid #8A0028;}</style><div class="datagrid"><table></table></div>');
+
+		assert.notInclude(html, '<style');
+		assert.include(styles, '.datagrid table');
+		assert.include(styles, 'border: 1px solid #8A0028');
+	});
+
+	it("leaves html with no <style> block completely untouched", () =>
+	{
+		const {html, styles} = extract('<p>no styles here</p>');
+
+		assert.equal(html, '<p>no styles here</p>');
+		assert.equal(styles, '');
+	});
+
+	it("extracts multiple <style> blocks, concatenated", () =>
+	{
+		const {html, styles} = extract('<style>.a{color:red}</style><p>text</p><style>.b{color:blue}</style>');
+
+		assert.equal(html, '<p>text</p>');
+		assert.include(styles, '.a{color:red}');
+		assert.include(styles, '.b{color:blue}');
+	});
+
+	it("strips the same CSS-security denylist as the server-side equivalent", () =>
+	{
+		const {styles} = extract('<style>.a{background:expression(alert(1))} .b{-moz-binding:url(x)} .c{x:javascript:alert(1)}</style>');
+
+		assert.notInclude(styles.toLowerCase(), 'javascript');
+		assert.notInclude(styles.toLowerCase(), 'expression');
+		assert.notInclude(styles.toLowerCase(), '-moz-binding');
+	});
+
+	it("a <style> block can never smuggle a literal </style> via its own content (non-greedy match)", () =>
+	{
+		// the regex's non-greedy [\s\S]*? guarantees the captured CSS text cannot itself contain
+		// "</style>" - the match ends at the FIRST one, structurally, regardless of content
+		const {html, styles} = extract('<style>.a{color:red}</style><script>alert(1)</script><style>.b{color:blue}</style>');
+
+		assert.notInclude(html, '<style');
+		assert.include(html, '<script>alert(1)</script>', 'untouched content outside any <style> block is extractStyles()\'s caller\'s concern (DOMPurify\'s FORBID_TAGS), not this method\'s');
+		assert.include(styles, '.a{color:red}');
+		assert.include(styles, '.b{color:blue}');
+	});
+});
+
+/**
  * RFC 2045's Content-ID header value is conventionally written wrapped in angle brackets (eg.
  * "<checkmk_logo.png>"), and a real JMAP server (Stalwart) can return EmailBodyPart.cid as that
  * raw header value verbatim - but the "cid:" URI scheme (RFC 2392, and this widget's own

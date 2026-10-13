@@ -3337,7 +3337,16 @@ export class MailJmap
 			const useHtml = !!htmlPart;
 			const part = useHtml ? htmlPart : textParts[0];
 			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
-			let sanitized = useHtml ? DOMPurify.sanitize(raw, {
+			// ticket #126181 (Birgit, relaying a customer): an ERP-generated report email's own
+			// <style> block (table borders/colours) vanished not just from the message VIEW
+			// (assembleBodyHtml(), fixed separately) but from a REPLY's quoted copy too, for the
+			// exact same reason - DOMPurify.sanitize() unconditionally strips every <style> element,
+			// confirmed even with ADD_TAGS: ['style']. extractStyles() pulls it out first; put back
+			// in AFTER DOMPurify but BEFORE sanitizeExternalContentForQuoting() below so that
+			// method's own (already correct, <template>-based - see its own docblock) CSS url()/
+			// @import filtering still runs over it, same as any other quoted style block.
+			const {html : withoutStyles, styles} = useHtml ? MailJmap.extractStyles(raw) : {html : raw, styles : ''};
+			let sanitized = useHtml ? DOMPurify.sanitize(withoutStyles, {
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			}) : raw;
@@ -3350,7 +3359,7 @@ export class MailJmap
 			// them afterward.
 			if (useHtml)
 			{
-				sanitized = this.sanitizeExternalContentForQuoting(sanitized);
+				sanitized = this.sanitizeExternalContentForQuoting(styles + sanitized);
 			}
 			// unlike the message-view path (resolveInlineImages()), the quoted body here is a plain
 			// string, not yet attached to any DOM/iframe - resolve straight into real blob: URLs
@@ -4283,18 +4292,73 @@ export class MailJmap
 		let body : string;
 		if (isHtml)
 		{
-			body = DOMPurify.sanitize(raw, {
+			const {html: withoutStyles, styles} = MailJmap.extractStyles(raw);
+			body = DOMPurify.sanitize(withoutStyles, {
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			});
+			// Re-prepend styles only AFTER both reparse steps below, not before - deferCidImages()/
+			// deferExternalImages() each round-trip `body` through `new DOMParser().parseFromString(
+			// html,'text/html')` and return `doc.body.innerHTML`. Confirmed live: a browser's HTML
+			// parser auto-relocates a LEADING `<style>` tag into the document's (implicit) `<head>`
+			// per the standard HTML5 parsing algorithm's "in head" insertion mode, since nothing
+			// before it signals body content has begun - `doc.body.innerHTML` then silently drops it,
+			// same end result as DOMPurify's own unconditional stripping, just a completely different
+			// mechanism one step later.
 			body = MailJmap.deferCidImages(body);
 			body = this.deferExternalImages(body);
+			body = styles + body;
 		}
 		else
 		{
 			body = MailJmap.textToHtml(raw);
 		}
 		return this.wrapDocument(body);
+	}
+
+	/**
+	 * Pull `<style>...</style>` blocks out of a raw HTML mail body and return them separately,
+	 * sanitized - DOMPurify.sanitize() unconditionally strips `<style>` elements no matter what
+	 * (confirmed live: even `ADD_TAGS: ['style']` has no effect, in both jsdom AND a real Chrome -
+	 * DOMPurify just doesn't support allow-listing this tag at all), so assembleBodyHtml() lost
+	 * every HTML mail's own stylesheet entirely once message rendering moved to this client-side
+	 * DOMPurify path - found live, ticket #126181 (Birgit, relaying a customer: an ERP-generated
+	 * report email's `.datagrid table` CSS - borders, header background colour, zebra-striped rows
+	 * - rendered as a plain unstyled table, while eMClient showed it correctly).
+	 *
+	 * Mirrors the server-side equivalent (Api\Html\HtmLawed::getStyles(), Api\Mail\
+	 * BodyDecoding::getStyles()) that the classic/shim-backed HtmLawed::purify() path already
+	 * applies - extract, strip the same handful of known-dangerous CSS constructs, re-inject
+	 * afterward - since a genuine JMAP (Stalwart) account's body never goes through HtmLawed at
+	 * all and relies entirely on THIS client-side sanitization. `url(http://...)`/`@import` of an
+	 * external resource is deliberately NOT stripped here (unlike the server-side equivalent) -
+	 * wrapDocument()'s own CSP (externalContentCsp()) already governs every resource a style rule
+	 * can reference (img-src/font-src cover a CSS `url()` exactly like an `<img src>`, and
+	 * style-src itself is restricted to the same allowed origins) regardless of where in the
+	 * document it's referenced from, so that class of risk is already covered - no need to
+	 * duplicate it here by text-stripping, which could clumsily break legitimate `url()` colour/
+	 * pattern values for same-origin or data: references.
+	 *
+	 * @return {html, styles} - `html` with every `<style>` block removed, `styles` the sanitized
+	 *  blocks concatenated (possibly empty), each re-wrapped in `<style>...</style>`
+	 */
+	private static extractStyles(html : string) : {html : string, styles : string}
+	{
+		if (!/<style[\s>]/i.test(html))
+		{
+			return {html, styles: ''};
+		}
+		let styles = '';
+		const withoutStyles = html.replace(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi, (_match, css) =>
+		{
+			// same CSS-security denylist as HtmLawed::getStyles()/BodyDecoding::getStyles() -
+			// 'expression(' (old IE only) and '-moz-binding' (old Firefox XBL only) are both dead
+			// in every browser this ships to today, kept only for parity with the server-side list.
+			const cleaned = css.replace(/(javascript|expression|-moz-binding)/gi, '');
+			styles += `<style>${cleaned}</style>`;
+			return '';
+		});
+		return {html: withoutStyles, styles};
 	}
 
 	/**
