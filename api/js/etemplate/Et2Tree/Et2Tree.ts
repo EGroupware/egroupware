@@ -410,6 +410,18 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	/**
 	 * Collect every currently-open node's id (recursively) and (debounced) write it back to
 	 * openStatePreference - called from handleItemExpand()/handleItemCollapse().
+	 *
+	 * Also refreshes the in-memory _openIds cache immediately (ticket #126411: expanding/
+	 * collapsing one top-level account could sporadically auto-expand or auto-collapse ALL the
+	 * OTHER ones). loadOpenIds() parses and caches the persisted ids exactly ONCE per widget
+	 * instance, and applyOpenState() is re-run on every lazy-load anywhere in the tree (see its
+	 * own docblock) - not just for the node being loaded. Without this update, every one of
+	 * those later re-runs kept re-applying that same page-load-time snapshot, authoritatively
+	 * resetting any top-level item the user had since expanded or collapsed back to whatever it
+	 * was when the tree first loaded, as soon as an unrelated lazy-load fired elsewhere in the
+	 * tree. Updating _openIds here keeps it in sync with the tree's own latest state, same as
+	 * _hasSavedOpenState - both the state actually written and the state applyOpenState() will
+	 * next apply.
 	 */
 	private saveOpenState() : void
 	{
@@ -429,6 +441,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			});
 		};
 		collect(this._selectOptions);
+
+		this._openIds = new Set(ids);
+		this._hasSavedOpenState = true;
 
 		window.clearTimeout(this._openStateSaveTimer);
 		this._openStateSaveTimer = window.setTimeout(() => this.flushOpenState(parts, ids), 300);
