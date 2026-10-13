@@ -590,6 +590,21 @@ export class Et2DatagridRowRenderer
 				(rowData, key) => this.host._getFieldValue(rowData, key)
 			);
 		}
+		// A lightweight description is a bare span, not a widget that expands its own
+		// attributes, so a class like `$row_cont[seen_class]` has to be resolved here
+		fragment.querySelectorAll("span[data-et2-description][class]").forEach((span) =>
+		{
+			const className = span.getAttribute("class") || "";
+			const resolved = Et2RowProvider.resolveSimpleRowPlaceholders(
+				className,
+				row,
+				(rowData, key) => this.host._getFieldValue(rowData, key)
+			);
+			if(resolved !== className)
+			{
+				span.setAttribute("class", resolved);
+			}
+		});
 	}
 
 	/**

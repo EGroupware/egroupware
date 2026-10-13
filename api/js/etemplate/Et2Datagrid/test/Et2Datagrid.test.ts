@@ -1533,6 +1533,36 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: a class placeholder on a native-text description resolves per row,
+	 * so an app can mark a row's title (tracker: unread tickets) from row data.
+	 * Setup: a description whose class is `$row_cont[seen_class]`, rendered for a row.
+	 * Pass: the span's class is the row's value, not the raw placeholder.
+	 */
+	it("resolves a class placeholder on native text row descriptions", async() =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		el.columns = [{key: "summary", title: "Summary", width: "1fr"}] as any;
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `<td><et2-description id="\${row}[summary]" noLang="1" class="$row_cont[seen_class]"></et2-description></td>`;
+
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template,
+			rowTemplateXml: prepared?.xml,
+			rowTemplateAttrMap: prepared?.attrMap || {},
+			loaderTemplate: null
+		} as any;
+		const rowElement = (el as any)._buildRowElement(
+			{id: "row-0", data: {summary: "A ticket", seen_class: "tracker_unseen"}}, 0
+		) as HTMLTableRowElement | null;
+
+		const span = rowElement?.querySelector("span[data-et2-description]");
+		assert.equal(span?.className, "tracker_unseen", "the row's class value should replace the placeholder");
+	});
+
+	/**
 	 * Contract: row-provider cloning owns child preparation for container
 	 * widgets. Container loadFromXML must not load original children before the
 	 * row provider appends prepared lightweight children.
