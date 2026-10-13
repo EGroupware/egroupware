@@ -124,6 +124,30 @@ class JmapShimFetchRawPartTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * Ticket #125641 follow-up (2026-10-13, ralf: "it says binary, but is base64, some Exchange
+	 * stupidity") - unlike the two cases above (message/rfc822-only, and only when the CTE header
+	 * is MISSING), this is a part of ANY type whose CTE header is PRESENT but simply wrong: Exchange
+	 * declaring "binary" on a bare whole-message PDF body that's still literal base64 TEXT. With a
+	 * trustworthy-looking header present, the narrower heuristic above never even looks at the
+	 * bytes - decodeIfStillBase64()'s own final, content-only (never header-trusting) pass is what
+	 * catches this one instead, for every part/type uniformly, not just message/rfc822.
+	 */
+	public function testDecodesStillBase64ContentEvenWhenTheCteHeaderPresentButWrong()
+	{
+		$structure = new \Horde_Mime_Part();
+		$structure->setType('application/pdf');
+		$structure->setMimeId('1');
+
+		$pdfBytes = "%PDF-1.4 fake but stable bytes for the test";
+		$stillEncodedRaw = base64_encode($pdfBytes);
+
+		$imap = $this->stubImap($structure, '1', $stillEncodedRaw, 'binary',
+			"Content-Type: application/pdf\r\nContent-Transfer-Encoding: binary\r\n\r\n");
+
+		$this->assertSame($pdfBytes, JmapShim::fetchRawPart($imap, 'INBOX', '1', '1'));
+	}
+
+	/**
 	 * The heuristic in the test above must stay narrow: genuinely 7bit-clean, non-base64-looking
 	 * message/rfc822 content (the overwhelmingly common case - most message/rfc822 parts were never
 	 * touched by ticket #125561's own base64 fix at all) must never be run through base64_decode()

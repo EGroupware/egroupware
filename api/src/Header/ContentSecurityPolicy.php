@@ -35,19 +35,20 @@ class ContentSecurityPolicy
 	 * @var array
 	 */
 	private static $sources = array(
-		// 'blob:' here is a CORE default, not app-specific - ticket #125641 (2026-10-04): found
-		// live that mail's own PDF-attachment print/view wrapper (MailJmap.wrapPdfViewerWithDownload(),
-		// pdf.js worker loading, both via a blob: object URL) only worked because smallpart happens
-		// to be installed on the same instance - smallpart's own csp_frame_src() hook (misusing that
-		// hook slot, the only one with per-app aggregation for frame-src/connect-src - see add()'s
-		// own code below) directly calls self::add('script-src', 'blob:') as a side effect, which
-		// then applies GLOBALLY to every app's own CSP for the rest of that request, regardless of
-		// which app's hook triggered it. On any install without smallpart, that accidental grant
-		// would be missing and mail's own, unrelated blob:-script feature would silently break with
-		// no visible error (a CSP-blocked script failure is silent by nature) - 'blob:' is already a
-		// core-trusted scheme for both img-src and object-src below, extending that same trust to
-		// script-src (a well-established, secure pattern for dynamically-created worker/script
-		// blobs) belongs at this level, not behind an unrelated app's install state.
+		// 'blob:' here is a CORE default, not app-specific - ticket #125641 (2026-10-04): found live
+		// that api/js/etemplate/CustomHtmlElements/pdf-player.ts's own pdf.js worker loading
+		// (ensureWorkerSrc(), a blob: Worker/module-worker URL, loaded unconditionally on every page
+		// via etemplate2.ts -> et2_widget_video.ts) only worked because smallpart happens to be
+		// installed on the same instance - smallpart's own csp_frame_src() hook (misusing that hook
+		// slot, the only one with per-app aggregation for frame-src/connect-src - see add()'s own
+		// code below) directly calls self::add('script-src', 'blob:') as a side effect, which then
+		// applies GLOBALLY to every app's own CSP for the rest of that request, regardless of which
+		// app's hook triggered it. On any install without smallpart, that accidental grant would be
+		// missing and pdf-player.ts's own worker would silently fail to load with no visible error (a
+		// CSP-blocked script failure is silent by nature) - 'blob:' is already a core-trusted scheme
+		// for both img-src and object-src below, extending that same trust to script-src (a
+		// well-established, secure pattern for dynamically-created worker/script blobs) belongs at
+		// this level, not behind an unrelated app's install state.
 		//
 		// 'trusted-types-eval' + the (not-yet-enabled, see below) trusted-types directive
 		// (ralf, 2026-10-05, master only for now - see api/js/jsapi/egw_trusted_types.ts's own

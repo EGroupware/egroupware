@@ -676,33 +676,24 @@ class AttachmentJmap
 			// shim's own "upload:<token>" staging marker (JmapImap::upload()/readUploadedBlob()) for
 			// a temp file backing a just-uploaded JMAP-mode compose attachment. Missing here meant
 			// switching such an attachment to a "download link" filemode before ever sending
-			// silently dropped it - the mailbox:uid:partId parse below happily "succeeds" on
-			// "upload:<token>" too (mailboxB64="upload", uid=<token>), just resolving to nothing
-			// real, caught below and treated as "gone", not "wrong shape". Checked first, same as
-			// JmapImap::readUploadedBlob()'s own ordering - needs no server connection at all,
-			// unlike every other branch here.
+			// silently dropped it - the mailboxB64:uid:partId parse fetchGenericBlobBytes() does
+			// happily "succeeds" on "upload:<token>" too (mailboxB64="upload", uid=<token>), just
+			// resolving to nothing real, caught below and treated as "gone", not "wrong shape".
+			// Checked first, same as JmapImap::readUploadedBlob()'s own ordering - needs no server
+			// connection at all, unlike every other branch here.
 			if (str_starts_with($blobId, 'upload:'))
 			{
 				$path = JmapImap::uploadPath(substr($blobId, strlen('upload:')));
 				return is_file($path) ? file_get_contents($path) : null;
 			}
-			$icServer = JmapImap::imapServer($acc_id);
-			if (!$icServer)
+			// ticket #125641 follow-up: the 'smime:' scheme (JmapImap::smimeAttachments()) re-
+			// decrypts server-side and is otherwise unrelated to the generic mailbox:uid:partId/
+			// real-JMAP dispatch below - same special-case JmapImap::download() already has.
+			if (str_starts_with($blobId, 'smime:'))
 			{
-				return null;
+				return JmapImap::smimeAttachmentBytes($blobId);
 			}
-			if ($icServer instanceof Mail\Imap\Jmap)
-			{
-				return $icServer->jmapClient()->downloadBlob($blobId, $filename, $mimeType);
-			}
-			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
-			if ($mailboxB64 === null || !$uid)
-			{
-				return null;
-			}
-			$mailbox = JmapImap::urlsafeB64Decode($mailboxB64);
-			return $partId !== '' ? JmapImap::fetchRawPart($icServer, $mailbox, $uid, $partId) :
-				JmapImap::fetchRawMessage($icServer, $mailbox, $uid);
+			return JmapImap::fetchGenericBlobBytes($acc_id, $blobId, $filename, $mimeType);
 		}
 		catch (\Throwable $e)
 		{

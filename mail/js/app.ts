@@ -3123,28 +3123,37 @@ export class MailApp extends EgwApp
 	 *
 	 * Only worth it for a type the browser actually renders inline on plain navigation - the exact
 	 * same enumerated "viewable" bucket AttachmentJmap::createAttachmentBlock()'s own switch
-	 * already groups together server-side (IMAGE/JPEG|PNG|GIF|BMP, APPLICATION/PDF, TEXT/PLAIN|
-	 * HTML|DIRECTORY), as opposed to its generic `default:` download-only case - deliberately an
-	 * enumerated whitelist, not a `text/*`/`image/*` wildcard guess: a first attempt at this fix
-	 * used `!type.startsWith('application/')` as the cutoff, which wrongly still let eg.
-	 * `text/csv` through - many browsers treat CSV as a download-triggering type, not an inline
-	 * view, same failure mode as Excel (found live 2026-09-22, tracker #124932 follow-up, a
-	 * second attachment in the SAME account still got a blob-UUID filename after the first fix).
-	 * Anything not in this exact list has no legitimate "view" to begin with -
-	 * Et2Description._handleClick() falls through to a plain egw.open_link(href) navigation for
-	 * those, and navigating a bare blob: URL directly (no <a download> involved) lets the browser
-	 * fall back to the blob's own opaque UUID as the save filename, regardless of the underlying
-	 * File's real .name - same bug class as tracker #124541 (fixed for PDF only, via jmap.ts's
-	 * getAttachmentViewUrl()/wrapPdfViewerWithDownload()). Leaving everything else on the classic
-	 * mail_ui::getAttachment() URL keeps it correct - Api\Header\Content::safe()
-	 * (MessageDisplayHandler.php) sets a real Content-Disposition header with the actual filename
-	 * via a normal HTTP response, sidestepping the whole blob:-URL-filename problem entirely
-	 * instead of trying to work around it client-side.
+	 * already groups together server-side (IMAGE/JPEG|PNG|GIF|BMP, TEXT/PLAIN|HTML|DIRECTORY), as
+	 * opposed to its generic `default:` download-only case - deliberately an enumerated whitelist,
+	 * not a `text/*`/`image/*` wildcard guess: a first attempt at this fix used
+	 * `!type.startsWith('application/')` as the cutoff, which wrongly still let eg. `text/csv`
+	 * through - many browsers treat CSV as a download-triggering type, not an inline view, same
+	 * failure mode as Excel (found live 2026-09-22, tracker #124932 follow-up, a second attachment
+	 * in the SAME account still got a blob-UUID filename after the first fix). Anything not in this
+	 * exact list has no legitimate "view" to begin with - Et2Description._handleClick() falls
+	 * through to a plain egw.open_link(href) navigation for those, and navigating a bare blob: URL
+	 * directly (no <a download> involved) lets the browser fall back to the blob's own opaque UUID
+	 * as the save filename, regardless of the underlying File's real .name - same bug class as
+	 * tracker #124541. Leaving everything else on the classic mail_ui::getAttachment() URL keeps it
+	 * correct - Api\Header\Content::safe() (MessageDisplayHandler.php) sets a real
+	 * Content-Disposition header with the actual filename via a normal HTTP response, sidestepping
+	 * the whole blob:-URL-filename problem entirely instead of trying to work around it client-side.
+	 *
+	 * PDF is deliberately NOT in this list (ticket #125641) - it keeps whatever mime_url
+	 * AttachmentJmap::createAttachmentBlock() already built server-side for it (same
+	 * mail.EGroupware\Mail\Ui.getAttachment URL, blobId included, inline Content-Disposition) rather
+	 * than being overridden with a client-side blob: URL here: the browser's own native PDF viewer
+	 * navigated straight to that real URL gets a real filename, fillable forms and working print,
+	 * none of which a blob: URL (rendered via pdf.js to a page of flat <img>s, as this app used to
+	 * do here) could ever provide - forms especially can't be rendered as an image at any
+	 * resolution. Applies equally to a PDF unpacked from a winmail.dat (ticket #126161) - it has no
+	 * JMAP blobId, but createAttachmentBlock() already gives it the same kind of real, correct
+	 * mime_url (via the classic uid/part/is_winmail addressing instead), so it needs no special
+	 * casing here either any more.
 	 *
 	 * @return true if any row's mime_url was replaced (caller should re-render)
 	 */
 	private static readonly VIEWABLE_TYPES = new Set([
-		'application/pdf',
 		'text/plain', 'text/html', 'text/directory',
 		'image/jpeg', 'image/png', 'image/gif', 'image/bmp',
 	]);
@@ -3166,18 +3175,12 @@ export class MailApp extends EgwApp
 			const type = (item.type || '').toLowerCase();
 			return item.blobId && !excluded.includes(type) && MailApp.VIEWABLE_TYPES.has(type);
 		});
-		// a PDF unpacked from a winmail.dat has no JMAP blob (it lives inside of it), but is viewed in the pdf.js viewer too
-		const unpackedPdfs = attachmentsBlock.filter((item) => item && !item.blobId && item.winmailFlag &&
-			(item.type || '').toLowerCase() === 'application/pdf');
-		if (!eligible.length && !unpackedPdfs.length)
+		if (!eligible.length)
 		{
 			return false;
 		}
 		this.jmap.revokeAttachmentViewUrls(rowId);
-		this.tnefViewUrls ??= {};
-		(this.tnefViewUrls[rowId] ?? []).forEach((url) => URL.revokeObjectURL(url));
-		this.tnefViewUrls[rowId] = [];
-		const results = await Promise.all([...eligible.map((item) =>
+		const results = await Promise.all(eligible.map((item) =>
 			this.jmap.getAttachmentViewUrl(rowId, profileID, item.blobId, item.filename, item.type)
 				.then((url) => { item.mime_url = url; return true; })
 				.catch((e) =>
@@ -3185,50 +3188,8 @@ export class MailApp extends EgwApp
 					console.error('resolveAttachmentViewUrls(): failed for', item.filename, e);
 					return false;
 				})
-		), ...unpackedPdfs.map((item) => this.resolveUnpackedPdfViewUrl(rowId, item))]);
+		));
 		return results.some(Boolean);
-	}
-
-	/**
-	 * Object URLs of the pdf.js viewer pages built for PDFs unpacked from a winmail.dat, by row,
-	 * revoked the next time the row is resolved (same convention as MailJmap's attachmentViewUrls)
-	 */
-	private tnefViewUrls : Record<string, string[]> = {};
-
-	/**
-	 * Show a PDF unpacked from a winmail.dat (TNEF) in the same pdf.js viewer as every other PDF of a mail, instead of
-	 * the browsers own PDF viewer (ticket #126161)
-	 *
-	 * The PDF has no JMAP blob, so its bytes come from the classic getAttachment URL (which the download uses, too),
-	 * and are wrapped by MailJmap's own pdf.js wrapper, which is private to it (and its file is not touched here) -
-	 * reached with bracket notation.
-	 *
-	 * @param rowId
-	 * @param item attachmentsBlock row, gets its mime_url replaced
-	 * @return true if mime_url was replaced, false on any error - the classic URL (browsers PDF viewer) stays then
-	 */
-	private async resolveUnpackedPdfViewUrl(rowId : string, item : any) : Promise<boolean>
-	{
-		try
-		{
-			const response = await fetch(attachmentSaveUrl(this.egw, item), {credentials: 'same-origin'});
-			if (!response.ok)
-			{
-				throw new Error('HTTP ' + response.status + ' ' + response.statusText);
-			}
-			const blob = MailJmap['withKnownFilename'](await response.blob(), item.type, item.filename);
-			const contentUrl = URL.createObjectURL(blob);
-			(this.tnefViewUrls[rowId] ??= []).push(contentUrl);
-			const viewerUrl = await MailJmap['wrapPdfViewerWithDownload'](blob, contentUrl, item.filename, item.type);
-			(this.tnefViewUrls[rowId] ??= []).push(viewerUrl);
-			item.mime_url = viewerUrl;
-			return true;
-		}
-		catch (e)
-		{
-			console.error('resolveUnpackedPdfViewUrl(): failed for', item.filename, e);
-			return false;
-		}
 	}
 
 	/**

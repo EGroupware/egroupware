@@ -127,44 +127,6 @@ describe("MailJmap object URL retention", () =>
 		assert.equal(live.size, MAX_ROWS);
 	});
 
-	it("revokes a PDF's page wrapper even when the same message was resolved again while its pages rendered", async() =>
-	{
-		// The preview resolves a message's attachments from two places, so a second resolve can
-		// revoke and replace the row's URLs while the first is still rendering a PDF. The wrapper
-		// that finishes afterwards used to be pushed onto the array the second resolve had just
-		// thrown away, and was never revoked.
-		let finishPages : (url : string) => void;
-		const wrapperStub = sinon.stub(MailJmap, "wrapPdfViewerWithDownload").callsFake(() =>
-			new Promise<string>(resolve => { finishPages = resolve; }));
-		(<any>jmap).clients["1"] = {
-			downloadBlob: async() => ({blob: async() => new Blob(["%PDF"], {type: "application/pdf"})}),
-		};
-		(<any>jmap).tokens["1"] = {
-			sessionUrl: "https://example.com", accountId: "acc", access_token: "tok",
-			expires_at: Date.now() + 100000, isLocal: false, customLabels: {},
-		};
-
-		try
-		{
-			const first = jmap.getAttachmentViewUrl("rowA", "1", "blob1", "a.pdf", "application/pdf");
-			await new Promise(resolve => setTimeout(resolve, 20));	// first call is now rendering its pages
-
-			jmap.revokeAttachmentViewUrls("rowA");	// the second resolve
-			const wrapper = "blob:test/wrapper";
-			live.add(wrapper);
-			finishPages(wrapper);
-			await first;
-
-			assert.isTrue(live.has(wrapper), "the finished wrapper is the one the preview shows");
-			jmap.revokeAttachmentViewUrls("rowA");
-			assert.equal(live.size, 0, "so it is revoked with the row's other URLs, not left behind");
-		}
-		finally
-		{
-			wrapperStub.restore();
-		}
-	});
-
 	it("revokes a download that finishes after its message was pushed out", async() =>
 	{
 		holdDownloads = true;
