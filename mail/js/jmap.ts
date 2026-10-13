@@ -8388,9 +8388,19 @@ export class MailJmap
 			attachments: hasAttachment ? 'attach' : '',
 			attachment_icon: hasAttachment ? 'attach' : '',
 			// ticket #125281: row-list security icons - see smimeRowIcon()/pgpRowIcon()'s own
-			// docblocks for why each is a cheap Content-Type-only check, no extra per-row fetch
+			// docblocks for why each is a cheap Content-Type-only check, no extra per-row fetch.
+			// Kept as their own fields - NOT merged into `encryption` below - since `smime` has a
+			// second, unrelated consumer: composeMessage() (app.ts) reads content.data['smime']
+			// for settings.smime_type on reply/forward, which must stay S/MIME-specific.
 			smime: MailJmap.smimeRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			pgp: MailJmap.pgpRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
+			// ticket #126391 follow-up: one combined row-list icon slot for whichever of the two
+			// applies - a message's top-level Content-Type is one or the other, never both, so
+			// this is never actually ambiguous. Display-only (index.xet's row templates use this
+			// instead of two separate, almost-always-one-empty <et2-image>s) - `smime`/`pgp`
+			// above are untouched for their own existing consumers.
+			encryption: MailJmap.smimeRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]) ||
+				MailJmap.pgpRowIcon(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]),
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			priority_icon: priority ? 'prio_' + priority : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's

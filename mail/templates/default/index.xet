@@ -169,7 +169,21 @@
         <grid width="100%">
             <columns>
                 <column width="80%"/>
-                <column width="140"/>
+                <!-- minWidth: ticket #126391 (Sam, 2026-10-13): this column holds the date AND the
+                     status_icons row below it (status_icon, encryption, priority, attachment,
+                     flagged - up to 5 icons; was 6 separate smime+pgp icons until the combined
+                     `encryption` field just below, plus bfda361554 having added priority_icon
+                     without widening this column at all, 2026-10-09) - plain width alone is a
+                     resizable/savable preference a long-lived account's own stale saved value can
+                     silently override down to something narrower than the template's own current
+                     default (confirmed live: an existing test account's saved width rendered this
+                     column at 114px instead of the declared 140, pushing the attachment/flag icons
+                     out of view entirely, clipped behind the preview pane). minWidth is a hard
+                     floor minmax() enforces regardless of any saved/stale width value. 120 fits 5
+                     icons (5 * (1em+2px) + 4 gaps + the status_icons row's own margin-right: 1em)
+                     with a little headroom, down from 140 (sized for 6, before the encryption
+                     merge). -->
+                <column width="120" minWidth="120"/>
             </columns>
             <rows>
                 <row class="th">
@@ -190,10 +204,13 @@
                         <et2-hbox>
                             <et2-date-time-today  class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
                         </et2-hbox>
+                        <!-- ticket #126391 follow-up: one combined slot for smime/pgp (a message's
+                             Content-Type is one or the other, never both - see MailJmap's own
+                             `encryption` field docblock, mail/js/jmap.ts) instead of two
+                             almost-always-one-empty icons, to ease pressure on this column's width -->
                         <et2-hbox  class="status_icons">
                             <et2-image  src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
-                            <et2-image  src="$row_cont[smime]" inline="true" class="bi"></et2-image>
-                            <et2-image  src="$row_cont[pgp]" inline="true" class="bi"></et2-image>
+                            <et2-image  src="$row_cont[encryption]" inline="true" class="bi"></et2-image>
                             <et2-image  src="$row_cont[priority_icon]"></et2-image>
                             <et2-image  src="$row_cont[attachment_icon]"></et2-image>
                             <et2-image  src="$row_cont[flagged_icon]" id="flaggedImage"></et2-image>
@@ -215,7 +232,11 @@
             <columns>
                 <column minWidth="60" maxWidth="60" width="60"/>
                 <column width="20"/>
-                <column width="20"/>
+                <!-- minWidth: ticket #126391 - this column holds priority+attachment+flagged (3
+                     icons since bfda361554 added priority_icon, 2026-10-09) - 20px never fit more
+                     than one, see the vertical row template's own column just above for the full
+                     explanation (same root cause, same fix). -->
+                <column width="60" minWidth="60"/>
                 <column width="40%"/>
                 <column minWidth="42" width="95"/>
                 <column width="95"/>
@@ -263,8 +284,9 @@
                     <et2-url-email  id="${row}[fromaddress]" readonly="true" emailDisplay="preference" disableClickAction="true"></et2-url-email>
                     <et2-vfs-size  align="right" id="${row}[size]" noLang="1" readonly="true"></et2-vfs-size>
                     <et2-hbox>
-                        <et2-image  align="center" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
-                        <et2-image  align="center" src="$row_cont[pgp]" inline="true" class="horizontal_smime"></et2-image>
+                        <!-- ticket #126391 follow-up: one combined smime/pgp slot, see the vertical
+                             row template's own identical change just above for the full reasoning -->
+                        <et2-image  align="center" src="$row_cont[encryption]" inline="true" class="horizontal_smime"></et2-image>
                     </et2-hbox>
                 </row>
             </rows>
