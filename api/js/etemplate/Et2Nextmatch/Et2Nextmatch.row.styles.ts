@@ -1,10 +1,25 @@
 import {css} from "lit";
+import bootstrapIcons from "../Styles/bootstrap-icons";
 
 /**
  * Row styles for et2-nextmatch.  These are loaded inside the Et2Datagrid shadowRoot.
  * Only EGroupware-wide styles are allowed here.
+ *
+ * bootstrapIcons (the full per-glyph `.bi-xxx::before { content: "\fxxx" }` ruleset, normally
+ * adopted per-component via Et2Widget.ts's own `static styles`) is included here explicitly -
+ * ticket #126391 (Sam, 2026-10-13: "Markierungen Mails werden ... nicht angezeigt", flag icons
+ * missing from the mail row list since the move to this widget). Row content is rendered as
+ * LIGHT DOM inside this shadow root for virtualization (confirmed live: a row's own
+ * `<et2-image class="bi-flag-fill">` has no shadowRoot of its own at all), so it never gets
+ * Et2Widget's per-component style adoption - the generic `font-family: bootstrap-icons` rule
+ * above still reached it (inherited custom styling does cross shadow boundaries), but the actual
+ * `content: "\fxxx"` glyph value for any specific icon class never did, rendering a correctly
+ * coloured, correctly sized, but completely BLANK icon. Not mail-specific: any app's nextmatch
+ * rows using a bootstrap-icon glyph class hit the identical gap.
  */
 export default css`
+	${bootstrapIcons}
+
 	et2-link,
 	et2-link-string {
 		color: var(--sl-color-sky-900);

@@ -99,3 +99,40 @@ describe("MailJmap.email2row() - security (S/MIME/PGP) row icons", () =>
 		assert.equal(row.pgp, "");
 	});
 });
+
+/**
+ * Ticket #126391 follow-up: a dedicated row-list "encryption" field combining smime/pgp into one
+ * display slot (index.xet's row templates use this instead of two separate, almost-always-one-
+ * empty <et2-image>s, easing pressure on a fixed-width column that was clipping other icons) -
+ * since a message's top-level Content-Type is one or the other, never both, this is never
+ * actually ambiguous. `smime`/`pgp` themselves stay untouched - composeMessage() (app.ts) reads
+ * content.data['smime'] for settings.smime_type on reply/forward, which must stay S/MIME-only.
+ */
+describe("MailJmap.email2row() - combined 'encryption' row-list icon slot", () =>
+{
+	it("uses the S/MIME icon when only S/MIME applies", () =>
+	{
+		const row = rowFor('multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256');
+		assert.equal(row.encryption, "smime_sign");
+	});
+
+	it("uses the PGP icon when only PGP applies", () =>
+	{
+		const row = rowFor('multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256');
+		assert.equal(row.encryption, "envelope-at-fill");
+	});
+
+	it("is empty for a plain message", () =>
+	{
+		const row = rowFor("text/plain; charset=utf-8");
+		assert.equal(row.encryption, "");
+	});
+
+	it("never changes the separate smime/pgp fields themselves", () =>
+	{
+		const row = rowFor("application/pkcs7-mime; smime-type=enveloped-data");
+		assert.equal(row.smime, "smime_encrypt");
+		assert.equal(row.pgp, "");
+		assert.equal(row.encryption, "smime_encrypt");
+	});
+});
