@@ -772,6 +772,7 @@ unconditional	mail	en	Unconditional
 undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
+unseen messages first	mail	en	Unseen messages first
 unsubscribe folder	mail	en	Unsubscribe folder
 unsubscribe from folder %1	mail	en	Unsubscribe from folder %1
 upload files...	mail	en	Upload files ...

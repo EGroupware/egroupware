@@ -760,6 +760,7 @@ unconditional	mail	de	immer
 undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
+unseen messages first	mail	de	Ungelesene Nachrichten zuerst
 unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Anhang
