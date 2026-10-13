@@ -731,6 +731,7 @@ import	common	de	Import
 import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML-Datei
 import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
 import xml	common	de	XML-Import
+in %1	common	de	in %1
 include access to any linked files (links tab)	common	de	Beinhaltet Zugriff auf jegliche verknüpfte Dateien (Reiter Verknüpfungen)
 increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
 indent	common	de	Einzug vergrößern

@@ -710,6 +710,7 @@ import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
 import xml	common	fr	Importer XML
+in %1	common	fr	dans %1
 include access to any linked files (links tab)	common	fr	Ajout de l'accès à tous liens de fichiers (onglet Liens)
 increment version to not overwrite the existing template	common	fr	Incrémente la version pour ne pas écraser le modèle existant
 indent	common	fr	Indenter

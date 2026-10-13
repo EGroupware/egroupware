@@ -729,6 +729,7 @@ import	common	en	Import
 import an etemplate from a xml-file	common	en	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	en	Import table definitions from existing DB table
 import xml	common	en	Import XML
+in %1	common	en	in %1
 include access to any linked files (links tab)	common	en	Include access to any linked files (Links tab)
 increment version to not overwrite the existing template	common	en	Increment version to not overwrite the existing template.
 indent	common	en	Indent
