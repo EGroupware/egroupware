@@ -186,7 +186,13 @@ window.egw_import = (function()
 	window.egw_manifest = JSON.parse(egw_script.getAttribute('data-manifest')) || {};
 
 	// split includes in legacy js and modules
-	const legacy_js_regexp = /\/dhtmlx|jquery-ui|^etemplate\/|^phpbrain\/|^phpgwapi\//;
+	// phpbrain used to belong here too, back when its only js/ file was a plain pre-rollup
+	// app.js - now that it has a real app.ts (ticket #126081), routing it through this literal,
+	// manifest-blind <script src> path instead of egw_import() below either serves its
+	// gitignored, never-rebuilt app.min.js leftover on disk (missing app.classes.phpbrain) or,
+	// once that stale file is cleaned up, 404s outright - either way app.classes.phpbrain never
+	// gets set and etemplate2.ts's "please reload" warning fires for no real reason
+	const legacy_js_regexp = /\/dhtmlx|jquery-ui|^etemplate\/|^phpgwapi\//;
 
 	// check if egw object was injected by window open
 	if (typeof window.egw == 'undefined')
