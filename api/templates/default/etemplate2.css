@@ -1871,6 +1871,11 @@ hr {
 /**
  * grid widget
  */
+/* full width by default: a grid wanting less sets its width= (inline style) or a class rule, :where() keeps this at zero specificity */
+:where(table.et2_grid) {
+    width: 100%;
+}
+
 table.et2_grid {
     border-collapse: collapse;
     /* table-layout: fixed; check with infolog.edit before switching that on again! */

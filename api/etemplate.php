@@ -679,6 +679,19 @@ function send_template()
 		// legacy <nextmatch> --> <et2-nextmatch>, unless it opts out with legacy="true"
 		$str = convertNextmatch($str, $fspath);
 
+		// legacy grid: the grid widget only takes pixels or percent as plain numbers, so a numeric column
+		// width (pixels) becomes a relative length (1em = 16px), which the grid passes on to CSS unchanged
+		$str = preg_replace_callback('#<column\b([^>]*?)(/?)>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (!isset($attrs['width']) || !is_numeric($attrs['width']))
+			{
+				return $matches[0];
+			}
+			$attrs['width'] = round($attrs['width'] / 16, 2) . 'em';
+			return '<column' . stringAttrs($attrs) . $matches[2] . '>';
+		}, $str);
+
 		$processing = microtime(true);
 
 		if (isset($cache) && (file_exists($cache_dir = dirname($cache)) || mkdir($cache_dir, 0755, true) || is_dir($cache_dir)))
