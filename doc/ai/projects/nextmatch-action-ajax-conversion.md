@@ -351,6 +351,11 @@ that have a nextmatch, and "select all" refuses rather than falling back to an u
 > **Bespoke picker dialog** when the option set is user data *and* the action wants verbs or
 > multi-select (categories, distribution lists) - Proposals A-B.
 >
+> *Exception:* a **single-value** category list short enough for a screenful
+> (`Nextmatch::DEFAULT_MAX_MENU_SELECT`, counting the "None" entry) stays a plain sub-menu with
+> `onExecute` = `app.<app>.ajax_action`. The dialog is used past that, and always for
+> multi-value apps (addressbook), whose Add/Remove/Replace verbs a menu cannot offer.
+>
 > **Generic overflow dialog** for everything in between: data-driven lists that are bounded in
 > principle but grow with the installation (tracker queues/versions/resolutions/statuses,
 > kanban boards, esyncpro policies, content types). These need no bespoke UI, just a search

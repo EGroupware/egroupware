@@ -1436,7 +1436,7 @@ class Nextmatch extends Etemplate\Widget
 	 * @param boolean $globals =true application global categories too
 	 * @param int $parent_id =0 only returns cats of a certain parent
 	 * @param int $max_cats_flat =self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
-	 * @param boolean|null $multiple dialog shape, see the code; null = sub-menu
+	 * @param boolean|null $multiple dialog shape, see the code; null = sub-menu, false = sub-menu too while the list is short (DEFAULT_MAX_MENU_SELECT), else single-value dialog
 	 * @param boolean $none =true sub-menu only: offer a leading "None" entry that sends the bare prefix to clear the category
 	 * @return array like self::egw_actions
 	 */
@@ -1444,11 +1444,18 @@ class Nextmatch extends Etemplate\Widget
 		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH,
 		$multiple=null, $none=true)
 	{
+		$cat = new Api\Categories(null,$app);
+		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
+
 		// $multiple opts in to the picker dialog and says which shape it takes. Leaving it null
 		// keeps the historic sub-menu (one entry per category), which for a long category list
 		// selectChildrenIfTooLong() will collapse into the generic picker anyway - just without
 		// the verbs below.
-		if (isset($multiple))
+		// A single-value category (false) with few enough categories, counting "None", stays a
+		// plain sub-menu: a dialog is needless for a handful of entries. Multi-value (true) always
+		// needs the dialog, as it offers Add/Remove/Replace.
+		$submenu = $multiple === false && count($cats) + ($none ? 1 : 0) <= self::DEFAULT_MAX_MENU_SELECT;
+		if (isset($multiple) && !$submenu)
 		{
 			return array(
 				'caption' => $caption,
@@ -1474,9 +1481,6 @@ class Nextmatch extends Etemplate\Widget
 				),
 			);
 		}
-		$cat = new Api\Categories(null,$app);
-		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
-
 		// if more then max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
 		{
@@ -1512,13 +1516,20 @@ class Nextmatch extends Etemplate\Widget
 				'icon' => 'delete',
 			)) + $cat_actions;
 		}
-		return array(
+		$action = array(
 			'caption' => $caption,
 			'children' => $cat_actions,
 			'enabled' => $enabled,
 			'group' => $group,
 			'prefix' => $prefix,
 		);
+		if ($submenu)
+		{
+			// EgwApp::ajax_action() sends the action id + ids to <app>.<app>_ui.ajax_action, the
+			// same ids the picker dialog sends. egw_actions() hands this down to the children.
+			$action['onExecute'] = 'javaScript:app.'.$app.'.ajax_action';
+		}
+		return $action;
 	}
 
 	/**

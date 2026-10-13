@@ -1244,9 +1244,10 @@ class timesheet_ui extends timesheet_bo
 			),
 		);
 		// Change category via AJAX
-		// NOT $actions['cat']['onExecute'] = ... any more: the category action is now a
-		// picker dialog (nm_action=categories) which dispatches to ajax_action itself, and an
-		// onExecute here would run instead of opening it
+		// NOT $actions['cat']['onExecute'] = ... here: category_action() sets it itself for the
+		// short sub-menu, and past DEFAULT_MAX_MENU_SELECT it returns a picker dialog
+		// (nm_action=categories) which dispatches to ajax_action itself - an onExecute set here
+		// would run instead of opening it
 
 		// Other Api\Applications
 		$group++;
