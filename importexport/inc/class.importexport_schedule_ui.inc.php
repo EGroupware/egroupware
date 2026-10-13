@@ -99,6 +99,13 @@ class importexport_schedule_ui
 
 		$data = $content;
 
+		// do not create NEW scheduled iCal imports from a URL, existing ones keep running and can be edited
+		if($content['save'] && !$id && ($message = self::deny_ical_url_import($content)))
+		{
+			$data['message'] = $message;
+			unset($content['save'], $data['save']);
+		}
+
 		// Deal with incoming
 		if($content['save'] && self::check_target($content) === true)
 		{
@@ -292,6 +299,31 @@ class importexport_schedule_ui
 			return substr($id, 0, 64);
 		}
 		return substr($id, 0, 32).md5($id);
+	}
+
+	/**
+	 * Scheduling the calendar iCal import of a URL is no longer supported, a subscribed calendar should be used instead
+	 *
+	 * The import with "Empty calendar before import" deletes and re-creates all imported events on every run,
+	 * which creates millions of (soft-)deleted events and changes the ETag of all events.
+	 * A subscribed calendar skips an unchanged calendar, updates events by their UID and only deletes removed ones.
+	 *
+	 * @param array $data values of the schedule form, with keys "type", "target" and "definition" (name)
+	 * @return string|false message why the schedule is not allowed, or false if it is allowed
+	 */
+	public static function deny_ical_url_import(array $data)
+	{
+		if (($data['type'] ?? 'import') !== 'import' || empty($data['definition']) ||
+			!in_array(strtolower((string)parse_url((string)($data['target'] ?? ''), PHP_URL_SCHEME)), ['http', 'https']))
+		{
+			return false;
+		}
+		$definition = new importexport_definition($data['definition']);
+		if ($definition->get_identifier() < 1 || $definition->plugin !== 'calendar_import_ical')
+		{
+			return false;
+		}
+		return lang('Scheduling an iCal import from a URL is no longer supported. Please use a subscribed calendar (calendar sidebar: Subscribed calendar) instead: it updates existing events by their UID and skips unchanged calendars.');
 	}
 
 	/**

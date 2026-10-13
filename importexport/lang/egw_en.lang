@@ -117,6 +117,7 @@ schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import | export
 schedule not found	importexport	en	Schedule not found.
 schedule times are server time!  currently %s.	importexport	en	Schedule times are server time! Currently %s.
+scheduling an ical import from a url is no longer supported. please use a subscribed calendar (calendar sidebar: subscribed calendar) instead: it updates existing events by their uid and skips unchanged calendars.	importexport	en	Scheduling an iCal import from a URL is no longer supported. Please use a subscribed calendar (calendar sidebar: Subscribed calendar) instead: it updates existing events by their UID and skips unchanged calendars.
 select definition	importexport	en	Select definition
 select groups	importexport	en	Select groups
 select owner	importexport	en	Select owner
