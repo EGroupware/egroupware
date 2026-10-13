@@ -2012,7 +2012,13 @@ export class MailApp extends EgwApp
 				'mail.EGroupware\\Mail\\Compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
 			);
 		}
-		return this.composeToolbarDataPromises[accId];
+		// Hand every caller its OWN deep copy, never the cached objects themselves: a compose popup
+		// writes objects of its own realm into what it gets (eg. its toolbar replaces actions.<id>.data,
+		// below bootstrapComposePopup()'s shallow {...actions} copy). Left in this MAIN-window cache,
+		// they kept every closed compose popup alive (~20MB each) until the main window reloaded.
+		// The cached value is plain JSON from ajax_getComposeToolbarData() and nobody else ever gets
+		// a reference to it, so structuredClone() always works.
+		return this.composeToolbarDataPromises[accId].then(data => structuredClone(data));
 	}
 
 	/**
