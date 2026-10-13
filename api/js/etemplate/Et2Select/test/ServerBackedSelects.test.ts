@@ -183,5 +183,29 @@ describe("Server-backed Et2Select subclasses", () =>
 
 			assert.isAbove(requests.length, afterFirst, "a different country is a different cache entry");
 		});
+
+		it("keeps options of a popup in the realm of the window owning the shared cache", async() =>
+		{
+			// A popup shares its opener's egw and so its cache.  One object of the popup's own realm in
+			// that cache keeps the whole closed popup in memory, so the cache must get a copy made by the
+			// owning window.  The owner is played by an iframe's window, a realm of its own.
+			const owner = document.createElement("iframe");
+			document.body.appendChild(owner);
+			(<any>callableEgw).window = owner.contentWindow;
+			try
+			{
+				const element = await connected("et2-select-country");
+
+				const cached = Object.values(cache)[0];
+				assert.isTrue(cached instanceof (<any>owner.contentWindow).Array, "cache entry is not from the owning window");
+				assert.isTrue(cached[0] instanceof (<any>owner.contentWindow).Object, "cached option is not from the owning window");
+				assert.includeMembers(element.select_options.map(o => "" + o.value), ["a", "b"], "widget still gets the options");
+			}
+			finally
+			{
+				delete (<any>callableEgw).window;
+				owner.remove();
+			}
+		});
 	});
 });

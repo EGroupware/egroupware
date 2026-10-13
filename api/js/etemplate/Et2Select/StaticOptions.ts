@@ -25,6 +25,30 @@ type NumberOptions = {
 type Constructor<T = {}> = new (...args : any[]) => T;
 
 /**
+ * Copy options into the window which owns the shared egw cache
+ *
+ * Popups share the opener's egw, and so its cache (egw.getCache()).  The options arrive in the popup's own
+ * realm, and one object of that realm kept in the opener's cache keeps the whole closed popup in memory.
+ * In the main window, or if the copy is not possible, the options are returned as they are.
+ */
+function intoCacheRealm<T>(options : T) : T
+{
+	try
+	{
+		const owner = (<any>egw).window;
+		if(options && owner && owner !== window)
+		{
+			return owner.JSON.parse(JSON.stringify(options));
+		}
+	}
+	catch(e)
+	{
+		// closed or inaccessible opener: keep what we have
+	}
+	return options;
+}
+
+/**
  * Base class for things that have static options
  *
  * We keep static options separate and concatenate them in to allow for extra options without
@@ -177,7 +201,7 @@ export const StaticOptions = new class StaticOptionsType
 			// pending, wait for it
 			const promise = cache.then((response) =>
 			{
-				cache = cache_owner[cache_id] = response?.response[0].data || undefined;
+				cache = cache_owner[cache_id] = intoCacheRealm(response?.response[0].data) || undefined;
 
 				if (return_promise) return cache;
 
@@ -260,7 +284,7 @@ export const StaticOptions = new class StaticOptionsType
 				.then(options =>
 				{
 					// Need to clean the options because file may be key=>value, may have option list, may be mixed
-					cache_owner[file] = cleanSelectOptions(options) ?? [];
+					cache_owner[file] = intoCacheRealm(cleanSelectOptions(options) ?? []);
 					return cache_owner[file];
 				});
 		}
