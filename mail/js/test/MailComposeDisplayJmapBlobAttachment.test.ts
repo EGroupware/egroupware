@@ -9,14 +9,15 @@ import type {MailApp} from "../app";
  *
  * Root cause: displayJmapBlobAttachment() (mail/js/compose.ts) navigated a sized egw.openPopup()
  * directly to MailJmap.downloadBlobUrl()'s own result - for anything other than a PDF, that's a
- * BARE blob: URL of the raw file (downloadBlobUrl() only wraps PDF in a real HTML shell). A
- * plain NAVIGATION to a blob: URL (as opposed to a real `<a download>` click) falls back to the
- * blob's own opaque UUID as the save filename regardless of the underlying File's real .name -
- * same bug class already fixed elsewhere for a RECEIVED message's own attachments (tracker
- * #124541/#124932, getAttachmentViewUrl()'s own docblock) - this one compose-window call site
- * never got it. This also explains the ticket's OTHER symptom (a blank popup/tab opens
- * alongside the download): navigating a window to a blob: URL the browser can't render inline
- * just triggers a download inside that window's own context, leaving it empty.
+ * BARE blob: URL of the raw file (downloadBlobUrl() only returns a real, directly navigable page
+ * URL for a PDF - ticket #125641 - everything else is still a plain blob:). A plain NAVIGATION to
+ * a blob: URL (as opposed to a real `<a download>` click) falls back to the blob's own opaque
+ * UUID as the save filename regardless of the underlying File's real .name - same bug class
+ * already fixed elsewhere for a RECEIVED message's own attachments (tracker #124541/#124932,
+ * getAttachmentViewUrl()'s own docblock) - this one compose-window call site never got it. This
+ * also explains the ticket's OTHER symptom (a blank popup/tab opens alongside the download):
+ * navigating a window to a blob: URL the browser can't render inline just triggers a download
+ * inside that window's own context, leaving it empty.
  */
 
 function createFakeWidget(id : string, initial : any = '')
@@ -95,16 +96,16 @@ describe("MailCompose.displayJmapBlobAttachment() (ticket #126271)", () =>
 		assert.equal(anchor.download, "Bestellung.xlsx", "the real filename must be used, not left to the blob: URL's own opaque UUID");
 	});
 
-	it("still opens a PDF in a sized popup - downloadBlobUrl() already wraps it in a real HTML shell", async() =>
+	it("still opens a PDF in a sized popup - downloadBlobUrl() already returns a real, directly navigable URL", async() =>
 	{
-		const downloadBlobUrl = sinon.stub().resolves("blob:http://x/pdf-viewer-wrapper");
+		const downloadBlobUrl = sinon.stub().resolves("/egroupware/mail/jmap.php?download=1&accountId=1&blobId=blob1");
 		const {compose, egw} = createCompose(downloadBlobUrl);
 
 		await (compose as any).displayJmapBlobAttachment({
 			jmapProfileID : "1", jmapBlobId : "blob1", name : "Invoice.pdf", type : "application/pdf", tmp_name : "tmp2",
 		});
 
-		assert.isTrue(egw.openPopup.calledOnceWith("blob:http://x/pdf-viewer-wrapper", 800, 600, "maildisplayAttachment_tmp2"));
-		assert.isFalse(clickStub.called, "a PDF's own wrapper page already has its own working download link");
+		assert.isTrue(egw.openPopup.calledOnceWith("/egroupware/mail/jmap.php?download=1&accountId=1&blobId=blob1", 800, 600, "maildisplayAttachment_tmp2"));
+		assert.isFalse(clickStub.called, "a PDF's own real URL already has a working inline Content-Disposition - no click-to-download needed");
 	});
 });

@@ -4089,11 +4089,7 @@ class Imap extends Jmap\Base
 		}
 		else
 		{
-			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
-			$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
-			$bytes = $imap ? ($partId !== '' ?
-				self::fetchRawPart($imap, self::urlsafeB64Decode($mailboxB64), $uid, $partId) :
-				self::fetchRawMessage($imap, self::urlsafeB64Decode($mailboxB64), $uid)) : null;
+			$bytes = self::fetchGenericBlobBytes($accountId, $blobId, $name, $type);
 		}
 		if ($bytes === null)
 		{
@@ -4188,19 +4184,37 @@ class Imap extends Jmap\Base
 			$path = self::uploadPath(substr($blobId, strlen('upload:')));
 			return is_file($path) ? file_get_contents($path) : null;
 		}
+		return self::fetchGenericBlobBytes($accountId, $blobId);
+	}
+
+	/**
+	 * Backend-agnostic non-special blobId -> raw bytes: Stalwart's own opaque blobId via the real
+	 * JMAP client (Api\Mail\Imap\Jmap), or the shim's own self-describing "mailbox:uid:partId"
+	 * scheme via direct IMAP FETCH otherwise. Shared by download(), readUploadedBlob() and
+	 * EGroupware\Mail\Ui\AttachmentJmap::fetchBlobBytes() - this exact branch used to be
+	 * duplicated three times, with download()'s own copy alone missing this real-JMAP check (a
+	 * latent gap: a real Stalwart blobId reaching it fell into a nonsense mailbox:uid:partId parse
+	 * instead of ever reaching Stalwart at all - never hit in practice because nothing pointed a
+	 * real-JMAP account's OWN attachment links at this route before ticket #125641's native-PDF-
+	 * viewer follow-up).
+	 *
+	 * @param string $accountId
+	 * @param string $blobId
+	 * @param string $filename only used for a real-JMAP account - becomes part of the actual
+	 *  request URL sent to that JMAP server (RFC 8620 S6.2 downloadUrl {name}/{type} placeholders),
+	 *  not just local metadata
+	 * @param string $mimeType see $filename
+	 * @return ?string null if not found/resolvable
+	 */
+	public static function fetchGenericBlobBytes(string $accountId, string $blobId,
+		string $filename = 'attachment', string $mimeType = 'application/octet-stream') : ?string
+	{
 		$icServer = self::imapServer($accountId);
 		if ($icServer instanceof Api\Mail\Imap\Jmap)
 		{
-			// Stalwart's own opaque blobId (eg. an attachment already sitting on its blob store from
-			// a prior Email/get or upload) - never matches the shim-scheme parse below, so route it
-			// through the real JMAP download instead. Added (2026-08-31) for
-			// buildMailerFromEmailProperties()'s planned S/MIME sign/encrypt caller - this method and
-			// its only caller so far were shim-only (a real-JMAP account never reaches this class for
-			// its normal Email/set/EmailSubmission/set traffic, see class docblock), but a uniform
-			// sign/encrypt endpoint needs both backends' attachment bytes resolvable here.
 			try
 			{
-				return $icServer->jmapClient()->downloadBlob($blobId, 'attachment', 'application/octet-stream');
+				return $icServer->jmapClient()->downloadBlob($blobId, $filename, $mimeType);
 			}
 			catch (\Throwable $e)
 			{
@@ -4302,7 +4316,21 @@ class Imap extends Jmap\Base
 			$raw = $decoded;
 		}
 		$part->setContents($raw, ['encoding' => $encoding]);
-		return $part->getContents();
+		// ticket #125641 follow-up (2026-10-13, ralf: "it says binary, but is base64, some Exchange
+		// stupidity") - the heuristic above only ever covers a MISSING Content-Transfer-Encoding on
+		// a message/rfc822 part (ticket #125561); it does nothing for a part whose CTE header is
+		// PRESENT but simply WRONG (seen live: Exchange declaring "binary" on a bare whole-message
+		// PDF body that's still literal base64 TEXT) - getContents() above then applies 'binary's
+		// own no-op pass-through and returns that still-encoded text completely unchanged, for a
+		// blobId download that used to never hit this function at all (structureToHtml()'s own
+		// pre-#125641 fallback called BodyDecoding::decodeIfStillBase64() directly on the
+		// already-in-memory, already-correctly-decoded $structure instead - this blobId-download
+		// path is a SEPARATE, fresh IMAP fetch that never went through that same safety net).
+		// decodeIfStillBase64() is purely content-based (never trusts ANY declared encoding, right
+		// or wrong, missing or not) and a safe no-op for genuine binary - applying it unconditionally
+		// here, for every part/type, closes this gap in general rather than adding another
+		// type/header-specific special case next to the one above.
+		return Api\Mail\BodyDecoding::decodeIfStillBase64($part->getContents());
 	}
 
 	/**
@@ -4491,7 +4519,8 @@ class Imap extends Jmap\Base
 	 * @return string sanitized HTML body only (no document wrapper - callers still use
 	 *  mail_ui::get_email_header()/showBody() for that, unchanged page chrome)
 	 */
-	public static function structureToHtml(\Horde_Mime_Part $structure, string $htmlOptions='') : string
+	public static function structureToHtml(\Horde_Mime_Part $structure, string $htmlOptions='',
+		?string $rowId = null, ?string $blobId = null) : string
 	{
 		$textId = $structure->findBody('plain');
 		$htmlId = $structure->findBody('html');
@@ -4509,20 +4538,43 @@ class Imap extends Jmap\Base
 			// served with the right Content-Type) - this JMAP-native path returns an HTML string
 			// embedded into a srcdoc iframe instead (MailJmap.wrapDocument(), mail/js/jmap.ts), so
 			// it can't do a raw response the same way.
-			//
-			// A PDF specifically can NOT just be a data: URI here, unlike the image case below (or
-			// inlineCidImages()'s own data: URI use for a referenced image) - found live (ralf):
-			// Chrome's built-in PDF viewer flatly refuses to render a PDF from a data: URI at all,
-			// for either <embed> or <iframe>, confirmed via a minimal reproduction with no CSP/
-			// iframe-nesting involved (a plain top-level page, <embed src="data:application/pdf;
-			// base64,...">, shows only a blank/broken-plugin area) - only a blob: URL actually
-			// renders. A blob: URL can only be constructed client-side (URL.createObjectURL()), so
-			// this instead emits the base64 payload as a data-* attribute for preview.js (already
-			// loaded on both this srcdoc iframe and the classic full-page fallback - see
-			// MailJmap.wrapDocument()'s own docblock - so no separate wiring needed per context) to
-			// convert into a real blob: URL once the page loads.
 			if ($structure->getType() === 'application/pdf')
 			{
+				// ticket #125641 follow-up (2026-10-13, ralf): point the <embed> straight at the
+				// same real, session-authenticated mail.EGroupware\Mail\Ui.getAttachment URL the
+				// message's own attachment list already builds for this exact part - the browser's
+				// native viewer gets a real filename for its own Download button for free (its
+				// previous blob: URL, built from the data-bare-pdf-base64 attribute below, never
+				// carried one - same bug class as tracker #124541, just never fixed for THIS
+				// specific case). Only resolveBare() (the plain, non-S/MIME, non-TNEF caller) can
+				// supply $rowId/$blobId today - resolveSmime()/resolveTnef() still fall through to
+				// the data: blob: fallback below until a later pass extends this to their own,
+				// differently-shaped blobId schemes.
+				if ($rowId !== null && $blobId !== null)
+				{
+					$name = $structure->getName() ?: 'attachment.pdf';
+					$url = Api\Egw::link('/index.php', [
+						'menuaction' => 'mail.EGroupware\\Mail\\Ui.getAttachment',
+						'id' => $rowId,
+						'blobId' => $blobId,
+						'name' => $name,
+						'type' => 'application/pdf',
+					]);
+					return '<embed type="application/pdf" src="'.htmlspecialchars($url, ENT_QUOTES)
+						.'" style="width:100%;height:100vh;border:0">';
+				}
+				// A PDF specifically can NOT just be a data: URI here, unlike the image case below
+				// (or inlineCidImages()'s own data: URI use for a referenced image) - found live
+				// (ralf): Chrome's built-in PDF viewer flatly refuses to render a PDF from a data:
+				// URI at all, for either <embed> or <iframe>, confirmed via a minimal reproduction
+				// with no CSP/iframe-nesting involved (a plain top-level page, <embed
+				// src="data:application/pdf;base64,...">, shows only a blank/broken-plugin area) -
+				// only a blob: URL actually renders. A blob: URL can only be constructed client-side
+				// (URL.createObjectURL()), so this instead emits the base64 payload as a data-*
+				// attribute for preview.js (already loaded on both this srcdoc iframe and the
+				// classic full-page fallback - see MailJmap.wrapDocument()'s own docblock - so no
+				// separate wiring needed per context) to convert into a real blob: URL once the page
+				// loads.
 				$bytes = Api\Mail\BodyDecoding::decodeIfStillBase64($structure->getContents());
 				return '<embed type="application/pdf" data-bare-pdf-base64="'.base64_encode($bytes)
 					.'" style="width:100%;height:100vh;border:0">';
@@ -4656,7 +4708,18 @@ class Imap extends Jmap\Base
 		{
 			throw new \Exception("Message '$uid' not found in '$mailbox'!");
 		}
-		return self::structureToHtml(\Horde_Mime_Part::parseMessage($raw), $htmlOptions);
+		// same wire-format Ui::generateRowID()/the shim's own blobId scheme already use elsewhere
+		// (mail_ui is the app layer, not reachable from here - see class docblock on why this layer
+		// never calls into it) - gives structureToHtml()'s bare-PDF branch enough to build a real,
+		// directly-navigable attachment URL instead of inlining the whole PDF as base64.
+		$rowId = 'mail::'.trim($GLOBALS['egw_info']['user']['account_id']).'::'.$accountId.'::'.
+			base64_encode($mailbox).'::'.$uid;
+		$structure = \Horde_Mime_Part::parseMessage($raw);
+		// urlsafeB64Encode(), NOT plain base64_encode() - this is the blobId scheme (see
+		// bodyPartToJmap()), a DIFFERENT encoding than the rowId's own folder segment above
+		// (Mail\Imap::splitRowID() decodes that one with plain base64_decode()).
+		$blobId = self::urlsafeB64Encode($mailbox).':'.$uid.':'.$structure->getMimeId();
+		return self::structureToHtml($structure, $htmlOptions, $rowId, $blobId);
 	}
 
 	/**
@@ -4737,8 +4800,13 @@ class Imap extends Jmap\Base
 	 * @return ?string null if the blobId is malformed, the message/part is no longer found, or
 	 *  decryption fails (eg. the session-cached passphrase expired since the body was shown) -
 	 *  download() already treats a null return as a plain 404, same as every other scheme
+	 *
+	 * Public (not just download()'s own private helper) - ticket #125641's native-PDF-viewer
+	 * follow-up also needs this from EGroupware\Mail\Ui\AttachmentJmap::fetchBlobBytes(), the
+	 * app-layer blob fetcher mail.EGroupware\Mail\Ui.getAttachment uses for the session-cookie-
+	 * authenticated (not mail/jmap.php's own route) attachment-view URL.
 	 */
-	private static function smimeAttachmentBytes(string $blobId) : ?string
+	public static function smimeAttachmentBytes(string $blobId) : ?string
 	{
 		$segments = explode(':', substr($blobId, strlen('smime:')), 4);
 		if (count($segments) !== 4)

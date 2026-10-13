@@ -1119,8 +1119,8 @@ export class MailCompose
 		const url = await this.app.jmap.downloadBlobUrl(attgrid.jmapProfileID, attgrid.jmapBlobId, attgrid.name, attgrid.type);
 		if ((attgrid.type || '').toLowerCase() === 'application/pdf')
 		{
-			// downloadBlobUrl() wrapped this in a real HTML shell (pre-rendered pages + its own
-			// visible, working download link) - a genuine page, fine to navigate a popup to.
+			// downloadBlobUrl() returned a real, session-authenticated URL (ticket #125641) - a
+			// genuine page (the browser's own native PDF viewer), fine to navigate a popup to.
 			egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
 			return;
 		}

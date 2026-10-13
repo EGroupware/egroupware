@@ -136,6 +136,30 @@ class ResolveAttachmentBytesTest extends TestCase
 		$this->assertSame('a real shim-shaped upload blob', $result['attachment']);
 		$this->assertFalse($handler->classicFetchCalled);
 	}
+
+	/**
+	 * Ticket #125641 follow-up: AttachmentJmap::fetchBlobBytes() gained its own 'smime:' branch
+	 * (delegating to Imap::smimeAttachmentBytes(), made public for exactly this) so the native-
+	 * PDF-viewer URL mail.EGroupware\Mail\Ui.getAttachment builds for an S/MIME-decrypted
+	 * attachment actually resolves, instead of mis-parsing the 'smime:'-prefixed blobId as the
+	 * generic mailbox:uid:partId shape. A malformed one (same DB-free early-return
+	 * SmimeAttachmentsTest::testMalformedBlobIdReturnsNullWithoutTouchingAnyBackend already covers
+	 * for smimeAttachmentBytes() directly) is enough to prove the DISPATCH reaches that method at
+	 * all - a real, resolvable one needs a real decrypted DB-backed message (see that test file's
+	 * own docblock for why this is live-verified instead, same reasoning as every other
+	 * DB/IMAP-entangled branch here).
+	 */
+	public function testMalformedSmimeBlobIdFallsThroughToClassicFetch() : void
+	{
+		$handler = $this->handler();
+
+		$result = $handler->resolveAttachmentBytes('1', 'uid123', 'INBOX', '2', false,
+			'smime:onlyOneSegment', 'name.pdf', 'application/pdf');
+
+		$this->assertTrue($handler->classicFetchCalled,
+			'an unresolvable smime: blobId must fall through to the classic fetch, same as any other unresolvable blobId');
+		$this->assertSame(['uid123', 'INBOX', '2', false], $handler->classicFetchArgs);
+	}
 }
 
 /**

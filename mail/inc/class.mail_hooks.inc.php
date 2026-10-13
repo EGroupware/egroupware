@@ -911,23 +911,35 @@ class mail_hooks
 		// a new csp-object-src one - a new hook location needs an admin to re-register hooks
 		// (Admin > Configuration/Hooks) before it does anything at all on an EXISTING install,
 		// which this fix can't assume happened (ralf, 2026-09-15). Needed for
-		// MailJmap.wrapPdfViewerWithDownload()'s (mail/js/jmap.ts) <embed> to load its own blob:
-		// content at all - that wrapper page is itself a blob: document (opened when clicking to
-		// view a PDF attachment on a JMAP-native/shim account), which INHERITS the CSP of
-		// whichever real page navigated to it; object-src is otherwise never set at all anywhere,
-		// falling back to the global default-src 'none' and blocking the embed outright. Found
-		// live 2026-09-15 (ralf): "Loading plugin data from 'blob:...' violates ... default-src
-		// 'none' ... object-src was not explicitly set". CSP is only actually enforced from the
-		// very FIRST top-level page load of a session - mail's own later menuaction calls run via
-		// AJAX template-fetches, far too late to affect an already-loaded document's enforced
-		// policy - which is why this needs to be a hook (guaranteed to run on that first load) at
-		// all, the same reason this connect-src grant already was one.
+		// MailJmap.resolveBarePdfEmbed()'s (mail/js/jmap.ts) <embed data-bare-pdf-base64> - ticket
+		// #125171, "whole message is one PDF, no separate body" - to load its own blob: content at
+		// all: that embed lives inside wrapDocument()'s srcdoc iframe, which ALREADY repeats this
+		// same object-src/frame-src blob: grant in its own per-document <meta> CSP, but a srcdoc
+		// iframe's effective policy is the INTERSECTION of that meta tag AND whatever CSP the
+		// TOP-LEVEL page itself was served with (this hook's own target) - without this grant here
+		// too, the top-level page's own (otherwise blob:-less) object-src/frame-src silently
+		// narrows the iframe's own more permissive meta tag right back down, blocking the embed
+		// regardless of what wrapDocument() itself says. Briefly remained removed (ticket #125641
+		// follow-up, 2026-10-13) in the mistaken belief this was needed only for that ticket's own
+		// (now-deleted) wrapPdfViewerWithDownload() wrapper page - found live the same day
+		// (ralf: "PDF as only part - no body.eml" rendered a correctly-sized, correctly-typed,
+		// correctly-blob:-sourced <embed> that stayed completely blank) that resolveBarePdfEmbed()
+		// depends on this exact same page-wide grant too, unrelated to and pre-dating #125641
+		// entirely (ticket #125171). object-src is otherwise never set at all anywhere, falling
+		// back to the global default-src 'none' and blocking the embed outright. Found live
+		// 2026-09-15 (ralf): "Loading plugin data from 'blob:...' violates ... default-src 'none'
+		// ... object-src was not explicitly set". CSP is only actually enforced from the very FIRST
+		// top-level page load of a session - mail's own later menuaction calls run via AJAX
+		// template-fetches, far too late to affect an already-loaded document's enforced policy -
+		// which is why this needs to be a hook (guaranteed to run on that first load) at all, the
+		// same reason this connect-src grant already was one.
 		Api\Header\ContentSecurityPolicy::add('object-src', ['blob:']);
 		// Et2Description.wrapLink()'s <a target="..."> for this same attachment link apparently
 		// doesn't always end up a genuine new top-level tab (found live 2026-09-15, ralf: the very
 		// next CSP violation was frame-src, not a second object-src one) - whatever the exact
-		// widget/template wiring, the wrapper page can end up navigated as a FRAME too, which needs
-		// its own blob: grant same as object-src above, for the identical reason.
+		// widget/template wiring, a <embed data-bare-pdf-base64>'s own blob: can end up navigated as
+		// a FRAME too in some engines, which needs its own blob: grant same as object-src above, for
+		// the identical reason.
 		Api\Header\ContentSecurityPolicy::add('frame-src', ['blob:']);
 
 		// Safari/WebKit categorizes the <embed>'s own blob: fetch under connect-src, not

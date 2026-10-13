@@ -126,6 +126,66 @@ class StructureToHtmlTest extends \PHPUnit\Framework\TestCase
 			'a data: URI src would never render in Chrome for a PDF embed - must stay a data-* attribute for preview.js to resolve into a blob: URL instead');
 	}
 
+	/**
+	 * Ticket #125641 follow-up (2026-10-13, found live by ralf testing a real "whole message is
+	 * one PDF" fixture): when the caller CAN supply a rowId/blobId (resolveBare(), the plain
+	 * non-S/MIME, non-TNEF case), the <embed> points straight at the same real, session-
+	 * authenticated mail.EGroupware\Mail\Ui.getAttachment URL the message's own attachment list
+	 * already uses for this exact part - the browser's native viewer gets a real filename for its
+	 * own Download button this way (a bare blob: URL, built from the data-bare-pdf-base64
+	 * attribute the OTHER test above covers, never carried one).
+	 *
+	 * Api\Egw::link() needs $GLOBALS['egw']->framework - stubbed minimally here (save/restore
+	 * around the one call) rather than pulling in a full LoggedInTest/AppTest DB+session bootstrap
+	 * for this one assertion, keeping this file's own "no database, session or IMAP connection
+	 * required" promise intact for every other test in it.
+	 */
+	public function testBarePdfWithRowIdAndBlobIdEmbedsARealUrlInstead()
+	{
+		$originalEgw = $GLOBALS['egw'] ?? null;
+		$captured = null;
+		$GLOBALS['egw'] = new class {
+			public $framework;
+			public function __construct()
+			{
+				$this->framework = new class {
+					public $captured;
+					public function link($url, $extravars = '', $link_app = null)
+					{
+						$this->captured = [$url, $extravars];
+						return $url.'?'.http_build_query($extravars);
+					}
+				};
+			}
+		};
+
+		try
+		{
+			$pdfBytes = "%PDF-1.4 fake but stable bytes for the test";
+			$part = new \Horde_Mime_Part();
+			$part->setType('application/pdf');
+			$part->setName('Bestellung 4500195131.pdf');
+			$part->setContents($pdfBytes);
+
+			$html = JmapShim::structureToHtml($part, '', 'mail::1::42::SU5CT1g=::123', 'SU5CT1g=:123:1');
+			$captured = $GLOBALS['egw']->framework->captured;
+		}
+		finally
+		{
+			$GLOBALS['egw'] = $originalEgw;
+		}
+
+		$this->assertStringContainsString('<embed ', $html);
+		$this->assertStringNotContainsString('data-bare-pdf-base64', $html,
+			'the whole point is to NOT inline the bytes any more, once a real URL can be built');
+		$this->assertSame('/index.php', $captured[0]);
+		$this->assertSame('mail.EGroupware\\Mail\\Ui.getAttachment', $captured[1]['menuaction']);
+		$this->assertSame('mail::1::42::SU5CT1g=::123', $captured[1]['id']);
+		$this->assertSame('SU5CT1g=:123:1', $captured[1]['blobId']);
+		$this->assertSame('Bestellung 4500195131.pdf', $captured[1]['name']);
+		$this->assertSame('application/pdf', $captured[1]['type']);
+	}
+
 	/** Same as the bare-PDF case, for a message whose entire content is a single image instead. */
 	public function testBareImageMessageEmbedsItselfAsTheBody()
 	{

@@ -120,23 +120,32 @@ describe("MailApp.resolveAttachmentViewUrls()", () =>
 	{
 		// Tracker #124932 (real customer, acc_id=42): clicking an .xlsx attachment's name
 		// downloaded it as a random blob-UUID filename instead of its real name - same bug class
-		// as tracker #124541, which was fixed for PDF only. Leaving these on the classic
-		// mail_ui::getAttachment() URL (Api\Header\Content::safe() sets a real
-		// Content-Disposition header there) sidesteps the blob:-URL-filename problem entirely.
+		// as tracker #124541. Leaving these on the classic mail_ui::getAttachment() URL
+		// (Api\Header\Content::safe() sets a real Content-Disposition header there) sidesteps the
+		// blob:-URL-filename problem entirely.
 		const {app, requested} = createMailApp();
 		const items = [
 			{blobId: 'b1', filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
 			{blobId: 'b2', filename: 'archive.zip', type: 'application/zip'},
-			{blobId: 'b3', filename: 'doc.pdf', type: 'application/pdf'},
 		];
 
 		const result = await invoke(app, ROW_ID, items);
 
-		assert.isTrue(result, "the PDF alone is still eligible, so overall result is true");
+		assert.isFalse(result);
 		assert.isUndefined(items[0].mime_url, "xlsx must not get a client-side blob mime_url");
 		assert.isUndefined(items[1].mime_url, "zip must not get a client-side blob mime_url");
-		assert.equal(items[2].mime_url, 'blob:b3', "pdf still resolves client-side");
-		assert.deepEqual(requested.map(r => r.blobId), ['b3']);
+		assert.isEmpty(requested);
+	});
+
+	it("leaves PDF on the classic server mime_url too (ticket #125641) - the browser's own native " +
+		"viewer needs the real server URL for fillable forms and working print, not a client-side blob", async() =>
+	{
+		const {app, requested} = createMailApp();
+
+		const result = await invoke(app, ROW_ID, [{blobId: 'b1', filename: 'doc.pdf', type: 'application/pdf'}]);
+
+		assert.isFalse(result);
+		assert.isEmpty(requested);
 	});
 
 	it("leaves text/csv on the classic server mime_url too - many browsers download it rather than view it inline", async() =>
