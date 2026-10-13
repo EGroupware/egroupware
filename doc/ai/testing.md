@@ -21,7 +21,9 @@ After editing code, follow this order:
 3. If blocked (environment, missing service, permissions, etc.), record the exact blocker and command.
 4. If there is no direct automated coverage for the changed area, state that explicitly and run the closest relevant
    tests available.
-5. Report results in the final response using the format below (`Tests run` / `Not run`).
+5. For user-facing changes (UI, templates, CSS, client-side behaviour), verify the change in a browser too - see
+   "Verify user-facing changes in the browser" below.
+6. Report results in the final response using the format below (`Tests run` / `Verified in browser` / `Not run`).
 
 When no direct tests exist, avoid claiming full verification; call out residual risk and suggest the most relevant
 manual check or follow-up test.
@@ -313,6 +315,22 @@ For writing/reviewing timing-sensitive tests around `Et2Datagrid`/`Et2Nextmatch`
 
 ## Browser / manual verification
 
+### Verify user-facing changes in the browser
+
+Passing unit tests, a clean type-check, or reading the code does not show that a user-facing change works. Before
+claiming success on a change a user can see or click, exercise it in a real browser when one is available:
+
+* Load the affected page on the dev instance, perform the user action the change is about, and check the visible
+  result - not just that no error was thrown. Check the browser console for new errors.
+* For a bug fix, first reproduce the symptom, then confirm it is gone. If it cannot be reproduced, say so rather than
+  presenting the change as a fix.
+* After changing JS/CSS/templates, hard-reload so a stale cached chunk or template is not what you are testing.
+* Make sure the automation tab is visible and use a real mobile emulation where relevant (both described below).
+* If no browser can be used (no dev instance, login needed, hidden tab you cannot focus), do not claim the change
+  works. Say it was not verified in a browser, give the reason, and name the manual check the user should run.
+
+### Mobile viewport
+
 When a checklist or task calls for verifying UI behavior "at mobile viewport" or "on mobile":
 
 * Shrinking a desktop browser window's width is **not** a mobile test, even at phone-sized dimensions (e.g.
@@ -381,8 +399,11 @@ When reporting test results, include:
 Tests run:
 - <command or summary>
 
+Verified in browser:
+- <what was exercised and what was observed> (omit for changes with no user-facing effect)
+
 Not run:
-- <reason>
+- <reason, including any browser check that could not be done>
 ```
 
 Examples:
