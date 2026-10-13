@@ -228,8 +228,6 @@ abstract class Ajax extends Api\Framework
 			}
 			self::includeJS($path.'?'.filemtime(EGW_SERVER_ROOT.$path));
 
-			Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
-
 			$extra['navbar-apps'] = $this->get_navbar_apps($_SERVER['REQUEST_URI']);
 		}
 		// for an url WITHOUT cd=yes --> load framework if not yet loaded:
@@ -574,10 +572,6 @@ abstract class Ajax extends Api\Framework
 
 	/**
 	 * Set sidebox content in self::$data['setSidebox']
-	 *
-	 * We store in the session the md5 of each sidebox menu already send to client.
-	 * If the framework get reloaded, that list gets cleared in header();
-	 * Most apps never change sidebox, so we not even need to generate it more then once.
 	 */
 	function do_sidebox()
 	{
@@ -594,26 +588,28 @@ abstract class Ajax extends Api\Framework
 			//error_log(__METHOD__."() app=$app, menuaction=$_GET[menuaction], PHP_SELF=$_SERVER[PHP_SELF] --> sidebox request ignored");
 			return;
 		}
-		$md5_session = Api\Cache::getSession(__CLASS__,'sidebox_md5');
 
 		//Set the sidebox content
 		$sidebox = $this->get_sidebox($app);
 		$target = $_REQUEST['fw_target'] ?? $app;
 		$md5 = md5(json_encode($sidebox));
 
-		if($md5_session[$target] !== $md5)
+		// always (re-)send the sidebox: we used to skip this when its md5 matched a copy already
+		// recorded in the session, assuming the client must still have it - but that assumption
+		// breaks for any app still opened via a plain (non-ajax) GET (eg. phpbrain's iframe/GET
+		// based templates, ticket #126081): the client only re-fetches/re-renders the sidebox when
+		// it is actually sent, so closing and reopening such an app within the same session could
+		// leave it with a stale/incomplete sidebox until a full reload. kdots keeps each app's
+		// sidebox in memory and re-renders on every setSidebox() call (no client-side caching of
+		// its own), so there is no cost to always sending it.
+		if (Api\Json\Request::isJSONRequest())
 		{
-			//error_log(__METHOD__."() header changed md5_session[$app]!=='$md5' --> setting it on self::\$extra[setSidebox]");
-			$md5_session[$target] = $md5;    // update md5 in session
-			Api\Cache::setSession(__CLASS__, 'sidebox_md5', $md5_session);
-			self::$extra['setSidebox'] = array($target, $sidebox, $md5);
-		}
-		elseif(Api\Json\Request::isJSONRequest())
-		{
-			// Requested after initial load via JSON, send it
 			Api\Json\Response::get()->apply('framework.setSidebox', array($target, $sidebox, $md5));
 		}
-		//else error_log(__METHOD__."() md5_session[$app]==='$md5' --> nothing to do");
+		else
+		{
+			self::$extra['setSidebox'] = array($target, $sidebox, $md5);
+		}
 	}
 
 	/**
@@ -1198,7 +1194,6 @@ abstract class Ajax extends Api\Framework
 			// flag to indicate target of output e.g. _tab
 			if ($_GET['fw_target'])
 			{
-				Api\Cache::unsetSession(__CLASS__,'sidebox_md5');	// sideboxes need to be send again
 				$GLOBALS['egw']->framework->set_extra('fw','target',$_GET['fw_target']);
 			}
 
