@@ -55,6 +55,7 @@ allow users to create further identities	mail	en	Allow users to create further i
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	en	Allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
+always allow external sources from %1 and load content from %2	mail	en	Always allow external sources from %1 and load content from %2
 always respond / auto-responder	mail	en	Always respond / auto-responder
 always show html emails	mail	en	Always show HTML emails
 always show notifiction	mail	en	Always show notification
@@ -396,6 +397,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+load content from %1 this time only	mail	en	Load content from %1 this time only
 lookup	mail	en	Lookup
 lookup (mailbox is visible to list/lsub commands, subscribe mailbox)	mail	en	Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
 low priority	mail	en	Low priority

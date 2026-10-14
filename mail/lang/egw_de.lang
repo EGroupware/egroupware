@@ -54,6 +54,7 @@ allow users to create further identities	mail	de	Benutzer dürfen weitere Identi
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	de	Ermöglicht es einem Benutzer, Ordner und E-Mails zu lesen, zu schreiben und zu erstellen, darin zu posten, Nachrichten anzuhängen und Nachrichten zu löschen.
 always	mail	de	Immer
 always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
+always allow external sources from %1 and load content from %2	mail	de	Erlaube externe Bildquellen von %1 und lade Inhalte von %2
 always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
@@ -390,6 +391,7 @@ learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da
 less than	mail	de	kleiner als
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern).
+load content from %1 this time only	mail	de	Inhalte von %1 einmalig laden
 lookup	mail	de	Sichtbar
 low priority	mail	de	Niedrige Priorität
 mail	common	de	E-Mail

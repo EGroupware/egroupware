@@ -3941,6 +3941,12 @@ export class MailApp extends EgwApp
 				return;
 			}
 			const host = getUrlParts(blocked_alts[0]);
+			// every host "Show"/"Allow" loads content from: the blocked images' and the hosts of
+			// a JMAP-native body's other blocked content (MailJmap.wrapDocument())
+			const blocked_hosts = [...new Set([
+				...blocked_alts.map((alt) => MailJmap.urlHost(alt.split('[blocked external image:')[1].replace(/\]$/, ''))),
+				...(_node.querySelector('[data-blocked-hosts]')?.getAttribute('data-blocked-hosts')?.split(' ') ?? []),
+			])].filter(Boolean).join(', ');
 			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
 			for (const alt of blocked_alts)
 			{
@@ -3978,7 +3984,7 @@ export class MailApp extends EgwApp
 
 			const allowBtn = document.createElement('button');
 			allowBtn.textContent = this.egw.lang('Allow');
-			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
+			allowBtn.title = this.egw.lang('Always allow external sources from %1 and load content from %2', host.domain, blocked_hosts);
 			allowBtn.addEventListener('click', () =>{
 				container.remove();
 				// only the domain the button's title names, not eg. a tracker's domain of another image
@@ -3996,7 +4002,7 @@ export class MailApp extends EgwApp
 
 			const showBtn = document.createElement('button');
 			showBtn.textContent = this.egw.lang('Show');
-			showBtn.title = this.egw.lang('Show them this time only');
+			showBtn.title = this.egw.lang('Load content from %1 this time only', blocked_hosts);
 			showBtn.addEventListener('click', () =>
 			{
 				container.remove();

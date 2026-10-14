@@ -205,6 +205,25 @@ describe("MailApp.resolveExternalImages()", () =>
 		return doc;
 	}
 
+	/**
+	 * "Show" and "Allow" load content from every blocked host, not just the one "Allow" saves,
+	 * so both titles name them all: the blocked images' hosts and a JMAP-native body's
+	 * data-blocked-hosts (CSS backgrounds etc.), each once.
+	 */
+	it("names every host Show and Allow load content from in their titles", () =>
+	{
+		const app = createMailApp();
+		const doc = jmapBodyDocument('https://claude.ai/images/email/hand_wave.gif',
+			'https://example.org/photo.png', 'https://tracker.example.com/pixel.gif', 'https://example.org/other.png');
+		doc.body.setAttribute('data-blocked-hosts', 'claude.ai tracker.example.com');
+		app.resolveExternalImages(doc);
+		const title = (label : string) => (Array.from(doc.querySelectorAll('button'))
+			.find((btn) => btn.textContent === label) as HTMLElement).title;
+
+		assert.equal(title('Allow'), 'Always allow external sources from %1 and load content from %2 example.org example.org, tracker.example.com, claude.ai');
+		assert.equal(title('Show'), 'Load content from %1 this time only example.org, tracker.example.com, claude.ai');
+	});
+
 	function clickButton(app : MailApp, doc : Document, label : string)
 	{
 		Array.from(doc.querySelectorAll('button')).find((btn) => btn.textContent === app.egw.lang(label))!.click();

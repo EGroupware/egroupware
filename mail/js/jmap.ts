@@ -4438,6 +4438,23 @@ export class MailJmap
 	private static readonly BLOCKED_IMAGE_MARKER = ' [blocked external image:';
 
 	/**
+	 * Host (incl. port) of a url, as the allowExternalDomains preference stores it
+	 *
+	 * A relative url is resolved against the page, as the body document loads it from there.
+	 */
+	public static urlHost(url : string) : string
+	{
+		try
+		{
+			return new URL(url.trim(), window.location.href).host;
+		}
+		catch (e)
+		{
+			return url.trim().replace(/^(https?:)?\/\//i, '').split(/[/?#]/)[0];
+		}
+	}
+
+	/**
 	 * Which urls of a message body the 'allowExternalIMGs' / 'allowExternalDomains' preferences
 	 * block, mirroring HtmLawed's `($allowIMGs != 1 && !in_array($domain, $domains)) || $isHttp`:
 	 * a plain http: url is always blocked, regardless of preference/allowlist, so it only ever
@@ -4518,15 +4535,16 @@ export class MailJmap
 	}
 
 	/**
-	 * First url the external-content CSP blocks, which is not an already deferred `<img src>`.
+	 * Urls the external-content CSP blocks, which are not an already deferred `<img src>`.
 	 *
 	 * Gives MailApp.resolveExternalImages() something to offer "Show" for, as eg. a body whose
-	 * only external content is a CSS background would otherwise be blocked silently.
+	 * only external content is a CSS background would otherwise be blocked silently, and the hosts
+	 * "Show"/"Allow" would load content from.
 	 * Only used for the banner, the CSP blocks those urls whether they are detected here or not.
 	 *
-	 * @return blocked url or null
+	 * @return blocked urls in document order, without duplicates
 	 */
-	private findBlockedExternalUrl(body : string) : string | null
+	private findBlockedExternalUrls(body : string) : string[]
 	{
 		const isBlocked = this.externalUrlFilter();
 		const doc = new DOMParser().parseFromString(body, 'text/html');
@@ -4536,6 +4554,7 @@ export class MailJmap
 		];
 		const srcsetUrls = (srcset : string) => srcset.split(',').map((candidate) => candidate.trim().split(/\s+/)[0]);
 
+		const blocked = new Set<string>();
 		for (const element of Array.from(doc.querySelectorAll('*')))
 		{
 			const urls : string[] = [];
@@ -4566,13 +4585,9 @@ export class MailJmap
 						break;
 				}
 			}
-			const blocked = urls.find(isBlocked);
-			if (blocked)
-			{
-				return blocked;
-			}
+			urls.filter(isBlocked).forEach((url) => blocked.add(url));
 		}
-		return null;
+		return [...blocked];
 	}
 
 	/**
@@ -4710,6 +4725,7 @@ export class MailJmap
 			}
 		});
 		doc.body.removeAttribute('data-blocked-external');
+		doc.body.removeAttribute('data-blocked-hosts');
 
 		const meta = doc.querySelector('meta[http-equiv="Content-Security-Policy"]');
 		meta?.setAttribute('content', meta.getAttribute('content')
@@ -4781,10 +4797,12 @@ export class MailJmap
 		const csp = "frame-src " + (forMailvelope ? "'self'" : `blob: ${ownOrigin}`) + "; " +
 			"connect-src 'none'; manifest-src 'none'; script-src 'none'; object-src blob: " + ownOrigin + "; " +
 			this.externalContentCsp(false);
-		// tells MailApp.resolveExternalImages() to offer "Show" for content the CSP blocks
-		const blockedUrl = this.findBlockedExternalUrl(body);
-		const bodyAttrs = blockedUrl ? ` data-blocked-external="${blockedUrl.replace(/&/g, '&amp;')
-			.replace(/"/g, '&quot;').replace(/</g, '&lt;')}"` : '';
+		// tells MailApp.resolveExternalImages() to offer "Show" for content the CSP blocks,
+		// and which hosts that would load content from
+		const blockedUrls = this.findBlockedExternalUrls(body);
+		const escapeAttr = (value : string) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+		const bodyAttrs = blockedUrls.length ? ` data-blocked-external="${escapeAttr(blockedUrls[0])}"` +
+			` data-blocked-hosts="${escapeAttr([...new Set(blockedUrls.map(MailJmap.urlHost))].join(' '))}"` : '';
 
 		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
 			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
