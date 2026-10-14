@@ -494,7 +494,7 @@ class Link extends Link\Storage
 		{
 			return self::attach_file($app1,$id1,$id2,$remark);
 		}
-		$link_id = Link\Storage::link($app1,$id1,$app2,$id2,$remark,$owner);
+		$link_id = Link\Storage::link($app1,$id1,$app2,$id2,$remark,$owner,$lastmod);
 
 		if (!($no_notify&2)) self::notify('link',$app2,$id2,$app1,$id1,$link_id);
 		if (!($no_notify&1)) self::notify('link',$app1,$id1,$app2,$id2,$link_id);
