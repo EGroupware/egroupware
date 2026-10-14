@@ -155,6 +155,14 @@ export class Et2Email
 	 */
 	@property({type: Number, reflect: true}) rows;
 
+	/**
+	 * Click handler for individual address tags instead of the widget as a whole, called with
+	 * (event, tag) - tag.value is the clicked address.  Clicks on the tag's own contact avatar or
+	 * "add contact" button keep their own meaning and do not reach it.
+	 */
+	@property({type: Function})
+	onTagClick : any;
+
 	protected currentOption : SlOption;
 	protected currentTag : Et2EmailTag;
 
@@ -1169,6 +1177,17 @@ export class Et2Email
 		`;
 	}
 
+	protected handleTagClick = (event : MouseEvent) =>
+	{
+		if(typeof this.onTagClick != "function" ||
+			event.composedPath().some(node => ["et2-button-icon", "et2-lavatar"].includes((<Element>node).localName)))
+		{
+			return;
+		}
+		event.stopPropagation();
+		this.onTagClick(event, event.currentTarget);
+	};
+
 	tagsTemplate()
 	{
 		return html`${keyed(this._valueUID, map(this.value, (value, index) => this.tagTemplate(value)))}`;
@@ -1196,6 +1215,7 @@ export class Et2Email
                     @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, value)}
                     @mousedown=${(e) => {this._cancelOpen = true;}}
                     @dblclick=${(e) => {e.target.startEdit();}}
+                    @click=${typeof this.onTagClick == "function" ? this.handleTagClick : nothing}
                     @change=${this.handleTagChange}
             >
             </et2-email-tag>`;
