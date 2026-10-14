@@ -272,6 +272,75 @@ describe("Tags", () =>
 		assert.notInclude(element.value, "not-an-email", "Invalid address was accepted");
 		assert.include(element.value, "one@example.com", "Original address was not put back");
 	});
+
+	describe("onTagClick", () =>
+	{
+		it("is called with the event and the clicked tag", async() =>
+		{
+			const handler = sinon.spy();
+			element.onTagClick = handler;
+			await element.updateComplete;
+
+			element._tags[1].dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+
+			assert.isTrue(handler.calledOnce, "Handler was not called exactly once");
+			assert.instanceOf(handler.firstCall.args[0], MouseEvent);
+			assert.strictEqual(handler.firstCall.args[1], element._tags[1], "Handler did not get the clicked tag");
+			assert.equal(handler.firstCall.args[1].value, "two@example.com");
+		});
+
+		it("is not called for a click on the tag's add-contact button", async() =>
+		{
+			const handler = sinon.spy();
+			element.onTagClick = handler;
+			await element.updateComplete;
+
+			const tag = element._tags[0];
+			// The button's own click handler opens the add-contact dialog via egw().open()
+			const open = sinon.spy();
+			sinon.stub(tag, "egw").returns({...window.egw, open});
+			await tag.updateComplete;
+			// Prefix is rendered once the contact lookup resolves
+			let button = null;
+			for(let i = 0; i < 20 && !button; i++)
+			{
+				button = tag.shadowRoot.querySelector("et2-button-icon");
+				button || await new Promise(resolve => setTimeout(resolve, 25));
+			}
+			assert.exists(button, "Could not find the tag's add-contact button");
+
+			button.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+
+			assert.isTrue(open.calledOnce, "Add-contact button lost its own action");
+			assert.isFalse(handler.called, "Clicking the add-contact button also triggered onTagClick");
+		});
+
+		/**
+		 * The contact avatar only reacts to mousedown, so its click still bubbles up to the tag
+		 * and has to be told apart from a click on the address itself.
+		 */
+		it("is not called for a click on the tag's contact avatar", async() =>
+		{
+			const handler = sinon.spy();
+			element.onTagClick = handler;
+			await element.updateComplete;
+
+			const tag = element._tags[0];
+			const avatar = document.createElement("et2-lavatar");
+			tag.shadowRoot.appendChild(avatar);
+
+			avatar.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+
+			assert.isFalse(handler.called, "Clicking the contact avatar also triggered onTagClick");
+		});
+
+		it("does nothing without a handler", async() =>
+		{
+			assert.isUndefined(element.onTagClick);
+			element._tags[0].dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+			assert.sameMembers(element.value, ["one@example.com", "two@example.com"]);
+		});
+	});
 });
 
 // Et2Email is a tag-based, always-multi-value widget - get_value() is an array even with a
