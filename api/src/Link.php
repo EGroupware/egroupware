@@ -871,17 +871,25 @@ class Link extends Link\Storage
 
 		$result = self::exec($method, array($pattern, &$options));
 
-		if (!isset($options['total']))
+		// An app that pages itself has to report how many matches there are, as that can no
+		// longer be counted from the one page it returned. One that does not has returned
+		// everything it found and still needs paging here - but doing it to a page an app already
+		// took would cut a second window out of it, which for anything but the first page leaves
+		// nothing at all.
+		$paged_by_app = isset($options['total']);
+		if (!$paged_by_app)
 		{
-		       $options['total'] = count($result);
+			$options['total'] = count($result);
 		}
 		if (isset($options['exclude']))
 		{
 			$result = array_diff_key($result, array_flip($options['exclude']));
 		}
-		if (is_array($result) && (isset($options['start']) || (isset($options['num_rows']) && count($result) > $options['num_rows'])))
+		// more rows than asked for proves it did not page, whatever it reported
+		if (is_array($result) && (!$paged_by_app || count($result) > $options['num_rows']) &&
+			(isset($options['start']) || count($result) > $options['num_rows']))
 		{
-			$result = array_slice($result, $options['start'], (isset($options['num_rows']) ? $options['num_rows'] : count($result)), true);
+			$result = array_slice($result, (int)($options['start'] ?? 0), $options['num_rows'], true);
 		}
 
 		return $result;
