@@ -521,42 +521,20 @@ EOT, $this->header([
 	 *
 	 * Existing event of given $cat_id will be queried before and deleted, if they are no longer in the imported file.
 	 *
-	 * @param string|null $etag
+	 * Unchanged ics files are detected by their ETag and by a hash of their content, as many servers have NO or
+	 * an unreliable ETag, which changes with every request (eg. if the file contains a generated timestamp).
+	 *
+	 * @param string|null $etag sync-token: ETag and/or hash of the content of the last sync, on return the new one
 	 * @param array $modifications
 	 * @return array|void
 	 * @throws \JsonException
 	 */
 	protected function sync_calendar_get(?string &$etag, array $modifications)
 	{
-		// check for an ics-file with Content-Type: text/calendar
-		if (!empty($etag))
+		// fetch the ics-file, returns null, if it did not change since last sync
+		if (($ics = $this->fetchCalendar($etag, $response_header)) === null)
 		{
-			try {
-				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
-				$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
-				$response = $this->api($this->url, $method, '', $this->header([
-					'Accept: text/calendar',
-					'If-None-Match: '.$etag,
-				]), $response_header);
-			}
-			catch (Api\Exception\Http $e) {
-				if ($method === 'HEAD' && $e->getCode() == 400)
-				{
-					$response = $this->api($this->url, 'GET', '', $this->header([
-						'Accept: text/calendar',
-						'If-None-Match: '.$etag,
-					]), $response_header);
-				}
-				else
-				{
-					throw $e;
-				}
-			}
-			// check for 304 Not Modified or unchanged ETag
-			if (explode(' ', $response_header[0])[1] == 304 || $response_header['etag'] === $etag)
-			{
-				return;
-			}
+			return;
 		}
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
@@ -571,10 +549,7 @@ EOT, $this->header([
 			});
 			return true;
 		};
-		$ical_class->importVCal($response ?? $this->api($this->url, 'GET', '', $this->header([
-			'Accept: text/calendar',
-		]), $response_header), -1, null, false, 0, '',
-			null, null, null, true);
+		$ical_class->importVCal($ics, -1, null, false, 0, '', null, null, null, true);
 
 		// delete NOT imported $old_events
  		foreach($old_events as $old_event)
@@ -586,7 +561,139 @@ EOT, $this->header([
 				$ical_class->delete($old_event['id'], 0, false, true);
 			}
 		}
-		$etag = $response_header['etag'];
+		$etag = self::icsToken($response_header['etag'] ?? null, $ics);
+	}
+
+	/**
+	 * Fetch an ics file, if it changed since the last sync
+	 *
+	 * With an ETag of the last sync, we first check via a conditional request, if the ics file changed.
+	 * That request is a HEAD request (GET for iCloud), which has NO body: if the file changed,
+	 * it has to be fetched with an additional GET, the (empty) response of the HEAD request must NOT be imported!
+	 * Otherwise all events of the subscription would be deleted, as none of them is found in the empty "calendar".
+	 *
+	 * If the ETag changed (or there is none), we compare a hash of the content with the one of the last sync,
+	 * as the ETag of some servers changes with every request. In that case the ETag is not used anymore.
+	 *
+	 * To never delete events because of a failed, empty or truncated response, we only return a complete ics file.
+	 *
+	 * @param string|null &$token sync-token of the last sync (ETag and/or hash of content) or null/empty to always fetch the ics file,
+	 *  on return updated, if the content is unchanged and the ETag turned out to be unreliable
+	 * @param array|null &$response_header on return headers (lowercased header-name => value, 0 => status line) of the last request
+	 * @return string|null content of the ics file or null, if it did not change since last sync
+	 * @throws \Exception if response is not a complete ics file or the request failed
+	 */
+	protected function fetchCalendar(?string &$token, ?array &$response_header=null) : ?string
+	{
+		[$etag, $hash] = self::parseIcsToken($token);
+		$ics = null;
+		if ($etag !== '')
+		{
+			$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
+			try {
+				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
+				$ics = $this->api($this->url, $method, '', $this->header([
+					'Accept: text/calendar',
+					'If-None-Match: '.$etag,
+				]), $response_header);
+			}
+			catch (Api\Exception\Http $e) {
+				// api() throws for every non-2xx status, incl. 304 Not Modified
+				if ($e->getCode() == 304)
+				{
+					$response_header = $e->response_headers ?? $response_header;
+					return null;
+				}
+				if ($method !== 'HEAD' || $e->getCode() != 400)
+				{
+					throw $e;
+				}
+				$method = 'GET';
+				$ics = $this->api($this->url, 'GET', '', $this->header([
+					'Accept: text/calendar',
+					'If-None-Match: '.$etag,
+				]), $response_header);
+			}
+			// check for 304 Not Modified or unchanged ETag
+			if ((int)(explode(' ', $response_header[0] ?? '')[1] ?? 0) === 304 || ($response_header['etag'] ?? null) === $etag)
+			{
+				return null;
+			}
+			// a HEAD request has no body, the changed ics file needs to be fetched below
+			if ($method === 'HEAD')
+			{
+				$ics = null;
+			}
+		}
+		$ics ??= $this->api($this->url, 'GET', '', $this->header([
+			'Accept: text/calendar',
+		]), $response_header);
+
+		// never import (and delete the not imported events) from an error page or an empty or truncated response
+		if (!is_string($ics) || !str_starts_with(ltrim($ics, "\xEF\xBB\xBF \t\r\n"), 'BEGIN:VCALENDAR') ||
+			!str_contains($ics, 'END:VCALENDAR'))
+		{
+			throw new \Exception('Response from '.parse_url($this->url, PHP_URL_HOST).' is not a complete ics file, NOT importing / deleting any events!');
+		}
+		// content unchanged, but ETag changed or not used: nothing to import
+		if ($hash !== '' && hash_equals($hash, self::icsHash($ics)))
+		{
+			if ($etag !== '')
+			{
+				// a changed ETag with unchanged content: this server's ETag is unreliable, do not use it anymore
+				$token = 'sha256:'.$hash;
+			}
+			return null;
+		}
+		return $ics;
+	}
+
+	/**
+	 * Create sync-token for an ics file: "<ETag> sha256:<hash of content>"
+	 *
+	 * @param string|null $etag ETag of the ics file, if the server sent one
+	 * @param string $ics content of ics file
+	 * @return string
+	 */
+	protected static function icsToken(?string $etag, string $ics) : string
+	{
+		return trim(trim((string)$etag).' sha256:'.self::icsHash($ics));
+	}
+
+	/**
+	 * Split a sync-token into ETag and hash of the content, a plain ETag (or empty token) has no hash
+	 *
+	 * @param string|null $token
+	 * @return string[] [$etag, $hash] both empty strings if not available
+	 */
+	protected static function parseIcsToken(?string $token) : array
+	{
+		$token = trim((string)$token);
+		if (preg_match('/^(.*?)\s*sha256:([0-9a-f]{64})$/', $token, $matches))
+		{
+			return [$matches[1], $matches[2]];
+		}
+		return [$token, ''];
+	}
+
+	/**
+	 * Hash of the content of an ics file, ignoring line endings and the DTSTAMP, which some servers generate on every request
+	 *
+	 * @param string $ics
+	 * @return string hex sha256
+	 */
+	protected static function icsHash(string $ics) : string
+	{
+		$lines = [];
+		foreach(preg_split('/\r\n|\n|\r/', $ics) as $line)
+		{
+			$line = rtrim($line);
+			if ($line !== '' && !preg_match('/^DTSTAMP[;:]/i', $line))
+			{
+				$lines[] = $line;
+			}
+		}
+		return hash('sha256', implode("\n", $lines));
 	}
 
 	/**
