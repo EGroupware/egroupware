@@ -48,7 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
 				log_tail_start = _data.next;
 				const log = document.querySelector("#log");
 				if (log) {
-					log.textContent = log.textContent + _data.content.replace(/</g, "&lt;");
+					// `.textContent` already displays a literal "<" safely (never parsed as markup) -
+					// no escaping needed. Found live via ticket #125621: this used to store the
+					// *escaped* string "&lt;" back into textContent, which displays as the literal
+					// 4 characters "&lt;" rather than "<" - someone copying request/response bodies
+					// out of this live viewer (eg. to replay a REST request) got back corrupted,
+					// double-escaped content, even though the real Download button (Tail::download(),
+					// a plain readfile() of the on-disk log) was never affected by this at all.
+					log.textContent = log.textContent + _data.content;
 					log.scrollTop = log.scrollHeight;
 				}
 			}
