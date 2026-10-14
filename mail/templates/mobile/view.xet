@@ -8,6 +8,8 @@
 			<et2-hbox  class="mailPreviewHeaders">
 				<et2-description  id="subject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
                 <et2-date-time-today  id="date" readonly="true"></et2-date-time-today>
+                <!-- only shown while EGroupware itself is in dark mode, see app.less -->
+                <et2-button-toggle  id="mail_darkmode" class="mailDarkmodeToggle" align="right" onIcon="moon" offIcon="sun" statustext="Dark mode for mails" noSubmit="true" onchange="app.mail.toggleMailDarkmode"></et2-button-toggle>
 			</et2-hbox>
 			<et2-hbox  width="100%" class="mailPreviewHeaders">
 				<et2-vbox  width="100%">

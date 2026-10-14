@@ -29,6 +29,7 @@ import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {dropRtfBody, findTnefEntry, isTnefEntry, renumber, spliceUnpacked} from "./tnef";
 import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
+import {adaptMessageForDarkMode, restoreMessageFromDarkMode} from "./darkReader";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 import {Et2UrlEmail} from "../../api/js/etemplate/Et2Url/Et2UrlEmail";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
@@ -176,6 +177,11 @@ export class MailApp extends EgwApp
 	 * set by loadMessageBody() and used by resolveExternalImages()
 	 */
 	private externalContentRenderers = new WeakMap<Document, () => void>();
+
+	/**
+	 * Watches EGroupware's own dark mode (data-darkmode of <html>), set by et2_ready()
+	 */
+	private darkmodeObserver: MutationObserver;
 
 	customLabels: CustomLabels = {};
 
@@ -380,6 +386,9 @@ export class MailApp extends EgwApp
 		this._jmap?.destroy();
 		delete this._jmap;
 
+		this.darkmodeObserver?.disconnect();
+		delete this.darkmodeObserver;
+
 		// call parent
 		super.destroy.apply(this, arguments);
 	}
@@ -418,6 +427,13 @@ export class MailApp extends EgwApp
 		
 		this.et2_obj = et2;
 		this.push_active = {};
+		// switch already loaded message bodies, when EGroupware switches dark mode,
+		// the framework also sets it on popups like mail.display
+		if (!this.darkmodeObserver)
+		{
+			this.darkmodeObserver = new MutationObserver(() => this.applyBodyDarkmode());
+			this.darkmodeObserver.observe(document.documentElement, {attributes: true, attributeFilter: ['data-darkmode']});
+		}
     const self = this;
 		switch (_name)
 		{
@@ -2928,6 +2944,7 @@ export class MailApp extends EgwApp
 		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
 		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
+		data.mail_darkmode = this.mailDarkmodePref();
 
 		if (partID)
 		{
@@ -3631,6 +3648,82 @@ export class MailApp extends EgwApp
 	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
 	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
 	 */
+	/**
+	 * User did not switch dark mode off for message bodies (mail_darkmode preference, default on)
+	 */
+	private mailDarkmodePref(): boolean
+	{
+		return this.egw.preference('mail_darkmode', 'mail') !== '0';
+	}
+
+	/**
+	 * Message bodies are shown in dark mode (mailDarkmode in preview.css):
+	 * EGroupware itself is in dark mode and the user did not switch it off for mails
+	 */
+	private isBodyDarkmode(): boolean
+	{
+		return this.mailDarkmodePref() && document.documentElement.dataset.darkmode === '1';
+	}
+
+	/**
+	 * Show message bodies in dark mode or not, see isBodyDarkmode()
+	 *
+	 * Port of Thunderbird's "Dark Reader": the body gets a dark background and light text,
+	 * and adaptMessageForDarkMode() removes the colors the message sets itself, which would not be readable on that.
+	 *
+	 * Also syncs the mailDarkmodeToggle buttons, as eg. mobile's mail.display gets no
+	 * mail_darkmode content from renderMessageInto().
+	 *
+	 * @param doc body document to update, default all loaded ones (marked by a data-row-id)
+	 */
+	private applyBodyDarkmode(doc?: Document): void
+	{
+		const pref = this.mailDarkmodePref();
+		const active = this.isBodyDarkmode();
+		const docs = doc ? [doc] : Array.from(document.querySelectorAll('et2-iframe'),
+			(iframe: any) => iframe.iframe?.contentDocument as Document)
+			.filter((d) => d?.documentElement?.dataset.rowId);
+		docs.forEach((d) =>
+		{
+			d.documentElement.classList.toggle('mailDarkmode', active);
+			if (active)
+			{
+				adaptMessageForDarkMode(d);
+			}
+			else
+			{
+				restoreMessageFromDarkMode(d);
+			}
+			// hidden by hideBodyFrameUntilAdapted()
+			(d.defaultView?.frameElement as HTMLIFrameElement)?.style.removeProperty('visibility');
+		});
+		document.querySelectorAll('et2-button-toggle.mailDarkmodeToggle').forEach((toggle: any) =>
+		{
+			if (toggle.value !== pref) toggle.value = pref;
+		});
+	}
+
+	/**
+	 * Hide the body iframe while loading a body to show in dark mode, until applyBodyDarkmode() adapted it on load
+	 *
+	 * Otherwise the not yet adapted message, eg. with its own white background, flashes up before every message.
+	 *
+	 * @param iframe
+	 */
+	private hideBodyFrameUntilAdapted(iframe: HTMLIFrameElement): void
+	{
+		if (iframe && this.isBodyDarkmode()) iframe.style.visibility = 'hidden';
+	}
+
+	/**
+	 * Switch dark mode for message bodies on or off, onchange of the mailDarkmodeToggle button
+	 */
+	toggleMailDarkmode(_event: Event, _widget: any): void
+	{
+		this.egw.set_preference('mail', 'mail_darkmode', _widget.value ? '1' : '0');
+		this.applyBodyDarkmode();
+	}
+
 	/** Shared by loadMessageBody()'s {special:true} result and its own catch() fallback below. */
 	private loadClassicBody(iframeWidget: any, iframe: HTMLIFrameElement, rowId: string, onLoad: (doc: Document) => void,
 		partID?: string): void
@@ -3639,6 +3732,7 @@ export class MailApp extends EgwApp
 		{
 			const doc = iframe.contentWindow.document;
 			doc.documentElement.dataset.rowId = rowId;
+			this.applyBodyDarkmode(doc);
 			openLinksInNewTab(doc);
 			// classic-fallback counterpart of loadMessageBody()'s own fast-path trigger below - the
 			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
@@ -3710,6 +3804,7 @@ export class MailApp extends EgwApp
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
 		const iframe = iframeWidget?.iframe;
+		this.hideBodyFrameUntilAdapted(iframe);
 		const fetchPromise = partID ?
 			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
 			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);
@@ -3749,9 +3844,11 @@ export class MailApp extends EgwApp
 				this.externalContentRenderers.set(doc, () =>
 				{
 					iframe.addEventListener('load', onBodyLoad, {once: true});
+					this.hideBodyFrameUntilAdapted(iframe);
 					iframe.srcdoc = this.jmap.showExternalContent(iframe.srcdoc);
 				});
 				doc.documentElement.dataset.rowId = rowId;
+				this.applyBodyDarkmode(doc);
 				openLinksInNewTab(doc);
 				// srcdoc body runs no script of its own (MailJmap.wrapDocument()), unlike the classic one with preview.js
 				activateBodyLinks(doc, this.egw);

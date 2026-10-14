@@ -881,11 +881,36 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
     #mail-display_mailDisplayBodySrc {
         display: none;
     }
+    /* mail.index's OWN preview-pane iframe (messageIFRAME) - the exact same reasoning as
+       mail-display_mailDisplayBodySrc above, just never given to this backend's differently-named
+       widget either (same gap class as preparePrint()'s own messageIFRAME fallback, mail/js/app.ts).
+       Found live 2026-10-12 (ralf, with Stefan Unverricht): without this, the message body printed
+       TWICE - once as the live iframe's own (partial/clipped) print rendering, directly followed by
+       tmpPrintDiv's own complete, correctly-prepared copy.
+       Etemplate2 only prefixes this widget's rendered id with its container's name ("mail-index_")
+       some of the time (depends on page/nesting context - the SAME ambiguity the pre-existing
+       #mail-index_messageIFRAME rule above elsewhere in this file already works around); matching
+       on the suffix covers both the bare and the prefixed form actually seen live.
+    */
+    [id$="messageIFRAME"] {
+        display: none !important;
+    }
 
     .tmpPrintDiv {
         margin-top: 10px;
         margin-bottom: 30px;
-        display: block;
+        /* !important: MailApp.preparePrint() sets this element's visibility via an INLINE style
+           (display:none while hidden on screen) - only MailApp.displayPrint() (the in-app Print
+           button) explicitly flips that inline style to 'block' right before window.print(). An
+           inline style always beats a plain external-stylesheet rule regardless of media query, so
+           printing via any OTHER trigger (ctrl+P, the browser's own print menu item) left this stuck
+           hidden - found live 2026-10-12 (Stefan Unverricht, relaying his GL-Assistenz's report:
+           "ctrl+P opens the print dialog, but without the full mail content - the print button's
+           content is complete"). With #mail-display_mailDisplayBodySrc (the iframe) ALSO hidden
+           under print just below, nothing of the actual message body printed at all in that case -
+           only headers/attachments, which aren't gated by this element.
+         */
+        display: block !important;
         overflow: visible;
         height: auto;
     }
@@ -948,6 +973,58 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	.et2_email:last-child:after {
 		content: "";
 	}
+    /* mail.index (the list+preview view, NOT the dedicated mail.display popup above) has its own
+       separate message-list grid (<et2-nextmatch>) and folder tree (<et2-tree>) - neither is
+       covered by anything above. Et2Nextmatch.ts DOES have a real print-preparation system
+       (beforePrint()/afterPrint(), converting its virtualized grid to a bounded set of real rows)
+       but it's only ever reachable via the in-app Print action, never the browser's native print
+       (no 'beforeprint' listener exists anywhere) - found live 2026-10-12 (Stefan Unverricht,
+       relaying a report that ctrl+P on a displayed message was incomplete; ralf's own follow-up
+       testing on the list+preview view specifically found ctrl+P there produced 4,625 PAGES,
+       effectively unusable): native print leaves the grid virtualized, so its internal "full
+       scroll height" placeholder (used by @lit-labs/virtualizer to size the scrollbar correctly
+       without rendering every row) becomes real print-layout height once print ignores the
+       on-screen height/overflow constraint, and the browser paginates that mostly-blank space.
+       Hiding the list and folder tree outright under print - showing only the preview pane's own
+       message content - matches what printing directly from this view is actually for.
+    */
+    et2-nextmatch,
+    et2-tree {
+        display: none !important;
+    }
+    /* et2-split's own internal resize-divider handle (a shadow-DOM part, Shoelace's sl-split-panel
+       under the hood) - NOT hidden by anything above (et2-nextmatch/et2-tree are its SIBLINGS, this
+       is et2-split's own shadow content). Found live 2026-10-12 (ralf, with Stefan Unverricht, via
+       direct DOM inspection of the actual print output): the large gray rectangle that kept
+       appearing where header info should be was never a broken image or a missing header at all -
+       it was THIS divider, whose own position/size is computed for the on-screen split ratio and
+       ends up misplaced/oversized once its sibling pane is hidden and print reflows to the page's
+       own (narrower) width.
+    */
+    et2-split::part(divider) {
+        display: none !important;
+    }
+    /* et2-split (mailSplitter) is a CSS GRID whose host itself carries an inline
+       `grid-template-columns: <start%> <divider-width> auto` reflecting the on-screen drag
+       position (e.g. ~49% start / auto end) - NOT a flexible flex-grow layout, so hiding the
+       start pane's CONTENT (et2-nextmatch/et2-tree above) does not reclaim its grid TRACK width.
+       The preview pane (slot="end") stays confined to whatever sliver the on-screen split ratio
+       happened to leave it, which is why its own header block printed narrow/not full-width while
+       tmpPrintDiv's body (a direct child of document.body, entirely outside this split) printed at
+       full page width right next to it. Found live 2026-10-12 (ralf, with Stefan Unverricht).
+       An inline style always beats a plain stylesheet rule regardless of media query, hence
+       !important, same reasoning as every other inline-style override in this block.
+       A SINGLE column, not "0 0 1fr": the start slot (et2-nextmatch/et2-tree) and the divider are
+       BOTH display:none by the time this applies, and a display:none grid item is skipped by
+       auto-placement entirely rather than just shrunk to its track's size - so the end slot (the
+       only item actually left) becomes the FIRST (and only consumed) track, not the third. "0 0
+       1fr" therefore collapsed it into the zero-width first track instead of expanding it, hiding
+       the preview pane's own header block entirely. Found live 2026-10-12 (ralf, with Stefan
+       Unverricht, immediately after the first version of this rule shipped).
+    */
+    et2-split {
+        grid-template-columns: 1fr !important;
+    }
 }
 
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
@@ -1347,5 +1424,10 @@ et2-description.mailAclRotatedHeader .description--content {
  * onto the wrapping <td> (this repo's grid widget copies a widget's own `class` there too), which
  * is exactly what's wanted here - the whole cell collapses, not just the widget inside it. */
 .mailAclHidden {
+	display: none;
+}
+
+/* toggle for dark mode of message bodies (MailApp.toggleMailDarkmode()), only while EGroupware itself is in dark mode */
+html:not([data-darkmode="1"]) et2-button-toggle.mailDarkmodeToggle {
 	display: none;
 }

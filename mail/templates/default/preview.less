@@ -14,7 +14,8 @@
 // THIS PART IS TAKEN FROM @SHOELACE-STYLES
 // only copied parts here because this gets requested everytime user previews a mail
 //
-.sl-theme-dark {
+// html.mailDarkmode: dark mode of the message body, see below
+.sl-theme-dark, html.mailDarkmode {
   color-scheme: dark;
 
   --sl-color-gray-50: hsl(240 5.1% 15%);
@@ -288,5 +289,33 @@ img[alt*="[blocked external image:"] {
   img {
     width: 64px;
     height: 64px;
+  }
+}
+// dark mode of the message body (MailApp.applyBodyDarkmode()), a port of Thunderbird's "Dark Reader"
+// (mail/themes/shared/mail/messageBody.css): colors of EGroupware's own dark mode (kdots.css html[data-darkmode="1"]),
+// mail/js/darkReader.ts removes the colors the message sets itself, which are not readable on that
+@media screen {
+  html.mailDarkmode {
+    // primary colors used below, from EGroupware's dark mode, the gray ones see .sl-theme-dark above
+    --sl-color-primary-700: hsl(210, 36%, 63%);
+    --sl-color-primary-800: hsl(210, 33%, 73%);
+
+    background-color: var(--sl-color-neutral-50);
+    color: var(--sl-color-neutral-700);
+
+    // our own colors for a light background from above
+    .td_display, .td_display:has(pre), blockquote {
+      color: inherit;
+      background-color: transparent;
+    }
+    blockquote[type=cite] {
+      color: var(--sl-color-primary-700);
+    }
+    a:link {
+      color: var(--sl-color-primary-700);
+    }
+    a:visited {
+      color: var(--sl-color-primary-800);
+    }
   }
 }

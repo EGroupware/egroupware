@@ -14,6 +14,8 @@
 			</et2-hbox>
 			<et2-hbox  class="mail-d-h1" width="100%">
 				<et2-description  align="left" id="subject" readonly="true" noLang="1"></et2-description>
+				<!-- only shown while EGroupware itself is in dark mode, see app.less -->
+				<et2-button-toggle  id="mail_darkmode" class="mailDarkmodeToggle" align="right" onIcon="moon" offIcon="sun" statustext="Dark mode for mails" noSubmit="true" onchange="app.mail.toggleMailDarkmode"></et2-button-toggle>
 			</et2-hbox>
 
 			<!--

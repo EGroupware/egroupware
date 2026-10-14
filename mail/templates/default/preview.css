@@ -9,7 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-.sl-theme-dark {
+.sl-theme-dark,
+html.mailDarkmode {
   color-scheme: dark;
   --sl-color-gray-50: hsl(240, 5.1%, 15%);
   --sl-color-gray-100: hsl(240, 5.7%, 18.2%);
@@ -254,4 +255,27 @@ img[alt*="[blocked external image:"] {
 .mail_attachmentIndexIcon img {
   width: 64px;
   height: 64px;
+}
+@media screen {
+  html.mailDarkmode {
+    --sl-color-primary-700: hsl(210, 36%, 63%);
+    --sl-color-primary-800: hsl(210, 33%, 73%);
+    background-color: var(--sl-color-neutral-50);
+    color: var(--sl-color-neutral-700);
+  }
+  html.mailDarkmode .td_display,
+  html.mailDarkmode .td_display:has(pre),
+  html.mailDarkmode blockquote {
+    color: inherit;
+    background-color: transparent;
+  }
+  html.mailDarkmode blockquote[type=cite] {
+    color: var(--sl-color-primary-700);
+  }
+  html.mailDarkmode a:link {
+    color: var(--sl-color-primary-700);
+  }
+  html.mailDarkmode a:visited {
+    color: var(--sl-color-primary-800);
+  }
 }
