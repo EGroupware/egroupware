@@ -3,7 +3,7 @@
     "compilerOptions": {
         "target": "es2015",
         "module": "ES2020",
-		"lib": ["es2020","dom"],
+		"lib": ["es2020","dom","dom.iterable"],
         "outDir": "",
         "rootDir": "./",
         "emitDecoratorMetadata": false,
