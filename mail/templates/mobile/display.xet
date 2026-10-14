@@ -65,7 +65,7 @@
 									<et2-description  id="${row}[partID]"></et2-description>
 									<et2-description  id="${row}[type]"></et2-description>
 									<et2-description  id="${row}[winmailFlag]"></et2-description>
-									<et2-description-expose  class="useEllipsis et2_link" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]"></et2-description-expose>
+									<et2-description-expose  class="useEllipsis et2_link" id="${row}[filename]" mime="$row_cont[type]" href="$row_cont[mime_url]" noLang="1" mimeData="$row_cont[mime_data]" onclick="app.mail.attachmentFilenameClick"></et2-description-expose>
 									<et2-description  align="right" id="${row}[size]"></et2-description>
 									<et2-button-icon  id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachmentHandler(widget,'downloadOneAsFile', ${row})" noSubmit="true"></et2-button-icon>
 									<et2-button-icon  id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentHandler(widget,'saveOneToVfs', ${row})" noSubmit="true"></et2-button-icon>

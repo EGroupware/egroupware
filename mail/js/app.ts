@@ -3161,6 +3161,32 @@ export class MailApp extends EgwApp
 	private async resolveAttachmentViewUrls(rowId : string, attachmentsBlock : any[]) : Promise<boolean>
 	{
 		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
+		// ticket #126271 follow-up (2026-10-14, confirmed live by bb@/ik@egroupware.org - Edge
+		// specifically, not Chrome/Firefox): clicking a non-viewable attachment's own filename link
+		// falls through to Et2Description's own egw.open_link(href, '_browser', ...) ->
+		// window.open(url, '_blank') against this classic download URL - Edge alone leaves a
+		// permanently blank EXTRA tab behind, alongside the download's own tab (which closes itself
+		// normally everywhere, Edge included). Clearing mime_url here means window.open() is never
+		// called at all for these rows any more - sidesteps the whole browser-specific quirk instead
+		// of chasing it. attachmentFilenameClick() (bound in the .xet) restores "click the filename
+		// to download" via the same fetch()+<a download> mechanism the toolbar's own "Download"
+		// action already uses safely (saveAttachmentHandler()'s 'downloadOneAsFile' case).
+		//
+		// Scoped to rows with NO mime_data handler already registered (eg. Collabora/invoices) -
+		// those keep their existing, presumably-intended open_link()/mimeData behavior untouched;
+		// message/rfc822 and vCard/iCalendar keep their own dedicated popup mime_url too (a real
+		// "view", not a download, same exclusion resolveAttachmentViewUrls() itself always had).
+		let suppressedAny = false;
+		attachmentsBlock.forEach((item) =>
+		{
+			const type = (item.type || '').toLowerCase();
+			if (item.mime_url && !item.mime_data && !excluded.includes(type) && !MailApp.VIEWABLE_TYPES.has(type))
+			{
+				item.mime_url = '';
+				suppressedAny = true;
+			}
+		});
+
 		let profileID : string;
 		try
 		{
@@ -3168,7 +3194,7 @@ export class MailApp extends EgwApp
 		}
 		catch (e)
 		{
-			return false;
+			return suppressedAny;
 		}
 		const eligible = attachmentsBlock.filter((item) =>
 		{
@@ -3177,7 +3203,7 @@ export class MailApp extends EgwApp
 		});
 		if (!eligible.length)
 		{
-			return false;
+			return suppressedAny;
 		}
 		this.jmap.revokeAttachmentViewUrls(rowId);
 		const results = await Promise.all(eligible.map((item) =>
@@ -3189,7 +3215,63 @@ export class MailApp extends EgwApp
 					return false;
 				})
 		));
-		return results.some(Boolean);
+		return suppressedAny || results.some(Boolean);
+	}
+
+	/**
+	 * Click handler for the attachment row's own filename link (et2-description-expose, bound in
+	 * mail/templates/default/{index,display}.xet, both the full attachments grid AND the
+	 * single-attachment summary near the header) - ticket #126271 follow-up. For a viewable type
+	 * (MailApp.VIEWABLE_TYPES, or one of the "has its own dedicated popup" excluded types,
+	 * or anything with a real mime_data handler registered), this is a harmless no-op: the
+	 * widget's own href/mimeData are untouched, so its default Et2Description click handling
+	 * (view/open_link()) proceeds exactly as before this method ever existed.
+	 *
+	 * For everything else, resolveAttachmentViewUrls() already cleared this row's own mime_url
+	 * to '' (see its own docblock for why - Edge's window.open()-to-a-download-URL quirk), so
+	 * Et2Description's own fallback is already a safe no-op regardless; this instead performs the
+	 * actual download via the same fetch()+<a download> mechanism the toolbar's own "Download"
+	 * action already uses, so clicking the filename still does something useful.
+	 *
+	 * @return true to let Et2Description's own default click handling continue (viewable/excluded/
+	 *  mime_data cases); false (after preventDefault()) once this has taken over the download
+	 */
+	attachmentFilenameClick(_ev : MouseEvent, _widget : any) : boolean
+	{
+		const type = (_widget.mime || '').toLowerCase();
+		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
+		if (_widget.mimeData || _widget.href || excluded.includes(type) || MailApp.VIEWABLE_TYPES.has(type))
+		{
+			return true;
+		}
+		_ev.preventDefault();
+		// Usually just the row's own key within its OWN grid row's "content" array-manager scope
+		// (matching attachmentsBlockActions()'s own id.replace('[actions]','') pattern, already
+		// proven by the toolbar's own working "Download" action) - but the single-attachment
+		// summary rendered near the header (not inside a repeating grid row) resolves against the
+		// template's TOP-LEVEL content instead, where this same literal id string is the nested
+		// path "attachmentsBlock[0]", not a flat key into an already-scoped sub-array. Resolved to
+		// the actual attachment object directly here (rather than a row_id passed through
+		// saveAttachmentHandler()'s own, differently-scoped lookup) via downloadOneAttachment(),
+		// which only needs the object itself.
+		const row_id = _widget.id.replace('[filename]', '');
+		const scope = _widget.getParent()?.getArrayMgr?.('content')?.data;
+		let attachment = scope?.[row_id];
+		if (!attachment)
+		{
+			const nested = row_id.match(/^(.+)\[(\d+)]$/);
+			attachment = nested ? scope?.[nested[1]]?.[nested[2]] : undefined;
+		}
+		if (!attachment)
+		{
+			// Can't resolve this row's own attachment data - mime_url is already cleared either
+			// way, so doing nothing here is the same safe no-op Et2Description's own fallback
+			// would have been; better than throwing on an undefined attachment below.
+			console.error('attachmentFilenameClick(): could not resolve attachment data for', _widget.id);
+			return false;
+		}
+		this.downloadOneAttachment(attachment);
+		return false;
 	}
 
 	/**
@@ -6437,6 +6519,41 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Download a single attachment - shared by saveAttachmentHandler()'s own 'downloadOneAsFile'
+	 * case and attachmentFilenameClick() (ticket #126271 follow-up), which needs the exact same
+	 * fetch()+<a download>/JMAP-blob mechanism from an already-resolved attachment object, without
+	 * going through saveAttachmentHandler()'s own widget/row_id -> attachments[row_id] lookup
+	 * (which the single-attachment summary near the header can't satisfy - its id's row_id isn't a
+	 * flat key into its own getArrayMgr("content").data the way a real grid row's is).
+	 */
+	private downloadOneAttachment(attachment : any) : void
+	{
+		const classicDownload = () => etemplate2.prototype.download(attachmentSaveUrl(this.egw, attachment));
+		// Fast client-side JMAP path for a single attachment with a known blobId (set by
+		// mail_ui::jmapAttachmentsToLegacy(), both backends) - an unparseable mail_id or missing
+		// blobId falls back to the classic path too (not a JMAP failure, just not applicable), but
+		// once the JMAP download itself is attempted, any failure shows the error directly, there's
+		// no classic fallback (see folderTreeAutoload()'s docblock for why).
+		if (attachment.blobId)
+		{
+			let profileID : string;
+			try
+			{
+				profileID = this.jmap.messageReference(attachment.mail_id).profileID;
+			}
+			catch (e)
+			{
+				classicDownload();
+				return;
+			}
+			this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
+				.catch((e) => this.egw.message(e.message, 'error'));
+			return;
+		}
+		classicDownload();
+	}
+
+	/**
 	 * A handler for saving to VFS/downloading attachments
 	 *
 	 * @param {type} widget
@@ -6525,47 +6642,18 @@ export class MailApp extends EgwApp
 				break;
 
 			case 'downloadOneAsFile':
+				this.downloadOneAttachment(attachments[row_id]);
+				break;
 			case 'downloadAllToZip':
 				attachment = attachments[row_id];
-				const classicDownload = () =>
-				{
-					// same per-attachment save URL "Download all attachments" uses for its
-					// classic path, see downloadAllAttachments() below
-					const url = action === 'downloadOneAsFile' ? attachmentSaveUrl(this.egw, attachment) :
-						this.egw.webserverUrl + '/index.php?' + new URLSearchParams({
-							menuaction: 'mail.EGroupware\\Mail\\Ui.download_zip',
-							mode: 'save',
-							id: attachment.mail_id,
-							part: attachment.partID,
-							is_winmail: attachment.winmailFlag,
-							smime_type: attachment.smime_type ?? ''
-						}).toString();
-					etemplate2.prototype.download(url);
-				};
-				// Fast client-side JMAP path for a single attachment with a known blobId (set by
-				// mail_ui::jmapAttachmentsToLegacy(), both backends). downloadAllToZip stays on the
-				// classic path (server-side zip assembly, not a per-file fetch); an unparseable
-				// mail_id or missing blobId falls back to it too (not a JMAP failure, just not
-				// applicable) - but once the JMAP download itself is attempted, any failure shows
-				// the error directly, there's no classic fallback (see folderTreeAutoload()'s
-				// docblock for why).
-				if (action === 'downloadOneAsFile' && attachment.blobId)
-				{
-					let profileID : string;
-					try
-					{
-						profileID = this.jmap.messageReference(attachment.mail_id).profileID;
-					}
-					catch (e)
-					{
-						classicDownload();
-						break;
-					}
-					this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
-						.catch((e) => this.egw.message(e.message, 'error'));
-					break;
-				}
-				classicDownload();
+				etemplate2.prototype.download(this.egw.webserverUrl + '/index.php?' + new URLSearchParams({
+					menuaction: 'mail.EGroupware\\Mail\\Ui.download_zip',
+					mode: 'save',
+					id: attachment.mail_id,
+					part: attachment.partID,
+					is_winmail: attachment.winmailFlag,
+					smime_type: attachment.smime_type ?? ''
+				}).toString());
 				break;
 			case 'forward':
 				// Give some UI feedback, this might take a second

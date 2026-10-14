@@ -207,3 +207,69 @@ describe("MailApp.resolveAttachmentViewUrls()", () =>
 		assert.isFalse(result);
 	});
 });
+
+/**
+ * Ticket #126271 follow-up (2026-10-14, confirmed live by bb@/ik@egroupware.org - Edge
+ * specifically): clicking a non-viewable attachment's own filename link used to fall through to
+ * Et2Description's own window.open(url, '_blank') against the classic download URL, leaving a
+ * permanently blank extra tab behind in Edge. Clearing the row's own mime_url here (so that
+ * fallback becomes a no-op regardless of browser - window.open() is never reached at all any
+ * more) is the actual fix; attachmentFilenameClick() (own test file) restores equivalent
+ * "click the filename to download" behavior via a safe fetch()+<a download> mechanism instead.
+ */
+describe("MailApp.resolveAttachmentViewUrls() - non-viewable mime_url suppression (ticket #126271)", () =>
+{
+	it("clears mime_url for a non-viewable, non-excluded type with no mime_data handler", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [
+			{filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+				mime_url: '/index.php?menuaction=mail.EGroupware%5CMail%5CUi.getAttachment&...'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isTrue(result);
+		assert.strictEqual(items[0].mime_url, '');
+	});
+
+	it("leaves mime_url untouched when a mime_data handler is already registered (eg. Collabora)", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [
+			{filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+				mime_url: 'https://example/getAttachment', mime_data: 'abc123'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isFalse(result);
+		assert.equal(items[0].mime_url, 'https://example/getAttachment');
+	});
+
+	it("leaves mime_url untouched for the message/rfc822/vCard/iCalendar popup types", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [
+			{filename: 'fwd.eml', type: 'message/rfc822', mime_url: 'https://example/displayMessage'},
+			{filename: 'event.ics', type: 'text/calendar', mime_url: 'https://example/viewEvent'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isFalse(result);
+		assert.equal(items[0].mime_url, 'https://example/displayMessage');
+		assert.equal(items[1].mime_url, 'https://example/viewEvent');
+	});
+
+	it("never touches an already-empty mime_url (nothing to suppress)", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [{filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isFalse(result);
+		assert.isUndefined(items[0].mime_url);
+	});
+});
