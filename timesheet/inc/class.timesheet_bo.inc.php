@@ -1099,6 +1099,42 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
+	 * Read what file_access() needs for several entries at once
+	 *
+	 * Registered as 'file_access_rows', so Api\Link::file_access_multiple() can answer a whole
+	 * directory listing's worth of access checks without reading one entry per query. It returns
+	 * rows only - every verdict still comes from file_access()/check_acl() above, which takes such
+	 * a row in place of an id.
+	 *
+	 * These are the plain entry rows, deliberately NOT taken through readRows()/db2data():
+	 * db2data() resolves pm_id from the entry's links, which costs a query per entry - exactly
+	 * what this exists to avoid - for a field the access check never looks at. check_acl() reads
+	 * ts_owner, ts_readable and ts_status, all of them columns of the row itself. Do not use these
+	 * rows for anything but that check: pm_id, ts_project_blur and the timestamp conversion
+	 * db2data() would have done are all missing from them.
+	 *
+	 * @param int[] $ids
+	 * @return array ts_id => entry pairs, entries that do not exist are left out
+	 */
+	function file_access_rows(array $ids)
+	{
+		$rows = array();
+		if (!$ids) return $rows;
+
+		foreach($this->db->select($this->table_name, '*', array('ts_id' => array_values($ids)),
+			__LINE__, __FILE__, false, '', TIMESHEET_APP) as $row)
+		{
+			$data = array();
+			foreach($this->db_cols as $db_col => $col)
+			{
+				$data[$col] = $row[$db_col] ?? null;
+			}
+			$rows[$data['ts_id']] = $data;
+		}
+		return $rows;
+	}
+
+	/**
 	 * updates the project titles in the timesheet application (called whenever a project name is changed in the project manager)
 	 *
 	 * Todo: implement via notification

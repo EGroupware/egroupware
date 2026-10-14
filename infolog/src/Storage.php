@@ -266,6 +266,65 @@ class Storage extends Api\Storage
 	}
 
 	/**
+	 * Read the rows of many entries in one go - the bulk twin of read()
+	 *
+	 * Reimplemented, as read() here does its own raw select rather than going through
+	 * Api\Storage::read(), and hydrates info_responsible/info_cc from the users table and the
+	 * unregistered "#" custom fields on top. Each of those is done once for the whole list here,
+	 * so a caller asking about N entries costs a handful of queries instead of four per entry.
+	 *
+	 * The one thing these rows do not get is read()'s side effect of generating and saving an
+	 * info_uid for an entry whose uid is missing or too short - listing a lot of entries is no
+	 * reason to write to all of them. info_uid is the only field that can therefore differ, and
+	 * only for such an entry.
+	 *
+	 * @param array $ids info_ids
+	 * @return array info_id => entry array pairs, ids without an entry are left out
+	 */
+	function readRows(array $ids)
+	{
+		$rows = array();
+		if (!$ids) return $rows;
+
+		foreach($this->db->select($this->table_name, $this->table_name.'.*',
+			$this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => array_values($ids))),
+			__LINE__, __FILE__, false, '', 'infolog') as $row)
+		{
+			$row['info_id_parent'] = (int)$row['info_id_parent'];
+			$rows[$row['info_id']] = $row;
+		}
+		if (!$rows) return $rows;
+
+		$responsible = $this->read_responsible(array_keys($rows));
+		foreach($rows as $info_id => &$row)
+		{
+			// read_responsible() only returns entries that have any, the rest still need the keys
+			// read() gives them, as is_responsible() reads info_responsible unconditionally
+			$row['info_responsible'] = $responsible[$info_id]['info_responsible'] ?? array();
+			$row['info_cc'] = $responsible[$info_id]['info_cc'] ?? '';
+		}
+		unset($row);
+
+		foreach($this->read_customfields(array_keys($rows)) as $info_id => $cfs)
+		{
+			if (isset($rows[$info_id])) $rows[$info_id] = array_merge($rows[$info_id], $cfs);
+		}
+		// unregistered "#"-prefixed rows (infolog_ical.inc.php's X-property storage), same as read()
+		$unregistered_where = array('info_id' => array_keys($rows));
+		if ($this->customfields)
+		{
+			$unregistered_where[] = 'info_extra_name NOT IN ('.
+				implode(',', array_map(array($this->db, 'quote'), array_keys($this->customfields))).')';
+		}
+		foreach($this->db->select($this->extra_table, 'info_id,info_extra_name,info_extra_value',
+			$unregistered_where, __LINE__, __FILE__, false, '', 'infolog') as $row)
+		{
+			$rows[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+		}
+		return $rows;
+	}
+
+	/**
 	 * read InfoLog entry $info_id
 	 *
 	 * some caching is done to prevent multiple reads of the same entry

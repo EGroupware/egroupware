@@ -199,6 +199,177 @@ class Storage
 		return is_array($id) ? $links : ($links[$id] ?? []);
 	}
 
+	/**
+	 * Count the links of an entry, grouped by the app they point at
+	 *
+	 * Lets a caller find out how an entry's links divide up without reading them - a directory
+	 * listing working out whether it has to break them up, and how big each part would be.
+	 *
+	 * The counts are what the database holds, before any access check: an entry the user may not
+	 * see still counts here, so treat them as upper bounds. For deciding whether a limit is
+	 * exceeded that only errs towards breaking up slightly too early.
+	 *
+	 * @param string $app appname
+	 * @param int|string $id id in $app
+	 * @param string $only_app ='' only count links to $only_app, or NOT to it if $only_app[0]=='!'
+	 * @param boolean $deleted =false include links flagged as deleted
+	 * @return array app => number of links pairs, in descending order of count
+	 */
+	static function countLinksByApp($app, $id, $only_app='', $deleted=false)
+	{
+		$not_only = false;
+		if (!empty($only_app) && ($not_only = $only_app[0] === '!'))
+		{
+			$only_app = substr($only_app, 1);
+		}
+		$counts = array();
+		// a link stores the entry on either side, so both directions have to be counted
+		foreach([['link_app1' => $app, 'link_id1' => $id], ['link_app2' => $app, 'link_id2' => $id]] as $n => $keys)
+		{
+			$other = $n ? 'link_app1' : 'link_app2';
+			$where = array(self::$db->expression(self::TABLE, self::encodeRow($keys)));
+			if (!$deleted) $where[] = 'deleted IS NULL';
+			if (!empty($only_app))
+			{
+				$where[] = $other.($not_only ? ' != ' : ' = ').self::$db->quote($only_app);
+			}
+			foreach(self::$db->select(self::TABLE, $other.',COUNT(*) AS num', $where, __LINE__, __FILE__,
+				false, 'GROUP BY '.$other, 'phpgwapi') as $row)
+			{
+				// an app the user has no rights to never shows up in get_links() either
+				list($linked_app) = explode('-', $row[$other]);
+				if ($linked_app !== Api\Link::URL_APPNAME && empty($GLOBALS['egw_info']['user']['apps'][$linked_app]))
+				{
+					continue;
+				}
+				$counts[$row[$other]] = ($counts[$row[$other]] ?? 0) + (int)$row['num'];
+			}
+		}
+		arsort($counts);
+
+		return $counts;
+	}
+
+	/**
+	 * Count the links of an entry per period of their last modification
+	 *
+	 * Lets a caller break an entry's links up by age without reading them. Use getLinksInPeriod()
+	 * to then list one of the periods.
+	 *
+	 * Only the timestamps are read, one row at a time, so this costs one query and no memory
+	 * worth speaking of however many links the entry has.
+	 *
+	 * Same caveat as countLinksByApp(): the counts are what the database holds, before any access
+	 * check, so a period can list shorter than its count.
+	 *
+	 * @param string $app appname
+	 * @param int|string $id id in $app
+	 * @param string $only_app ='' only count links to $only_app, or NOT to it if $only_app[0]=='!'
+	 * @param string $format ='Y' date() format for the period, eg. 'Y' or 'Y-m'
+	 * @param boolean $deleted =false include links flagged as deleted
+	 * @return array period => number of links pairs, newest period first
+	 */
+	static function countLinksByPeriod($app, $id, $only_app='', $format='Y', $deleted=false)
+	{
+		$not_only = false;
+		if (!empty($only_app) && ($not_only = $only_app[0] === '!'))
+		{
+			$only_app = substr($only_app, 1);
+		}
+		$periods = array();
+		foreach(self::$db->select(self::TABLE, 'link_lastmod',
+			self::linksWhere($app, $id, $only_app, $not_only, $deleted), __LINE__, __FILE__,
+			false, 'ORDER BY link_lastmod DESC', 'phpgwapi') as $row)
+		{
+			$period = Api\DateTime::server2user($row['link_lastmod'], $format);
+			$periods[$period] = ($periods[$period] ?? 0) + 1;
+		}
+		return $periods;
+	}
+
+	/**
+	 * Get the links of an entry whose last modification falls in a given period
+	 *
+	 * The counterpart to countLinksByPeriod(): that one says which periods there are and how big,
+	 * this one lists one of them, so a listing costs what the period shown holds rather than
+	 * everything the entry is linked to.
+	 *
+	 * Note this can NOT be done with get_links()' $limit: that limit is applied to the rows before
+	 * $only_app filters them in PHP, so an offset counted in filtered links does not line up with
+	 * it. Here the period and the app are both part of the query.
+	 *
+	 * @param string $app appname
+	 * @param int|string $id id in $app
+	 * @param string $only_app ='' only links to $only_app, or NOT to it if $only_app[0]=='!'
+	 * @param Api\DateTime $from =null links modified before it are left out
+	 * @param Api\DateTime $to =null links modified after it are left out
+	 * @param boolean $deleted =false include links flagged as deleted
+	 * @return array link_id => link array pairs, newest first, same shape as get_links()
+	 */
+	static function getLinksInPeriod($app, $id, $only_app='', Api\DateTime $from=null, Api\DateTime $to=null, $deleted=false)
+	{
+		$not_only = false;
+		if (!empty($only_app) && ($not_only = $only_app[0] === '!'))
+		{
+			$only_app = substr($only_app, 1);
+		}
+		$where = self::linksWhere($app, $id, $only_app, $not_only, $deleted);
+		if (isset($from)) $where[] = 'link_lastmod >= '.(int)$from->format('ts');
+		if (isset($to))   $where[] = 'link_lastmod <= '.(int)$to->format('ts');
+
+		$links = array();
+		foreach(self::$db->select(self::TABLE, '*', $where, __LINE__, __FILE__,
+			false, 'ORDER BY link_lastmod DESC, link_id DESC', 'phpgwapi') as $row)
+		{
+			$row = self::decodeRow($row);
+			if ($row['link_app1'] == $app && (string)$row['link_id1'] === (string)$id)
+			{
+				self::_add2links($row, true, $only_app, $not_only, $links);
+			}
+			if ($row['link_app2'] == $app && (string)$row['link_id2'] === (string)$id)
+			{
+				self::_add2links($row, false, $only_app, $not_only, $links);
+			}
+		}
+		return $links[$id] ?? array();
+	}
+
+	/**
+	 * Where clause matching an entry's links, optionally only those to (or not to) one app
+	 *
+	 * Unlike get_links(), which fetches an entry's links and then drops the ones $only_app does
+	 * not want in PHP, this puts the app into the query - so a period bound applies to what the
+	 * caller actually asked for.
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @param string $only_app '' for all, otherwise an appname, with $not_only saying whether to
+	 * 	match it or everything but it
+	 * @param boolean $not_only
+	 * @param boolean $deleted include links flagged as deleted
+	 * @return array where clause fragments, to be and-ed together
+	 */
+	private static function linksWhere($app, $id, $only_app, $not_only, $deleted)
+	{
+		$own1 = self::$db->expression(self::TABLE, self::encodeRow(['link_app1' => $app, 'link_id1' => $id]));
+		$own2 = self::$db->expression(self::TABLE, self::encodeRow(['link_app2' => $app, 'link_id2' => $id]));
+
+		if (empty($only_app))
+		{
+			$where = array('(('.$own1.') OR ('.$own2.'))');
+		}
+		else
+		{
+			// the app of the OTHER side is whichever column is not the entry's own
+			$op = $not_only ? ' != ' : ' = ';
+			$where = array('(('.$own1.' AND link_app2'.$op.self::$db->quote($only_app).
+				') OR ('.$own2.' AND link_app1'.$op.self::$db->quote($only_app).'))');
+		}
+		if (!$deleted) $where[] = 'deleted IS NULL';
+
+		return $where;
+	}
+
 	private static function _add2links($row,$left,$only_app,$not_only,array &$links)
 	{
 		$linked_app = $left ? $row['link_app2'] : $row['link_app1'];

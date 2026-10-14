@@ -481,6 +481,52 @@ class Base
 	const USER_TIMEZONE_READ = 'user_timezone_read';
 
 	/**
+	 * Read the rows of many ids in one query - the bulk twin of read()
+	 *
+	 * Anything that has to ask about a whole list of entries - a directory listing of /apps
+	 * checking access to every entry in it, say - otherwise reads them one at a time, which costs
+	 * a query per entry and does not scale.
+	 *
+	 * The contract is that this returns, for every id, the same row read() would have returned for
+	 * it, just without the per-entry queries. A class that gives read() something extra (another
+	 * table joined in, a 1:N relation hydrated) therefore has to override this too, or its rows
+	 * come back missing exactly that - which is why callers that depend on the two agreeing check
+	 * that whoever declared read() declared this as well.
+	 *
+	 * Ids that have no row are simply absent from the result, as read() returns false for them.
+	 *
+	 * @param array $ids values of the (single-column) primary key
+	 * @return array id => row pairs
+	 */
+	function readRows(array $ids)
+	{
+		$rows = array();
+		// a multi-column primary key cannot be matched with a single IN(), which is the whole point here
+		if (!$ids || count($this->db_key_cols) != 1)
+		{
+			return $rows;
+		}
+		$db_pk = array_key_first($this->db_key_cols);
+		$pk = $this->db_key_cols[$db_pk];
+
+		foreach($this->db->select($this->table_name, '*', array($db_pk => array_values($ids)),
+			__LINE__, __FILE__, false, '', $this->app) as $row)
+		{
+			// read() returns the row under its internal names, not the database's - so must we
+			$data = array();
+			foreach($this->db_cols as $db_col => $col)
+			{
+				$data[$col] = $row[$db_col] ?? null;
+			}
+			$data = $this->db2data($data);
+			$data[self::USER_TIMEZONE_READ] = Api\DateTime::$user_timezone->getName();
+
+			$rows[$data[$pk]] = $data;
+		}
+		return $rows;
+	}
+
+	/**
 	 * reads row matched by key and puts all cols in the data array
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key

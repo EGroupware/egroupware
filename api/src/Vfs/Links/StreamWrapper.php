@@ -374,7 +374,24 @@ class StreamWrapper extends LinksParent
 			$this->opened_dir = array();
 			return true;
 		}
-		return parent::dir_opendir($url, $options);
+		if (!($ret = parent::dir_opendir($url, $options)))
+		{
+			return $ret;
+		}
+		// /apps/$app lists one directory per entry, and whoever is listing it (Vfs::find(),
+		// a WebDAV PROPFIND, ...) stats every one of them, which asks check_extended_acl() ->
+		// Api\Link::file_access() about a different entry each time. Left alone that is one
+		// query per entry - several, for most apps - so a big app directory exceeds
+		// max_execution_time. We know the whole list here, so let the app answer for all of
+		// them at once and leave the verdicts where file_access() will find them.
+		list(,$apps, $app, $id) = array_pad(explode('/', Vfs::parse_url($url, PHP_URL_PATH), 4), 4, null);
+		if ($apps === 'apps' && !empty($app) && ($id === null || $id === '') && $this->opened_dir && !Vfs::$is_root &&
+			// file_access() only ever consults its cache for the current user
+			$this->user == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			Api\Link::file_access_multiple($app, $this->opened_dir);
+		}
+		return $ret;
 	}
 
 	/**

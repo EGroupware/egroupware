@@ -67,6 +67,7 @@ class infolog_hooks
 			'add_id'     => 'action_id',
 			'add_popup'  => '760x570',
 			'file_access'=> 'infolog.infolog_bo.file_access',
+			'file_access_rows' => 'infolog.infolog_bo.file_access_rows',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'edit'       => array(
 				'menuaction' => 'infolog.infolog_ui.edit',

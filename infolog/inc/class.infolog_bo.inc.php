@@ -1577,6 +1577,9 @@ class infolog_bo
 	 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
 	 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
 	 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+	 * @param $query[cols] columns to select instead of the full rows
+	 * @param $query[append] "GROUP BY <column>[,<column>...]" for a $query[cols] selecting
+	 *	aggregates; anything else is ignored, as it can not be validated before being run
 	 * @param &$query[limit_modified_n_month] limit "last changed" to the last N month, only honored when
 	 *	sorting by last changed and not searching; unset again if the window had to be dropped.
 	 *	$query[total] is then the total of the LIMITED list, $limit_modified_applied the window used.
@@ -1934,6 +1937,21 @@ class infolog_bo
 		$only_keys = isset($query['cols']) ? $query['cols'] : false;
 		$start = array((int)($query['start']??0), isset($query['num_rows']) ? (int)$query['num_rows'] : -1);
 
+		// A caller selecting aggregates of its own via 'cols' (eg. EGroupware EPL's Links
+		// stream-wrapper, counting entries per date) needs them grouped. GROUP BY goes in front of
+		// the ORDER BY in the one fragment Api\Storage\Base::search() takes, which is why the
+		// other apps' plugins hand theirs to that positional $order_by - this is the same place,
+		// reached through the $query array this search() takes instead.
+		// Only a plain list of columns is accepted: Base::sanitizeOrderBy() can not validate a
+		// GROUP BY and so rejects every one of them, and switching that off (as a grouping caller
+		// must) means nothing else is standing between this fragment and the query.
+		if (!empty($query['append']) && is_string($query['append']) &&
+			preg_match('/^GROUP BY [a-z_0-9]+( *, *[a-z_0-9]+)*$/i', trim($query['append'])))
+		{
+			$order_by = trim($query['append']).' ORDER BY '.$order_by;
+			$this->so->disableSanitizeOrderBy();
+		}
+
 		$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
 		$query['total'] = $this->so->total;
 
@@ -2231,6 +2249,22 @@ class infolog_bo
 	{
 		unset($rel_path);	// not used
 		return $this->check_access($id,$check,0,$user);
+	}
+
+	/**
+	 * Read what file_access() needs for several entries at once
+	 *
+	 * Registered as 'file_access_rows', so Api\Link::file_access_multiple() can answer a whole
+	 * directory listing's worth of access checks without reading one entry per query. It returns
+	 * rows only - every verdict still comes from file_access()/check_access() above, which takes
+	 * such a row in place of an id.
+	 *
+	 * @param int[] $ids
+	 * @return array info_id => entry array pairs, entries that do not exist are left out
+	 */
+	function file_access_rows(array $ids)
+	{
+		return $this->so->readRows($ids);
 	}
 
 	/**

@@ -359,6 +359,7 @@ class addressbook_hooks
 			'add_popup'  => '870x610',
 			'file_access_user' => true,	// file_access supports 4th parameter $user
 			'file_access'=> 'api.EGroupware\\Api\\Contacts.file_access',
+			'file_access_rows' => 'api.EGroupware\\Api\\Contacts.file_access_rows',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
 			// registers an additional type 'addressbook-email', returning only contacts with email, title has email appended
 			'additional' => array(

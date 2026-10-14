@@ -1153,6 +1153,43 @@ class Sql extends Api\Storage
 	}
 
 	/**
+	 * Read the rows of many contacts in one query - the bulk twin of read()
+	 *
+	 * Reimplemented to add the sharing information read() adds, in one query for the whole list
+	 * rather than one per contact. That matters because check_perms() falls back to sharing when
+	 * the grants say no, so a row arriving without it would deny a contact the user can reach.
+	 *
+	 * The one thing these rows do not get is read()'s side effect of generating and saving a uid
+	 * for a contact whose uid is missing or too short - reading a list is no reason to write to
+	 * all of it. uid is therefore the only field that can differ, and only for such a contact.
+	 *
+	 * @param array $ids contact_ids
+	 * @return array contact_id => contact pairs, ids without a contact are left out
+	 */
+	function readRows(array $ids)
+	{
+		if (!($rows = parent::readRows($ids)))
+		{
+			return $rows;
+		}
+		// read() gives every contact a "shared" key, an empty array when it has none
+		foreach($rows as &$row)
+		{
+			$row['shared'] = array();
+		}
+		unset($row);
+
+		foreach($this->read_shared(array_keys($rows)) as $shared)
+		{
+			if (isset($rows[$shared['contact_id']]))
+			{
+				$rows[$shared['contact_id']]['shared'][] = $shared;
+			}
+		}
+		return $rows;
+	}
+
+	/**
 	 * Read sharing information of a contact
 	 *
 	 * @param int $id contact_id to read

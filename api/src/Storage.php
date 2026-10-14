@@ -339,6 +339,27 @@ class Storage extends Storage\Base
 	}
 
 	/**
+	 * Read the rows of many ids in one query
+	 *
+	 * Reimplemented to also read the custom fields, so these rows stay what read() returns.
+	 *
+	 * @param array $ids values of the (single-column) primary key
+	 * @return array id => row pairs
+	 */
+	function readRows(array $ids)
+	{
+		if (!($rows = parent::readRows($ids)) || !$this->customfields)
+		{
+			return $rows;
+		}
+		foreach($this->read_customfields(array_keys($rows)) as $id => $cfs)
+		{
+			if (isset($rows[$id])) $rows[$id] = array_merge($rows[$id], $cfs);
+		}
+		return $rows;
+	}
+
+	/**
 	 * saves the content of data to the db
 	 *
 	 * reimplented to also save the custom fields

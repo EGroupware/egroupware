@@ -67,6 +67,14 @@ use EGroupware\Api\Json\Push;
  *                                                  // bool, if result does NOT depend on $rel_path and can be cached, int=0|1, if it depends on $rel_path
  * 			'file_access_user' => false,			// true if file_access method supports 4th parameter $user, if app is NOT supporting it
  *                                                  // Link::file_access() returns false for $user != current user!
+ * 			'file_access_rows' => 'app.class.method',	// optional: array file_access_rows(array $ids) returning id => row pairs, usually just
+ *                                                  // forwarding to the storage's readRows(). Worth adding only where 'file_access' reads the entry
+ *                                                  // to answer - an app answering without touching the database (records: "return true") has no
+ *                                                  // per-entry query to save, and reading rows for it would only add cost.
+ *                                                  // It returns DATA, never an access decision: each row is handed to the app's own 'file_access'
+ *                                                  // method (which has to accept a row-array in place of an id, as eg. infolog_bo::check_access(),
+ *                                                  // Api\Contacts::check_perms() and tracker_bo::check_rights() all do), so the decision stays in
+ *                                                  // the one place that makes it.
  *			'file_dir'	=> 'app/sub',				// sub file dir for uploaded files/links
  *			'find_extra'  => array('name_preg' => '/^(?!.picture.jpg)$/')	// extra options to Vfs::find, to eg. remove some files from the list of attachments
  *			'edit' => array(
@@ -208,9 +216,25 @@ class Link extends Link\Storage
 	private static $title_cache = array();
 
 	/**
-	 * Max. number of titles stored in session (older once get removed)
+	 * Max. number of file-access rights stored in session (older once get removed)
+	 *
+	 * Doubles as the number of entries file_access_multiple() reads from an app at a time, which
+	 * is what keeps the memory a directory listing costs independent of how many entries it has:
+	 * entry rows run to a few KB each, so reading a whole big directory's worth in one go would
+	 * only trade max_execution_time for memory_limit.
 	 */
 	const FILE_ACCESS_CACHE_SIZE = 1000;
+
+	/**
+	 * Keys file_access_multiple() put into $file_access_cache, which do not belong in the session
+	 *
+	 * A directory listing primes a verdict per entry, which is worth keeping for the rest of the
+	 * request and not beyond it: left in the session cache they would evict everything else from
+	 * it, for answers nothing is going to ask for again.
+	 *
+	 * @var array key => true pairs
+	 */
+	private static $file_access_primed = array();
 	/**
 	 * Cache file access permissions
 	 *
@@ -305,6 +329,7 @@ class Link extends Link\Storage
 		{
 			self::$file_access_cache = array();
 		}
+		self::$file_access_primed = array();
 		// bo-class instances cached by exec() capture the constructing user (eg. $this->user), so they
 		// must NOT survive a user-context switch within the same process (eg. async/cron jobs, tests)
 		if ($clear_all)
@@ -367,11 +392,13 @@ class Link extends Link\Storage
 			}
 			Cache::setSession(__CLASS__, 'link_title_cache', self::$title_cache);
 
-			if (count(self::$file_access_cache) > self::FILE_ACCESS_CACHE_SIZE)
+			$file_access = self::$file_access_primed ?
+				array_diff_key(self::$file_access_cache, self::$file_access_primed) : self::$file_access_cache;
+			if (count($file_access) > self::FILE_ACCESS_CACHE_SIZE)
 			{
-				self::$file_access_cache = array_slice(self::$file_access_cache, -self::FILE_ACCESS_CACHE_SIZE);
+				$file_access = array_slice($file_access, -self::FILE_ACCESS_CACHE_SIZE);
 			}
-			Cache::setSession(__CLASS__, 'link_file_access_cache', self::$file_access_cache);
+			Cache::setSession(__CLASS__, 'link_file_access_cache', $file_access);
 		}
 	}
 
@@ -1777,6 +1804,7 @@ class Link extends Link\Storage
 	{
 		unset(self::$title_cache[$app.':'.$id]);
 		unset(self::$file_access_cache[$app.':'.$id]);
+		unset(self::$file_access_primed[$app.':'.$id]);
 
 		try {
 			$push = new Push(Push::ALL);
@@ -1917,6 +1945,115 @@ class Link extends Link\Storage
 		}
 		//else error_log(__METHOD__."($app,$id,$required,$rel_path) using cached value $cache --> ".($cache & $required ? 'true' : 'false'));
 		return !!($ret & $required);
+	}
+
+	/**
+	 * Prime the file-access cache for many entries of one app, to spare file_access() its per-entry query
+	 *
+	 * Listing a directory of the /apps VFS mount stats every child, and every stat asks
+	 * file_access() about a different entry. Answering each one on its own makes an app read one
+	 * entry per query, so a directory of N entries costs O(N) queries (infolog: 4 per entry) and a
+	 * big one runs into max_execution_time. This fetches what those checks need in one query
+	 * instead, and leaves the answers in the same cache file_access() consults, so the stats that
+	 * follow are free.
+	 *
+	 * It never decides access itself. For an app registering 'file_access_rows' it only batches
+	 * the READING of the rows, and still asks that app's own 'file_access' method about each one,
+	 * passing the row in place of the id. For an app without a 'file_access' method, where
+	 * file_access() falls back to title(), it just bulk-queries the titles that fallback reads.
+	 * Either way the verdict comes from exactly the code that would have produced it anyway - so
+	 * an app can only ever make itself slower here, never more permissive.
+	 *
+	 * Anything not primed - an app that has not opted in, an id its 'file_access_rows' did not
+	 * return, a verdict that is not cacheable - is simply left to the per-entry file_access().
+	 *
+	 * @param string $app
+	 * @param array $ids ids in $app
+	 * @param int $required =Acl::READ only Acl::READ is primed, see below
+	 * @param int $user =null account_id file_access() will be called for, null/current user
+	 */
+	public static function file_access_multiple($app, array $ids, $required=Acl::READ, $user=null)
+	{
+		// file_access() answers for another user from a separate, deliberately uncached branch -
+		// the cache below is keyed by app:id only, so priming it for anyone else would hand the
+		// current user another user's verdicts
+		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			return;
+		}
+		// only READ is primed: file_access() re-checks a cached EDIT ($required == Acl::EDIT &&
+		// !($ret & $required)) rather than trusting it, so priming it would buy nothing
+		if ($required != Acl::READ ||
+			!($ids = array_unique(array_filter($ids, static function($id) { return isset($id) && $id !== ''; }))))
+		{
+			return;
+		}
+		if (!($file_access = self::get_registry($app, 'file_access')))
+		{
+			// no 'file_access' method: file_access() falls back to title(), and titles() is the
+			// bulk form of exactly that read - no cache of our own to write
+			self::titles($app, $ids);
+			return;
+		}
+		if (!($rows_method = self::get_registry($app, 'file_access_rows')))
+		{
+			return;		// app has not opted in, leave every id to the per-entry file_access()
+		}
+		// in chunks, so a directory of 100.000 entries does not mean 100.000 entry rows held at
+		// once - reading them all in one go would just trade max_execution_time for memory_limit
+		$verified = false;
+		foreach(array_chunk(array_values($ids), self::FILE_ACCESS_CACHE_SIZE) as $chunk)
+		{
+			$rows = self::exec($rows_method, array($chunk));
+			foreach((array)$rows as $id => $row)
+			{
+				if (!is_array($row)) continue;
+
+				$access = self::exec($file_access, array($row, $required, null));
+
+				if (!$verified)
+				{
+					// Passing a row where an id is expected is how these checks are written
+					// (infolog_bo::check_access(), Api\Contacts::check_perms(),
+					// tracker_bo::check_rights(), ... all take either), but nothing makes an app do
+					// it. One that does not would quietly answer about the array itself rather than
+					// the entry, so ask it once the ordinary way too and use none of the verdicts if
+					// the two disagree. That costs the single per-entry read we are avoiding N-1 of,
+					// and it happens before anything is cached.
+					if (self::exec($file_access, array($id, $required, null)) !== $access)
+					{
+						return;
+					}
+					$verified = true;
+				}
+				self::cacheFileAccess($app, $id, $access, $required);
+			}
+			unset($rows);	// let a chunk go again before reading the next
+		}
+	}
+
+	/**
+	 * Remember one file_access() verdict the way file_access() itself would
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 * @param mixed $access whatever the app's 'file_access' method answered
+	 * @param int $required
+	 */
+	private static function cacheFileAccess($app, $id, $access, $required)
+	{
+		// same rule file_access() applies: only a bool verdict is independent of $rel_path and may
+		// be cached, anything else is left for it to deal with per entry
+		if (!is_bool($access)) return;
+
+		$cache =& self::get_cache($app, $id, 'file_access');
+		// never overwrite what file_access() already worked out, incl. its NO_CACHE_FLAG
+		if (!isset($cache))
+		{
+			$cache = $access ? $required | Acl::READ : 0;
+			self::$file_access_primed[$app.':'.$id] = true;
+		}
+		unset($cache);
 	}
 
 	/**
