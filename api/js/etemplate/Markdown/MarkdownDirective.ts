@@ -57,6 +57,10 @@ function getParser() : MarkdownIt
 	if(!parser)
 	{
 		parser = new MarkdownIt({html: false, linkify: true, breaks: true, typographer: false});
+		// Linkify only text that is clearly a URL - with a scheme or a leading "www." -
+		// fuzzy mode would also turn any bare domain into a link,
+		// e.g. "Claude.ai" in a mail subject
+		parser.linkify.set({fuzzyLink: false});
 
 		// Harden links at the token level rather than with a DOMPurify hook.  Hooks are global to
 		// the module, so one installed here would also rewrite Et2Image's SVG and the mail bodies
