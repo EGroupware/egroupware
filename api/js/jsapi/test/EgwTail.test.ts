@@ -125,7 +125,7 @@ describe('egw_tail.js', () =>
 
 	describe('refresh_log() callback handling', () =>
 	{
-		it('appends new content, escaping only "<" (KNOWN QUIRK: ">" is left as-is), and advances log_tail_start', async() =>
+		it('appends new content verbatim (no "&lt;" escaping) and advances log_tail_start', async() =>
 		{
 			env = await createEgwTailEnv({filename: 'access.log'});
 			env.fireDomContentLoaded();
@@ -133,9 +133,9 @@ describe('egw_tail.js', () =>
 
 			call.callback({length: 1, next: 42, content: '<script>', size: '10', writable: true});
 
-			// content is set via textContent (not innerHTML), so the un-escaped ">"
-			// is harmless here - but the escaping itself is asymmetric on its face.
-			assert.equal(env.log.textContent, '&lt;script>');
+			// content is set via textContent (not innerHTML), so markup is never parsed -
+			// escaping would only show a literal "&lt;" (ticket #125621)
+			assert.equal(env.log.textContent, '<script>');
 		});
 
 		it('a second chunk request uses the advanced log_tail_start', async() =>
