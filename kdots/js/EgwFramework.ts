@@ -1106,6 +1106,11 @@ export class EgwFramework extends LitElement
 		const hash = await this.egw.hashString(message);
 
 		// Do not add a same message twice if it's still not dismissed
+		if(typeof this._messages[hash] !== "undefined" && !this._messages[hash].isConnected)
+		{
+			// belongs to a window that has been closed meanwhile
+			delete this._messages[hash];
+		}
 		if(typeof this._messages[hash] !== "undefined")
 		{
 			const alert = this._messages[hash];
@@ -1168,6 +1173,19 @@ export class EgwFramework extends LitElement
 
 		this._messages[hash] = alert;
 		alert.dataset.hash = hash;
+
+		// An alert of a popup is only removed above by its own "sl-hide", which never comes if the popup is
+		// closed first: the entry would keep the whole closed popup alive in this (main) window.
+		if(_window !== window)
+		{
+			_window.addEventListener("pagehide", () =>
+			{
+				if(this._messages[hash] === alert)
+				{
+					delete this._messages[hash];
+				}
+			}, {once: true});
+		}
 
 		return returnPromise
 	}

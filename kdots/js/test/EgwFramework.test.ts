@@ -341,4 +341,63 @@ describe('EgwFramework', () =>
 			assert.isTrue(popup.print.notCalled, 'popup was printed without being asked to');
 		});
 	});
+
+	describe('message() from a popup', () =>
+	{
+		// A window of its own: the popup's document creates the alert, as it does for real
+		const fakePopup = () =>
+		{
+			const created = [];
+			const listeners : {[type : string] : Function} = {};
+			const popup : any = {
+				created,
+				listeners,
+				document: {
+					createElement: () =>
+					{
+						const alert : any = document.createElement("div");
+						alert.updateComplete = Promise.resolve(alert);
+						alert.hide = sinon.stub();
+						alert.restartAutoHide = sinon.stub();
+						created.push(alert);
+						return alert;
+					},
+					body: {append: sinon.stub()}
+				},
+				addEventListener: (type : string, handler : Function) => { listeners[type] = handler; }
+			};
+			return popup;
+		};
+
+		beforeEach(() =>
+		{
+			egwStub.hashString.returns("same-message");
+		});
+
+		it("forgets the alert when the popup goes away", async() =>
+		{
+			// Left in the framework's list, the alert keeps the whole closed popup alive in the main window
+			const popup = fakePopup();
+			await element.message("Draft saved", "success", null, true, null, popup);
+			assert.isDefined((<any>element)._messages["same-message"], "alert was not tracked while the popup is open");
+
+			popup.listeners.pagehide();
+
+			assert.isUndefined((<any>element)._messages["same-message"], "alert of the closed popup is still referenced");
+		});
+
+		it("does not reuse the alert of a popup that is gone for the same message", async() =>
+		{
+			const popup = fakePopup();
+			await element.message("Draft saved", "success", null, true, null, popup);
+			const first = popup.created[0];
+
+			// Popup is gone without its alert ever having been hidden: not attached to a document any more
+			await element.message("Draft saved", "success", null, true, null, popup);
+
+			assert.equal(popup.created.length, 2, "the stale alert was reused instead of showing the message again");
+			assert.isTrue(first.restartAutoHide.notCalled, "countdown of an alert nobody can see was restarted");
+			assert.notStrictEqual((<any>element)._messages["same-message"], first);
+		});
+	});
 });
