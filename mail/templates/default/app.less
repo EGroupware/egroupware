@@ -1431,3 +1431,44 @@ et2-description.mailAclRotatedHeader .description--content {
 html:not([data-darkmode="1"]) et2-button-toggle.mailDarkmodeToggle {
 	display: none;
 }
+
+/* external content banner, overlaid at the bottom of a message body iframe (MailApp.resolveExternalImages()) */
+.mail_externalImagesMsgHost {
+	position: relative;
+}
+
+/* sl-alert itself is display: contents, so its base part is positioned and colored */
+sl-alert.mail_externalImagesMsg::part(base) {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 1;
+	width: 99%;
+	border: none;
+	border-radius: 0;
+	background-color: var(--sl-color-warning-200);
+	cursor: pointer;
+}
+
+sl-alert.mail_externalImagesMsg[variant="danger"]::part(base) {
+	background-color: var(--sl-color-danger-600);
+	color: var(--sl-color-neutral-0);
+}
+
+sl-alert.mail_externalImagesMsg::part(message) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--sl-spacing-x-small);
+	padding: var(--sl-spacing-3x-small) var(--sl-spacing-small);
+}
+
+sl-alert.mail_externalImagesMsg::part(close-button) {
+	padding-inline-end: 0;
+	margin-inline-end: 0;
+}
+
+/* buttons on the right: et2-description's own flex: 0 1 auto !important can not be overridden */
+sl-alert.mail_externalImagesMsg .mailExternalShow {
+	margin-inline-start: auto;
+}

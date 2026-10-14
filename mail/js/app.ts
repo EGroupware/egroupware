@@ -183,6 +183,11 @@ export class MailApp extends EgwApp
 	 */
 	private darkmodeObserver: MutationObserver;
 
+	/**
+	 * External content banner shown for the body in a frame, see externalContentBannerAnchor()
+	 */
+	private externalContentBanners = new WeakMap<HTMLElement, HTMLElement>();
+
 	customLabels: CustomLabels = {};
 
 	/**
@@ -3962,11 +3967,21 @@ export class MailApp extends EgwApp
 		// first url of other external content blocked by a JMAP-native body's CSP
 		const blocked_other = _node.querySelector('[data-blocked-external]')?.getAttribute('data-blocked-external');
 		const renderShowingExternal = this.externalContentRenderer(doc);
-		if ((external_images.length > 0 || blocked_other) && _node.querySelector('.mail_externalImagesMsg') === null)
+		// a banner of the previous message in the same frame - it lives outside the body document
+		const frame = this.externalContentBannerAnchor(doc);
+		this.externalContentBanners?.get(frame)?.remove();
+		if ((external_images.length > 0 || blocked_other) && (frame || _node.querySelector('.mail_externalImagesMsg') === null))
 		{
-			const container = document.createElement('div');
+			// web components only work in our own document, a detached body (no frame) gets plain elements
+			const bannerDoc : Document = frame ? document : (_node.ownerDocument ?? document);
+			const container = bannerDoc.createElement('sl-alert') as HTMLElement & {variant : string, closable : boolean, open : boolean};
 			container.classList.add('mail_externalImagesMsg');
-			container.addEventListener('click', () =>{ container.remove(); });
+			container.variant = 'warning';
+			container.closable = true;
+			container.open = true;
+			container.addEventListener('sl-after-hide', () => container.remove());
+			// a click anywhere on the banner hides it, the buttons' own handlers run first
+			container.addEventListener('click', () => container.remove());
 			const getUrlParts = (_rawUrl) => {
 				let u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
@@ -4044,15 +4059,16 @@ export class MailApp extends EgwApp
 				...blocked_alts.map((alt) => MailJmap.urlHost(alt.split('[blocked external image:')[1].replace(/\]$/, ''))),
 				...(_node.querySelector('[data-blocked-hosts]')?.getAttribute('data-blocked-hosts')?.split(' ') ?? []),
 			])].filter(Boolean).join(', ');
-			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
+			// untranslated, et2-description translates it
+			let message = 'In order to protect your privacy all external sources within this email are blocked.';
 			for (const alt of blocked_alts)
 			{
 				if (!alt) continue;
 				const r = getUrlParts(alt);
 				if (r && r.protocol == 'http')
 				{
-					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
-					container.classList.add('red');
+					message = 'This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!';
+					container.variant = 'danger';
 					break;
 				}
 			}
@@ -4068,20 +4084,24 @@ export class MailApp extends EgwApp
 				}
 			}
 
-			const messageP = document.createElement('p');
-			messageP.textContent = message;
-			container.appendChild(messageP);
+			const messageText = bannerDoc.createElement('et2-description') as HTMLElement & {value : string};
+			messageText.classList.add('mail_externalImagesMsgText');
+			messageText.value = message;
+			container.appendChild(messageText);
 
-			const closeBtn = document.createElement('button');
-			closeBtn.classList.add('closeBtn');
-			closeBtn.addEventListener('click', () =>{
-				container.remove();
-			});
-			container.appendChild(closeBtn);
+			const createButton = (_label : string, _statustext : string, _class : string) =>
+			{
+				const button = bannerDoc.createElement('et2-button') as HTMLElement & {statustext : string, noSubmit : boolean, size : string};
+				button.classList.add(_class);
+				button.size = 'small';
+				// the default slot is the button's label, available right away unlike the label property
+				button.textContent = this.egw.lang(_label);
+				button.statustext = _statustext;
+				button.noSubmit = true;
+				return button;
+			};
 
-			const allowBtn = document.createElement('button');
-			allowBtn.textContent = this.egw.lang('Allow');
-			allowBtn.title = this.egw.lang('Always allow external sources from %1 and load content from %2', host.domain, blocked_hosts);
+			const allowBtn = createButton('Allow', this.egw.lang('Always allow external sources from %1 and load content from %2', host.domain, blocked_hosts), 'mailExternalAllow');
 			allowBtn.addEventListener('click', () =>{
 				container.remove();
 				// only the domain the button's title names, not eg. a tracker's domain of another image
@@ -4097,9 +4117,7 @@ export class MailApp extends EgwApp
 			});
 			container.appendChild(allowBtn);
 
-			const showBtn = document.createElement('button');
-			showBtn.textContent = this.egw.lang('Show');
-			showBtn.title = this.egw.lang('Load content from %1 this time only', blocked_hosts);
+			const showBtn = createButton('Show', this.egw.lang('Load content from %1 this time only', blocked_hosts), 'mailExternalShow');
 			showBtn.addEventListener('click', () =>
 			{
 				container.remove();
@@ -4132,9 +4150,42 @@ export class MailApp extends EgwApp
 
 				}
 			});
-			container.appendChild(showBtn);
-			(_node.body ? _node.body : _node).appendChild(container);
+			// Show before Allow, as Allow also does what Show does
+			container.insertBefore(showBtn, allowBtn);
+			if (frame)
+			{
+				// overlaid at the bottom of the body iframe, see .mail_externalImagesMsg in app.less
+				frame.after(container);
+				frame.parentElement?.classList.add('mail_externalImagesMsgHost');
+				(this.externalContentBanners ??= new WeakMap()).set(frame, container);
+			}
+			else
+			{
+				(_node.body ? _node.body : _node).appendChild(container);
+			}
 		}
+	}
+
+	/**
+	 * Element the external content banner of a message body document is placed after
+	 *
+	 * The banner uses our web components, which can not live in the body document itself
+	 * (it has its own custom element registry and no scripts), so it is overlaid at the bottom of
+	 * the body's iframe in our own document: after the et2-iframe, or the iframe itself.
+	 *
+	 * @param doc body document
+	 * @return null if the body is not in an iframe in our document, eg. a detached node
+	 */
+	private externalContentBannerAnchor(doc : Document) : HTMLElement | null
+	{
+		const frame = doc?.defaultView?.frameElement as HTMLElement | null;
+		if (!frame)
+		{
+			return null;
+		}
+		const host = (frame.getRootNode() as ShadowRoot).host as HTMLElement | undefined;
+		const anchor = host?.localName === 'et2-iframe' ? host : frame;
+		return anchor.parentElement ? anchor : null;
 	}
 
 	/**

@@ -119,62 +119,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 img[alt*="[blocked external image:"] {
   object-fit: scale-down;
 }
-.mail_externalImagesMsg {
-  display: block;
-  position: fixed;
-  height: auto;
-  width: 100%;
-  bottom: 0px;
-  left: 0px;
-  background: #ffe5a5;
-  border-top: 1px solid #8f8b8b;
-  box-shadow: #8f8b8b 0px 1px 13px 2px;
-}
-.mail_externalImagesMsg.red {
-  background: rgba(204, 0, 51, 0.8) !important;
-}
-.mail_externalImagesMsg.red * {
-  color: white !important;
-}
-.mail_externalImagesMsg button {
-  float: right;
-  margin: 7px;
-  display: inline-block;
-  background-color: transparent;
-  border: none;
-  font-weight: bold;
-  color: #30558c;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.mail_externalImagesMsg button:hover {
-  color: #143058;
-}
-.mail_externalImagesMsg p {
-  display: inline-block;
-  width: 70%;
-  font-size: 9pt;
-  margin: 7px 7px 7px 10px;
-  color: #1f1f1f;
-}
-.mail_externalImagesMsg button.closeBtn {
-  float: right;
-  background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
-  height: 30px;
-  width: 50px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 22px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  margin: 0;
-  opacity: 0.6;
-}
-.mail_externalImagesMsg button.closeBtn:hover {
-  opacity: 1;
-}
 #smimePasswordRequest {
   background-image: url('../api/templates/default/images/lock.svg');
   width: 100%;
