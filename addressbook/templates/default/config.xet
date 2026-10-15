@@ -119,8 +119,8 @@
 					<et2-description  value="Set full name and file as field in contacts of all users (either all or only empty values)" label="%s:"></et2-description>
 					<et2-hbox>
 						<et2-select  id="fileas" width="70%" emptyLabel="Set only full name"></et2-select>
-						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;all=1&amp;type='+this.form.fileas.value;" label="All"></et2-button>
-						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;type='+this.form.fileas.value;" label="Empty"></et2-button>
+						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;all=1&amp;type='+widget.getRoot().getWidgetById('fileas').value;" noSubmit="true" label="All"></et2-button>
+						<et2-button  onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&amp;type='+widget.getRoot().getWidgetById('fileas').value;" noSubmit="true" label="Empty"></et2-button>
 					</et2-hbox>
 				</row>
 				<row>
