@@ -171,6 +171,37 @@ export function deepExtend(out : any, ...arguments_ : any[]) : any
 		return {};
 	}
 
+	// By far the most common call-shape across the codebase is a plain
+	// clone - deepExtend({}, data) - used everywhere a module hands out its
+	// own copy of some cached state (egw_user.ts, egw_preferences.ts,
+	// egw_config.ts, egw_links.ts, egw_images.ts, mail/js/app.ts, ...) so it
+	// can't be mutated out from under the cache. That shape - exactly one
+	// source, merging into a fresh/empty `out` - can skip the hand-rolled
+	// recursive walk below entirely and let the engine's native
+	// structuredClone() do the copying (no per-key Object.entries()/switch/
+	// recursion here), which is considerably faster for anything
+	// non-trivially sized. It's deliberately NOT taken when actually
+	// merging into an already-populated `out` (e.g. egw_links.ts's
+	// `deepExtend(vars, _extravars)`, mail/js/app.ts's
+	// `deepExtend({message: ...}, _metadata)`), since structuredClone()
+	// would replace whole nested objects instead of recursively merging
+	// their keys into what's already there.
+	if (arguments_.length === 1 && Object.keys(out).length === 0) {
+		const [obj] = arguments_;
+		if (!obj) {
+			return out;
+		}
+		try {
+			return Object.assign(out, structuredClone(obj));
+		}
+		catch (e) {
+			// structuredClone() throws (DataCloneError) on functions, DOM
+			// nodes etc. - not expected in our cached app-state, but not
+			// guaranteed absent either - fall back to the slower but more
+			// permissive clone below.
+		}
+	}
+
 	for (const obj of arguments_) {
 		if (!obj) {
 			continue;

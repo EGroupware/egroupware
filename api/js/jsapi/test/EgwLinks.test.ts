@@ -88,6 +88,17 @@ describe('egw_links.js (links)', () =>
 		{
 			assert.deepEqual(env.egw().deepExtend({a: 1}, null as any, undefined as any), {a: 1});
 		});
+
+		it('falls back to the recursive clone when the source has a structuredClone()-hostile value (e.g. a function)', () =>
+		{
+			const source : any = {a: 1, nested: {b: 2}, fn: () => 'unclonable'};
+			const result : any = env.egw().deepExtend({}, source);
+
+			assert.deepEqual(result.a, 1);
+			assert.deepEqual(result.nested, {b: 2});
+			assert.strictEqual(result.fn, source.fn, 'functions pass through by reference on the fallback path');
+			assert.notStrictEqual(result.nested, source.nested, 'still an independent clone, not a shared reference');
+		});
 	});
 
 	describe('link_get_registry() / set_link_registry()', () =>
