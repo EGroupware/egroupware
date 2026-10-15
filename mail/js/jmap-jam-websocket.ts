@@ -101,10 +101,14 @@ const HTTP_TIMEOUT_MS = 10000;
 /** Race `promise` against a timeout - see HTTP_TIMEOUT_MS's docblock for why this exists and its limits. */
 function withTimeout<T>(promise : Promise<T>, message : string, timeoutMs : number = HTTP_TIMEOUT_MS) : Promise<T>
 {
+	// Cleared once `promise` itself settles (the common case) - left running otherwise, this
+	// timer - and whatever it closes over via `reject`/`message` - sits live for up to
+	// `timeoutMs` after it can no longer affect anything, for every call.
+	let timer : number;
 	return Promise.race([
-		promise,
+		promise.finally(() => window.clearTimeout(timer)),
 		new Promise<T>((_resolve, reject) =>
-			window.setTimeout(() => reject(new Error(message)), timeoutMs)),
+			timer = window.setTimeout(() => reject(new Error(message)), timeoutMs)),
 	]);
 }
 
@@ -448,6 +452,12 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		window.clearTimeout(this.#reconnectTimer);
 		this.#stopHeartbeat();
 		this.#socket?.close();
+		// Defense in depth: a caller that registered via onPush() without keeping/calling its own
+		// returned unsubscribe function would otherwise leave its callback (and whatever realm it
+		// closes over) reachable from this client for as long as this instance itself stays
+		// reachable - harmless as long as this instance is discarded too, but not guaranteed by
+		// every caller.
+		this.#pushCallbacks.clear();
 	}
 
 	/**
