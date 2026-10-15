@@ -106,10 +106,10 @@ class JmapShimDescribeSendExceptionTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testUnwrapsDetailsThroughHordeMimeExceptionAndHordeMailException()
 	{
-		$smtp = $this->hordeSmtpException(450, '<info@khami-fitness.de>: Recipient address rejected: Domain not found');
+		$smtp = $this->hordeSmtpException(450, '<info@example.invalid>: Recipient address rejected: Domain not found');
 		// Horde_Smtp::_getResponse()'s own convention (api/thumbnail.php's own sibling finding,
 		// ticket #125201) - sets this directly, not through any wrapping mechanism
-		$smtp->details = '<info@khami-fitness.de>: Recipient address rejected: Domain not found';
+		$smtp->details = '<info@example.invalid>: Recipient address rejected: Domain not found';
 		$mime = new \Horde_Mime_Exception(new \Horde_Mail_Exception($smtp));
 
 		$this->assertSame('Mailbox unavailable.', $mime->getMessage(),
@@ -117,6 +117,6 @@ class JmapShimDescribeSendExceptionTest extends \PHPUnit\Framework\TestCase
 
 		$description = $this->describeSendException($mime);
 
-		$this->assertSame('<info@khami-fitness.de>: Recipient address rejected: Domain not found', $description);
+		$this->assertSame('<info@example.invalid>: Recipient address rejected: Domain not found', $description);
 	}
 }

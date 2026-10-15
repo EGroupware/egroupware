@@ -33,12 +33,12 @@ describe("describeFailedRecipientsWarning()", () =>
 	it("names the address and reason for a single failed recipient", () =>
 	{
 		const message = describeFailedRecipientsWarning(egw, {
-			'info@khami-fitness.de': 'Recipient address rejected: Domain not found',
+			'info@example.invalid': 'Recipient address rejected: Domain not found',
 		});
 
 		assert.equal(message,
 			'The mail was sent successfully to all recipients, except the following: ' +
-			'info@khami-fitness.de (Recipient address rejected: Domain not found)');
+			'info@example.invalid (Recipient address rejected: Domain not found)');
 	});
 
 	it("lists every failed recipient, not just the first", () =>

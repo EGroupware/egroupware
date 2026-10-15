@@ -655,7 +655,7 @@ class Mailer extends Horde_Mime_Mail
 	/**
 	 * A Horde_Smtp_Exception_Recipients' own reason text (Horde_Smtp's own $details, the SMTP
 	 * server's raw response) usually already names the FIRST rejected address itself (eg.
-	 * "<info@khami-fitness.de>: Recipient address rejected: Domain not found") - stripped here,
+	 * "<info@example.invalid>: Recipient address rejected: Domain not found") - stripped here,
 	 * since send() pairs this SAME reason with EVERY address in ->recipients, not just that first
 	 * one. Horde's own library never retains a distinct reason per address beyond the first (see
 	 * its RCPT-TO loop, Horde_Smtp::sendMessage()) - reusing this one (admittedly sometimes
