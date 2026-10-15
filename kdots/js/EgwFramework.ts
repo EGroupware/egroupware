@@ -821,8 +821,10 @@ export class EgwFramework extends LitElement
 			let applicationInfo = this.applicationList.find(a => a.name == appName);
 			if(applicationInfo)
 			{
-				// If they passed in nothing, reset to application name
-				applicationInfo.title = applicationHeader || this.egw.lang("" + (this.egw.link_get_registry(appName, "name") || applicationInfo.name));
+				// If they passed in nothing, reset to application name,
+				// preferring the server-translated title, as lang() may not have the "common" translations yet on initial load
+				applicationInfo.title = applicationHeader || this.egw.app(appName, "title") ||
+					this.egw.lang("" + (this.egw.link_get_registry(appName, "name") || applicationInfo.name));
 				siteTitle += ": " + applicationInfo.title;
 				const appElement = (<EgwFrameworkApp>this.querySelector("egw-app[name='" + appName + "'][active]"))
 				if (appElement) appElement.title = applicationInfo.title;
