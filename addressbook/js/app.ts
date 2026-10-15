@@ -1753,22 +1753,15 @@ class AddressbookApp extends EgwApp
 				{id:'z1',val:_dest_data['adr_'+dest_type+'_postalcode']}
 			]
 		];
+		const hasValue = (group) => group.some(addr => !!addr.val);
 
-		let src_param : any = url.match(/{{%rs=.*%rs}}/ig);
-		if (src_param[0])
-		{
-			src_param = src_param[0].replace(/{{%rs=/,'');
-			src_param = src_param.replace(/%rs}}/,'');
-			url = url.replace(/{{%rs=.*%rs}}/, src_param);
-		}
-
-		let d_param = url.match(/{{%d=.*%d}}/ig);
-		if (d_param[0])
-		{
-			d_param = d_param[0].replace(/{{%d=/,'');
-			d_param = d_param.replace(/%d}}/,'');
-			url = url.replace(/{{%d=.*%d}}/, d_param);
-		}
+		// {{%rs=...%rs}} / {{%d=...%d}} are ONE atomic optional segment each (the literal prefix
+		// text, eg. "?saddr=", AND the address placeholders it wraps) - kept only when that
+		// address actually has a value, stripped entirely otherwise. Without this, a missing
+		// source/destination used to still leave eg. "?saddr=+++" (empty, "+"-joined tokens)
+		// in the url instead of a clean, source- or destination-less one.
+		url = url.replace(/{{%rs=(.*?)%rs}}/i, hasValue(addrs[0]) ? '$1' : '');
+		url = url.replace(/{{%d=(.*?)%d}}/i, hasValue(addrs[1]) ? '$1' : '');
 
 		// Replcae placeholders with acctual values
 		for (let j=0;j<addrs.length;j++)
@@ -1782,6 +1775,55 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
+	 * Is the configured geolocation_url HERE WeGo - which, unlike Google/Bing/OpenStreetMap,
+	 * needs real coordinates (never plain address text) and therefore has to be built separately
+	 * via geoLocationUrlHere(), not the generic address-text template mechanism above
+	 *
+	 * Recognises both the new sentinel value ("here") and an existing install's old,
+	 * pre-this-fix literal https://maps.here.com/... template, so upgrading needs no admin action.
+	 *
+	 * @param {string} url
+	 * @returns {boolean}
+	 */
+	private isHereMapsConfig(url)
+	{
+		return url === 'here' || /^https?:\/\/(maps|share|wego)\.here\.com\//i.test(url);
+	}
+
+	/**
+	 * Build a HERE WeGo share link, which needs real coordinates - looks up (and caches, for the
+	 * business address only - see ajax_get_geolocation()'s own docblock) the destination's and,
+	 * if given, the source's geo-location first.
+	 *
+	 * @param {object} _dest_data destination contact data (at least {id: ...})
+	 * @param {string} _dest_type 'one' (business) or 'two' (private)
+	 * @param {object} _src_data =null source contact data ({id: ...}), or browser coordinates
+	 *  ({latitude, longitude}) when _src_type is 'browser', or null/undefined for no source at all
+	 * @param {string} _src_type =null 'browser', 'one', 'two', or null/undefined for no source
+	 * @returns {Promise<string|false>}
+	 */
+	async geoLocationUrlHere(_dest_data, _dest_type, _src_data?, _src_type?)
+	{
+		const dest_type = _dest_type || 'one';
+
+		const getGeo = (data, type) =>
+		{
+			if (type === 'browser') return Promise.resolve(data.latitude+','+data.longitude);
+			if (!data || !data.id) return Promise.resolve(null);
+			return this.egw.request('addressbook.addressbook_ui.ajax_get_geolocation', [data.id, type]);
+		};
+
+		const dest_geo = await getGeo(_dest_data, dest_type);
+		if (!dest_geo) return false;
+
+		const src_geo = _src_type ? await getGeo(_src_data, _src_type) : null;
+
+		return src_geo ?
+			'https://share.here.com/r/'+src_geo+'/'+dest_geo :
+			'https://share.here.com/l/'+dest_geo+'?z=15';
+	}
+
+	/**
 	 * Open a popup base on selected address in provided map
 	 *
 	 * @param {object} _action
@@ -1790,7 +1832,9 @@ class AddressbookApp extends EgwApp
 	geoLocationExec(_action, _selected)
 	{
 		const content = egw.dataGetUIDdata(_selected[0].id);
+		const dest_type = _action.id === 'business'?'one':'two';
 		const geolocation_src = egw.preference('geolocation_src','addressbook');
+		const is_here = this.isHereMapsConfig(this.getGeolocationConfig());
 
 		if (geolocation_src === 'browser' && navigator.geolocation)
 		{
@@ -1798,8 +1842,10 @@ class AddressbookApp extends EgwApp
 			{
 				if (position && position.coords)
 				{
-					const url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', position.coords, 'browser');
-					window.open(url,'_blank');
+					const urlPromise = is_here ?
+						this.geoLocationUrlHere(content.data, dest_type, position.coords, 'browser') :
+						Promise.resolve(this.geoLocationUrl(content.data, dest_type, position.coords, 'browser'));
+					urlPromise.then(url => url && window.open(url,'_blank'));
 				}
 			});
 		}
@@ -1807,8 +1853,11 @@ class AddressbookApp extends EgwApp
 		{
 			this.egw.request('addressbook.addressbook_ui.ajax_get_contact', [egw.user('account_id')]).then(_data =>
 			{
-				const url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', _data, geolocation_src === 'browser'?'one':geolocation_src);
-				window.open(url,'_blank');
+				const src_type = geolocation_src === 'browser'?'one':geolocation_src;
+				const urlPromise = is_here ?
+					this.geoLocationUrlHere(content.data, dest_type, _data, src_type) :
+					Promise.resolve(this.geoLocationUrl(content.data, dest_type, _data, src_type));
+				urlPromise.then(url => url && window.open(url,'_blank'));
 			});
 		}
 	}
@@ -1822,9 +1871,47 @@ class AddressbookApp extends EgwApp
 	{
 		// This default url should be identical to the first value of geolocation_url array
 		// defined in addressbook_hooks::config
-		const default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
+		const default_url = 'https://www.openstreetmap.org/directions?engine=fossgis_osrm_car{{%rs=&from=%r0+%t0+%z0+%c0%rs}}{{%d=&to=%r1+%t1+%z1+%c1%d}}';
 		const geo_url = egw.config('geolocation_url');
 		return geo_url || default_url;
+	}
+
+	/**
+	 * "Show this location on the configured map" button next to the geo_lat/geo_lon number-boxes
+	 * in the contact edit dialog (templates/default/edit.xet)
+	 *
+	 * @param {Event} _ev
+	 * @param {Et2Widget} _widget the clicked button
+	 */
+	showGeoOnMap(_ev, _widget)
+	{
+		const widgetContainer = _widget.getInstanceManager().widgetContainer;
+		const lat = widgetContainer.getWidgetById('geo_lat')?.getValue();
+		const lon = widgetContainer.getWidgetById('geo_lon')?.getValue();
+		if (!lat || !lon) return;
+
+		// a bare coordinate pair is a "show this point" action, not routing - every provider has
+		// its own dedicated, geocoding-free url for that, distinct from geoLocationUrl()'s
+		// address-text routing templates
+		const config = this.getGeolocationConfig();
+		let url;
+		if (this.isHereMapsConfig(config))
+		{
+			url = 'https://share.here.com/l/'+lat+','+lon+'?z=15';
+		}
+		else if (/bing\.com/i.test(config))
+		{
+			url = 'https://www.bing.com/maps?cp='+lat+'~'+lon+'&lvl=15';
+		}
+		else if (/google\.com/i.test(config))
+		{
+			url = 'https://www.google.com/maps/search/?api=1&query='+lat+','+lon;
+		}
+		else	// OpenStreetMap, or any other/custom address-text template
+		{
+			url = 'https://www.openstreetmap.org/?mlat='+lat+'&mlon='+lon+'&zoom=15';
+		}
+		window.open(url, '_blank');
 	}
 
 	/**

@@ -1333,6 +1333,85 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
+	 * Get (and cache) a contact's geo-location, for a mapping service that needs coordinates
+	 * rather than a free-text address (eg. HERE WeGo)
+	 *
+	 * Only the business address (adr_one, $address_type='one') is ever read from or written to
+	 * the contact's own cached "geo" field (contact_geo DB column) - a private-address geocode
+	 * ($address_type='two') is always looked up fresh and never persisted, so a single lookup for
+	 * one address type can never silently overwrite a cached result for the other.
+	 *
+	 * @param int|string $contact_id
+	 * @param string $address_type 'one' (business, default - the only one ever cached) or
+	 *  'two' (private, looked up fresh every time, never cached)
+	 */
+	function ajax_get_geolocation($contact_id, $address_type='one')
+	{
+		$bo = new Api\Contacts();
+		if (!($contact = $bo->read($contact_id)))
+		{
+			Api\Json\Response::get()->data(null);
+			return;
+		}
+		if ($address_type === 'one' && !empty($contact['geo']))
+		{
+			Api\Json\Response::get()->data($contact['geo']);
+			return;
+		}
+		$address = trim(implode(' ', array_filter([
+			$contact['adr_'.$address_type.'_street'] ?? null,
+			$contact['adr_'.$address_type.'_postalcode'] ?? null,
+			$contact['adr_'.$address_type.'_locality'] ?? null,
+			(!empty($contact['adr_'.$address_type.'_countrycode']) ?
+				Api\Country::get_full_name($contact['adr_'.$address_type.'_countrycode']) : null),
+		])));
+		$geo = $address !== '' ? self::geocodeAddress($address) : null;
+		if ($geo && $address_type === 'one')
+		{
+			try
+			{
+				$bo->save(['id' => $contact['id'], 'geo' => $geo]);
+			}
+			catch (\Exception $e)
+			{
+				// no write access (or similar) to cache it - still return the looked-up value
+				unset($e);
+			}
+		}
+		Api\Json\Response::get()->data($geo);
+	}
+
+	/**
+	 * Geocode a free-text address via OpenStreetMap's public Nominatim service
+	 *
+	 * Nominatim's usage policy (https://operations.osmfoundation.org/policies/nominatim/) requires
+	 * a real identifying User-Agent and caps public use to roughly 1 request/second - fine for
+	 * this use: it only ever runs once per (business) address, since the result is cached in
+	 * contact_geo afterwards, and is triggered by a single explicit user action, never in bulk.
+	 *
+	 * @param string $address
+	 * @return ?string "lat,lon" (6 decimal places) or null if no match / the request failed
+	 */
+	protected static function geocodeAddress($address)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q='.rawurlencode($address));
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['User-Agent: EGroupware (https://www.egroupware.org)']);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+		$response = curl_exec($ch);
+		$ok = $response !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
+		curl_close($ch);
+
+		if (!$ok || !($results = json_decode($response, true)) || empty($results[0]['lat']) || empty($results[0]['lon']))
+		{
+			return null;
+		}
+		return round((float)$results[0]['lat'], 6).','.round((float)$results[0]['lon'], 6);
+	}
+
+	/**
 	 * Disable / clear advanced search
 	 *
 	 * Advanced search is stored server side in session no matter what the nextmatch
@@ -2473,6 +2552,15 @@ class addressbook_ui extends addressbook_bo
 					{
 						unset($content['n_fn']);
 					}
+					// combine the edit template's separate lat/lon number-boxes back into
+					// the single "lat,lon" string contact_geo/geo is actually stored as
+					if (isset($content['geo_lat']) || isset($content['geo_lon']))
+					{
+						$content['geo'] = $content['geo_lat'] !== '' && $content['geo_lat'] !== null &&
+							$content['geo_lon'] !== '' && $content['geo_lon'] !== null ?
+							$content['geo_lat'].','.$content['geo_lon'] : '';
+						unset($content['geo_lat'], $content['geo_lon']);
+					}
 					// Country codes
 					foreach(array('adr_one', 'adr_two') as $c_prefix)
 					{
@@ -3009,6 +3097,13 @@ class addressbook_ui extends addressbook_bo
 				}
 				//error_log(__METHOD__."() changed tabs=".array2string($tabs));
 			}
+		}
+		// split the single "lat,lon" string contact_geo/geo is stored as, into the edit
+		// template's two separate number-boxes (covers both a fresh load and a successful
+		// "apply", which re-renders the same dialog with the just-saved/combined value)
+		if (!empty($content['geo']) && str_contains($content['geo'], ','))
+		{
+			list($content['geo_lat'], $content['geo_lon']) = explode(',', $content['geo'], 2);
 		}
 		return $this->tmpl->exec('addressbook.addressbook_ui.edit', $content, $sel_options, $readonlys, $preserve, 2);
 	}

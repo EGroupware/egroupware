@@ -563,11 +563,23 @@ class addressbook_hooks
 			$repositories['ldap'] = 'LDAP';
 			$repositories['sql-ldap'] = 'SQL --> LDAP ('.lang('read only').')';
 		}
-		// geolocation pre-defined maps
+		// geolocation pre-defined maps - keep this array's VALUES in sync with
+		// addressbook/js/app.ts's getGeolocationConfig()'s own default (OpenStreetMap, first
+		// entry here too) and isHereMapsConfig()'s recognized HERE values
+		//
+		// Ticket #90341: HERE WeGo's current url scheme (share.here.com) needs real coordinates,
+		// not address text at all any more - 'here' is a sentinel app.ts's isHereMapsConfig()
+		// recognises to build that url separately (geoLocationUrlHere()), not via this generic,
+		// address-text template mechanism. Google's/Bing's templates are otherwise unchanged
+		// except moving the %r1 etc. address placeholders INSIDE the {{%rs=...%rs}}/{{%d=...%d}}
+		// optional-block markers (they used to sit just outside, so they were always substituted
+		// regardless of whether that address actually had a value, leaving eg. "?saddr=+++" in
+		// the url for a missing source/destination instead of cleanly omitting it).
 		$geoLocation = array(
-			array('value' => 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1', 'label' => 'Here Maps'),
-			array('value' => 'http://maps.google.com/{{%rs=?saddr=%rs}}%r0+%t0+%z0+%c0{{%d=&daddr=%d}}%r1+%t1+%z1+%c1', 'label' => 'Google Maps'),
-			array('value' => 'https://www.bing.com/maps/{{%rs=?rtp=adr.%rs}}%r0+%t0+%z0+%c0{{%d=~adr.%d}}%r1+%t1+%z1+%c1', 'label' => 'Bing Maps')
+			array('value' => 'https://www.openstreetmap.org/directions?engine=fossgis_osrm_car{{%rs=&from=%r0+%t0+%z0+%c0%rs}}{{%d=&to=%r1+%t1+%z1+%c1%d}}', 'label' => 'OpenStreetMap'),
+			array('value' => 'here', 'label' => 'Here WeGo'),
+			array('value' => 'http://maps.google.com/{{%rs=?saddr=%r0+%t0+%z0+%c0%rs}}{{%d=&daddr=%r1+%t1+%z1+%c1%d}}', 'label' => 'Google Maps'),
+			array('value' => 'https://www.bing.com/maps/{{%rs=?rtp=adr.%r0+%t0+%z0+%c0%rs}}{{%d=~adr.%r1+%t1+%z1+%c1%d}}', 'label' => 'Bing Maps'),
 		);
 		$ret = array(
 			'sel_options' => array(
