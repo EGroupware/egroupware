@@ -327,7 +327,22 @@ class notifications {
 	public function set_message($_message, $_type = false) {
 		if(!$_type)
 		{
-			$_type = strlen($_message) == strlen(strip_tags($_message)) ? 'plain' : 'html';
+			// Ticket #94561: a plain-text message containing a bracketed email address (eg. an
+			// "Owner: Name <user@example.org>" line, extremely common - calendar's own invitation
+			// notifications always have one) used to get misclassified as html here: strip_tags()
+			// treats ANY "<...>" pair as a tag, including <user@example.org>, changing the
+			// string's length and tripping this auto-detect - storing the raw plain text
+			// verbatim as the html message (no escaping, no nl2br - "<html><body>" wrapped around
+			// otherwise-untouched plain text) while reducing the plain part to whatever
+			// Api\Mail\Html::convertHTMLToText() made of it (collapsing its own line breaks, since
+			// it correctly treats bare newlines as insignificant for REAL html, which this wasn't).
+			// Looks for something that actually resembles an HTML tag instead of any bracket pair -
+			// and requires at least 2 such matches, not just 1: real html is virtually always more
+			// than a single bare tag (an element plus its closing tag, several elements, ...),
+			// while a plain-text message that happens to mention one tag-like fragment for an
+			// unrelated reason (eg. an import error quoting a malformed "<li>") is far more likely
+			// to have just that one, isolated occurrence.
+			$_type = preg_match_all('/<\/?[a-z][a-z0-9]*(?:\s[^<>]*)?\/?>/i', $_message) >= 2 ? 'html' : 'plain';
 		}
 		if($_type == 'plain') {
 			$this->message_plain = $_message;

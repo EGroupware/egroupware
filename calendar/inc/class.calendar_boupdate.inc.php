@@ -1403,15 +1403,19 @@ class calendar_boupdate extends calendar_bo
 							$notification->set_sender($senderid);
 							$notification->set_subject($subject);
 							// as we want ical body to be just description, we can NOT set links, as they get appended to body
+							// Explicit 'plain' type (ticket #94561): this is always plain text, never
+							// html - an "Owner: Name <user@example.org>" line in $details_body used to
+							// trip notifications::set_message()'s own auto-detect (now fixed there too,
+							// but no reason for this call site to still depend on it guessing right).
 							if ($part_prefs['calendar']['update_format'] != 'ical')
 							{
-								$notification->set_message($notify_body . "\n\n" . $details['description'] . "\n\n" . $details_body);
+								$notification->set_message($notify_body . "\n\n" . $details['description'] . "\n\n" . $details_body, 'plain');
 								$notification->set_links(array($details['link_arr']));
 							}
 							else
 							{
 								// iCal: description need to be separated from body by fancy separator
-								$notification->set_message($notify_body . "\n\n" . $details_body . "\n*~*~*~*~*~*~*~*~*~*\n\n" . $details['description']);
+								$notification->set_message($notify_body . "\n\n" . $details_body . "\n*~*~*~*~*~*~*~*~*~*\n\n" . $details['description'], 'plain');
 							}
 							// popup notifiactions: set subject, different message (without separator) and (always) links
 							$notification->set_popupsubject($subject);
