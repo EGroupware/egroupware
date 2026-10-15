@@ -169,7 +169,7 @@
 							<option value="contacts,accounts-back" title="for read only LDAP">contacts to LDAP, account contact-data to SQL</option>
 							<option value="sql" title="for read only LDAP">contacts and account contact-data to SQL</option>
 						</et2-select>
-						<et2-button  onclick="if (this.form.migrate.value) document.location.href='index.php?menuaction=addressbook.addressbook_ui.migrate2ldap&amp;type='+this.form.migrate.value;" label="Start"></et2-button>
+						<et2-button  onclick="if (widget.getRoot().getWidgetById('migrate').value) document.location.href='index.php?menuaction=addressbook.addressbook_ui.migrate2ldap&amp;type='+widget.getRoot().getWidgetById('migrate').value;" noSubmit="true" label="Start"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
