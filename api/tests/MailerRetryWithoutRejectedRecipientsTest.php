@@ -55,7 +55,7 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 	{
 		$mailer = $this->mailer();
 		$mailer->addAddress('good@example.org');
-		$mailer->addAddress('info@khami-fitness.de');
+		$mailer->addAddress('info@example.invalid');
 
 		$transport = new class extends \Horde_Mail_Transport
 		{
@@ -66,8 +66,8 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 				if (count($this->attempts) === 1)
 				{
 					throw MailerRetryWithoutRejectedRecipientsTest::wrappedRecipientsException(
-						['info@khami-fitness.de'],
-						'<info@khami-fitness.de>: Recipient address rejected: Domain not found');
+						['info@example.invalid'],
+						'<info@example.invalid>: Recipient address rejected: Domain not found');
 				}
 			}
 		};
@@ -75,12 +75,12 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 		$mailer->send($transport);
 
 		$this->assertCount(2, $transport->attempts, 'must have retried exactly once');
-		$this->assertStringNotContainsString('khami-fitness.de', $transport->attempts[1],
+		$this->assertStringNotContainsString('example.invalid', $transport->attempts[1],
 			'the retry must exclude the rejected recipient from the envelope');
 		$this->assertStringContainsString('good@example.org', $transport->attempts[1],
 			'the retry must still include the good recipient');
 		$this->assertSame(
-			['info@khami-fitness.de' => 'Recipient address rejected: Domain not found'],
+			['info@example.invalid' => 'Recipient address rejected: Domain not found'],
 			$mailer->failedRecipients);
 	}
 
@@ -108,7 +108,7 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 	{
 		$mailer = $this->mailer();
 		$mailer->addAddress('good@example.org');
-		$mailer->addAddress('info@khami-fitness.de');
+		$mailer->addAddress('info@example.invalid');
 
 		$transport = new class extends \Horde_Mail_Transport
 		{
@@ -119,7 +119,7 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 				if (count($this->attempts) === 1)
 				{
 					throw MailerRetryWithoutRejectedRecipientsTest::wrappedRecipientsException(
-						['info@khami-fitness.de'], '<info@khami-fitness.de>: Domain not found');
+						['info@example.invalid'], '<info@example.invalid>: Domain not found');
 				}
 				// the retry itself hits an unrelated, genuine connection failure
 				throw new \Horde_Mime_Exception(new \Horde_Mail_Exception(
@@ -151,10 +151,10 @@ class MailerRetryWithoutRejectedRecipientsTest extends LoggedInTest
 	public function testSkipsTheRetryEntirelyWhenNoRecipientsWouldBeLeft()
 	{
 		$mailer = $this->mailer();
-		$mailer->addAddress('info@khami-fitness.de');
+		$mailer->addAddress('info@example.invalid');
 
 		$originalException = self::wrappedRecipientsException(
-			['info@khami-fitness.de'], '<info@khami-fitness.de>: Recipient address rejected: Domain not found');
+			['info@example.invalid'], '<info@example.invalid>: Recipient address rejected: Domain not found');
 		$transport = new class($originalException) extends \Horde_Mail_Transport
 		{
 			public array $attempts = [];
