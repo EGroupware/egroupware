@@ -262,6 +262,27 @@ describe("MailApp.resolveAttachmentViewUrls() - non-viewable mime_url suppressio
 		assert.equal(items[1].mime_url, 'https://example/viewEvent');
 	});
 
+	/**
+	 * Ticket #126541 (bb@egroupware.org, 2026-10-15 - Chrome/Brave/Edge, not Firefox): PDF
+	 * attachments were being force-downloaded instead of opened for viewing. This suppression
+	 * check (added a day after #125641's own "PDF deliberately not in VIEWABLE_TYPES" decision)
+	 * reused that same set to mean "no real view url of its own, safe to clear" - true for every
+	 * type it was written against, but not for PDF's own, different reason for being absent (see
+	 * VIEWABLE_TYPES' own docblock and `excluded`'s own comment in resolveAttachmentViewUrls()).
+	 */
+	it("leaves mime_url untouched for PDF (ticket #126541 - was wrongly suppressed, forcing a download)", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [
+			{filename : 'doc.pdf', type : 'application/pdf', mime_url : 'https://example/getAttachment?...'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isFalse(result);
+		assert.equal(items[0].mime_url, 'https://example/getAttachment?...');
+	});
+
 	it("never touches an already-empty mime_url (nothing to suppress)", async() =>
 	{
 		const {app} = createMailApp();

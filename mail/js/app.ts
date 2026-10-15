@@ -3165,7 +3165,11 @@ export class MailApp extends EgwApp
 	 * resolution. Applies equally to a PDF unpacked from a winmail.dat (ticket #126161) - it has no
 	 * JMAP blobId, but createAttachmentBlock() already gives it the same kind of real, correct
 	 * mime_url (via the classic uid/part/is_winmail addressing instead), so it needs no special
-	 * casing here either any more.
+	 * casing here either any more. It lives in resolveAttachmentViewUrls()'s own `excluded` array
+	 * instead (ticket #126541) - "not eligible for blob-fetch" (this set) and "has no view of its
+	 * own, safe to force-download" (that array's OTHER use, the suppression check right below it)
+	 * turned out to be two different questions once that suppression check was added a day after
+	 * this comment was written, and PDF answers them differently.
 	 *
 	 * @return true if any row's mime_url was replaced (caller should re-render)
 	 */
@@ -3176,7 +3180,22 @@ export class MailApp extends EgwApp
 
 	private async resolveAttachmentViewUrls(rowId : string, attachmentsBlock : any[]) : Promise<boolean>
 	{
-		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
+		const excluded = [
+			'message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar',
+			// PDF deliberately lives here, NOT in VIEWABLE_TYPES above - same reasoning as that
+			// set's own docblock (ticket #125641): it already has a correct, real, directly-
+			// viewable mime_url built server-side (AttachmentJmap::createAttachmentBlock() /
+			// the classic equivalent), so it must be exempted from BOTH checks below, not just
+			// the eligible-for-blob-fetch one - VIEWABLE_TYPES alone only covers the latter.
+			// Found live 2026-10-15 (ticket #126541, bb@egroupware.org - Chrome/Brave/Edge, not
+			// Firefox): PDF attachments were being force-downloaded instead of opened for
+			// viewing - the suppression check just below this array was added a day AFTER
+			// #125641's own "PDF deliberately not in VIEWABLE_TYPES" decision, and (correctly,
+			// from its own narrower perspective) reused that same set to mean "has no real view
+			// url of its own, might as well have been cleared" - which was true for every type
+			// it was written against, but not for PDF's own, different reason for being absent.
+			'application/pdf',
+		];
 		// ticket #126271 follow-up (2026-10-14, confirmed live by bb@/ik@egroupware.org - Edge
 		// specifically, not Chrome/Firefox): clicking a non-viewable attachment's own filename link
 		// falls through to Et2Description's own egw.open_link(href, '_browser', ...) ->
@@ -3190,8 +3209,8 @@ export class MailApp extends EgwApp
 		//
 		// Scoped to rows with NO mime_data handler already registered (eg. Collabora/invoices) -
 		// those keep their existing, presumably-intended open_link()/mimeData behavior untouched;
-		// message/rfc822 and vCard/iCalendar keep their own dedicated popup mime_url too (a real
-		// "view", not a download, same exclusion resolveAttachmentViewUrls() itself always had).
+		// message/rfc822, vCard/iCalendar and PDF keep their own dedicated/real mime_url too (a
+		// real "view", not a download - PDF's own reason is above, in `excluded`'s own comment).
 		let suppressedAny = false;
 		attachmentsBlock.forEach((item) =>
 		{
