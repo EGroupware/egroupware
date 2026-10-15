@@ -37,6 +37,7 @@ Object.assign(egwStub, {
 	jsonq: sinon.stub().resolves(undefined),
 	jsonEncode: sinon.stub().callsFake(v => JSON.stringify(v)),
 	hashString: sinon.stub().returns(""),
+	app: sinon.stub().returns(null),
 	app_name: sinon.stub().returns("api"),
 	config: sinon.stub().returns(null),
 	debug: sinon.stub(),
