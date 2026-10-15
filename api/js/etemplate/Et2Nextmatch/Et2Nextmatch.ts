@@ -2460,7 +2460,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 					}
 					continue;
 				}
-				if(!this._filterValuesEqual(activeFilters[key], set[key]))
+				// An explicit "" for a key we hold no value for is not "no change": the server keeps its own
+				// session copy of the filters (eg. an organisation view it opened itself) and only an
+				// explicitly sent empty value clears that.  Once stored here, the same "" compares equal.
+				const explicitClear = set[key] === "" && !(key in activeFilters);
+				if(explicitClear || !this._filterValuesEqual(activeFilters[key], set[key]))
 				{
 					activeFilters[key] = set[key];
 					changed = true;

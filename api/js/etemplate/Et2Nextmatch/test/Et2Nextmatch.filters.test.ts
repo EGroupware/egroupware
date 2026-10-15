@@ -253,6 +253,27 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.isUndefined(el.activeFilters.col_filter.reentrant, "reentrant filter must not be applied");
 	});
 
+	/**
+	 * Contract under test:
+	 * - Explicitly applying "" for a filter key the client holds no value for is a change that is sent
+	 *   to the server, while applying it again afterwards is not.
+	 *
+	 * Why this matters:
+	 * - The server merges received filters into its own session copy, so a key missing from the request
+	 *   keeps its old value there (eg. the addressbook organisation view behind "No filters").
+	 *
+	 * Pass criteria:
+	 * - First applyFilters({grouped_view: ""}) returns true and stores "", the repeat returns false.
+	 */
+	it("sends an explicit empty top-level filter the client never held", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		assert.isTrue(el.applyFilters({grouped_view: ""}, {reload: false}));
+		assert.equal(el.activeFilters.grouped_view, "");
+		assert.isFalse(el.applyFilters({grouped_view: ""}, {reload: false}), "repeat is not a change");
+	});
+
 	it("can update filter state without reloading or clearing row actions", async() =>
 	{
 		const el = new Et2Nextmatch();
