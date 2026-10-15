@@ -143,8 +143,19 @@ class notifications_email implements notifications_iface {
 		$this->mail->addHeader('Subject', trim($_subject)); // trim the subject to avoid strange wrong encoding problem
 		if ($_messages['html'])
 		{
+			// Allow embedding a webdav.php image, but ONLY one pointing into the notified
+			// entity's own VFS attachment directory (eg. a tracker reply's screenshot, which
+			// Et2HtmlArea[imageUpload=link_to] only ever references via webdav.php, never a
+			// data: URI) - never any other VFS path. See Api\Mail::processURL2InlineImages()'s
+			// own docblock for why this restriction is required (ticket #125961/#126501).
+			$allowed_webdav_prefix = null;
+			if (!empty($_data['appname']) && isset($_data['id']) && $_data['id'] !== '' &&
+				preg_match('/^[A-Za-z0-9_]+$/', $_data['appname']) && preg_match('/^[A-Za-z0-9_.-]+$/', (string)$_data['id']))
+			{
+				$allowed_webdav_prefix = '/apps/'.$_data['appname'].'/'.$_data['id'].'/';
+			}
 			// embed images as inline
-			\EGroupware\Api\Mail::processURL2InlineImages($this->mail, $body_html, null);
+			\EGroupware\Api\Mail::processURL2InlineImages($this->mail, $body_html, null, $allowed_webdav_prefix);
 		}
 		$this->mail->setHtmlBody($body_html, null, false);	// no automatic alternativ
 		$this->mail->setBody($body_plain);
