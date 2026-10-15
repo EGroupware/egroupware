@@ -9948,25 +9948,6 @@ export class MailApp extends EgwApp
 		}
 	}
 	/**
-	 * This function helps to trigger the Push notification immidiately.
-	 * @todo: Must be removed after socket push notification is implemented
-	 */
-	smimeAttachmentsCheckerInterval()
-	{
-		const self = this;
-		const attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
-		if (attachmentArea) attachmentArea.getDOMNode().classList.add('loading');
-		const interval = window.setInterval(() =>{
-			self.egw.json('mail.EGroupware\\Mail\\Ui.ajax_smimeAttachmentsChecker',null,(_stop) =>{
-				if (_stop)
-				{
-					window.clearInterval(interval);
-				}
-			}).sendRequest(true);
-		},1000);
-	}
-
-	/**
 	 *
 	 * @param {object} _data smime resolved certificate data
 	 * @returns {undefined}
