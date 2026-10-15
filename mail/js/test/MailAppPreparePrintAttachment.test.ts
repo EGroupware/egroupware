@@ -67,46 +67,25 @@ describe('MailApp.preparePrint()', () =>
 	});
 
 	/**
-	 * Ticket live report 2026-10-12 (ralf, following up on Stefan Unverricht's ctrl+P report):
-	 * mailDisplayBodySrc only exists in the mail.display popup - mail.index's OWN embedded preview
-	 * pane (where preparePrint() is ALSO called, on the SAME 'load' event, see app.ts's own
-	 * 'mail.index' case) uses a DIFFERENTLY-named widget, messageIFRAME. Without a fallback,
-	 * getWidgetById('mailDisplayBodySrc') returns undefined there, mainIframe stays undefined, and
-	 * tempPrintDiv gets created/shown but never populated - a blank printed page, not an error.
+	 * preparePrint() is only ever called from mail.display now (2026-10-15): mail.index's own
+	 * preview pane used to call it too, via its messageIFRAME widget, until
+	 * installPrintKeydownInterception() redirected Ctrl/Cmd+P there to the SAME isolated popup
+	 * print path the toolbar's own "print" button already used, instead of printing the main
+	 * window in place - see that method's own docblock in app.ts.
 	 */
-	it('falls back to messageIFRAME (mail.index\'s own preview pane) when mailDisplayBodySrc is absent', async() =>
+	it('uses mailDisplayBodySrc, with no fallback to any other widget', async() =>
 	{
-		const fakeBody = {innerHTML : '<p>the real message body</p>', addEventListener : () => {}};
+		const displayBody = {
+			innerHTML : '<p>mail.display\'s own body</p>',
+			addEventListener : () => {},
+			querySelectorAll : () => [],
+		};
 		app = Object.create(MailAppClass.prototype);
 		Object.assign(app, {
 			appname : 'mail',
 			et2 : {
-				getWidgetById : (id : string) => id === 'messageIFRAME' ?
-					{iframe : {contentDocument : {body : fakeBody}}} : undefined,
-			},
-		});
-
-		(app as any).preparePrint();
-		await new Promise((resolve) => setTimeout(resolve, 700));
-
-		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
-		assert.equal(tempPrintDiv.innerHTML, fakeBody.innerHTML);
-	}).timeout(2000);
-
-	it('still prefers mailDisplayBodySrc over messageIFRAME when both are somehow present', async() =>
-	{
-		const displayBody = {innerHTML : '<p>mail.display\'s own body</p>', addEventListener : () => {}};
-		const previewBody = {innerHTML : '<p>preview pane body - must NOT be used</p>', addEventListener : () => {}};
-		app = Object.create(MailAppClass.prototype);
-		Object.assign(app, {
-			appname : 'mail',
-			et2 : {
-				getWidgetById : (id : string) =>
-				{
-					if (id === 'mailDisplayBodySrc') return {iframe : {contentDocument : {body : displayBody}}};
-					if (id === 'messageIFRAME') return {iframe : {contentDocument : {body : previewBody}}};
-					return undefined;
-				},
+				getWidgetById : (id : string) => id === 'mailDisplayBodySrc' ?
+					{iframe : {contentDocument : {body : displayBody}}} : undefined,
 			},
 		});
 
@@ -115,5 +94,55 @@ describe('MailApp.preparePrint()', () =>
 
 		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
 		assert.equal(tempPrintDiv.innerHTML, displayBody.innerHTML);
+	}).timeout(2000);
+
+	/**
+	 * Found live 2026-10-15 (ralf, re-testing on boulder - a CheckMK mail with several embedded
+	 * graphs): images were intermittently missing from the print popup, because the previous
+	 * fixed-600ms-only wait could snapshot tmpPrintDiv before an inline image (already a valid
+	 * blob: url in the markup, but still decoding) had actually finished loading. This also
+	 * verifies displayPrint()'s own synchronization point (printContentReady) only resolves once
+	 * that decode - not just the fixed delay - has actually completed.
+	 */
+	it('waits for a pending inline image to finish decoding before copying', async() =>
+	{
+		let imgLoadCallback : (() => void) | undefined;
+		const fakeImg = {
+			complete : false,
+			addEventListener : (type : string, cb : () => void) => { if (type === 'load') imgLoadCallback = cb; },
+		};
+		const fakeBody : any = {
+			innerHTML : '<p>before the image finished loading</p>',
+			addEventListener : () => {},
+			querySelectorAll : (sel : string) => sel === 'img' ? [fakeImg] : [],
+		};
+		app = Object.create(MailAppClass.prototype);
+		Object.assign(app, {
+			appname : 'mail',
+			et2 : {
+				getWidgetById : (id : string) => id === 'mailDisplayBodySrc' ?
+					{iframe : {contentDocument : {body : fakeBody}}} : undefined,
+			},
+		});
+
+		(app as any).preparePrint();
+		await new Promise((resolve) => setTimeout(resolve, 700));
+
+		let resolved = false;
+		(app as any).printContentReady.then(() => { resolved = true; });
+		await new Promise((resolve) => setTimeout(resolve, 50));
+		assert.isFalse(resolved, 'should still be waiting on the pending image');
+		assert.notExists(
+			document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv').innerHTML.match(/before/),
+			'must not have copied yet',
+		);
+
+		fakeBody.innerHTML = '<p>after the image finished loading</p>';
+		imgLoadCallback?.();
+		await new Promise((resolve) => setTimeout(resolve, 50));
+
+		assert.isTrue(resolved);
+		const tempPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
+		assert.equal(tempPrintDiv.innerHTML, fakeBody.innerHTML);
 	}).timeout(2000);
 });
