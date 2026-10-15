@@ -904,8 +904,12 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			}
 			return false;	// no permission or file does not exist
 		}
-		$stmt = self::$pdo->prepare('SELECT COUNT(*) FROM '.self::TABLE.' WHERE fs_dir=?');
-		$stmt->execute(array($stat['ino']));
+		// only count ACTIVE children: Versioning\StreamWrapper and S3\StreamWrapper (both of which
+		// extend and fall back to this method) soft-delete via fs_active=false instead of removing
+		// the row, so an unfiltered count would see their leftover (already deleted) rows and wrongly
+		// refuse to ever rmdir() a directory that's merely logically empty (#94141)
+		$stmt = self::$pdo->prepare('SELECT COUNT(*) FROM '.self::TABLE.' WHERE fs_active=? AND fs_dir=?');
+		$stmt->execute(array(self::_pdo_boolean(true), $stat['ino']));
 		if ($stmt->fetchColumn())
 		{
 			self::_remove_password($url);
