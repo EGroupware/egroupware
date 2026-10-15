@@ -1390,7 +1390,9 @@ class addressbook_ui extends addressbook_bo
 		{
 			try
 			{
-				$bo->save(['id' => $contact['id'], 'geo' => $geo]);
+				// Contacts::save() takes $contact by reference - can't pass the array literal directly
+				$update = ['id' => $contact['id'], 'geo' => $geo];
+				$bo->save($update);
 			}
 			catch (\Exception $e)
 			{
