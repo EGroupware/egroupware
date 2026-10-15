@@ -117,6 +117,54 @@ class SqlfsBackendTest extends LoggedInTest
 	}
 
 	// ---------------------------------------------------------------
+	// rmdir() "is directory empty" check (ticket #94141: a directory whose
+	// only remaining child is an already-(soft-)deleted row - as left behind
+	// by Vfs\Versioning\StreamWrapper or Vfs\S3\StreamWrapper, both of which
+	// fall back to this very method - must still be considered empty)
+	// ---------------------------------------------------------------
+
+	/**
+	 * Plain Sqlfs\StreamWrapper::unlink() always hard-deletes (no fs_active
+	 * concept of its own), so a fresh on-premise install never produces an
+	 * inactive child row by itself - but a directory inherited from, or
+	 * previously backed by, Versioning\StreamWrapper or S3\StreamWrapper
+	 * (both of which soft-delete via fs_active=false instead) can carry one
+	 * once it falls back to plain Sqlfs rmdir(). Before the fix, rmdir()'s
+	 * "is empty" COUNT(*) had no fs_active filter and counted that leftover
+	 * row, so the directory could never be removed again.
+	 */
+	public function testRmdirIgnoresInactiveChildRow() : void
+	{
+		$dir = $this->files[] = $this->getFilename('_inactive_child_dir');
+		Vfs::mkdir($dir);
+
+		$file = $dir . '/leftover.txt';
+		file_put_contents(Vfs::PREFIX . $file, 'soft-deleted elsewhere');
+		$stat = Vfs::stat($file);
+
+		// simulate the soft-delete Versioning\StreamWrapper / S3\StreamWrapper
+		// leave behind instead of really removing the row
+		$GLOBALS['egw']->db->update('egw_sqlfs', ['fs_active' => false], ['fs_id' => $stat['ino']], __LINE__, __FILE__);
+		Vfs::clearstatcache();
+
+		try
+		{
+			$this->assertTrue(Vfs::rmdir($dir),
+				'rmdir() must ignore an inactive (soft-deleted) child row and consider the directory empty');
+
+			// it's gone - don't let tearDown() try to remove it again
+			array_pop($this->files);
+		}
+		finally
+		{
+			// rmdir() only removes the directory's own row - the orphaned inactive
+			// child row is real production behavior (same as Versioning/S3 leave
+			// behind), but has no path to clean up through anymore, so do it directly
+			$GLOBALS['egw']->db->delete('egw_sqlfs', ['fs_id' => $stat['ino']], __LINE__, __FILE__);
+		}
+	}
+
+	// ---------------------------------------------------------------
 	// symlink edge cases
 	// ---------------------------------------------------------------
 
