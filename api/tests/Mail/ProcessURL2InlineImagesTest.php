@@ -93,4 +93,52 @@ class ProcessURL2InlineImagesTest extends TestCase
 
 		$this->assertNull(Mail::processURL2InlineImages($mailer, $html, null));
 	}
+
+	/**
+	 * Ticket #126501: $allowed_webdav_prefix must restrict embedding to the notified entity's own
+	 * VFS attachment directory, never any other VFS path (that restriction is the whole point -
+	 * see processURL2InlineImages()'s own docblock for the confused-deputy vulnerability #125961
+	 * fixed by removing the original, unrestricted version of this). The "prefix matches AND the
+	 * file genuinely exists" success path needs a real mounted VFS/session - covered separately in
+	 * ProcessURL2InlineImagesWebdavPrefixTest (extends Api\LoggedInTest). What's covered here
+	 * (bare TestCase, no session) is every path that must NOT embed anything, which is the
+	 * security-relevant half of this behaviour.
+	 */
+	public function testWebdavUrlOutsideAllowedPrefixIsLeftUntouched()
+	{
+		$mailer = new Mailer(false);
+		// same ticket's own directory textually, but ".." escapes it back out to another record
+		$html = '<img src="/webdav.php/apps/tracker/999999/../999998/secret.pdf">';
+		$before = $html;
+
+		$result = Mail::processURL2InlineImages($mailer, $html, null, '/apps/tracker/999999/');
+
+		$this->assertSame($before, $html, 'a ".." path must not be allowed to escape the prefix via a literal string match');
+		$this->assertSame('', $result[0]['file']);
+	}
+
+	public function testWebdavUrlForADifferentEntityIsLeftUntouched()
+	{
+		$mailer = new Mailer(false);
+		$html = '<img src="/webdav.php/apps/tracker/123456/other_ticket_file.png">';
+		$before = $html;
+
+		$result = Mail::processURL2InlineImages($mailer, $html, null, '/apps/tracker/999999/');
+
+		$this->assertSame($before, $html);
+		$this->assertSame('', $result[0]['file']);
+	}
+
+	public function testWebdavUrlNotEmbeddedWithoutAnAllowedPrefixAtAll()
+	{
+		$mailer = new Mailer(false);
+		$html = '<img src="/webdav.php/apps/tracker/999999/logo.png">';
+		$before = $html;
+
+		// no 4th argument at all - mail's own compose/send call sites must keep today's behaviour
+		$result = Mail::processURL2InlineImages($mailer, $html, null);
+
+		$this->assertSame($before, $html);
+		$this->assertSame('', $result[0]['file']);
+	}
 }

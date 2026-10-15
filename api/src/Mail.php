@@ -7485,23 +7485,44 @@ class Mail
 	/**
 	 * Parses a html text for images, and adds them as inline attachment
 	 *
-	 * Images can be data: URIs, or a classic mail.mail_ui.displayImage menuaction reference to
-	 * one of the original message's own CID attachments (quoted/forwarded content's own inline
-	 * image, not a fresh one). A `webdav.php`-referenced `<img>` is deliberately NOT resolved
-	 * here (ticket #125961) - such a URL only ever works for whoever has this exact account's
-	 * own session, which is exactly why embedding it used to survive only as far as the first
-	 * forward. Compose-time insertion (paste/drop, "insert from VFS") produces a `data:` URI
-	 * directly instead (Mail\Compose::ajax_uploadInlineImage()/ajax_resizeVfsImageForCompose()),
-	 * so a `webdav.php` URL reaching this far is leftover/foreign content - left as a plain,
-	 * unconverted URL, same as any other external image reference (subject to mail's own
-	 * "block external images" display-time privacy guard, not auto-fetched here).
+	 * Images can be data: URIs, a classic mail.mail_ui.displayImage menuaction reference to one
+	 * of the original message's own CID attachments (quoted/forwarded content's own inline image,
+	 * not a fresh one), or - only when $allowed_webdav_prefix is given - a same-origin
+	 * webdav.php URL pointing INTO that exact VFS directory prefix.
+	 *
+	 * A `webdav.php`-referenced `<img>` is otherwise deliberately NOT resolved (ticket #125961) -
+	 * such a URL only ever works for whoever has this exact account's own session, which is
+	 * exactly why embedding it used to survive only as far as the first forward. Compose-time
+	 * insertion (paste/drop, "insert from VFS") produces a `data:` URI directly instead
+	 * (Mail\Compose::ajax_uploadInlineImage()/ajax_resizeVfsImageForCompose()), so a `webdav.php`
+	 * URL reaching mail's own compose/send path is leftover/foreign content - left as a plain,
+	 * unconverted URL there, same as any other external image reference.
+	 *
+	 * $allowed_webdav_prefix exists for a DIFFERENT caller: notifications_email.inc.php, sending
+	 * a notification (eg. a tracker reply containing a screenshot uploaded via
+	 * Et2HtmlArea[imageUpload=link_to], which only ever produces webdav.php URLs, never data:)
+	 * on behalf of some other app/entity. That content can originate from an unauthenticated-to-
+	 * EGroupware source (eg. a ticket reply imported from an incoming email, never passed through
+	 * Etemplate\Widget\HtmlArea::validate()) and gets auto-sent without anyone reviewing it, so a
+	 * caller MUST NOT simply allow every webdav.php URL the way the pre-#125961 code did - doing
+	 * so would let anyone who can get a webdav.php `<img>` into that content (eg. a ticket
+	 * submitter emailing a crafted reply) trick a later, staff-triggered notification into
+	 * silently reading an arbitrary VFS path with the TRIGGERING STAFF MEMBER's own permissions
+	 * and mailing it back to them - the exact confused-deputy vulnerability #125961 removed.
+	 * Restricting it to the specific entity's own VFS attachment directory (eg.
+	 * "/apps/tracker/$tr_id/", computed by the caller from data it already trusts, never from
+	 * anything inside $_html2parse) narrows that to "can read files already part of this same
+	 * record", not "can read anything on the VFS".
 	 *
 	 * @param Mailer $_mailObject instance of the Mailer Object to be used
 	 * @param string $_html2parse the html to parse and to be altered, if conditions meet
 	 * @param $mail_bo mail bo object
+	 * @param ?string $allowed_webdav_prefix =null when given, a webdav.php URL whose path (after
+	 *  "/webdav.php") starts with this exact prefix may be embedded too - must be derived by the
+	 *  caller from trusted data (eg. the notified entity's own app+id), never from $_html2parse
 	 * @return array|null return inline images stored as tmp file in vfs as array of attachments otherwise null
 	 */
-	static function processURL2InlineImages(Mailer $_mailObject, &$_html2parse, $mail_bo)
+	static function processURL2InlineImages(Mailer $_mailObject, &$_html2parse, $mail_bo, ?string $allowed_webdav_prefix=null)
 	{
 		//error_log(__METHOD__."()");
 		$imageC = 0;
@@ -7544,6 +7565,31 @@ class Mail
 									$data = $attachment->getContents();
 									$attachmentData['type'] = $attachment->getType();
 									$attachmentData['name'] = $attachment->getDispositionParameter('filename');
+								}
+							}
+						}
+
+						// see this method's own docblock for why $allowed_webdav_prefix is required
+						// and what it must (and must NOT) be derived from
+						if (!$data && $allowed_webdav_prefix && ($webdav_pos = stripos($decoded_url, '/webdav.php')) !== false)
+						{
+							$own_host = strtolower((string)parse_url(Framework::getUrl('/'), PHP_URL_HOST));
+							$url_host = parse_url($decoded_url, PHP_URL_HOST);
+							$same_origin = $url_host === null || (strcasecmp((string)$url_host, $own_host) === 0 &&
+								in_array(strtolower(parse_url($decoded_url, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true));
+							$webdav_path = urldecode(substr($decoded_url, $webdav_pos+strlen('/webdav.php')));
+							// reject "..", so eg. "/apps/tracker/$tr_id/../../other_ticket/secret.pdf"
+							// can not use a literal-prefix match to escape $allowed_webdav_prefix
+							if ($same_origin && !str_contains($webdav_path, '..') &&
+								str_starts_with($webdav_path, $allowed_webdav_prefix))
+							{
+								Vfs::load_wrapper('vfs');
+								if (($content = file_get_contents('vfs://default'.$webdav_path)) !== false)
+								{
+									$data = $content;
+									$attachmentData['type'] = Vfs::mime_content_type('vfs://default'.$webdav_path) ?:
+										MimeMagic::ext2mime(pathinfo($webdav_path, PATHINFO_EXTENSION));
+									$attachmentData['name'] = basename($webdav_path);
 								}
 							}
 						}
