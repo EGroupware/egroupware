@@ -579,6 +579,101 @@ class Egw extends Egw\Base
 	}
 
 	/**
+	 * Request was already finished by finish_request(), response sent and session closed
+	 *
+	 * @var bool
+	 */
+	protected static bool $request_finished = false;
+
+	/**
+	 * Send the response to the client now and continue processing the request, only possible with FastCGI
+	 *
+	 * Does what __destruct() does at the end of a request: runs the session related on_shutdown callbacks,
+	 * sends the (json) response, closes the session and tells the web-server, that the request is finished.
+	 * That allows to respond before the browser or a proxy times out, if the rest of a request needs a long time.
+	 * The remaining on_shutdown callbacks are still run by __destruct() at the end of the request.
+	 *
+	 * The session is closed and the response sent, so the caller can NOT change them anymore, and has to extend
+	 * PHP's time-limit by set_time_limit(), as FPM's request_terminate_timeout is not tracked after the request is finished.
+	 *
+	 * @return bool true: response was sent and the request finished, false: not possible (not FastCGI, finished already or in shutdown)
+	 */
+	public static function finish_request() : bool
+	{
+		if (self::$request_finished || defined('EGW_SHUTDOWN') || !self::canFinishRequest())
+		{
+			return false;
+		}
+		return self::$request_finished = self::sendResponse();
+	}
+
+	/**
+	 * Can the request be finished before the end of the script: FastCGI, but not for asyncservices
+	 *
+	 * @return bool
+	 */
+	protected static function canFinishRequest() : bool
+	{
+		return function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'] ?? '', -18) != '/asyncservices.php';
+	}
+
+	/**
+	 * Send the response to the user, close the session and tell FastCGI the request is finished
+	 *
+	 * @return bool true if the request was finished via fastcgi_finish_request()
+	 */
+	protected static function sendResponse() : bool
+	{
+		// run all on_shutdown callbacks with session in their name (eg. egw_link::save_session_cache,
+		// Api\Cache::flush_session_writes) BEFORE sending the json response below - once that has
+		// echoed real output, headers_sent() is true and session_start() refuses to reopen the
+		// session at all (regardless of session.use_cookies), so anything buffered while the
+		// session was closed early would be silently lost if this ran after, do NOT stop on exceptions
+		foreach(self::$shutdown_callbacks as $n => $data)
+		{
+			try {
+				$callback = array_shift($data);
+				if (!is_array($callback) || strpos($callback[1], 'session') === false)
+				{
+					//error_log(__METHOD__."() NOT (yet) running ".(((array)$callback)[1]??$callback).json_encode($data));
+					continue;
+				}
+				//error_log(__METHOD__."() running ".(((array)$callback)[1]??$callback).json_encode($data));
+				call_user_func_array($callback, $data);
+			}
+			catch (\Throwable $ex) {
+				_egw_log_exception($ex);
+			}
+			unset(self::$shutdown_callbacks[$n]);
+		}
+
+		// send json response BEFORE flushing output
+		if (Json\Request::isJSONRequest())
+		{
+			Json\Response::sendResult();
+		}
+		// now we can close the session
+		// without closing the session fastcgi_finish_request() will NOT send output to user
+		if (isset($GLOBALS['egw']->session) && is_object($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
+
+		// flush all output to user
+		/* does NOT work on Apache :-(
+		for($i = 0; ob_get_level() && $i < 10; ++$i)
+		{
+			ob_end_flush();
+		}
+		flush();*/
+		// working for fastCGI :-)
+		if (self::canFinishRequest())
+		{
+			fastcgi_finish_request();
+			ini_set('error_log', dirname($GLOBALS['egw_info']['server']['files_dir']) . '/on-shutdown.log');
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Shutdown handler running all registered on_shutdown callbacks and then disconnecting from db
 	 */
 	function __destruct()
@@ -587,50 +682,10 @@ class Egw extends Egw\Base
 		{
 			define('EGW_SHUTDOWN',True);
 
-			// run all on_shutdown callbacks with session in their name (eg. egw_link::save_session_cache,
-			// Api\Cache::flush_session_writes) BEFORE sending the json response below - once that has
-			// echoed real output, headers_sent() is true and session_start() refuses to reopen the
-			// session at all (regardless of session.use_cookies), so anything buffered while the
-			// session was closed early would be silently lost if this ran after, do NOT stop on exceptions
-			foreach(self::$shutdown_callbacks as $n => $data)
+			// response already sent by finish_request()
+			if (!self::$request_finished)
 			{
-				try {
-					$callback = array_shift($data);
-					if (!is_array($callback) || strpos($callback[1], 'session') === false)
-					{
-						//error_log(__METHOD__."() NOT (yet) running ".(((array)$callback)[1]??$callback).json_encode($data));
-						continue;
-					}
-					//error_log(__METHOD__."() running ".(((array)$callback)[1]??$callback).json_encode($data));
-					call_user_func_array($callback, $data);
-				}
-				catch (\Throwable $ex) {
-					_egw_log_exception($ex);
-				}
-				unset(self::$shutdown_callbacks[$n]);
-			}
-
-			// send json response BEFORE flushing output
-			if (Json\Request::isJSONRequest())
-			{
-				Json\Response::sendResult();
-			}
-			// now we can close the session
-			// without closing the session fastcgi_finish_request() will NOT send output to user
-			if (isset($GLOBALS['egw']->session) && is_object($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
-
-			// flush all output to user
-			/* does NOT work on Apache :-(
-			for($i = 0; ob_get_level() && $i < 10; ++$i)
-			{
-				ob_end_flush();
-			}
-			flush();*/
-			// working for fastCGI :-)
-			if (function_exists('fastcgi_finish_request') && substr($_SERVER['PHP_SELF'], -18) != '/asyncservices.php')
-			{
-				fastcgi_finish_request();
-				ini_set('error_log', dirname($GLOBALS['egw_info']['server']['files_dir']) . '/on-shutdown.log');
+				self::sendResponse();
 			}
 
 			// run all on_shutdown, do NOT stop on exceptions

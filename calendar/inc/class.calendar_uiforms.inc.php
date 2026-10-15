@@ -4033,6 +4033,12 @@ class calendar_uiforms extends calendar_ui
 				switch ($button)
 				{
 					case 'sync':
+						// a long running sync continues in the background, after we responded
+						if (!empty($content['cat_id']) && Api\CalDAV\Sync::isRunning((int)$content['cat_id']))
+						{
+							Framework::message(lang('Subscription is just being synced, please wait until it is finished.'), 'info');
+							break;
+						}
 						$content['sync_token'] = '';    // do a full sync, when called manually
 						$caldav_client->sync($content['sync_token'],
 						                     array_intersect_key($content, array_flip(['cat_id', 'participants',

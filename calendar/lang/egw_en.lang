@@ -603,6 +603,7 @@ status of participants set to unknown because of missing category rights	calenda
 submit to repository	calendar	en	Submit to repository
 subscribed calendar	calendar	en	Subscribed calendar
 subscription incl. the synced events deleted.	calendar	en	Subscription incl. the synced events deleted.
+subscription is just being synced, please wait until it is finished.	calendar	en	Subscription is just being synced, please wait until it is finished.
 subscription saved.	calendar	en	Subscription saved.
 subscription synced.	calendar	en	Subscription synced.
 subscriptions	calendar	en	Subscriptions

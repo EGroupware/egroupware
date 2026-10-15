@@ -531,6 +531,35 @@ EOT, $this->header([
 	 */
 	protected function sync_calendar_get(?string &$etag, array $modifications)
 	{
+		// never sync a subscription twice at the same time, eg. a cron-job and "Sync now" or a "Sync now" continuing in the background
+		if (!self::lock($modifications['cat_id']))
+		{
+			return;
+		}
+		try {
+			$this->importCalendar($etag, $modifications);
+		}
+		finally {
+			self::unlock($modifications['cat_id']);
+		}
+	}
+
+	/**
+	 * Fetch the ics file, if it changed, import it and delete the events no longer in it
+	 *
+	 * If that is called by a web request and takes longer than RESPOND_AFTER seconds, we respond to the client and
+	 * continue in the background, as the browser warns after 30s: "No response from server: your data is probably NOT saved".
+	 *
+	 * @param string|null $etag sync-token, on return the new one
+	 * @param array $modifications
+	 * @throws \Exception
+	 */
+	protected function importCalendar(?string &$etag, array $modifications)
+	{
+		if (Api\Json\Request::isJSONRequest())
+		{
+			ignore_user_abort(true);	// closing the dialog must not stop the sync
+		}
 		// fetch the ics-file, returns null, if it did not change since last sync
 		if (($ics = $this->fetchCalendar($etag, $response_header)) === null)
 		{
@@ -539,8 +568,9 @@ EOT, $this->header([
 		$ical_class = new \calendar_ical();
 		// fetch current events, to be able to delete the ones no longer returned
 		$old_events = $ical_class->search(['cat_id' => $modifications['cat_id']]);
-		$ical_class->event_callback = static function(array &$event) use ($modifications, &$old_events)
+		$ical_class->event_callback = static function(array &$event) use ($modifications, &$old_events, $ical_class)
 		{
+			self::respondIfSlow($ical_class->events_imported);
 			$event = self::modify($event, $modifications);
 			// delete imported event from $old_events (plus non-calendar event with not-numeric ids)
 			$old_events = array_filter($old_events, static function(array $old_event) use($event)
@@ -697,12 +727,106 @@ EOT, $this->header([
 	}
 
 	/**
+	 * Seconds a web request is allowed to run, before we respond and continue in the background
+	 *
+	 * The browser shows "No response from server" after 30s, and proxies might time out.
+	 */
+	const RESPOND_AFTER = 20;
+	/**
+	 * Seconds (PHP max_execution_time) the sync is allowed to continue in the background, after we responded
+	 */
+	const BACKGROUND_TIME_LIMIT = 1800;
+	/**
+	 * Seconds after which a lock of a (probably died) running sync is ignored
+	 */
+	const LOCK_EXPIRATION = 3600;
+
+	/**
+	 * Is the request running longer than RESPOND_AFTER seconds
+	 *
+	 * @param float $now microtime(true)
+	 * @param float|null $start start of the request ($_SERVER['REQUEST_TIME_FLOAT']), null if unknown (eg. CLI)
+	 * @return bool
+	 */
+	protected static function isSlow(float $now, ?float $start) : bool
+	{
+		return isset($start) && $now - $start >= self::RESPOND_AFTER;
+	}
+
+	/**
+	 * Respond to the client now, if a web request runs too long, and continue the sync in the background
+	 *
+	 * Called for each imported event. We only respond once and not for cron-jobs and other not-web requests.
+	 *
+	 * @param int $imported number of events imported so far
+	 */
+	protected static function respondIfSlow(int $imported) : void
+	{
+		static $responded = false;
+
+		if ($responded || !Api\Json\Request::isJSONRequest() || !self::isSlow(microtime(true), $_SERVER['REQUEST_TIME_FLOAT'] ?? null))
+		{
+			return;
+		}
+		$responded = true;
+		Api\Framework::message(lang('Subscription sync takes longer: %1 events imported so far, it continues in the background.', $imported), 'info');
+		if (Api\Egw::finish_request())
+		{
+			// FPM does not track request_terminate_timeout after the request is finished, but PHP's max_execution_time
+			set_time_limit(self::BACKGROUND_TIME_LIMIT);
+		}
+	}
+
+	/**
+	 * Lock a subscription for syncing
+	 *
+	 * @param int $cat_id
+	 * @return bool false: already locked by a running sync, true: lock acquired
+	 */
+	protected static function lock(int $cat_id) : bool
+	{
+		if (self::isRunning($cat_id))
+		{
+			return false;
+		}
+		Api\Cache::setInstance(__CLASS__, 'sync-running-'.$cat_id, time(), self::LOCK_EXPIRATION);
+		return true;
+	}
+
+	/**
+	 * Release the lock of a subscription
+	 *
+	 * @param int $cat_id
+	 */
+	protected static function unlock(int $cat_id) : void
+	{
+		Api\Cache::unsetInstance(__CLASS__, 'sync-running-'.$cat_id);
+	}
+
+	/**
+	 * Is a sync of the subscription currently running (eg. in the background after "Sync now" responded)
+	 *
+	 * @param int $cat_id
+	 * @return bool
+	 */
+	public static function isRunning(int $cat_id) : bool
+	{
+		$started = Api\Cache::getInstance(__CLASS__, 'sync-running-'.$cat_id);
+		return $started && $started > time()-self::LOCK_EXPIRATION;
+	}
+
+	/**
 	 * Run subscribed calendar sync as cronjob
 	 *
 	 * @param int $cat_id
 	 */
 	public static function cronjob(int $cat_id)
 	{
+		// a running sync (eg. "Sync now" continuing in the background) would write the subscription again with the new sync-token
+		if (self::isRunning($cat_id))
+		{
+			return;
+		}
 		if (($data = self::readSubscription($cat_id)))
 		{
 			try {
