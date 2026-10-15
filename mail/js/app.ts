@@ -5788,12 +5788,23 @@ export class MailApp extends EgwApp
 		const owner = this.nmOwner();
 		if (!owner) return;
 
+		// Called from a popup (compose after sending, or the "view" popup): let the window owning
+		// the list do it. Run here, the objects built below (labelTags) would belong to the popup's
+		// realm and, stored in the opener's shared row data and row widgets, keep the closed popup
+		// alive (~20MB each) until the main window reloads.
+		if (owner.app !== this)
+		{
+			return owner.app.patchRow(_uid);
+		}
+
 		const dataElem = egw.dataGetUIDdata(_uid);
 		if (!dataElem) return;
 
 		// Mirrors MailJmap.email2row()'s status_icon logic exactly, so a locally-guessed value
 		// renders identically to what a real JMAP re-fetch would later produce.
-		const flags = dataElem.data.flags || {};
+		// Copied into this realm: a popup caller may have created the flags object itself
+		// (compose's `dataElem.data.flags ||= {}`), which would keep that popup alive too.
+		const flags = dataElem.data.flags = {...(dataElem.data.flags || {})};
 		dataElem.data.status_icon = flags.forwarded ? 'mail_forward' :
 			flags.replied ? 'mail_reply' : !flags.read ? 'mail_unseen' : '';
 		const hasFlag = !!flags.flagged ||
