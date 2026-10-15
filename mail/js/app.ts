@@ -3741,8 +3741,10 @@ export class MailApp extends EgwApp
 			{
 				restoreMessageFromDarkMode(d);
 			}
+			const iframe = d.defaultView?.frameElement as HTMLIFrameElement;
+			this.setBodyFrameColorScheme(iframe);
 			// hidden by hideBodyFrameUntilAdapted()
-			(d.defaultView?.frameElement as HTMLIFrameElement)?.style.removeProperty('visibility');
+			iframe?.style.removeProperty('visibility');
 		});
 		document.querySelectorAll('et2-button-toggle.mailDarkmodeToggle').forEach((toggle: any) =>
 		{
@@ -3760,6 +3762,29 @@ export class MailApp extends EgwApp
 	private hideBodyFrameUntilAdapted(iframe: HTMLIFrameElement): void
 	{
 		if (iframe && this.isBodyDarkmode()) iframe.style.visibility = 'hidden';
+	}
+
+	/**
+	 * Show a message with its own dark mode support (see darkReader.ts hasOwnDarkMode()) light,
+	 * if the user switched dark mode off for mails, while EGroupware itself is in dark mode
+	 *
+	 * Inside the iframe, prefers-color-scheme follows the iframe's color-scheme, which it inherits from
+	 * EGroupware's dark mode, so the message's own "@media (prefers-color-scheme: dark)" rules would still apply.
+	 * Set before loading the message, so its dark skin doesn't flash up.
+	 *
+	 * @param iframe
+	 */
+	private setBodyFrameColorScheme(iframe: HTMLIFrameElement): void
+	{
+		if (!iframe) return;
+		if (document.documentElement.dataset.darkmode === '1' && !this.mailDarkmodePref())
+		{
+			iframe.style.colorScheme = 'light';
+		}
+		else
+		{
+			iframe.style.removeProperty('color-scheme');
+		}
 	}
 
 	/**
@@ -3855,6 +3880,7 @@ export class MailApp extends EgwApp
 		this.inFlightRequests += 1;
 		const iframe = iframeWidget?.iframe;
 		this.hideBodyFrameUntilAdapted(iframe);
+		this.setBodyFrameColorScheme(iframe);
 		const fetchPromise = partID ?
 			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
 			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);

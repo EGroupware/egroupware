@@ -31,7 +31,7 @@
   --sl-color-gray-950: hsl(0 0% 95%);
 }
 
-.sl-theme-light {
+.sl-theme-light, html:not(.mailDarkmode){
   color-scheme: light;
 
   --sl-color-gray-50: hsl(0 0% 97.5%);
@@ -231,6 +231,12 @@ img[alt*="[blocked external image:"] {
 // (mail/themes/shared/mail/messageBody.css): colors of EGroupware's own dark mode (kdots.css html[data-darkmode="1"]),
 // mail/js/darkReader.ts removes the colors the message sets itself, which are not readable on that
 @media screen {
+  // a message shown light, eg. with dark mode switched off for mails (MailApp.setBodyFrameColorScheme()):
+  // its iframe is then transparent, so it needs its own (light) background, and no color-scheme dark of .sl-theme-dark
+  html:not(.mailDarkmode) {
+    color-scheme: light;
+    background-color: var(--sl-color-gray-50);
+  }
   html.mailDarkmode {
     // primary colors used below, from EGroupware's dark mode, the gray ones see .sl-theme-dark above
     --sl-color-primary-700: hsl(210, 36%, 63%);

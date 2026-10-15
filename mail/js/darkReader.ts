@@ -9,18 +9,31 @@
  * https://github.com/thunderbird/thunderbird-desktop/blob/main/mail/base/content/modules/DarkReader.mjs
  *
  * The message is shown with a dark background and light text (html.mailDarkmode in preview.css),
- * and all colors the message sets itself, which would not be readable on that, get removed.
- * Images stay untouched.
+ * and all colors the message sets itself, which would not be readable on that, get removed,
+ * or lightened for too dark text colors. Images stay untouched.
  *
  * Changes to the original:
  * - Gecko-only InspectorUtils.isValidCSSColor()/colorToRGBA() replaced by CSS.supports() and a canvas,
  *   and the Gecko-only isInstance() checks by ones working for elements of an iframe too
  * - every change gets recorded, so restoreMessageFromDarkMode() can undo it, when the user switches dark mode off
  * - the "mail.dark-reader.enabled" preference is checked by the caller (MailApp.isBodyDarkmode())
+ * - too dark text colors are lightened (keeping their hue), instead of removed, see lightenColor(),
+ *   only the body's own text color is still removed, to use our default text color,
+ *   and a too dark color attribute (eg. of <font>) is lightened as inline style
+ * - a message with its own dark mode support is detected by its "@media (prefers-color-scheme: dark)" rules
+ *   (see hasOwnDarkMode()), as Thunderbird's check for that in the computed filter can never match
  */
 
+// luminance (0-255) above which a background counts as too bright, and up to which a text color as too dark for dark mode
+// (Thunderbird uses 200): higher keeps more light backgrounds, but lightens more text colors (and more),
+// lower removes more backgrounds, but keeps more text colors as they are
 const LUMINANCE_THRESHOLD = 200;
+// minimum ratio between the luminance of text and background color to keep a message's own background
+// higher removes more of the message's backgrounds, lower keeps more of them, even if hard to read
 export const CONTRAST_THRESHOLD = 3.5;
+// minimum (HSL) lightness (0-100) of too dark text colors in dark mode, see lightenColor():
+// higher gives lighter, more pastel text colors, lower keeps them stronger, but darker
+const MIN_TEXT_LIGHTNESS = 80;
 const VARIABLE_COLOR_PROPERTIES = [
 	"color",
 	"background",
@@ -67,7 +80,13 @@ const colorToRGBA = (color: string): { r: number, g: number, b: number, a: numbe
 		return {r, g, b, a: 1};
 	}
 	const values = rgba.match(/^rgba?\(([^)]+)\)$/)?.[1].split(",").map(Number);
-	return values?.length >= 3 ? {r: values[0], g: values[1], b: values[2], a: values[3] ?? 1} : null;
+	if (values?.length >= 3)
+	{
+		return {r: values[0], g: values[1], b: values[2], a: values[3] ?? 1};
+	}
+	// eg. a computed relative color from lightenColor(): "color(srgb 1 0.4 0.4 / 0.5)"
+	const srgb = rgba.match(/^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)(?: \/ ([\d.]+))?\)$/)?.slice(1);
+	return srgb ? {r: 255 * Number(srgb[0]), g: 255 * Number(srgb[1]), b: 255 * Number(srgb[2]), a: Number(srgb[3] ?? 1)} : null;
 };
 
 /**
@@ -86,6 +105,26 @@ export const luminance = (color: string): number =>
 
 	const {r, g, b} = rgba;
 	return 0.2125 * r + 0.7154 * g + 0.0721 * b;
+};
+
+/**
+ * Lighten a too dark text color for dark mode, keeping its hue and saturation
+ *
+ * Uses CSS relative color syntax, like kdots/js/EgwFramework.styles.ts does,
+ * so the browser raises the color's lightness to at least MIN_TEXT_LIGHTNESS,
+ * eg. dark red text stays red, just lighter - Thunderbird removes such a color instead.
+ * Already light enough colors stay unchanged.
+ *
+ * Browsers without (full) relative color support, eg. Safari < 18 resolving the "l" keyword to a percentage,
+ * reject the expression, so the caller removes the color instead, like Thunderbird does.
+ *
+ * @param {string} color
+ * @returns the lightened color, or null if the color is not valid or the browser does not support the expression
+ */
+export const lightenColor = (color: string): string | null =>
+{
+	const lightened = `hsl(from ${color} h s max(l, ${MIN_TEXT_LIGHTNESS}) / alpha)`;
+	return isValidCSSColor(color) && CSS.supports("color", lightened) ? lightened : null;
 };
 
 /**
@@ -123,6 +162,29 @@ export const isTransparent = (color: string): boolean =>
 };
 
 type ResolvedStyle = Pick<CSSStyleDeclaration, "color" | "background" | "backgroundColor" | "backgroundImage">;
+
+/**
+ * Lighten a too dark text color of a style (see lightenColor()), Thunderbird removes it instead
+ *
+ * @param {CSSStyleDeclaration} style
+ * @param {string} color - resolved color of the style
+ */
+function lightenTextColor(style: CSSStyleDeclaration, color: string): void
+{
+	if (!style.color)
+	{
+		return;
+	}
+	const lightened = lightenColor(color);
+	if (lightened)
+	{
+		style.setProperty("color", lightened, style.getPropertyPriority("color"));
+	}
+	else
+	{
+		style.removeProperty("color");
+	}
+}
 
 /**
  * Check if the various color customization for the current style are suitable
@@ -173,7 +235,7 @@ function sanitizeStyle(style: CSSStyleDeclaration, resolvedStyle: ResolvedStyle 
 		// If no background color is specified, test the color luminance.
 		if (luminance(color) <= LUMINANCE_THRESHOLD)
 		{
-			style.removeProperty("color");
+			lightenTextColor(style, color);
 		}
 		return;
 	}
@@ -194,7 +256,7 @@ function sanitizeStyle(style: CSSStyleDeclaration, resolvedStyle: ResolvedStyle 
 			// Check for color luminance after we removed the background.
 			if (style.color && luminance(color) <= LUMINANCE_THRESHOLD)
 			{
-				style.removeProperty("color");
+				lightenTextColor(style, color);
 			}
 		}
 	}
@@ -214,7 +276,7 @@ function sanitizeStyle(style: CSSStyleDeclaration, resolvedStyle: ResolvedStyle 
 			// Check for color luminance after we removed the background.
 			if (style.color && luminance(color) <= LUMINANCE_THRESHOLD)
 			{
-				style.removeProperty("color");
+				lightenTextColor(style, color);
 			}
 		}
 	}
@@ -229,6 +291,37 @@ function sanitizeStyle(style: CSSStyleDeclaration, resolvedStyle: ResolvedStyle 
 		style.removeProperty("background");
 		style.removeProperty("background-image");
 	}
+}
+
+/**
+ * Check if a message comes with its own dark mode support: "@media (prefers-color-scheme: dark)" rules in its <style>
+ *
+ * Inside the message's iframe, prefers-color-scheme follows the iframe's color-scheme, so EGroupware's dark mode,
+ * not the operating system's, so such rules apply exactly when the message is shown in dark mode.
+ *
+ * @param {Document} doc
+ * @returns {boolean}
+ */
+export function hasOwnDarkMode(doc: Document): boolean
+{
+	const hasDarkRule = (rules: CSSRuleList): boolean => Array.from(rules ?? []).some(rule =>
+		// instanceof CSSMediaRule does not work for rules of an iframe's document
+		rule.type === CSSRule.MEDIA_RULE && /prefers-color-scheme\s*:\s*dark/i.test((rule as CSSMediaRule).media.mediaText) ||
+		// eg. inside @supports
+		"cssRules" in rule && hasDarkRule((rule as CSSGroupingRule).cssRules));
+
+	return Array.from(doc.styleSheets).some(sheet =>
+	{
+		try
+		{
+			return hasDarkRule(sheet.cssRules);
+		}
+		catch (e)
+		{
+			// eg. a cross-origin stylesheet, whose rules we can't read
+			return false;
+		}
+	});
 }
 
 /**
@@ -259,6 +352,12 @@ export function adaptMessageForDarkMode(doc: Document): void
 			changes.push(() => node.setAttribute(attribute, value));
 		}
 	};
+	const setAttribute = (node: Element, attribute: string, value: string) =>
+	{
+		const original = node.getAttribute(attribute);
+		node.setAttribute(attribute, value);
+		changes.push(() => original === null ? node.removeAttribute(attribute) : node.setAttribute(attribute, original));
+	};
 	// restores an element's original style attribute, not just an equivalent cssText (eg. "rgb(0, 0, 0)" for "#000000")
 	const recordStyleChanges = (style: CSSStyleDeclaration, change: () => void, node?: Element) =>
 	{
@@ -267,7 +366,8 @@ export function adaptMessageForDarkMode(doc: Document): void
 		change();
 		if (style.cssText !== cssText)
 		{
-			changes.push(node ? () => node.setAttribute("style", attribute) : () => {style.cssText = cssText;});
+			changes.push(!node ? () => {style.cssText = cssText;} :
+				(attribute === null ? () => node.removeAttribute("style") : () => node.setAttribute("style", attribute)));
 		}
 	};
 
@@ -276,7 +376,7 @@ export function adaptMessageForDarkMode(doc: Document): void
 	// Don't do anything if the email already comes with dark mode support.
 	if (
 		documentStyle.filter.includes("invert(1)") ||
-		documentStyle.filter.includes("prefers-color-scheme: dark")
+		hasOwnDarkMode(doc)
 	)
 	{
 		return;
@@ -308,15 +408,28 @@ export function adaptMessageForDarkMode(doc: Document): void
 	{
 		// Clear inline attributes, usually in tables.
 		removeAttribute(node, "bgcolor");
-		removeAttribute(node, "color");
 
-		// Bail out if the node doesn't have any inline style.
-		if (!node.hasAttribute("style") || !node.style)
+		if (node.hasAttribute("style") && node.style)
 		{
-			continue;
+			recordStyleChanges(node.style, () => sanitizeStyle(node.style), node);
 		}
 
-		recordStyleChanges(node.style, () => sanitizeStyle(node.style), node);
+		// Lighten a too dark color attribute, eg. of <font>, Thunderbird removes all of them:
+		// as inline style, as the attribute can not hold lightenColor()'s relative color syntax.
+		// Not, if an inline color already overrides the attribute.
+		const colorAttribute = node.getAttribute("color");
+		if (colorAttribute !== null && !node.style?.color && luminance(colorAttribute) <= LUMINANCE_THRESHOLD)
+		{
+			const lightened = lightenColor(colorAttribute);
+			if (lightened)
+			{
+				recordStyleChanges(node.style, () => node.style.setProperty("color", lightened), node);
+			}
+			else
+			{
+				removeAttribute(node, "color");
+			}
+		}
 	}
 
 	// SVG text with hardcoded fill attribute.
@@ -328,9 +441,7 @@ export function adaptMessageForDarkMode(doc: Document): void
 		}
 		if (luminance(node.getAttribute("fill")) <= LUMINANCE_THRESHOLD)
 		{
-			const fill = node.getAttribute("fill");
-			node.setAttribute("fill", "currentColor");
-			changes.push(() => node.setAttribute("fill", fill));
+			setAttribute(node, "fill", lightenColor(node.getAttribute("fill")) ?? "currentColor");
 		}
 	}
 

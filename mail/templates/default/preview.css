@@ -24,7 +24,8 @@ html.mailDarkmode {
   --sl-color-gray-900: hsl(240, 9.1%, 91.8%);
   --sl-color-gray-950: hsl(0, 0%, 95%);
 }
-.sl-theme-light {
+.sl-theme-light,
+html:not(.mailDarkmode) {
   color-scheme: light;
   --sl-color-gray-50: hsl(0, 0%, 97.5%);
   --sl-color-gray-100: hsl(240, 4.8%, 95.9%);
@@ -201,6 +202,10 @@ img[alt*="[blocked external image:"] {
   height: 64px;
 }
 @media screen {
+  html:not(.mailDarkmode) {
+    color-scheme: light;
+    background-color: var(--sl-color-gray-50);
+  }
   html.mailDarkmode {
     --sl-color-primary-700: hsl(210, 36%, 63%);
     --sl-color-primary-800: hsl(210, 33%, 73%);
