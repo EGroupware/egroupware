@@ -159,6 +159,15 @@
                         </rows>
                     </grid>
                 </row>
+                <row valign="top">
+                    <et2-description  value="Geo location"></et2-description>
+                    <et2-description  value="Location"></et2-description>
+                    <et2-hbox>
+                        <et2-number  id="geo_lat" precision="6" statustext="Latitude" placeholder="Latitude" width="90"></et2-number>
+                        <et2-number  id="geo_lon" precision="6" statustext="Longitude" placeholder="Longitude" width="90"></et2-number>
+                        <et2-button-icon  id="geo_show_map" image="map" statustext="Show this location on the configured map" onclick="app.addressbook.showGeoOnMap"></et2-button-icon>
+                    </et2-hbox>
+                </row>
             </rows>
         </grid>
     </et2-template>
