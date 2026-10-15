@@ -2030,6 +2030,11 @@ class addressbook_ui extends addressbook_bo
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
+			// the rows template of a grouped view must not outlive it, as the stored state is restored on reload
+			if (empty($query['grouped_view']) && empty($query['col_filter']['parent_id']))
+			{
+				unset($query['template']);
+			}
 			$store_query = $query;
 			// Do not store these
 			foreach(array('options-cat_id','actions','action_links','placeholder_actions') as $key)
