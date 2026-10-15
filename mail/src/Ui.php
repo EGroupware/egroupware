@@ -2106,17 +2106,6 @@ class Ui
 	}
 
 	/**
-	 * This is a helper function to trigger Push method
-	 * faster than normal 60 sec cycle.
-	 * @todo: Once we have socket push implemented we should
-	 * remove this function plus its client side companion.
-	 */
-	function ajax_smimeAttachmentsChecker ()
-	{
-		$this->smimeHandler()->ajaxAttachmentsChecker();
-	}
-
-	/**
 	 * Adds certificate to relevant contact
 	 * @param array $_metadata data of sender's certificate
 	 */
