@@ -2991,7 +2991,7 @@ export class MailApp extends EgwApp
 					this.setupViewAttachmentActions(data, sel_options);
 					await this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock);
 					// Update client cache to avoid resolving winmail.dat attachment again
-					egw.dataStoreUID(data.uid, data);
+					egw.dataStoreUID(data.uid, this.intoOwnerRealm(data));
 					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
 				}
 				else
@@ -3022,7 +3022,7 @@ export class MailApp extends EgwApp
 					this.setupViewAttachmentActions(data, sel_options);
 					await this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock);
 					// Update client cache to avoid re-fetching the attachment block again
-					egw.dataStoreUID(data.uid, data);
+					egw.dataStoreUID(data.uid, this.intoOwnerRealm(data));
 					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
 					// body may have already finished loading (empty) before this resolved -
 					// retry the auto-index now that attachmentsBlock is known
@@ -3058,7 +3058,7 @@ export class MailApp extends EgwApp
 					{
 						data[field + 'address'] = formatted;
 					}
-					egw.dataStoreUID(data.uid, data);
+					egw.dataStoreUID(data.uid, this.intoOwnerRealm(data));
 					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
 				});
 			});
@@ -3086,7 +3086,7 @@ export class MailApp extends EgwApp
 			{
 				if (changed)
 				{
-					egw.dataStoreUID(data.uid, data);
+					egw.dataStoreUID(data.uid, this.intoOwnerRealm(data));
 					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
 				}
 			});
@@ -3707,7 +3707,10 @@ export class MailApp extends EgwApp
 			data.attachmentsBlock = _data.attachmentsBlock;
 			data.attachment_icon = 'attach';
 			data.attachments = 'attach';
-			egw.dataStoreUID(rowId, data);
+			// Also reachable from the "view" popup (see this method's own @param template) - the
+			// `?? {}` fallback above would otherwise construct a fresh object in the popup's own
+			// realm, see intoOwnerRealm()'s own docblock.
+			egw.dataStoreUID(rowId, this.intoOwnerRealm(data));
 			this.renderMessageInto(template, rowId, data);
 			this.patchRow(rowId);
 		}).catch((e) => console.error('MailApp.resolveSmimeAttachmentsBlock(): failed', e));
@@ -5622,6 +5625,45 @@ export class MailApp extends EgwApp
 			if (nm) return {app, nm};
 		}
 		return null;
+	}
+
+	/**
+	 * Reconstruct a plain-data value via the window owning the shared `egw` cache, before storing
+	 * it there with egw.dataStoreUID() - same purpose and technique as Et2Select/StaticOptions.ts's
+	 * own intoCacheRealm(), just for mail's row cache instead of its select-options cache.
+	 *
+	 * renderMessageInto() runs in a "view" popup's own MailApp just as often as in the main
+	 * window's (see that method's own docblock) - each window builds its own MailApp/MailJmap, so
+	 * this method's own code, and anything it builds (this.jmap.repairAddressField()'s result,
+	 * this.resolveAttachmentViewUrls()'s mime_urls, ...), executes using the POPUP's own realm
+	 * when called from there, regardless of `egw` itself being shared. A plain object/array keeps
+	 * the realm it was constructed in alive for as long as anything reachable still references it
+	 * - one such object left in egw's shared row-data cache (read by the MAIN window's own row
+	 * widgets) kept every closed "view" popup in memory (~20MB each) until the main window
+	 * reloaded, the same class of bug #305/#306 fixed for the compose-toolbar cache and patchRow().
+	 *
+	 * Calling structuredClone() bare here would not help - this method itself runs in the POPUP's
+	 * realm in that case, so a bare call would just construct the clone via the SAME (wrong) realm
+	 * again. `egw.window` is always the window that originally built this shared egw instance (the
+	 * main window - popups reach it via window.opener.top.egw, see egw.js) regardless of which
+	 * window is calling now, so `egw.window.structuredClone` is the one that actually reconstructs
+	 * the value in the right realm.
+	 */
+	private intoOwnerRealm<T>(value : T) : T
+	{
+		try
+		{
+			const owner : any = (egw as any).window;
+			if (value && owner && owner !== window)
+			{
+				return owner.structuredClone(value);
+			}
+		}
+		catch (e)
+		{
+			// closed or inaccessible opener: keep what we have
+		}
+		return value;
 	}
 
 	/**
@@ -9898,7 +9940,10 @@ export class MailApp extends EgwApp
 
 			data.data.attachmentsBlock = _attachments;
 			data.data.attachmentsBlockTitle = _attachments.lenght;
-			egw.dataStoreUID(selected[0], data.data);
+			// Also reachable from the "view" popup's own S/MIME decryption (same concern as
+			// resolveSmimeAttachmentsBlock()'s own equivalent fix) - _attachments may be an array
+			// built in the popup's own realm, see intoOwnerRealm()'s own docblock.
+			egw.dataStoreUID(selected[0], this.intoOwnerRealm(data.data));
 			this.preview(selected, this.et2.getWidgetById('nm'));
 		}
 	}

@@ -548,6 +548,35 @@ export class MailJmap
 	// auto-match. PGP encryption has no separate "verify" step the way signing does, so this is
 	// just a plain boolean, not a richer result type.
 	private pgpEncryptedCache : Record<string, boolean> = {};
+
+	/**
+	 * Rows with a cached PGP check (pgpSignatureCache and/or pgpEncryptedCache), least recently
+	 * touched first - same unbounded-growth concern rowsWithUrls/touchRowUrls() already solves
+	 * for object URLs, for these two small per-row caches instead. Each entry only holds a
+	 * verify-result object or a boolean, so the per-entry cost is tiny, but a multi-week session
+	 * reading thousands of messages would otherwise grow both of these forever.
+	 */
+	private rowsWithPgpCache : string[] = [];
+
+	private static readonly MAX_ROWS_WITH_PGP_CACHE = 200;
+
+	/** Mark a row as the most recently PGP-checked, evicting both caches for whatever falls out. */
+	private touchPgpCache(rowId : string) : void
+	{
+		const index = this.rowsWithPgpCache.indexOf(rowId);
+		if (index !== -1)
+		{
+			this.rowsWithPgpCache.splice(index, 1);
+		}
+		this.rowsWithPgpCache.push(rowId);
+		while (this.rowsWithPgpCache.length > MailJmap.MAX_ROWS_WITH_PGP_CACHE)
+		{
+			const evicted = this.rowsWithPgpCache.shift();
+			delete this.pgpSignatureCache[evicted];
+			delete this.pgpEncryptedCache[evicted];
+		}
+	}
+
 	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 	// standard (non-label, non-custom-flag) system flags the UI can bulk-toggle for an explicit
 	// selection - keyed by the base ("un"-stripped) action id used throughout mail/js/app.ts
@@ -793,6 +822,14 @@ export class MailJmap
 	{
 		Object.values(this.refreshTimers).forEach(timer => window.clearTimeout(timer));
 		this.refreshTimers = {};
+		// Same reasoning as the token-refresh path's own close() a bit further down this file
+		// (search "close the outgoing client's WebSocket"): a real window/popup closing gets its
+		// sockets torn down by the browser on navigation anyway, but MailApp can also destroy()
+		// and rebuild this instance without a real navigation (a client-side template reload of
+		// mail.index, see app.ts's own et2_ready() comment on that) - left open, the old client
+		// has nothing more to do once this instance is discarded.
+		Object.values(this.clients).forEach(client => client?.close());
+		this.clients = {};
 		this.app = null;
 	}
 
@@ -2944,6 +2981,7 @@ export class MailJmap
 				return {special: true};
 			}
 			this.pgpEncryptedCache[rowId] = !!this.findPgpPart(email.bodyStructure);
+			this.touchPgpCache(rowId);
 			if (this.isSpecialCase(email.bodyStructure) || this.isBareAttachmentBody(email.bodyStructure))
 			{
 				// S/MIME/TNEF/bare: rendering is 100% server-side either way (private key material,
@@ -4052,10 +4090,12 @@ export class MailJmap
 	{
 		if (rowId in this.pgpSignatureCache)
 		{
+			this.touchPgpCache(rowId);
 			return this.pgpSignatureCache[rowId];
 		}
 		const result = await this.verifyPgpSignatureUncached(rowId);
 		this.pgpSignatureCache[rowId] = result;
+		this.touchPgpCache(rowId);
 		return result;
 	}
 
