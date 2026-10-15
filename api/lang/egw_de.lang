@@ -1412,6 +1412,7 @@ subject	common	de	Betreff
 submit	common	de	Absenden
 submit form	common	de	Formular abschicken
 submitbutton	common	de	Schaltfläche
+subscription sync takes longer: %1 events imported so far, it continues in the background.	common	de	Das Synchronisieren des Abonnements dauert länger: %1 Termine bisher importiert, es läuft im Hintergrund weiter.
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
 successful created new directory %1 for unconnected nods.	admin	de	Ordner %1 wurde erfolgreich erstellt für nicht verbundene Knoten (nods).
 sudan	common	de	SUDAN

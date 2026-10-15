@@ -602,6 +602,7 @@ status of participants set to unknown because of missing category rights	calenda
 submit to repository	calendar	de	Übertragen zu www.egroupware.org
 subscribed calendar	calendar	de	Abonnierter Kalender
 subscription incl. the synced events deleted.	calendar	de	Abonnement einschl. der synchronisierten Termine gelöscht.
+subscription is just being synced, please wait until it is finished.	calendar	de	Das Abonnement wird gerade synchronisiert, bitte warten Sie bis es fertig ist.
 subscription saved.	calendar	de	Abonnement gespeichert.
 subscription synced.	calendar	de	Abonnement synchronisiert.
 subscriptions	calendar	de	Abonnements
