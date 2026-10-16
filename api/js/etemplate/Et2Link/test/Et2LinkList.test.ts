@@ -121,3 +121,41 @@ describe("Et2LinkList clipboard", () =>
 		assert.isUndefined(store["phpgwapi-egw_clipboard"]);
 	});
 });
+
+describe("Et2LinkList context menu", () =>
+{
+	let proto : any;
+	let opened : any[];
+	let list : any;
+
+	before(async() =>
+	{
+		proto = (await import("../Et2LinkList")).Et2LinkList.prototype;
+	});
+
+	beforeEach(() =>
+	{
+		opened = [];
+		const egw = {
+			lang: (l : string) => l,
+			image: () => "",
+			open: (...args) => {opened.push(args);}
+		};
+		list = {
+			application: "calendar",
+			entryId: "25412",
+			egw: () => egw,
+			_createMailContextMenu: proto._createMailContextMenu
+		};
+		proto._createContextMenu.call(list);
+	});
+
+	it("opens the file information with the VFS path as the link list sends it", () =>
+	{
+		// "100% a#b?c.txt" as sqlfs stores it, only the encoded path exists in the VFS
+		list.context.data = {app: "file", id: "100%25 a%23b%3Fc.txt", app2: "calendar", id2: "25412"};
+		list.context.getItem("file_info").onClick();
+
+		assert.deepEqual(opened, [["/apps/calendar/25412/100%25 a%23b%3Fc.txt", "filemanager", "edit"]]);
+	});
+});
