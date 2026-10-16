@@ -170,17 +170,19 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     multiple
                     @click=${async(e) =>
                             {
-                                // Pre-select all files
-                                let files = [];
-                                let cbFiles = await getClipboardFiles();
-                                cbFiles.forEach(f => files.push(f.path));
-                                e.target.firstElementChild.value = files;
-                                e.target.firstElementChild.requestUpdate();
-
-                                waitForEvent(e.target._dialog, "sl-after-show").then(async() =>
+                                // Before the first await: the event is dispatched by then, e.target no longer
+                                // the select, and the dialog may already be shown (reading the clipboard
+                                // fetches the titles of linked entries)
+                                const select = e.currentTarget;
+                                waitForEvent(select._dialog, "sl-after-show").then(async() =>
                                 {
                                     this.handleFilePaste(await this.pasteDialog.getComplete());
                                 });
+
+                                // Pre-select all files
+                                const cbFiles = await getClipboardFiles();
+                                select.firstElementChild.value = cbFiles.map(f => f.path);
+                                select.firstElementChild.requestUpdate();
                             }}
             >
                 <et2-link-paste-dialog open
