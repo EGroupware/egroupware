@@ -343,6 +343,7 @@ pre {
 }
 .mail-index_quotabox {
 	display: inline-block;
+	padding-left: var(--sl-spacing-x-small);
 }
 .mail-index_vacation {
 	display: inline-block;
@@ -1167,6 +1168,15 @@ et2-hbox.mailPreviewHeaders:has(et2-vbox.addresses > et2-hbox:first-child + [dis
 	overflow-y: auto;
 }
 #mail-index_mail-index-header_right {gap: 1ex;}
+
+/* "Unseen first" toggle: smaller circle/circle-fill icons,
+   and a stroke so the thin outline circle does not fade away.
+   Set on the host, so the em-sized icon slots shrink with the icons and keep them centered,
+   while the button itself is sized by --sl-input-height-medium and stays the same. */
+#mail-index_unseenFirst {
+	font-size: 0.75em;
+	-webkit-text-stroke: 0.05em currentColor;
+}
 
 et2-dropdown.vacationnotice {
 	padding-inline: var(--sl-spacing-2x-small);

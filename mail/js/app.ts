@@ -503,7 +503,6 @@ export class MailApp extends EgwApp
 				{
 					(nm as unknown as { applyFilters : (f : Record<string, any>) => void }).applyFilters({unseenFirst : '1'});
 				}
-				this.sizeUnseenFirstToggleIcons();
 
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
 				// see rememberUsedFolder()/updateFolderQuickAction().
@@ -10761,43 +10760,6 @@ export class MailApp extends EgwApp
 	{
 		this.nm && this.nm.applyFilters({unseenFirst: _widget.value ? '1' : ''});
 		this.egw.set_preference('mail', 'unseenFirstToggle', _widget.value ? '1' : '');
-		this.sizeUnseenFirstToggleIcons();
-	}
-
-	/**
-	 * Cosmetic sizing for the "unseenFirst" toggle's two icons (ralf, 2026-10-13 follow-up):
-	 * the plain "circle-fill"/"circle" icons default to a font-size inherited from the toolbar
-	 * context (21px live, itself already font-size-preference-relative, NOT a fixed value set by
-	 * Et2SwitchIcon.styles.ts/Et2ButtonToggle.styles.ts - neither actually declares `--width` here)
-	 * - a little large, and the "circle" (outline) glyph's thin stroke nearly disappears under
-	 * anti-aliasing at that weight. Shrinks both icons to 0.75em (relative to that SAME inherited
-	 * font-size, not a fixed px value - confirmed live the row's own unseen-dot, rows.less's
-	 * `.status_img`, is `calc(1em + 2px)` of ITS OWN - different - font-size context, so this is an
-	 * approximate visual match, not a literal shared value, deliberately kept relative so it still
-	 * scales if the user picks a different UI font size) and adds a `-webkit-text-stroke` (also in
-	 * em, same reasoning) to reinforce the thin outline glyph - an inherited property, so setting it
-	 * on the host element reaches its own font-icon `::before` content correctly.
-	 *
-	 * Same "reach into the shadow root directly" approach as the (removed) colour-matching
-	 * attempt's own docblock explained at length - mail/templates/default/app.css is never adopted
-	 * into this toolbar's shadow context at all (confirmed live), and must be re-applied after
-	 * every `.value` change since Et2ButtonToggle's own Lit re-render replaces these exact nodes.
-	 */
-	private sizeUnseenFirstToggleIcons() : void
-	{
-		const toggle = this.et2?.getWidgetById('unseenFirst') as unknown as (HTMLElement & { updateComplete? : Promise<unknown> });
-		if (!toggle) return;
-		const apply = () =>
-		{
-			const onImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.on');
-			const offImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.off');
-			onImage?.style.setProperty('font-size', '0.75em', 'important');
-			offImage?.style.setProperty('font-size', '0.75em', 'important');
-			offImage?.style.setProperty('-webkit-text-stroke-width', '0.05em', 'important');
-			offImage?.style.setProperty('-webkit-text-stroke-color', 'currentColor', 'important');
-		};
-		apply();
-		(toggle.updateComplete ?? Promise.resolve()).then(apply);
 	}
 
 	/**
@@ -10915,7 +10877,6 @@ export class MailApp extends EgwApp
 			if (unseen_first_toggle && unseen_first_toggle.value != (value === '1')) {
 				unseen_first_toggle.value = value === '1';
 			}
-			this.sizeUnseenFirstToggleIcons();
 		}
 	}
 
