@@ -419,8 +419,8 @@ export class Et2LinkList extends Et2LinkString
 			let link_data = this.context.data;
 			if(link_data.app == 'file')
 			{
-				// File info is always the same
-				let url = '/apps/' + link_data.app2 + '/' + link_data.id2 + '/' + decodeURIComponent(link_data.id);
+				// File info is always the same, the id is already the VFS path component ('%', '#' and '?' encoded)
+				let url = '/apps/' + link_data.app2 + '/' + link_data.id2 + '/' + link_data.id;
 				if(typeof url == 'string' && url.indexOf('webdav.php'))
 				{
 					// URL is url to file in webdav, so get rid of that part
