@@ -118,6 +118,26 @@ and drop the 11th entry if that pushes the list over 10 - dropping it here does 
 file itself. The full set of project docs, including everything trimmed off this list, always
 lives in `doc/ai/projects/` - check there directly for anything not shown here.
 
+- `doc/ai/projects/smallpart-s3-videos.md` - design for adding S3 storage to smallPART/ViDoTeach
+  videos (ticket #89091 item 4), currently plain files served directly by nginx with zero PHP in the
+  serving path - a requirement that rules out a literal copy of `Stylite\Vfs\S3\StreamWrapper`
+  (every VFS read goes through its stream wrapper for a cache-miss download, incompatible with
+  nginx's static `alias`). Reuses `stylite/src/Vfs/S3/StorageTrait.php` as-is (same storage config,
+  multi-storage redundancy, automatic >64MB multipart upload) with a `smallpart-video/<video_hash>`
+  key prefix in the same bucket as VFS/backups. New columns on `egw_smallpart_videos`
+  (`video_s3_flags`, `video_aes_key`, `video_s3_lru`, `video_s3_lock_started`) drive an async
+  migrate-to-S3 job and a daily local-cache-eviction job. The "is this video's file still local"
+  check moves into the student UI's pre-playback path (two call sites: server-side in
+  `videoSrc()`/`readVideo()` for a normal page load, a new ajax method for the client-side
+  already-loaded-metadata video-switch path found in `app.ts`'s `ltiVideoSelection()`) instead of an
+  nginx `error_page`/`X-Accel-Redirect` fallback, so zero nginx config changes are needed anywhere.
+  Concurrent cold-miss downloads are guarded by a DB compare-and-swap claim (`DOWNLOADING` bit +
+  stale-lock timeout) rather than filesystem locking, since Hosting's `$files_dir` is NFS shared
+  across pods/k8s nodes where `O_EXCL`/`flock()` have known reliability gaps; the actual download is
+  staged to a temp path and `rename()`d into place atomically so nginx never serves a partial file.
+  Design/discussion phase only, no code written yet - see the doc's "Open questions" for what's still
+  undecided (an LRU-fallback column vs. `filemtime()`, re-upload orphaned-key cleanup, a possible
+  new-upload eviction grace period).
 - `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
   `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
   (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
@@ -249,18 +269,6 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
   `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
   write support are future phases, not started.
-- `doc/ai/projects/link-url-support.md` - `Api\Link`/`egw_links` enhancement letting any app's
-  entry hold arbitrary external URLs, via a new `Link::URL_APPNAME = 'url'` pseudo-app (mirrors
-  the existing `VFS_APPNAME` special case) rather than a per-app URL table. Covers the schema
-  change (`link_id2` widened to `varchar(1024)`, prefix-indexed to 64 chars via the schema DSL's
-  `'colname(64)'` length-suffix syntax, `link_lastmod` split out into its own standalone index),
-  the `Link::title()`/`Link\Storage::_add2links()` fixes a pseudo-app needs (both silently drop
-  such links otherwise - the ACL/access-checking code's assumption that every "other side" of a
-  link is a real installed app), the `et2-link*` widget UI (an "URL" option in the existing link-
-  app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
-  path - already fully generic - just works, no new widgets or endpoints needed), and a small
-  inline-SVG icon (no new asset file). Done and tested.
-
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
