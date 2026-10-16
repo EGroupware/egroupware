@@ -1,3 +1,23 @@
+egroupware-docker (26.10.20261016) hardy; urgency=low
+
+  * All Apps: fixed several memory leaks causing browser to get slower/slugish after hours of usage
+  * Addressbook: fix broken geo-location routing links, add OpenStreetMap and a cached lat/lon
+  * Filemanager: fix "Permission denied" uploading to a hidden-upload share on mobile or after opening a folder
+  * Calendar: month, multi-week and month views scroll to today again when re-entered with the same range
+  * Calendar: dim days in the past, fix "different month" for views spanning months
+  * Calendar: subscription "Sync now" of a big calendar responds after 20s and continues in the background
+  * Mail: new feature to show unseen mails always on top, if enabled
+  * Mail: use again the browser build-in PDF viewer for displaying PDFs
+  * Mail: clicking an address in the mail preview composes to it, or adds it to an open compose window
+  * Mail: fixed Ctrl/Cmd+P leaking a mail's own CSS into the main window (#126511)
+  * Mail: style-sheets embeded in mails are no longer removed when displaying or replying
+  * Mail: fixed sieve "Forward to address" allowing a distribution list
+  * Mail: fixed folder tree sporadically auto-expanding/collapsing all accounts
+  * Mail: fixed not displayed flagged/marking icon
+  * Tracker: notifications mails restore inline embedding for a notified entity's own images in the description
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 16 Oct 2026 09:05:17 +0200
+
 egroupware-docker (26.10.20261012) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high and medium level security vulnerabilites, everyone it adviced to update to it!
