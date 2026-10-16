@@ -190,6 +190,12 @@ foreach($run as $func)
 	call_user_func('do_'.$func);
 }
 
+// once everything succeeded, leave main- and all app-dirs back on the release-branch, not
+// detached at a tag - do_tag()/do_release() check out tags, and an app-dir can be left
+// detached by eg. a previous composer resolution too
+chdir($config['checkoutdir']);
+run_cmd('./install-cli.php -c --git checkout '.escapeshellarg($config['branch']));
+
 /**
  * Read changelog for given branch from (last) tag or given revision from svn
  *
@@ -423,8 +429,8 @@ function do_release()
 	// gives error "fatal: you are not on a branch" run_cmd($config['git'].' push');
 	$tag = config_translate('tag');
 	run_cmd($config['git'].' push -f origin '.$tag);
-	// checkout release-branch again (we are on the tag!)
-	run_cmd($config['git'].' checkout '.$config['branch']);
+	// we are left on the tag (detached HEAD) here - all repos (main + apps) get checked
+	// out back to the release-branch once the whole run succeeds, see below
 
 	if (!empty($config['github_user']) || empty($config['github_token']))
 	{
@@ -460,6 +466,9 @@ function do_upload()
 {
 	global $config,$verbose;
 
+	// names of assets already uploaded (eg. by an earlier, interrupted run), to resume without
+	// re-sending them (and without GitHub rejecting them as already existing)
+	$existing = [];
 	if (empty($config['upload_url']))
 	{
 		$response = github_api("/repos/EGroupware/egroupware/releases", [], 'GET');
@@ -469,6 +478,10 @@ function do_upload()
 				json_encode($response, JSON_UNESCAPED_SLASHES));
 		}
 		$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response[0]['upload_url']);	// remove {?name,label} template
+		foreach ($response[0]['assets'] ?? [] as $asset)
+		{
+			$existing[$asset['name']] = true;
+		}
 	}
 
 	$archives = config_translate('upload');
@@ -498,12 +511,35 @@ function do_upload()
 		{
 			continue;
 		}
-		if ($verbose) echo "Uploading $path as $content_type\n";
 		$name = basename($path);
-		github_api($config['upload_url'], array(
-			'name' => $name,
-			'label' => isset($label) ? $label : $name,
-		), 'FILE', $path, $content_type);
+		if (isset($existing[$name]))
+		{
+			echo "Skipping $name, already uploaded\n";
+			continue;
+		}
+		if ($verbose) echo "Uploading $path as $content_type\n";
+
+		// uploads of large archives occasionally hit a transient network/timeout error -
+		// retry a few times with a growing delay, instead of aborting the whole release
+		for ($try = 1; ; ++$try)
+		{
+			try {
+				github_api($config['upload_url'], array(
+					'name' => $name,
+					'label' => isset($label) ? $label : $name,
+				), 'FILE', $path, $content_type);
+				break;
+			}
+			catch (Exception $e) {
+				if ($try >= 5)
+				{
+					throw $e;
+				}
+				$wait = 30 * $try;
+				error_log("$try. attempt to upload $name failed: ".$e->getMessage().", retrying in $wait seconds ...");
+				sleep($wait);
+			}
+		}
 	}
 
 	if (!empty($config['release']))
@@ -536,7 +572,13 @@ function github_api($_url, $data, $method='POST', $upload=null, $content_type=nu
 	curl_setopt($c, CURLOPT_USERPWD, $config['github_user'].':'.$config['github_token']);
 	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($c, CURLOPT_USERAGENT, basename(__FILE__));
-	curl_setopt($c, CURLOPT_TIMEOUT, 240);
+	curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 30);
+	// large archive uploads can legitimately take a while - abort only if the transfer truly
+	// stalls (under 1KB/s for 2min straight), not on a flat wall-clock timeout that a slow
+	// moment on an otherwise-fine connection can trip for any request, small or large
+	curl_setopt($c, CURLOPT_LOW_SPEED_LIMIT, 1024);
+	curl_setopt($c, CURLOPT_LOW_SPEED_TIME, 120);
+	curl_setopt($c, CURLOPT_TIMEOUT, 1800);	// 30min absolute backstop
 	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 
 	switch($method)
