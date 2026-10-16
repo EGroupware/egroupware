@@ -242,10 +242,11 @@ foreach(scandir(__DIR__) as $dir)
 		{
 			$cmd .= "$git config advice.detachedHead false ; ";
 		}
-		if ($branch != $target)
-		{
-			$cmd .= "$git fetch && $git checkout $target && ";
-		}
+		// always (re-)checkout $target: an app-dir can be left on a different branch/tag than
+		// the main checkout (eg. detached by a previous composer resolution, or a manual
+		// backport checkout done in just some app-dirs) - $branch==$target is no guarantee
+		// every app-dir actually is on $target too
+		$cmd .= "$git fetch && $git checkout $target && ";
 		// no need to pull for release-channel/tags
 		if (!preg_match('/^\d+\.\d+\.\d{8}/', $target))
 		{
