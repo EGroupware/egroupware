@@ -73,6 +73,32 @@ describe("Link to widget", () =>
 
 		assert.isTrue(element.shadowRoot.querySelector("#paste").hasAttribute("disabled"));
 	});
+
+	// Reading the clipboard waits for the titles of linked entries, the click is long dispatched by then
+	it('pre-selects the clipboard contents when it holds a linked entry', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: "25412"};
+		await elementUpdated(element);
+		const clipboard = {type: ["link"], selected: [{id: "acilog::202883", data: {}}]};
+		const egw = Object.assign({}, window.egw, {
+			getSessionItem: () => JSON.stringify(clipboard),
+			link_title: () => new Promise(resolve => setTimeout(() => resolve("A todo"), 50))
+		});
+		const egwStub = sinon.stub(window, "egw").value(Object.assign(() => egw, egw));
+		try
+		{
+			const paste = <HTMLElement>element.shadowRoot.querySelector("#paste");
+			const dialog = <any>paste.firstElementChild;
+			paste.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+			await new Promise(resolve => setTimeout(resolve, 150));
+
+			assert.deepEqual(dialog.value, ["acilog::202883"]);
+		}
+		finally
+		{
+			egwStub.restore();
+		}
+	});
 });
 
 // value is a plain string | LinkInfo, unmodified by any getter/setter override - a plain string
