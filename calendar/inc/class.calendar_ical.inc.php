@@ -1367,7 +1367,11 @@ class calendar_ical extends calendar_boupdate
 				{
 					// $user is the optional owner and null eg. for the calendar subscription: as array key that became the
 					// participant "" (empty id), which made every import of the unchanged event a change, saved it again
-					$event['participants'] = [($user ?: $this->user) => calendar_so::combine_status('A')];
+					$uid = $user ?: $this->user;
+					// keep status and role of the user, if he is already a participant, otherwise he is the only participant
+					// of his personal event and therefore its CHAIR
+					$event['participants'] = [$uid => $event_info['stored_event']['participants'][$uid] ??
+						calendar_so::combine_status('A', 1, 'CHAIR')];
 				}
 				// if the client does not return a status, we restore the original one
 				foreach ($event['participants'] as $uid => $status)

@@ -90,4 +90,60 @@ class IcalImportNoParticipantsTest extends Api\LoggedInTest
 			__LINE__, __FILE__, false, '', 'api')->fetchColumn();
 		$this->assertLessThanOrEqual(1, $history, 'unchanged imports do not log "participants" changes over and over');
 	}
+
+	/**
+	 * @return array status and role of the participant $uid of the stored event
+	 */
+	private function statusAndRole(string $uid) : array
+	{
+		$participants = (new \calendar_bo())->read($this->cal_id)['participants'];
+		$this->assertArrayHasKey($uid, $participants, 'participants: '.json_encode($participants));
+		$quantity = null;
+		$role = null;
+		$status = \calendar_so::split_status($participants[$uid], $quantity, $role);
+		return [$status, $role];
+	}
+
+	/**
+	 * Status and role of the user, who is already a participant of the stored event, are kept: they must not change from
+	 * CHAIR to REQ-PARTICIPANT (what the default of combine_status() is) with the first sync after the fix, also not if he
+	 * declined or set another role
+	 */
+	public function testStoredStatusAndRoleOfTheUserAreKept()
+	{
+		$user = (string)$GLOBALS['egw_info']['user']['account_id'];
+		$uid = 'ical-no-attendees-keep-'.uniqid().'@example.org';
+		$this->cal_id = (int)(new \calendar_ical())->importVCal($this->ics($uid), -1, null, false, 0, '', null, null, null, true);
+		$this->assertGreaterThan(0, $this->cal_id);
+
+		foreach ([['A', 'CHAIR'], ['D', 'OPT-PARTICIPANT'], ['T', 'REQ-PARTICIPANT'], ['A', 'REQ-PARTICIPANT']] as [$status, $role])
+		{
+			$GLOBALS['egw']->db->update('egw_cal_user', ['cal_status' => $status, 'cal_role' => $role],
+				['cal_id' => $this->cal_id, 'cal_user_type' => 'u', 'cal_user_id' => $user], __LINE__, __FILE__, 'calendar');
+			(new \calendar_ical())->importVCal($this->ics($uid, 'again '.$status.$role), -1, null, false, 0, '', null, null, null, true);
+			$this->assertSame([$status, $role], $this->statusAndRole($user), "stored $status/$role is kept");
+		}
+	}
+
+	/**
+	 * A personal event with just the user in it: he is the organizer, so the role is CHAIR
+	 */
+	public function testUserNotYetParticipantBecomesTheChair()
+	{
+		$user = (string)$GLOBALS['egw_info']['user']['account_id'];
+		$uid = 'ical-no-attendees-chair-'.uniqid().'@example.org';
+		$this->cal_id = (int)(new \calendar_ical())->importVCal($this->ics($uid), -1, null, false, 0, '', null, null, null, true);
+		$this->assertGreaterThan(0, $this->cal_id);
+
+		// the stored event has another participant, but not the user
+		$db = $GLOBALS['egw']->db;
+		$db->delete('egw_cal_user', ['cal_id' => $this->cal_id], __LINE__, __FILE__, 'calendar');
+		$db->insert('egw_cal_user', ['cal_id' => $this->cal_id, 'cal_recur_date' => 0, 'cal_user_type' => 'e',
+			'cal_user_id' => 'someone@example.org', 'cal_status' => 'U', 'cal_role' => 'REQ-PARTICIPANT'], false,
+			__LINE__, __FILE__, 'calendar');
+
+		(new \calendar_ical())->importVCal($this->ics($uid, 'imported again'), -1, null, false, 0, '', null, null, null, true);
+		$this->assertSame(['A', 'CHAIR'], $this->statusAndRole($user), 'the user is the CHAIR of his personal event');
+		$this->assertSame(0, $this->emptyParticipantRows());
+	}
 }
