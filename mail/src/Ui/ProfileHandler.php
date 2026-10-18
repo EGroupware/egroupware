@@ -111,6 +111,12 @@ class ProfileHandler
 				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?:
 					($local ? self::resolveUnconfiguredTrashFolder((int)$resolvedID) : 'Trash');
 				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
+					// null -> client falls back to role='sent', same convention as junkFolder above.
+					// Found live (help forum "sent mail going to Send folder instead of the defined
+					// folder"): MailJmap.resolveComposeContext() always used role='sent' unconditionally,
+					// silently ignoring this account-level override - same bug independently also found
+					// (and fixed) server-side in Api\Mail\Jmap\Transport::resolveMailboxesAndIdentities().
+					$bootstrap['sentFolder'] = $imapServer->acc_folder_sent ?: null;
 				// Templates/Outbox have neither an IMAP SPECIAL-USE attribute nor a JMAP role at
 				// all (RFC 8621 defines neither) - unlike trash/junk above, there's no
 				// role-based fallback whatsoever for a real JMAP server (Stalwart), so the
