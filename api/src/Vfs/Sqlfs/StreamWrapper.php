@@ -35,7 +35,29 @@ use EGroupware\Api;
  */
 class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 {
-	use Vfs\UserContextTrait;
+	use Vfs\UserContextTrait {
+		__construct as private contextConstruct;
+	}
+
+	/**
+	 * @var bool true while url_stat() repeats itself after reconnecting, to not try that more than once
+	 */
+	private static $url_stat_reconnecting = false;
+
+	/**
+	 * Constructor: check an existing DB connection is still alive and set context/user (see Vfs\UserContextTrait)
+	 *
+	 * PHP creates a new instance for every operation on the VFS, so the connection is checked before it is used. The server
+	 * closes it, if it was idle longer than wait_timeout, eg. in a long running job (see Api\Db\Pdo::connection()).
+	 *
+	 * @param resource|string|null $url_or_context url with user or context to set
+	 */
+	public function __construct($url_or_context=null)
+	{
+		if (isset(self::$pdo)) self::connection();
+
+		$this->contextConstruct($url_or_context);
+	}
 
 	/**
 	 * Mime type of directories, the old vfs uses 'Directory', while eg. WebDAV uses 'httpd/unix-directory'
@@ -1339,6 +1361,24 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 			}
 		}
 		catch (\PDOException $e) {
+			// server closed our (idle) connection, eg. during a long running job: this has nothing to do with the subquery depth,
+			// which was decremented (and permanently saved!) for it before, and tried again with the same dead connection
+			// --> reconnect and try once more, here and not in Vfs\StreamWrapper::url_stat(), which calls us also from resolve_url()
+			if (self::connectionLost($e))
+			{
+				if (!self::$url_stat_reconnecting)
+				{
+					self::$url_stat_reconnecting = true;
+					try {
+						self::reconnect();
+						return $this->url_stat($url, $flags);
+					}
+					finally {
+						self::$url_stat_reconnecting = false;
+					}
+				}
+				throw new Api\Db\Exception($e->getMessage());
+			}
 			// decrement subquery limit by 1 and try again, if not already smaller then 3
 			if ($max_subquery_depth < 3)
 			{
@@ -1773,9 +1813,20 @@ GROUP BY A.fs_id';
 		{
 			self::_pdo();
 		}
-		$stmt = self::$pdo->prepare($query);
-		$stmt->setFetchMode(\PDO::FETCH_ASSOC);
-		if (!$stmt->execute())
+		try {
+			$stmt = self::$pdo->prepare($query);
+			$stmt->setFetchMode(\PDO::FETCH_ASSOC);
+			$executed = $stmt->execute();
+		}
+		catch (\PDOException $e) {
+			if (!self::connectionLost($e)) throw $e;
+			// server closed our (idle) connection, eg. during a long running job: reconnect and try once more
+			self::reconnect();
+			$stmt = self::$pdo->prepare($query);
+			$stmt->setFetchMode(\PDO::FETCH_ASSOC);
+			$executed = $stmt->execute();
+		}
+		if (!$executed)
 		{
 			return false;	// not found
 		}
