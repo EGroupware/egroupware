@@ -53,6 +53,7 @@ all events	calendar	en	All events
 all exceptions are converted into single events.	calendar	en	All exceptions are converted into single events.
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
+an ical feed is synchronised at most once an hour.	calendar	en	An iCal feed is synchronised at most once an hour.
 blocking	calendar	en	Blocking
 all participants	calendar	en	All participants
 allow booking requests from any user when creating events?	calendar	en	Allow booking requests from any user when creating events?

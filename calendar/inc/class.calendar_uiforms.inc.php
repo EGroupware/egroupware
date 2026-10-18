@@ -4160,6 +4160,13 @@ class calendar_uiforms extends calendar_ui
 						}
 						$content['url'] = is_array($sel_options['calendar']) ? $content['calendar'] : $sel_options['calendar'];
 						unset($content['show_calendar_selection'], $content['calendar']);
+						// an iCal feed is downloaded and checked completely, the cronjob syncs it at most once an hour anyway
+						if (Api\CalDAV\Sync::isIcalFeed($content['sync_type'] ?? null) && !empty($content['sync_frequence']) &&
+							(int)$content['sync_frequence'] < Api\CalDAV\Sync::MIN_ICAL_FEED_FREQUENCE)
+						{
+							$content['sync_frequence'] = Api\CalDAV\Sync::MIN_ICAL_FEED_FREQUENCE;
+							Framework::message(lang('An iCal feed is synchronised at most once an hour.'), 'info');
+						}
 						$content['cat_id'] = Api\CalDAV\Sync::writeSubscription($content);
 						$async = new Api\Asyncservice();
 						$async->cancel_timer($async_id = 'cal-sync-'.$content['cat_id']);
