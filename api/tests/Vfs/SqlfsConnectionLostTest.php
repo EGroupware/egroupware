@@ -149,4 +149,37 @@ class SqlfsConnectionLostTest extends Api\LoggedInTest
 			Vfs::$is_root = false;
 		}
 	}
+
+	/**
+	 * Prepared statements cached in a static variable are bound to the connection they were prepared on: after a
+	 * reconnect every write failed with "MySQL server has gone away" (polluting all later tests of the process, too)
+	 */
+	public function testWritingAfterReconnectDoesNotUseStatementsOfTheOldConnection() : void
+	{
+		Vfs::$is_root = true;
+		try
+		{
+			$dir = '/sqlfs-connection-lost-test-'.uniqid();
+			$this->assertTrue(Vfs::mkdir($dir));
+			// prepares (and caches) the statements adjusting the size of the directories
+			$this->assertSame(1, file_put_contents(Vfs::PREFIX.$dir.'/first', 'x'));
+			$old = Sqlfs\StreamWrapper::connection();
+
+			$this->killSqlfsConnection();
+			// next VFS operation replaces the dead connection
+			Vfs::clearstatcache();
+			(new \ReflectionProperty(Api\Db\Pdo::class, 'last_used'))->setValue(null, microtime(true) - Api\Db\Pdo::PING_AFTER - 1);
+
+			$this->assertSame(2, file_put_contents(Vfs::PREFIX.$dir.'/second', 'yy'), 'writing a file uses the new connection');
+			$this->assertNotSame($old, Sqlfs\StreamWrapper::connection(), 'connection was replaced');
+			Vfs::clearstatcache();
+			$this->assertSame(3, Vfs::stat($dir)['size'], 'size of the directory was adjusted by both writes');
+		}
+		finally
+		{
+			Vfs::clearstatcache();
+			if (!empty($dir)) Vfs::remove($dir);
+			Vfs::$is_root = false;
+		}
+	}
 }
