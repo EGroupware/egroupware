@@ -32,6 +32,37 @@ class admin_asyncservice
 		Api\Framework::bodyClass('scrollVertical');
 		echo $GLOBALS['egw']->framework->header();
 
+		// match current eTemplate (et2-button) styling, lost here since the move to the kdots framework
+		echo '<style>
+			input[type="submit"] {
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+				font-size: 12.25px;
+				font-weight: 500;
+				min-height: 35px;
+				padding: 0 14px;
+				border-radius: 9999px;
+				border: 1px solid #d4d4d8;
+				background-color: #ffffff;
+				color: #3f3f46;
+				cursor: pointer;
+				transition: background-color 150ms, border-color 150ms, color 150ms;
+			}
+			input[type="submit"]:hover {
+				background-color: #f4f4f5;
+				border-color: #a1a1aa;
+			}
+			input[type="submit"]:active {
+				background-color: #e4e4e7;
+				border-color: #71717a;
+			}
+			input[type="submit"]:disabled {
+				background-color: transparent;
+				color: gray;
+				cursor: default;
+				box-shadow: none;
+			}
+		</style>'."\n";
+
 		$async = new Api\Asyncservice();	// use an own instance, as we might set debug=True
 
 		$async->debug = !!$_POST['debug'];
