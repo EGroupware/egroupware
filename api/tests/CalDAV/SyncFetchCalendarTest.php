@@ -236,6 +236,33 @@ class SyncFetchCalendarTest extends TestCase
 		$this->assertNotSame($hash, SyncFetchCalendarStub::hash(str_replace('UID:1@', 'UID:2@', self::ICS)));
 	}
 
+	/**
+	 * Thunderbird/Lightning writes X-MOZ-LASTACK / X-MOZ-SNOOZE-TIME into an event, whenever a reminder rang: in a calendar of 3,000 events
+	 * that changed the file all the time (340 events in 12 minutes), so all events were imported again (more then 400s) for nothing
+	 */
+	public function testHashIgnoresAlarmPropertiesOfThunderbirdButNotOtherChanges()
+	{
+		$hash = SyncFetchCalendarStub::hash(self::ICS);
+		$with = static fn(string $lines) => str_replace("SUMMARY:Test\r\n", "SUMMARY:Test\r\n$lines", self::ICS);
+		foreach ([
+			"X-MOZ-LASTACK:20261018T150000Z\r\n",
+			"X-MOZ-SNOOZE-TIME:20261018T151500Z\r\n",
+			"X-MOZ-SNOOZE-TIME-1792335600000000:20261018T151500Z\r\n",
+			"x-moz-lastack:20261018T150000Z\r\nX-MOZ-SNOOZE-TIME;VALUE=DATE-TIME:20261018T151500Z\r\n",
+		] as $lines)
+		{
+			$this->assertSame($hash, SyncFetchCalendarStub::hash($with($lines)), "ignored: ".trim($lines));
+		}
+		// the value of a changed property does not matter either
+		$this->assertSame(SyncFetchCalendarStub::hash($with("X-MOZ-LASTACK:20261018T150000Z\r\n")),
+			SyncFetchCalendarStub::hash($with("X-MOZ-LASTACK:20261019T090000Z\r\n")));
+		// other X- properties and everything else count
+		foreach (["X-MOZ-GENERATION:1\r\n", "X-MICROSOFT-CDO-BUSYSTATUS:BUSY\r\n", "DESCRIPTION:changed\r\n", "X-MOZ-LASTACKX:1\r\n"] as $lines)
+		{
+			$this->assertNotSame($hash, SyncFetchCalendarStub::hash($with($lines)), "counts: ".trim($lines));
+		}
+	}
+
 	public function testSyncToken()
 	{
 		$hash = SyncFetchCalendarStub::hash(self::ICS);
