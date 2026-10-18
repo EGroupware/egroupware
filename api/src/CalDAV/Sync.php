@@ -832,6 +832,13 @@ EOT, $this->header([
 		}
 		if (($data = self::readSubscription($cat_id)))
 		{
+			// an iCal feed without ETag has no delta: the whole file is downloaded and, if changed, imported again. Do that at most once
+			// an hour, whatever interval the user chose (one with 5 minutes ran all the time, as its import takes > 400s)
+			$start = time();
+			if (!self::isDue($data, $start))
+			{
+				return;
+			}
 			try {
 				$self = new self($data['url'], $data['user']??null, $data['password']??null, $data['sync_type']??null);
 				$self->sync($data['sync_token'], array_intersect_key($data, array_flip(['cat_id', 'participants',
@@ -845,8 +852,54 @@ EOT, $this->header([
 				$data['error_msg'] = $e->getMessage();
 				$data['error_trace'] = $e->getTrace();
 			}
+			$data['sync_time'] = $start;
 			self::writeSubscription($data);
 		}
+	}
+
+	/**
+	 * Sync types, which download the whole iCal file every time, as the server sends no ETag to ask for changes: only a hash of the
+	 * content tells if it changed. Not "calendar-get-etag" (a conditional request is cheap), a sync-collection REPORT or PROPFIND.
+	 */
+	public const ICAL_FEED_SYNC_TYPES = ['calendar-get'];
+
+	/**
+	 * Minimum interval between two syncs of an iCal feed in seconds (start to start), 5 minutes less then the shortest
+	 * automatic interval of an hour, so a timer of exactly an hour is never skipped
+	 */
+	public const MIN_ICAL_FEED_INTERVAL = 3300;
+
+	/**
+	 * Shortest automatic update interval in minutes for an iCal feed
+	 */
+	public const MIN_ICAL_FEED_FREQUENCE = 60;
+
+	/**
+	 * Is the sync type one of an iCal feed without ETag: the whole file is downloaded every time
+	 *
+	 * @param string|null $sync_type
+	 * @return bool
+	 */
+	public static function isIcalFeed(?string $sync_type) : bool
+	{
+		return in_array($sync_type, self::ICAL_FEED_SYNC_TYPES, true);
+	}
+
+	/**
+	 * Is a subscription due for the automatic sync: an iCal feed without ETag is synced at most once an hour
+	 *
+	 * @param array $data subscription data with keys "sync_type" and "sync_time" (start of the last automatic sync)
+	 * @param int $now
+	 * @return bool
+	 */
+	public static function isDue(array $data, int $now) : bool
+	{
+		if (!self::isIcalFeed($data['sync_type'] ?? null) || empty($data['sync_time']))
+		{
+			return true;
+		}
+		$age = $now - (int)$data['sync_time'];
+		return $age < 0 || $age >= self::MIN_ICAL_FEED_INTERVAL;	// a time in the future (clock change) must not block it
 	}
 
 	/**
