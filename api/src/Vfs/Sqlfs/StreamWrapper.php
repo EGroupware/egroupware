@@ -677,11 +677,13 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 	{
 		if (!$fs_size) return;  // nothing to do
 
-		static $stmt=null,$parent_stmt;
-		if (!isset($stmt))
+		// prepared statements belong to the connection they were prepared on: prepare them again after a reconnect
+		static $stmt=null,$parent_stmt,$stmt_pdo=null;
+		if (!isset($stmt) || $stmt_pdo !== self::$pdo)
 		{
 			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=fs_size+:fs_size WHERE fs_id=:fs_id');
 			$parent_stmt = self::$pdo->prepare('SELECT fs_dir FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+			$stmt_pdo = self::$pdo;
 		}
 
 		$max_depth = 100;
