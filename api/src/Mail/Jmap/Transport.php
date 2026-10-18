@@ -281,12 +281,25 @@ class Transport extends \Horde_Mail_Transport
 	 */
 	private function resolveMailboxesAndIdentities(Http $jmap) : array
 	{
-		$drafts_id = $sent_id = null;
+		// acc_folder_sent is the account's own OPTIONAL override (admin_mail::jmapMailboxes()
+		// pre-selects it by role at wizard time, but the user/admin can point it at any other
+		// mailbox afterwards, by NAME - same "highest precedence" convention as the classic
+		// Api\Mail::_getSpecialUseFolder() uses for IMAP accounts) - found live (ticket/forum
+		// "sent mail going to Send folder instead of the defined folder"): this always used the
+		// role='sent' mailbox unconditionally, silently ignoring that override for every JMAP
+		// submission (interactive compose AND any other Api\Mailer caller - notifications,
+		// mail-merge, cron - since they all share this one method via smtpTransport()).
+		$sentOverride = $this->account->acc_folder_sent ?: null;
+		$drafts_id = $sent_id = $sent_by_role_id = null;
 		foreach ($jmap->mailbox->get()['list'] ?? [] as $mailbox)
 		{
 			if (($mailbox['role'] ?? null) === 'drafts') $drafts_id = $mailbox['id'];
-			if (($mailbox['role'] ?? null) === 'sent') $sent_id = $mailbox['id'];
+			if (($mailbox['role'] ?? null) === 'sent') $sent_by_role_id = $mailbox['id'];
+			if ($sentOverride !== null && $mailbox['name'] === $sentOverride) $sent_id = $mailbox['id'];
 		}
+		// override configured but its mailbox is gone (renamed/deleted) - fall back to role='sent'
+		// rather than failing the send outright, same safety net a missing classic IMAP folder gets
+		$sent_id ??= $sent_by_role_id;
 		if (!$drafts_id || !$sent_id)
 		{
 			throw new \Horde_Mail_Exception('Could not find Drafts/Sent mailbox by role for account #'.$this->account->acc_id);

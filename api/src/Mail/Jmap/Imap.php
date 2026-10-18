@@ -3315,7 +3315,16 @@ class Imap extends Jmap\Base
 				}
 				$patch = (array)($args['onSuccessUpdateEmail']['#'.$creationId] ?? []);
 				$sourceFolder = null;
-				$targetFolder = null;
+				// a REAL JMAP backend lets one Email belong to several mailboxes at once (eg.
+				// MailJmap.sendNewEmail()'s own optional "also file into this folder" compose
+				// picker, on top of Sent) - classic IMAP has no such concept, so "multiple target
+				// folders" here means multiple independent APPENDs below, same as classic
+				// Send.php's own $folderOnMailAccount/$folderOnServerID handling always did. Found
+				// live (help forum "sent mail going to Send folder instead of the defined folder"):
+				// this used to keep only the LAST 'true' entry in a single $targetFolder, silently
+				// dropping every other target - including Sent itself, whenever an extra folder was
+				// also picked (its entry iterates after Sent's in the patch).
+				$targetFolders = [];
 				$sentFlags = [];
 				foreach ($patch as $path => $value)
 				{
@@ -3324,7 +3333,7 @@ class Imap extends Jmap\Base
 						$folder = self::folderPath(substr((string)$path, strlen('mailboxIds/')));
 						if ($value === true)
 						{
-							$targetFolder = $folder;
+							$targetFolders[] = $folder;
 						}
 						elseif ($value === null)
 						{
@@ -3346,6 +3355,10 @@ class Imap extends Jmap\Base
 					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['onSuccessUpdateEmail']];
 					continue;
 				}
+				// never APPEND the same folder twice (eg. the account's Sent override happens to
+				// also be manually picked via compose's "also file into" picker) - same dedup
+				// classic Send.php's own $folderOnMailAccount/$folderOnServerID always applied
+				$targetFolders = array_unique($targetFolders);
 
 				$emailContext = [];
 				// found missing 2026-09-09 (ralf, relaying a tester report: "the selected ReplyTo
@@ -3460,22 +3473,47 @@ class Imap extends Jmap\Base
 				// deleting+expunging the old Draft are best-effort bookkeeping the user shouldn't
 				// have to wait for (see $deferredWork's own docblock) - queued to run once jmap.php
 				// has already sent the response to the client instead of inline here.
-				self::queueDeferredWork(function() use ($imap, $targetFolder, $sourceFolder, $raw, $sentFlags, $emailId)
+				self::queueDeferredWork(function() use ($imap, $targetFolders, $sourceFolder, $raw, $sentFlags, $emailId)
 				{
-					if ($targetFolder !== null)
+					// one real APPEND per target folder (Sent, plus any extra folder(s) the compose
+					// "also file into" picker added) - classic IMAP's own way of putting one message
+					// into several folders, same as classic Send.php always did. Each one is isolated
+					// (runDeferredWork() only wraps the WHOLE closure in try/catch, not individual
+					// statements inside it) - found live: a single bad/unreachable target folder
+					// (eg. a stale one, since-renamed/deleted) threw, which skipped every OTHER
+					// target still in the list AND the essential draft-cleanup below entirely, even
+					// though the mail had already genuinely been sent via SMTP by this point.
+					$failures = [];
+					foreach ($targetFolders as $targetFolder)
 					{
-						$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-						self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
+						try
+						{
+							$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+							self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
+						}
+						catch (\Throwable $e)
+						{
+							_egw_log_exception($e);
+							$failures[] = $targetFolder.': '.$e->getMessage();
+						}
 					}
 					// remove the old Draft outright (matches classic mail_compose::send()'s own
 					// deleteMessages(..., 'remove_immediately') cleanup after a successful
-					// send-from-draft)
+					// send-from-draft) - unconditionally, regardless of any append failure above:
+					// the mail is already sent, a Draft left behind would be actively misleading
 					$sourceMailbox = self::hordeMailbox($imap, $sourceFolder);
 					$imap->store($sourceMailbox, [
 						'add' => ['\\Deleted'],
 						'ids' => new \Horde_Imap_Client_Ids([(int)$emailId]),
 					]);
 					$imap->expunge($sourceMailbox);
+					if ($failures)
+					{
+						// surfaces via runDeferredWork()'s own catch - same user-facing Push
+						// notification a fully-failed closure already gets, just reached AFTER the
+						// cleanup above instead of pre-empting it
+						throw new \Exception('Could not file the sent copy into: '.implode(', ', $failures));
+					}
 				});
 
 				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'),

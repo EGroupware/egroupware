@@ -3176,6 +3176,10 @@ export class MailCompose
 			threadTopic: this.replyThreadingHeaders?.threadTopic ?? undefined,
 			threadIndex: this.replyThreadingHeaders?.threadIndex ?? undefined,
 			listId: this.replyThreadingHeaders?.listId ?? undefined,
+			// found missing entirely alongside replyTo/priority above - see JmapNewEmail.folder's
+			// own docblock (mail/js/jmap.ts)
+			folder: (this.et2.getWidgetById('folder')?.get_value() as string[])?.length ?
+				this.et2.getWidgetById('folder')?.get_value() : undefined,
 		};
 	}
 

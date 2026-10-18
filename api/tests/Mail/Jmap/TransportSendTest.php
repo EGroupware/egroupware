@@ -62,9 +62,9 @@ class TransportSendTest extends \PHPUnit\Framework\TestCase
 		};
 	}
 
-	private function transport(Http $jmap) : Transport
+	private function transport(Http $jmap, array $accountParams=[]) : Transport
 	{
-		$account = new Mail\Account(['acc_id' => 0]);
+		$account = new Mail\Account(['acc_id' => 0] + $accountParams);
 		$transport = new Transport($account);
 		$prop = new \ReflectionProperty(Transport::class, 'jmap');
 		$prop->setAccessible(true);
@@ -127,6 +127,42 @@ class TransportSendTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame('Identity/get', $jmap->calls[1][0],
 			"must bypass Mail\\Jmap\\Identity's local-synthesis override - that returns OUR ident_id, which EmailSubmission/set would reject");
+	}
+
+	/**
+	 * Regression test (forum: "sent mail going to Send folder instead of the defined folder"):
+	 * acc_folder_sent is the account's own optional override - resolveMailboxesAndIdentities()
+	 * used to always pick the role='sent' mailbox unconditionally, silently ignoring it.
+	 */
+	public function testResolveMailboxesAndIdentitiesPrefersTheConfiguredSentFolderOverRole()
+	{
+		$jmap = $this->fakeHttp($this->happyPathResponder([
+			'Mailbox/get' => ['list' => [
+				['id' => 'drafts-id', 'role' => 'drafts'],
+				['id' => 'sent-id', 'role' => 'sent', 'name' => 'Sent'],
+				['id' => 'custom-sent-id', 'role' => null, 'name' => 'Sent Archive'],
+			]],
+		]));
+		$transport = $this->transport($jmap, ['acc_folder_sent' => 'Sent Archive']);
+
+		[, $sent_id] = $this->invokeResolveMailboxesAndIdentities($transport, $jmap);
+
+		$this->assertSame('custom-sent-id', $sent_id);
+	}
+
+	public function testResolveMailboxesAndIdentitiesFallsBackToRoleWhenConfiguredSentFolderNoLongerExists()
+	{
+		$jmap = $this->fakeHttp($this->happyPathResponder([
+			'Mailbox/get' => ['list' => [
+				['id' => 'drafts-id', 'role' => 'drafts'],
+				['id' => 'sent-id', 'role' => 'sent', 'name' => 'Sent'],
+			]],
+		]));
+		$transport = $this->transport($jmap, ['acc_folder_sent' => 'Deleted Folder']);
+
+		[, $sent_id] = $this->invokeResolveMailboxesAndIdentities($transport, $jmap);
+
+		$this->assertSame('sent-id', $sent_id);
 	}
 
 	public function testResolveMailboxesAndIdentitiesThrowsWhenDraftsRoleIsMissing()

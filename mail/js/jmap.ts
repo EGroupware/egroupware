@@ -56,6 +56,9 @@ interface JmapToken
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
 	junkFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Junk" - null if not configured
+	// account's own OPTIONAL Sent-folder override (acc_folder_sent) - null means "not configured,
+	// use role='sent'" (see resolveComposeContext()'s own docblock for the bug this fixes)
+	sentFolder? : string | null;
 	// Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - the account's own
 	// configured (or default) name is the only way folderTree.ts's buildNode() can identify them
 	// for a real JMAP server; see ProfileHandler::jmapBootstrap()'s docblock
@@ -136,6 +139,16 @@ export interface JmapNewEmail
 	threadTopic? : string;
 	threadIndex? : string;
 	listId? : string;
+	/**
+	 * MailCompose's own optional "folder" picker (compose.xet's `id="folder"` et2-select, EGroupware
+	 * folder-path strings, noPrefixId) - additional mailbox(es) to also file the sent copy into,
+	 * alongside Sent. Found missing here entirely (help forum "sent mail going to Send folder
+	 * instead of the defined folder"): classic Send.php reads this into $folderOnMailAccount/
+	 * $folderOnServerID and IMAP-copies the sent message into each one, but currentEmailFields()
+	 * never read the widget at all, so sendNewEmail() (unlike saveDraft(), which has no equivalent
+	 * concept - a draft only ever lives in Drafts) never knew it existed.
+	 */
+	folder? : string[];
 }
 
 /**
@@ -5432,6 +5445,7 @@ export class MailJmap
 						customLabels: data.customLabels || {},
 						trashFolder: data.trashFolder,
 						junkFolder: data.junkFolder,
+						sentFolder: data.sentFolder,
 						templatesFolder: data.templatesFolder,
 						outboxFolder: data.outboxFolder,
 						enableWsPush: !!data.enableWsPush,
@@ -6269,6 +6283,26 @@ export class MailJmap
 					bodyOverride as {type : string, blobId : string} | {type : string, subParts : {type : string, blobId : string}[]} | undefined,
 					await this.buildAutocryptHeader(identity));
 
+			// Additional folder(s) the user picked to also file the sent copy into (compose.xet's
+			// "folder" picker, see JmapNewEmail.folder's own docblock) - JMAP lets one Email belong
+			// to several mailboxes at once, so this is just more mailboxIds/<id> patch entries
+			// alongside sentId, not a separate copy step the way classic Send.php needs one (plain
+			// IMAP has no such concept). A path that no longer resolves (renamed/deleted folder) is
+			// skipped rather than failing the whole send - same safety net sentFolder's own
+			// fallback gets in resolveComposeContext().
+			const extraFolderIds : Record<string, true> = {};
+			for (const path of email.folder ?? [])
+			{
+				try
+				{
+					extraFolderIds[`mailboxIds/${await this.mailboxId(client, token.accountId, profileID, path)}`] = true;
+				}
+				catch (e)
+				{
+					console.error(`MailJmap.sendNewEmail(): could not resolve folder '${path}', skipping it`, e);
+				}
+			}
+
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
 					accountId: token.accountId,
@@ -6277,6 +6311,7 @@ export class MailJmap
 						'#sub1': {
 							[`mailboxIds/${draftsId}`]: null,
 							[`mailboxIds/${sentId}`]: true,
+							...extraFolderIds,
 							'keywords/$draft': null,
 							'keywords/$seen': true,
 						},
@@ -6820,7 +6855,16 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('No identity found for this account'));
 		}
 		const draftsId = mailboxes.list?.find((m : any) => m.role === 'drafts')?.id;
-		const sentId = needSent ? mailboxes.list?.find((m : any) => m.role === 'sent')?.id : undefined;
+		// token.sentFolder is the account's own OPTIONAL override (acc_folder_sent, matched by
+		// mailbox name - same convention Api\Mail\Jmap\Transport::resolveMailboxesAndIdentities()
+		// uses server-side) - found live (help forum "sent mail going to Send folder instead of
+		// the defined folder"): this always used role='sent' unconditionally before, silently
+		// ignoring it. Falls back to role='sent' if not configured, or if the configured mailbox
+		// no longer exists (renamed/deleted) - never hard-fails the send over a stale override.
+		const sentId = needSent ?
+			(token.sentFolder && mailboxes.list?.find((m : any) => m.name === token.sentFolder)?.id) ||
+				mailboxes.list?.find((m : any) => m.role === 'sent')?.id :
+			undefined;
 		if (!draftsId || (needSent && !sentId))
 		{
 			throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
