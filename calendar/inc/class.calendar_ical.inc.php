@@ -1365,7 +1365,9 @@ class calendar_ical extends calendar_boupdate
 				// if file contains no participants add current user
 				if (empty($event['participants']))
 				{
-					$event['participants'] = [$user => calendar_so::combine_status('A')];
+					// $user is the optional owner and null eg. for the calendar subscription: as array key that became the
+					// participant "" (empty id), which made every import of the unchanged event a change, saved it again
+					$event['participants'] = [($user ?: $this->user) => calendar_so::combine_status('A')];
 				}
 				// if the client does not return a status, we restore the original one
 				foreach ($event['participants'] as $uid => $status)
