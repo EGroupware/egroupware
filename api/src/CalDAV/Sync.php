@@ -707,7 +707,10 @@ EOT, $this->header([
 	}
 
 	/**
-	 * Hash of the content of an ics file, ignoring line endings and the DTSTAMP, which some servers generate on every request
+	 * Hash of the content of an ics file, ignoring line endings, the DTSTAMP, which some servers generate on every request, and the
+	 * alarm properties of Thunderbird/Lightning (X-MOZ-LASTACK, X-MOZ-SNOOZE-TIME[-recurrence]), which it writes into an event of a
+	 * calendar whenever a reminder rang: they change many events of a big calendar all the time (340 events in 12 minutes in a
+	 * calendar of 3,000 events), imported all of them again, which took more then 400s, but are of no use for the subscription
 	 *
 	 * @param string $ics
 	 * @return string hex sha256
@@ -718,7 +721,7 @@ EOT, $this->header([
 		foreach(preg_split('/\r\n|\n|\r/', $ics) as $line)
 		{
 			$line = rtrim($line);
-			if ($line !== '' && !preg_match('/^DTSTAMP[;:]/i', $line))
+			if ($line !== '' && !preg_match('/^(DTSTAMP|X-MOZ-LASTACK|X-MOZ-SNOOZE-TIME(-[0-9A-Z]+)?)[;:]/i', $line))
 			{
 				$lines[] = $line;
 			}
