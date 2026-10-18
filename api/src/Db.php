@@ -2019,6 +2019,7 @@ class Db
 
 		$sql_append = '';
 		$cmd = 'INSERT';
+		$replace_avoided = false;
 		if (is_array($where) && count($where))
 		{
 			switch($this->Type)
@@ -2033,6 +2034,19 @@ class Db
 					{
 						if (count(array_intersect(array_keys($where), (array)$uk)) === count((array)$uk))
 						{
+							// REPLACE deletes the row and inserts it again, which gets a NEW auto-increment id, if the row is identified
+							// by a unique key and not by its id: every write of an existing row used up an id (INSERT ... ON DUPLICATE
+							// KEY UPDATE does that too), the INT of a table was full after some time (egw_rag_fulltext with 2,826 rows),
+							// with auto_increment_increment=10 of our Galera cluster 10 times faster --> update the row instead, resetting
+							// columns not given to their default, as REPLACE would (see replaceAsUpdate())
+							foreach($table_def['fd'] as $col => $def)
+							{
+								if (($def['type'] ?? null) === 'auto' && !array_key_exists($col, $where))
+								{
+									$replace_avoided = true;
+									break 2;	// do NOT use REPLACE
+								}
+							}
 							$cmd = 'REPLACE';
 							break 2;
 						}
@@ -2041,7 +2055,8 @@ class Db
 				default:
 					if ($this->select($table,'count(*)',$where,$line,$file)->fetchColumn())
 					{
-						return !!$this->update($table,$data,$where,$line,$file,$app,$use_prepared_statement,$table_def);
+						return !!$this->update($table,$replace_avoided ? self::replaceAsUpdate($table_def, $data, $where) : $data,
+							$where,$line,$file,$app,$use_prepared_statement,$table_def);
 					}
 					break;
 			}
@@ -2106,15 +2121,50 @@ class Db
 			$sql = "$cmd INTO $table ".$this->column_data_implode(',',$data,'VALUES',true,$table_def['fd']).$sql_append;
 		}
 
-		if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
-		{
-			$backup = $this->log_updates;
-			$this->log_updates = true;
-			$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
-			$this->log_updates = $backup;
-			return $ret;
+		try {
+			if (!is_bool($this->log_updates) && in_array($table, (array)$this->log_updates))
+			{
+				$backup = $this->log_updates;
+				$this->log_updates = true;
+				$ret = $this->query($sql,$line,$file,0,-1,$inputarr);
+				$this->log_updates = $backup;
+				return $ret;
+			}
+			return $this->query($sql,$line,$file,0,-1,$inputarr);
 		}
-		return $this->query($sql,$line,$file,0,-1,$inputarr);
+		catch (Exception $e) {
+			if (isset($backup)) $this->log_updates = $backup;
+			// REPLACE was avoided and somebody inserted the row between our check and the insert --> update it now
+			if (!empty($replace_avoided) && $where && stripos($e->getMessage(), 'Duplicate entry') !== false)
+			{
+				return !!$this->update($table,self::replaceAsUpdate($table_def, $data, $where),
+					$where,$line,$file,$app,$use_prepared_statement,$table_def);
+			}
+			throw $e;
+		}
+	}
+
+	/**
+	 * Data for an UPDATE doing what REPLACE does to an existing row, without deleting and inserting it again
+	 *
+	 * REPLACE writes the whole row: columns not given get their default. Row identity (the auto-increment id) is the only
+	 * difference, the row keeps it, so no id is used up for every write.
+	 *
+	 * @param array $table_def
+	 * @param array $data column => value pairs of insert()
+	 * @param array $where column => value pairs identifying the row, not reset
+	 * @return array $data plus "column=DEFAULT" for all other columns, but the auto-increment one
+	 */
+	protected static function replaceAsUpdate(array $table_def, array $data, array $where) : array
+	{
+		foreach($table_def['fd'] as $col => $def)
+		{
+			if (!array_key_exists($col, $data) && !array_key_exists($col, $where) && ($def['type'] ?? null) !== 'auto')
+			{
+				$data[] = $col.'=DEFAULT';
+			}
+		}
+		return $data;
 	}
 
 	/**

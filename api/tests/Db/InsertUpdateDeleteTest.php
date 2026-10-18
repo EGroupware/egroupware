@@ -60,9 +60,15 @@ class InsertUpdateDeleteTest extends TestCase
 			array($_SERVER['HTTP_HOST'] ?? '', $_SERVER['SERVER_NAME'] ?? ''), $GLOBALS['egw_domain']);
 
 		$GLOBALS['egw'] = new stdClass();
-		$GLOBALS['egw']->db = self::$db = new Api\Db($GLOBALS['egw_domain'][$domain]);
+		self::$db_data = $GLOBALS['egw_domain'][$domain];
+		$GLOBALS['egw']->db = self::$db = new Api\Db(self::$db_data);
 		self::$db->connect();
 	}
+
+	/**
+	 * @var array connection data of self::$db
+	 */
+	private static $db_data;
 
 	protected function assertPreConditions() : void
 	{
@@ -323,5 +329,108 @@ class InsertUpdateDeleteTest extends TestCase
 
 		$updated = $this->fetchRow((int)$row['t_id']);
 		$this->assertEquals(11, $updated['t_modifier']);
+	}
+
+	// -------------------------------------------------------------------
+	// insert() - a row identified by a unique key must not use up auto-increment ids
+	// -------------------------------------------------------------------
+
+	private function autoIncrementStep() : int
+	{
+		return (int)self::$db->query('SELECT @@auto_increment_increment', __LINE__, __FILE__)->fetchColumn();
+	}
+
+	/**
+	 * Behavior: REPLACE deletes a row and inserts it again, which gets a NEW auto-increment id, if the row is identified by a
+	 * unique key (not its id): the INT of egw_rag_fulltext (2,826 rows) was full, as every re-index used an id, and with our
+	 * Galera's auto_increment_increment=10 ids are used up 10 times faster. insert() now updates the row, but still writes the
+	 * whole row, as REPLACE did (columns not given get their default, see ...ReplacesNotUpdates above).
+	 *
+	 * Pass criteria: 5 writes of the same t_uniq keep the t_id and the next new row gets the very next id (one step further).
+	 */
+	public function testRewritingARowByItsUniqueKeyUsesNoNewAutoIncrementIds()
+	{
+		$uniq = 'InsertUpdateDeleteTest-noburn-'.bin2hex(random_bytes(4));
+		$ids = [];
+		for ($i = 1; $i <= 5; $i++)
+		{
+			self::$db->insert('egw_test', array('t_title' => "version $i", 't_modifier' => $i), array('t_uniq' => $uniq),
+				__LINE__, __FILE__, 'test');
+			$row = self::$db->select('egw_test', '*', array('t_uniq' => $uniq), __LINE__, __FILE__, false, '', 'test')->fetch();
+			$ids[] = (int)$row['t_id'];
+		}
+		$this->track($ids[0]);
+		$this->assertCount(1, array_unique($ids), 'the row keeps its id: '.implode(', ', $ids));
+		$this->assertSame('version 5', $row['t_title']);
+
+		self::$db->insert('egw_test', array('t_title' => 'InsertUpdateDeleteTest-probe-'.bin2hex(random_bytes(4))), false,
+			__LINE__, __FILE__, 'test');
+		$probe = (int)self::$db->get_last_insert_id('egw_test', 't_id');
+		$this->track($probe);
+		$this->assertSame($ids[0] + $this->autoIncrementStep(), $probe, '5 writes of the same row must not have used up ids');
+	}
+
+	public function testRewritingARowByItsUniqueKeyResetsColumnsNotGiven()
+	{
+		$uniq = 'InsertUpdateDeleteTest-reset-'.bin2hex(random_bytes(4));
+		self::$db->insert('egw_test', array('t_title' => 'first', 't_desc' => 'will be reset', 't_modifier' => 7),
+			array('t_uniq' => $uniq), __LINE__, __FILE__, 'test');
+		self::$db->insert('egw_test', array('t_title' => 'second'), array('t_uniq' => $uniq), __LINE__, __FILE__, 'test');
+
+		$row = self::$db->select('egw_test', '*', array('t_uniq' => $uniq), __LINE__, __FILE__, false, '', 'test')->fetch();
+		$this->track((int)$row['t_id']);
+		$this->assertSame('second', $row['t_title']);
+		$this->assertNotSame('will be reset', $row['t_desc'], 'a column not given is reset to its default, as REPLACE does');
+		$this->assertNotEquals(7, $row['t_modifier']);
+		$this->assertSame($uniq, $row['t_uniq'], 'the key is kept');
+	}
+
+	/**
+	 * Behavior: with the auto-increment id itself in $where the row is identified by its id, REPLACE keeps that id,
+	 * so nothing changes for such calls.
+	 */
+	public function testWriteByIdKeepsUsingReplaceAndTheId()
+	{
+		$uniq = 'InsertUpdateDeleteTest-byid-'.bin2hex(random_bytes(4));
+		self::$db->insert('egw_test', array('t_title' => 'first', 't_uniq' => $uniq), false, __LINE__, __FILE__, 'test');
+		$id = $this->track((int)self::$db->get_last_insert_id('egw_test', 't_id'));
+
+		self::$db->insert('egw_test', array('t_title' => 'second', 't_uniq' => $uniq), array('t_id' => $id), __LINE__, __FILE__, 'test');
+
+		$row = $this->fetchRow($id);
+		$this->assertSame('second', $row['t_title']);
+		$this->assertSame($uniq, $row['t_uniq']);
+	}
+
+	/**
+	 * Behavior: the check for an existing row and the insert are not atomic, unlike REPLACE: a second process inserting the
+	 * row in between must not make insert() fail with "Duplicate entry", but update that row.
+	 */
+	public function testRaceWithAnotherInsertBecomesAnUpdate()
+	{
+		$racing = new class(self::$db_data) extends Api\Db {
+			public bool $hide_existing_row = false;
+
+			function select($table, $cols, $where, $line, $file, $offset=false, $append='', $app=False, $num_rows=0, $join='', $table_def=False, $fetchmode=self::FETCH_ASSOC)
+			{
+				if ($this->hide_existing_row && $cols === 'count(*)')
+				{
+					$where[] = '1=0';	// we do not see the row, which the other process just inserted
+				}
+				return parent::select($table, $cols, $where, $line, $file, $offset, $append, $app, $num_rows, $join, $table_def, $fetchmode);
+			}
+		};
+		$racing->connect();
+		$uniq = 'InsertUpdateDeleteTest-race-'.bin2hex(random_bytes(4));
+		$racing->insert('egw_test', array('t_title' => 'inserted by the other process'), array('t_uniq' => $uniq), __LINE__, __FILE__, 'test');
+		$racing->hide_existing_row = true;
+
+		$this->assertTrue((bool)$racing->insert('egw_test', array('t_title' => 'we wanted to insert'), array('t_uniq' => $uniq),
+			__LINE__, __FILE__, 'test'), 'no duplicate key error');
+
+		$rows = iterator_to_array(self::$db->select('egw_test', '*', array('t_uniq' => $uniq), __LINE__, __FILE__, false, '', 'test'));
+		$this->assertCount(1, $rows);
+		$this->track((int)$rows[0]['t_id']);
+		$this->assertSame('we wanted to insert', $rows[0]['t_title'], 'the row was updated');
 	}
 }
