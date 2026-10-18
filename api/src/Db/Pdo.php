@@ -40,7 +40,23 @@ class Pdo
 	public static $case_sensitive_equal = '=';
 
 	/**
+	 * Seconds a connection can be unused, before connection() checks it is still alive
+	 *
+	 * The DB server closes idle connections after wait_timeout (300s on our Galera cluster), eg. while a long running
+	 * job (uploading a big file) uses no DB. Unlike Api\Db::query() a PDO statement can not be repeated transparent
+	 * on a new connection, so we have to check before a statement is prepared.
+	 */
+	const PING_AFTER = 30;
+
+	/**
+	 * @var float microtime of last connection() call
+	 */
+	static protected $last_used = 0.0;
+
+	/**
 	 * Get active PDO connection
+	 *
+	 * A connection not used for PING_AFTER seconds is checked and replaced by a new one, if the server closed it.
 	 *
 	 * @return \PDO
 	 * @throws \PDOException when opening PDO connection fails
@@ -52,6 +68,18 @@ class Pdo
 		{
 			self::reconnect();
 		}
+		elseif (microtime(true) - self::$last_used > self::PING_AFTER)
+		{
+			try {
+				self::$pdo->query('SELECT 1')->closeCursor();
+			}
+			catch (\PDOException $e) {
+				if (!self::connectionLost($e)) throw $e;
+				self::reconnect();
+			}
+		}
+		self::$last_used = microtime(true);
+
 		return self::$pdo;
 	}
 
@@ -61,6 +89,24 @@ class Pdo
 	static public function reconnect()
 	{
 		self::$pdo = self::_pdo();
+	}
+
+	/**
+	 * Check if an exception was caused by the server closing our connection
+	 *
+	 * Eg. as it was idle longer than wait_timeout, while a long running job (eg. uploading a big file) was running,
+	 * or because the server was restarted. Reconnecting and repeating is the right reaction, unlike for other errors.
+	 *
+	 * @param \Throwable $e
+	 * @return bool true: "MySQL server has gone away" or "Lost connection to MySQL server during query"
+	 */
+	static public function connectionLost(\Throwable $e) : bool
+	{
+		$code = $e instanceof \PDOException && isset($e->errorInfo[1]) ? (int)$e->errorInfo[1] : (int)$e->getCode();
+
+		return in_array($code, [2006, 2013], true) ||
+			stripos($e->getMessage(), 'server has gone away') !== false ||
+			stripos($e->getMessage(), 'Lost connection to') !== false;
 	}
 
 	/**
