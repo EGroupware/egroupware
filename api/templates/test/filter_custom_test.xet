@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!--
+This template is used by api/tests/Etemplate/FilterTemplateTest.php:
+column filters with legacy comma-separated customfilter options, followed by more filters
+-->
+<overlay>
+	<template id="api.filter_custom_test.rows" template="" lang="" group="0" version="26.1">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="ID" id="test_id"/>
+					<et2-nextmatch-header-filter id="before_id" emptyLabel="Before"/>
+					<nextmatch-customfilter blur="Customer" id="contact_id" options="link-entry,infolog"/>
+					<et2-nextmatch-header-filter id="after_id" emptyLabel="After"/>
+				</row>
+				<row>
+					<et2-description id="${row}[test_id]"></et2-description>
+					<et2-description id="${row}[before_id]"></et2-description>
+					<et2-description id="${row}[contact_id]"></et2-description>
+					<et2-description id="${row}[after_id]"></et2-description>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

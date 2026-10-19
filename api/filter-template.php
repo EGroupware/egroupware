@@ -221,6 +221,16 @@ EOF;
 					case 'header-custom':
 						$widget = ($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options'] ?? '' ?: $attrs['type'] ?? 'et2-select');
 						unset($attrs['widgetType'], $attrs['widget_type'], $attrs['options'], $attrs['class']);
+						// legacy "options" are "<type>[,<options>]" eg. "link-entry,infolog": only the type can be the widget name,
+						// a comma in the element name makes the whole filter-template unparsable (dropping all filters behind it)
+						if (str_contains($widget, ','))
+						{
+							[$widget, $widget_options] = explode(',', $widget, 2);
+							if ($widget === 'link-entry' && ($only_app = trim(explode(',', $widget_options)[0])) !== '')
+							{
+								$attrs['onlyApp'] = $only_app;
+							}
+						}
 						if ($widget !== 'records-field') break;
 						// fall-through for records-field
 					case 'records-field':
@@ -236,10 +246,11 @@ EOF;
 				}
 				if (!isset($attrs['label']))
 				{
-					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? null;
-					if ($attrs['label'] === $attrs['ariaLabel']) unset($attrs['ariaLabel']);
+					$attrs['label'] = $attrs['ariaLabel'] ?? $attrs['emptyLabel'] ?? $attrs['statustext'] ?? $attrs['blur'] ?? null;
+					if ($attrs['label'] === ($attrs['ariaLabel'] ?? null)) unset($attrs['ariaLabel']);
 					if (empty($attrs['label'])) unset($attrs['label']);
 				}
+				unset($attrs['blur']);	// legacy placeholder of nextmatch-customfilter, used as label above
 				$attrs['class'] = trim(str_replace('selectboxFullWidth', '', $attrs['class'] ?? '') . ' et2-label-fixed');
 				// et2-details does NOT create a namespace therefore, we need to use "col_filter[$id]" (not for cfs without id!)
 				if(!empty($attrs['id']) && $attrs['id'] !== 'col_filter')
