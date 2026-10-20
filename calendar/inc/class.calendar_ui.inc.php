@@ -652,8 +652,10 @@ class calendar_ui
 	 */
 	public function ajax_get($event_ids)
 	{
-		foreach($event_ids as $id)
+		foreach((array)$event_ids as $id)
 		{
+			if (!is_scalar($id)) continue;
+
 			$this->update_client($id);
 		}
 	}
@@ -668,14 +670,14 @@ class calendar_ui
 	 * If the event is recurring, we send the next month's worth of recurrences
 	 * for lack of a better way to determine how much to send.
 	 *
-	 * @param int $event_id
-	 * @param Api\DateTime $recurrence_date
+	 * @param int|string $event_id cal_id or cal_id:timestamp
+	 * @param ?Api\DateTime $recurrence_date
 	 * @param array|bool|int|null $old_event
 	 *
 	 * @return boolean True if the event was updated, false if it could not be
 	 *    updated or was removed.
 	 */
-	public function update_client($event_id, Api\DateTime $recurrence_date = null, $old_event = array())
+	public function update_client(string|int $event_id, ?Api\DateTime $recurrence_date = null, $old_event = array())
 	{
 		if(!$event_id)
 		{
