@@ -1,5 +1,75 @@
 # SQL fragment type safety (`Api\Db\SqlFragment`)
 
+## App conversion tracker
+
+One row per app that ships by default (core monorepo + `egroupware/*` composer packages) or is an
+EPL (commercial, `EGroupwareGmbH/*`) app. "Converted" means: every raw SQL fragment *that app's own
+code* builds uses `Db\SqlFragment`, and (where the app has its own `Api\Db` clone to scope it to)
+`requireSqlFragmentObjects(true)` is enabled for it. An app with no own SO-layer query building (pure
+UI/config apps) is marked N/A rather than chased for conversion.
+
+### Core (part of the main `egroupware/egroupware` repo)
+
+| App | Status |
+|---|---|
+| calendar | **Done** (pilot, commit `196de24beb`) - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone |
+| api (incl. `Api\Storage`/`Storage\Base`) | **In progress** - shared SO-layer base class many apps extend |
+| addressbook | Not started |
+| admin | Not started |
+| aiassistant | Not started |
+| archive | Not started |
+| developer | Not started |
+| emailadmin | Not started |
+| etemplate | N/A - template engine, no own SO layer |
+| filemanager | Not started |
+| home | Not started |
+| importexport | Not started |
+| infolog | Not started |
+| kdots | N/A - UI framework, no own SO layer |
+| mail | Not started |
+| notifications | Not started |
+| phpgwapi | N/A - deprecated legacy compat shim |
+| preferences | Not started |
+| resources | Not started |
+| timesheet | Not started |
+
+### Default composer packages (`egroupware/*` in `composer.json`, public `EGroupware/*` repos)
+
+| App | Status |
+|---|---|
+| activesync | Not started |
+| aitools | Not started |
+| bookmarks | Not started |
+| collabora | Not started |
+| news_admin | Not started |
+| openid | Not started |
+| projectmanager | Not started |
+| rag | Not started |
+| registration | Not started |
+| rocketchat | Not started |
+| smallpart | Not started |
+| status | Not started |
+| swoolepush | Not started |
+| tracker | Not started |
+| webauthn | Not started |
+
+### EPL (commercial, private `EGroupwareGmbH/*` repos)
+
+| App | Status |
+|---|---|
+| stylite (EPL core functions) | Not started |
+| esyncpro | Not started |
+| invoices | Not started |
+| kanban | Not started |
+| licenses | Not started |
+| managementserver | Not started |
+| records | Not started |
+| vidopro | Not started |
+
+Not covered by either list above (separate repos, but neither a default composer package nor EPL -
+`guacamole`, `knowledgebase`, `phpbrain`, `profitbricks`, `ranking`, `schulmanager`, `untissync`,
+`wiki`): out of scope for this project unless/until requested.
+
 ## Motivation
 
 GHSA-vx89-j2x7-5wp2: `calendar.calendar_ui.ajax_get` let a client-supplied array (an integer-keyed
