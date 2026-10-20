@@ -389,6 +389,23 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	}
 
 	/**
+	 * Next upcoming mid-July midnight (server timezone) - a date always far enough from any
+	 * northern or southern hemisphere DST transition to keep a RECUR_DAYS window clear of one,
+	 * whatever day this test happens to run, while still being a near-future date like 'now' was.
+	 */
+	protected function nextSafeAnchorDay() : Api\DateTime
+	{
+		$now = new Api\DateTime('now', Api\DateTime::$server_timezone);
+		$anchor = new Api\DateTime($now->format('Y').'-07-15', Api\DateTime::$server_timezone);
+		$anchor->setTime(0, 0, 0);
+		if ($anchor < $now)
+		{
+			$anchor->modify('+1 year');
+		}
+		return $anchor;
+	}
+
+	/**
 	 * Make the array of event information
 	 *
 	 * @param Array $timezones
@@ -399,8 +416,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	{
 		// Preserve legacy test semantics from mktime()+timestamp flow:
 		// use server calendar date, but interpret wall time in user timezone.
-		$server_start_day = new Api\DateTime('now', Api\DateTime::$server_timezone);
-		$server_start_day->setTime(0, 0, 0);
+		$server_start_day = $this->nextSafeAnchorDay();
 		$server_start_day->modify('+1 day');
 		$start = new Api\DateTime(
 			$server_start_day->format('Y-m-d') . ' ' . sprintf('%02d:00:00', $whole_day ? 0 : $times['start']),
@@ -417,8 +433,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		{
 			$end->setTime($times['end'], 0, 0);
 		}
-		$server_recur_end_day = new Api\DateTime('now', Api\DateTime::$server_timezone);
-		$server_recur_end_day->setTime(0, 0, 0);
+		$server_recur_end_day = $this->nextSafeAnchorDay();
 		$server_recur_end_day->modify('+' . static::RECUR_DAYS . ' days');
 		$this->recur_end = new Api\DateTime(
 			$server_recur_end_day->format('Y-m-d') . ' 00:00:00',
