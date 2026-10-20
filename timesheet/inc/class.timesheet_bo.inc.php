@@ -172,6 +172,13 @@ class timesheet_bo extends Api\Storage
 	{
 		parent::__construct(TIMESHEET_APP,self::TABLE,self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects timesheet's own queries - every raw
+		// SQL fragment timesheet builds itself now uses Api\Db\SqlFragment. Once
+		// requireSqlFragmentObjects() becomes the default (opt-out) for Api\Db generally, remove
+		// this clone again - Api\Storage::__construct() already defaults $no_clone=true.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
+
 		$this->convert_all_timestamps();
 
 		$this->config_data = Api\Config::read(TIMESHEET_APP);
@@ -547,15 +554,15 @@ class timesheet_bo extends Api\Storage
 		{
 			if ($filter['ts_status'] == self::BILLABLE)
 			{
-				$filter[] = '(ts_status IS NULL OR ts_status IN ('.
+				$filter[] = Api\Db\SqlFragment::raw('(ts_status IS NULL OR ts_status IN ('.
 					implode(',',array_keys(array_filter($this->status_labels_config,
-						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))';
+						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))');
 				unset($filter['ts_status']); // no status set
 			}
 			elseif ($filter['ts_status'] == self::ALL_STATUS)
 			{
 				// all timesheets with a status set, excluding timesheets without a status and deleted ones
-				$filter[] = '(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')';
+				$filter[] = Api\Db\SqlFragment::raw('(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')');
 				unset($filter['ts_status']);
 			}
 			elseif ($filter['ts_status'] !== 'all')
@@ -569,8 +576,8 @@ class timesheet_bo extends Api\Storage
 		}
 		else
 		{
-			$filter[] = '(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=' : '!= ') . self::DELETED_STATUS .
-				($filter['ts_status'] == self::DELETED_STATUS ? '' : ' OR ts_status IS NULL') . ')';
+			$filter[] = Api\Db\SqlFragment::raw('(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=' : '!= ') . self::DELETED_STATUS .
+				($filter['ts_status'] == self::DELETED_STATUS ? '' : ' OR ts_status IS NULL') . ')');
 		}
 		if(is_array($filter['ts_owner']) && !count($filter['ts_owner']))
 		{
@@ -699,8 +706,8 @@ class timesheet_bo extends Api\Storage
 
 		$last_end = $this->db->select(self::TABLE, 'MAX(ts_start + ts_duration * 60)', array(
 			'ts_owner' => $user,
-			'ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
-				' AND '.$this->db->quote($day_end->format('ts'), 'int'),
+			Api\Db\SqlFragment::raw('ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
+				' AND '.$this->db->quote($day_end->format('ts'), 'int')),
 		), __LINE__, __FILE__, false, '', TIMESHEET_APP)->fetchColumn();
 
 		return is_null($last_end) ? null : new Api\DateTime($last_end);
@@ -739,14 +746,14 @@ class timesheet_bo extends Api\Storage
 
 		$where = array(
 			'ts_owner' => $ts['ts_owner'],
-			'(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)',
-			'(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)',
-			'ts_start < '.$this->db->quote($end->format('ts'), 'int'),
-			'ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int'),
+			Api\Db\SqlFragment::raw('(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)'),
+			Api\Db\SqlFragment::raw('(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)'),
+			Api\Db\SqlFragment::raw('ts_start < '.$this->db->quote($end->format('ts'), 'int')),
+			Api\Db\SqlFragment::raw('ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int')),
 		);
 		if (!empty($ts['ts_id']))
 		{
-			$where[] = 'ts_id != '.(int)$ts['ts_id'];
+			$where[] = Api\Db\SqlFragment::raw('ts_id != '.(int)$ts['ts_id']);
 		}
 		$conflicts = array();
 		foreach($this->db->select(self::TABLE, 'ts_id,ts_title,ts_start,ts_duration', $where,

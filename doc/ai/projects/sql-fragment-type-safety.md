@@ -31,7 +31,7 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | phpgwapi | N/A - deprecated legacy compat shim |
 | preferences | Not started |
 | resources | Not started |
-| timesheet | Not started |
+| timesheet | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`timesheet_bo::__construct()`) |
 
 ### Default composer packages (`egroupware/*` in `composer.json`, public `EGroupware/*` repos)
 
@@ -173,17 +173,44 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   an app, grep that app's *entire* directory for `$this->bo->`/`$this->so->`/`$this->db->` call
   sites, not just its `*_so.inc.php`/`*_bo.inc.php` files.
 
-- **`Api\Storage` / `Api\Storage\Base`** (commit `c0a028f33c`): own fragment-building converted -
-  `search2criteria()`'s two returns, `parse_search()`'s several int-keyed appends (including the
-  `search2criteria()`-return-wrapped-in-`[$search]` nested-array case, which must NOT be re-wrapped -
-  `column_data_implode()`'s own single-element-array unwrap handles it), `search()`'s `$db_filter`
-  building, and the "direct sql updates"/"keep sql fragments" int-key passthroughs in
-  `save()`/`delete()`/`read()` (`Storage::process_search()` has two more of its own). Added
-  `Db\SqlFragment::raw()` idempotency (returns an already-wrapped instance unchanged) so these call
-  sites don't need an `instanceof` check first. **Not opted in** - no subclass (or `Storage\Base`
-  itself) calls `requireSqlFragmentObjects()` yet; per the second lesson above, before any app
-  extending it opts in, that app's *entire* directory needs the same full-file sweep calendar's
-  CalDAV handler taught us to do, not just its `*_bo`/`*_so` classes.
+- **`Api\Storage` / `Api\Storage\Base`** (commit `c0a028f33c`, corrected by `ca94a23f2a`): own
+  fragment-building converted - `search2criteria()`'s two returns, `parse_search()`'s several
+  int-keyed appends, `search()`'s `$db_filter` building (`Storage::process_search()` has two more
+  of its own). Added `Db\SqlFragment::raw()` idempotency (returns an already-wrapped instance
+  unchanged) so these call sites don't need an `instanceof` check first.
+
+  **Third lesson, a self-inflicted one (commit `ca94a23f2a`)**: the first pass at this also
+  auto-wrapped the "direct sql updates"/"keep sql fragments"/"copy direct SQL parts from $keys"
+  int-key passthroughs in `save()`/`delete()`/`read()`/`search()` - but those take the raw value
+  straight from the *caller's own* `$keys`/`$filter`/`$criteria` parameter, not something
+  `Storage\Base` builds itself. Auto-wrapping a plain string there launders an attacker-controlled
+  value into looking like a deliberately-built trusted fragment *before*
+  `column_data_implode()`'s check ever sees it - making `requireSqlFragmentObjects()` a no-op for
+  exactly the bug class it exists to catch. Fixed by reverting those passthrough points to plain,
+  unwrapped passthrough; a caller that wants a raw fragment to survive strict mode must wrap it
+  itself before calling in. Regression-tested in `api/tests/Storage/RequireSqlFragmentObjectsTest.php`
+  (confirmed to fail against the pre-fix code by temporarily reintroducing it). The rule going
+  forward: only wrap a value a method *constructs itself* from validated/trusted inputs (a matched
+  column name, a `quote()`-escaped value, a hardcoded keyword) - never a value merely passed through
+  from a caller's own parameter.
+
+  `requireSqlFragmentObjects()` is opt-in per app (see tracker above); per the second lesson above,
+  before any app extending `Api\Storage` opts in, that app's *entire* directory needs the same
+  full-file sweep calendar's CalDAV handler taught us to do, not just its `*_bo`/`*_so` classes.
+- **Timesheet pilot** (second app, uncommitted/local as of this writing): every raw SQL fragment
+  timesheet builds itself converted - `timesheet_bo.inc.php`'s `search()` (status filters) and
+  `checkConflicts()`'s `$where` array (the `ts_status`/`cat_id`/`ts_start` range conditions, inline
+  *and* appended - the first lesson above about inline array-literal elements applies here too),
+  `get_last_end()`'s `ts_start BETWEEN ...` condition, and `timesheet_ui.inc.php`'s `date_filter()`
+  result assigned into `$query['col_filter'][0]` (an ORIGINATOR case - built server-side by
+  `Api\DateTime::sql_filter()` from internally-resolved, quoted date values, not client SQL) and
+  `timesheet_export_csv.inc.php`'s range-filter builder. `requireSqlFragmentObjects(true)` enabled
+  on timesheet's own `Db` clone in `timesheet_bo::__construct()` (unlike `calendar_so`,
+  `Api\Storage::__construct()` defaults `$no_clone=true`, so this is a new clone, not flipping a
+  flag on an existing one). Verified: full `timesheet/tests/` suite green except one pre-existing,
+  unrelated failure (`TimesheetUiGetRowsTest::testPartialMonthSumIsMarkedPartial` - a date-dependent
+  partial-month-sum flag bug, reproduces identically with strict mode on or off, not investigated
+  further here) and the 3 known `LinkedFilterToolCallTest` output-buffer "risky" warnings.
 
 ### Open / next
 
@@ -194,7 +221,7 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   `api/src/Link/Storage.php`, `api/src/Mail/Account.php`, `api/src/Sharing.php`,
   `api/src/Storage/Customfields.php`, `api/src/Vfs.php`, `developer/src/Langfiles.php`,
   `infolog/inc/class.infolog_bo.inc.php`, `infolog/src/Storage.php`,
-  `notifications/inc/class.notifications_push.inc.php`, `timesheet/inc/class.timesheet_bo.inc.php`,
+  `notifications/inc/class.notifications_push.inc.php`,
   plus the various `*/setup/tables_update.inc.php` schema-migration files (lower priority - one-time
   migration code, not live request-handling).
 - The global default flip (opt-out model) is explicitly a *later* step per the original design ask -
@@ -203,3 +230,13 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
 - No 26 backport for any of this (explicit decision) - the actual vulnerability is already closed on
   both branches via the two entry-point patches; this is defense-in-depth architecture that should
   soak on master first.
+
+**Unrelated, but found while tracing `Api\Storage\Base::search2criteria()` callers for this
+project**: `search2criteria()`'s own first line (`if (empty($_pattern) || is_array($_pattern) ||
+...) return $_pattern;`) returns a non-string pattern completely unprocessed, which several callers
+then wove straight into generated SQL - the same vulnerability class as GHSA-vx89-j2x7-5wp2
+(calendar's original finding), independently present in `timesheet/src/ApiHandler.php`'s REST
+filter handling, `infolog_bo::searchInfolog()`'s free-text search, and `Api\Accounts\Sql::search()`.
+This is a standalone, pre-existing bug with zero dependency on `Db\SqlFragment` - fixed with plain
+`is_string()` guards (commit `77355c16a1`), pushed to master and backported to 26 immediately,
+independent of this longer-running project.

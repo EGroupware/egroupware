@@ -775,7 +775,9 @@ class timesheet_ui extends timesheet_bo
 		}
 		if ($query['filter'])
 		{
-			$query['col_filter'][0] = $date_filter;
+			// $date_filter is a fixed SQL condition built by date_filter()/DateTime::sql_filter()
+			// itself from internally-resolved, quoted date values - not client-supplied SQL
+			$query['col_filter'][0] = Api\Db\SqlFragment::raw($date_filter);
 
 			// generate a meaningful app-header / report title
 			if ($this->show_sums['month'])
