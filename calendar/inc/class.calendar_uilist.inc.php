@@ -741,6 +741,10 @@ class calendar_uilist extends calendar_ui
 			{
 				$id = $id['id'];
 			}
+			if (!is_scalar($id))
+			{
+				$id = null;
+			}
 			$matches = null;
 			if(!(int)$id && preg_match('/^([a-z_-]+)([0-9]+)$/i',$id,$matches))
 			{
