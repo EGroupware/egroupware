@@ -923,6 +923,19 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		border-top: none;
 		overflow: visible !important;
 		position: static !important;
+		// screen-only rule (further up) sizes this to the popup's own full viewport height, to let
+		// it fill available space there - its only CHILD actually rendered at print time is the
+		// mailvelope iframe (plain mail already hides #mail-display_mailDisplayBodySrc above, and
+		// the real printed content is tmpPrintDiv, an entirely separate element appended straight
+		// to document.body, see MailApp.preparePrint()'s own docblock for why - never a descendant
+		// of this container at all). Left at "height: 100%" here, Chrome (unlike Firefox) resolves
+		// that against one page's own content height during print pagination, reserving a whole
+		// blank page's worth of vertical space for this now-empty box between the headers above it
+		// and tmpPrintDiv's real content after it - ticket #126671 (a real customer, 2026-10-19,
+		// via a partner): a genuinely one-page email printed as "half-empty page 1, body on page 2"
+		// in Chrome, confirmed fine in Firefox (which collapses a percentage height to its content
+		// instead) - exactly this symptom.
+		height: auto !important;
 	}
 	.mailDisplayAttachments{
 		border: none;

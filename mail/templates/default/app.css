@@ -787,6 +787,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     border-top: none;
     overflow: visible !important;
     position: static !important;
+    height: auto !important;
   }
   .mailDisplayAttachments {
     border: none;
