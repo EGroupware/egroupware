@@ -3997,7 +3997,7 @@ class Imap extends Jmap\Base
 			'blobId' => self::urlsafeB64Encode($mailbox).':'.$uid.':'.$part->getMimeId(),
 			'size' => $part->getBytes(),
 			'name' => $part->getName() ?: null,
-			'type' => strtolower((string)$part->getType()),
+			'type' => self::concreteMimeType(strtolower((string)$part->getType()), $part),
 			'charset' => $part->getContentTypeParameter('charset') ?: null,
 			'disposition' => $part->getDisposition() ?: null,
 			'cid' => $contentId ? trim($contentId, '<>') : null,
@@ -4007,6 +4007,50 @@ class Imap extends Jmap\Base
 			$result['subParts'] = array_map(static fn($sub) => self::bodyPartToJmap($sub, $mailbox, $uid), $part->getParts());
 		}
 		return $result;
+	}
+
+	/**
+	 * A part's Content-Type, sanitized against a wildcard subtype like "image/*" - only ever
+	 * valid in an Accept header, never an actual message part's own Content-Type, but seen live
+	 * from a broken Samsung Email app version (ticket #126631): a .jpg sent with a literal
+	 * "Content-Type: image/*" header. The raw bytes are still a perfectly normal JPEG (download
+	 * and other mail clients, apparently going by the file extension, render it fine), but a
+	 * browser can't decode a Blob/<img> whose declared type is "image/*" - shows as a broken
+	 * image/red X.
+	 *
+	 * Prefers sniffing the real bytes (Api\MimeMagic::analyze_data(), same "file"-style magic-byte
+	 * detection Api\Mail\Account::embedSignatureImages()/Mail::processURL2InlineImages() already
+	 * use for an equally unreliable declared type) over guessing from the filename extension -
+	 * more accurate, and still works when there's no filename at all. $part->getContents() is
+	 * only ever touched inside this method, and only once $type is actually confirmed to be a
+	 * wildcard - cheap for the overwhelmingly common already-concrete-type case, and for
+	 * bodyPartToJmap()'s own BODYSTRUCTURE-only $part (no content bytes populated yet,
+	 * getContents() just returns ''), which falls through to the filename guess instead - same
+	 * fallback the TNEF decoder's own generic application/octet-stream placeholder uses
+	 * (Api\Mail::tnef_decoder(), via Horde_Mime_Magic::filenameToMIME()).
+	 *
+	 * @param string $type lowercased Content-Type (primary/subtype only, no parameters)
+	 * @param \Horde_Mime_Part $part the part itself, for its filename and (if already populated)
+	 *  its real content bytes
+	 * @return string $type unchanged, unless it's a "xxx/*" wildcard and either the sniffed or the
+	 *  filename-guessed type is better
+	 */
+	private static function concreteMimeType(string $type, \Horde_Mime_Part $part) : string
+	{
+		if (!preg_match('#^[a-z-]+/\*$#', $type))
+		{
+			return $type;
+		}
+		if (($contents = $part->getContents()) !== '' &&
+			($sniffed = Api\MimeMagic::analyze_data($contents)) && $sniffed !== 'application/octet-stream')
+		{
+			return strtolower($sniffed);
+		}
+		if (($name = $part->getName()))
+		{
+			return strtolower(Api\MimeMagic::filename2mime($name));
+		}
+		return $type;
 	}
 
 	/**
@@ -4816,7 +4860,7 @@ class Imap extends Jmap\Base
 				'blobId' => $blobIdPrefix.$id,
 				'size' => $part->getBytes(),
 				'name' => $part->getName() ?: null,
-				'type' => strtolower((string)$part->getType()),
+				'type' => self::concreteMimeType(strtolower((string)$part->getType()), $part),
 				'charset' => $part->getContentTypeParameter('charset') ?: null,
 				'disposition' => $part->getDisposition() ?: null,
 				'cid' => $contentId ? trim($contentId, '<>') : null,
