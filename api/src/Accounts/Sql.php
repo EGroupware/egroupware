@@ -509,7 +509,9 @@ class Sql
 		$op = 'AND';
 		$criteria = array();
 		$wildcard = in_array($param['query_type'] ?? '', ['start', 'exact']) ? '' : '%';
-		if (($query = $param['query'] ?? null))
+		// search2criteria() treats a non-string pattern as already-built, trusted criteria and
+		// returns it unprocessed - $param is client-supplied, so it must be a plain string here
+		if (($query = $param['query'] ?? null) && is_string($query))
 		{
 			$op = $query[0] == '!' ? 'AND' : 'OR';
 			switch($param['query_type'])
@@ -699,21 +701,24 @@ class Sql
 	/**
 	 * Update the last login timestamps and the IP
 	 *
+	 * A plain atomic UPDATE, deliberately not preceded by a SELECT of the previous value (no
+	 * caller uses it - see Session::create(), which discards this method's return value; the
+	 * separate 'account_previous_login' cache comes from Auth::$previous_login instead) - a
+	 * SELECT-then-UPDATE here previously raced under concurrent calls for the same account_id
+	 * (eg. concurrent *DAV Basic-Auth requests sharing the same pseudo-session-id, no longer
+	 * serialized by a session lock) inside Session::create()'s surrounding transaction, causing
+	 * "Record has changed since last read" (MariaDB error 1020).
+	 *
 	 * @param int $account_id
 	 * @param string $ip
-	 * @return int lastlogin time
 	 */
 	function update_lastlogin($account_id, $ip)
 	{
-		$previous_login = $this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__)->fetchColumn();
-
 		$this->db->update($this->table,array(
 			'account_lastloginfrom' => $ip,
 			'account_lastlogin'     => time(),
 		),array(
 			'account_id' => abs($account_id),
 		),__LINE__,__FILE__);
-
-		return $previous_login;
 	}
 }
