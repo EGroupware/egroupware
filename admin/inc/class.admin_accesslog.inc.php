@@ -82,7 +82,7 @@ class admin_accesslog
 		if ($query['session_list'])	// filter active sessions
 		{
 			$query['col_filter']['lo'] = null;	// not logged out
-			$query['col_filter'][0] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
+			$query['col_filter'][0] = Api\Db\SqlFragment::raw('session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']));
 			// for push via fallback (no native push) we use the heartbeat (constant polling of notification app)
 			if (Api\Json\Push::onlyFallback())
 			{
@@ -97,14 +97,14 @@ class admin_accesslog
 			switch((string)$query['session_list'])
 			{
 				case 'active':	// remove status != 'active', eg. CalDAV/eSync
-					$query['col_filter'][1] = $active_query;
-					$query['col_filter'][3] = "session_php NOT LIKE '% %'";	// remove blocked, bad login, etc
+					$query['col_filter'][1] = Api\Db\SqlFragment::raw($active_query);
+					$query['col_filter'][3] = Api\Db\SqlFragment::raw("session_php NOT LIKE '% %'");	// remove blocked, bad login, etc
 					break;
 				default:
-					$query['col_filter'][1] = "(notification_heartbeat IS NULL OR $active_query)";
+					$query['col_filter'][1] = Api\Db\SqlFragment::raw("(notification_heartbeat IS NULL OR $active_query)");
 					break;
 			}
-			$query['col_filter'][2] = 'account_id>0';
+			$query['col_filter'][2] = Api\Db\SqlFragment::raw('account_id>0');
 		}
 		$total = $this->so->get_rows($query,$rows,$readonlys);
 

@@ -864,11 +864,11 @@ class admin_customfields
 		{
 			if ($t2 === '~~all~~')
 			{
-				$query['col_filter'][0] = 'cf_type2 IS NULL';
+				$query['col_filter'][0] = Api\Db\SqlFragment::raw('cf_type2 IS NULL');
 			}
 			else
 			{
-				$query['col_filter'][0] = '(cf_type2 IS NULL OR '.$this->db->concat("','", 'cf_type2', "','").' LIKE '.$GLOBALS['egw']->db->quote('%,'.$t2.',%').')';
+				$query['col_filter'][0] = Api\Db\SqlFragment::raw('(cf_type2 IS NULL OR '.$this->db->concat("','", 'cf_type2', "','").' LIKE '.$GLOBALS['egw']->db->quote('%,'.$t2.',%').')');
 			}
 			unset($query['col_filter']['cf_type2']);
 		}

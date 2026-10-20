@@ -70,7 +70,7 @@ class notifications_push implements Json\PushBackend
 			foreach(self::$db->select(self::TABLE, '*', array(
 				'account_id' => array(0, $GLOBALS['egw_info']['user']['account_id']),
 				'notify_type' => self::TYPE,
-				'notify_id > '.(int)$already_send,
+				Api\Db\SqlFragment::raw('notify_id > '.(int)$already_send),
 			), __LINE__, __FILE__, false, 'ORDER BY notify_id ASC', self::APP) as $row)
 			{
 				$message = json_decode($row['notify_message'], true);
@@ -185,7 +185,7 @@ class notifications_push implements Json\PushBackend
 			do {
 				self::$db->delete(self::TABLE, array(
 					'notify_type' => self::TYPE,
-					'notify_created < '.$ts,
+					Api\Db\SqlFragment::raw('notify_created < '.$ts),
 				), __LINE__, __FILE__, self::APP, null, self::DELETE_CHUNK_SIZE);
 			}
 			while($n++ < 100 && self::$db->affected_rows() == self::DELETE_CHUNK_SIZE);
@@ -208,7 +208,7 @@ class notifications_push implements Json\PushBackend
 	public function online()
 	{
 		$online = [];
-		foreach($GLOBALS['egw']->session->session_list(0, 'DESC', 'session_dla', true, ['notification_heartbeat IS NOT NULL']) as $row)
+		foreach($GLOBALS['egw']->session->session_list(0, 'DESC', 'session_dla', true, [Api\Db\SqlFragment::raw('notification_heartbeat IS NOT NULL')]) as $row)
 		{
 			$online[] = (int)$row['account_id'];
 		}

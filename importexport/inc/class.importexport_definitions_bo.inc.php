@@ -59,7 +59,7 @@ class importexport_definitions_bo {
 			}
 			$sql .= implode(' OR ', $read);
 			$sql .= ') OR owner = '.$GLOBALS['egw_info']['user']['account_id'];
-			$query['col_filter'][] = $sql;
+			$query['col_filter'][] = Api\Db\SqlFragment::raw($sql);
 		}
 
 		// Handle allowed filter
@@ -75,7 +75,7 @@ class importexport_definitions_bo {
 			if($allowed)
 			{
 				unset($query['col_filter']['allowed_users']);
-				$query['col_filter'][] = '('.implode(' OR ', $allowed) . ')';
+				$query['col_filter'][] = Api\Db\SqlFragment::raw('('.implode(' OR ', $allowed) . ')');
 			}
 		}
 

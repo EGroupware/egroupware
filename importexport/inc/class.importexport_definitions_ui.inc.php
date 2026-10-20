@@ -502,7 +502,7 @@ class importexport_definitions_ui
 		if($query['col_filter']['allowed_users'] == 'private')
 		{
 			unset($query['col_filter']['allowed_users']);
-			$query['col_filter'][] = 'allowed_users = ' . $GLOBALS['egw']->db->quote(',,');
+			$query['col_filter'][] = Api\Db\SqlFragment::raw('allowed_users = ' . $GLOBALS['egw']->db->quote(',,'));
 		}
 		$bodefinitions = new importexport_definitions_bo($query['col_filter'], true);
 		// We don't care about readonlys for the UI

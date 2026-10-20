@@ -64,11 +64,11 @@ class filemanager_shares extends filemanager_ui
 		switch ($query['col_filter']['type'])
 		{
 			case Sharing::LINK:
-				$query['col_filter'][] = "share_path LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%');
+				$query['col_filter'][] = Api\Db\SqlFragment::raw("share_path LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%'));
 				break;
 
 			case Sharing::READONLY:
-				$query['col_filter'][] = "share_path NOT LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%');
+				$query['col_filter'][] = Api\Db\SqlFragment::raw("share_path NOT LIKE ".$GLOBALS['egw']->db->quote(self::$tmp_dir.'%'));
 				$query['col_filter']['share_writable'] = false;
 				break;
 
@@ -80,14 +80,14 @@ class filemanager_shares extends filemanager_ui
 
 		if (class_exists('EGroupware\\Collabora\\Wopi'))
 		{
-			$query['col_filter'][] = 'share_writable NOT IN ('.
-				EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.EGroupware\Collabora\Wopi::WOPI_READONLY.')';
+			$query['col_filter'][] = Api\Db\SqlFragment::raw('share_writable NOT IN ('.
+				EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.EGroupware\Collabora\Wopi::WOPI_READONLY.')');
 		}
 
 		if ((string)$query['col_filter']['share_passwd'] !== '')
 		{
-			$query['col_filter'][] = $query['col_filter']['share_passwd'] === 'yes' ?
-				'share_passwd IS NOT NULL' : 'share_passwd IS NULL';
+			$query['col_filter'][] = Api\Db\SqlFragment::raw($query['col_filter']['share_passwd'] === 'yes' ?
+				'share_passwd IS NOT NULL' : 'share_passwd IS NULL');
 		}
 		unset($query['col_filter']['share_passwd']);
 
