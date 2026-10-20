@@ -221,8 +221,8 @@ class ExpressionTest extends TestCase
 	 */
 	public function testColumnDataImplodeSingleElementArrayUnwrapsToScalar()
 	{
-		$fromArray = self::$db->column_data_implode(' AND ', ['t_modifier' => [5]], True, False, self::$table_def);
-		$fromScalar = self::$db->column_data_implode(' AND ', ['t_modifier' => 5], True, False, self::$table_def);
+		$fromArray = (string)self::$db->column_data_implode(' AND ', ['t_modifier' => [5]], True, False, self::$table_def);
+		$fromScalar = (string)self::$db->column_data_implode(' AND ', ['t_modifier' => 5], True, False, self::$table_def);
 
 		$this->assertSame($fromScalar, $fromArray);
 		$this->assertStringNotContainsString('IN', $fromArray, 'a single-element array must not produce an IN(...) clause');
@@ -249,7 +249,7 @@ class ExpressionTest extends TestCase
 		$id = $this->insertRow(['t_modifier' => 10]);
 
 		$fragment = self::$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], True, False, self::$table_def);
-		$this->assertSame('t_modifier=t_modifier+1', $fragment,
+		$this->assertSame('t_modifier=t_modifier+1', (string)$fragment,
 			'an integer-keyed array value must pass through completely unquoted/unmodified');
 
 		self::$db->update('egw_test', [0 => 't_modifier=t_modifier+1'], ['t_id' => $id], __LINE__, __FILE__, 'test');

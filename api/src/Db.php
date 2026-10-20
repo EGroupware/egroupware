@@ -105,6 +105,16 @@ class Db
 	var $readonly = false;
 
 	/**
+	 * Per-instance opt-in: once true, an integer array key whose value is not an
+	 * Db\SqlFragment instance throws Db\Exception\InvalidArgument, instead of being used as a
+	 * raw, unquoted SQL fragment. Off by default, to not break code not yet converted to use
+	 * Db\SqlFragment for its own raw fragments - see requireSqlFragmentObjects().
+	 *
+	 * @var bool
+	 */
+	protected bool $requireSqlFragmentObjects = false;
+
+	/**
 	* @var int $Debug enable debuging - 0 no, 1 yes
 	*/
 	var $Debug         = 0;
@@ -1308,13 +1318,7 @@ class Db
 	 */
 	function concat(/*$str1, ...*/)
 	{
-		$args = func_get_args();
-
-		if (!$this->Link_ID && !$this->connect())
-		{
-			return False;
-		}
-		return call_user_func_array(array(&$this->Link_ID,'concat'),$args);
+		return Db\SqlFragment::concat($this, ...func_get_args());
 	}
 
 	/**
@@ -1323,34 +1327,11 @@ class Db
 	 * @param string $expr column-name or expression optional prefixed with "DISTINCT"
 	 * @param string $order_by ='' optional order
 	 * @param string $separator =',' optional separator, default is comma
-	 * @return string|boolean false if not supported by dbms
+	 * @return Db\SqlFragment|false false if not supported by dbms
 	 */
 	function group_concat($expr, $order_by='', $separator=',')
 	{
-		switch($this->Type)
-		{
-			case 'mysqli':
-			case 'mysql':
-				$sql = 'GROUP_CONCAT('.$expr;
-				if ($order_by) $sql .= ' ORDER BY '.$order_by;
-				if ($separator != ',') $sql .= ' SEPARATOR '.$this->quote($separator);
-				$sql .= ')';
-				break;
-
-			case 'pgsql':	// requires for Postgresql < 8.4 to have a custom ARRAY_AGG method installed!
-				if ($this->Type == 'pgsql' && (float)$this->ServerInfo['version'] < 8.4)
-				{
-					return false;
-				}
-				$sql = 'ARRAY_TO_STRING(ARRAY_AGG('.$expr;
-				if ($order_by) $sql .= ' ORDER BY '.$order_by;
-				$sql .= '), '.$this->quote($separator).')';
-				break;
-
-			default:	// probably gives an sql error anyway
-				return false;
-		}
-		return $sql;
+		return Db\SqlFragment::groupConcat($this, $expr, $order_by, $separator);
 	}
 
 	/**
@@ -1361,20 +1342,11 @@ class Db
 	 * @param string $expr SQL expression, must be quoted for strings, eg. "'string'"
 	 * @param string $regexp no quotes neccessary will be run through quotes()
 	 * @param string $with SQL expression, must be quoted for strings, eg. "'string'"
-	 * @return string SQL REGEXP_REPLACE() function or $expr, if not supported!
+	 * @return Db\SqlFragment SQL REGEXP_REPLACE() function or $expr, if not supported!
 	 */
 	function regexp_replace($expr, $regexp, $with)
 	{
-		switch($this->Type)
-		{
-			case 'mysqli':
-			case 'mysql':
-				if ((float)$this->ServerInfo['version'] < 8.0) break;	// MySQL 8.0 or MariaDB 10.0 required
-				// fall through
-			case 'pgsql':
-				return 'REGEXP_REPLACE('.$expr.','.$this->quote($regexp).','.$with.')';
-		}
-		return $expr;
+		return Db\SqlFragment::regexpReplace($this, $expr, $regexp, $with);
 	}
 
 	/**
@@ -1382,66 +1354,33 @@ class Db
 	 *
 	 * @param string $str
 	 * @param string $substr
-	 * @return string SQL returning character (not byte!) positions for $substr in $str
+	 * @return Db\SqlFragment SQL returning character (not byte!) positions for $substr in $str
 	 */
 	function strpos($str, $substr)
 	{
-		switch($this->Type)
-		{
-			case 'mysql':
-			case 'mysqli':
-				return "LOCATE($substr,$str)";
-			case 'pgsql':
-				return "STRPOS($str,$substr)";
-			case 'mssql':
-				return "CHARINDEX($substr,$str)";
-		}
-		die(__METHOD__." not implemented for DB type '$this->Type'!");
+		return Db\SqlFragment::strpos($this, $str, $substr);
 	}
 
 	/**
 	 * Convert a DB specific timestamp in a unix timestamp stored as integer, like MySQL: UNIX_TIMESTAMP(ts)
 	 *
 	 * @param string $expr name of an integer column or integer expression
-	 * @return string SQL expression of type timestamp
+	 * @return ?Db\SqlFragment SQL expression of type timestamp
 	 */
 	function unix_timestamp($expr)
 	{
-		switch($this->Type)
-		{
-			case 'mysql':
-			case 'mysqli':
-				return "UNIX_TIMESTAMP($expr)";
-
-			case 'pgsql':
-				return "EXTRACT(EPOCH FROM CAST($expr AS TIMESTAMP))";
-
-			case 'mssql':
-				return "DATEDIFF(second,'1970-01-01',($expr))";
-		}
+		return Db\SqlFragment::unixTimestamp($this, $expr);
 	}
 
 	/**
 	 * Convert a unix timestamp stored as integer in the db into a db timestamp, like MySQL: FROM_UNIXTIME(ts)
 	 *
 	 * @param string $expr name of an integer column or integer expression
-	 * @return string SQL expression of type timestamp
+	 * @return Db\SqlFragment|false SQL expression of type timestamp
 	 */
 	function from_unixtime($expr)
 	{
-		switch($this->Type)
-		{
-			case 'mysql':
-			case 'mysqli':
-				return "FROM_UNIXTIME($expr)";
-
-			case 'pgsql':
-				return "(TIMESTAMP WITH TIME ZONE 'epoch' + ($expr) * INTERVAL '1 sec')";
-
-			case 'mssql':	// we use date(,0) as we store server-time
-				return "DATEADD(second,($expr),'".date('Y-m-d H:i:s',0)."')";
-		}
-		return false;
+		return Db\SqlFragment::fromUnixtime($this, $expr);
 	}
 
 	/**
@@ -1451,89 +1390,44 @@ class Db
 	 *
 	 * @param string $expr name of a timestamp column or timestamp expression
 	 * @param string $format format specifier like '%Y-%m-%d %H:%i:%s' or '%V%X' ('%v%x') weeknumber & year with Sunday (Monday) as first day
-	 * @return string SQL expression of type timestamp
+	 * @return Db\SqlFragment|false SQL expression of type timestamp
 	 */
 	function date_format($expr,$format)
 	{
-		switch($this->Type)
-		{
-			case 'mysql':
-			case 'mysqli':
-				return "DATE_FORMAT($expr,'$format')";
-
-			case 'pgsql':
-				$format = str_replace(
-					array('%Y',  '%y','%m','%d','%H',  '%h','%i','%s','%V','%v','%X',  '%x'),
-					array('YYYY','YY','MM','DD','HH24','HH','MI','SS','IW','IW','YYYY','YYYY'),
-					$format);
-				return "TO_CHAR($expr,'$format')";
-
-			case 'mssql':
-				$from = $to = array();
-				foreach(array('%Y'=>'yyyy','%y'=>'yy','%m'=>'mm','%d'=>'dd','%H'=>'hh','%i'=>'mi','%s'=>'ss','%V'=>'wk','%v'=>'wk','%X'=>'yyyy','%x'=>'yyyy') as $f => $t)
-				{
-					$from[] = $f;
-					$to[] = "'+DATEPART($t,($expr))+'";
-				}
-				$from[] = "''+"; $to[] = '';
-				$from[] = "+''"; $to[] = '';
-				return str_replace($from,$to,$format);
-		}
-		return false;
+		return Db\SqlFragment::dateFormat($this, $expr, $format);
 	}
 
 	/**
 	 * Cast a column or sql expression to integer, necessary at least for postgreSQL or MySQL for sorting
 	 *
 	 * @param string $expr
-	 * @return string
+	 * @return Db\SqlFragment
 	 */
 	function to_double($expr)
 	{
-		switch($this->Type)
-		{
-			case 'pgsql':
-				return $expr.'::double';
-			case 'mysql':
-			case 'mysqli':
-				return 'CAST('.$expr.' AS DECIMAL(24,3))';
-		}
-		return $expr;
+		return Db\SqlFragment::toDouble($this, $expr);
 	}
 
 	/**
 	 * Cast a column or sql expression to integer, necessary at least for postgreSQL
 	 *
 	 * @param string $expr
-	 * @return string
+	 * @return Db\SqlFragment
 	 */
 	function to_int($expr)
 	{
-		switch($this->Type)
-		{
-			case 'pgsql':
-				return $expr.'::integer';
-			case 'mysql':
-			case 'mysqli':
-				return 'CAST('.$expr.' AS SIGNED)';
-		}
-		return $expr;
+		return Db\SqlFragment::toInt($this, $expr);
 	}
 
 	/**
 	 * Cast a column or sql expression to varchar, necessary at least for postgreSQL
 	 *
 	 * @param string $expr
-	 * @return string
+	 * @return Db\SqlFragment
 	 */
 	function to_varchar($expr)
 	{
-		switch($this->Type)
-		{
-			case 'pgsql':
-				return 'CAST('.$expr.' AS varchar)';
-		}
-		return $expr;
+		return Db\SqlFragment::toVarchar($this, $expr);
 	}
 
 	/**
@@ -1719,7 +1613,9 @@ class Db
 	* @param array|boolean $column_definitions this can be set to the column-definitions-array
 	*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 	*	If its set, the column-type-data determinates if (int) or addslashes is used.
-	* @return string SQL
+	* @return string|Db\SqlFragment SQL - a plain string only for the historical $array=SQL-string case,
+	*	see Db\SqlFragment::columnDataImplode() for the (usual) $array=array case
+	* @throws Db\Exception\InvalidArgument see requireSqlFragmentObjects()
 	*/
 	function column_data_implode($glue,$array,$use_key=True,$only=False,$column_definitions=False)
 	{
@@ -1727,89 +1623,7 @@ class Db
 		{
 			return $array;
 		}
-		if (empty($column_definitions))
-		{
-			$column_definitions = $this->column_definitions ?? null;
-		}
-		if ($this->Debug) echo "<p>db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre>\n";
-
-		// do we need to truncate varchars to their max length (INSERT and UPDATE on Postgres)
-		$truncate_varchar = $glue == ',' && $this->capabilities[self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR];
-
-		$keys = $values = array();
-		foreach($array as $key => $data)
-		{
-			if (is_int($key) && $use_key !== 'VALUES' || !$only || $only === True && isset($column_definitions[$key]) ||
-				is_array($only) && in_array($key,$only))
-			{
-				$keys[] = $this->name_quote($key);
-
-				$col = $key;
-				// fix "table.column" expressions, to not trigger exception, if column alone would work
-				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]) &&
-					(!preg_match('/^([a-z0-9_]+)\.([a-z0-9_]+)$/i',$key,$matches) || !isset($column_definitions[$matches[2]])))
-				{
-					throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
-				}
-				$column_type = is_array($column_definitions) ? ($column_definitions[$col]['type'] ?? false) : False;
-				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
-
-				$maxlength = null;
-				if ($truncate_varchar && !is_int($col) && isset($column_definitions[$col]) &&
-					in_array($column_definitions[$col]['type'], ['varchar','ascii']))
-				{
-					$maxlength = $column_definitions[$col]['precision'];
-				}
-				// dont use IN ( ), if there's only one value, it's slower for MySQL
-				if (is_array($data) && count($data) <= 1)
-				{
-					$data = array_shift($data);
-				}
-				// array for SET or VALUES, not WHERE --> automatic store comma-separated
-				if (is_array($data) && $glue === ',' && in_array($column_type, ['varchar','ascii']))
-				{
-					$data = implode(',', $data);
-				}
-				if ($column_type === 'vector' && is_array($data))
-				{
-					$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null,$maxlength);
-				}
-				elseif (is_array($data))
-				{
-					$or_null = '';
-					foreach($data as $k => $v)
-					{
-						if (!$not_null && $use_key===True && is_null($v))
-						{
-							$or_null = $this->name_quote($key).' IS NULL)';
-							unset($data[$k]);
-							continue;
-						}
-						$data[$k] = $this->quote($v,$column_type,$not_null,$maxlength);
-					}
-					$values[] = ($or_null?'(':'').(!count($data) ?
-						// empty array on insert/update, store as NULL, or if not allowed whatever value NULL is casted to
-						$this->quote(null, $column_type, $not_null) :
-						($use_key===True ? $this->name_quote($key).' IN ' : '') .
-						'('.implode(',',$data).')'.($or_null ? ' OR ' : '')).$or_null;
-				}
-				elseif (is_int($key) && $use_key===True)
-				{
-					if (empty($data)) continue;	// would give SQL error
-					$values[] = $data;
-				}
-				elseif ($glue != ',' && $use_key === True && !$not_null && is_null($data))
-				{
-					$values[] = $this->name_quote($key) .' IS NULL';
-				}
-				else
-				{
-					$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null,$maxlength);
-				}
-			}
-		}
-		return ($use_key==='VALUES' ? '('.implode(',',$keys).') VALUES (' : '').
-			implode($glue,$values) . ($use_key==='VALUES' ? ')' : '');
+		return Db\SqlFragment::columnDataImplode($this, $glue, $array, $use_key, $only, $column_definitions);
 	}
 
 	/**
@@ -1824,6 +1638,28 @@ class Db
 	function set_column_definitions($column_definitions=False)
 	{
 		$this->column_definitions=$column_definitions;
+	}
+
+	/**
+	 * Get or set this instance's requireSqlFragmentObjects opt-in (see the property's own doc)
+	 *
+	 * Opts in THIS Api\Db instance only - clone the (usually shared, eg. $GLOBALS['egw']->db)
+	 * instance first, rather than flipping it on the shared one, unless every caller of that
+	 * shared instance is known to already only use Db\SqlFragment for its own raw fragments:
+	 *
+	 *     $this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects();
+	 *
+	 * @param ?bool $require null (default): just return the current value; bool: set it
+	 * @return ($require is null ? bool : $this)
+	 */
+	function requireSqlFragmentObjects(?bool $require = null)
+	{
+		if ($require === null)
+		{
+			return $this->requireSqlFragmentObjects;
+		}
+		$this->requireSqlFragmentObjects = $require;
+		return $this;
 	}
 
 	/**
@@ -2161,7 +1997,7 @@ class Db
 		{
 			if (!array_key_exists($col, $data) && !array_key_exists($col, $where) && ($def['type'] ?? null) !== 'auto')
 			{
-				$data[] = $col.'=DEFAULT';
+				$data[] = Db\SqlFragment::raw($col.'=DEFAULT');
 			}
 		}
 		return $data;
@@ -2324,38 +2160,13 @@ class Db
 	 *
 	 * Please note: As the function has a variable number of arguments, you CAN NOT add further parameters !!!
 	 *
-	 * @return string the expression generated from the arguments
+	 * @return Db\SqlFragment the expression generated from the arguments
 	 */
 	function expression($table_def/*,$args, ...*/)
 	{
-		if (!is_array($table_def)) $table_def = $this->get_table_definitions(true,$table_def);
-		$sql = '';
-		$ignore_next = 0;
-		foreach(func_get_args() as $n => $arg)
-		{
-			if ($n < 1) continue;	// table-name
-
-			if ($ignore_next)
-			{
-				--$ignore_next;
-				continue;
-			}
-			if (is_null($arg)) $arg = False;
-
-			switch(gettype($arg))
-			{
-				case 'string':
-					$sql .= $arg;
-					break;
-				case 'boolean':
-					$ignore_next += !$arg ? 2 : 0;
-					break;
-				case 'array':
-					$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def['fd']);
-					break;
-			}
-		}
-		return $sql;
+		$args = func_get_args();
+		array_shift($args);	// $table_def
+		return Db\SqlFragment::expression($this, $table_def, ...$args);
 	}
 
 	/**
