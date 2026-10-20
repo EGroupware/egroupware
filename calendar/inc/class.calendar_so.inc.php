@@ -146,8 +146,11 @@ class calendar_so
 	function __construct()
 	{
 		$this->async = $GLOBALS['egw']->asyncservice;
-		// own clone (not the shared global instance) so this opt-in only affects calendar's own
-		// queries - every raw SQL fragment calendar builds itself now uses Api\Db\SqlFragment
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects calendar's own queries - every raw
+		// SQL fragment calendar builds itself now uses Api\Db\SqlFragment. Once
+		// requireSqlFragmentObjects() becomes the default (opt-out) for Api\Db generally, revert
+		// this back to "$this->db = $GLOBALS['egw']->db;" - the clone+opt-in will be redundant.
 		$this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(true);
 
 		$this->all_tables = array($this->cal_table);

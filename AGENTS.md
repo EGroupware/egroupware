@@ -118,6 +118,24 @@ and drop the 11th entry if that pushes the list over 10 - dropping it here does 
 file itself. The full set of project docs, including everything trimmed off this list, always
 lives in `doc/ai/projects/` - check there directly for anything not shown here.
 
+- `doc/ai/projects/sql-fragment-type-safety.md` - closing GHSA-vx89-j2x7-5wp2's vulnerability
+  *class* (not just its two entry points, already patched separately): `Api\Db` let a caller splice
+  raw SQL into a `$where`/`$cols`/`$data` array via an integer array key, indistinguishable from an
+  attacker-influenced array that merely happens to contain one. New `Api\Db\SqlFragment` makes "this
+  is deliberately raw SQL" an explicit value type; `Api\Db::requireSqlFragmentObjects()` is a
+  per-instance opt-in that then throws `Db\Exception\InvalidArgument` for a non-`SqlFragment` value
+  at an integer key. Infrastructure done (commit `a46f539449`); calendar fully converted as the pilot
+  (commit `196de24beb`, 61+11+2 sites across `calendar_so`/`calendar_boupdate`/`calendar_uilist`,
+  `requireSqlFragmentObjects(true)` enabled on calendar's own cloned `Db` instance) - also fixed one
+  core-framework instance of the same bug found along the way (`Db::replaceAsUpdate()`). The
+  per-instance *clone* (vs. the shared global connection) is a **temporary** stopgap for the
+  transition period - the doc keeps a list of every clone site to revert once
+  `requireSqlFragmentObjects()` becomes the default (opt-out) for `Api\Db` generally. Master only, no
+  26 backport (the actual vulnerability is already closed on both branches via the entry-point
+  patches). Next: `Api\Storage`/`Api\Storage\Base` (in progress) - the shared SO-layer base class many
+  apps extend; a plain grep for the append idiom was already proven insufficient on calendar (raw
+  fragments also show up as bare inline array-literal elements and under other variable names), so
+  this needs the same per-call-site reading, not just a pattern search.
 - `doc/ai/projects/smallpart-s3-videos.md` - design for adding S3 storage to smallPART/ViDoTeach
   videos (ticket #89091 item 4), currently plain files served directly by nginx with zero PHP in the
   serving path - a requirement that rules out a literal copy of `Stylite\Vfs\S3\StreamWrapper`
@@ -256,19 +274,6 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   "reload at your convenience" prompt a lie). Implemented and live (`a77de36152` +co-commits); the doc
   now also tracks ticket #124112's follow-up findings and a running commit list. Two residual bugs
   from that ticket still open - see the doc's "Status" section.
-- `doc/ai/projects/calendar-rrule-standards-gap.md` - maps how far `calendar_rrule` (the whole
-  recurrence engine, shared by the UI, DB storage, iCal import/export, and the JSCalendar REST read
-  path) falls short of RFC 5545 - single-implicit-BYDAY/BYMONTHDAY only, no BYMONTH/BYYEARDAY/
-  BYWEEKNO/BYSETPOS/BYHOUR-MINUTE-SECOND, COUNT irreversibly collapsed to UNTIL, RRULE+RDATE
-  mutually exclusive, WKST read from the viewing user's live preference instead of stored per
-  event - ahead of two future features (a real stored RRULE + library-based interpretation, and
-  REST support for creating/updating recurring events). Covers the full gap table plus several
-  concrete bugs found while building the harness (a crash importing RRULE+RDATE together with
-  UNTIL, order-dependent semantic loss for RRULE+RDATE without UNTIL, a `monthly_byday_num`
-  int/float docblock mismatch, YEARLY leap-day drift, JSCalendar's `byDay` not being a JSON array
-  as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
-  `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
-  write support are future phases, not started.
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
