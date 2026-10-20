@@ -289,6 +289,43 @@ class SaveDeleteTest extends TestCase
 	}
 
 	/**
+	 * Behavior: read()'s $keys array can mix column => value pairs with an integer-keyed raw SQL
+	 * fragment ("copy direct SQL parts from $keys") - both are AND'ed together.
+	 */
+	public function testReadWithRawSqlFragmentCondition()
+	{
+		$row = $this->insertRow(array('t_modifier' => 10));
+
+		$found = $this->storage->read(array('t_id' => $row['t_id'], 't_modifier > 5'));
+		$this->assertNotFalse($found, 'the raw fragment condition is satisfied, the row must be found');
+		$this->assertEquals($row['t_id'], $this->storage->data['t_id']);
+
+		$not_found = $this->storage->read(array('t_id' => $row['t_id'], 't_modifier > 50'));
+		$this->assertFalse($not_found, 'the raw fragment condition is NOT satisfied, nothing must be found');
+	}
+
+	/**
+	 * Behavior: delete()'s $keys array can likewise mix column => value pairs with an
+	 * integer-keyed raw SQL fragment ("keep sql fragments (with integer key)").
+	 */
+	public function testDeleteWithRawSqlFragmentCondition()
+	{
+		$shared_title = 'SaveDeleteTest-'.__FUNCTION__.'-'.uniqid();
+		$keep = $this->insertRow(array('t_title' => $shared_title, 't_modifier' => 1));
+		$remove = $this->insertRow(array('t_title' => $shared_title, 't_modifier' => 10));
+
+		$affected = $this->storage->delete(array('t_title' => $shared_title, 't_modifier > 5'));
+		$this->assertEquals(1, $affected,
+			'only the row matching BOTH the column criteria and the raw fragment must be deleted');
+
+		$row = self::$db->select('egw_test', 't_id', array('t_id' => $remove['t_id']), __LINE__, __FILE__, false, '', 'test')->fetch();
+		$this->assertFalse($row, 'the matching row must be deleted');
+
+		$row = self::$db->select('egw_test', 't_id', array('t_id' => $keep['t_id']), __LINE__, __FILE__, false, '', 'test')->fetch();
+		$this->assertNotFalse($row, 'the row failing the raw-fragment condition must survive');
+	}
+
+	/**
 	 * Behavior: update() with no actual column data to write (only the pk) returns 0 ("nothing
 	 * to update") without issuing a write.
 	 * Pass criteria: return === 0, and the row is byte-for-byte unchanged.

@@ -626,9 +626,9 @@ class Storage extends Storage\Base
 				{
 					$criteria[$this->extra_value] = substr($criteria[$this->extra_value],1);
 				}
-				$criteria[] = $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+				$criteria[] = Db\SqlFragment::raw($this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
 					$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
-					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard);
+					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard));
 				unset($criteria[$this->extra_value]);
 			}
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
@@ -685,7 +685,7 @@ class Storage extends Storage\Base
 					}
 				}
 			}
-			if (!empty($cfcriteria) && $op === 'OR') $criteria[] = implode(' OR ', $cfcriteria);
+			if (!empty($cfcriteria) && $op === 'OR') $criteria[] = Db\SqlFragment::raw(implode(' OR ', $cfcriteria));
 		}
 		if($only_keys === true)
 		{

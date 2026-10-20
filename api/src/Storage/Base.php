@@ -605,7 +605,7 @@ class Base
 		// copy direct SQL parts from $keys
 		for($i = 0; is_array($keys) && isset($keys[$i]); ++$i)
 		{
-			$query[] = $keys[$i];
+			$query[] = Api\Db\SqlFragment::raw($keys[$i]);
 		}
 		foreach($this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
 			$query,__LINE__,__FILE__,False,'',$this->app,0,$join) as $row)
@@ -726,7 +726,7 @@ class Base
 			{
 				for($n=0; isset($keys[$n]); ++$n)
 				{
-					$data[] = $keys[$n];
+					$data[] = Api\Db\SqlFragment::raw($keys[$n]);
 				}
 			}
 			$keys = $extra_where;
@@ -840,7 +840,7 @@ class Base
 			{
 				if (is_int($key))
 				{
-					$keys[] = $val;
+					$keys[] = Api\Db\SqlFragment::raw($val);
 				}
 			}
 		}
@@ -850,7 +850,7 @@ class Base
 		{
 			if (is_int($db_col))
 			{
-				$query[] = $col;
+				$query[] = Api\Db\SqlFragment::raw($col);
 			}
 			else
 			{
@@ -930,12 +930,12 @@ class Base
 					}
 					if(is_int($col))
 					{
-						$db_filter[] = $val;
+						$db_filter[] = Api\Db\SqlFragment::raw($val);
 					}
 					// only allow "!''" for real column-names NOT (e.g. injected) SQL fragments
 					elseif ($val === "!''" && preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)?$/iu', $col))
 					{
-						$db_filter[] = $col." != ''";
+						$db_filter[] = Api\Db\SqlFragment::raw($col." != ''");
 					}
 					else
 					{
@@ -947,7 +947,7 @@ class Base
 			{
 				if ($op != 'AND')
 				{
-					$db_filter[] = '('.$this->db->column_data_implode(' '.$op.' ',$query).')';
+					$db_filter[] = Api\Db\SqlFragment::raw('('.$this->db->column_data_implode(' '.$op.' ',$query).')');
 				}
 				else
 				{
@@ -1206,7 +1206,11 @@ class Base
 		{
 			if (is_int($col))
 			{
-				$query[] = $val;
+				// $val can be an array here (eg. search2criteria()'s single-element return, wrapped
+				// again into $criteria=[$search] by search()) - leave it alone, column_data_implode()
+				// unwraps a single-element array back to its (possibly already Db\SqlFragment) value
+				// before checking it; only a plain scalar needs wrapping here.
+				$query[] = is_array($val) ? $val : Api\Db\SqlFragment::raw($val);
 			}
 			elseif ($empty || $val != '')
 			{
@@ -1221,7 +1225,7 @@ class Base
 						$this->table_def['fd'][$db_col]['nullable'] !== false)
 					{
 						unset($criteria[$col]);
-						$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
+						$query[] = Api\Db\SqlFragment::raw('(' . $db_col . ' IS NULL OR ' . $db_col . " = '')");
 					}
 					else
 					{
@@ -1247,9 +1251,9 @@ class Base
 					}
 					foreach((is_array($criteria[$col]) ? $criteria[$col] : explode(' ',$criteria[$col])) as $crit)
 					{
-						$query[] = ($negate ? ' ('.$table_name.$db_col.' IS NULL OR ' : '').$table_name.$db_col.$cmp_op.
+						$query[] = Api\Db\SqlFragment::raw(($negate ? ' ('.$table_name.$db_col.' IS NULL OR ' : '').$table_name.$db_col.$cmp_op.
 							$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
-							($negate ? ') ' : '');
+							($negate ? ') ' : ''));
 					}
 				}
 				elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
@@ -1266,11 +1270,11 @@ class Base
 						{
 							$v = $this->db->quote($v, $type);
 						}
-						$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
+						$query[] = $sql = Api\Db\SqlFragment::raw($db_col.' IN (' .implode(',',$val).')');
 					}
 					else
 					{
-						$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type);
+						$query[] = Api\Db\SqlFragment::raw($db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type));
 					}
 				}
 				else
@@ -1401,7 +1405,7 @@ class Base
 		// Special handling for an ID search, #<int>
 		if(strpos($_pattern, '#') === 0 && is_numeric(substr($_pattern, 1)))
 		{
-			return array('(' . $this->table_name.'.'. $this->autoinc_id . '=' . (int)substr($_pattern,1) . ')');
+			return array(Api\Db\SqlFragment::raw('(' . $this->table_name.'.'. $this->autoinc_id . '=' . (int)substr($_pattern,1) . ')'));
 		}
 		if(!$search_cols)
 		{
@@ -1579,7 +1583,7 @@ class Base
 		}
 
 		$op = 'OR';
-		return array('(' . $result . ')');
+		return array(Api\Db\SqlFragment::raw('(' . $result . ')'));
 	}
 
 	/**

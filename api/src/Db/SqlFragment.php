@@ -68,10 +68,15 @@ final class SqlFragment implements \Stringable, \ArrayAccess
 
 	/**
 	 * Wrap an already-built, trusted SQL string as a fragment
+	 *
+	 * Idempotent: given an already-wrapped SqlFragment, returns it unchanged instead of
+	 * double-wrapping - lets a caller handling a value that's sometimes already converted and
+	 * sometimes still a legacy raw string just call raw($val) unconditionally, no instanceof check
+	 * needed.
 	 */
-	public static function raw(string $sql) : self
+	public static function raw(string|self $sql) : self
 	{
-		return new self($sql);
+		return $sql instanceof self ? $sql : new self($sql);
 	}
 
 	/**
