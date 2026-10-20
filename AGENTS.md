@@ -83,6 +83,15 @@ Primary expectations:
   developers (no internal class/method names, no implementation detail). Further lines are for developers and are
   not parsed.
 - Do not modify generated JavaScript files, they're automatically built.
+- A `.css` file that has a `.less` file of the same name next to it (eg. `mail/templates/default/
+  app.less` / `app.css`) is compiled output, checked into git for convenience - never hand-edit it.
+  Edit the `.less` source, then regenerate the `.css` with `lessc <file>.less <file>.css` and commit
+  both together in the same commit. Before trusting a recompile, diff it against the currently
+  checked-in `.css` first: a plain `lessc` run should reproduce it byte-for-byte when the `.less`
+  hasn't changed yet - if it doesn't, the two are already out of sync (eg. from a past hand-edit of
+  the `.css` only), and blindly overwriting the `.css` would silently delete real, already-shipped
+  rules. Port the missing content into the `.less` source first (keeping it byte-identical once
+  compiled), then make your actual change on top of that.
 
 ## Coding standards
 
