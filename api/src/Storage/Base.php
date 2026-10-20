@@ -602,10 +602,15 @@ class Base
 				unset($query[$col]);
 			}
 		}
-		// copy direct SQL parts from $keys
+		// copy direct SQL parts from $keys - NOT wrapped in Db\SqlFragment here: $keys is the
+		// caller's own parameter, not something this method constructs itself. Wrapping a plain
+		// string unconditionally would launder an attacker-controlled value into looking like a
+		// deliberately-built fragment, defeating Db::requireSqlFragmentObjects() for exactly the
+		// callers it exists to protect. A caller that wants to pass a raw fragment safely under
+		// strict mode must wrap it itself before calling read().
 		for($i = 0; is_array($keys) && isset($keys[$i]); ++$i)
 		{
-			$query[] = Api\Db\SqlFragment::raw($keys[$i]);
+			$query[] = $keys[$i];
 		}
 		foreach($this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
 			$query,__LINE__,__FILE__,False,'',$this->app,0,$join) as $row)
@@ -721,12 +726,13 @@ class Base
 				}
 				$data[$db_col] = !is_object($this->data[$col]) && (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
-			// allow to add direct sql updates, eg. "etag=etag+1" with int keys
+			// allow to add direct sql updates, eg. "etag=etag+1" with int keys - NOT wrapped: $keys
+			// is the caller's own parameter, see the identical note in read() above
 			if (is_array($keys) && isset($keys[0]))
 			{
 				for($n=0; isset($keys[$n]); ++$n)
 				{
-					$data[] = Api\Db\SqlFragment::raw($keys[$n]);
+					$data[] = $keys[$n];
 				}
 			}
 			$keys = $extra_where;
@@ -835,12 +841,13 @@ class Base
 					$keys[$db_col] = $col;
 				}
 			}
-			// keep sql fragments (with integer key)
+			// keep sql fragments (with integer key) - NOT wrapped: $data here is $keys, the
+			// caller's own parameter, see the identical note in read() above
 			foreach($data as $key => $val)
 			{
 				if (is_int($key))
 				{
-					$keys[] = Api\Db\SqlFragment::raw($val);
+					$keys[] = $val;
 				}
 			}
 		}
@@ -850,7 +857,7 @@ class Base
 		{
 			if (is_int($db_col))
 			{
-				$query[] = Api\Db\SqlFragment::raw($col);
+				$query[] = $col;
 			}
 			else
 			{
@@ -930,7 +937,9 @@ class Base
 					}
 					if(is_int($col))
 					{
-						$db_filter[] = Api\Db\SqlFragment::raw($val);
+						// NOT wrapped: $val is from $filter, the caller's own parameter, see the
+						// identical note in read() above
+						$db_filter[] = $val;
 					}
 					// only allow "!''" for real column-names NOT (e.g. injected) SQL fragments
 					elseif ($val === "!''" && preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)?$/iu', $col))
@@ -1206,11 +1215,14 @@ class Base
 		{
 			if (is_int($col))
 			{
-				// $val can be an array here (eg. search2criteria()'s single-element return, wrapped
-				// again into $criteria=[$search] by search()) - leave it alone, column_data_implode()
-				// unwraps a single-element array back to its (possibly already Db\SqlFragment) value
-				// before checking it; only a plain scalar needs wrapping here.
-				$query[] = is_array($val) ? $val : Api\Db\SqlFragment::raw($val);
+				// NOT wrapped: $val is from $_criteria, the caller's own parameter (possibly an
+				// array here - eg. search2criteria()'s single-element return, wrapped again into
+				// $criteria=[$search] by search() - column_data_implode() unwraps a single-element
+				// array back to its value, whatever that is, before checking it). Wrapping a plain
+				// string unconditionally here would launder an attacker-controlled value into
+				// looking like a deliberately-built fragment, defeating
+				// Db::requireSqlFragmentObjects() for exactly the callers it exists to protect.
+				$query[] = $val;
 			}
 			elseif ($empty || $val != '')
 			{
