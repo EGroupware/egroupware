@@ -135,7 +135,7 @@ class resources_bo
 				break;
 			case -2:
 				// Accessories only
-				$filter[] = 'accessory_of != -1';
+				$filter[] = Api\Db\SqlFragment::raw('accessory_of != -1');
 				break;
 			case -3:
 				// All
@@ -145,7 +145,7 @@ class resources_bo
 			case self::DELETED:
 				$join = $acc_join;
 				$extra_cols[] = 'acc_count';
-				$filter[] = 'deleted IS NOT NULL';
+				$filter[] = Api\Db\SqlFragment::raw('deleted IS NOT NULL');
 				break;
 			default:
 				$filter['accessory_of'] = $query['filter2'];
