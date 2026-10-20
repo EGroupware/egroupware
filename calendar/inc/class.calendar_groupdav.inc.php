@@ -660,7 +660,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						{
 							$sync_token = (new Api\DateTime($sync_token, Api\DateTime::$server_timezone))->format('ts');
 						}
-						$cal_filters['query'][] = 'cal_modified>'.(int)$sync_token;
+						$cal_filters['query'][] = Api\Db\SqlFragment::raw('cal_modified>'.(int)$sync_token);
 						$cal_filters['filter'] = 'everything';	// to return deleted entries too
 						// no standard time-range!
 						unset($cal_filters['start']);
@@ -1103,7 +1103,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 		// if path not found, check the UID and return "403 Forbidden" if event is deleted or user has not rights to event with same UID
 		if (!isset($oldEvent) && ($events = $handler->icaltoegw($vCalendar)) &&
-			($oldEvents = $this->bo->read(['cal_uid' => $events[0]['uid'], 'cal_reference=0'], null, false, 'server')) !== null)
+			($oldEvents = $this->bo->read(['cal_uid' => $events[0]['uid'], Api\Db\SqlFragment::raw('cal_reference=0')], null, false, 'server')) !== null)
 		{
 			foreach($oldEvents as $oldEvent)
 			{
@@ -1718,7 +1718,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_reference=0'), null, true, 'object');
+		$event = $this->bo->read(array($column => $id, Api\Db\SqlFragment::raw('cal_reference=0')), null, true, 'object');
 
 		// read with array as 1. param, returns an array of events!
 		// as we no longer return only NOT-deleted events, there might be more
