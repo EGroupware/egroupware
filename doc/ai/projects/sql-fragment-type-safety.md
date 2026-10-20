@@ -57,24 +57,24 @@ in that app's own checkout, not in the main repo.
 | tracker | **Done** - `requireSqlFragmentObjects(true)` enabled on both `tracker_so` and `tracker_escalations`'s own `Db` clone |
 | webauthn | **Own fragment wrapped** (`PublicKeyCredentialSourceRepository.php`) |
 
-None of the apps in this table have `requireSqlFragmentObjects()` enabled yet - wrapping their own
-fragments was pure future-proofing (except rag's fix, which was live - see below). `projectmanager`
-and `tracker` are the strongest candidates for a full pilot (own `Db` clone + opt-in) next: both are
-substantial, well-tested, genuine `Api\Storage`/`Api\Storage\Base` apps with CalDAV/REST handlers,
-exactly the shape calendar/timesheet/addressbook already proved out.
+`projectmanager` and `tracker` are now full pilots too - `requireSqlFragmentObjects(true)` enabled on
+each of their own `Db` clone(s), per the user's explicit follow-up instruction (see the Ninth lesson
+below for what that flip surfaced). Every other app in this table is still wrap-only (no opt-in point
+found, or not attempted yet) - good next candidates if continuing this project, since their fragments
+are already wrapped and ready.
 
 ### EPL (commercial, private `EGroupwareGmbH/*` repos)
 
 | App | Status |
 |---|---|
-| stylite (EPL core functions) | Not started |
-| esyncpro | Not started |
-| invoices | Not started |
-| kanban | Not started |
-| licenses | Not started |
-| managementserver | Not started |
-| records | Not started |
-| vidopro | Not started |
+| stylite (EPL core functions) | **Own fragments wrapped, several were live cross-app regressions - see the Tenth/Eleventh lessons below** (commit `922d0c6`) |
+| esyncpro | **Own fragment wrapped** (`esyncpro_ui.inc.php`) |
+| invoices | **Own fragments wrapped** (`ApiHandler.php`/`Bo.php`) |
+| kanban | **Own fragments wrapped** (`Bo.php`/`Hooks.php`/`Bo/Column.php`) |
+| licenses | **Own fragment wrapped** (`licenses_ui.inc.php`) |
+| managementserver | **Own fragments wrapped, every file with `Api\Db` usage swept** (commit `63788ed`); future-proofing only, no opt-in point anywhere in this app - see the Eleventh lesson below |
+| records | **Own fragments wrapped** (`records_bo.inc.php`/`records_fields.inc.php`) |
+| vidopro | N/A - no `Api\Db` usage found |
 
 Not covered by either list above (separate repos, but neither a default composer package nor EPL -
 `guacamole`, `knowledgebase`, `phpbrain`, `profitbricks`, `ranking`, `schulmanager`, `untissync`,
@@ -386,14 +386,50 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   strict mode via `column_data_implode()` when it collapses its array into a string) before deciding
   not to touch them, not inferred from the test run alone.
 
+  **Tenth lesson - EPL apps are a separate, invisible checkout with live cross-app regressions once a
+  default app opts in**: the EPL (commercial, `EGroupwareGmbH/*`) apps are *also* each their own
+  separate git repo, same as the Eighth lesson's composer packages, confirmed the same way (nothing
+  shows in the main repo's `git status`). Two of them, `stylite/docker/dist/*` and `stylite/docker/src/*`,
+  are additionally vendored *build-artifact copies* of other apps (kanban/invoices/esyncpro/policy/
+  stylite itself) bundled for the Docker image - confirmed byte-identical via `diff -q` against the
+  canonical top-level app repos - and must never be edited; only the canonical copies matter. More
+  importantly, stylite's EPL integration layer (`PMCalendarIntegration.php`, `Cti/Storage.php`,
+  `stylite_infolog_calendar_integration.inc.php`, the `Vfs/Links/*` plugins for projectmanager/
+  timesheet/tracker/addressbook) builds its *own* raw filter arrays and feeds them straight into
+  calendar/timesheet/tracker/projectmanager/addressbook's `search()`/`get_rows()`/union-query
+  machinery - all of which are now strict-mode pilots. Once a default app opts into
+  `requireSqlFragmentObjects(true)`, any separate app/repo's unwrapped fragment reaching that app's
+  query layer is a *live* regression, not future-proofing, even though neither side's code changed.
+  This was found to be true repeatedly, confirmed end-to-end by re-running
+  `calendar/timesheet/tracker/projectmanager/infolog/addressbook` tests together (0
+  `Db\SqlFragment`-related errors) after fixing stylite's integration layer.
+
+  **Eleventh lesson - forks still miss things, even on narrow, well-specified batches**: across the
+  5 small EPL apps and stylite, fork-written enumeration reports had real gaps found only by directly
+  re-reading the flagged files after applying the reported fixes: `kanban/src/Bo/Column.php` (bare
+  elements inside an `Array(...)` literal, no `[] =` syntax), `records_fields.inc.php` (a `delete()`
+  call not in the fork's list at all), and - worst case - `managementserver_search.inc.php`, where a
+  fork's report listed only 2 of 4 actual unwrapped sites in the same `switch` block. Continued in
+  `managementserver`'s own file-by-file sweep (not fork-assisted, read directly): found further
+  misses the same way in `managementserver_instance.inc.php` (`instance_id != N`) and
+  `managementserver_sync.inc.php`/`_session.inc.php`/`_wopi.inc.php` (several `$where[]`/`$query[]`
+  bare elements per file, none pre-flagged). `managementserver` has no opt-in point anywhere (every
+  `Db` instance is either the shared global or an unscoped clone) and ships no test suite, so this
+  pass was syntax-checked (`php -l`) only, not test-verified - pure future-proofing, same as the
+  other wrap-only apps. One wrap (`mail-proxy.php`'s account/hash lookup) was left out of the commit
+  because it landed inside a much larger pre-existing uncommitted rewrite of that function from
+  elsewhere in the shared checkout (see `feedback_shared_checkout_stale_uncommitted_work` in memory) -
+  committing it would have mixed unrelated, unreviewed logic changes into this project's commit; the
+  wrap itself is still present on disk, just not yet committed.
+
 ### Open / next
 
 - All apps/files previously listed here as "still using the raw-fragment convention" are now
-  wrapped (see the tracker tables and the "other default apps" sweep entry above). What's left,
-  lower priority: the various `*/setup/tables_update.inc.php`/`setup/default_records.inc.php`
-  schema-migration files across every app (one-time migration code, not live request-handling - out
-  of scope per this project's established policy), and the EPL (commercial) apps, not started at
-  all - a separate checkout this session never had access to.
+  wrapped, including all 8 EPL apps (see the tracker tables, the "other default apps" sweep entry,
+  and the Tenth/Eleventh lessons above). What's left, lower priority: the various
+  `*/setup/tables_update.inc.php`/`setup/default_records.inc.php` schema-migration files across every
+  app (one-time migration code, not live request-handling - out of scope per this project's
+  established policy), and `mail-proxy.php`'s one leftover un-committed wrap (see Eleventh lesson).
 - `projectmanager` and `tracker` are now full pilots too (`requireSqlFragmentObjects(true)` enabled
   on each of their own `Db` clones - see the tables above). Every other app in the composer-packages
   table is still wrap-only (no opt-in point found, or not attempted yet) - good next candidates if
