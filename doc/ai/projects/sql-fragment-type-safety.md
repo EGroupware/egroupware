@@ -15,43 +15,53 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | calendar | **Done** (pilot, commit `196de24beb`) - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone |
 | api (every file under `api/src/` using `Api\Db` directly, not just `Api\Storage` subclasses - see the full-sweep note below) | **Done** for the pieces with their own `Db` clone (`Contacts\Sql`, used by addressbook/Accounts - see below); every other file found building its own raw fragment (`Link\Storage`, `Sharing`, `Mail\Account`, `Accounts\Import`, `Auth\Sql`, `Preferences`, `Session`, `Storage\Customfields`, `Storage\History`, `Acl`, `Translation`, `Egw\Applications`) had it wrapped too, but these are all static classes or always use the shared global `Db` instance with no per-instance clone point, so `requireSqlFragmentObjects()` isn't enabled for them yet |
 | addressbook | **Done** - via `Contacts\Sql`'s opt-in (addressbook_bo/`Api\Contacts` share that backend); `Contacts\Storage`'s own `tid != deleted` filters converted too |
-| admin | Not started |
-| aiassistant | Not started |
-| archive | Not started |
-| developer | Not started |
-| emailadmin | Not started |
+| admin | **Own fragments wrapped** - `admin_acl`/`admin_accesslog`/`admin_customfields`/`admin_cmd_change_account_id`/`admin_cmd_delete_account`; all reach shared/non-strict `Db` instances, no opt-in point |
+| aiassistant | **Own fragments wrapped** (`So.php`); no opt-in point (plain class, shared `Db`) |
+| archive | N/A - no `Api\Db` usage found |
+| developer | **Own fragments wrapped** - `Langfiles.php` (a real `Api\Storage\Base` subclass, missed by the original scoping grep) and `TranslationTools.php`; not opted in yet |
+| emailadmin | N/A - no `Api\Db` usage found (only `setup/tables_update.inc.php`) |
 | etemplate | N/A - template engine, no own SO layer |
-| filemanager | Not started |
-| home | Not started |
-| importexport | Not started |
+| filemanager | **Own fragments wrapped** (`filemanager_shares.inc.php`, delegates to `Vfs\Sharing`/`Api\Sharing` - already wrapped in the api/src sweep) |
+| home | N/A - no `Api\Db` usage found (only `setup/tables_update.inc.php`) |
+| importexport | **Own fragments wrapped** - `importexport_definitions_bo.inc.php`/`importexport_definitions_ui.inc.php` |
 | infolog | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`Infolog\Storage::__construct()`) |
 | kdots | N/A - UI framework, no own SO layer |
-| mail | Not started |
-| notifications | Not started |
+| mail | N/A - no `Api\Db` usage found outside `api/src/Mail/Account.php` (already covered in the api/src sweep); IMAP/JMAP-based, not its own SQL storage |
+| notifications | **Own fragments wrapped** - `notifications_push`/`notifications_ajax`/`notifications_popup.inc.php` |
 | phpgwapi | N/A - deprecated legacy compat shim |
-| preferences | Not started |
+| preferences (app) | N/A - no `Api\Db` usage found |
 | resources | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`resources_so::__construct()`) |
 | timesheet | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`timesheet_bo::__construct()`) |
 
 ### Default composer packages (`egroupware/*` in `composer.json`, public `EGroupware/*` repos)
 
+Each of these ships as its **own separate git repository** (confirmed the hard way mid-session - a
+`git status`/`git diff` from the main repo's root silently shows nothing for them). Commit per-app,
+in that app's own checkout, not in the main repo.
+
 | App | Status |
 |---|---|
-| activesync | Not started |
-| aitools | Not started |
-| bookmarks | Not started |
-| collabora | Not started |
-| news_admin | Not started |
-| openid | Not started |
-| projectmanager | Not started |
-| rag | Not started |
-| registration | Not started |
-| rocketchat | Not started |
-| smallpart | Not started |
-| status | Not started |
-| swoolepush | Not started |
-| tracker | Not started |
-| webauthn | Not started |
+| activesync | N/A - no `Api\Db` usage found |
+| aitools | **Own fragments wrapped** (`TriggerState.php`) |
+| bookmarks | **Own fragments wrapped** (`bookmarks_so.inc.php`, a real `Api\Storage` subclass missed by the original scoping grep) |
+| collabora | **Own fragment wrapped** (`Wopi.php`) |
+| news_admin | **Own fragments wrapped** (`news_admin_bo.inc.php`, a real `Api\Storage\Base` subclass missed by the original scoping grep) |
+| openid | **Own fragments wrapped** - `Repositories/AccessTokenRepository.php`/`ClientRepository.php` (real `Api\Storage\Base` subclasses) and `RefreshTokenRepository.php` |
+| projectmanager | **Own fragments wrapped** - element/pricelist/constraint SO classes (all real `Api\Storage`/`Api\Storage\Base` subclasses missed by the original scoping grep) and the CalDAV/REST `ApiHandler.php` |
+| rag | **Own fragments wrapped, see the critical cross-app finding below** - `Embedding.php`/`Embedding/Base.php` |
+| registration | **Own fragment wrapped** (`registration_bo.inc.php`) |
+| rocketchat | N/A - no `Api\Db` usage found |
+| smallpart | **Own fragments wrapped** - `So.php`/`Overlay.php`/`Bo.php` |
+| status | N/A - no `Api\Db` usage found |
+| swoolepush | N/A - no `Api\Db` usage found |
+| tracker | **Own fragments wrapped** - `tracker_so`/`tracker_escalations`/`tracker_bo.inc.php` (real `Api\Storage`/`Api\Storage\Base2` subclasses missed by the original scoping grep) and `src/ApiHandler.php` |
+| webauthn | **Own fragment wrapped** (`PublicKeyCredentialSourceRepository.php`) |
+
+None of the apps in this table have `requireSqlFragmentObjects()` enabled yet - wrapping their own
+fragments was pure future-proofing (except rag's fix, which was live - see below). `projectmanager`
+and `tracker` are the strongest candidates for a full pilot (own `Db` clone + opt-in) next: both are
+substantial, well-tested, genuine `Api\Storage`/`Api\Storage\Base` apps with CalDAV/REST handlers,
+exactly the shape calendar/timesheet/addressbook already proved out.
 
 ### EPL (commercial, private `EGroupwareGmbH/*` repos)
 
@@ -307,17 +317,63 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   (its only match was a commented-out line), `Vfs\Sharing`, and `Vfs\Sqlfs\StreamWrapper` were all
   checked and have nothing to convert. `Vfs/Sqlfs/*`'s actual SQL backend beyond `StreamWrapper.php`
   was not separately swept.
+- **"The other default apps" sweep** (user's explicit instruction to continue, after the api/src
+  sweep): admin, aiassistant, developer, filemanager, importexport, notifications, aitools,
+  bookmarks, collabora, news_admin, openid, projectmanager, rag, registration, smallpart, tracker,
+  webauthn - see the tracker tables above for per-app detail. archive, emailadmin, home, mail (its
+  own account SQL already covered via `api/src/Mail/Account.php`), preferences (app), activesync,
+  rocketchat, status, and swoolepush were checked and have no `Api\Db` usage of their own to
+  convert.
+
+  **Sixth lesson - the original "extends Api\Storage" scoping grep had false negatives**: it used
+  `extends Api\\Storage\b` / `extends Storage\\Base\b` and missed `tracker_so` (`extends Api\Storage`
+  - should have matched, didn't - likely a regex-engine quirk across this many files run in one
+  pass), `tracker_escalations` (`extends Api\Storage\Base2`, a variant base class not covered by the
+  pattern at all), `developer/src/Langfiles.php`, `registration_so`, `bookmarks_so`,
+  `news_admin_bo`, and `openid/src/Repositories/{AccessTokenRepository,ClientRepository}.php` (all
+  genuine `Api\Storage`/`Api\Storage\Base` subclasses). These were only found because the
+  file-by-file fork audits read every file's actual class declaration rather than trusting the
+  earlier grep's file list - a reminder that a single repo-wide structural grep is not a substitute
+  for reading each file when precision matters.
+
+  **Seventh lesson - a shared/composed helper's by-reference output needs the same wrap discipline
+  as a direct `$filter[]` append, found via a live, cross-app risk**:
+  `Rag\Embedding::search2criteria($app, $criteria, $order_by, $extra_cols, &$filter)` appends two
+  raw fragments directly into the caller's `$filter` array by reference, and is called from
+  `Api\Storage::process_search()` - the shared base *every* `Api\Storage` app uses - whenever a
+  plain-string search runs and RAG's `available()` check says yes for that app. Since calendar,
+  timesheet, resources, infolog, and addressbook/Accounts (via `Contacts\Sql`) all now opt into
+  `requireSqlFragmentObjects()`, a real free-text search on any of them, with RAG actually
+  configured for that app, would have thrown `InvalidArgument` in production - purely latent in this
+  session's test environment because RAG wasn't enabled there (`class_exists()` on the autoloadable
+  class still returns true regardless, so the gate that actually matters is `available()`'s
+  app-specific config check, not whether the RAG app is "installed"). Found only because a fork
+  doing a routine file audit happened to trace what `process_search()` calls, not through any test
+  failure - worth remembering that a dependency's *conditional* code path can carry the same risk as
+  code in the app being converted, and grepping only the app's own directory would never surface it.
+
+  **Eighth lesson - a dedicated separate git repo per default/composer app**: each of
+  activesync/aitools/bookmarks/collabora/news_admin/openid/projectmanager/rag/registration/
+  rocketchat/smallpart/status/swoolepush/tracker/webauthn (and developer, aiassistant) is its own
+  git repository nested inside the main `egroupware/egroupware` checkout - `git status`/`git diff`
+  run from the main repo's root show nothing for files changed only inside one of these, even though
+  the files themselves are right there on disk and fully editable. Discovered only after finishing
+  all the edits for this round, when a routine "which pre-existing test failures are really
+  pre-existing" `git stash` from the main repo's root silently did nothing to `projectmanager/`.
+  Each of these needed its own `git status`/`git add`/`git commit` run from inside that app's own
+  directory - 13 separate commits for this round alone, instead of one in the main repo.
 
 ### Open / next
 
-- **Other apps/files still using the raw-fragment convention**, not yet converted (found via
-  `grep -rln "db->expression(\|db->column_data_implode(\|db->concat(\|..." `, excluding tests):
-  `admin/inc/class.admin_accesslog.inc.php`, `admin/inc/class.admin_acl.inc.php`,
-  `admin/inc/class.admin_customfields.inc.php`, `developer/src/Langfiles.php`,
-  `notifications/inc/class.notifications_push.inc.php`,
-  plus the various `*/setup/tables_update.inc.php` schema-migration files (lower priority - one-time
-  migration code, not live request-handling). `api/src/` itself is now fully swept (see the "Full
-  `api/src` sweep" entry above) - these remaining items are all outside `api/src`.
+- All apps/files previously listed here as "still using the raw-fragment convention" are now
+  wrapped (see the tracker tables and the "other default apps" sweep entry above). What's left,
+  lower priority: the various `*/setup/tables_update.inc.php`/`setup/default_records.inc.php`
+  schema-migration files across every app (one-time migration code, not live request-handling - out
+  of scope per this project's established policy), and the EPL (commercial) apps, not started at
+  all - a separate checkout this session never had access to.
+- `projectmanager` and `tracker` are the next candidates for a full pilot (their own `Db` clone +
+  `requireSqlFragmentObjects(true)`), not just the wrap-only treatment - see the composer-packages
+  table above.
 - The global default flip (opt-out model) is explicitly a *later* step per the original design ask -
   not scheduled, waits until enough of the above is converted that flipping it wouldn't break
   everything still unconverted.
