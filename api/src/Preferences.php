@@ -731,10 +731,10 @@ class Preferences
 				$where['preference_owner'] = self::DEFAULT_ID;
 				break;
 			case 'user':
-				$where[] = 'preference_owner > 0';
+				$where[] = Db\SqlFragment::raw('preference_owner > 0');
 				break;
 			case 'group':
-				$where[] = 'preference_owner < '.self::DEFAULT_ID;
+				$where[] = Db\SqlFragment::raw('preference_owner < '.self::DEFAULT_ID);
 				break;
 		}
 		foreach($db->select(self::TABLE, '*', $where, __LINE__, __FILE__) as $row)

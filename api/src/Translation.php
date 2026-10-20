@@ -1109,7 +1109,7 @@ class Translation
 		{
 			self::init();
 		}
-		$where = array('content '.self::$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation));
+		$where = array(Db\SqlFragment::raw('content '.self::$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation)));
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
 

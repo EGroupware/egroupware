@@ -62,7 +62,7 @@ class Sql implements Backend
 		);
 		if (empty($GLOBALS['egw_info']['server']['case_sensitive_username']))	// = is case-sensitive e.g. on postgres, but not on mysql!
 		{
-			$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			$where[] = Api\Db\SqlFragment::raw('account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username));
 			unset($where['account_lid']);
 		}
 		if($passwd_type == 'text')
@@ -130,7 +130,7 @@ class Sql implements Backend
 		);
 		if (!$GLOBALS['egw_info']['server']['case_sensitive_username'])	// = is case sensitiv eg. on postgres, but not on mysql!
 		{
-			$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username);
+			$where[] = Api\Db\SqlFragment::raw('account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($username));
 			unset($where['account_lid']);
 		}
 		if (!($row = $this->db->select($this->table,'account_lid,account_lastpwd_change',$where,__LINE__,__FILE__)->fetch()) ||

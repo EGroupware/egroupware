@@ -402,8 +402,8 @@ class History
 			// earlier version did - never fired, and `to` stayed at midnight: the user's last
 			// chosen day was excluded entirely, and a same-day range matched nothing at all.
 			$date->setTime(...($key === 'to' ? [23, 59, 59] : [0, 0, 0]));
-			$fragments[] = $db_col . ' ' . $op . ' ' .
-				$GLOBALS['egw']->db->quote($GLOBALS['egw']->db->to_timestamp($date->format('ts')));
+			$fragments[] = Api\Db\SqlFragment::raw($db_col . ' ' . $op . ' ' .
+				$GLOBALS['egw']->db->quote($GLOBALS['egw']->db->to_timestamp($date->format('ts'))));
 		}
 		return $fragments;
 	}
@@ -493,7 +493,7 @@ class History
 		$filter += self::columnFilters($col_filter, $query['appname']);
 		if(($search = self::searchFilter($query['search'] ?? null)))
 		{
-			$filter[] = $search;
+			$filter[] = Api\Db\SqlFragment::raw($search);
 		}
 		// Raw SQL an app added server-side, eg. calendar scoping participant changes to the one
 		// recurrence being viewed (calendar_uiforms::setup_history()).  This is TRUSTED input and
@@ -533,7 +533,7 @@ class History
 															  }, array_keys($cfs))
 					) . ')';
 			}
-			$filter[] = '(' . implode(' OR ', $to_or) . ')';
+			$filter[] = Api\Db\SqlFragment::raw('(' . implode(' OR ', $to_or) . ')');
 		}
 		$_query = array(array(
 							'table' => self::TABLE,

@@ -85,15 +85,15 @@ class Customfields implements \IteratorAggregate
 		{
 			$memberships = $GLOBALS['egw']->accounts->memberships($this->account, true);
 			$memberships[] = $this->account;
-			$query[] = $this->commasep_match('cf_private', $memberships);
+			$query[] = Api\Db\SqlFragment::raw($this->commasep_match('cf_private', $memberships));
 		}
 		if ($only_type2)
 		{
-			$query[] = $this->commasep_match('cf_type2', $only_type2);
+			$query[] = Api\Db\SqlFragment::raw($this->commasep_match('cf_type2', $only_type2));
 		}
 		if (isset($tabs))
 		{
-			$query[] = 'cf_tab IS '.($tabs?'NOT ':'').'NULL';
+			$query[] = Api\Db\SqlFragment::raw('cf_tab IS '.($tabs?'NOT ':'').'NULL');
 		}
 		if (!$db) $db = self::$db;
 		$this->iterator = $db->select(self::TABLE, '*', $query, __LINE__, __FILE__,
@@ -502,7 +502,7 @@ class Customfields implements \IteratorAggregate
 	public static function save($app, array $cfs)
 	{
 		$query = array('cf_app' => $app);
-		if ($cfs) $query[] = self::$db->expression(self::TABLE, 'NOT ', array('cf_name' => array_keys($cfs)));
+		if ($cfs) $query[] = Api\Db\SqlFragment::raw(self::$db->expression(self::TABLE, 'NOT ', array('cf_name' => array_keys($cfs))));
 		self::$db->delete(self::TABLE, $query, __LINE__, __FILE__);
 
 		foreach($cfs as $name => $cf)

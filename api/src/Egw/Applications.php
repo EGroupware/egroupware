@@ -111,7 +111,7 @@ class Applications
 		$GLOBALS['egw_info']['apps'] = Api\Cache::getInstance(__CLASS__, 'apps', function()
 		{
 			$apps = array();
-			foreach($this->db->select($this->table_name,'*', ['app_enabled != -1'],__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
+			foreach($this->db->select($this->table_name,'*', [Api\Db\SqlFragment::raw('app_enabled != -1')],__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
 			{
 				$apps[$row['app_name']] = Array(
 					'title'   => $row['app_name'],

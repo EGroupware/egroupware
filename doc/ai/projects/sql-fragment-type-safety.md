@@ -13,7 +13,7 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | App | Status |
 |---|---|
 | calendar | **Done** (pilot, commit `196de24beb`) - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone |
-| api (`Api\Storage`/`Storage\Base`, `Contacts\Sql`/`Contacts\Storage`, `Accounts\Sql`) | **Done** for the pieces with their own `Db` clone (`Contacts\Sql`, used by addressbook/Accounts - see below); `Link\Storage`, `Sharing`, `Mail\Account` had their own fragments wrapped too but are static classes with no clean per-instance clone point, so `requireSqlFragmentObjects()` isn't enabled for them yet |
+| api (every file under `api/src/` using `Api\Db` directly, not just `Api\Storage` subclasses - see the full-sweep note below) | **Done** for the pieces with their own `Db` clone (`Contacts\Sql`, used by addressbook/Accounts - see below); every other file found building its own raw fragment (`Link\Storage`, `Sharing`, `Mail\Account`, `Accounts\Import`, `Auth\Sql`, `Preferences`, `Session`, `Storage\Customfields`, `Storage\History`, `Acl`, `Translation`, `Egw\Applications`) had it wrapped too, but these are all static classes or always use the shared global `Db` instance with no per-instance clone point, so `requireSqlFragmentObjects()` isn't enabled for them yet |
 | addressbook | **Done** - via `Contacts\Sql`'s opt-in (addressbook_bo/`Api\Contacts` share that backend); `Contacts\Storage`'s own `tid != deleted` filters converted too |
 | admin | Not started |
 | aiassistant | Not started |
@@ -280,6 +280,33 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   `infolog/tests/SearchCustomFieldFilterTest.php` (pre-existing, not written for this project) -
   a reminder that an app's *existing* test suite can be as valuable as a purpose-built regression
   test for finding these, provided it's actually run after opting in.
+- **Full `api/src` sweep** (prompted directly by the user asking "did you convert all usages in
+  api/src?" - the answer at that point was no, only the files touched by the addressbook/infolog
+  investigations): every file under `api/src/` that uses `Api\Db` directly (`$this->db->`,
+  `self::$db->`, `static::$db->`, or `$GLOBALS['egw']->db->` - not just `Api\Storage` subclasses,
+  since plenty of core classes talk to the database without going through that base class at all)
+  was enumerated and individually checked. Found and fixed real gaps in `Accounts\Import` (a
+  `modified>=` filter reaching `Contacts\Sql`'s now-strict backend directly through the account
+  SQL/LDAP source, bypassing the `Contacts\Storage` composition layer entirely - would have thrown
+  on the next account import run), `Auth\Sql` (the case-insensitive-username LIKE fallback, used on
+  every login attempt once case-sensitive usernames are off), `Preferences`, `Session`,
+  `Storage\Customfields` (four separate sites, including one where a *helper method's own return
+  value* - `commasep_match()` - needed wrapping at its call sites rather than inside the helper,
+  since the helper's documented contract is "returns a plain SQL string" for other potential
+  callers), `Storage\History` (three sites, one of them a dedicated `dateRangeFilter()` helper
+  wrapped at its source since building fragments is that method's sole purpose), `Acl`,
+  `Translation`, and `Egw\Applications` (`read_installed_apps()` - on the hot path of every page
+  load, verified safe via the full `api/tests/` suite of 1094 tests still passing). None of these
+  classes have `requireSqlFragmentObjects()` enabled anywhere yet (all either static or always using
+  the shared global `Db` instance), so none of this was a live break - pure future-proofing ahead of
+  whenever a clone mechanism or the eventual global opt-out flip happens. `Accounts.php`,
+  `Categories.php`, `Contacts.php` (its raw hand-built SQL strings executed via `$db->query()`
+  bypass the array-based mechanism entirely - a different, unrelated pattern this project doesn't
+  touch), `Contacts\Ldap.php` (LDAP, not SQL), `Mail\Smtp\Sql`/`Stalwart`, `Mail\Notifications`,
+  `Asyncservice`, `Config`, `Egw.php`, `Db\Backup`, `Db\CallbackIterator`, `DateTime`, `Vfs.php`
+  (its only match was a commented-out line), `Vfs\Sharing`, and `Vfs\Sqlfs\StreamWrapper` were all
+  checked and have nothing to convert. `Vfs/Sqlfs/*`'s actual SQL backend beyond `StreamWrapper.php`
+  was not separately swept.
 
 ### Open / next
 
@@ -289,10 +316,8 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   `admin/inc/class.admin_customfields.inc.php`, `developer/src/Langfiles.php`,
   `notifications/inc/class.notifications_push.inc.php`,
   plus the various `*/setup/tables_update.inc.php` schema-migration files (lower priority - one-time
-  migration code, not live request-handling).
-  `api/src/Storage/Customfields.php` and `api/src/Vfs.php` were checked and have nothing to
-  convert (`self::$db` is set but never used for a query in the former; the latter's actual SQL
-  backend lives in `Vfs/Sqlfs/*`, out of scope here, not checked yet).
+  migration code, not live request-handling). `api/src/` itself is now fully swept (see the "Full
+  `api/src` sweep" entry above) - these remaining items are all outside `api/src`.
 - The global default flip (opt-out model) is explicitly a *later* step per the original design ask -
   not scheduled, waits until enough of the above is converted that flipping it wouldn't break
   everything still unconverted.

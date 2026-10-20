@@ -2292,9 +2292,9 @@ class Session
 			$order_by = 'session_dla DESC';
 		}
 		$filter['lo'] = null;
-		$filter[] = 'account_id>0';
-		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
-		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
+		$filter[] = Db\SqlFragment::raw('account_id>0');
+		$filter[] = Db\SqlFragment::raw('session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']));
+		$filter[] = Db\SqlFragment::raw('(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')');
 		foreach($GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, '*', $filter, __LINE__, __FILE__,
 			$all_no_sort ? false : $start, 'ORDER BY '.$order_by) as $row)
 		{
@@ -2312,9 +2312,9 @@ class Session
 	public static function session_count(array $filter=array())
 	{
 		$filter['lo'] = null;
-		$filter[] = 'account_id>0';
-		$filter[] = 'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']);
-		$filter[] = '(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')';
+		$filter[] = Db\SqlFragment::raw('account_id>0');
+		$filter[] = Db\SqlFragment::raw('session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']));
+		$filter[] = Db\SqlFragment::raw('(notification_heartbeat IS NULL OR notification_heartbeat > '.self::heartbeat_limit().')');
 		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', $filter, __LINE__, __FILE__)->fetchColumn();
 	}
 
