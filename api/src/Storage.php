@@ -871,9 +871,9 @@ class Storage extends Storage\Base
 				{
 					if ((int)$filter[$this->autoinc_id])
 					{
-						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+						$filter[] = Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name . '.', array(
 							$this->autoinc_id => $filter[$this->autoinc_id],
-						));
+						)));
 					}
 					unset($filter[$this->autoinc_id]);
 				}
@@ -883,9 +883,9 @@ class Storage extends Storage\Base
 					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 					if (!empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 					{
-						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+						$filter[] = Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name . '.', array(
 							array_search($name, $this->db_cols) => $val,
-						));
+						)));
 						unset($filter[$name]);
 					}
 				}
@@ -918,7 +918,7 @@ class Storage extends Storage\Base
 							{
 								$sql_filter = str_replace($this->extra_value, 'extra_filter.' . $this->extra_value,
 									$this->db->expression($this->extra_table, array(
-										$this->extra_value . ' ' . $this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote($wildcard . $val . $wildcard)
+										Db\SqlFragment::raw($this->extra_value . ' ' . $this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote($wildcard . $val . $wildcard))
 									))
 								);
 							}

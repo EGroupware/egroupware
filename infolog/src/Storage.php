@@ -83,6 +83,13 @@ class Storage extends Api\Storage
 		// (passing 'infolog' explicitly) for exactly that reason - no need to clone.
 		parent::__construct('infolog', 'egw_infolog', 'egw_infolog_extra', '',
 			'info_extra_name', 'info_extra_value', 'info_id', $db);
+
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects infolog's own queries - every raw
+		// SQL fragment infolog builds itself (here and in infolog_bo, via this->db being public)
+		// now uses Api\Db\SqlFragment. Once requireSqlFragmentObjects() becomes the default
+		// (opt-out) for Api\Db generally, remove this clone again.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
 	}
 
 	/**
@@ -313,8 +320,8 @@ class Storage extends Api\Storage
 		$unregistered_where = array('info_id' => array_keys($rows));
 		if ($this->customfields)
 		{
-			$unregistered_where[] = 'info_extra_name NOT IN ('.
-				implode(',', array_map(array($this->db, 'quote'), array_keys($this->customfields))).')';
+			$unregistered_where[] = Api\Db\SqlFragment::raw('info_extra_name NOT IN ('.
+				implode(',', array_map(array($this->db, 'quote'), array_keys($this->customfields))).')');
 		}
 		foreach($this->db->select($this->extra_table, 'info_id,info_extra_name,info_extra_value',
 			$unregistered_where, __LINE__, __FILE__, false, '', 'infolog') as $row)
@@ -347,7 +354,7 @@ class Storage extends Api\Storage
 		}
 		if (isset($where['info_id']))
 		{
-			$where[] = $this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => $where['info_id']));
+			$where[] = Api\Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => $where['info_id'])));
 			unset($where['info_id']);
 		}
 
@@ -388,8 +395,8 @@ class Storage extends Api\Storage
 		$unregistered_where = array('info_id' => $this->data['info_id']);
 		if ($this->customfields)
 		{
-			$unregistered_where[] = 'info_extra_name NOT IN ('.
-				implode(',', array_map(array($this->db,'quote'), array_keys($this->customfields))).')';
+			$unregistered_where[] = Api\Db\SqlFragment::raw('info_extra_name NOT IN ('.
+				implode(',', array_map(array($this->db,'quote'), array_keys($this->customfields))).')');
 		}
 		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',$unregistered_where,__LINE__,__FILE__,false,'','infolog') as $row)
 		{
@@ -557,7 +564,7 @@ class Storage extends Api\Storage
 				}
 				unset($to_write['info_etag']);
 				// and increment it
-				$to_write[] = 'info_etag=info_etag+1';
+				$to_write[] = Api\Db\SqlFragment::raw('info_etag=info_etag+1');
 			}
 			if (!$this->db->update($this->table_name,$to_write,$where,__LINE__,__FILE__,'infolog'))
 			{
@@ -602,7 +609,7 @@ class Storage extends Api\Storage
 		if ($purge_cfs)
 		{
 			$where = array('info_id' => $info_id);
-			if ($purge_cfs == 'ical') $where[] = "info_extra_name LIKE '#%'";
+			if ($purge_cfs == 'ical') $where[] = Api\Db\SqlFragment::raw("info_extra_name LIKE '#%'");
 			$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,'infolog');
 		}
 		$cf_data = array('info_id' => $info_id);
@@ -675,9 +682,9 @@ class Storage extends Api\Storage
 				'info_res_modifier' => $this->user,
 			), array(
 				'info_id' => $this->data['info_id'],
-				'info_res_deleted IS NULL',
+				Api\Db\SqlFragment::raw('info_res_deleted IS NULL'),
 			)+(!$values['info_responsible'] ? array() :
-				array(1=>'account_id NOT IN ('.implode(',', array_map(array($this->db, 'quote'), array_keys($users))).')')),
+				array(1=>Api\Db\SqlFragment::raw('account_id NOT IN ('.implode(',', array_map(array($this->db, 'quote'), array_keys($users))).')'))),
 				__LINE__, __FILE__, 'infolog');
 
 			// add newly added attendees
@@ -686,7 +693,7 @@ class Storage extends Api\Storage
 				$old_users = array();
 				foreach($this->db->select($this->users_table,'account_id,info_res_attendee',array(
 					'info_id' => $this->data['info_id'],
-					'info_res_deleted IS NULL',
+					Api\Db\SqlFragment::raw('info_res_deleted IS NULL'),
 				), __LINE__, __FILE__, false, '', 'infolog') as $row)
 				{
 					$old_users[] = $row['account_id'];
@@ -726,7 +733,7 @@ class Storage extends Api\Storage
 		$counts = array();
 		foreach($this->db->select($this->table_name,'info_id_parent,COUNT(*) AS info_anz_subs',array(
 			'info_id_parent' => $info_id,
-			"info_status != 'deleted'",	// dont count deleted subs as subs, as they are not shown by default
+			Api\Db\SqlFragment::raw("info_status != 'deleted'"),	// dont count deleted subs as subs, as they are not shown by default
 		),__LINE__,__FILE__,
 			false,'GROUP BY info_id_parent','infolog') as $row)
 		{
@@ -748,9 +755,9 @@ class Storage extends Api\Storage
 		$users = array();
 
 		foreach($this->db->select($this->table_name,'DISTINCT info_owner',array(
-			str_replace(' AND ','',$this->statusFilter('open')),
-			'(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
-			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')',		// end_day within 4 days
+			Api\Db\SqlFragment::raw(str_replace(' AND ','',$this->statusFilter('open'))),
+			Api\Db\SqlFragment::raw('(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
+			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')'),		// end_day within 4 days
 		),__LINE__,__FILE__,false,'','infolog') as $row)
 		{
 			$users[] = $row['info_owner'];

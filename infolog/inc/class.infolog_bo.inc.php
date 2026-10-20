@@ -1934,7 +1934,7 @@ class infolog_bo
 		// SQL got delegated to Api\Storage::search()) - $link_extra is deliberately OUTSIDE the
 		// enclosing parens: for the "sp" (subtask) action it's a top-level OR ("also show the
 		// parent entries"), not another AND-ed condition
-		$filter[0] = '('.$filtermethod.' '.$pid.' '.($search_fragment ?? '').')'.($link_extra ?? '');
+		$filter[0] = Api\Db\SqlFragment::raw('('.$filtermethod.' '.$pid.' '.($search_fragment ?? '').')'.($link_extra ?? ''));
 
 		$only_keys = isset($query['cols']) ? $query['cols'] : false;
 		$start = array((int)($query['start']??0), isset($query['num_rows']) ? (int)$query['num_rows'] : -1);
@@ -2028,8 +2028,8 @@ class infolog_bo
 				}
 				elseif ($this->so->customfields)
 				{
-					$where[] = 'info_extra_name NOT IN ('.
-						implode(',', array_map(array($this->so->db,'quote'), array_keys($this->so->customfields))).')';
+					$where[] = Api\Db\SqlFragment::raw('info_extra_name NOT IN ('.
+						implode(',', array_map(array($this->so->db,'quote'), array_keys($this->so->customfields))).')');
 				}
 				foreach($this->so->db->select($this->so->extra_table,'info_id,info_extra_name,info_extra_value',$where,__LINE__,__FILE__,false,'','infolog') as $row)
 				{
