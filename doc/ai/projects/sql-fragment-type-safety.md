@@ -47,14 +47,14 @@ in that app's own checkout, not in the main repo.
 | collabora | **Own fragment wrapped** (`Wopi.php`) |
 | news_admin | **Own fragments wrapped** (`news_admin_bo.inc.php`, a real `Api\Storage\Base` subclass missed by the original scoping grep) |
 | openid | **Own fragments wrapped** - `Repositories/AccessTokenRepository.php`/`ClientRepository.php` (real `Api\Storage\Base` subclasses) and `RefreshTokenRepository.php` |
-| projectmanager | **Own fragments wrapped** - element/pricelist/constraint SO classes (all real `Api\Storage`/`Api\Storage\Base` subclasses missed by the original scoping grep) and the CalDAV/REST `ApiHandler.php` |
+| projectmanager | **Done** - `requireSqlFragmentObjects(true)` enabled on each of its 4 independent SO classes' own `Db` clone (`projectmanager_so`, `projectmanager_elements_so`, `projectmanager_constraints_so`, `projectmanager_pricelist_so`) |
 | rag | **Own fragments wrapped, see the critical cross-app finding below** - `Embedding.php`/`Embedding/Base.php` |
 | registration | **Own fragment wrapped** (`registration_bo.inc.php`) |
 | rocketchat | N/A - no `Api\Db` usage found |
 | smallpart | **Own fragments wrapped** - `So.php`/`Overlay.php`/`Bo.php` |
 | status | N/A - no `Api\Db` usage found |
 | swoolepush | N/A - no `Api\Db` usage found |
-| tracker | **Own fragments wrapped** - `tracker_so`/`tracker_escalations`/`tracker_bo.inc.php` (real `Api\Storage`/`Api\Storage\Base2` subclasses missed by the original scoping grep) and `src/ApiHandler.php` |
+| tracker | **Done** - `requireSqlFragmentObjects(true)` enabled on both `tracker_so` and `tracker_escalations`'s own `Db` clone |
 | webauthn | **Own fragment wrapped** (`PublicKeyCredentialSourceRepository.php`) |
 
 None of the apps in this table have `requireSqlFragmentObjects()` enabled yet - wrapping their own
@@ -362,6 +362,29 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   pre-existing" `git stash` from the main repo's root silently did nothing to `projectmanager/`.
   Each of these needed its own `git status`/`git add`/`git commit` run from inside that app's own
   directory - 13 separate commits for this round alone, instead of one in the main repo.
+- **Projectmanager/tracker full pilots** (user's explicit follow-up instruction): enabling
+  `requireSqlFragmentObjects(true)` immediately surfaced 3 more missed fragments in projectmanager
+  that the wrap-only sweep's fork audit hadn't caught (`sync_all()`'s own status filter, an inline
+  `pe_id` OR-condition in `constraints_so::search()`, and - the big one -
+  `projectmanager_so::search()`'s ACL-join filter, hit on *every single search* once the ACL join is
+  active, not some rare branch). Tracker's wrap-only pass, by contrast, needed zero follow-up fixes -
+  its full test suite passed clean the moment strict mode was flipped on. No consistent predictor
+  found for which apps will need a second pass; re-running the full test suite immediately after
+  flipping the flag, not just trusting the earlier wrap sweep, is the only reliable check.
+
+  **Ninth lesson - not every `$filter[]`/`$criteria[]` site should be wrapped, even when strict mode
+  flags it**: `projectmanager_so::search()` has two sites (`$filter[] = $criteria;` for a non-array,
+  non-string `$criteria`, and the `is_array($query) ? array_merge($filter, $query) : ...` branch
+  consuming `parse_search()`'s own return) that were deliberately left unwrapped despite being
+  *adjacent* to fixed ORIGINATOR sites in the same method. Both are genuine PASS-THROUGH: the first
+  is the caller's own `$criteria` parameter verbatim, the second is `parse_search()`'s array return,
+  whose own int-keyed entries are pass-through by Storage\Base's own documented contract (see the
+  third lesson). Wrapping either would launder potentially-unvalidated input into looking trusted -
+  exactly the over-wrap bug the third lesson already found and fixed once. The test suite passing at
+  0 `Db\SqlFragment`-related errors does not by itself prove these two sites are unreachable with bad
+  input; it was cross-checked against `parse_search()`'s source (which itself already enforces
+  strict mode via `column_data_implode()` when it collapses its array into a string) before deciding
+  not to touch them, not inferred from the test run alone.
 
 ### Open / next
 
@@ -371,9 +394,10 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   schema-migration files across every app (one-time migration code, not live request-handling - out
   of scope per this project's established policy), and the EPL (commercial) apps, not started at
   all - a separate checkout this session never had access to.
-- `projectmanager` and `tracker` are the next candidates for a full pilot (their own `Db` clone +
-  `requireSqlFragmentObjects(true)`), not just the wrap-only treatment - see the composer-packages
-  table above.
+- `projectmanager` and `tracker` are now full pilots too (`requireSqlFragmentObjects(true)` enabled
+  on each of their own `Db` clones - see the tables above). Every other app in the composer-packages
+  table is still wrap-only (no opt-in point found, or not attempted yet) - good next candidates if
+  continuing this project, since their fragments are already wrapped and ready.
 - The global default flip (opt-out model) is explicitly a *later* step per the original design ask -
   not scheduled, waits until enough of the above is converted that flipping it wouldn't break
   everything still unconverted.
