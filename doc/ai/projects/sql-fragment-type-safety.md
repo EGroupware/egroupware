@@ -13,7 +13,7 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | App | Status |
 |---|---|
 | calendar | **Done** (pilot, commit `196de24beb`) - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone |
-| api (incl. `Api\Storage`/`Storage\Base`) | **In progress** - shared SO-layer base class many apps extend |
+| api (incl. `Api\Storage`/`Storage\Base`) | **Own code converted** (commit `c0a028f33c`) - `requireSqlFragmentObjects()` not yet called anywhere; each subclassing app still needs its own conversion before it (or `Storage\Base`'s constructor, if ever flipped globally) can safely enable it |
 | addressbook | Not started |
 | admin | Not started |
 | aiassistant | Not started |
@@ -164,12 +164,29 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   `$this->db->select/insert/update/delete(` call site's arguments directly, not just grepping for
   the append idiom.
 
+  **Second lesson, learned the hard way (commit `06d4f00748`, a live CI break on master)**:
+  "converted" also means *every file that reaches that class's Db instance*, not just the files
+  that obviously look like its SO layer. `calendar_groupdav.inc.php` (the CalDAV HTTP handler) built
+  the exact same `[$column => $id, 'raw sql']` shape in three places, reaching `calendar_so`'s
+  now-strict `Db` clone - invisible to local PHPUnit (which never exercises the groupdav HTTP layer)
+  and only surfaced as uniform 401s in CI's real-HTTP CalDAV tests. Before enabling enforcement for
+  an app, grep that app's *entire* directory for `$this->bo->`/`$this->so->`/`$this->db->` call
+  sites, not just its `*_so.inc.php`/`*_bo.inc.php` files.
+
+- **`Api\Storage` / `Api\Storage\Base`** (commit `c0a028f33c`): own fragment-building converted -
+  `search2criteria()`'s two returns, `parse_search()`'s several int-keyed appends (including the
+  `search2criteria()`-return-wrapped-in-`[$search]` nested-array case, which must NOT be re-wrapped -
+  `column_data_implode()`'s own single-element-array unwrap handles it), `search()`'s `$db_filter`
+  building, and the "direct sql updates"/"keep sql fragments" int-key passthroughs in
+  `save()`/`delete()`/`read()` (`Storage::process_search()` has two more of its own). Added
+  `Db\SqlFragment::raw()` idempotency (returns an already-wrapped instance unchanged) so these call
+  sites don't need an `instanceof` check first. **Not opted in** - no subclass (or `Storage\Base`
+  itself) calls `requireSqlFragmentObjects()` yet; per the second lesson above, before any app
+  extending it opts in, that app's *entire* directory needs the same full-file sweep calendar's
+  CalDAV handler taught us to do, not just its `*_bo`/`*_so` classes.
+
 ### Open / next
 
-- **`Api\Storage` / `Api\Storage\Base`** - in progress. This is the shared SO-layer base class many
-  apps extend (addressbook, infolog, timesheet, etc. via `Contacts\Sql`, `Storage\Base` subclasses) -
-  converting it is higher-leverage than any single app, but also used far more widely, so needs the
-  same careful "read every call site" approach as calendar, not just the obvious append patterns.
 - **Other apps/files still using the raw-fragment convention**, not yet converted (found via
   `grep -rln "db->expression(\|db->column_data_implode(\|db->concat(\|..." `, excluding tests):
   `addressbook/inc/class.addressbook_groupdav.inc.php`, `admin/inc/class.admin_accesslog.inc.php`,
