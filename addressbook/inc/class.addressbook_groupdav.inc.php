@@ -409,7 +409,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			if ($sync_collection_report)
 			{
 				list(,$sync_token) = explode('>', $filter[0]);
-				if ((int)$sync_token) $where[] = 'list_modified>'.$GLOBALS['egw']->db->from_unixtime((int)$sync_token);
+				if ((int)$sync_token) $where[] = Api\Db\SqlFragment::raw('list_modified>'.$GLOBALS['egw']->db->from_unixtime((int)$sync_token));
 			}
 			if (isset($filter[self::$path_attr]))	// multiget report?
 			{
@@ -602,7 +602,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
 			if ($prop_filters)
 			{
-				$filters[] = $filter = '(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))';
+				$filters[] = $filter = Api\Db\SqlFragment::raw('(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))');
 				if ($this->debug) error_log(__METHOD__."(path=$options[path], ...) sql-filter: $filter");
 			}
 		}
@@ -630,7 +630,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					{
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
-						$filters[] = 'contact_modified>'.(int)$sync_token;
+						$filters[] = Api\Db\SqlFragment::raw('contact_modified>'.(int)$sync_token);
 						$filters['tid'] = null;	// to return deleted entries too
 					}
 					break;

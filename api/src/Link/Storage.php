@@ -227,11 +227,11 @@ class Storage
 		foreach([['link_app1' => $app, 'link_id1' => $id], ['link_app2' => $app, 'link_id2' => $id]] as $n => $keys)
 		{
 			$other = $n ? 'link_app1' : 'link_app2';
-			$where = array(self::$db->expression(self::TABLE, self::encodeRow($keys)));
-			if (!$deleted) $where[] = 'deleted IS NULL';
+			$where = array(Api\Db\SqlFragment::raw(self::$db->expression(self::TABLE, self::encodeRow($keys))));
+			if (!$deleted) $where[] = Api\Db\SqlFragment::raw('deleted IS NULL');
 			if (!empty($only_app))
 			{
-				$where[] = $other.($not_only ? ' != ' : ' = ').self::$db->quote($only_app);
+				$where[] = Api\Db\SqlFragment::raw($other.($not_only ? ' != ' : ' = ').self::$db->quote($only_app));
 			}
 			foreach(self::$db->select(self::TABLE, $other.',COUNT(*) AS num', $where, __LINE__, __FILE__,
 				false, 'GROUP BY '.$other, 'phpgwapi') as $row)
@@ -356,16 +356,16 @@ class Storage
 
 		if (empty($only_app))
 		{
-			$where = array('(('.$own1.') OR ('.$own2.'))');
+			$where = array(Api\Db\SqlFragment::raw('(('.$own1.') OR ('.$own2.'))'));
 		}
 		else
 		{
 			// the app of the OTHER side is whichever column is not the entry's own
 			$op = $not_only ? ' != ' : ' = ';
-			$where = array('(('.$own1.' AND link_app2'.$op.self::$db->quote($only_app).
-				') OR ('.$own2.' AND link_app1'.$op.self::$db->quote($only_app).'))');
+			$where = array(Api\Db\SqlFragment::raw('(('.$own1.' AND link_app2'.$op.self::$db->quote($only_app).
+				') OR ('.$own2.' AND link_app1'.$op.self::$db->quote($only_app).'))'));
 		}
-		if (!$deleted) $where[] = 'deleted IS NULL';
+		if (!$deleted) $where[] = Api\Db\SqlFragment::raw('deleted IS NULL');
 
 		return $where;
 	}
@@ -505,7 +505,7 @@ class Storage
 			}
 			if ($owner)
 			{
-				if ($app) $where = array($where);
+				if ($app) $where = array(Api\Db\SqlFragment::raw($where));
 				$where['link_owner'] = $owner;
 			}
 		}

@@ -1001,10 +1001,10 @@ class Account implements \ArrayAccess
 		$cols[array_search('account_id', $cols)] = self::IDENTITIES_TABLE.'.account_id AS account_id';
 		$cols[array_search('acc_imap_username', $cols)] = Credentials::TABLE.'.cred_username AS acc_imap_username';
 
-		$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('account_id' => self::memberships($user)));
+		$where[] = Api\Db\SqlFragment::raw(self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('account_id' => self::memberships($user))));
 		if ($acc_id)
 		{
-			$where[] = self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('acc_id' => $acc_id));
+			$where[] = Api\Db\SqlFragment::raw(self::$db->expression(self::IDENTITIES_TABLE, self::IDENTITIES_TABLE.'.', array('acc_id' => $acc_id)));
 		}
 		$rs = self::$db->select(self::IDENTITIES_TABLE, $cols, $where, __LINE__, __FILE__, false,
 			'ORDER BY '.self::IDENTITIES_TABLE.'.account_id,ident_realname,ident_org,ident_email', self::APP, null,
@@ -1637,10 +1637,10 @@ class Account implements \ArrayAccess
 			}
 			$data =& self::$cache[$acc_id];
 		}
-		$where = array(self::TABLE.'.acc_id='.(int)$acc_id);
+		$where = array(Api\Db\SqlFragment::raw(self::TABLE.'.acc_id='.(int)$acc_id));
 		if (!isset($called_for) || $called_for !== '0')
 		{
-			$where[] = self::$db->expression(self::VALID_TABLE, self::VALID_TABLE.'.', array('account_id' => self::memberships($called_for)));
+			$where[] = Api\Db\SqlFragment::raw(self::$db->expression(self::VALID_TABLE, self::VALID_TABLE.'.', array('account_id' => self::memberships($called_for))));
 		}
 		$cols = array(self::TABLE.'.*', self::IDENTITIES_TABLE.'.*');
 		$group_by = 'GROUP BY '.self::TABLE.'.acc_id,'.self::IDENTITIES_TABLE.'.ident_id';

@@ -13,8 +13,8 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | App | Status |
 |---|---|
 | calendar | **Done** (pilot, commit `196de24beb`) - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone |
-| api (incl. `Api\Storage`/`Storage\Base`) | **Own code converted** (commit `c0a028f33c`) - `requireSqlFragmentObjects()` not yet called anywhere; each subclassing app still needs its own conversion before it (or `Storage\Base`'s constructor, if ever flipped globally) can safely enable it |
-| addressbook | Not started |
+| api (`Api\Storage`/`Storage\Base`, `Contacts\Sql`/`Contacts\Storage`, `Accounts\Sql`) | **Done** for the pieces with their own `Db` clone (`Contacts\Sql`, used by addressbook/Accounts - see below); `Link\Storage`, `Sharing`, `Mail\Account` had their own fragments wrapped too but are static classes with no clean per-instance clone point, so `requireSqlFragmentObjects()` isn't enabled for them yet |
+| addressbook | **Done** - via `Contacts\Sql`'s opt-in (addressbook_bo/`Api\Contacts` share that backend); `Contacts\Storage`'s own `tid != deleted` filters converted too |
 | admin | Not started |
 | aiassistant | Not started |
 | archive | Not started |
@@ -30,7 +30,7 @@ UI/config apps) is marked N/A rather than chased for conversion.
 | notifications | Not started |
 | phpgwapi | N/A - deprecated legacy compat shim |
 | preferences | Not started |
-| resources | Not started |
+| resources | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`resources_so::__construct()`) |
 | timesheet | **Done** - `requireSqlFragmentObjects(true)` enabled on its own `Db` clone (`timesheet_bo::__construct()`) |
 
 ### Default composer packages (`egroupware/*` in `composer.json`, public `EGroupware/*` repos)

@@ -724,7 +724,7 @@ class Storage
 		// Handle 'None' country option
 		if(is_array($filter) && isset($filter['adr_one_countrycode']) && $filter['adr_one_countrycode'] === '-custom-')
 		{
-			$filter[] = 'adr_one_countrycode IS NULL';
+			$filter[] = Api\Db\SqlFragment::raw('adr_one_countrycode IS NULL');
 			unset($filter['adr_one_countrycode']);
 		}
 		// Hide deleted items unless type is specifically deleted
@@ -741,11 +741,11 @@ class Storage
 		{
 			if ($join && strpos($join,'RIGHT JOIN') !== false)	// used eg. to search for groups
 			{
-				$filter[] = '(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)';
+				$filter[] = Api\Db\SqlFragment::raw('(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)');
 			}
 			else
 			{
-				$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+				$filter[] = Api\Db\SqlFragment::raw('contact_tid != \'' . self::DELETED_TYPE . '\'');
 			}
 		}
 		elseif(is_null($filter['tid']))
@@ -894,7 +894,7 @@ class Storage
 		}
 		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
 		{
-			$param['col_filter'][] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+			$param['col_filter'][] = Api\Db\SqlFragment::raw('contact_tid != \'' . self::DELETED_TYPE . '\'');
 		}
 		elseif(is_null($param['col_filter']['tid']))
 		{
@@ -974,7 +974,7 @@ class Storage
 		}
 		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
 		{
-			$param['col_filter'][] = $this->somain->table_name.'.contact_tid != \'' . self::DELETED_TYPE . '\'';
+			$param['col_filter'][] = Api\Db\SqlFragment::raw($this->somain->table_name.'.contact_tid != \'' . self::DELETED_TYPE . '\'');
 		}
 		elseif(is_null($param['col_filter']['tid']))
 		{

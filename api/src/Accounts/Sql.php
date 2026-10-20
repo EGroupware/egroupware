@@ -446,7 +446,7 @@ class Sql
 		if (!empty($param['account_id']) && is_array($param['account_id']) && ($not_account_ids = array_search('!', $param['account_id'])) !== false)
 		{
 			unset($param['account_id'][$not_account_ids]);
-			$filter[] = $this->db->expression(self::TABLE, 'NOT ('.self::TABLE.'.', ['account_id' => array_map('abs', $param['account_id'])], ')');
+			$filter[] = Api\Db\SqlFragment::raw($this->db->expression(self::TABLE, 'NOT ('.self::TABLE.'.', ['account_id' => array_map('abs', $param['account_id'])], ')'));
 			unset($param['account_id']);
 		}
 		switch($param['type'])
@@ -455,11 +455,11 @@ class Sql
 				$filter['owner'] = 0;
 				break;
 			case 'groups':
-				$filter[] = "account_type='g'";
+				$filter[] = Api\Db\SqlFragment::raw("account_type='g'");
 				break;
 			case 'owngroups':
 				$filter['account_id'] = array_map('abs', $this->frontend->memberships($GLOBALS['egw_info']['user']['account_id'], true));
-				$filter[] = "account_type='g'";
+				$filter[] = Api\Db\SqlFragment::raw("account_type='g'");
 				break;
 			case 'groupmembers':
 			case 'groupmembers+memberships':
@@ -481,7 +481,7 @@ class Sql
 				}
 				// fall-through
 			case 'both':
-				$filter[] = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
+				$filter[] = Api\Db\SqlFragment::raw("(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)");
 				break;
 		}
 		// if params also has an account_id filter, we need to intersect both (the negated account_id filter is already handled above)
@@ -497,14 +497,14 @@ class Sql
 				$this->total = 0;
 				return array();
 			}
-			$filter[] = $this->db->expression($this->table, $this->table.'.', array(
+			$filter[] = Api\Db\SqlFragment::raw($this->db->expression($this->table, $this->table.'.', array(
 				'account_id' => array_map('abs', (array)$filter['account_id']),
-			));
+			)));
 			unset($filter['account_id']);
 		}
 		if ($param['active'])
 		{
-			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),Api\Contacts\Sql::ACOUNT_ACTIVE_FILTER);
+			$filter[] = Api\Db\SqlFragment::raw(str_replace('UNIX_TIMESTAMP(NOW())',time(),Api\Contacts\Sql::ACOUNT_ACTIVE_FILTER));
 		}
 		$op = 'AND';
 		$criteria = array();

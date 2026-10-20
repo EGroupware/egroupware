@@ -215,7 +215,7 @@ class Sharing
 		}
 		if (empty($token) || !($share = self::$db->select(self::TABLE, '*', array(
 			'share_token' => $token,
-			'(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')',
+			Db\SqlFragment::raw('(share_expires IS NULL OR share_expires > '.self::$db->quote(time(), 'date').')'),
 		), __LINE__, __FILE__,false,'',Db::API_APPNAME)->fetch()) ||
 			!$GLOBALS['egw']->accounts->exists($share['share_owner']))
 		{
@@ -729,7 +729,7 @@ class Sharing
 		// Make sure to use case-sensitive matching
 		$collate = static::$db->setupType == "postgres" ? "unicode" : "utf8_bin";
 		if(($share = static::$db->select(static::TABLE, '*', $extra + array(
-														  "share_path = " . static::$db->quote($path) . " COLLATE $collate",
+														  Db\SqlFragment::raw("share_path = " . static::$db->quote($path) . " COLLATE $collate"),
 				'share_owner' => Vfs::$user,
 				'share_expires' => null,
 				'share_passwd'  => null,
@@ -904,7 +904,7 @@ class Sharing
 					'(MAX(share_last_accessed) IS NULL OR MAX(share_last_accessed) < '.self::$db->quote(self::$db->to_timestamp(time()-self::TMP_KEEP)).')';
 
 			foreach(self::$db->select(self::TABLE, $cols, array(
-				"share_path LIKE '/home/%/.tmp/%'",
+				Db\SqlFragment::raw("share_path LIKE '/home/%/.tmp/%'"),
 			), __LINE__, __FILE__, false, 'GROUP BY share_path '.$having) as $row)
 			{
 				Vfs::remove($row['share_path']);

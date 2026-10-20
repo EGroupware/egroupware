@@ -74,6 +74,13 @@ class Sql extends Api\Storage
 		parent::__construct('api', 'egw_addressbook', self::EXTRA_TABLE,
 			'contact_', '_name', '_value', '_id', $db);
 
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects addressbook's own queries - every
+		// raw SQL fragment this class builds itself now uses Api\Db\SqlFragment. Once
+		// requireSqlFragmentObjects() becomes the default (opt-out) for Api\Db generally, remove
+		// this clone again - Api\Storage::__construct() already defaults $no_clone=true.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
+
 		$this->non_db_cols[] = 'jpegphoto'; // to get merge to merge it too and save can store it in filesystem
 
 		// Get custom fields from addressbook instead of api
@@ -125,7 +132,7 @@ class Sql extends Api\Storage
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if ($filter['cat_id'])
 		{
-			$filter[] = $this->_cat_filter($filter['cat_id']);
+			$filter[] = Api\Db\SqlFragment::raw($this->_cat_filter($filter['cat_id']));
 			unset($filter['cat_id']);
 		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
@@ -147,33 +154,33 @@ class Sql extends Api\Storage
 			{
 				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
 				{
-					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
+					$filter[] = Api\Db\SqlFragment::raw($this->table_name.'.contact_owner != 0');	// in case there have been accounts in sql previously
 				}
-				$filter[] = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+				$filter[] = Api\Db\SqlFragment::raw("(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					(!$this->grants ? ')' :
 					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
-					implode(',',array_keys($this->grants))."))");
+					implode(',',array_keys($this->grants))."))"));
 			}
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 			{
 				$join .= self::ACCOUNT_ACTIVE_JOIN;
 				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 				{
-					$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+					$filter[] = Api\Db\SqlFragment::raw(str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER));
 				}
 				else
 				{
-					$filter[] = 'egw_accounts.account_id IS NULL';
+					$filter[] = Api\Db\SqlFragment::raw('egw_accounts.account_id IS NULL');
 				}
 			}
 		}
 		if ($param['searchletter'])
 		{
-			$filter[] = 'org_name '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
+			$filter[] = Api\Db\SqlFragment::raw('org_name '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%'));
 		}
 		else
 		{
-			$filter[] = "org_name != ''";// AND org_name IS NOT NULL";
+			$filter[] = Api\Db\SqlFragment::raw("org_name != ''");// AND org_name IS NOT NULL";
 		}
 		if (isset($filter['list']))
 		{
@@ -351,7 +358,7 @@ class Sql extends Api\Storage
 		if ($param['cat_id'])
 		{
 			$cat_filter = $this->_cat_filter($filter['cat_id']);
-			$filter[] = str_replace('cat_id', $this->table_name . '.cat_id', $cat_filter);
+			$filter[] = Api\Db\SqlFragment::raw(str_replace('cat_id', $this->table_name . '.cat_id', $cat_filter));
 			$join .= str_replace('cat_id', 'a2.cat_id', $cat_filter) . ' AND ';
 			unset($filter['cat_id']);
 		}
@@ -387,17 +394,17 @@ class Sql extends Api\Storage
 			{
 				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
 				{
-					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
+					$filter[] = Api\Db\SqlFragment::raw($this->table_name.'.contact_owner != 0');	// in case there have been accounts in sql previously
 				}
-				$filter[] = $access = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+				$filter[] = Api\Db\SqlFragment::raw($access = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR {$this->table_name}.contact_private=0 AND ".$this->table_name.".contact_owner IN (".
-					implode(',',array_keys($this->grants))."))";
+					implode(',',array_keys($this->grants))."))");
 				$join .= str_replace($this->table_name, 'a2', $access) . ' AND ';
 			}
 		}
 		if ($param['searchletter'])
 		{
-			$filter[] = $this->table_name.'.n_fn '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%');
+			$filter[] = Api\Db\SqlFragment::raw($this->table_name.'.n_fn '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($param['searchletter'].'%'));
 		}
 		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
 		$group = $GLOBALS['egw_info']['user']['preferences']['addressbook']['duplicate_fields'] ?
@@ -432,12 +439,12 @@ class Sql extends Api\Storage
 			{
 				$join .=' LEFT JOIN egw_accounts AS account_1 ON egw_addressbook.account_id=account_1.account_id ';
 				$join .=' LEFT JOIN egw_accounts AS account_2 ON egw_addressbook.account_id=account_2.account_id ';
-				$filter[] = str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_1.account_'),self::ACOUNT_ACTIVE_FILTER);
-				$filter[] = str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_2.account_'),self::ACOUNT_ACTIVE_FILTER);
+				$filter[] = Api\Db\SqlFragment::raw(str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_1.account_'),self::ACOUNT_ACTIVE_FILTER));
+				$filter[] = Api\Db\SqlFragment::raw(str_replace(array('UNIX_TIMESTAMP(NOW())', 'account_'),array(time(),'account_2.account_'),self::ACOUNT_ACTIVE_FILTER));
 			}
 			else
 			{
-				$filter[] = 'egw_addressbook.account_id IS NULL and a2.account_id IS NULL';
+				$filter[] = Api\Db\SqlFragment::raw('egw_addressbook.account_id IS NULL and a2.account_id IS NULL');
 			}
 		}
 		$append = " HAVING match_count >= $match_count ORDER BY {$order} $sort, $this->table_name.contact_id";
@@ -541,15 +548,15 @@ class Sql extends Api\Storage
 				$filter['cat_id'] = substr($filter['cat_id'],1);
 				$not = 'NOT';
 			}
-			$filter[] = $this->_cat_filter($filter['cat_id'],$not);
+			$filter[] = Api\Db\SqlFragment::raw($this->_cat_filter($filter['cat_id'],$not));
 			unset($filter['cat_id']);
 		}
 
 		if (!empty($filter['shared_by']))
 		{
-			$filter[] = $this->table_name.'.contact_id IN (SELECT DISTINCT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
+			$filter[] = Api\Db\SqlFragment::raw($this->table_name.'.contact_id IN (SELECT DISTINCT contact_id FROM '.self::SHARED_TABLE.' WHERE '.
 				'shared_deleted IS NULL AND shared_by='.(int)$filter['shared_by'].
-				((string)$filter['owner'] !== '' ? ' AND shared_with='.(int)$filter['owner'] : '').')';
+				((string)$filter['owner'] !== '' ? ' AND shared_with='.(int)$filter['owner'] : '').')');
 			unset($filter['shared_by']);
 			$shared_sql = '1=1';	// can not be empty and must be true
 		}
@@ -593,28 +600,28 @@ class Sql extends Api\Storage
 						$ret = false;
 						return $ret;
 					}
-					$filter[] = '('.substr($groupmember_sql,4)." OR $shared_sql)";
+					$filter[] = Api\Db\SqlFragment::raw('('.substr($groupmember_sql,4)." OR $shared_sql)");
 					unset($filter['owner']);
 				}
 				// for an owner filter, which does NOT include current user, filter out private entries
 				elseif (!in_array($GLOBALS['egw_info']['user']['account_id'], (array)$filter['owner']))
 				{
-					$filter[] = '('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner'], 'contact_private' => 0]).
-						" OR $shared_sql)";
+					$filter[] = Api\Db\SqlFragment::raw('('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner'], 'contact_private' => 0]).
+						" OR $shared_sql)");
 					unset($filter['owner']);
 				}
 				// if multiple addressbooks (incl. current owner) are searched, we need full acl filter
 				elseif(is_array($filter['owner']) && count($filter['owner']) > 1)
 				{
-					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					$filter[] = Api\Db\SqlFragment::raw("($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 						" OR $shared_sql".
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
-						implode(',',array_keys($this->grants)).") ".($groupmember_sql ?? '')." OR $this->table_name.contact_owner IS NULL)";
+						implode(',',array_keys($this->grants)).") ".($groupmember_sql ?? '')." OR $this->table_name.contact_owner IS NULL)");
 				}
 				else
 				{
-					$filter[] = '('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner']]).
-						" OR $shared_sql)";
+					$filter[] = Api\Db\SqlFragment::raw('('.$this->db->expression($this->table_name, $this->table_name.'.', ['contact_owner' => $filter['owner']]).
+						" OR $shared_sql)");
 					unset($filter['owner']);
 				}
 			}
@@ -622,13 +629,13 @@ class Sql extends Api\Storage
 			{
 				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
 				{
-					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
+					$filter[] = Api\Db\SqlFragment::raw($this->table_name.'.contact_owner != 0');	// in case there have been accounts in sql previously
 				}
-				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+				$filter[] = Api\Db\SqlFragment::raw("($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR $shared_sql".
 					($this->grants ? " OR contact_private=0 AND $this->table_name.contact_owner IN (".
 						implode(',',array_keys($this->grants)).")" : '').
-					($groupmember_sql??'')." OR $this->table_name.contact_owner IS NULL)";
+					($groupmember_sql??'')." OR $this->table_name.contact_owner IS NULL)");
 			}
 		}
 		if (isset($filter['list']))
@@ -654,7 +661,7 @@ class Sql extends Api\Storage
 			$extra_cols[] = 'account_lid AS account_lid';
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
-				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
+				$filter[] = Api\Db\SqlFragment::raw(str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER));
 			}
 		}
 		else
@@ -739,10 +746,10 @@ class Sql extends Api\Storage
 			case '':	// filter not set
 				break;
 			case 'not':
-				$filter[] = $shared_with.' IS NULL';
+				$filter[] = Api\Db\SqlFragment::raw($shared_with.' IS NULL');
 				break;
 			case 'shared':
-				$filter[] = $shared_with.' IS NOT NULL';
+				$filter[] = Api\Db\SqlFragment::raw($shared_with.' IS NOT NULL');
 				break;
 			default:
 				$join .= ' JOIN '.self::SHARED_TABLE.' sw ON '.$this->table_name.'.contact_id=sw.contact_id AND sw.'.
@@ -753,7 +760,8 @@ class Sql extends Api\Storage
 		unset($filter['shared_with']);
 
 		// if we have regular expression based container-name AND use MariaDB/MySQL sort by it instead of account_dn
-		if (preg_match('/(^|,| )account_dn( |,)/', $order_by) && in_array("account_type='g'", $filter) &&
+		// (string-cast comparison: a caller like Accounts\Sql may hand this in as a Db\SqlFragment now)
+		if (preg_match('/(^|,| )account_dn( |,)/', $order_by) && in_array("account_type='g'", array_map('strval', $filter)) &&
 			!empty($GLOBALS['egw_info']['server']['group_container_attribute']) && $this->db->Type === 'mysql' &&
 			in_array($group_container_attribute=$GLOBALS['egw_info']['server']['group_container_attribute'], ['account_dn', 'account_lid']))
 		{
@@ -771,8 +779,8 @@ class Sql extends Api\Storage
 		if (!empty($filter['account_id']) && ($not_account_ids = array_search('!', $filter['account_id'])) !== false)
 		{
 			unset($filter['account_id'][$not_account_ids]);
-			$filter[] = '('.$this->table_name.'.account_id IS NULL OR '.    // "NULL NOT IN (1, 2)" is false in SQL, need to check it explicit
-				$this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]).')';
+			$filter[] = Api\Db\SqlFragment::raw('('.$this->table_name.'.account_id IS NULL OR '.    // "NULL NOT IN (1, 2)" is false in SQL, need to check it explicit
+				$this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]).')');
 			unset($filter['account_id']);
 		}
 
@@ -874,7 +882,7 @@ class Sql extends Api\Storage
 	{
 		if (is_array($uids) && array_key_exists('list_id', $uids))
 		{
-			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $uids['list_id']));
+			$uids[] = Api\Db\SqlFragment::raw($this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $uids['list_id'])));
 			unset($uids['list_id']);
 		}
 		$lists = array();
@@ -962,7 +970,7 @@ class Sql extends Api\Storage
 		}
 		else
 		{
-			$data[] = 'list_etag=list_etag+1';
+			$data[] = Api\Db\SqlFragment::raw('list_etag=list_etag+1');
 		}
 		$data['list_modified'] = time();
 		$data['list_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
@@ -1026,7 +1034,7 @@ class Sql extends Api\Storage
 		}
 		// update etag
 		return $this->db->update($this->lists_table,array(
-			'list_etag=list_etag+1',
+			Api\Db\SqlFragment::raw('list_etag=list_etag+1'),
 			'list_modified' => time(),
 			'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
 		),array(
@@ -1067,7 +1075,7 @@ class Sql extends Api\Storage
 		foreach((array)$list as $list_id)
 		{
 			$this->db->update($this->lists_table,array(
-				'list_etag=list_etag+1',
+				Api\Db\SqlFragment::raw('list_etag=list_etag+1'),
 				'list_modified' => time(),
 				'list_modifier' => $GLOBALS['egw_info']['user']['account_id'],
 			),array(
@@ -1200,7 +1208,7 @@ class Sql extends Api\Storage
 	{
 		$shared = [];
 		$where = ['contact_id' => $id];
-		if (isset($deleted)) $where[] = $deleted ? 'shared_deleted IS NOT NULL' : 'shared_deleted IS NULL';
+		if (isset($deleted)) $where[] = Api\Db\SqlFragment::raw($deleted ? 'shared_deleted IS NOT NULL' : 'shared_deleted IS NULL');
 		foreach($this->db->select(self::SHARED_TABLE, '*', $where, __LINE__, __FILE__, false) as $row)
 		{
 			$row['shared_at'] = Api\DateTime::server2user($row['shared_at'], 'object');
@@ -1251,8 +1259,8 @@ class Sql extends Api\Storage
 			}
 			$ids[] = (int)$data['shared_id'];
 		}
-		$delete = ['contact_id' => $id, 'shared_deleted IS NULL'];
-		if ($ids) $delete[] = 'shared_id NOT IN ('.implode(',', $ids).')';
+		$delete = ['contact_id' => $id, Api\Db\SqlFragment::raw('shared_deleted IS NULL')];
+		if ($ids) $delete[] = Api\Db\SqlFragment::raw('shared_id NOT IN ('.implode(',', $ids).')');
 		$this->db->update(self::SHARED_TABLE, ['shared_deleted' => new Api\DateTime('now')], $delete, __LINE__, __FILE__);
 		foreach($shared as &$data)
 		{
@@ -1312,7 +1320,7 @@ class Sql extends Api\Storage
 		{
 			$etag = $this->data['etag'];
 			unset($this->data['etag']);
-			if (!($err = parent::save(array('contact_etag=contact_etag+1'),array('contact_etag' => $etag))))
+			if (!($err = parent::save(array(Api\Db\SqlFragment::raw('contact_etag=contact_etag+1')),array('contact_etag' => $etag))))
 			{
 				$this->data['etag'] = (int)$etag+1;
 			}
@@ -1324,7 +1332,7 @@ class Sql extends Api\Storage
 		else
 		{
 			unset($this->data['etag']);
-			if (!($err = parent::save(array('contact_etag=contact_etag+1'))) && $new_entry)
+			if (!($err = parent::save(array(Api\Db\SqlFragment::raw('contact_etag=contact_etag+1')))) && $new_entry)
 			{
 				$this->data['etag'] = 0;
 			}

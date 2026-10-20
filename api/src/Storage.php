@@ -636,8 +636,8 @@ class Storage extends Storage\Base
 			{
 				if ($criteria[$this->autoinc_id])
 				{
-					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',
-						array($this->autoinc_id => $criteria[$this->autoinc_id]));
+					$criteria[] = Db\SqlFragment::raw($this->db->expression($this->table_name,$this->table_name.'.',
+						array($this->autoinc_id => $criteria[$this->autoinc_id])));
 				}
 				unset($criteria[$this->autoinc_id]);
 			}
@@ -656,9 +656,9 @@ class Storage extends Storage\Base
 				$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 				if(is_string($name) && !empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 				{
-					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+					$criteria[] = Db\SqlFragment::raw($this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,
-					));
+					)));
 					unset($criteria[$name]);
 				}
 				elseif (is_string($name) && $this->is_cf($name))
