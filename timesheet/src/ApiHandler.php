@@ -281,7 +281,13 @@ class ApiHandler extends Api\CalDAV\Handler
 			switch($name)
 			{
 				case 'search':
-					$cols = array_merge($cols, $this->bo->search2criteria($value));
+					// search2criteria() treats a non-string pattern as already-built, trusted
+					// criteria and returns it unprocessed - $value is client-supplied, so it must
+					// be a plain string here, never an array
+					if (is_string($value))
+					{
+						$cols = array_merge($cols, $this->bo->search2criteria($value));
+					}
 					break;
 				case 'category':
 				case 'pricelist':
@@ -458,7 +464,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			if ($matches) $prop_filters[] = implode($prop_test=='allof'?' AND ':' OR ',$matches);
 			if ($prop_filters)
 			{
-				$filters[] = $filter = '(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))';
+				$filters[] = $filter = Api\Db\SqlFragment::raw('(('.implode($filter_test=='allof'?') AND (':') OR (', $prop_filters).'))');
 				if ($this->debug) error_log(__METHOD__."(path=$options[path], ...) sql-filter: $filter");
 			}
 		}
@@ -487,7 +493,7 @@ class ApiHandler extends Api\CalDAV\Handler
 						$parts = explode('/', $option['data']);
 						$parts = explode('/', $option['data']);
 						$filters['sync_token_offset'] = explode(self::SYNC_TOKEN_OFFSET_DELIMITER, array_pop($parts))+[null, 0];
-						$filters[] = 'ts_modified>='.(int)$filters['sync_token_offset'][0];
+						$filters[] = Api\Db\SqlFragment::raw('ts_modified>='.(int)$filters['sync_token_offset'][0]);
 						$filters['ts_status'] = 'all';	// to return deleted entries too
 					}
 					break;

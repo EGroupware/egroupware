@@ -1888,7 +1888,9 @@ class infolog_bo
 		$extra_cols = array();
 		$search_fragment = null;
 		if (!empty($query['query'])) $query['search'] = $query['query'];	// allow both names
-		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
+		// search2criteria() treats a non-string pattern as already-built, trusted criteria and
+		// returns it unprocessed - $query is often client-supplied, so it must be a plain string
+		if (!empty($query['search']) && is_string($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
 		{
 			$rag_filter = $extra_cols = [];
 			$search_order_by = null;
