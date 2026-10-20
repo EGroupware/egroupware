@@ -389,20 +389,62 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	}
 
 	/**
-	 * Next upcoming mid-July midnight (server timezone) - a date always far enough from any
-	 * northern or southern hemisphere DST transition to keep a RECUR_DAYS window clear of one,
-	 * whatever day this test happens to run, while still being a near-future date like 'now' was.
+	 * Nearest upcoming day (server timezone, starting from 'now'+1 like before) from which a
+	 * RECUR_DAYS window does not cross a DST transition for any of the given timezones.
+	 *
+	 * Recurring events only get their occurrences materialized up to the calendar's current
+	 * "horizont" at save time (calendar_bo::set_recurrences()); a far-future fixed date (eg. a
+	 * fixed mid-year anchor) can exceed it and silently truncate recurrences, which is why this
+	 * stays as close to 'now' as possible and only steps forward a few days when actually needed.
 	 */
-	protected function nextSafeAnchorDay() : Api\DateTime
+	protected function safeStartDay(array $timezones) : Api\DateTime
 	{
-		$now = new Api\DateTime('now', Api\DateTime::$server_timezone);
-		$anchor = new Api\DateTime($now->format('Y').'-07-15', Api\DateTime::$server_timezone);
-		$anchor->setTime(0, 0, 0);
-		if ($anchor < $now)
+		$day = new Api\DateTime('now', Api\DateTime::$server_timezone);
+		$day->setTime(0, 0, 0);
+		$day->modify('+1 day');
+
+		$zones = array_unique([$timezones['event'], $timezones['client'], $timezones['server']]);
+		// bounded search: a DST transition is at most a few months away, so this always terminates quickly
+		for ($tries = 0; $tries < 60; $tries++)
 		{
-			$anchor->modify('+1 year');
+			if (!$this->windowCrossesDst($day, $zones))
+			{
+				return $day;
+			}
+			$day->modify('+1 day');
 		}
-		return $anchor;
+		return $day;
+	}
+
+	/**
+	 * Whether any of $zones changes UTC offset anywhere across the RECUR_DAYS window starting at
+	 * $day, checked +/-1 day of padding and at noon UTC of each sampled date (not local midnight -
+	 * a timezone that's already past its own transition at local midnight of the transition's own
+	 * calendar day gave a false "safe" with an offset check limited to the two window endpoints).
+	 */
+	protected function windowCrossesDst(Api\DateTime $day, array $zones) : bool
+	{
+		$first_offset = [];
+		for ($d = -1; $d <= static::RECUR_DAYS + 1; $d++)
+		{
+			$sample = clone $day;
+			$sample->setTimezone(new \DateTimeZone('UTC'));
+			$sample->modify("$d days")->setTime(12, 0, 0);
+
+			foreach($zones as $tz)
+			{
+				$offset = (new \DateTimeZone($tz))->getOffset($sample);
+				if (!isset($first_offset[$tz]))
+				{
+					$first_offset[$tz] = $offset;
+				}
+				elseif ($first_offset[$tz] !== $offset)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -416,8 +458,7 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 	{
 		// Preserve legacy test semantics from mktime()+timestamp flow:
 		// use server calendar date, but interpret wall time in user timezone.
-		$server_start_day = $this->nextSafeAnchorDay();
-		$server_start_day->modify('+1 day');
+		$server_start_day = $this->safeStartDay($timezones);
 		$start = new Api\DateTime(
 			$server_start_day->format('Y-m-d') . ' ' . sprintf('%02d:00:00', $whole_day ? 0 : $times['start']),
 			Api\DateTime::$user_timezone
@@ -433,8 +474,9 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 		{
 			$end->setTime($times['end'], 0, 0);
 		}
-		$server_recur_end_day = $this->nextSafeAnchorDay();
-		$server_recur_end_day->modify('+' . static::RECUR_DAYS . ' days');
+		// matches the original 'now'+RECUR_DAYS vs. 'now'+1 relationship (RECUR_DAYS occurrences total)
+		$server_recur_end_day = clone $server_start_day;
+		$server_recur_end_day->modify('+' . (static::RECUR_DAYS - 1) . ' days');
 		$this->recur_end = new Api\DateTime(
 			$server_recur_end_day->format('Y-m-d') . ' 00:00:00',
 			Api\DateTime::$user_timezone
