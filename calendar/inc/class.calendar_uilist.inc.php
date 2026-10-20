@@ -418,7 +418,7 @@ class calendar_uilist extends calendar_ui
 				$status_config = Api\Config::read("status");
 				if (!$col_filter['include_videocalls'])
 				{
-					$col_filter[] = 'cal_category != ' . $this->bo->so->db->quote( $status_config['status_cat_videocall']);
+					$col_filter[] = Api\Db\SqlFragment::raw('cal_category != ' . $this->bo->so->db->quote( $status_config['status_cat_videocall']));
 				}
 				unset($col_filter['include_videocalls']);
 			}
@@ -426,7 +426,7 @@ class calendar_uilist extends calendar_ui
 			if (empty($params['cat_id']) && ($subscriptions=array_keys(Api\CalDAV\Sync::listSubscriptions())) &&
 				!in_array('subscriptions', (array)$this->cal_prefs['integration_toggle']))
 			{
-				$col_filter[] = 'NOT '.$this->bo->so->cat_filter($subscriptions);
+				$col_filter[] = Api\Db\SqlFragment::raw('NOT '.$this->bo->so->cat_filter($subscriptions));
 			}
 		}
 		$rows = $js_integration_data = array();

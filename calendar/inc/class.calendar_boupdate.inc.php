@@ -2782,18 +2782,18 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
+			$query[] = Api\Db\SqlFragment::raw('recur_type!='. MCAL_RECUR_NONE);
 			$query['cal_recurrence'] = 0;
 		}
 		elseif ($filter == 'exact')
 		{
 			if (!empty($event['recur_type']))
 			{
-				$query[] = 'recur_type='.$event['recur_type'];
+				$query[] = Api\Db\SqlFragment::raw('recur_type='.$event['recur_type']);
 			}
 			else
 			{
-				$query[] = 'recur_type IS NULL';
+				$query[] = Api\Db\SqlFragment::raw('recur_type IS NULL');
 			}
 			$query['cal_recurrence'] = $event_recurrence_ts;
 		}
@@ -2912,24 +2912,24 @@ class calendar_boupdate extends calendar_bo
 
 				// check length with some tolerance
 				$length = $event_end_ts - $event_start_ts - $delta;
-				$query[] = ('(cal_end-cal_start)>' . $length);
+				$query[] = Api\Db\SqlFragment::raw('(cal_end-cal_start)>' . $length);
 				$length += 2 * $delta;
-				$query[] = ('(cal_end-cal_start)<' . $length);
-				$query[] = ('cal_start>' . ($event_start_ts - 86400));
-				$query[] = ('cal_start<' . ($event_start_ts + 86400));
+				$query[] = Api\Db\SqlFragment::raw('(cal_end-cal_start)<' . $length);
+				$query[] = Api\Db\SqlFragment::raw('cal_start>' . ($event_start_ts - 86400));
+				$query[] = Api\Db\SqlFragment::raw('cal_start<' . ($event_start_ts + 86400));
 			}
 			elseif (isset($event['start']))
 			{
 				if ($filter == 'relax')
 				{
-					$query[] = ('cal_start>' . ($event_start_ts - 3600));
-					$query[] = ('cal_start<' . ($event_start_ts + 3600));
+					$query[] = Api\Db\SqlFragment::raw('cal_start>' . ($event_start_ts - 3600));
+					$query[] = Api\Db\SqlFragment::raw('cal_start<' . ($event_start_ts + 3600));
 				}
 				else
 				{
 					// we accept a tiny tolerance
-					$query[] = ('cal_start>' . ($event_start_ts - 2));
-					$query[] = ('cal_start<' . ($event_start_ts + 2));
+					$query[] = Api\Db\SqlFragment::raw('cal_start>' . ($event_start_ts - 2));
+					$query[] = Api\Db\SqlFragment::raw('cal_start<' . ($event_start_ts + 2));
 				}
 			}
 			if ($filter == 'relax')

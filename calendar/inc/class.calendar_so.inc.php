@@ -146,7 +146,9 @@ class calendar_so
 	function __construct()
 	{
 		$this->async = $GLOBALS['egw']->asyncservice;
-		$this->db = $GLOBALS['egw']->db;
+		// own clone (not the shared global instance) so this opt-in only affects calendar's own
+		// queries - every raw SQL fragment calendar builds itself now uses Api\Db\SqlFragment
+		$this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(true);
 
 		$this->all_tables = array($this->cal_table);
 		foreach(array('extra','repeats','user','dates') as $name)
@@ -177,15 +179,15 @@ class calendar_so
 
 		if(isset($deleted))
 		{
-			$where[] = "cal_deleted IS " . ($deleted ? '' : 'NOT') . ' NULL';
+			$where[] = Api\Db\SqlFragment::raw("cal_deleted IS " . ($deleted ? '' : 'NOT') . ' NULL');
 		}
 		if($end)
 		{
-			$where[] = "range_start<" . $end->format('server');
+			$where[] = Api\Db\SqlFragment::raw("range_start<" . $end->format('server'));
 		}
 		if($start)
 		{
-			$where[] = "(range_end IS NULL OR range_end>" . $start->format('server') . ")";
+			$where[] = Api\Db\SqlFragment::raw("(range_end IS NULL OR range_end>" . $start->format('server') . ")");
 		}
 		if ($_where) $where = array_merge($where, $_where);
 
@@ -217,11 +219,11 @@ class calendar_so
 		if (isset($deleted)) $where['recur_exception'] = $deleted;
 		if($end)
 		{
-			$where[] = "cal_start<" . $end->format('server');
+			$where[] = Api\Db\SqlFragment::raw("cal_start<" . $end->format('server'));
 		}
 		if($start)
 		{
-			$where[] = "cal_end>" . $start->format('server');
+			$where[] = Api\Db\SqlFragment::raw("cal_end>" . $start->format('server'));
 		}
 		if ($_where) $where = array_merge($where, $_where);
 
@@ -284,7 +286,7 @@ class calendar_so
 		$end_ts = $end->format('server');
 
 		$where = is_array($params['query']) ? $params['query'] : array();
-		if ($cat_id) $where[] = $this->cat_filter($cat_id);
+		if ($cat_id) $where[] = Api\Db\SqlFragment::raw($this->cat_filter($cat_id));
 
 		$egw_cal = $this->cal_range_view(
 			$start,
@@ -400,7 +402,7 @@ class calendar_so
 		$group_by = '';
 		if($recur_date && !$read_recurrence)
 		{
-			$where[] = 'cal_start >= ' . $recur_date_ts;
+			$where[] = Api\Db\SqlFragment::raw('cal_start >= ' . $recur_date_ts);
 			$group_by = 'GROUP BY '.$cols;
 			$cols .= ',MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end';
 			$join = "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id $join";
@@ -562,7 +564,7 @@ class calendar_so
 		foreach($this->db->select($this->user_table,'*',array(
 			'cal_id' => $ids,
 			'cal_recur_date' => $recur_date,
-			"cal_status NOT IN ('X','E')",
+			Api\Db\SqlFragment::raw("cal_status NOT IN ('X','E')"),
 		),__LINE__,__FILE__,false,'ORDER BY cal_user_type DESC,cal_recur_date DESC,'.self::STATUS_SORT,'calendar') as $row)	// DESC puts users before resources and contacts
 		{
 			// combine all participant data in uid and status values
@@ -667,7 +669,7 @@ class calendar_so
 
 		if (count($types) > 1)
 		{
-			$where[] = '(' . implode(' OR ', $types) . ')';
+			$where[] = Api\Db\SqlFragment::raw('(' . implode(' OR ', $types) . ')');
 		}
 
 		if ($master_only)
@@ -780,7 +782,7 @@ class calendar_so
 	{
 		if($filter != 'deleted' && $filter != 'everything')
 		{
-			$where[] = 'cal_deleted IS NULL';
+			$where[] = Api\Db\SqlFragment::raw('cal_deleted IS NULL');
 		}
 		switch($filter)
 		{
@@ -788,41 +790,41 @@ class calendar_so
 				break;
 			case 'showonlypublic':
 				$where['cal_public'] = 1;
-				$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status NOT IN ('R','X','E')");
 				break;
 			case 'deleted':
-				$where[] = 'cal_deleted IS NOT NULL';
+				$where[] = Api\Db\SqlFragment::raw('cal_deleted IS NOT NULL');
 				break;
 			case 'unknown':
-				$where[] = "$this->user_table.cal_status='U'";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status='U'");
 				break;
 			case 'not-unknown':
-				$where[] = "$this->user_table.cal_status NOT IN ('U','X','E')";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status NOT IN ('U','X','E')");
 				break;
 			case 'accepted':
-				$where[] = "$this->user_table.cal_status='A'";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status='A'");
 				break;
 			case 'tentative':
-				$where[] = "$this->user_table.cal_status='T'";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status='T'");
 				break;
 			case 'rejected':
-				$where[] = "$this->user_table.cal_status='R'";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status='R'");
 				break;
 			case 'delegated':
-				$where[] = "$this->user_table.cal_status='D'";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status='D'");
 				break;
 			case 'all':
 			case 'owner':
-				$where[] = "$this->user_table.cal_status NOT IN ('X','E')";
+				$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status NOT IN ('X','E')");
 				break;
 			default:
 				if ($enum_recuring)	// regular UI
 				{
-					$where[] = "$this->user_table.cal_status NOT IN ('R','X','E')";
+					$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status NOT IN ('R','X','E')");
 				}
 				else	// CalDAV / eSync / iCal need to include 'E' = exceptions
 				{
-					$where[] = "$this->user_table.cal_status NOT IN ('R','X')";
+					$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_status NOT IN ('R','X')");
 				}
 				break;
 		}
@@ -902,7 +904,7 @@ class calendar_so
 				$params['private_grants'][] = $GLOBALS['egw_info']['user']['account_id'];	// db query does NOT return current user
 			}
 			$private_filter = '(cal_public=1 OR cal_public=0 AND '.$this->db->expression($this->cal_table, array('cal_owner' => $params['private_grants'])) . ')';
-			$where[] = $private_filter;
+			$where[] = Api\Db\SqlFragment::raw($private_filter);
 		}
 		if(isset($params['sql_filter']['cal_id']))
 		{
@@ -915,7 +917,7 @@ class calendar_so
 		{
 			if(is_string($params['sql_filter']))
 			{
-				$where[] = $params['sql_filter'];
+				$where[] = Api\Db\SqlFragment::raw($params['sql_filter']);
 			}
 			elseif(is_array($params['sql_filter']))
 			{
@@ -936,7 +938,7 @@ class calendar_so
 						// Multi-select - any entry with the filter value selected matches
 						$filtermethod .= $this->db->expression($this->extra_table, array(
 								'cal_extra_name' => substr($col, 1),
-								$this->db->concat("','", 'cal_extra_value', "','") . ' ' . $this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote('%,' . $data . ',%'),
+								Api\Db\SqlFragment::raw($this->db->concat("','", 'cal_extra_value', "','") . ' ' . $this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote('%,' . $data . ',%')),
 							)) . ')';
 					}
 					else
@@ -946,7 +948,7 @@ class calendar_so
 								'cal_extra_value' => $data,
 							)) . ')';
 					}
-					$where[] = $filtermethod;
+					$where[] = Api\Db\SqlFragment::raw($filtermethod);
 				}
 			}
 		}
@@ -1009,23 +1011,23 @@ class calendar_so
 				}
 			}
 			// this is only used, when we cannot use UNIONS
-			if (!$useUnionQuery) $where[] = '('.implode(' OR ',$to_or).')';
+			if (!$useUnionQuery) $where[] = Api\Db\SqlFragment::raw('('.implode(' OR ',$to_or).')');
 
 			$where = $this->status_filter($filter, $params['enum_recuring'], $where);
 		}
 		if ($cat_id)
 		{
-			$where[] = $this->cat_filter($cat_id);
+			$where[] = Api\Db\SqlFragment::raw($this->cat_filter($cat_id));
 		}
 		if ($start)
 		{
 			if ($params['enum_recuring'])
 			{
-				$where[] = $start->format('server') . ' < cal_end';
+				$where[] = Api\Db\SqlFragment::raw($start->format('server') . ' < cal_end');
 			}
 			else
 			{
-				$where[] = '(' . ($start->format('server')) . ' < range_end OR range_end IS NULL)';
+				$where[] = Api\Db\SqlFragment::raw('(' . ($start->format('server')) . ' < range_end OR range_end IS NULL)');
 			}
 		}
 		if (empty($params['order']) || !preg_match('/^[a-z_ ,c]+$/i', $params['order']))
@@ -1036,13 +1038,18 @@ class calendar_so
 		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
 		if (!$params['enum_recuring'])
 		{
-			$where[] = "$this->user_table.cal_recur_date=0";
+			$where[] = Api\Db\SqlFragment::raw("$this->user_table.cal_recur_date=0");
 			$cols = str_replace(array('cal_start','cal_end'),array('range_start AS cal_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end'),$cols);
 			// in case cal_start is used in a query, eg. calendar_ical::find_event
 			// in contrary to the docu on php.net, 3rd parameter can not be an array: https://3v4l.org/budKH
 			foreach($where as &$val)
 			{
-				if (!is_array($val))
+				if ($val instanceof Api\Db\SqlFragment)
+				{
+					$val = Api\Db\SqlFragment::raw(str_replace(array('cal_start','cal_end'),
+						array('range_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id)'), (string)$val));
+				}
+				elseif (!is_array($val))
 				{
 					if($val instanceof DateTimeInterface)
 					{
@@ -1055,12 +1062,12 @@ class calendar_so
 			$params['order'] = str_replace('cal_start', 'range_start', $params['order']);
 			if($end)
 			{
-				$where[] = $end->format('server') . ' > range_start';
+				$where[] = Api\Db\SqlFragment::raw($end->format('server') . ' > range_start');
 			}
 		}
 		elseif($end)
 		{
-			$where[] = $end->format('server') . ' > cal_start';
+			$where[] = Api\Db\SqlFragment::raw($end->format('server') . ' > cal_start');
 		}
 
 		if ($remove_rejected_by_user && $filter != 'everything')
@@ -1076,7 +1083,7 @@ class calendar_so
 				"rejected_by_user.cal_status NOT IN ('R','X')",
 			);
 			if ($filter == 'owner') $or_required[] = 'cal_owner='.(int)$remove_rejected_by_user;
-			$where[] = '('.implode(' OR ',$or_required).')';
+			$where[] = Api\Db\SqlFragment::raw('('.implode(' OR ',$or_required).')');
 		}
 		// using a time-range and deleted attribute limited view instead of full table
 		$cal_table = $this->cal_range_view($start, $end, null, $filter == 'everything' ? null : $filter != 'deleted');
@@ -1142,10 +1149,10 @@ class calendar_so
 					$selects[count($selects)-1]['where'][] = $user_sql;
 					if ($params['enum_recuring'])
 					{
-						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
+						$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("recur_type IS NULL AND $this->user_table.cal_recur_date=0");
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_sql;
-						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
+						$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("$this->user_table.cal_recur_date=cal_start");
 					}
 				}
 				// if the query is to be filtered by owner we need to add more selects for the union
@@ -1155,10 +1162,10 @@ class calendar_so
 					$selects[count($selects)-1]['where'][] = $owner_or;
 					if ($params['enum_recuring'])
 					{
-						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
+						$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("recur_type IS NULL AND $this->user_table.cal_recur_date=0");
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $owner_or;
-						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
+						$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("$this->user_table.cal_recur_date=cal_start");
 					}
 				}
 			}
@@ -1168,9 +1175,9 @@ class calendar_so
 				$selects[] = $select;
 				if ($params['enum_recuring'])
 				{
-					$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
+					$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("recur_type IS NULL AND $this->user_table.cal_recur_date=0");
 					$selects[] = $select;
-					$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
+					$selects[count($selects)-1]['where'][] = Api\Db\SqlFragment::raw("$this->user_table.cal_recur_date=cal_start");
 				}
 			}
 			if (is_numeric($offset) && empty($params['no_total']))	// get the total too
@@ -1199,7 +1206,7 @@ class calendar_so
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
-			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0 OR $this->user_table.cal_recur_date=cal_start)";
+			$where[] = Api\Db\SqlFragment::raw("(recur_type IS NULL AND $this->user_table.cal_recur_date=0 OR $this->user_table.cal_recur_date=cal_start)");
 
 			$selects = array(array(
 				'table' => $cal_table,
@@ -1687,7 +1694,7 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($etag)) $where['cal_etag'] = $etag;
 
 			unset($event['cal_etag']);
-			$event[] = 'cal_etag=COALESCE(cal_etag,0)+1';	// always update the etag, even if none given to check
+			$event[] = Api\Db\SqlFragment::raw('cal_etag=COALESCE(cal_etag,0)+1');	// always update the etag, even if none given to check
 
 			// convert any DateTime values to server timestamps for DB storage
 			$save_event = $event;
@@ -1754,7 +1761,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 			// delete all user-records, with recur-date != 0
 			$this->db->delete($this->user_table,array(
-				'cal_id' => $cal_id, 'cal_recur_date != 0'),
+				'cal_id' => $cal_id, Api\Db\SqlFragment::raw('cal_recur_date != 0')),
 				__LINE__,__FILE__,'calendar');
 
 			$this->db->delete($this->repeats_table,array(
@@ -1768,7 +1775,7 @@ ORDER BY cal_user_type, cal_usre_id
 				foreach($this->db->select($this->user_table, 'cal_user_type,cal_user_id,cal_user_attendee', array(
 					'cal_id' => $event['cal_reference'],
 					'cal_recur_date' => 0,
-					"cal_status != 'X'",	// deleted need to be replaced with exception marker too
+					Api\Db\SqlFragment::raw("cal_status != 'X'"),	// deleted need to be replaced with exception marker too
 				), __LINE__, __FILE__, false, '', 'calendar') as $row)
 				{
 					$master_participants[] = self::combine_user($row['cal_user_type'], $row['cal_user_id'], $row['cal_user_attendee']);
@@ -1836,13 +1843,13 @@ ORDER BY cal_user_type, cal_usre_id
 				// delete all, but the lowest dates record
 				$this->db->delete($this->dates_table,array(
 					'cal_id' => $cal_id,
-					'cal_start > '.(int)$old_min,
+					Api\Db\SqlFragment::raw('cal_start > '.(int)$old_min),
 				),__LINE__,__FILE__,'calendar');
 
 				// delete all user-records, with recur-date != 0
 				$this->db->delete($this->user_table,array(
 					'cal_id' => $cal_id,
-					'cal_recur_date != 0',
+					Api\Db\SqlFragment::raw('cal_recur_date != 0'),
 				),__LINE__,__FILE__,'calendar');
 			}
 			else
@@ -1883,8 +1890,8 @@ ORDER BY cal_user_type, cal_usre_id
 						((int)$old_repeats['recur_enddate'] == 0 || (int)$old_repeats['recur_enddate'] > (int)$event['recur_enddate'])
 					)
 					{
-						$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date >= '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
-						$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start >= '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
+						$this->db->delete($this->user_table,array('cal_id' => $cal_id,Api\Db\SqlFragment::raw('cal_recur_date >= '.($event['recur_enddate'] + 1*DAY_s))),__LINE__,__FILE__,'calendar');
+						$this->db->delete($this->dates_table,array('cal_id' => $cal_id,Api\Db\SqlFragment::raw('cal_start >= '.($event['recur_enddate'] + 1*DAY_s))),__LINE__,__FILE__,'calendar');
 					}
 
 					// recurrences need to be expanded
@@ -2289,7 +2296,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if ((int) $change_since)
 		{
-			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
+			$where[] = Api\Db\SqlFragment::raw('(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')');
 		}
 
 		if ($change_since !== false)
@@ -2352,8 +2359,8 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_user_id'   => $ids,
 					));
 				}
-				$where[] = '('.implode(' OR ',$to_or).')';
-				$where[] = "cal_status!='E'";	// do NOT delete exception marker
+				$where[] = Api\Db\SqlFragment::raw('('.implode(' OR ',$to_or).')');
+				$where[] = Api\Db\SqlFragment::raw("cal_status!='E'");	// do NOT delete exception marker
 				$this->db->update($this->user_table,array('cal_status'=>'X'),$where,__LINE__,__FILE__,'calendar');
 			}
 		}
@@ -2465,11 +2472,11 @@ ORDER BY cal_user_type, cal_usre_id
 			// be more tolerant with a wrong recurrence-id, allow e.g. the time to be 0:00 (as seen with old Exchange servers), but of the same day
 			//$where['cal_recur_date'] = $recur_date;
 			$recur_date = $this->db->quote($recur_date instanceof DateTime ? $recur_date->format('server') : $recur_date, 'int');
-			$where[] = "(cal_recur_date>=$recur_date AND ABS(cal_recur_date-$recur_date)<86400)";
+			$where[] = Api\Db\SqlFragment::raw("(cal_recur_date>=$recur_date AND ABS(cal_recur_date-$recur_date)<86400)");
 		}
 		else
 		{
-			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.time().')';
+			$where[] = Api\Db\SqlFragment::raw('(cal_recur_date=0 OR cal_recur_date >= '.time().')');
 		}
 
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
@@ -2494,7 +2501,7 @@ ORDER BY cal_user_type, cal_usre_id
 				{
 					$set['cal_recur_date'] = $this->db->select($this->dates_table, 'cal_start', [
 						'cal_id' => $cal_id,
-						'cal_start >= ' . $this->db->quote($recur_date, 'int') ?: time(),
+						Api\Db\SqlFragment::raw('cal_start >= ' . $this->db->quote($recur_date, 'int')) ?: time(),
 					], __LINE__, __FILE__, false, '', 'calendar')->fetchColumn();
 				}
 				unset($where[0]);
@@ -2946,7 +2953,7 @@ ORDER BY cal_user_type, cal_usre_id
 			foreach($this->db->select($this->user_table,'cal_id',array(		// MySQL does NOT allow to run this as delete!
 				'cal_user_type' => 'u',
 				'cal_user_id' => $old_user,
-				"cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".$this->db->quote($new_user)." AND cal_user_type='u')",
+				Api\Db\SqlFragment::raw("cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".$this->db->quote($new_user)." AND cal_user_type='u')"),
 			),__LINE__,__FILE__,false,'','calendar') as $row)
 			{
 				$ids[] = $row['cal_id'];
@@ -2984,16 +2991,16 @@ ORDER BY cal_user_type, cal_usre_id
 		$where = array('cal_id' => $cal_id);
 		if($start != null && $end == null)
 		{
-			$where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . $start->format('server') . ')';
+			$where[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR cal_recur_date >= ' . $start->format('server') . ')');
 		}
 		if($start == null && $end != null)
 		{
-			$where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . $end->format('server') . ')';
+			$where[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR cal_recur_date <= ' . $end->format('server') . ')');
 		}
 		if($start != null && $end != null)
 		{
-			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . $start->format('server') .
-				' AND cal_recur_date <= ' . $end->format('server') . '))';
+			$where[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR (cal_recur_date >= ' . $start->format('server') .
+				' AND cal_recur_date <= ' . $end->format('server') . '))');
 		}
 		foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 		{
@@ -3011,16 +3018,16 @@ ORDER BY cal_user_type, cal_usre_id
 		);
 		if($start && !$end)
 		{
-			$where2[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . $start->format('server') . ')';
+			$where2[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR cal_recur_date >= ' . $start->format('server') . ')');
 		}
 		if(!$start && $end)
 		{
-			$where2[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . $end->format('server') . ')';
+			$where2[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR cal_recur_date <= ' . $end->format('server') . ')');
 		}
 		if($start && $end)
 		{
-			$where2[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . $start->format('server') .
-				' AND cal_recur_date <= ' . $end->format('server') . '))';
+			$where2[] = Api\Db\SqlFragment::raw('(cal_recur_date = 0 OR (cal_recur_date >= ' . $start->format('server') .
+				' AND cal_recur_date <= ' . $end->format('server') . '))');
 		}
 		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status,cal_quantity,cal_role',$where2,
 				__LINE__,__FILE__,false,'','calendar') as $row)
