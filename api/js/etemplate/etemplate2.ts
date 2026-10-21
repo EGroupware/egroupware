@@ -1665,6 +1665,39 @@ export class etemplate2
 	}
 
 	/**
+	 * Find the <et2-dialog> this etemplate2 instance (if any) is actually rendered inside, for
+	 * handle_load()'s own window-close/refresh-opener handling - a dialog needs closing/refreshing
+	 * via ITS OWN mechanism (dialog.close()), never window.close()/egw.close(), which assume a real
+	 * separate popup window and are no-ops (browsers correctly refuse to let script close a window/
+	 * tab it didn't open) for a dialog rendered inline in the SAME window instead, as MailApp.
+	 * openComposeDialog() (mail/js/app.ts) and EgwFramework.openPopup()'s own narrow-viewport/
+	 * "open_popups_in: same_window" branch (kdots/js/EgwFramework.ts) both do.
+	 *
+	 * `_instance` is the SUBMITTING etemplate2 instance (api.json()'s own _context param, see
+	 * submit() above - handle_load() itself is invoked via `plugin.callback.call(plugin.context ||
+	 * ..., ...)`, egw_json.ts, so `this` there really is that instance, not the etemplate2 class
+	 * despite the `static` declaration). closest('et2-dialog') finds its dialog ancestor regardless
+	 * of how many wrapper elements sit in between - unlike the previous `et2-dialog > form...`/
+	 * direct-parentNode checks this replaced, which both assumed a <form> immediately inside
+	 * <et2-dialog>. Et2Dialog's actual content wrapper is a plain <div class="dialog_content">,
+	 * never a <form> at all, so neither old check could ever match. Found live 2026-10-20, ticket
+	 * #126711 (a real customer, via Birgit): saving a tracker entry (or any other app's edit form)
+	 * via this same window-close path on a narrow viewport left the dialog open with no error, same
+	 * root cause mail's own trySendViaJmap() independently hit (mail/js/compose.ts, fixed
+	 * alongside this). A global `document.querySelector()` also risked matching the WRONG dialog
+	 * whenever more than one happened to be open at once - scoping to `_instance` sidesteps that
+	 * entirely, since it never needed window-close's own missing DOMNodeID in the first place.
+	 *
+	 * Extracted into its own method purely for unit testability - handle_load() itself handles too
+	 * many unrelated response shapes (refresh-opener, app_header, message, window-focus,
+	 * setSidebox, ...) to drive in a focused test.
+	 */
+	private static findOwnDialog(_instance : any) : Et2Dialog | undefined
+	{
+		return <Et2Dialog>_instance?.DOMContainer?.closest('et2-dialog') ?? undefined;
+	}
+
+	/**
 	 * Plugin for egw.json type "et2_load"
 	 *
 	 * @param _type
@@ -1675,10 +1708,7 @@ export class etemplate2
 	{
 		// Check the parameters
 		const data = _response.data;
-		// window-close does NOT send data.DOMNodeID!
-		const dialog = <Et2Dialog>document.querySelector('et2-dialog > form' + (data.DOMNodeID ? '#' + data.DOMNodeID : '.dialog_content'))?.parentNode ??
-			// Reloaded into same container
-			(this?.DOMContainer?.parentNode instanceof Et2Dialog ? this.DOMContainer.parentNode : undefined);
+		const dialog = etemplate2.findOwnDialog(this);
 		let app = null;
 
 		if (dialog)
