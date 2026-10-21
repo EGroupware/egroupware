@@ -1519,8 +1519,35 @@ export class MailCompose
 		// otherwise trip the "unsaved changes" beforeunload prompt despite the message having
 		// already sent successfully (found live 2026-08-27)
 		this.et2.getInstanceManager().skip_close_prompt();
-		window.close();
+		this.closeComposeWindow();
 		return true;
+	}
+
+	/**
+	 * Close this compose, whether it's a real popup window or an inline <et2-dialog> - trySendViaJmap()'s
+	 * own call site, after a successful send. Extracted into its own method purely for unit
+	 * testability, same reasoning as flagSourceMessagesAfterSend() below.
+	 *
+	 * On a narrow viewport (or the "open_popups_in: same_window" preference), MailApp.openComposeDialog()
+	 * (mail/js/app.ts) builds this compose as an inline <et2-dialog> in the SAME window instead of a
+	 * real popup - a plain window.close() unconditionally assumed the latter, a no-op browsers
+	 * correctly refuse ("script can't close a window/tab it didn't open") for the former. Found live
+	 * 2026-10-20, ticket #126711 (a real customer, relayed by Birgit): the compose dialog just stayed
+	 * open after a successful send, with no error, leaving the user unsure whether it actually sent.
+	 * Closing the dialog itself when inline mirrors openComposeDialog()'s own construction
+	 * (loadWebComponent('et2-dialog', ...)).
+	 */
+	private closeComposeWindow() : void
+	{
+		const dialog = this.et2.getInstanceManager().DOMContainer.closest('et2-dialog') as Et2Dialog | null;
+		if(dialog)
+		{
+			dialog.close();
+		}
+		else
+		{
+			window.close();
+		}
 	}
 
 	/**
