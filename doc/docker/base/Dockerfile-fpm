@@ -1,0 +1,116 @@
+################################################################################
+##
+## EGroupware base-fpm image: extends base-php with the heavier extensions
+## (gd/xsl/bz2/zip/tidy/bcmath/ldap/apcu/gmp/smbclient) and the generic
+## FPM pool + php.ini production hardening shared by CE, development, and the
+## hosting-farm's own php-fpm/mserver images.
+##
+## Does NOT contain pgsql/pdo_pgsql: postgresqlXX-dev pulls in a surprisingly
+## heavy transitive dependency chain (LLVM/clang, for JIT support nothing here
+## needs) - add it in the CE/EPL Dockerfile instead, where it's actually used.
+##
+## Build with --build-arg BASE_IMAGE=<base-php image:tag>, defaulting to the
+## published base-php image.
+##
+################################################################################
+ARG BASE_IMAGE=quay.io/egroupware/php:base-latest
+
+FROM ${BASE_IMAGE}
+LABEL maintainer="rb@egroupware.org"
+
+ARG PHP_VERSION=8.5
+ENV PHP_VERSION=$PHP_VERSION
+
+RUN set -e \
+	&& apk add --no-cache --virtual .build-deps \
+		$PHPIZE_DEPS \
+		freetype-dev libjpeg-turbo-dev libpng-dev libwebp-dev \
+		libxslt-dev \
+		bzip2-dev \
+		libzip-dev \
+		tidyhtml-dev \
+		gmp-dev \
+		openldap-dev \
+		samba-dev \
+	&& apk add --no-cache \
+		freetype libjpeg-turbo libpng libwebp \
+		libxslt \
+		libbz2 \
+		libzip \
+		tidyhtml-libs \
+		gmp \
+		openldap \
+		libsmbclient samba-client-libs \
+		ca-certificates \
+	&& docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+	&& docker-php-ext-install -j$(nproc) gd xsl bz2 zip tidy gmp bcmath ldap \
+	# pecl.php.net's REST metadata is intermittently flaky ("does not have REST info xml
+	# available"), unrelated to this Dockerfile - retry rather than fail the whole build
+	&& (for i in 1 2 3 4 5; do printf '\n' | pecl install apcu && exit 0; sleep 5; done; exit 1) \
+	&& (for i in 1 2 3 4 5; do pecl install smbclient && exit 0; sleep 5; done; exit 1) \
+	&& docker-php-ext-enable apcu smbclient \
+	&& docker-php-source delete \
+	&& apk del .build-deps \
+	# fpm pool settings, generic production baseline - downstream images may override
+	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
+		-e '/allowed_clients/d' \
+		-e '/pm.max_children/s/=.*/= 80/' \
+		-e '/pm.start_servers/s/=.*/= 10/' \
+		-e '/pm.min_spare_servers/s/=.*/= 10/' \
+		-e '/pm.max_spare_servers/s/=.*/= 20/' \
+		-e '/catch_workers_output/s/^;/;/' \
+		-e '/error_log/d' \
+		-e 's/^;\?pm.max_requests =.*/pm.max_requests = 30/' \
+		# temporary CVE-2026-109618 mitigation: a *finite* memory_limit is what triggers
+		# the vulnerable OOM-interrupt code path, so uncap it until PHP 8.5.12 ships the
+		# real fix - revert to a real limit (was 172M) once that's deployed everywhere
+		-e 's/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit] = -1/' \
+		-e 's/^;\?request_terminate_timeout.*/request_terminate_timeout = 70m/' \
+		-i /usr/local/etc/php-fpm.d/www.conf \
+	# disable_functions as a pool-level php_admin_value, NOT in the shared php.ini: unlike
+	# Debian/ondrej's packages, the official Alpine PHP image has ONE php.ini shared by both
+	# the fpm and cli SAPIs - setting disable_functions there would also break CLI scripts
+	# (post_install.php/setup-cli.php) that genuinely need exec()/system() to work. A
+	# pool-level php_admin_value only applies to requests served by this FPM pool, never CLI.
+	# Downstream images that genuinely need exec() at the FPM level too (eg. mserver) can
+	# simply comment this line back out.
+	&& echo 'php_admin_value[disable_functions] = exec,passthru,shell_exec,system,proc_open,popen' >> /usr/local/etc/php-fpm.d/www.conf \
+	&& sed 	-e 's/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime=14400/g' \
+		# Debian/ondrej's PHP package bakes this into its own default php.ini; upstream's
+		# php.ini-production leaves it empty. Any app relying on PHP's native session.save_path
+		# convention (eg. swoolepush's Session\Files, which reads ini_get('session.save_path')
+		# directly) needs it explicitly set - left empty, it looks for session files at
+		# filesystem root and never finds any. Downstream images using a different session
+		# backend (eg. the hosting-farm's memcached-backed sessions) simply override it.
+		-e 's|^;\?session.save_path.*|session.save_path = "/var/lib/php/sessions"|g' \
+		-e 's|^;\?max_execution_time \?=.*|max_execution_time = 90|g' \
+		-e 's|^;\?upload_max_filesize \?=.*|upload_max_filesize = 64M|g' \
+		-e 's|^;\?post_max_size \?=.*|post_max_size = 65M|g' \
+		-e 's|^;\?max_input_vars \?=.*|max_input_vars = 2000|g' \
+		-e 's|^;\?zlib.output_compression \?=.*|zlib.output_compression = On|g' \
+		-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=0|g' \
+		-i /usr/local/etc/php/php.ini \
+	# create a 20-apcu.ini conf.d entry under the path entrypoint.sh expects to find/patch
+	&& mv /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini /usr/local/etc/php/conf.d/20-apcu.ini \
+	# entrypoint.sh (shared with the CE/development images) hardcodes Debian-style
+	# /etc/php/$PHP_VERSION/{fpm,cli}/... paths - symlink them onto the real,
+	# single shared php.ini/pool.d of the official Alpine image, so it runs
+	# unmodified against either base image
+	&& mkdir -p /etc/php/$PHP_VERSION/fpm /etc/php/$PHP_VERSION/cli \
+	&& ln -s /usr/local/etc/php/php.ini /etc/php/$PHP_VERSION/fpm/php.ini \
+	&& ln -s /usr/local/etc/php/php.ini /etc/php/$PHP_VERSION/cli/php.ini \
+	&& ln -s /usr/local/etc/php-fpm.d /etc/php/$PHP_VERSION/fpm/pool.d \
+	&& ln -s /usr/local/etc/php/conf.d /etc/php/$PHP_VERSION/fpm/conf.d \
+	# minimal "service" shim so entrypoint.sh's "service cron start" works
+	# (busybox crond backgrounds itself by default, same as Debian's service call)
+	&& printf '#!/bin/sh\n[ "$1.$2" = "cron.start" ] && exec crond -L /var/log/cron.log\n' > /usr/sbin/service \
+	&& chmod +x /usr/sbin/service \
+	# entrypoint.sh's overlay-storage-driver hard-link fix globs /etc/crontab and
+	# /etc/cron.*/* (Debian layout) - give it empty/harmless matches on Alpine too
+	&& touch /etc/crontab \
+	&& mkdir -p /etc/cron.d \
+	# non-hidden placeholder: shell globs don't match dotfiles by default
+	&& touch /etc/cron.d/placeholder \
+	# disable certificate checks for LDAP as most LDAP and AD servers have no "valid" cert
+	&& mkdir -p /etc/openldap \
+	&& echo "TLS_REQCERT never" >> /etc/openldap/ldap.conf

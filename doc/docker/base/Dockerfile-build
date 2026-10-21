@@ -1,0 +1,36 @@
+################################################################################
+##
+## EGroupware base-build image: extends base-fpm with Node.js, Composer and the
+## shell tools needed to actually build EGroupware (npm/composer scripts call
+## out to rsync/git/patch/etc.) - shared by both the CE (doc/docker/fpm) and
+## development images, which previously each installed these independently.
+##
+## Build with --build-arg BASE_IMAGE=<base-fpm image:tag>, defaulting to the
+## published base-fpm image.
+##
+################################################################################
+ARG BASE_IMAGE=quay.io/egroupware/php:fpm-latest
+
+FROM composer:2 AS composer
+
+FROM ${BASE_IMAGE}
+LABEL maintainer="rb@egroupware.org"
+
+ARG PHP_VERSION=8.5
+ENV PHP_VERSION=$PHP_VERSION
+# on 32-bit arches (arm/v7) V8's auto-sized default heap is far below what's actually
+# available on the (64-bit) build host/device, and OOMs bundling larger JS dependencies
+# (eg. openpgp.js); raise it explicitly instead of relying on V8's default sizing
+ENV NODE_OPTIONS="--max-old-space-size=3072"
+
+# composer from its own official image, instead of installing+verifying via curl
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer.phar
+RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
+RUN set -e \
+	&& apk add --no-cache \
+		bash rsync sudo xz zip curl patch git unzip \
+		# Alpine's "nodejs" package is the LTS line (24.x); "nodejs-current" tracks
+		# the latest major (26.x at time of writing)
+		nodejs-current npm \
+		ca-certificates

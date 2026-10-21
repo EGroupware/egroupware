@@ -54,7 +54,7 @@ git config --global user.email || git config --global user.email "you@example.co
 	&& mkdir chunks \
 	&& ./install-cli.php \
 	&& ln -sf /var/lib/egroupware/header.inc.php \
-	&& sed -e 's/apache/www-data/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware
+	&& sed -e 's/apache/www-data/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/crontabs/www-data
 }
 
 # check if we have further apps to install (EPL or old ones ...)
@@ -125,4 +125,4 @@ done 2>&1 | tee -a $LOG
 # to run async jobs
 service cron start
 
-exec php-fpm$PHP_VERSION --nodaemonize
+exec php-fpm --nodaemonize
