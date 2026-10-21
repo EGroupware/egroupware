@@ -1340,7 +1340,7 @@ class timesheet_bo extends Api\Storage
 		foreach($this->search('', false, 'ts_id DESC', '', '', false, 'AND', [0, 1], [
 			'cat_id' => Events::workingTimeCat(),
 			'ts_owner' => $this->user,
-			'ts_start BETWEEN '.$this->db->quote($start, 'int').' AND '.$this->db->quote($end, 'int'),
+			Api\Db\SqlFragment::raw('ts_start BETWEEN '.$this->db->quote($start, 'int').' AND '.$this->db->quote($end, 'int')),
 		]) ?? [] as $row)
 		{
 			return $row;
