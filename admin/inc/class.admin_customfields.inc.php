@@ -603,7 +603,12 @@ class admin_customfields
 	 */
 	protected function get_actions()
 	{
-		$edit = $this->appname . '.' . get_class($this) . '.edit';
+		// same menuaction-ownership rule as edit()'s own $exec just below (line ~572): for the
+		// plain admin_customfields class (most apps have no <app>_customfields subclass), the
+		// class belongs to 'admin', not to $this->appname (the app being configured) - using
+		// $this->appname here breaks Json\Request::checkMenuAction()'s app-ownership check
+		$edit = get_class($this) == 'admin_customfields' ? 'admin.admin_customfields.edit' :
+			$this->appname . '.' . get_class($this) . '.edit';
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
 				'caption' => 'Open',
