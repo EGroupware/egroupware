@@ -43,6 +43,7 @@ RUN set -e \
 		-e 's/^;\?request_terminate_timeout.*/request_terminate_timeout = 70m/' \
 		-i /etc/php/$PHP_VERSION/fpm/pool.d/www.conf \
 	&& sed 	-e 's/^;\?session.gc_maxlifetime.*/session.gc_maxlifetime = 14400/g' \
+		-e 's|^;\?session.upload_progress.enabled.*|session.upload_progress.enabled = Off|g' \
 		-e 's|^;\?date.timezone.*|date.timezone = UTC|g' \
 		-e 's|^;\?sys_temp_dir.*|sys_temp_dir = /tmp|g' \
 		-e 's|^;\?disable_functions.*|disable_functions = exec,passthru,shell_exec,system,proc_open,popen|g' \
