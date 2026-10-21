@@ -1,3 +1,14 @@
+egroupware-docker (26.10.20261021) hardy; urgency=low
+
+  * SECURITY: PHP 8.5.12 security update plus one EGroupware security update, everyone is strongly advised to update to this release!
+  * Admin: fix not working "Open"/"Copy"/"Add" row actions after security update
+  * Calendar: an subscribed iCal feed without ETag is synced at most once an hour, whatever interval the user chose
+  * Mail: configured Sent folder was not used, nor the selected folder in compose
+  * Mail: a genuinely one-page email no longer prints onto two pages in Chrome
+  * Mail/all apps: compose or edit dialogs no longer stay open after a successful send/save on mobile
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 21 Oct 2026 20:30:40 +0200
+
 egroupware-docker (26.10.20261016) hardy; urgency=low
 
   * All Apps: fixed several memory leaks causing browser to get slower/slugish after hours of usage
