@@ -61,10 +61,7 @@ RUN set -e \
 		-e '/catch_workers_output/s/^;/;/' \
 		-e '/error_log/d' \
 		-e 's/^;\?pm.max_requests =.*/pm.max_requests = 30/' \
-		# temporary CVE-2026-109618 mitigation: a *finite* memory_limit is what triggers
-		# the vulnerable OOM-interrupt code path, so uncap it until PHP 8.5.12 ships the
-		# real fix - revert to a real limit (was 172M) once that's deployed everywhere
-		-e 's/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit] = -1/' \
+		-e 's/^;\?php_admin_value\[memory_limit\].*/php_admin_value[memory_limit] = 172M/' \
 		-e 's/^;\?request_terminate_timeout.*/request_terminate_timeout = 70m/' \
 		-i /usr/local/etc/php-fpm.d/www.conf \
 	# disable_functions as a pool-level php_admin_value, NOT in the shared php.ini: unlike
@@ -89,6 +86,15 @@ RUN set -e \
 		-e 's|^;\?max_input_vars \?=.*|max_input_vars = 2000|g' \
 		-e 's|^;\?zlib.output_compression \?=.*|zlib.output_compression = On|g' \
 		-e 's|^;\?opcache.validate_timestamps \?=.*|opcache.validate_timestamps=0|g' \
+		# Debian/ondrej's PHP package bakes this default in; upstream's php.ini-production
+		# leaves it empty, falling back to mysqlnd's own built-in default instead. An
+		# on-premise install connecting to a DB on the Docker host typically does so by
+		# bind-mounting the host's MySQL/MariaDB Unix domain socket into the container at
+		# this Debian-conventional path - leaving the default empty breaks that silently
+		# (connecting to host "localhost" always uses a socket, never TCP, regardless of
+		# any port also given) (ticket #126761)
+		-e 's|^pdo_mysql.default_socket\s*=.*|pdo_mysql.default_socket = /var/run/mysqld/mysqld.sock|g' \
+		-e 's|^mysqli.default_socket \?=.*|mysqli.default_socket = /var/run/mysqld/mysqld.sock|g' \
 		-i /usr/local/etc/php/php.ini \
 	# create a 20-apcu.ini conf.d entry under the path entrypoint.sh expects to find/patch
 	&& mv /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini /usr/local/etc/php/conf.d/20-apcu.ini \
