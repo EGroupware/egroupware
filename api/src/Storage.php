@@ -740,7 +740,7 @@ class Storage extends Storage\Base
 	 * @param string $field
 	 * @return boolean true if $name is a custom field, false otherwise
 	 */
-	function is_cf($field)
+	function is_cf(string $field)
 	{
 		return !empty($field) && $field[0] == self::CF_PREFIX;
 	}
