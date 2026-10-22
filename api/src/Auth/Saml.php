@@ -604,6 +604,16 @@ class Saml implements BackendSSO
 						$cookie_domain ? "$1'.$cookie_domain'," : '$1\'\',',
 						'$1$2'.($cookie_secure ? 'true' : 'false').',',
 					], $content);
+					// repair config.php written against an older SimpleSAMLphp version, whose
+					// config.php.dist called canSetSameSiteNone() statically - it's a genuine
+					// instance method in the currently installed version (src/SimpleSAML/Utils/
+					// HTTP.php), so the stale static call is now a fatal "cannot be called
+					// statically" error (see https://help.egroupware.org/t/80123)
+					$content = preg_replace(
+						'/\\\\?SimpleSAML\\\\Utils\\\\HTTP::canSetSameSiteNone\(\)/',
+						'(new \SimpleSAML\Utils\HTTP())->canSetSameSiteNone()',
+						$content
+					);
 				}
 				// repair authsources.php created without the "entityID" key, which makes SimpleSAMLphp 2 fail
 				if ($file === 'authsources.php')
