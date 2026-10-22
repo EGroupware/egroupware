@@ -270,6 +270,8 @@ class filemanager_hooks
 	static function search_link()
 	{
 		return array(
+			'title' => 'filemanager.filemanager_hooks.title',
+			'file_access' => 'filemanager.filemanager_hooks.file_access',
 			'edit' => array(
 				'menuaction' => 'filemanager.filemanager_ui.file',
 			),
@@ -293,6 +295,43 @@ class filemanager_hooks
 			'entries' => 'Files',
 			'view_popup' => '980x750'
 		);
+	}
+
+	/**
+	 * Title for a filemanager link entry (eg. shown wherever Api\Link displays a link to a
+	 * VFS path by its real 'filemanager' appname, as opposed to Api\Link::VFS_APPNAME ('file'),
+	 * which is for cross-app file ATTACHMENTS stored under /apps/$app/$id instead)
+	 *
+	 * Like title() does for any other app, returning null here for an entry that no longer
+	 * exists gets its links auto-unlinked by Api\Link::title().
+	 *
+	 * @param string $path VFS path
+	 * @return string|null null if the path no longer exists
+	 */
+	static function title($path)
+	{
+		return Vfs::stat($path) ? Vfs::basename($path) : null;
+	}
+
+	/**
+	 * Check read/write access to a VFS path for a filemanager link entry
+	 *
+	 * Without this hook, Api\Link::file_access() falls back to title(), which only ever
+	 * proves read-access (never EDIT) and, more importantly, denies access for every path
+	 * wherever title() itself is not reachable - which, since Etemplate\Widget\Link::
+	 * ajax_link_list()'s access check was added, broke the "Links" grid column for every
+	 * row of every filemanager listing (ticket report: Zugriff verweigert! / NoPermission
+	 * from a VFS path that was perfectly readable).
+	 *
+	 * @param string $path VFS path
+	 * @param int $required Acl::READ or Acl::EDIT
+	 * @param string $rel_path =null not used
+	 * @return boolean
+	 */
+	static function file_access($path, $required, $rel_path=null)
+	{
+		unset($rel_path);
+		return $required == Api\Acl::EDIT ? Vfs::is_writable($path) : Vfs::is_readable($path);
 	}
 
 	/**
