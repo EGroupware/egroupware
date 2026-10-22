@@ -303,7 +303,10 @@ class Ldap extends Mail\Smtp
 		$emailAddresses	= array();
 		$ds = $this->getLdapConnection();
 		$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.Api\Ldap::quote($_accountName).'))';
-		$attributes	= array('dn', static::MAIL_ATTR, static::ALIAS_ATTR);
+		// ALIAS_ATTR is false for schemas without one (eg. the generic posixAccount default) -
+		// PHP 8.4+'s ldap_search() requires $attributes to be a list of strings, same as the
+		// array_diff(..., array(false, '')) below already guards against for the other call
+		$attributes = array_values(array_diff(array('dn', static::MAIL_ATTR, static::ALIAS_ATTR), array(false, '')));
 		$sri = @ldap_search($ds, $this->search_base, $filter, $attributes);
 
 		if ($sri)
@@ -702,6 +705,9 @@ class Ldap extends Mail\Smtp
 		{
 			$attributes[] = static::FORWARD_ONLY_ATTR;
 		}
+		// FORWARD_ATTR is false for schemas without one (eg. the generic posixAccount default) -
+		// PHP 8.4+'s ldap_search() requires $attributes to be a list of strings
+		$attributes = array_values(array_diff($attributes, array(false, '')));
 		$sri = ldap_search($ds, $this->search_base, $filter, $attributes);
 
 		if ($sri)
