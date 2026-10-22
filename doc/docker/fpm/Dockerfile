@@ -38,7 +38,12 @@ RUN set -e \
 	&& until npm run build; do sleep 5; npm install; done \
 	# fix permissions (as some npm modules have world-writable files)
 	&& chmod -R o-w . \
-	&& npm run css \
+	# master/26 compile CSS via "npm run css" (build-css.mjs); older branches (23.1) have
+	# no such script and use Grunt's default cssmin task instead - run whichever applies.
+	# Check for the installed grunt binary, not just Gruntfile.js: master still has a
+	# stale Gruntfile.js lying around despite dropping the grunt devDependency itself.
+	&& npm run css --if-present \
+	&& ( [ ! -x node_modules/.bin/grunt ] || npx grunt ) \
 	# clean up and remove caches
 	&& npm cache clear --force \
 	# create data directory
