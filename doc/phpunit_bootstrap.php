@@ -53,6 +53,13 @@ if (($egw_admin_password = getenv('EGW_ADMIN_PASSWORD') ?: ($_ENV['EGW_ADMIN_PAS
 {
 	$GLOBALS['EGW_ADMIN_PASSWORD'] = $egw_admin_password;
 }
+// EGW_NONADMIN_USER/EGW_NONADMIN_PASSWORD (see doc/phpunit.xml) default to "demo"/"guest" for
+// a fresh install, but are overridable via environment on installs where "demo" has a real
+// mailbox and its login password doubles as its live mail password (see doc/phpunit.xml
+// comment) - normalize into $GLOBALS['EGW_USER']/['EGW_PASSWORD'], the names the rest of the
+// test suite (organizerLid(), LoggedInTest, etc.) already reads.
+$GLOBALS['EGW_USER'] = getenv('EGW_NONADMIN_USER') ?: ($_ENV['EGW_NONADMIN_USER'] ?? null) ?: 'demo';
+$GLOBALS['EGW_PASSWORD'] = getenv('EGW_NONADMIN_PASSWORD') ?: ($_ENV['EGW_NONADMIN_PASSWORD'] ?? null) ?: 'guest';
 // Optional CI-only switch to disable custom push backends (eg. swoolepush)
 // during PHPUnit runs to avoid network retries/backoff impacting runtime.
 if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')

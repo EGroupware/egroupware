@@ -9,8 +9,15 @@
         <!-- Local override without committing: EGW_URL="http://your-host/egroupware" vendor/bin/phpunit -c doc/phpunit.xml -->
         <env name="EGW_URL" value="http://localhost/egroupware"/>
         <var name="EGW_DOMAIN" value="default" />
-        <var name="EGW_USER" value="demo" />
-        <var name="EGW_PASSWORD" value="guest" />
+        <!-- Non-admin test account, normalized into $GLOBALS['EGW_USER']/['EGW_PASSWORD'] by
+             phpunit_bootstrap.php (default "demo"/"guest", matching a fresh install). Accounts
+             like acc_id=1 (a shared/"Everyone" mail account, no separate mail-password stored
+             per user) forward the CURRENT session password straight through as the IMAP/SMTP/
+             JMAP credential - so on any install where "demo" has a real, working mailbox, its
+             login password IS also its live mail password. Override via shell on such installs:
+             EGW_NONADMIN_USER="..." EGW_NONADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml -->
+        <env name="EGW_NONADMIN_USER" value="demo"/>
+        <env name="EGW_NONADMIN_PASSWORD" value="guest"/>
         <!-- Real, DB-backed admin account - for tests exercising admin-only functionality
              (eg. admin_cmd_edit_user/_edit_group), switch to this via LoggedInTest::switchUser()
              rather than granting EGW_USER admin rights, which would short-circuit the many tests
