@@ -6,6 +6,12 @@
 	bootstrap="phpunit_bootstrap.php"
 >
 	<php>
+        <!-- The full suite runs as one long-lived CLI process (thousands of tests, each
+             contributing to peak usage), and individual tests legitimately allocate large
+             buffers (eg. BodyDecodingTest's 20MB-string memory-efficiency check) - the
+             Alpine base image's php.ini-production default (128M) is tuned for a single
+             short-lived web request, not this, and is too tight for the suite as a whole. -->
+        <ini name="memory_limit" value="512M"/>
         <!-- Local override without committing: EGW_URL="http://your-host/egroupware" vendor/bin/phpunit -c doc/phpunit.xml -->
         <env name="EGW_URL" value="http://localhost/egroupware"/>
         <var name="EGW_DOMAIN" value="default" />
