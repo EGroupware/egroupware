@@ -264,10 +264,22 @@ class Link extends Etemplate\Widget
 
 		// unlike ajax_link()/ajax_delete(), there's no not-yet-saved-entry case to exempt here -
 		// listing links only ever makes sense for an already-saved entry, so $app/$id being set is
-		// always a real entry to check read-access on
+		// always a real entry to check read-access on.
+		//
+		// Returning no links here instead of throwing (unlike every other access check in this
+		// class) is deliberate and branch-local: this branch's eTemplate engine does not
+		// substitute $row_cont[...] placeholders into a custom element's non-"id" attributes (eg.
+		// filemanager/templates/default/index.xet's <et2-link-string entryId="$row_cont[path]">),
+		// so $id arrives here as that literal, unresolved string for every row of every filemanager
+		// listing - never a real, checkable path. Throwing surfaced that as a user-visible "Zugriff
+		// verweigert!" toast on every single row. Access is still fully denied either way (no link
+		// data for anything that fails the check), so this is not a weaker check, just a quieter
+		// failure for a case that is never a real access decision in the first place. 26/master
+		// don't have this problem (their eTemplate engine does substitute it) and keep throwing.
 		if ($app && $id && !is_array($id) && !Api\Link::file_access($app, $id))
 		{
-			throw new Api\Exception\NoPermission();
+			Api\Json\Response::get()->data(['total' => 0]);
+			return;
 		}
 
 		$links = Api\Link::get_links($app, $id, $value['only_app']??'', 'link_lastmod DESC, link_id DESC',
