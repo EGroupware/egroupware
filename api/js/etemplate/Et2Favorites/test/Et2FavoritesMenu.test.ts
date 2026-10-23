@@ -282,20 +282,20 @@ describe("Favorites menu", () =>
 		{
 			user = () => ({});
 			prefs = {favorite_A: own("A")};
-			assert.deepEqual(actions(await create(), "A"), ["edit", "move", "delete"]);
+			assert.deepEqual(actions(await create(), "A"), ["edit", "create-folder", "move", "delete"]);
 		});
 
 		it("offers an admin all of it for a shared favorite", async() =>
 		{
 			prefs = {favorite_Some_name: shared("Some name")};
-			assert.deepEqual(actions(await create(), "Some_name"), ["edit", "move", "delete"]);
+			assert.deepEqual(actions(await create(), "Some_name"), ["edit", "create-folder", "move", "delete"]);
 		});
 
-		it("only lets a user move a shared favorite", async() =>
+		it("only lets a user move or file away a shared favorite", async() =>
 		{
 			user = () => ({});
 			prefs = {favorite_S: shared("S")};
-			assert.deepEqual(actions(await create(), "S"), ["move"]);
+			assert.deepEqual(actions(await create(), "S"), ["create-folder", "move"]);
 		});
 
 		it("offers renaming and removing a folder", async() =>
