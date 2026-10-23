@@ -1049,7 +1049,8 @@ class timesheet_ui extends timesheet_bo
 			// remove sum-* rows from checked rows
 			$content['nm']['selected'] = array_filter($content['nm']['selected'], function($id)
 			{
-				return $id > 0;
+				// PHP 8 compares non-numeric 'sum-*' strings with 0 as strings, so "sum-day-…" > 0 is true
+				return is_numeric($id) && $id > 0;
 			});
 			if (!count($content['nm']['selected']) && !$content['nm']['select_all'])
 			{
@@ -1409,6 +1410,11 @@ class timesheet_ui extends timesheet_bo
 				$this->get_rrows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
 		}
+		// drop the 'sum-*' summation rows: they are no timesheets and PHP 8 treats "sum-…" > 0 as true
+		$checked = array_values(array_filter((array)$checked, static function($id)
+		{
+			return is_numeric($id) && $id > 0;
+		}));
 		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')");
 
 		if (substr($action,0,9) == 'to_status')
