@@ -727,10 +727,19 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		}
 	}
 
-	protected handleFavoriteAction(event : CustomEvent, key : string)
+	protected async handleFavoriteAction(event : CustomEvent, key : string)
 	{
 		const action = event.detail.item.value;
-		if(action === "edit" || action === "move")
+		if(action === "create-folder")
+		{
+			// A folder only exists through the favorites in it, so the new one starts with this favorite
+			const name = await this.promptFolder(this.egw().lang("New folder"));
+			if(name)
+			{
+				await Favorite.setFolders(this.egw(), this.application, {[key]: name});
+			}
+		}
+		else if(action === "edit" || action === "move")
 		{
 			Favorite.edit(this.egw(), this.application, key, action === "move");
 		}
@@ -814,6 +823,7 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
                 <sl-menu @sl-select=${(e : CustomEvent) => this.handleFavoriteAction(e, key)}>
                     ${canEdit ? html`
                         <sl-menu-item value="edit"><sl-icon slot="prefix" name="pencil"></sl-icon>${lang("Edit")}</sl-menu-item>` : nothing}
+                    <sl-menu-item value="create-folder"><sl-icon slot="prefix" name="folder-plus"></sl-icon>${lang("Create folder")}</sl-menu-item>
                     <sl-menu-item value="move"><sl-icon slot="prefix" name="folder-symlink"></sl-icon>${lang("Move to folder")}</sl-menu-item>
                     ${canDelete ? html`
                         <sl-menu-item value="delete"><sl-icon slot="prefix" name="trash"></sl-icon>${lang("Delete")}</sl-menu-item>` : nothing}
