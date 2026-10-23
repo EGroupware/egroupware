@@ -3,6 +3,8 @@ import {css} from "lit";
 export default css`
 	  :host {
 		width: auto;
+		/* lit-flatpickr hides what is outside the host, which includes the validation message under the input */
+		overflow: visible;
 	  }
 
 		/* Required and empty: the yellow etemplate2.css gives other widgets, which cannot reach the textbox in here */

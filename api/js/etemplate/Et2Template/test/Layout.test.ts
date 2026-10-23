@@ -214,6 +214,85 @@ describe("Layout span to end of line", () =>
 });
 
 /**
+ * Grow row sizing in a grid
+ *
+ * The grid rows are the grid's own tracks.  A widget shorter than its row-mates and vertically
+ * centred (a bare checkbox beside a textbox) sits lower than they do, and used to be counted as a
+ * row of its own: the track list came out one too long and the growing row's track landed on the
+ * row after it.
+ */
+describe("Layout grow row sizing in a grid", () =>
+{
+	const HEIGHT = 400;
+	const GAP = 10;
+	let styles : HTMLStyleElement;
+
+	beforeEach(() =>
+	{
+		styles = document.createElement("style");
+		styles.textContent = `
+			et2-template[layout="2-column"] { display: block; height: ${HEIGHT}px; }
+			et2-template[layout="2-column"]::part(base) {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: ${GAP}px;
+				height: 100%;
+			}
+			et2-template[layout="2-column"] [span="all"] { grid-column: 1 / -1; }
+			et2-template[layout="2-column"] > div { height: 35px; }
+			et2-template[layout="2-column"] #short { height: 15px; align-self: center; }
+			et2-template[layout="2-column"] #grow { height: auto; min-height: 100px; }
+			et2-template[layout="2-column"] #footer { height: 20px; position: sticky; bottom: 0; }
+		`;
+		document.head.append(styles);
+	});
+	afterEach(() => styles?.remove());
+
+	const rect = (element : Et2Template, id : string) => element.querySelector("#" + id).getBoundingClientRect();
+
+	it("puts the grow track on the grow row when a short centred child shares a row", async() =>
+	{
+		const element = await make(`<et2-template layout="2-column">
+			<div id="tall"></div><div id="short"></div>
+			<div id="tall2"></div><div id="short2"></div>
+			<div id="grow" grow span="all"></div>
+			<div id="footer" span="all"></div>
+		</et2-template>`);
+		await nextFrame();
+		await nextFrame();
+
+		// 35 + 35 + 20 + 3 gaps leaves the rest for the growing row
+		const expected = HEIGHT - 35 - 35 - 20 - 3 * GAP;
+		assert.approximately(rect(element, "grow").height, expected, 1, "the growing row takes the leftover height");
+		assert.equal(Math.round(rect(element, "footer").height), 20, "the footer keeps its natural height");
+		assert.equal(Math.round(rect(element, "tall2").height), 35, "a row before the growing one keeps its natural height");
+		assert.equal(
+			getComputedStyle(base(element)).gridTemplateRows.split(" ").length, 4,
+			"one track per row, none for the centred child"
+		);
+	});
+
+	it("does not count a sticky footer's displaced top as a row", async() =>
+	{
+		const element = await make(`<et2-template layout="2-column">
+			<div id="tall"></div><div id="short"></div>
+			<div id="grow" grow span="all"></div>
+			<div id="footer" span="all"></div>
+		</et2-template>`);
+		await nextFrame();
+		await nextFrame();
+		// Re-run once more: the second pass starts from the first one's grid-template-rows
+		element.requestUpdate();
+		await elementUpdated(element);
+		await nextFrame();
+		await nextFrame();
+
+		assert.equal(getComputedStyle(base(element)).gridTemplateRows.split(" ").length, 3);
+		assert.equal(Math.round(rect(element, "footer").height), 20);
+	});
+});
+
+/**
  * grow="2" takes twice the share of grow="1" in a stack.
  *
  * As above, the layout CSS is in kdots.css and not on this page, so stack's flex column is

@@ -32,6 +32,15 @@ export default css`
 		height: 100%;
 	}
 
+	/*
+	 * Fixed-width label (a layout puts .et2-label-fixed on its children): Shoelace's own label, in this
+	 * shadow root, is out of reach of the shared rule, which only sees labels it can name from outside.
+	 */
+	:host(.et2-label-fixed) .form-control__label {
+		flex: 0 0 auto;
+		width: var(--label-width, 8em);
+	}
+
 	.form-control-input .textarea--standard.textarea--focused:not(.textarea--disabled){
 		width: calc(100% - (2 * var(--sl-focus-ring-width)));
 		margin-left: var(--sl-focus-ring-width);

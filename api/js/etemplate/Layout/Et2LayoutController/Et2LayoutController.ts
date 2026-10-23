@@ -1,6 +1,7 @@
 import {CSSResult, ReactiveController, ReactiveControllerHost} from "lit";
 import {Et2LayoutName, getLayoutStrategy} from "./Et2LayoutStrategies";
 import {Et2TopLayerPopupController} from "./Et2TopLayerPopupController";
+import {Et2IconOnlyButtonTooltips} from "./Et2IconOnlyButtonTooltips";
 
 // Re-exported so a widget adding layout support only has to import from here: it needs
 // Et2LayoutHost and Et2LayoutController anyway, and the `layout` property it declares to
@@ -58,10 +59,18 @@ export class Et2LayoutController implements ReactiveController
 	 */
 	private topLayerPopups : Et2TopLayerPopupController;
 
+	/*
+	 * The layout CSS clips the label of an icon button when it is narrow, leaving the icon to explain
+	 * itself.  Here, and not in Et2Button, because the layout is what clips; see
+	 * Et2IconOnlyButtonTooltips for when that should change.
+	 */
+	private iconOnlyButtonTooltips : Et2IconOnlyButtonTooltips;
+
 	constructor(private host : Et2LayoutHost)
 	{
 		(host as ReactiveControllerHost).addController(this);
 		this.topLayerPopups = new Et2TopLayerPopupController(host);
+		this.iconOnlyButtonTooltips = new Et2IconOnlyButtonTooltips(host);
 	}
 
 	hostConnected()

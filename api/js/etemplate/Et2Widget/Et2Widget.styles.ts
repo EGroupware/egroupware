@@ -70,9 +70,23 @@ export default css`
 		max-width: 100%;
 	}
 
-	::part(form-control-help-text), .form-control-help-text {
-		flex-basis: 100%;
+	/*
+	 * The help text is where a failed validation shows its message.  It is out of the flow, under the control: in
+	 * the row (flex-basis: 100% only meant "a line of its own" where the row wraps, and a fixed-label row does not)
+	 * it took the input's width, so a required field that failed shrank and its neighbours moved.
+	 */
+	::part(form-control), .form-control {
 		position: relative;
+	}
+
+	::part(form-control-help-text), .form-control-help-text, .form-control .form-control__help-text {
+		flex-basis: auto;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: auto;
+		/* Over the widget that follows it, which may have a stacking context of its own (an editor) */
+		z-index: 1;
 	}
 
 	/* Use .et2-label-fixed class to give fixed label size */
@@ -92,7 +106,10 @@ export default css`
 		}
 	}
 
-	:host(.et2-label-fixed)::part(form-control-help-text), :host(.et2-label-fixed) .form-control-help-text {
-		left: calc(var(--sl-spacing-medium) + var(--label-width, 8em));
+	:host(.et2-label-fixed)::part(form-control-help-text), :host(.et2-label-fixed) .form-control-help-text,
+	:host(.et2-label-fixed) .form-control__help-text {
+		width: auto;
+		/* A margin, not left: it moves the in-flow help text too (a select's own), and leaves it the room that is left to wrap in */
+		margin-left: calc(var(--sl-spacing-medium) + var(--label-width, 8em));
 	}
 `;

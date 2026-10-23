@@ -14,6 +14,17 @@
 	  }
 	}
 
+	/* A fixed-label widget that does not grow (flex:none) in a box sizes to its content, which counts
+	 * label and input side by side even though they now stack; min-content is the wider of the two, so
+	 * the box shrinks to its field.  Widgets that grow keep their basis: shrinking it would hand their
+	 * room to the siblings.
+	 */
+	@{selector} et2-hbox > *.et2-label-fixed[style*="flex:none"],
+	@{selector} et2-hbox > *.et2-label-fixed[style*="flex: none"],
+	@{selector} et2-hbox > *.et2-label-fixed[style*="flex: 0 0 auto"] {
+	  width: min-content;
+	}
+
 	@{selector} *::part(form-control-label) {
 	  width: 100%;
 	  flex-basis: 100%;
@@ -26,6 +37,7 @@
 
 	@{selector} *::part(form-control-help-text) {
 	  left: 0;
+	  margin-left: 0;
 	}
 
 	/* When titles break, we want to align widgets at the bottom of the hbox */

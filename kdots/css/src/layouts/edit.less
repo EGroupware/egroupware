@@ -34,7 +34,9 @@
   }
 
   et2-tabbox {
-	min-height: 20em;
+	// Room for a tab's content as well as its tab bar: an et2-htmlarea wants 20em of its own, and with
+	// 20em for the whole tabbox it got less than that and the tab had to scroll instead
+	min-height: 25em;
   }
 }
 

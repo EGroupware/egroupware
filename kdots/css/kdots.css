@@ -842,6 +842,16 @@ body egw-app,
   [layout="2-column"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
+  /* A fixed-label widget that does not grow (flex:none) in a box sizes to its content, which counts
+	 * label and input side by side even though they now stack; min-content is the wider of the two, so
+	 * the box shrinks to its field.  Widgets that grow keep their basis: shrinking it would hand their
+	 * room to the siblings.
+	 */
+  [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex:none"],
+  [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex: none"],
+  [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex: 0 0 auto"] {
+    width: min-content;
+  }
   [layout="2-column"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -852,6 +862,7 @@ body egw-app,
   }
   [layout="2-column"] *::part(form-control-help-text) {
     left: 0;
+    margin-left: 0;
   }
   /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
@@ -948,6 +959,16 @@ body egw-app,
   [layout="edit"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
+  /* A fixed-label widget that does not grow (flex:none) in a box sizes to its content, which counts
+	 * label and input side by side even though they now stack; min-content is the wider of the two, so
+	 * the box shrinks to its field.  Widgets that grow keep their basis: shrinking it would hand their
+	 * room to the siblings.
+	 */
+  [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex:none"],
+  [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex: none"],
+  [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex: 0 0 auto"] {
+    width: min-content;
+  }
   [layout="edit"] *::part(form-control-label) {
     width: 100%;
     flex-basis: 100%;
@@ -958,6 +979,7 @@ body egw-app,
   }
   [layout="edit"] *::part(form-control-help-text) {
     left: 0;
+    margin-left: 0;
   }
   /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
@@ -1020,7 +1042,7 @@ body egw-app,
   flex-grow: 0;
 }
 [layout="edit"] et2-tabbox {
-  min-height: 20em;
+  min-height: 25em;
 }
 /* Read-only facts at the bottom of a dialog - who changed it, when - as a row of their own: a
  * label in the label column, then the name and the date.  The name starts where the inputs above

@@ -220,23 +220,36 @@ function scheduleGrowRowSizing(host: HTMLElement, children: HTMLElement[]): void
 			return;
 		}
 
-		const rowTops: number[] = [];
-		for(const child of visibleChildren)
+		// Rows are the grid's own tracks, not the distinct tops of the children: a widget shorter than
+		// its row-mates and vertically centred (a bare checkbox beside a textbox) sits lower than they
+		// do, and a sticky footer sits away from its natural top - neither is a row of its own.  Our
+		// previous answer is dropped first, so the tracks are the ones the content asks for.
+		base.style.removeProperty("grid-template-rows");
+		const baseStyle = getComputedStyle(base);
+		const rowGap = parseFloat(baseStyle.rowGap) || 0;
+		const trackHeights = baseStyle.gridTemplateRows.split(/\s+/).map(parseFloat).filter(h => !isNaN(h));
+		const baseRect = base.getBoundingClientRect();
+		const contentTop = baseRect.top + base.clientTop + (parseFloat(baseStyle.paddingTop) || 0);
+		const trackStarts: number[] = [];
+		let offset = 0;
+		for(const height of trackHeights)
 		{
-			const top = Math.round(child.getBoundingClientRect().top);
-			if(!rowTops.some(existing => Math.abs(existing - top) <= 1))
-			{
-				rowTops.push(top);
-			}
+			trackStarts.push(offset);
+			offset += height + rowGap;
 		}
-		rowTops.sort((a, b) => a - b);
+		const rowOf = (child: HTMLElement): number =>
+		{
+			const top = child.getBoundingClientRect().top - contentTop + 1;
+			let index = -1;
+			trackStarts.forEach((start, i) => top >= start && (index = i));
+			return index;
+		};
 
 		// Find preferred sizing for growing children
-		const rows = rowTops.map(() => ({minValues: [] as string[], maxValues: [] as string[], growFactor: 0}));
+		const rows = trackStarts.map(() => ({minValues: [] as string[], maxValues: [] as string[], growFactor: 0}));
 		for(const growChild of growChildren)
 		{
-			const growTop = Math.round(growChild.getBoundingClientRect().top);
-			const rowIndex = rowTops.findIndex(top => Math.abs(top - growTop) <= 1);
+			const rowIndex = rowOf(growChild);
 			if(rowIndex < 0)
 			{
 				continue;

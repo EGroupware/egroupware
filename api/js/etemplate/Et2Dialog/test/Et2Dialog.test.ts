@@ -5,6 +5,7 @@ import {Et2Dialog} from "../Et2Dialog";
 import {assertNoElement} from "../../test/assertDom";
 import "../../Et2Textarea/Et2Textarea";
 import "../../Et2Textbox/Et2Textbox";
+import "../../Et2Template/Et2Template";
 
 /**
  * Test file for Etemplate webComponent Et2Dialog
@@ -304,5 +305,78 @@ describe("Enter key", () =>
 	{
 		await press("et2-textbox", "Enter");
 		assert.isTrue(clicked.calledOnce, "Default button was not pressed");
+	});
+});
+
+
+describe("Dialog size", () =>
+{
+	// The test frame is narrow, and a dialog never opens wider than the window
+	let innerWidth : PropertyDescriptor | undefined;
+	beforeEach(() =>
+	{
+		innerWidth = Object.getOwnPropertyDescriptor(window, "innerWidth");
+		Object.defineProperty(window, "innerWidth", {value: 3000, configurable: true});
+	});
+	afterEach(() =>
+	{
+		if(innerWidth)
+		{
+			Object.defineProperty(window, "innerWidth", innerWidth);
+		}
+		else
+		{
+			delete (<any>window).innerWidth;
+		}
+	});
+
+	async function layoutDialog(extra : any = {}) : Promise<Et2Dialog>
+	{
+		const dialog = await fixture<Et2Dialog>(html`
+            <et2-dialog title="Layout" .isModal=${false} .width=${extra.width}>
+                <div class="dialog_content">
+                    <et2-template layout="2-column" style="--column-min-width: 26em">
+                        <et2-textbox label="One"></et2-textbox>
+                        <et2-textbox label="Two"></et2-textbox>
+                        <et2-textbox label="Three"></et2-textbox>
+                    </et2-template>
+                </div>
+            </et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await dialog.show();
+		await dialog.updateComplete;
+		return dialog;
+	}
+
+	it("starts a dialog holding a layout at the width the layout prefers", async() =>
+	{
+		// A layout fills the width it is given, so in a dialog that sizes to its content it used to come out
+		// 0px wide and the dialog stayed at its minimum width
+		const dialog = await layoutDialog();
+		const template = dialog.querySelector<any>("et2-template");
+		const preferred = template.getPreferredSize();
+		assert.isOk(preferred, "the template reports a preferred size");
+		assert.isBelow(template.getBoundingClientRect().width, preferred.width, "the dialog starts too narrow for its layout");
+
+		// Asked for, not rendered: the panel is also capped to the (narrow) test frame by the stylesheet
+		const panel = dialog.shadowRoot.querySelector<HTMLElement>(".dialog__panel");
+		panel.style.width = "";
+		panel.style.height = "";
+		assert.isTrue(dialog._fitToLayout(panel), "the dialog was widened");
+		assert.isAtLeast(parseFloat(panel.style.width), preferred.width,
+			"the panel is asked to be at least as wide as the layout wants its content");
+	});
+
+	it("leaves a dialog with a width of its own alone", async() =>
+	{
+		const dialog = await layoutDialog({width: 300});
+		const preferred = dialog.querySelector<any>("et2-template").getPreferredSize();
+
+		const panel = dialog.shadowRoot.querySelector<HTMLElement>(".dialog__panel");
+		panel.style.width = "";
+		assert.isFalse(dialog._fitToLayout(panel), "the dialog was not widened");
+		assert.equal(panel.style.width, "", "no width was asked for");
+		assert.isAbove(preferred.width, 300, "the layout wanted more than the dialog's own width");
 	});
 });

@@ -16,6 +16,7 @@ import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
 import type {etemplate2} from "../etemplate2";
+import type {Et2Template} from "../Et2Template/Et2Template";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -497,9 +498,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.dispatchEvent(new Event('open', {bubbles: true}));
 
 		Promise.all([this._template_promise, this.updateComplete])
-			.then(() =>
+			.then(async() =>
 			{
-				this._setInitialSize();
+				await this._setInitialSize();
 				this._setupMoveResize();
 			});
 	}
@@ -1037,7 +1038,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * the dialog would keep a size its content never fit into.  Only the first call does anything,
 	 * so a re-render (or the user resizing) does not reset the dialog to its content's size.
 	 */
-	_setInitialSize()
+	async _setInitialSize()
 	{
 		const panel = <HTMLElement>this.shadowRoot?.querySelector(".dialog__panel");
 		if(!panel || this._sizeIsSet)
@@ -1048,9 +1049,74 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 		panel.style.width = "";
 		panel.style.height = "";
+		if(this._fitToLayout(panel))
+		{
+			// A layout works its rows out a frame after its width changes (and again as its widgets finish
+			// rendering), so wait until its height stops moving before reading the one we are about to freeze
+			const template = this._contentNode?.querySelector("et2-template[layout]");
+			let last = -1, stable = 0;
+			for(let frames = 0; frames < 30 && stable < 4; frames++)
+			{
+				await new Promise(resolve => requestAnimationFrame(resolve));
+				const height = template?.scrollHeight ?? 0;
+				stable = height === last ? stable + 1 : 0;
+				last = height;
+			}
+			panel.style.height = "";
+		}
 		const style = getComputedStyle(panel);
 		panel.style.width = style.width;
 		panel.style.height = style.height;
+
+		// A layout that still scrolls inside the room it was given is short by exactly that much (its margins,
+		// the sliver the dialog's body keeps), so give it that, up to the window
+		const layout = this._contentNode?.querySelector("et2-template[layout]");
+		const short = layout ? layout.scrollHeight - layout.clientHeight : 0;
+		if(short > 0)
+		{
+			panel.style.height = Math.min(panel.getBoundingClientRect().height + short, Math.floor(window.innerHeight * 0.95)) + "px";
+		}
+	}
+
+	/**
+	 * Start a dialog whose template has a layout at the width that layout prefers.
+	 *
+	 * A layout fills whatever width it is given, so inside a dialog that sizes to its content the template
+	 * comes out as wide as nothing at all and the dialog stays at its minimum width, with the fields squeezed
+	 * (or nothing visible).  The template knows the width it would like - its columns at their minimum width -
+	 * so we start there.  A width the caller set (the `width` property) or a layout that already has room is
+	 * left alone, and the dialog never opens wider than the window.
+	 *
+	 * @param {HTMLElement} panel the dialog's panel, with no inline size
+	 * @return {boolean} whether the width was changed
+	 */
+	protected _fitToLayout(panel : HTMLElement) : boolean
+	{
+		if(this.width)
+		{
+			return false;
+		}
+		const template = <Et2Template | null>this._contentNode?.querySelector("et2-template[layout]");
+		const preferred = template?.getPreferredSize?.();
+		if(!preferred || !preferred.width)
+		{
+			return false;
+		}
+		const have = template.getBoundingClientRect().width;
+		if(have >= preferred.width)
+		{
+			return false;
+		}
+		// What the panel adds around the content: its padding and border
+		const panelWidth = panel.getBoundingClientRect().width;
+		const chrome = Math.max(0, panelWidth - this._contentNode.getBoundingClientRect().width);
+		const wanted = Math.min(preferred.width + chrome, Math.floor(window.innerWidth * 0.95));
+		if(wanted > panelWidth)
+		{
+			panel.style.width = wanted + "px";
+		}
+
+		return wanted > panelWidth;
 	}
 
 	/**
