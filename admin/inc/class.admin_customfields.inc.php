@@ -567,6 +567,9 @@ class admin_customfields
 		{
 			$content['options'][$key] = lang($value);
 		}
+		// options of the type selectbox, a plain et2-select (the former customfields-types widget supplied them itself)
+		$sel_options['cf_type'] = Etemplate\Widget\Customfields::getCfTypes();
+		if (empty($content['cf_type'])) $content['cf_type'] = key($sel_options['cf_type']);
 		$content['statustext'] = $content['options'][$content['cf_type']];
 		$content['attributes'] = self::$type_attribute_flags;
 		$exec = static::class == 'admin_customfields' ? 'admin.admin_customfields.edit' : $this->appname . '.' . static::class . '.edit';
@@ -599,12 +602,8 @@ class admin_customfields
 	 */
 	protected function get_actions()
 	{
-		// same menuaction-ownership rule as edit()'s own $exec just below (line ~572): for the
-		// plain admin_customfields class (most apps have no <app>_customfields subclass), the
-		// class belongs to 'admin', not to $this->appname (the app being configured) - using
-		// $this->appname here breaks Json\Request::checkMenuAction()'s app-ownership check
-		$edit = get_class($this) == 'admin_customfields' ? 'admin.admin_customfields.edit' :
-			$this->appname . '.' . get_class($this) . '.edit';
+		// the generic class lives in admin, apps like infolog have a subclass of their own (see edit())
+		$edit = get_class($this) == 'admin_customfields' ? 'admin.admin_customfields.edit' : $this->appname . '.' . get_class($this) . '.edit';
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
 				'caption' => 'Open',
@@ -869,11 +868,11 @@ class admin_customfields
 		{
 			if ($t2 === '~~all~~')
 			{
-				$query['col_filter'][0] = Api\Db\SqlFragment::raw('cf_type2 IS NULL');
+				$query['col_filter'][0] = 'cf_type2 IS NULL';
 			}
 			else
 			{
-				$query['col_filter'][0] = Api\Db\SqlFragment::raw('(cf_type2 IS NULL OR '.$this->db->concat("','", 'cf_type2', "','").' LIKE '.$GLOBALS['egw']->db->quote('%,'.$t2.',%').')');
+				$query['col_filter'][0] = '(cf_type2 IS NULL OR '.$this->db->concat("','", 'cf_type2', "','").' LIKE '.$GLOBALS['egw']->db->quote('%,'.$t2.',%').')';
 			}
 			unset($query['col_filter']['cf_type2']);
 		}
