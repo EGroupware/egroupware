@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be578ff770e759d07f2458808e8e4b1e",
+    "content-hash": "d657c86363aa825419b260f6ce3260f3",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -5150,33 +5150,6 @@
             "license": [
                 "GPL-2.0"
             ]
-        },
-        {
-            "name": "npm-asset/gridster",
-            "version": "0.5.6",
-            "dist": {
-                "type": "tar",
-                "url": "https://registry.npmjs.org/gridster/-/gridster-0.5.6.tgz"
-            },
-            "require": {
-                "npm-asset/jquery": "2.0.3"
-            },
-            "type": "npm-asset"
-        },
-        {
-            "name": "npm-asset/jquery",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:jquery/jquery.git",
-                "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/f852e631ba85af7da4ad7594785e122504e7b233",
-                "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
-            },
-            "type": "npm-asset"
         },
         {
             "name": "nyholm/psr7",
