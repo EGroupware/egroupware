@@ -69,6 +69,7 @@ $setup_tpl->set_file(array(
 	'T_db_backup' => 'db_backup.tpl',
 ));
 $setup_tpl->set_var('hidden_vars', Api\Html::input_hidden('csrf_token', Api\Csrf::token(__FILE__)));
+$setup_tpl->set_var('password_warned', '');
 
 // check CSRF token for POST requests with any content (setup uses empty POST to call it's modules!)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST)
@@ -178,6 +179,8 @@ $setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" v
 	($db_backup->backup_files ? ' checked="true"':'').
 // do NOT allow to change "backup files" outside of setup
 	($is_setup ? '' : ' disabled="true" title="'.htmlspecialchars(lang('Can only be change via Setup!')).'"').'/>');
+$setup_tpl->set_var('old_db_password','<input type="password" name="old_db_password" size="20" autocomplete="new-password" />');
+$setup_tpl->set_var('lang_old_db_password', lang('old DB password (only needed to restore a backup created with a different DB password)'));
 $setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_backup_settings" value="'.htmlspecialchars(lang('save')).'" />');
 $setup_tpl->set_var('backup_mount','<input type="submit" name="mount" value="'.htmlspecialchars(lang('Mount backup directory to %1','/backup')).'" />');
 
@@ -203,11 +206,27 @@ if (!empty($_POST['restore']))
 	$file = key($_POST['restore']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
 
-	try {
+	$old_db_password = (string)($_POST['old_db_password'] ?? '');
+	// backup was created with a different DB password: passwords encrypted with it can only be re-encrypted, if we know it
+	// --> ask for it once, restoring without it only on a second request for the same backup
+	if ($old_db_password === '' && ($_POST['password_warned'] ?? '') !== basename($file) && $db_backup->dbPasswordChanged($file) === true)
+	{
+		$setup_tpl->set_var('error_msg', htmlspecialchars(lang('This backup was created with a different DB password. Passwords stored encrypted with the DB password (mail account passwords, password customfields, ...) can only be restored, if you enter the old DB password. Enter it and restore again, or restore again to continue without it.')));
+		$setup_tpl->set_var('password_warned', Api\Html::input_hidden('password_warned', basename($file)));
+	}
+	else try {
 		$f = $db_backup->fopen_backup($file,true);
 		$start = time();
-		$db_backup->restore($f, true, $file);	// always convert to current system charset on restore
-		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file).' ('.(time()-$start).' s)');
+		// always convert to current system charset on restore
+		$db_backup->old_db_password = $old_db_password;
+		if (($msg = $db_backup->restore($f, true, $file)))
+		{
+			throw new Api\Exception\WrongUserinput($msg);
+		}
+		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file).' ('.(time()-$start).' s)'.
+			($db_backup->reencrypted ? '. '.htmlspecialchars(lang('Re-encrypted with the current DB password: %1 mail account credentials, %2 customfield values, %3 calendar subscriptions, %4 share passwords, %5 values could not be decrypted and were left unchanged.',
+				$db_backup->reencrypted['credentials'], $db_backup->reencrypted['customfields'], $db_backup->reencrypted['subscriptions'],
+				$db_backup->reencrypted['shares'], $db_backup->reencrypted['skipped'])) : ''));
 		if (isset($run_in_egw))
 		{
 			// updating the backup

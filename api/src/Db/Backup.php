@@ -13,6 +13,7 @@
 namespace EGroupware\Api\Db;
 
 use EGroupware\Api;
+use EGroupware\Api\Mail\Credentials;
 use ZipArchive;
 
 /**
@@ -71,6 +72,28 @@ class Backup
 	 * Regular expression to identify a Guacamole table OR view
 	 */
 	const GUACAMOLE_REGEXP = '/^guacamole_/';
+	/**
+	 * Cleartext of the "secret_check" line of a backup
+	 *
+	 * The backup contains it encrypted with the DB password aka system secret (see Api\Mail\Credentials::SYSTEM_AES)
+	 * used by the backed up instance. That allows to tell on restore, if it changed, and if a given old DB password is the right one.
+	 */
+	const SECRET_CHECK = 'egw-db-password-check';
+	/**
+	 * DB password of the system the backup to restore was created on, set it before calling restore()
+	 *
+	 * It is a property and not a parameter of restore(), to not break classes reimplementing restore() like Stylite's S3\Backup.
+	 *
+	 * @var ?string
+	 */
+	public $old_db_password = null;
+	/**
+	 * Number of values re-encrypted by the last restore() with an old_db_password, by type (credentials, customfields, subscriptions, shares)
+	 * and "skipped" for values which could not be decrypted with the old DB password
+	 *
+	 * @var int[]
+	 */
+	public $reencrypted = [];
 	/**
 	 * Files directory
 	 *
@@ -351,12 +374,27 @@ class Backup
 	 * @param boolean $protect_system_config =true should above system_config values be protected (NOT overwritten)
 	 * @param int $insert_n_rows =500 how many rows to insert in one sql statement
 	 *
+	 * If $old_db_password is set, passwords encrypted with the DB password are re-encrypted with the current one,
+	 * see $reencrypted for the result.
+	 *
 	 * @returns string An empty string or an error message in case of failure.
 	 */
 	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true, $insert_n_rows=500)
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
+
+		// check old DB password BEFORE we drop anything
+		$old_key = null;
+		$this->reencrypted = [];
+		if ((string)$this->old_db_password !== '' && (string)$this->db->Password !== '' && $this->old_db_password !== $this->db->Password)
+		{
+			if ($this->checkDbPassword($filename, $this->old_db_password) === false)
+			{
+				return lang('The old DB password does not match the one the backup was created with, nothing was restored!');
+			}
+			$old_key = $this->old_db_password;
+		}
 
 		if (true) $convert_to_system_charset = true;	// enforce now utf-8 as system charset restores of old backups
 
@@ -480,6 +518,11 @@ class Backup
 				),__LINE__,__FILE__);
 			}
 		}
+		// DB password changed: re-encrypt everything encrypted with it
+		if (isset($old_key))
+		{
+			$this->reencrypted = $this->reencrypt($old_key, $this->db->Password);
+		}
 		// zip?
 		if($type == 'zip')
 		{
@@ -517,6 +560,239 @@ class Backup
 		$this->log($filename, true, false);
 
 		return '';
+	}
+
+	/**
+	 * Read what is needed to check the DB password from the start of a backup
+	 *
+	 * @param string $filename backup file, relative to the backup directory (any directory part is ignored)
+	 * @return array with values for keys:
+	 *	- "secret_check" SECRET_CHECK encrypted with the DB password of the backed up system, or null for older backups
+	 *	- "probe" for older backups the first value encrypted with the DB password found in the mail credentials, or null if none
+	 */
+	protected function readBackupInfo(string $filename) : array
+	{
+		$info = ['secret_check' => null, 'probe' => null];
+		$name = $this->backup_dir.'/'.basename($filename);
+		$zip = null;
+		if (strtolower(substr($name, -4)) === '.zip')
+		{
+			if (!class_exists(ZipArchive::class, false) || ($zip = new ZipArchive)->open($name) !== true)
+			{
+				return $info;
+			}
+			$f = false;
+			for ($i = 0; $i < $zip->numFiles; ++$i)
+			{
+				if (preg_match('#^database_backup/[^/]+$#', $zip->getNameIndex($i)))
+				{
+					$f = $zip->getStream($zip->getNameIndex($i));
+					break;
+				}
+			}
+		}
+		else
+		{
+			$name = preg_replace('/\.(bz2|gz)$/i', '', $name);
+			$f = @fopen('compress.bzip2://'.$name.'.bz2', 'rb') ?: @fopen('compress.zlib://'.$name.'.gz', 'rb') ?: @fopen($name, 'rb');
+		}
+		if (!is_resource($f))
+		{
+			return $info;
+		}
+		$table = $cols = null;
+		while (($line = fgets($f)) !== false)
+		{
+			if (substr($line, 0, 14) === 'secret_check: ')
+			{
+				$info['secret_check'] = trim(substr($line, 14));
+				break;
+			}
+			if (substr($line, 0, 7) === 'table: ')
+			{
+				if ($table === 'egw_ea_credentials')	// credentials table is over and had no value to probe with
+				{
+					break;
+				}
+				$table = trim(substr($line, 7));
+				$cols = $table === 'egw_ea_credentials' ? self::csv_split(trim(fgets($f))) : null;
+			}
+			elseif ($table === 'egw_ea_credentials' && $cols && count($data = self::csv_split(trim($line))) === count($cols))
+			{
+				$data = array_combine($cols, $data);
+				if ((int)$data['cred_pw_enc'] === Credentials::SYSTEM_AES && !empty($data['cred_password']))
+				{
+					// cred_password is a blob, which is base64 encoded in the backup
+					$info['probe'] = base64_decode($data['cred_password'], true) ?: $data['cred_password'];
+					break;
+				}
+			}
+		}
+		fclose($f);
+		unset($zip);
+
+		return $info;
+	}
+
+	/**
+	 * Check if a backup was encrypted with the given DB password
+	 *
+	 * @param string $filename backup file, relative to the backup directory
+	 * @param string $password DB password to check
+	 * @return ?bool true: it was created with $password, false: it was NOT, null: backup contains nothing to tell
+	 */
+	public function checkDbPassword(string $filename, string $password) : ?bool
+	{
+		$info = $this->readBackupInfo($filename);
+
+		if (isset($info['secret_check']))
+		{
+			return Credentials::decryptWithKey($info['secret_check'], $password) === self::SECRET_CHECK;
+		}
+		if (isset($info['probe']))
+		{
+			// mail credentials can be binary (S/MIME keys)
+			return Credentials::decryptWithKey($info['probe'], $password, false) !== null;
+		}
+		return null;
+	}
+
+	/**
+	 * Check if the DB password of the backup differs from the current one, which makes encrypted passwords unreadable
+	 *
+	 * @param string $filename backup file, relative to the backup directory
+	 * @return ?bool true: it differs, false: it's the same, null: backup contains nothing to tell
+	 */
+	public function dbPasswordChanged(string $filename) : ?bool
+	{
+		$same = (string)$this->db->Password === '' ? null : $this->checkDbPassword($filename, $this->db->Password);
+
+		return isset($same) ? !$same : null;
+	}
+
+	/**
+	 * Re-encrypt everything in the (restored) database encrypted with the old DB password with the new one
+	 *
+	 * That are:
+	 * - mail account credentials (egw_ea_credentials), only the AES ones, which were encrypted with the DB password
+	 * - password customfields in the egw_*_extra tables and, for filemanager, in the file properties (egw_sqlfs_props)
+	 * - passwords of subscribed calendars in egw_categories
+	 * - reversible passwords of shares in egw_sharing
+	 * Values, which can not be decrypted with the old password (eg. encrypted with a user password) are left untouched.
+	 *
+	 * @param string $old_key DB password the backup was created with
+	 * @param string $new_key current DB password
+	 * @return int[] number of re-encrypted values by "credentials", "customfields", "subscriptions", "shares" and number of "skipped" ones
+	 */
+	protected function reencrypt(string $old_key, string $new_key) : array
+	{
+		$stats = ['credentials' => 0, 'customfields' => 0, 'subscriptions' => 0, 'shares' => 0, 'skipped' => 0];
+
+		// mail account credentials, SSO password, 2FA secrets, ...
+		$stats['credentials'] = $this->reencryptRows('egw_ea_credentials', ['cred_id'], 'cred_password',
+			['cred_pw_enc' => Credentials::SYSTEM_AES], $old_key, $new_key, $stats['skipped'], false);
+
+		// password customfields
+		$cfs = [];
+		if (isset($this->schemas['egw_customfields']))
+		{
+			foreach($this->db->select('egw_customfields', 'cf_app,cf_name', ['cf_type' => 'passwd'], __LINE__, __FILE__,
+				false, '', false, 0, '', $this->schemas['egw_customfields']) as $row)
+			{
+				$cfs[$row['cf_app']][] = $row['cf_name'];
+			}
+		}
+		foreach($cfs as $app => $names)
+		{
+			if ($app === 'filemanager')	// stored as properties of the files, with a "#" prefix
+			{
+				$stats['customfields'] += $this->reencryptRows('egw_sqlfs_props', ['prop_id'], 'prop_value', [
+					'prop_namespace' => Api\Vfs::DEFAULT_PROP_NAMESPACE,
+					'prop_name' => array_map(static fn($name) => '#'.$name, $names),
+				], $old_key, $new_key, $stats['skipped']);
+				continue;
+			}
+			$table = $app === 'calendar' ? 'egw_cal_extra' : 'egw_'.$app.'_extra';
+			if (!isset($this->schemas[$table])) continue;
+
+			$columns = array_keys($this->schemas[$table]['fd']);
+			$name_col = current(preg_grep('/_name$/', $columns));
+			$value_col = current(preg_grep('/_value$/', $columns));
+			if (!$name_col || !$value_col || !$this->schemas[$table]['pk']) continue;
+
+			$stats['customfields'] += $this->reencryptRows($table, $this->schemas[$table]['pk'], $value_col,
+				[$name_col => $names], $old_key, $new_key, $stats['skipped']);
+		}
+
+		// reversible share passwords
+		$stats['shares'] = $this->reencryptRows('egw_sharing', ['share_id'], 'share_pw_reversable',
+			"share_pw_reversable != ''", $old_key, $new_key, $stats['skipped']);
+
+		// subscribed calendars: password is stored encrypted inside the JSON in cat_data
+		if (isset($this->schemas['egw_categories']))
+		{
+			foreach($this->db->select('egw_categories', 'cat_id,cat_data', 'cat_data LIKE '.$this->db->quote('%SUBSCRIBED-CALENDAR%'),
+				__LINE__, __FILE__, false, '', false, 0, '', $this->schemas['egw_categories']) as $row)
+			{
+				$data = json_php_unserialize($row['cat_data'], true);
+				if (!is_array($data) || empty($data['password']) || strlen($data['password']) <= 32) continue;
+
+				if (($new = Credentials::reencrypt($data['password'], $old_key, $new_key)) === null)
+				{
+					++$stats['skipped'];
+					continue;
+				}
+				$data['password'] = $new;
+				$this->db->update('egw_categories', ['cat_data' => json_encode($data)], ['cat_id' => $row['cat_id']],
+					__LINE__, __FILE__, false, false, $this->schemas['egw_categories']);
+				++$stats['subscriptions'];
+			}
+		}
+		return $stats;
+	}
+
+	/**
+	 * Re-encrypt one column of a table
+	 *
+	 * @param string $table
+	 * @param string[] $pk columns identifying a row
+	 * @param string $column column with the encrypted value
+	 * @param array|string $where which rows to re-encrypt
+	 * @param string $old_key
+	 * @param string $new_key
+	 * @param int& $skipped increased by the number of values not decryptable with $old_key
+	 * @param bool $printable =true false: values can be binary, eg. S/MIME keys, see Credentials::decryptWithKey()
+	 * @return int number of re-encrypted values
+	 */
+	protected function reencryptRows(string $table, array $pk, string $column, $where, string $old_key, string $new_key, int &$skipped, bool $printable=true) : int
+	{
+		if (!isset($this->schemas[$table]) || array_diff(array_merge($pk, [$column]), array_keys($this->schemas[$table]['fd'])))
+		{
+			return 0;
+		}
+		$rows = [];
+		foreach($this->db->select($table, implode(',', array_merge($pk, [$column])), $where, __LINE__, __FILE__,
+			false, '', false, 0, '', $this->schemas[$table]) as $row)
+		{
+			$rows[] = $row;
+		}
+		$done = 0;
+		foreach($rows as $row)
+		{
+			if ((string)$row[$column] === '')	// nothing to encrypt
+			{
+				continue;
+			}
+			if (!is_string($row[$column]) || ($new = Credentials::reencrypt($row[$column], $old_key, $new_key, $printable)) === null)
+			{
+				++$skipped;
+				continue;
+			}
+			$this->db->update($table, [$column => $new], array_intersect_key($row, array_flip($pk)),
+				__LINE__, __FILE__, false, false, $this->schemas[$table]);
+			++$done;
+		}
+		return $done;
 	}
 
 	/**
@@ -988,6 +1264,11 @@ class Backup
 
 		fwrite($f,"charset: $this->charset\n\n");
 
+		// allows to detect on restore, if DB password (used to encrypt passwords in the DB) changed
+		if ((string)$this->db->Password !== '')
+		{
+			fwrite($f, 'secret_check: '.Credentials::encryptWithKey(self::SECRET_CHECK, $this->db->Password)."\n\n");
+		}
 		$this->schema_backup($f);	// add the schema in a human-readable form too
 
 		fwrite($f,"\nschema: ".json_encode($this->schemas)."\n");

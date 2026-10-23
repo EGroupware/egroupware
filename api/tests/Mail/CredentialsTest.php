@@ -166,6 +166,56 @@ class CredentialsTest extends TestCase
 		}
 	}
 
+	/**
+	 * Encrypting with an explicit key round-trips and a wrong key or a non-encrypted value is reported as null
+	 */
+	public function testKeyBasedRoundTrip()
+	{
+		$encrypted = Credentials::encryptWithKey('RälfÜber12345678', 'old-db-password');
+
+		$this->assertSame('RälfÜber12345678', Credentials::decryptWithKey($encrypted, 'old-db-password'));
+		$this->assertNull(Credentials::decryptWithKey($encrypted, 'other-db-password'), 'wrong key');
+		$this->assertSame('', Credentials::decryptWithKey(Credentials::encryptWithKey('', 'old-db-password'), 'old-db-password'),
+			'empty value is not an error');
+
+		foreach(['', 'a-plain-text-password', str_repeat('x', 80), base64_encode(random_bytes(12)).'not base64!!',
+			substr($encrypted, 0, -4)] as $not_encrypted)
+		{
+			$this->assertNull(Credentials::decryptWithKey($not_encrypted, 'old-db-password'), "not encrypted: '$not_encrypted'");
+		}
+	}
+
+	/**
+	 * Binary values (S/MIME keys) are only accepted, if not asked for printable ones
+	 */
+	public function testKeyBasedBinary()
+	{
+		$binary = "\x00\x01\x02\xff\xfe".random_bytes(40);
+		$encrypted = Credentials::encryptWithKey($binary, 'old-db-password');
+
+		$this->assertNull(Credentials::decryptWithKey($encrypted, 'old-db-password'));
+		$this->assertSame($binary, Credentials::decryptWithKey($encrypted, 'old-db-password', false));
+		$this->assertNull(Credentials::reencrypt($encrypted, 'old-db-password', 'new-db-password'));
+		$this->assertSame($binary, Credentials::decryptWithKey(
+			Credentials::reencrypt($encrypted, 'old-db-password', 'new-db-password', false), 'new-db-password', false));
+	}
+
+	/**
+	 * Re-encrypting moves a value to the new key, which is also the one Credentials::decrypt() uses for SYSTEM_AES
+	 */
+	public function testReencrypt()
+	{
+		$encrypted = Credentials::encryptWithKey('secret-value', 'old-db-password');
+		$new = Credentials::reencrypt($encrypted, 'old-db-password', 'new-db-password');
+
+		$this->assertNotNull($new);
+		$this->assertNotSame($encrypted, $new);
+		$this->assertSame('secret-value', Credentials::decryptWithKey($new, 'new-db-password'));
+		$this->assertNull(Credentials::decryptWithKey($new, 'old-db-password'));
+		$this->assertSame('secret-value', Credentials::decrypt(['cred_password' => $new, 'cred_pw_enc' => Credentials::SYSTEM_AES], 'new-db-password'));
+		$this->assertNull(Credentials::reencrypt($encrypted, 'wrong-password', 'new-db-password'), 'not decryptable with given old key');
+	}
+
 	protected static function callProtectedMethod($name, $classname, $params)
 	{
 		$class = new ReflectionClass($classname);

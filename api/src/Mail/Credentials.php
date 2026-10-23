@@ -620,6 +620,68 @@ class Credentials
 	}
 
 	/**
+	 * Encrypt a value with an explicit key, in the format of SYSTEM_AES / USER_AES
+	 *
+	 * Used to (re-)encrypt values with the DB password aka system secret independent of the current DB connection.
+	 *
+	 * @param string $password cleartext value
+	 * @param string $key key/password to use
+	 * @return string encrypted value, as stored in cred_password
+	 */
+	public static function encryptWithKey(string $password, string $key) : string
+	{
+		$pw_enc = null;
+		return self::encrypt_openssl_aes($password, 0, $pw_enc, $key);
+	}
+
+	/**
+	 * Strictly decrypt a SYSTEM_AES / USER_AES value with an explicit key
+	 *
+	 * Unlike decrypt() this tells apart "wrong key / not an encrypted value" (null) from an empty value:
+	 * the value has to be well-formed base64, decrypt with valid padding and (if $printable) give printable UTF-8.
+	 *
+	 * @param string $encrypted encrypted value as stored in cred_password
+	 * @param string $key key/password to use
+	 * @param bool $printable =true false: also accept binary cleartext, eg. S/MIME keys, only checking the padding
+	 * @return ?string cleartext value or null if $encrypted is not decryptable with $key
+	 */
+	public static function decryptWithKey(string $encrypted, string $key, bool $printable=true) : ?string
+	{
+		if (strlen($encrypted) <= self::SALT_LEN64 ||
+			($salt = base64_decode(substr($encrypted, 0, self::SALT_LEN64), true)) === false || strlen($salt) !== self::SALT_LEN ||
+			($cipher = base64_decode(substr($encrypted, self::SALT_LEN64), true)) === false || $cipher === '' || strlen($cipher) % 16)
+		{
+			return null;
+		}
+		$plain = openssl_decrypt($cipher, self::AES_METHOD, self::aes_key($key, $salt), OPENSSL_RAW_DATA, $salt);
+
+		// a wrong key still gives valid padding in about 1 of 256 cases, but not valid printable UTF-8
+		if ($plain === false || $printable && (!mb_check_encoding($plain, 'UTF-8') || preg_match('/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/', $plain)))
+		{
+			return null;
+		}
+		return $plain;
+	}
+
+	/**
+	 * Re-encrypt a SYSTEM_AES value, because the key (DB password) changed
+	 *
+	 * @param string $encrypted value encrypted with $old_key
+	 * @param string $old_key
+	 * @param string $new_key
+	 * @param bool $printable =true false: also accept binary cleartext, see decryptWithKey()
+	 * @return ?string value encrypted with $new_key or null if $encrypted is not decryptable with $old_key
+	 */
+	public static function reencrypt(string $encrypted, string $old_key, string $new_key, bool $printable=true) : ?string
+	{
+		if (($plain = self::decryptWithKey($encrypted, $old_key, $printable)) === null)
+		{
+			return null;
+		}
+		return self::encryptWithKey($plain, $new_key);
+	}
+
+	/**
 	 * Derive an encryption key from a password
 	 *
 	 * Using a pbkdf2 password derivation with a (stored) salt
