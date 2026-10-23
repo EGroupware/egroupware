@@ -64,7 +64,10 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * col_filter[owner] is only a copy of the addressbook chosen in filter, not a filter of its own
+	 * col_filter[owner] is only a copy of the addressbook chosen in filter, not a filter of its own.
+	 *
+	 * The CRM view runs infolog's (etc.) nextmatch in here: the contact it is bound to (action*) and its
+	 * details toggle (filter2) are context, not filters - without this a new contact's empty list opened the drawer.
 	 *
 	 * @param filterValues
 	 * @param fwApp
@@ -74,6 +77,7 @@ class AddressbookApp extends EgwApp
 		const values = {...(filterValues ?? {})};
 		values.col_filter = {...(values.col_filter ?? {})};
 		delete values.col_filter.owner;
+		['action', 'action_id', 'action_title', 'filter2'].forEach(key => delete values[key]);
 		return fwApp.filterInfo(values);
 	}
 
