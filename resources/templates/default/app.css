@@ -4,11 +4,23 @@
  * @version: $Id$
  */
 
-#resources-edit.et2_container
-{
-	width:848px;
-}
 #resources-edit_res_id:before {content:"#"}
+
+/* The picture choices start at the top, level with their "Picture" label, and the preview sits at the far end */
+/* A checkbox in a box: the box fills its grid row, a bare checkbox sits lower than the inputs beside it and the layout counts that as a row of its own */
+.resources-bookable::part(base) {
+  align-items: center;
+}
+.resources-picture::part(base) {
+  align-items: flex-start;
+}
+.resources-picture et2-image-expose {
+  max-height: 8em;
+}
+.resources-picture et2-image-expose img {
+  max-height: 8em;
+  width: auto;
+}
 
 div.resources_pictureFile div.progress{
 	position: absolute;

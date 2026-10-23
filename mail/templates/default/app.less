@@ -822,6 +822,24 @@ div.mailPreviewHeaders #mail-index_previewAttachmentArea.visible {
 .mail_importMessageFile{
 	width: 40%;
 }
+/* "Choose file": the label takes the same column as the labels above, so the buttons start where their inputs do */
+.mail-import-file::part(base) {
+	gap: 0;
+	align-items: center;
+}
+.mail-import-file > et2-description {
+	flex: none;
+	width: calc(var(--label-width, 8em) + var(--sl-spacing-medium));
+}
+@container (max-width: 36em) {
+	.mail-import-file > et2-description {
+		width: auto;
+		margin-inline-end: var(--sl-spacing-small);
+	}
+}
+.mail-import-file > et2-file {
+	margin-inline-start: var(--sl-spacing-small);
+}
 #mail-importMessage .dialogHeader {
 	font-weight: bold;
 	font-size:150%;

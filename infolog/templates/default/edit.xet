@@ -53,7 +53,7 @@
 		<et2-hbox exportparts="base" class="dialogHeader">
 			<et2-textbox  label="Title" statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" tabindex="1" span="4"></et2-textbox>
 			<et2-description  id="info_id"></et2-description>
-			<et2-appicon  src="infolog"></et2-appicon>
+			<et2-appicon  src="infolog" align="right"></et2-appicon>
 			<et2-hbox  parentId="infolog-edit_tabs" slot="nav" class="infologExtraButtons">
 				<et2-button-timestamp  statustext="Insert timestamp into description field" id="timestamp" class="infologExtraButton infologTimestamp" target="info_des"></et2-button-timestamp>
 				<et2-button-toggle  statustext="Encrypt description" id="encrypt" class="infologExtraButton infologEncrypt" offIcon="lock" onIcon="unlock" onclick="app.infolog.toggleEncrypt"></et2-button-toggle>

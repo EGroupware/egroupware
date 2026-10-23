@@ -2,49 +2,18 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="filemanager.file.general" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%" spacing="10">
-			<columns>
-				<column width="80"/>
-				<column/>
-			</columns>
-			<rows>
-				<row height="30">
-					<et2-vfs-mime  align="center" id="mime"></et2-vfs-mime>
-					<et2-vfs-name  id="name" required="true" class="fileName"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row disabled="!@is_link">
-					<et2-description  for="symlink" value="Link"></et2-description>
-					<et2-textbox  id="symlink" readonly="true" class="fileName"></et2-textbox>
-				</row>
-				<row>
-					<et2-description  value="Type"></et2-description>
-					<et2-description  id="mime"></et2-description>
-				</row>
-				<row>
-					<et2-description  value="Directory"></et2-description>
-					<et2-description  id="dir"></et2-description>
-				</row>
-				<row disabled="@is_link">
-					<et2-description  value="Size"></et2-description>
-					<vfs-size id="size"/>
-				</row>
-				<row>
-					<et2-description  value="Created"></et2-description>
-					<et2-date-time  id="ctime" readonly="true"></et2-date-time>
-				</row>
-				<row>
-					<et2-description  value="Modified"></et2-description>
-					<et2-date-time  id="mtime" readonly="true"></et2-date-time>
-				</row>
-				<row>
-					<et2-description  for="comment" value="Comment"></et2-description><et2-ai><et2-textarea  id="comment"></et2-textarea></et2-ai>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="filemanager.file.general" template="" lang="" group="0" version="1.7.004" layout="2-column" style="--column-min-width:100%">
+		<et2-hbox  class="filemanager-file-name" span="all">
+			<et2-vfs-mime  align="center" id="mime" style="flex:none"></et2-vfs-mime>
+			<et2-vfs-name  id="name" required="true" class="fileName" style="flex:1; text-align:left; justify-content:flex-start"/>
+		</et2-hbox>
+		<et2-textbox  label="Link" id="symlink" readonly="true" class="fileName" hidden="!@is_link"></et2-textbox>
+		<et2-textbox  label="Type" id="mime" readonly="true"></et2-textbox>
+		<et2-textbox  label="Directory" id="dir" readonly="true"></et2-textbox>
+		<et2-vfs-size  label="Size" id="size" hidden="@is_link"></et2-vfs-size>
+		<et2-date-time  label="Created" id="ctime" readonly="true"></et2-date-time>
+		<et2-date-time  label="Modified" id="mtime" readonly="true"></et2-date-time>
+		<et2-ai span="all"><et2-textarea  label="Comment" id="comment"></et2-textarea></et2-ai>
 	</et2-template>
 	<et2-template  id="filemanager.file.perms" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%" spacing="10">
@@ -206,45 +175,31 @@
 			</rows>
 		</grid>
 	</et2-template>
-	<et2-template  id="filemanager.file" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@msg">
-					<et2-description  id="msg" span="all" class="redItalic"></et2-description>
-				</row>
-				<row class="dialogTabs">
-					<et2-tabbox  id="tabs" span="all" tabHeight="330">
-						<tabs>
-							<tab id="filemanager.file.general" label="General"/>
-							<tab id="filemanager.file.perms" label="Permissions"/>
-							<tab id="filemanager.file.eacl" label="Extended ACL"/>
-							<tab id="filemanager.file.preview" label="Preview"/>
-							<tab id="filemanager.file.custom" label="Custom fields"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="filemanager.file.general"></et2-template>
-							<et2-template  id="filemanager.file.perms"></et2-template>
-							<et2-template  id="filemanager.file.eacl"></et2-template>
-							<et2-template  id="filemanager.file.preview"></et2-template>
-							<et2-template  id="filemanager.file.custom"></et2-template>
-						</tabpanels>
+	<et2-template  id="filemanager.file" template="" lang="" group="0" version="1.9.002" layout="edit" style="--column-min-width:18em">
+		<et2-description  id="msg" class="redItalic" hidden="!@msg" span="all"></et2-description>
+		<et2-tabbox  id="tabs" tabHeight="auto">
+		<tabs>
+			<tab id="filemanager.file.general" label="General"/>
+			<tab id="filemanager.file.perms" label="Permissions"/>
+			<tab id="filemanager.file.eacl" label="Extended ACL"/>
+			<tab id="filemanager.file.preview" label="Preview"/>
+			<tab id="filemanager.file.custom" label="Custom fields"/>
+		</tabs>
+		<tabpanels>
+			<et2-template  id="filemanager.file.general"></et2-template>
+			<et2-template  id="filemanager.file.perms"></et2-template>
+			<et2-template  id="filemanager.file.eacl"></et2-template>
+			<et2-template  id="filemanager.file.preview"></et2-template>
+			<et2-template  id="filemanager.file.custom"></et2-template>
+		</tabpanels>
 					</et2-tabbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-hbox>
-						<et2-hbox>
-							<et2-button  label="Save" id="button[save]" image="save"></et2-button>
-							<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
-							<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
-						</et2-hbox>
-						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="document.querySelectorAll('.superuser').forEach(el => el.style.display='inline'); document.getElementById(form::name('sudo[user]')).focus();" image="lock" noSubmit="true"></et2-button>
-					</et2-hbox>
-				</row>
-                <row>
-                    <et2-groupbox  class="superuser" summary="Enter setup user and password">
+		<et2-hbox  class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  label="Save" id="button[save]" image="save"></et2-button>
+			<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+			<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="document.querySelectorAll('.superuser').forEach(el => el.style.display='inline'); document.getElementById(form::name('sudo[user]')).focus();" image="lock" noSubmit="true"></et2-button>
+		</et2-hbox>
+		<et2-groupbox  class="superuser" summary="Enter setup user and password">
                         <grid>
                             <columns>
                                 <column/>
@@ -270,10 +225,7 @@
                             </rows>
                         </grid>
                     </et2-groupbox>
-                </row>
-            </rows>
-        </grid>
-        <et2-styles>
+		<et2-styles>
             .full-height { height: 100% }
             .full-height > fieldset { flex-grow: 1; }
             .superuser {
@@ -287,5 +239,5 @@
 				display: none;
             }
         </et2-styles>
-    </et2-template>
+	</et2-template>
 </overlay>

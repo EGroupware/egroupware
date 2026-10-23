@@ -2,66 +2,48 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="resources.acl_edit" template="" lang="" group="0" version="16.1">
-		<grid width="100%">
-			<columns>
-				<column width="90"/>
-				<column width="300"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<et2-description  value="Category" for="name"></et2-description>
-					<et2-description  id="name"></et2-description>
-				</row>
-				<row valign="top">
-					<et2-description  value="Description" for="description"></et2-description><et2-ai><et2-textarea  id="description" rows="5" cols="50" readonly="true"></et2-textarea></et2-ai>
-				</row>
-				<row>
-					<et2-description  value="Category admin" for="admin"></et2-description>
-					<et2-select-account  id="admin" multiple="true" placeholder="Choose category admin" accountType="accounts"></et2-select-account>
-				</row>
-				<row class="nmr" disabled="@no_private">
-					<et2-description  value="Locations / rooms"></et2-description>
-					<et2-checkbox  id="location"></et2-checkbox>
-				</row>
-				<row>
-					<grid span="all" class="permissions">
-						<columns>
-							<column width="25%"/>
-							<column width="25%"/>
-							<column width="25%"/>
-							<column width="25%"/>
-						</columns>
-						<rows>
-							<row class="th">
-								<et2-description  label="Read permissions"></et2-description>
-								<et2-vbox>
-									<et2-description  label="Write permissions"></et2-description>
-									<et2-description  label="implies read permission"></et2-description>
-								</et2-vbox>
-								<et2-description  label="Read Calendar permissions"></et2-description>
-								<et2-vbox>
-									<et2-description  label="Direct booking permissions"></et2-description>
-									<et2-description  label="implies booking permission"></et2-description>
-								</et2-vbox>
-							</row>
-							<row valign="top">
-								<et2-select-account  id="read" multiple="true" accountType="both"></et2-select-account>
-								<et2-select-account  id="write" multiple="true" accountType="both"></et2-select-account>
-								<et2-select-account  id="calread" multiple="true" accountType="both"></et2-select-account>
-								<et2-select-account  id="calwrite" multiple="true" accountType="both"></et2-select-account>
-							</row>
-						</rows>
-					</grid>
-				</row>
-				<row  class="dialogFooterToolbar">
-					<et2-hbox  span="all">
-						<et2-button  label="Save" id="button[save]" image="save"></et2-button>
-						<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
-						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="resources.acl_edit" template="" lang="" group="0" version="16.1" layout="edit" style="--label-width:9em; --column-min-width:33em">
+		<et2-hbox  class="dialogHeader">
+			<et2-description  value="Category" for="name" style="width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-description  id="name"></et2-description>
+		</et2-hbox>
+		<et2-ai  span="all"><et2-textarea  label="Description" class="et2-label-fixed" id="description" rows="5" cols="50" readonly="true"></et2-textarea></et2-ai>
+		<et2-select-account  label="Category admin" span="all" id="admin" multiple="true" placeholder="Choose category admin" accountType="accounts"></et2-select-account>
+		<et2-checkbox  label="Locations / rooms" span="all" id="location" hidden="@no_private"></et2-checkbox>
+		<et2-hbox  span="all">
+			<grid width="100%" class="permissions">
+				<columns>
+					<column width="25%"/>
+					<column width="25%"/>
+					<column width="25%"/>
+					<column width="25%"/>
+				</columns>
+				<rows>
+					<row class="th">
+						<et2-description  label="Read permissions"></et2-description>
+						<et2-vbox>
+							<et2-description  label="Write permissions"></et2-description>
+							<et2-description  label="implies read permission"></et2-description>
+						</et2-vbox>
+						<et2-description  label="Read Calendar permissions"></et2-description>
+						<et2-vbox>
+							<et2-description  label="Direct booking permissions"></et2-description>
+							<et2-description  label="implies booking permission"></et2-description>
+						</et2-vbox>
+					</row>
+					<row valign="top">
+						<et2-select-account  id="read" multiple="true" accountType="both"></et2-select-account>
+						<et2-select-account  id="write" multiple="true" accountType="both"></et2-select-account>
+						<et2-select-account  id="calread" multiple="true" accountType="both"></et2-select-account>
+						<et2-select-account  id="calwrite" multiple="true" accountType="both"></et2-select-account>
+					</row>
+				</rows>
+			</grid>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  label="Save" id="button[save]" image="save"></et2-button>
+			<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>

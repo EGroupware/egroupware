@@ -22,38 +22,26 @@
 			</et2-ai>
 		</et2-vbox>
 	</et2-template>
-	<et2-template  id="admin.mainscreen_message" template="" lang="" group="0" version="18.1">
-		<grid width="100%" height="600">
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-select  id="lang" onchange="widget.getInstanceManager().submit()" statustext="Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page."></et2-select>
-					<et2-checkbox  id="html" onchange="widget.getInstanceManager().submit()" label="html/plaintext"></et2-checkbox>
-				</row>
-				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="550">
-						<tabs>
-							<tab id="loginscreen" label="Login screen"/>
-							<tab id="mainscreen" label="Home screen"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="admin.mainscreen_message.loginscreen"></et2-template>
-							<et2-template  id="admin.mainscreen_message.mainscreen"></et2-template>
-						</tabpanels>
-					</et2-tabbox>
-				</row>
-				<row>
-					<et2-hbox  span="all">
-						<et2-button  statustext="Save changes" label="Save" id="button[save]" image="save"></et2-button>
-						<et2-button  statustext="Apply changes" label="Apply" id="button[apply]" image="check"></et2-button>
-						<et2-button  statustext="Cancel changes" label="Cancel" id="button[cancel]" image="cancel"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="admin.mainscreen_message" template="" lang="" group="0" version="18.2" layout="stack">
+		<et2-hbox>
+			<et2-select  id="lang" onchange="widget.getInstanceManager().submit()" statustext="Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page."></et2-select>
+			<et2-checkbox  id="html" onchange="widget.getInstanceManager().submit()" label="html/plaintext"></et2-checkbox>
+		</et2-hbox>
+		<et2-tabbox  id="tabs" class="et2_nowrap" tabHeight="auto">
+			<tabs>
+				<tab id="loginscreen" label="Login screen"/>
+				<tab id="mainscreen" label="Home screen"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="admin.mainscreen_message.loginscreen"></et2-template>
+				<et2-template  id="admin.mainscreen_message.mainscreen"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-hbox>
+			<et2-button  statustext="Save changes" label="Save" id="button[save]" image="save"></et2-button>
+			<et2-button  statustext="Apply changes" label="Apply" id="button[apply]" image="check"></et2-button>
+			<et2-button  statustext="Cancel changes" label="Cancel" id="button[cancel]" image="cancel"></et2-button>
+					
+		</et2-hbox>
 	</et2-template>
 </overlay>

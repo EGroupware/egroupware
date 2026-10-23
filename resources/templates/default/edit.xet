@@ -2,73 +2,41 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="resources.edit_tabs.general" template="" lang="" group="0" version="">
-		<grid width="100%" height="245">
-			<columns>
-				<column width="80"/>
-				<column width="200"/>
-				<column width="75"/>
-				<column width="90"/>
-				<column width="10"/>
-				<column width="30"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Inventory number"></et2-description>
-					<et2-textbox  id="inventory_number"></et2-textbox>
-					<et2-description></et2-description>
-					<et2-description  value="Accessory of"></et2-description>
-					<et2-vbox  span="all">
-						<et2-select  id="accessory_of" noLang="1"></et2-select>
-						<et2-description  id="accessory_label"></et2-description>
-					</et2-vbox>
-				</row>
-				<row>
-					<et2-description  value="Description (short)"></et2-description>
-					<et2-textbox  statustext="Short description of resource" id="short_description" maxlength="100"></et2-textbox>
-					<et2-description></et2-description>
-					<et2-description  value="Storage information"></et2-description>
-					<et2-textbox  statustext="Information about storage" id="storage_info" maxlength="100" span="all"></et2-textbox>
-				</row>
-				<row>
-					<et2-description  value="Location"></et2-description>
-					<et2-textbox  statustext="Where to find this resource?" id="location" maxlength="100" ></et2-textbox>
-					<et2-description></et2-description>
-					<et2-description  disabled="true" value="Buyable"></et2-description>
-					<et2-checkbox  disabled="true" statustext="Is resource buyable?" id="buyable" span="all" ></et2-checkbox>
-				</row>
-				<row>
-					<et2-description  value="Picture"></et2-description>
-					<grid width="100%">
-						<columns>
-							<column width="10%"/>
-							<column width="90%"/>
-						</columns>
-						<rows>
-							<row>
-								<radio id="picture_src" set_value="gen_src" />
-								<et2-description  value="Use general resources icon"></et2-description>
-							</row>
-							<row>
-								<radio id="picture_src" set_value="cat_src" />
-								<et2-description  value="Use the category's icon"></et2-description>
-							</row>
-							<row>
-								<radio id="picture_src" set_value="own_src" />
-								<et2-description  value="Use own picture"></et2-description>
-							</row>
-							<row>
-								<et2-description></et2-description>
-								<et2-file  id="own_file" class="resources_pictureFile" onchange="app.resources.select_picture_src"></et2-file>
-							</row>
-						</rows>
-					</grid>
-					<et2-description></et2-description>
-					<et2-image-expose  src="resource_picture" href="$cont[picture_original]" align="center"></et2-image-expose>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="resources.edit_tabs.general" template="" lang="" group="0" version="" layout="2-column">
+		<et2-textbox  label="Inventory number" id="inventory_number"></et2-textbox>
+		<et2-select  label="Accessory of" id="accessory_of" noLang="1" helpText="@accessory_label"></et2-select>
+		<et2-textbox  label="Description (short)" statustext="Short description of resource" id="short_description" maxlength="100"></et2-textbox>
+		<et2-textbox  label="Storage information" statustext="Information about storage" id="storage_info" maxlength="100"></et2-textbox>
+		<et2-textbox  label="Location" statustext="Where to find this resource?" id="location" maxlength="100" ></et2-textbox>
+		<et2-checkbox  label="Buyable" disabled="true" statustext="Is resource buyable?" id="buyable"></et2-checkbox>
+		<et2-hbox  span="all" class="resources-picture">
+			<et2-description  value="Picture" style="flex:none;width:var(--label-width, 8em)"></et2-description>
+			<grid width="100%">
+				<columns>
+					<column width="2em"/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<radio id="picture_src" set_value="gen_src" />
+						<et2-description  value="Use general resources icon"></et2-description>
+					</row>
+					<row>
+						<radio id="picture_src" set_value="cat_src" />
+						<et2-description  value="Use the category's icon"></et2-description>
+					</row>
+					<row>
+						<radio id="picture_src" set_value="own_src" />
+						<et2-description  value="Use own picture"></et2-description>
+					</row>
+					<row>
+						<et2-description></et2-description>
+						<et2-file  id="own_file" class="resources_pictureFile" onchange="app.resources.select_picture_src"></et2-file>
+					</row>
+				</rows>
+			</grid>
+			<et2-image-expose  src="resource_picture" href="$cont[picture_original]" align="center"></et2-image-expose>
+		</et2-hbox>
 	</et2-template>
 	<et2-template  id="resources.edit_tabs.page" template="" lang="" group="0" version="">
 		<grid width="100%" height="100%" overflow="auto">
@@ -82,7 +50,7 @@
 		</grid>
 	</et2-template>
 	<et2-template  id="resources.edit_tabs.links" template="" lang="" group="0" version="">
-		<grid width="100%" height="245"  overflow="auto">
+		<grid width="100%" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -103,80 +71,51 @@
 	<et2-template  id="resources.edit_tabs.history" template="" lang="" group="0" version="">
 		<historylog id="history" width="100%"/>
 	</et2-template>
-	<et2-template  id="resources.edit" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%">
-			<columns>
-				<column width="90"/>
-				<column width="200"/>
-				<column width="80"/>
-				<column width="90"/>
-				<column width="120"/>
-				<column width="30"/>
-				<column width="50"/>
-				<column width="4"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<et2-description  value="Name"></et2-description>
-					<et2-textbox  statustext="Name of resource" id="name" class="et2_required" span="4" required="1"></et2-textbox>
-					<et2-number  id="res_id" readonly="true" precision="0"></et2-number>
-					<et2-appicon></et2-appicon>
-					<et2-description></et2-description>
-				</row>
-                <row class="dialogHeader2">
-                    <et2-description  value="Quantity"></et2-description>
-                    <et2-textbox  statustext="Quantity of resource" id="quantity" maxlength="10"></et2-textbox>
-                    <et2-description></et2-description>
-                    <et2-description  value="Category"></et2-description>
-                    <et2-select  span="3" tatustext="Which category does this resource belong to?" id="cat_id" onchange="1" required="1" noLang="1"></et2-select>
-                    <et2-description></et2-description>
-                </row>
-				<row class="dialogHeader3">
-					<et2-description  value="Useable"></et2-description>
-					<et2-textbox  statustext="How many of them are useable?" id="useable" maxlength="10"></et2-textbox>
-					<et2-description></et2-description>
-					<et2-description  value="Bookable"></et2-description>
-					<et2-checkbox  statustext="Is resource bookable?" id="bookable" span="3"></et2-checkbox>
-					<et2-description></et2-description>
-				</row>
-				<row>
-					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="250" cfTypeFilter="@cat_id">
-						<tabs>
-							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
-							<tab id="general" label="Details" statustext="General informations about resource"/>
-							<tab id="links" label="Links" statustext="Web-Page of resource"/>
-							<tab id="history" label="History"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="resources.edit_tabs.page"></et2-template>
-							<et2-template  id="resources.edit_tabs.general"></et2-template>
-							<et2-template  id="resources.edit_tabs.links"></et2-template>
-							<et2-template  id="resources.edit_tabs.history"></et2-template>
-						</tabpanels>
-					</et2-tabbox>
-				</row>
-				<row class="dialogOperators">
-					<et2-description  value="Created by"></et2-description>
-					<et2-hbox>
-						<et2-select-account  id="res_creator" readonly="true"></et2-select-account>
-						<et2-date-time  id="res_created" readonly="true" align="right"></et2-date-time>
-					</et2-hbox>
-					<et2-description></et2-description>
-					<et2-description  value="Last modified"></et2-description>
-					<et2-hbox>
-						<et2-select-account  id="res_modifier" readonly="true"></et2-select-account>
-							<et2-date-time  id="res_modified" readonly="true" align="right"></et2-date-time>
-					</et2-hbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-hbox  span="3">
-						<et2-button  statustext="Saves entry and exits" label="Save" id="button[save]" image="save"></et2-button>
-						<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
-						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
-					</et2-hbox>
-                    <et2-button  align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="resources.edit" template="" lang="" group="0" version="1.9.003" layout="edit">
+		<et2-hbox  class="dialogHeader">
+			<et2-textbox  label="Name" statustext="Name of resource" id="name" class="et2_required et2-label-fixed" required="1"></et2-textbox>
+			<et2-number  id="res_id" readonly="true" precision="0"></et2-number>
+			<et2-appicon></et2-appicon>
+		</et2-hbox>
+		<et2-textbox  label="Quantity" statustext="Quantity of resource" id="quantity" maxlength="10"></et2-textbox>
+		<et2-select  label="Category" tatustext="Which category does this resource belong to?" id="cat_id" onchange="1" required="1" noLang="1"></et2-select>
+		<et2-textbox  label="Useable" statustext="How many of them are useable?" id="useable" maxlength="10"></et2-textbox>
+		<et2-hbox  class="resources-bookable">
+			<et2-checkbox  label="Bookable" statustext="Is resource bookable?" id="bookable"></et2-checkbox>
+		</et2-hbox>
+		<et2-tabbox  id="tabs" tabHeight="auto" cfTypeFilter="@cat_id">
+			<tabs>
+				<tab id="page" label="Description" statustext="Informations about the location of resource"/>
+				<tab id="general" label="Details" statustext="General informations about resource"/>
+				<tab id="links" label="Links" statustext="Web-Page of resource"/>
+				<tab id="history" label="History"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="resources.edit_tabs.page"></et2-template>
+				<et2-template  id="resources.edit_tabs.general"></et2-template>
+				<et2-template  id="resources.edit_tabs.links"></et2-template>
+				<et2-template  id="resources.edit_tabs.history"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-hbox  class="dialogMeta">
+			<et2-description  value="Created by" for="res_creator"></et2-description>
+			<et2-hbox>
+				<et2-select-account  id="res_creator" readonly="true"></et2-select-account>
+				<et2-date-time  id="res_created" readonly="true"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogMeta">
+			<et2-description  value="Last modified" for="res_modifier"></et2-description>
+			<et2-hbox>
+				<et2-select-account  id="res_modifier" readonly="true"></et2-select-account>
+				<et2-date-time  id="res_modified" readonly="true"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  statustext="Saves entry and exits" label="Save" id="button[save]" image="save"></et2-button>
+			<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
+			<et2-button  align="right" label="Delete" id="button[delete]" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this resource?','Delete')" image="delete"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>

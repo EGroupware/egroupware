@@ -2,22 +2,8 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="addressbook.add_list_dialog" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-			<row>
-				<et2-description  value="Name for the distribution list"></et2-description>
-				<et2-textbox  id="name"></et2-textbox>
-			</row>
-			<row>
-			<et2-description  value="Addressbook"></et2-description>
-			<et2-select  id="owner"></et2-select>
-			</row>
-			</rows>
-		</grid>
+	<et2-template  id="addressbook.add_list_dialog" template="" lang="" group="0" version="" layout="stack" class="">
+		<et2-textbox  label="Name for the distribution list" id="name"></et2-textbox>
+		<et2-select  label="Addressbook" id="owner"></et2-select>
 	</et2-template>
 </overlay>

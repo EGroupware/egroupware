@@ -1664,6 +1664,32 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {width: 100%; height: 1
   flex: 7 1 70%;
   margin-bottom: 2em;
 }
+/* The edit dialog's checkboxes (whole day, private, ...) wrap onto another line instead of overflowing their cell */
+/* The add-alarm controls wrap rather than run out of the tab, and the alarm table scrolls sideways instead of overflowing it */
+.calendar-edit-alarm::part(base) {
+  flex-wrap: wrap;
+  gap: var(--sl-spacing-small);
+}
+.calendar-edit-alarms {
+  overflow-x: auto;
+}
+.calendar-edit-options {
+  min-width: 0;
+}
+/* The checkboxes line up with the inputs above and below them, not with the labels (until the labels stack above their fields) */
+.calendar-edit-options::part(base) {
+  padding-inline-start: calc(var(--label-width, 8em) + var(--sl-spacing-medium));
+}
+@container (max-width: 36em) {
+  .calendar-edit-options::part(base) {
+    padding-inline-start: 0;
+  }
+}
+.calendar-edit-options::part(base) {
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: var(--sl-spacing-large);
+}
 
 et2-button#calendar-toolbar_toolbar-today::part(label) {
   font-weight: bold;
@@ -1740,9 +1766,6 @@ egw-app {
   left: initial ;
   right: initial ;
   bottom: initial ;
-}
-#calendar-add_calendar-add {
-  width: min-content;
 }
 
 [slot="filter"] {

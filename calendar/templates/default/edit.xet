@@ -2,17 +2,17 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-        <et2-ai  class="calendar-edit_description">
+	<et2-template  id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001" layout="stack">
+        <et2-ai  class="calendar-edit_description" grow="1">
             <et2-textarea  id="description" cols="70"></et2-textarea>
         </et2-ai>
-		<et2-hbox  disabled="@no_add_alarm" height="35">
+		<et2-hbox  class="calendar-edit-alarm" disabled="@no_add_alarm">
 			<et2-select  statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"></et2-select>
             <et2-date-time  id="new_alarm[date]" class="calendar_alarm_date_display" dataFormat="object"></et2-date-time>
 			<et2-select  statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" noLang="1"></et2-select>
 			<et2-button  label="Add new alarm" id="button[add_alarm]" image="add"></et2-button>
 		</et2-hbox>
-        <grid id="alarm" width="100%">
+        <et2-box  class="calendar-edit-alarms"><grid id="alarm" width="100%">
             <columns>
                 <column/>
                 <column/>
@@ -36,7 +36,7 @@
                     <et2-button  align="left" hidden="!$row_cont[time]" statustext="Delete this alarm" label="Delete" id="delete_alarm[$row_cont[id]]" onclick="Et2Dialog.confirm(widget,'Delete this alarm','Delete')" image="delete"></et2-button>
 				</row>
 			</rows>
-		</grid>
+		</grid></et2-box>
 	</et2-template>
 	<et2-template  id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="99%" id="participants">
@@ -82,80 +82,53 @@
 			select#calendar-edit_role { width: 50%; }
 		</et2-styles>
 	</et2-template>
-	<et2-template  id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-                <column/>
-                <column/>
-                <column/>
-                <column/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th">
-					<et2-description  value="Repeating Event Information" span="all"></et2-description>
-				</row>
-				<row disabled="!@reference">
-					<et2-description  value="Exception"></et2-description>
-					<et2-date-time  id="recurrence" readonly="true"></et2-date-time>
-					<et2-description  id="reference"></et2-description>
-					<et2-description  id="uid"></et2-description>
-					<et2-label></et2-label>
-				</row>
-				<row height="12">
-					<et2-description  for="recur_type" value="Repeat type"></et2-description>
-					<et2-select  id="recur_type" onchange="app.calendar.check_recur_type"></et2-select>
-					<et2-description  for="recur_interval" value="Interval"></et2-description>
-					<et2-select-number  statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" min="2" max="31" emptyLabel="None"></et2-select-number>
-					<et2-label></et2-label>
-				</row>
-				<row height="12">
-					<et2-description  for="recur_enddate" value="End date"></et2-description>
-                    <et2-date  statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" dataFormat="object"></et2-date>
-					<et2-description  for="tzid" value="Timezone"></et2-description>
-					<et2-select-timezone  statustext="Timezone in which recurrences have identical time" id="tzid"></et2-select-timezone>
-					<et2-label></et2-label>
-				</row>
-				<row valign="top">
-					<et2-description  for="recur_data" value="Repeat days"></et2-description>
-					<et2-vbox>
-						<et2-select-dow  statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" multiple="true" placeholder=""></et2-select-dow>
-						<grid id="recur_rdates" class="recur_rdates" disabled="!@recur_rdates">
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-date-time  id="$row" readonly="true"></et2-date-time>
-                                    <et2-button-icon  statustext="Delete this recurrence" id="delete_rdate[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this recurrence','Delete')" image="delete"></et2-button-icon>
-								</row>
-							</rows>
-						</grid>
-						<et2-hbox>
-                            <et2-date-time  id="recur_rdate" placement="top" dataFormat="object"></et2-date-time>
-							<et2-button  id="button[add_rdate]" image="add" statustext="Add recurrence"></et2-button>
-						</et2-hbox>
-					</et2-vbox>
-					<et2-description  value="Exceptions"></et2-description>
-					<et2-vbox>
-						<et2-button  statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" noLang="1" hideOnReadonly="true"></et2-button>
-						<grid id="recur_exception">
-							<columns>
-								<column/>
-								<column/>
-							</columns>
-							<rows>
-								<row>
-									<et2-date-time  id="$row" readonly="true"></et2-date-time>
-                                    <et2-button-icon  statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
-								</row>
-							</rows>
-						</grid>
-					</et2-vbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.002" layout="2-column">
+		<et2-description  value="Repeating Event Information" span="all" class="th"></et2-description>
+		<et2-hbox  span="all" hidden="!@reference">
+			<et2-description  value="Exception"></et2-description>
+			<et2-date-time  id="recurrence" readonly="true"></et2-date-time>
+			<et2-description  id="reference"></et2-description>
+			<et2-description  id="uid"></et2-description>
+		</et2-hbox>
+		<et2-select  label="Repeat type" id="recur_type" onchange="app.calendar.check_recur_type"></et2-select>
+		<et2-select-number  label="Interval" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" min="2" max="31" emptyLabel="None"></et2-select-number>
+		<et2-date  label="End date" statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" dataFormat="object"></et2-date>
+		<et2-select-timezone  label="Timezone" statustext="Timezone in which recurrences have identical time" id="tzid"></et2-select-timezone>
+		<et2-select-dow label="Repeat days"  statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" multiple="true" placeholder=""></et2-select-dow>
+		<et2-vbox>
+			<grid id="recur_rdates" class="recur_rdates" disabled="!@recur_rdates">
+				<columns>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<et2-date-time  id="$row" readonly="true"></et2-date-time>
+						<et2-button-icon  statustext="Delete this recurrence" id="delete_rdate[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this recurrence','Delete')" image="delete"></et2-button-icon>
+					</row>
+				</rows>
+			</grid>
+			<et2-hbox>
+				<et2-date-time  id="recur_rdate" placement="top" dataFormat="object"></et2-date-time>
+				<et2-button  id="button[add_rdate]" image="add" statustext="Add recurrence"></et2-button>
+			</et2-hbox>
+		</et2-vbox>
+		<et2-vbox  span="all">
+			<et2-description  value="Exceptions"></et2-description>
+			<et2-button  statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" noLang="1" hideOnReadonly="true"></et2-button>
+			<grid id="recur_exception">
+				<columns>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row>
+						<et2-date-time  id="$row" readonly="true"></et2-date-time>
+						<et2-button-icon  statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="Et2Dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
+					</row>
+				</rows>
+			</grid>
+		</et2-vbox>
 	</et2-template>
 	<et2-template  id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
@@ -179,78 +152,55 @@
 	<et2-template  id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
 		<historylog id="history" options="history_status" width="100%" />
 	</et2-template>
-	<et2-template  id="calendar.edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="88"/>
-				<column width="130"/>
-				<column width="88"/>
-				<column width="130"/>
-				<column width="130"/>
-				<column/>
-				<column width="50"/>
-				<column width="50"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<et2-description  value="Title"></et2-description>
-					<et2-textbox  id="title" maxlength="255" tabindex="1" span="5" required="1"></et2-textbox>
-					<et2-description  id="id" fontStyle="n"></et2-description>
-					<et2-appicon></et2-appicon>
-				</row>
-				<row class="dialogHeader2">
-                    <et2-description  for="start" value="Start"></et2-description>
-                    <et2-date-time  id="start" class="required" onchange="app.calendar.edit_start_change" span="2" required="1" dataFormat="object"></et2-date-time>
-                    <et2-description  for="duration" value="Duration" id="calendar_edit_duration"></et2-description>
-                    <et2-select  statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
-                    <et2-date-time  id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true" dataFormat="object"></et2-date-time>
-                </row>
-                <row class="dialogHeader2">
-                    <et2-label  value="Options"></et2-label>
-                    <et2-checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
-                    <et2-checkbox  label="Private" id="public" selectedValue="0" unselectedValue="1" statustext="Mark event as private to hide title and description"></et2-checkbox>
-                    <et2-checkbox  statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" "></et2-checkbox>
-                    <et2-select-priority  label="Priority" id="priority" span="2"></et2-select-priority>
-                </row>
-				<row class="dialogHeader3">
-					<et2-label  for="location" value="Location"></et2-label>
-					<et2-hbox  span="2">
-						<et2-textbox  id="location" maxlength="255"></et2-textbox>
-					</et2-hbox>
-					<et2-checkbox  label="Video Conference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
-					<et2-select-cat  id="category" height="190" multiple="true" placeholder="Categories"></et2-select-cat>
-				</row>
-				<row>
-					<et2-tabbox  id="tabs" span="all" tabHeight="450">
-						<tabs>
-							<tab id="description" label="Description" statustext="Full description"/>
-							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
-							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
-							<tab id="links" label="Links" statustext="Links, Attachments"/>
-							<tab id="history" label="History" statustext="Change history"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="calendar.edit.description"></et2-template>
-							<et2-template  id="calendar.edit.participants"></et2-template>
-							<et2-template  id="calendar.edit.recurrence"></et2-template>
-							<et2-template  id="calendar.edit.links"></et2-template>
-							<et2-template  id="calendar.edit.history"></et2-template>
-						</tabpanels>
-					</et2-tabbox>
-				</row>
-                <row disabled="!@id" class="dialogOperators">
-                    <et2-hbox  span="4">
-                        <et2-date-time  label="created" id="created" readonly="true" noLang="1"></et2-date-time>
-                        <et2-select-account  label="by" id="owner" readonly="true"></et2-select-account>
-                    </et2-hbox>
-                    <et2-hbox  align="right">
-                        <et2-date-time  label="Updated" id="modified" readonly="true" noLang="1"></et2-date-time>
-                        <et2-select-account  label="by" class="et2_nowrap" id="modifier" align="right" readonly="true"></et2-select-account>
-                    </et2-hbox>
-                </row>
-			</rows>
-		</grid>
-		<et2-hbox  class="dialogFooterToolbar">
+	<et2-template  id="calendar.edit" template="" lang="" group="0" version="1.9.002" layout="edit">
+		<et2-hbox  class="dialogHeader">
+			<et2-textbox  label="Title" class="et2-label-fixed" id="title" maxlength="255" tabindex="1" required="1"></et2-textbox>
+			<et2-description  id="id" fontStyle="n"></et2-description>
+			<et2-appicon></et2-appicon>
+		</et2-hbox>
+		<et2-date-time  label="Start" class="required" id="start" onchange="app.calendar.edit_start_change" required="1" dataFormat="object"></et2-date-time>
+		<et2-select  label="Duration" statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
+		<et2-hbox  class="calendar-edit-options" span="all">
+			<et2-checkbox  statustext="Event will occupy the whole day" label="whole day" id="whole_day" onchange="app.calendar.set_alarmOptions_WD"></et2-checkbox>
+            <et2-checkbox  label="Private" id="public" selectedValue="0" unselectedValue="1" statustext="Mark event as private to hide title and description"></et2-checkbox>
+            <et2-checkbox  statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" selectedValue="1" unselectedValue="0" roTrue=" "></et2-checkbox>
+            <et2-checkbox  label="Video Conference" id="videoconference" onchange="app.calendar.videoconferenceOnChange"></et2-checkbox>
+		</et2-hbox>
+		<et2-date-time  label="End" id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true" dataFormat="object"></et2-date-time>
+		<et2-textbox  label="Location" id="location" maxlength="255"></et2-textbox>
+        <et2-select-priority  label="Priority" id="priority"></et2-select-priority>
+		<et2-select-cat  label="Categories" id="category" height="190" multiple="true" placeholder="Categories" span="all"></et2-select-cat>
+		<et2-tabbox  id="tabs" tabHeight="auto">
+			<tabs>
+				<tab id="description" label="Description" statustext="Full description"/>
+				<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
+				<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
+				<tab id="links" label="Links" statustext="Links, Attachments"/>
+				<tab id="history" label="History" statustext="Change history"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="calendar.edit.description"></et2-template>
+				<et2-template  id="calendar.edit.participants"></et2-template>
+				<et2-template  id="calendar.edit.recurrence"></et2-template>
+				<et2-template  id="calendar.edit.links"></et2-template>
+				<et2-template  id="calendar.edit.history"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-hbox  class="dialogMeta" hidden="!@id">
+			<et2-description  value="created" for="owner"></et2-description>
+			<et2-hbox>
+				<et2-select-account  id="owner" readonly="true"></et2-select-account>
+				<et2-date-time  id="created" readonly="true" noLang="1"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogMeta" hidden="!@id">
+			<et2-description  value="Updated" for="modifier"></et2-description>
+			<et2-hbox>
+				<et2-select-account  class="et2_nowrap" id="modifier" readonly="true"></et2-select-account>
+				<et2-date-time  id="modified" readonly="true" noLang="1"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar" style="min-width:0">
 			<et2-button  statustext="saves the changes made" label="Save" id="button[save]" image="save" onclick="app.calendar.move_edit_series"></et2-button>
 			<et2-button  statustext="apply the changes" label="Apply" id="button[apply]" image="apply" onclick="app.calendar.move_edit_series"></et2-button>
 			<et2-button  statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>

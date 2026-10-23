@@ -21,39 +21,16 @@
 			</rows>
 		</grid>
 	</et2-template>
-	<et2-template  id="admin.group.edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="100px"/>
-				<column/>
-			</columns>
-			<rows>
-                <row class="dialogHeader">
-                    <et2-description  value="Group name" for="account_lid"></et2-description>
-                    <et2-textbox  id="account_lid" maxlength="64" onchange="app.admin.changeGroup" required="true"></et2-textbox>
-                </row>
-                <row>
-                    <et2-description  value="Description" for="account_description"></et2-description>
-                    <et2-textbox  id="account_description" maxlength="64"></et2-textbox>
-                </row>
-                <row disabled="!@mailAllowed">
-                    <et2-description  value="EMail"></et2-description>
-                    <et2-url-email  id="account_email" maxlength="64"></et2-url-email>
-                </row>
-                <row>
-                    <et2-description  value="Filesystem quota"></et2-description>
-					<et2-hbox>
-						<et2-textbox  id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
-						<et2-checkbox  id="hidden" label="Group hidden from non-admins"></et2-checkbox>
-					</et2-hbox>
-                </row>
-				<row>
-					<et2-description  value="Container" for="account_dn"></et2-description>
-					<et2-textbox  id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
-				</row>
-            </rows>
-		</grid>
-		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="280px">
+	<et2-template  id="admin.group.edit" template="" lang="" group="0" version="1.9.002" layout="edit" style="--label-width:9em;">
+		<et2-hbox  class="dialogHeader">
+			<et2-textbox  label="Group name" class="et2-label-fixed" id="account_lid" maxlength="64" onchange="app.admin.changeGroup" required="true"></et2-textbox>
+		</et2-hbox>
+		<et2-textbox  label="Description" id="account_description" maxlength="64" span="all"></et2-textbox>
+		<et2-url-email  label="EMail" id="account_email" maxlength="64" hidden="!@mailAllowed"></et2-url-email>
+		<et2-textbox  label="Filesystem quota" id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
+		<et2-textbox  label="Container" id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
+		<et2-checkbox  id="hidden" label="Group hidden from non-admins" span="all"></et2-checkbox>
+		<et2-tabbox  id="tabs" tabHeight="auto">
 			<tabs>
 				<tab id="members" label="Members" statustext="Users in this group"/>
 				<tab id="apps" label="Applications" statustext="Applications this group can use"/>

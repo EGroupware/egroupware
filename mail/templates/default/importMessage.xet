@@ -2,35 +2,19 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="100"/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<et2-description  value="Import message" align="center" span="all"></et2-description>
-				</row>
-				<row>
-					<et2-description  value="Account"></et2-description>
-					<et2-select  id="mailaccount" onchange="app.mail.importMessageAccountChanged"></et2-select>
-				</row>
-				<row>
-					<et2-description  value="Store to Folder"></et2-description>
-					<et2-select  id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="app.mail.searchFolder"></et2-select>
-				</row>
-				<row>
-					<et2-description  value="Choose file"></et2-description>
-					<et2-hbox>
-						<et2-vfs-select  id="vfsfile" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"></et2-vfs-select>
-						<et2-file  statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" class="mail_importMessageFile"></et2-file>
-					</et2-hbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-button  statustext="Closes this window" label="Close" onclick="window.close();" image="close" noSubmit="true"></et2-button>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="mail.importMessage" template="" lang="" group="0" version="1.9.002" layout="stack">
+		<et2-hbox  class="dialogHeader">
+			<et2-description  value="Import message" align="center"></et2-description>
+		</et2-hbox>
+		<et2-select  label="Account" id="mailaccount" onchange="app.mail.importMessageAccountChanged"></et2-select>
+		<et2-select  label="Store to Folder" id="FOLDER" allowFreeEntries="false" onclick="app.mail.addressClick" searchUrl="app.mail.searchFolder"></et2-select>
+		<et2-hbox  class="mail-import-file">
+			<et2-description  value="Choose file"></et2-description>
+			<et2-vfs-select  id="vfsfile" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"></et2-vfs-select>
+			<et2-file  statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" class="mail_importMessageFile"></et2-file>
+		</et2-hbox>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  statustext="Closes this window" label="Close" onclick="window.close();" image="close" noSubmit="true"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>
