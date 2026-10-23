@@ -354,16 +354,17 @@ class notifications {
 
 	/**
 	 * sets specific popup notification message
-	 * @abstract $_message accepts plaintext or html
-	 * NOTE: There is no XSS prevention in notifications framework!
-	 * You have to filter userinputs yourselve (e.g. htmlspechialchars() )
 	 *
-	 * @param string $_message
+	 * $_message is always treated as plain text and run through plain2html() (escapes,
+	 * then adds only safe markup: nl2br() and auto-linked bare URLs) - there is no way to
+	 * pass through raw HTML here. If a caller needs more structure (eg. links to another
+	 * app/entry), use set_popuplinks()/set_popupdata() instead of embedding markup in the
+	 * message text.
+	 *
+	 * @param string $_message plain text, NOT html
 	 */
 	public function set_popupmessage($_message) {
-		//popup requires html
-		if(strlen($_message) == strlen(strip_tags($_message))) $_message = self::plain2html($_message);
-		$this->message_popup = $_message;
+		$this->message_popup = self::plain2html($_message);
 		return true;
 	}
 

@@ -40,9 +40,6 @@ class home_ui
 	{
 		self::setup_default_home();
 
-		// CSS for Gridster grid layout
-		Framework::includeCSS('/vendor/npm-asset/gridster/dist/jquery.gridster.css');
-
 		// Ask for our own CSS explicitly, rather than relying on Framework::include_css_js_response()
 		// picking it up as "the current app's".  That runs once when the response is serialized and
 		// reads $GLOBALS['egw_info']['flags']['currentapp'] at that moment - which is whichever app
