@@ -29,6 +29,9 @@
                     </row>
                 </rows>
             </grid>
+            <et2-description  id="links_header" class="subHeader"></et2-description>
+            <et2-number  label="Entries shown before splitting a directory into ranges" id="links_page_size" precision="0" min="0" class="et2-label-fixed" placeholder="100"></et2-number>
+            <et2-description  value="Applies to app directories (Links) without a ?page-size= on their mount, 0 turns splitting off, empty uses the default of 100"></et2-description>
         </et2-vbox>
     </et2-template>
     <et2-template  id="filemanager.config.notification" template="" lang="" group="0" version="1.9.004">
@@ -58,8 +61,13 @@
         </et2-vbox>
         <et2-styles>
             #filemanager-config_quota::part(form-control-input),
-            #filemanager-config_group_quota::part(form-control-input){
+            #filemanager-config_group_quota::part(form-control-input),
+            #filemanager-config_links_page_size::part(form-control-input){
             max-width: 15ex;
+            }
+
+            #filemanager-config_filemanager-config-configuration {
+            --label-width: 28em;
             }
 
             #filemanager-config > div > et2-vbox {
@@ -69,8 +77,7 @@
             #filemanager-config_oversize {
             margin: 2ex 0;
             }
-            #filemanager-config_quota_header,
-            #filemanager-config_notification_header {
+            #filemanager-config .subHeader {
             font-weight: bold;
             border-bottom: 1px solid var(--sl-color-neutral-400);
             padding-bottom: 3px;

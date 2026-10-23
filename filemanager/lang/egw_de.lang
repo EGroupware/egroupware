@@ -360,3 +360,5 @@ you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem 
 your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr persönlicher Ordner hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
 your home directory	filemanager	de	Ihr persönlicher Ordner
 links: add ?page-size=1000 to the path, to break a directory of more entries up into subdirectories	filemanager	de	Links: ?page-size=1000 an den Pfad anhängen, um ein Verzeichnis mit mehr Einträgen in Unterverzeichnisse aufzuteilen
+entries shown before splitting a directory into ranges	filemanager	de	Anzahl Einträge, bevor ein Verzeichnis in Bereiche aufgeteilt wird
+applies to app directories (links) without a ?page-size= on their mount, 0 turns splitting off, empty uses the default of 100	filemanager	de	Gilt für App-Verzeichnisse (Links) ohne ?page-size= am Mountpoint, 0 schaltet das Aufteilen aus, leer verwendet den Standard von 100

@@ -377,6 +377,10 @@ class filemanager_admin extends filemanager_ui
 
 					if($has_epl)
 					{
+						// empty = built-in default, 0 = no ranges
+						Api\Config::save_value('links_page_size',
+							($content['links_page_size'] ?? '') === '' ? null : max(0, (int)$content['links_page_size']),
+							'filemanager');
 						Api\Config::save_value(Api\Storage\Tracking::CUSTOM_NOTIFICATION, array(
 							'use_custom' => !empty($content['notification_use_custom']),
 							'message'    => $content['notification_message'],
@@ -410,6 +414,7 @@ class filemanager_admin extends filemanager_ui
 		}
 
 		$content['quota_header'] = lang('Quota');
+		$content['links_header'] = lang('Links').(!$has_epl ? ' ('.lang('EPL only').')' : '');
 		$content['notification_header'] = lang('Subscription').(!$has_epl ? ' ('.lang('EPL only').')' : '');
 
 		if(!$submitted)
@@ -418,10 +423,12 @@ class filemanager_admin extends filemanager_ui
 			$custom_notification = $fm_config[Api\Storage\Tracking::CUSTOM_NOTIFICATION] ?? [];
 			$content['notification_use_custom'] = !empty($custom_notification['use_custom']);
 			$content['notification_message'] = $custom_notification['message'] ?? '';
+			$content['links_page_size'] = $fm_config['links_page_size'] ?? '';
 		}
 
 		$sel_options = [];
 		$readonlys = array(
+			'links_page_size'         => !$has_epl,
 			'notification_use_custom' => !$has_epl,
 			'notification_message'    => !$has_epl,
 		);

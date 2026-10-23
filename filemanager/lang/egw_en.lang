@@ -362,3 +362,5 @@ you will be redirected to your start folder.	filemanager	en	You will be redirect
 your home dir did not exist, egroupware created a new one.	filemanager	en	Your home directory did not exist, EGroupware created a new one.
 your home directory	filemanager	en	Home folder
 links: add ?page-size=1000 to the path, to break a directory of more entries up into subdirectories	filemanager	en	Links: add ?page-size=1000 to the path, to break a directory of more entries up into subdirectories
+entries shown before splitting a directory into ranges	filemanager	en	Entries shown before splitting a directory into ranges
+applies to app directories (links) without a ?page-size= on their mount, 0 turns splitting off, empty uses the default of 100	filemanager	en	Applies to app directories (Links) without a ?page-size= on their mount, 0 turns splitting off, empty uses the default of 100
