@@ -84,7 +84,10 @@ async function buildTheDocs(watch = false)
 		// when that happens - no error in the page, the port simply stops answering - so it reads
 		// as a hang rather than a crash.
 		const child = spawn('npx', args, {
-			timeout: 120000,
+			// 120s was fine on a dev workstation but too tight on a CPU-constrained host (eg.
+			// our dev/deployment box) once the site grew past ~130 widget pages - a full,
+			// non-incremental build there can easily take several minutes.
+			timeout: 600000,
 			stdio: watch ? 'inherit' : 'pipe',
 			cwd: 'doc/etemplate2',
 			env: {...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} --max-old-space-size=4096`.trim()}
@@ -128,7 +131,10 @@ async function buildTheDocs(watch = false)
 				}
 				catch (e)
 				{
-					if (Date.now() - started > 120000)
+					// matches the spawn() timeout above - search.json is itself written near the
+					// end of a full build, so this is really the same "did the build finish in
+					// time" budget, not an independent server-startup check
+					if (Date.now() - started > 600000)
 					{
 						settled = true;
 						clearInterval(readyInterval);
