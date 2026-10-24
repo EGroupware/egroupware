@@ -245,8 +245,13 @@ foreach(scandir(__DIR__) as $dir)
 		// always (re-)checkout $target: an app-dir can be left on a different branch/tag than
 		// the main checkout (eg. detached by a previous composer resolution, or a manual
 		// backport checkout done in just some app-dirs) - $branch==$target is no guarantee
-		// every app-dir actually is on $target too
-		$cmd .= "$git fetch && $git checkout $target && ";
+		// every app-dir actually is on $target too.
+		// Not every app-dir has $target though (eg. some apps only ever had a "main" branch,
+		// never "master"/"26"/a release tag) - skip the checkout silently in that case instead
+		// of failing, but still fail loudly if $target does exist here and checkout itself
+		// fails for some other real reason.
+		$cmd .= "$git fetch && if $git rev-parse --verify --quiet $target >/dev/null 2>&1 || ".
+			"$git rev-parse --verify --quiet origin/$target >/dev/null 2>&1; then $git checkout $target; fi && ";
 		// no need to pull for release-channel/tags
 		if (!preg_match('/^\d+\.\d+\.\d{8}/', $target))
 		{
