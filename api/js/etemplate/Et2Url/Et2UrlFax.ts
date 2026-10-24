@@ -14,7 +14,7 @@ import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {css} from "lit";
 
 /**
- * @customElement et2-url-phone
+ * @customElement et2-url-fax
  */
 export class Et2UrlFax extends Et2UrlPhone
 {
