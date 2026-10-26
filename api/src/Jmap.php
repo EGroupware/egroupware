@@ -241,15 +241,26 @@ class Jmap extends Jmap\Base
 	}
 
 	/**
-	 * client_id we present to the server's OAuth endpoint
+	 * Redirect URI of our dynamically registered OAuth client
+	 *
+	 * Never dereferenced, only compared between the authorization and token calls. Stalwart 1.0
+	 * accepts anonymous client registration only for a loopback address or a private-use scheme
+	 * containing a dot (RFC 8252), so an https URL is refused.
 	 */
-	const OAUTH_CLIENT_ID = 'egroupware';
+	const OAUTH_REDIRECT_URI = 'org.egroupware.stalwart:/oauth';
 
 	/**
-	 * Never dereferenced by the server, only compared between the auth and token calls of a
-	 * single exchange, so an arbitrary (but https) URL is fine.
+	 * Scopes our dynamically registered OAuth client may request
+	 *
+	 * Stalwart 1.0 refuses a scope the client did not declare at registration (invalid_scope).
 	 */
-	const OAUTH_REDIRECT_URI = 'https://egroupware.org/oauth/stalwart-imap';
+	const OAUTH_SCOPE = 'urn:ietf:params:oauth:scope:mail urn:ietf:params:oauth:scope:contacts '.
+		'urn:ietf:params:oauth:scope:calendars urn:ietf:params:oauth:scope:files offline_access';
+
+	/**
+	 * How long we cache the client_id of the dynamically registered OAuth client (seconds)
+	 */
+	const OAUTH_CLIENT_ID_TTL = 30*24*3600;
 
 	/**
 	 * Switch authentication from Basic username/password to a Bearer access-token
@@ -266,10 +277,14 @@ class Jmap extends Jmap\Base
 	 * obtain an access- and refresh-token, without any browser or user interaction.
 	 *
 	 * Stalwart does not implement the OAuth2 "password" grant (RFC 6749 §4.3). We instead
-	 * replicate what Stalwart's own WebUI does on login: POST credentials to /api/auth (the
-	 * single, unavoidable bcrypt check) to get a one-time client-code, then exchange that code
-	 * for tokens at the regular /auth/token endpoint using the "authorization_code" grant - all
-	 * server-side, no redirect or user interaction required.
+	 * replicate what Stalwart's own login page does: POST credentials plus the OAuth
+	 * authorization request (as "query", with PKCE and consent) to /api/auth (the single,
+	 * unavoidable bcrypt check) to get the redirect-URL carrying a one-time authorization code,
+	 * then exchange that code for tokens at the regular /auth/token endpoint using the
+	 * "authorization_code" grant - all server-side, no redirect or user interaction required.
+	 *
+	 * Since Stalwart 1.0 only accepts known clients, we use an anonymously registered (RFC 7591)
+	 * public client, see oauthClientId().
 	 *
 	 * @link https://github.com/stalwartlabs/stalwart/blob/main/crates/http/src/auth/oauth/auth.rs
 	 * @param string $username
@@ -277,28 +292,120 @@ class Jmap extends Jmap\Base
 	 * @return array|null null if NOT a Stalwart server, wrong credentials, or MFA is required,
 	 *  otherwise values for keys "access_token", "refresh_token", "expires_in"
 	 */
-	public function passwordGrant(string $username, string $password) : ?array
+	public function passwordGrant(string $username, string $password, bool $retry=true) : ?array
 	{
 		try {
+			$client_id = $this->oauthClientId();
+			// PKCE (S256) is mandatory for the public client we registered
+			$verifier = self::base64Url(random_bytes(32));
+			$state = bin2hex(random_bytes(16));
+
+			// consent is a mandatory step for every non-WebUI client, we are the user's own server-side agent
 			$response = $this->api($this->oauthBaseUrl().'/api/auth', 'POST', [
 				'type' => 'authCode',
 				'accountName' => $username,
 				'accountSecret' => $password,
-				'clientId' => self::OAUTH_CLIENT_ID,
-				'redirectUri' => self::OAUTH_REDIRECT_URI,
+				'consent' => true,
+				'query' => http_build_query([
+					'response_type' => 'code',
+					'client_id' => $client_id,
+					'redirect_uri' => self::OAUTH_REDIRECT_URI,
+					'code_challenge' => self::base64Url(hash('sha256', $verifier, true)),
+					'code_challenge_method' => 'S256',
+					'state' => $state,
+					'scope' => self::OAUTH_SCOPE,
+				]),
 			]);
-			if (($response['type'] ?? null) !== 'authenticated' || empty($response['client_code']))
+			$type = $response['type'] ?? null;
+			$params = [];
+			if ($type === 'authenticated' && !empty($response['location']))
 			{
-				return null;	// wrong credentials, MFA required, or request not accepted
+				// the authorization code is returned in the redirect-URL, we do NOT follow
+				parse_str((string)parse_url($response['location'], PHP_URL_QUERY), $params);
+
+				if (!empty($params['code']) && ($params['state'] ?? null) === $state)
+				{
+					return $this->exchangeToken('authorization_code', [
+						'code' => $params['code'],
+						'redirect_uri' => self::OAUTH_REDIRECT_URI,
+						'code_verifier' => $verifier,
+					], $client_id);
+				}
+				return null;
 			}
-			return $this->exchangeToken('authorization_code', [
-				'code' => $response['client_code'],
-				'redirect_uri' => self::OAUTH_REDIRECT_URI,
-			]);
+			// our cached client_id is no longer accepted (e.g. server's encryption-key changed):
+			// register a new one and try once more, but NOT for wrong credentials (type=failure)
+			if ($retry && $type !== 'failure' && $type !== 'mfaRequired')
+			{
+				if ($type === 'redirect' && !empty($response['location']))
+				{
+					parse_str((string)parse_url($response['location'], PHP_URL_QUERY), $params);
+				}
+				if ($type === 'invalid' || in_array($params['error'] ?? null, ['invalid_client', 'invalid_scope'], true))
+				{
+					Cache::unsetInstance(__CLASS__, $this->oauthClientIdCacheKey());
+					return $this->passwordGrant($username, $password, false);
+				}
+			}
+			return null;	// wrong credentials, MFA required, or request not accepted
 		}
 		catch (\Throwable $e) {
 			return null;	// not a Stalwart server, network- or other error
 		}
+	}
+
+	/**
+	 * Get client_id of our OAuth client, registering it first (anonymously, RFC 7591) if necessary
+	 *
+	 * Stalwart 1.0 only accepts registered clients. A dynamically registered one is stateless:
+	 * the client_id is an encrypted blob, nothing is stored on the server, and it stays valid
+	 * until the server's encryption-key changes. We therefore cache one per JMAP host.
+	 *
+	 * @return string
+	 * @throws \Throwable if registration fails, eg. NOT a Stalwart server
+	 */
+	protected function oauthClientId() : string
+	{
+		if (($client_id = Cache::getInstance(__CLASS__, $this->oauthClientIdCacheKey())))
+		{
+			return $client_id;
+		}
+		$response = $this->api($this->oauthBaseUrl().'/auth/register', 'POST', [
+			'client_name' => 'EGroupware',
+			'redirect_uris' => [self::OAUTH_REDIRECT_URI],
+			'grant_types' => ['authorization_code', 'refresh_token'],
+			'response_types' => ['code'],
+			'token_endpoint_auth_method' => 'none',
+			'scope' => self::OAUTH_SCOPE,
+		]);
+		if (empty($response['client_id']) || !is_string($response['client_id']))
+		{
+			throw new Exception($this->oauthBaseUrl().' did not return a client_id');
+		}
+		Cache::setInstance(__CLASS__, $this->oauthClientIdCacheKey(), $response['client_id'], self::OAUTH_CLIENT_ID_TTL);
+
+		return $response['client_id'];
+	}
+
+	/**
+	 * Cache-key of the OAuth client_id: one per JMAP host (and instance, as we use the instance cache)
+	 *
+	 * @return string
+	 */
+	protected function oauthClientIdCacheKey() : string
+	{
+		return 'oauth_client_id:'.(parse_url($this->oauthBaseUrl(), PHP_URL_HOST) ?: $this->oauthBaseUrl());
+	}
+
+	/**
+	 * Base64 URL-safe encoding without padding (RFC 7636 appendix A)
+	 *
+	 * @param string $binary
+	 * @return string
+	 */
+	protected static function base64Url(string $binary) : string
+	{
+		return rtrim(strtr(base64_encode($binary), '+/', '-_'), '=');
 	}
 
 	/**
@@ -311,9 +418,15 @@ class Jmap extends Jmap\Base
 	public function refreshToken(string $refresh_token) : ?array
 	{
 		try {
+			// a refresh-token is bound to the client_id it was issued to: without a cached one
+			// (e.g. cache flushed) it can't be valid anymore, caller falls back to passwordGrant()
+			if (!($client_id = Cache::getInstance(__CLASS__, $this->oauthClientIdCacheKey())))
+			{
+				return null;
+			}
 			return $this->exchangeToken('refresh_token', [
 				'refresh_token' => $refresh_token,
-			]);
+			], $client_id);
 		}
 		catch (\Throwable $e) {
 			return null;
@@ -325,15 +438,29 @@ class Jmap extends Jmap\Base
 	 *
 	 * @param string $grant_type "authorization_code" or "refresh_token"
 	 * @param array $params grant-specific parameters
+	 * @param string $client_id our OAuth client_id, see oauthClientId()
 	 * @return array|null null on error (RFC 6749 §5.2), otherwise values for keys
 	 *  "access_token", "token_type", "expires_in", "refresh_token", "scope"
 	 */
-	protected function exchangeToken(string $grant_type, array $params) : ?array
+	protected function exchangeToken(string $grant_type, array $params, string $client_id) : ?array
 	{
-		$response = $this->api($this->oauthBaseUrl().'/auth/token', 'POST',
-			http_build_query(['grant_type' => $grant_type, 'client_id' => self::OAUTH_CLIENT_ID]+$params),
-			['Content-Type: application/x-www-form-urlencoded']);
-
+		// our client is public (token_endpoint_auth_method=none): Stalwart 1.0 treats the user's
+		// Basic/Bearer Authorization header, which api() adds for this host, as (invalid) client
+		// authentication and answers invalid_request, so it must NOT be sent to the token endpoint
+		$host = parse_url($this->oauthBaseUrl(), PHP_URL_HOST) ?: $this->oauthBaseUrl();
+		$authorization = $this->authorization[$host] ?? null;
+		unset($this->authorization[$host]);
+		try {
+			$response = $this->api($this->oauthBaseUrl().'/auth/token', 'POST',
+				http_build_query(['grant_type' => $grant_type, 'client_id' => $client_id]+$params),
+				['Content-Type: application/x-www-form-urlencoded']);
+		}
+		finally {
+			if ($authorization !== null)
+			{
+				$this->authorization[$host] = $authorization;
+			}
+		}
 		return isset($response['access_token']) ? $response : null;
 	}
 
