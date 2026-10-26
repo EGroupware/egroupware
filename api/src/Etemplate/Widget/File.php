@@ -123,22 +123,24 @@ class File extends Etemplate\Widget
 			{
 				if (!empty($widget->attrs['accept']))
 				{
-					if (!empty($mime = self::expand_name($widget->attrs['accept'], 0, 0)))
-					{
-						$mime = preg_split('/, */', $mime);
-						// Extensions require the dot
-						foreach($mime as &$m)
-						{
-							if(!str_contains($m, '/') && !str_starts_with($m, '.'))
-							{
-								$m = '.' . $m;
-							}
-						}
-					}
+					$mime = self::parseMimePatterns(self::expand_name($widget->attrs['accept'], 0, 0));
 				}
 				else
 				{
-					$mime = self::expand_name($widget->attrs['mime'], 0, 0);
+					// same comma-separated "regex-or-mime-or-.extension" list 'accept' already
+					// supports above - found live 2026-10-20, ticket #126721: a single regex-only
+					// 'mime' (eg. "/^message\//i" for mail's own .eml import) rejected a
+					// perfectly valid .eml, because generic byte-sniffing (Api\MimeMagic::
+					// analyze_file(), process_uploaded_file() below) has no distinct magic
+					// signature for a raw RFC822 header block and reports it as the equally
+					// generic "text/plain" - indistinguishable from actual plain text by content
+					// alone. Letting 'mime' ALSO take a trusted ".eml" extension alternative (the
+					// one signal that the regex alone can't express) fixes it without touching
+					// 'accept'/checkMime() (Et2File.ts) at all, which parses a leading "/" as one
+					// single always-regex value and has no comma-splitting of its own - passing it
+					// a mixed regex+extension list here would misparse into a broken RegExp client-
+					// side, well before this server-side check is ever reached.
+					$mime = self::parseMimePatterns(self::expand_name($widget->attrs['mime'], 0, 0));
 				}
 			}
 
@@ -272,6 +274,38 @@ class File extends Etemplate\Widget
 			}
 		}
 	}
+	/**
+	 * Split a comma-separated "mime" or "accept" widget attribute value into the array
+	 * process_uploaded_file()'s own match loop expects - one pattern per comma-separated entry
+	 * (a bare regex, a full mime/type, or just an extension), normalizing a bare extension entry
+	 * (no "/", not already dot-prefixed) to its required leading dot.
+	 *
+	 * Server-side only (used for both 'accept' and 'mime') - 'accept' additionally feeds the
+	 * CLIENT-side pre-check (checkMime(), Et2File.ts), which has no comma-splitting of its own and
+	 * only ever understands a single bare mime/type or a single regex (one leading "/") - a mixed
+	 * regex+extension list is only ever safe to pass through 'mime', never 'accept'.
+	 *
+	 * @param ?string $patterns
+	 * @return string[]
+	 */
+	protected static function parseMimePatterns(?string $patterns) : array
+	{
+		if (empty($patterns))
+		{
+			return [];
+		}
+		$mime = preg_split('/, */', $patterns);
+		// Extensions require the dot
+		foreach($mime as &$m)
+		{
+			if(!str_contains($m, '/') && !str_starts_with($m, '.'))
+			{
+				$m = '.' . $m;
+			}
+		}
+		return $mime;
+	}
+
 	/**
 	 * Process one uploaded file.  There should only be one per request...
 	 *
