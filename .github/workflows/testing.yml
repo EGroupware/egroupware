@@ -1018,9 +1018,16 @@ jobs:
         run: |
           mkdir -p ~/apt-archives
           sudo cp -n ~/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
+          # a stalled connection fails (and is retried by apt) after 20s instead of hanging
+          printf 'Acquire::http::Timeout "20";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99ci-timeouts >/dev/null
           for attempt in 1 2 3; do
             if timeout 150 npx playwright install-deps ${{ matrix.browser }}; then ok=1; break; fi
             echo "::warning::install-deps attempt $attempt failed or stalled"
+            # timeout only kills npx: the orphaned apt-get would keep the dpkg lock and fail the
+            # next attempt at once.  .debs it already finished stay in the archives for the retry.
+            sudo pkill -x apt-get || true
+            sudo pkill -x apt || true
+            sleep 3
           done
           cp -n /var/cache/apt/archives/*.deb ~/apt-archives/ 2>/dev/null || true
           [ "${ok:-}" = 1 ]
