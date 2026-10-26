@@ -11,7 +11,7 @@
 		<et2-hbox  class="mail-import-file">
 			<et2-description  value="Choose file"></et2-description>
 			<et2-vfs-select  id="vfsfile" mode="open" mime="message/rfc822" onchange="app.mail.vfsUploadForImport"></et2-vfs-select>
-			<et2-file  statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" class="mail_importMessageFile"></et2-file>
+			<et2-file  statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i,.eml" id="uploadForImport" class="mail_importMessageFile"></et2-file>
 		</et2-hbox>
 		<et2-hbox  class="dialogFooterToolbar">
 			<et2-button  statustext="Closes this window" label="Close" onclick="window.close();" image="close" noSubmit="true"></et2-button>
