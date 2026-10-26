@@ -17,9 +17,25 @@
 .resources-picture et2-image-expose {
   max-height: 8em;
 }
-.resources-picture et2-image-expose img {
+.resources-picture et2-image-expose img,
+et2-image-expose.resources-picture img {
   max-height: 8em;
   width: auto;
+}
+
+/* A chosen file's name hangs below the button instead of widening the row */
+et2-file.resources_pictureFile {
+  position: relative;
+  overflow: visible;
+}
+et2-file.resources_pictureFile::part(list) {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max-content;
+  max-width: 24em;
+  margin-top: var(--sl-spacing-x-small);
+  z-index: 1;
 }
 
 div.resources_pictureFile div.progress{

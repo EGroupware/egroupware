@@ -9,34 +9,15 @@
 		<et2-textbox  label="Storage information" statustext="Information about storage" id="storage_info" maxlength="100"></et2-textbox>
 		<et2-textbox  label="Location" statustext="Where to find this resource?" id="location" maxlength="100" ></et2-textbox>
 		<et2-checkbox  label="Buyable" disabled="true" statustext="Is resource buyable?" id="buyable"></et2-checkbox>
-		<et2-hbox  span="all" class="resources-picture">
-			<et2-description  value="Picture" style="flex:none;width:var(--label-width, 8em)"></et2-description>
-			<grid width="100%">
-				<columns>
-					<column width="2em"/>
-					<column/>
-				</columns>
-				<rows>
-					<row>
-						<radio id="picture_src" set_value="gen_src" />
-						<et2-description  value="Use general resources icon"></et2-description>
-					</row>
-					<row>
-						<radio id="picture_src" set_value="cat_src" />
-						<et2-description  value="Use the category's icon"></et2-description>
-					</row>
-					<row>
-						<radio id="picture_src" set_value="own_src" />
-						<et2-description  value="Use own picture"></et2-description>
-					</row>
-					<row>
-						<et2-description></et2-description>
-						<et2-file  id="own_file" class="resources_pictureFile" onchange="app.resources.select_picture_src"></et2-file>
-					</row>
-				</rows>
-			</grid>
-			<et2-image-expose  src="resource_picture" href="$cont[picture_original]" align="center"></et2-image-expose>
+		<et2-hbox  class="resources-picture">
+			<et2-select  label="Picture" class="et2-label-fixed" style="flex:1 0 calc(var(--label-width, 8em) + 12em)" id="picture_src" onchange="app.resources.picture_src_change">
+				<option value="gen_src">Use general resources icon</option>
+				<option value="cat_src">Use the category's icon</option>
+				<option value="own_src">Use own picture</option>
+			</et2-select>
+			<et2-file  id="own_file" class="resources_pictureFile" style="flex:none" hidden="!@picture_src=own_src" onchange="app.resources.select_picture_src"></et2-file>
 		</et2-hbox>
+		<et2-image-expose  id="picture_preview" class="resources-picture" src="resource_picture" href="$cont[picture_original]" align="center"></et2-image-expose>
 	</et2-template>
 	<et2-template  id="resources.edit_tabs.page" template="" lang="" group="0" version="">
 		<grid width="100%" height="100%" overflow="auto">

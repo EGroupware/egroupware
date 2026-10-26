@@ -181,6 +181,36 @@ class resourcesApp extends EgwApp
 	}
 
 	/**
+	 * The upload only matters for "Use own picture", show it just for that, and show the picture that
+	 * source gives
+	 *
+	 * @param _event
+	 * @param _widget the picture source select
+	 */
+	picture_src_change(_event : Event, _widget)
+	{
+		const file = this.et2.getWidgetById('own_file');
+		if (file)
+		{
+			file.hidden = _widget.value !== 'own_src';
+		}
+		const preview = this.et2.getWidgetById('picture_preview');
+		const res_id = this.et2.getArrayMgr('content').getEntry('res_id') || 0;
+		if (preview && res_id)
+		{
+			const cat_id = this.et2.getWidgetById('cat_id')?.value ?? 0;
+			this.egw.request('resources.resources_ui.ajax_picture', [res_id, cat_id, _widget.value]).then((pic) =>
+			{
+				if (pic)
+				{
+					preview.src = pic.src;
+					preview.href = pic.href;
+				}
+			});
+		}
+	}
+
+	/**
 	 * Submit the delete / un-delete dialog of the resource list
 	 *
 	 * The dialogs are real <et2-dialog>s, so Et2NextmatchActionController.openActionPopup() just sets

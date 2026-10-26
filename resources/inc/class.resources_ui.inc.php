@@ -431,6 +431,32 @@ class resources_ui
 	}
 
 	/**
+	 * Picture (thumbnail and full size) a resource would show for the given source, to update the preview
+	 *
+	 * Sends nothing back for a picture the user may not see: the own picture of a resource needs
+	 * access to that resource, the icon of a category needs read access to the category.
+	 *
+	 * @param int $res_id
+	 * @param int $cat_id
+	 * @param string $picture_src 'gen_src', 'cat_src' or 'own_src'
+	 * sends back an array with "src" (thumbnail) and "href" (full size)
+	 */
+	public function ajax_picture($res_id, $cat_id, $picture_src)
+	{
+		if (!in_array($picture_src, ['gen_src', 'cat_src', 'own_src'], true) ||
+			$picture_src === 'own_src' && !$this->bo->file_access((int)$res_id) ||
+			$picture_src === 'cat_src' && !$this->bo->acl->is_permitted((int)$cat_id, Acl::READ))
+		{
+			return;
+		}
+		$resource = ['res_id' => (int)$res_id, 'cat_id' => (int)$cat_id, 'picture_src' => $picture_src];
+		Api\Json\Response::get()->data([
+			'src'  => $this->bo->get_picture($resource, false),
+			'href' => $this->bo->get_picture($resource, true),
+		]);
+	}
+
+	/**
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * invokes add or edit dialog for resources
 	 *
@@ -458,6 +484,8 @@ class resources_ui
 						 $acc_count = count($this->bo->get_acc_list($content['res_id']));
 					}
 					$result = $this->bo->save($content);
+					// the uploaded picture is saved (or failed), do not show it as pending upload again
+					unset($content['own_file']);
 
 					if(is_numeric($result))
 					{
