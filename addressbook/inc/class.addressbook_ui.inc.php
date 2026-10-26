@@ -1428,17 +1428,31 @@ class addressbook_ui extends addressbook_bo
 	 */
 	protected static function fetchGeocode($address)
 	{
+		$response = static::nominatimRequest($address);
+		return $response['status'] === 200 ? $response['body'] : null;
+	}
+
+	/**
+	 * Send the search request to Nominatim and report what came back
+	 *
+	 * @param string $address
+	 * @return array{status:int,body:?string,error:string} HTTP status (0 if there was no HTTP answer
+	 *	at all: DNS, connection, TLS or timeout), the body (null if there was none) and curl's error text
+	 */
+	protected static function nominatimRequest($address)
+	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q='.rawurlencode($address));
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['User-Agent: EGroupware (https://www.egroupware.org)']);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		$response = curl_exec($ch);
-		$ok = $response !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
+		$body = curl_exec($ch);
+		$status = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$error = curl_error($ch);
 		curl_close($ch);
 
-		return $ok ? $response : null;
+		return ['status' => $status, 'body' => $body === false ? null : $body, 'error' => $error];
 	}
 
 	/**
