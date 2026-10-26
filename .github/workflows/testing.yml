@@ -827,7 +827,7 @@ jobs:
 
   jstest:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
     # One job per browser per shard, so the suite runs on four runners that do not share a CPU
     # instead of four pages sharing one.  Measured on 4 cores (a runner's size): both browsers
     # together 338s, firefox alone 285s, chromium alone 157s, half the files in firefox 145s/152s
@@ -1004,8 +1004,8 @@ jobs:
       # install-deps is an apt-get install of fonts and libraries from azure.archive.ubuntu.com,
       # which regularly stalls for minutes per package and used to eat the whole job's timeout.
       # The downloaded .debs are cached (apt skips a package whose .deb is already in
-      # /var/cache/apt/archives), and the step is bounded and retried instead of hanging.
-      # Saved even when the step failed, so a retry or the next run resumes with what arrived.
+      # /var/cache/apt/archives), and the step is bounded instead of hanging.
+      # Saved even when the step failed, so the next run resumes with what arrived.
       - name: Restore apt packages for Playwright ${{ matrix.browser }}
         id: apt-cache
         uses: actions/cache/restore@v4
@@ -1013,24 +1013,21 @@ jobs:
           path: ~/apt-archives
           key: apt-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
 
+      # azure.archive.ubuntu.com is sometimes slow (tens of KB/s for the fonts, ~10 minutes for the
+      # whole set): that is no failure, so one patient attempt instead of cutting it short and
+      # retrying.  Only a connection that stops delivering altogether is failed (and retried) by apt.
       - name: Install Playwright system dependencies
-        timeout-minutes: 8
+        timeout-minutes: 15
         run: |
           mkdir -p ~/apt-archives
           sudo cp -n ~/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
-          # a stalled connection fails (and is retried by apt) after 20s instead of hanging
           printf 'Acquire::http::Timeout "20";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99ci-timeouts >/dev/null
-          for attempt in 1 2 3; do
-            if timeout 150 npx playwright install-deps ${{ matrix.browser }}; then ok=1; break; fi
-            echo "::warning::install-deps attempt $attempt failed or stalled"
-            # timeout only kills npx: the orphaned apt-get would keep the dpkg lock and fail the
-            # next attempt at once.  .debs it already finished stay in the archives for the retry.
-            sudo pkill -x apt-get || true
-            sudo pkill -x apt || true
-            sleep 3
-          done
-          cp -n /var/cache/apt/archives/*.deb ~/apt-archives/ 2>/dev/null || true
-          [ "${ok:-}" = 1 ]
+          npx playwright install-deps ${{ matrix.browser }}
+
+      # Its own step so it also runs when the install above timed out or failed.
+      - name: Keep downloaded apt packages
+        if: always()
+        run: cp -n /var/cache/apt/archives/*.deb ~/apt-archives/ 2>/dev/null || true
 
       - name: Save apt packages for Playwright ${{ matrix.browser }}
         if: always() && steps.apt-cache.outputs.cache-hit != 'true'
