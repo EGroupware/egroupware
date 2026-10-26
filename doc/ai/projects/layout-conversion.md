@@ -166,7 +166,7 @@ Screenshots are in `doc/ai/projects/layout-conversion/<template>-{before-pref,af
 | Template | Status | Notes |
 |----------|--------|-------|
 | tracker.edit | done (default); mobile twin not done | main + Details tab; hidden dates / status rows verified |
-| resources.edit | converted, on the naughty list | main + Details tab done; the Picture section still needs work |
+| resources.edit | done | main + Details tab; the Picture section is a select (`picture_src`: general / category / own picture) with the upload shown only for "Use own picture" (`app.resources.picture_src_change()`), replacing the legacy radios |
 | projectmanager.edit | main done; General tab on naughty list | dialogMeta hidden for new entries verified |
 | calendar.edit | done (default); mobile twin not done | description tab `layout="stack"`; end date appears with "Use end date" |
 | admin.categories.edit | done (default); mobile twin not done | Private / Application / Modified conditions verified both ways |
@@ -227,6 +227,5 @@ Templates that should convert but proved troublesome, or just look bad. Worked t
 |----------|---------|
 | addressbook.edit (+ editname, general, home, details tabs) | Header holds phone numbers with a `tel_prefer` radio beside each, the name-parts overlay (`addressbook.editname`, shown by JS that hides `table.editname`), a search-mode footer (`showsearchbuttons`) and an org/city/state field order that swaps with `addr_format`. Needs a decision on how the preferred-phone radios and the overlay fit a layout before touching it. Not started. |
 | projectmanager.edit.general | DECISION (2026-10-19): left as it is. A real table: label, project value, then the datasource value beside each; does not reflow below ~700px. |
-| resources.edit (Details tab, Picture section) | Radios + upload + preview still do not line up well: the legacy `radio` widgets in a small grid, a "Picture" label hand-sized to `--label-width`, and a preview image that adds height (the popup scrolls). Needs a proper arrangement, probably replacing the legacy radios. Note: "Remove accessories before changing accessory of" is not new: `resources_ui::edit()` sets `accessory_label` for a resource that has accessories (resource 2 here) and the original template shows it beside the Accessory of select too; the earlier before shot was a resource without accessories. |
 | Mobile twins (`templates/mobile/edit.xet` for tracker, resources, calendar, projectmanager, ...) | DECISION (2026-10-19): left alone unless there is a compelling reason. Different designs (button icons in a header slot, a search bar, ownership tab) and the mobile skin is chosen from the User-Agent, which I cannot emulate here. Desktop first; mobile needs a decision. |
 
