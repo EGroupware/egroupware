@@ -350,6 +350,7 @@ could not unlink: %1	common	en	Could not unlink: %1
 create	common	en	Create
 create a new table for the application	common	en	Create a new table for the application
 create directory	common	en	Create folder
+create folder	common	en	Create folder
 create link	common	en	Create link
 created	common	en	Created
 created by	common	en	Created by

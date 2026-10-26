@@ -351,6 +351,7 @@ could not unlink: %1	common	de	Konnte nicht lösen: %1
 create	common	de	Erstellen
 create a new table for the application	common	de	Neue Tabelle für die Anwendung anlegen
 create directory	common	de	Ordner erstellen
+create folder	common	de	Ordner erstellen
 create link	common	de	Verknüpfung erstellen
 created	common	de	Erstellt
 created by	common	de	Erstellt von
