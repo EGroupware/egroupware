@@ -743,7 +743,23 @@ class MessageDisplayHandler
 			$sources[] = $proxy;	// add() reduces it to its origin
 		}
 		Api\Header\ContentSecurityPolicy::add('img-src', $sources, true);
-		Api\Header\ContentSecurityPolicy::add('media-src', $sources, true);
+		// media-src does NOT get the same (per-user, can grow to dozens of entries) domain
+		// allowlist as img-src: video/audio-in-email needing a user-approved external domain is
+		// rare, and duplicating a large allowlist across both directives was blowing up the CSP
+		// header past the proxy_buffer_size of simple reverse-proxies (found live, ticket #126491
+		// / pole.egroupware.org "502 Bad Gateway" - farmA/B and a customer's own nginx both choke
+		// on "upstream sent too big header" once a user has approved ~20+ domains). A user who
+		// needs an external media domain can still allow it via allowExternalIMGs="Always".
+		$mediaSources = ['data:', 'blob:'];
+		if (parse_url($proxy, PHP_URL_HOST))
+		{
+			$mediaSources[] = $proxy;
+		}
+		if (!empty($_GET['_showExternal']) || ($prefs['allowExternalIMGs'] ?? 2) == 1)
+		{
+			$mediaSources[] = 'https:';
+		}
+		Api\Header\ContentSecurityPolicy::add('media-src', $mediaSources, true);
 	}
 
 	/**

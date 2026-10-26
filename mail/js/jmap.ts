@@ -3686,6 +3686,16 @@ export class MailJmap
 	 * Depth-first walk of bodyStructure/subParts for any SPECIAL_CASE_TYPES / winmail.dat match, or
 	 * an S/MIME (not PGP/MIME) multipart/signed wrapper - see SPECIAL_CASE_TYPES' own docblock for
 	 * why that one needs a dedicated check instead of just being a flat member of that set.
+	 *
+	 * text/calendar gets its own exclusion within that flat match: mirrors Mail::getMultipartMixed()'s
+	 * "case 'calendar':" (api/src/Mail.php), which explicitly only treats an INLINE text/calendar part
+	 * as a meeting invite ("NOT attached iCal files!"), not a plain attached .ics (eg. a travel-booking
+	 * confirmation's journey file). Server/client disagreed on exactly this distinction (found live via
+	 * a Deutsche Bahn booking mail, ticket #126491): forcing the expensive classic server round-trip
+	 * for a message that was never actually going to render as a meeting invite wasn't just wasted
+	 * work, it was what exposed the real bug - the classic path's CSP header (unlike the JMAP path's
+	 * client-side one) is a genuine HTTP response header, and can exceed a simple reverse-proxy's
+	 * default header buffer once a user's allowExternalDomains allowlist grows large enough.
 	 */
 	private isSpecialCase(part : any) : boolean
 	{
@@ -3693,9 +3703,11 @@ export class MailJmap
 		{
 			return false;
 		}
-		if (MailJmap.SPECIAL_CASE_TYPES.has((part.type || '').toLowerCase()) ||
+		const type = (part.type || '').toLowerCase();
+		if ((MailJmap.SPECIAL_CASE_TYPES.has(type) &&
+				(type !== 'text/calendar' || ((part.disposition || '').toLowerCase() !== 'attachment' && (part.size || 0) > 0))) ||
 			(part.name || '').toLowerCase() === 'winmail.dat' ||
-			((part.type || '').toLowerCase() === 'multipart/signed' &&
+			(type === 'multipart/signed' &&
 				(part.subParts || []).some((sub : any) => MailJmap.isSmimeSignaturePart(sub?.type))))
 		{
 			return true;

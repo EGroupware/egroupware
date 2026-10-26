@@ -2464,10 +2464,21 @@ class Mail
 	 * Recursively check a JMAP bodyStructure for a text/calendar part - getMessageBody()'s JMAP
 	 * path doesn't populate $calendar_part (meeting-invite detection), so it bails to the classic
 	 * path whenever one is present rather than silently dropping that feature.
+	 *
+	 * Mirrors getMultipartMixed()'s own "case 'calendar':" check (disposition/size), which only
+	 * treats an INLINE text/calendar part as a meeting invite, NOT an attached .ics file - a plain
+	 * attached calendar file (eg. a travel-booking confirmation's journey .ics) is just a regular
+	 * attachment the JMAP path already handles fine, and forcing the far more expensive classic
+	 * server round-trip for it was both pointless and the (unrelated) root cause of a real "502
+	 * Bad Gateway" bug: the classic path's CSP header, unlike the JMAP path's client-side one, is a
+	 * real HTTP response header, and a large per-user allowExternalDomains allowlist can make it
+	 * exceed a simple reverse-proxy's default header buffer (ticket #126491).
 	 */
 	private function jmapHasCalendarPart(array $structure) : bool
 	{
-		if (($structure['type'] ?? null) === 'text/calendar')
+		if (($structure['type'] ?? null) === 'text/calendar' &&
+			($structure['disposition'] ?? null) !== 'attachment' &&
+			($structure['size'] ?? 0) > 0)
 		{
 			return true;
 		}
