@@ -1385,7 +1385,7 @@ class addressbook_ui extends addressbook_bo
 			(!empty($contact['adr_'.$address_type.'_countrycode']) ?
 				Api\Country::get_full_name($contact['adr_'.$address_type.'_countrycode']) : null),
 		])));
-		$geo = $address !== '' ? self::geocodeAddress($address) : null;
+		$geo = $address !== '' ? static::geocodeAddress($address) : null;
 		if ($geo && $address_type === 'one')
 		{
 			try
@@ -1416,6 +1416,18 @@ class addressbook_ui extends addressbook_bo
 	 */
 	protected static function geocodeAddress($address)
 	{
+		$response = static::fetchGeocode($address);
+		return $response === null ? null : static::parseGeocode($response);
+	}
+
+	/**
+	 * Ask Nominatim for the best match of a free-text address
+	 *
+	 * @param string $address
+	 * @return ?string raw JSON body, null if the request failed or the answer was not HTTP 200
+	 */
+	protected static function fetchGeocode($address)
+	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q='.rawurlencode($address));
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['User-Agent: EGroupware (https://www.egroupware.org)']);
@@ -1426,7 +1438,19 @@ class addressbook_ui extends addressbook_bo
 		$ok = $response !== false && curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200;
 		curl_close($ch);
 
-		if (!$ok || !($results = json_decode($response, true)) || empty($results[0]['lat']) || empty($results[0]['lon']))
+		return $ok ? $response : null;
+	}
+
+	/**
+	 * Extract the position of the first match from a Nominatim search response
+	 *
+	 * @param string $response JSON body of a "format=json" search
+	 * @return ?string "lat,lon" (6 decimal places) or null if there is no usable match
+	 */
+	protected static function parseGeocode($response)
+	{
+		if (!($results = json_decode($response, true)) || !is_array($results) ||
+			empty($results[0]['lat']) || empty($results[0]['lon']))
 		{
 			return null;
 		}
