@@ -120,10 +120,9 @@
             </rows>
         </grid>
     </et2-template>
-    <et2-template  id="infolog.config" template="" lang="" group="0" version="1.9.001">
-        <et2-vbox>
+    <et2-template  id="infolog.config" template="" lang="" group="0" version="1.9.001" layout="edit">
             <et2-description  id="msg" span="all" class="message"></et2-description>
-            <et2-tabbox  id="configuration|notification" cfDisabled="true">
+            <et2-tabbox  id="configuration|notification" cfDisabled="true" span="all" tabHeight="auto">
                 <tabs>
                     <tab id="configuration" label="Configuration"/>
                     <tab id="notification" label="Notification"/>
@@ -138,7 +137,6 @@
                 <et2-button  statustext="apply the changes" label="Apply" id="apply"></et2-button>
                 <et2-button  statustext="Exit without saving" label="Cancel" id="cancel" noValidation="true"></et2-button>
             </et2-hbox>
-        </et2-vbox>
         <et2-styles>select {
             min-width: 30em;
             }

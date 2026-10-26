@@ -105,7 +105,7 @@ span#admin-mailaccount_acc_id {
 /**
  * new et2 site configuration
  */
-#admin-site-config > div > et2-vbox > .subHeader {
+#admin-site-config > et2-template > .subHeader {
     border-bottom: 3px solid #696969;
     padding-left: 3px;
     padding-bottom: 3px;
@@ -113,23 +113,72 @@ span#admin-mailaccount_acc_id {
     margin-bottom: 5px;
 }
 
-#admin-site-config > div > et2-vbox {
-	height: 100%;
+/* The title is not a label/value row: no input-row height for it, and neither for the line an app's
+ * own config template keeps for its "saved" message (empty until something is saved) */
+#admin-site-config > et2-template > .subHeader::part(form-control-label),
+#admin-index_ajax_target > form[id$="-config"] et2-description.message::part(form-control-label) {
+    min-height: 0;
 }
 
 #admin-site-config .mainContent {
-	flex-grow: 1;
 	overflow: hidden auto;
 }
 
 #admin-site-config .mainContent et2-tabbox {
-	flex-grow: 10;
 	height: 100%;
+}
+
+/* A tabbox with many tabs (invoices has seven) sized the box to its tab bar and scrolled sideways;
+ * held to the width of the box its tab bar scrolls instead */
+#admin-site-config .mainContent > et2-template,
+#admin-site-config .mainContent et2-tabbox,
+#admin-index_ajax_target > form[id$="-config"] et2-tabbox {
+	min-width: 0;
+	max-width: 100%;
 }
 
 #admin-site-config .mainContent > et2-template::part(base) {
 	display: flex;
 	flex-direction: column;
+}
+
+/* Narrow: the label of each setting goes above its field instead of being squeezed into the column
+ * beside it.  The settings of an app are a grid of exactly two columns, label and value (most carry
+ * .admin-config, not all do), a section subheader (colspan) stays a row of its own either way.  A
+ * grid with more columns is a real table and stays one.
+ *
+ * An app's configuration is reached two ways: inside the admin.site-config wrapper (a template that is
+ * its own container) and, from the admin tree, as the app's config template directly in the admin
+ * pane, in a form of its own - made a container here, so both stack by the width they actually have. */
+#admin-index_ajax_target > form[id$="-config"] {
+	container-type: inline-size;
+}
+@container (max-width: 36em) {
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) table.et2_grid:has(col:nth-child(2)):not(:has(col:nth-child(3))),
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) table.et2_grid:has(col:nth-child(2)):not(:has(col:nth-child(3))) > tbody,
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) table.et2_grid:has(col:nth-child(2)):not(:has(col:nth-child(3))) > tbody > tr,
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) table.et2_grid:has(col:nth-child(2)):not(:has(col:nth-child(3))) > tbody > tr > td {
+		display: block;
+		width: auto;
+	}
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) table.et2_grid:has(col:nth-child(2)):not(:has(col:nth-child(3))) > tbody > tr {
+		margin-bottom: var(--sl-spacing-small, 0.5rem);
+		/* A row's height="40" is the height of one line of label and field side by side; stacked they
+		 * are two, and a fixed row would let the second spill into the next row */
+		height: auto !important;
+	}
+
+	/* A field with something beside it (rocketchat: the URL and its connection status) wraps instead of
+	 * running out of the pane */
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) et2-hbox::part(base) {
+		flex-wrap: wrap;
+	}
+
+	/* A help text under a field is indented by the label column (28em in the filemanager config);
+	 * with the label above the field it belongs directly under it */
+	:is(#admin-site-config, #admin-index_ajax_target > form[id$="-config"]) *::part(form-control-help-text) {
+		margin-left: 0;
+	}
 }
 
 #admin-index_ajax_target > form[id$="-config"] tr.th > td,

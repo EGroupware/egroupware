@@ -41,9 +41,8 @@
             <et2-description  value="Full list of placeholder names" href="filemanager.filemanager_merge.show_replacements" extraLinkTarget="_blank"></et2-description>
         </et2-vbox>
     </et2-template>
-    <et2-template  id="filemanager.config" template="" lang="" group="0" version="1.9.004">
-        <et2-vbox  height="100%">
-            <et2-tabbox  id="tabs" width="100%" cfDisabled="true">
+    <et2-template  id="filemanager.config" template="" lang="" group="0" version="1.9.004" layout="edit">
+            <et2-tabbox  id="tabs" width="100%" cfDisabled="true" tabHeight="auto" span="all">
                 <tabs>
                     <tab id="configuration" label="Configuration"/>
                     <tab id="notification" label="Notification"/>
@@ -53,12 +52,11 @@
                     <et2-template  id="filemanager.config.notification"></et2-template>
                 </tabpanels>
             </et2-tabbox>
-            <et2-hbox  span="2" class="dialogFooterToolbar">
+            <et2-hbox  class="dialogFooterToolbar">
                 <et2-button  label="Save" id="button[save]"></et2-button>
                 <et2-button  label="Apply" id="button[apply]"></et2-button>
                 <et2-button  label="Cancel" id="button[cancel]"></et2-button>
             </et2-hbox>
-        </et2-vbox>
         <et2-styles>
             #filemanager-config_quota::part(form-control-input),
             #filemanager-config_group_quota::part(form-control-input),
@@ -70,9 +68,6 @@
             --label-width: 28em;
             }
 
-            #filemanager-config > div > et2-vbox {
-            height: 100%;
-            }
             #filemanager-config_button\[recalculate\],
             #filemanager-config_oversize {
             margin: 2ex 0;
@@ -83,12 +78,6 @@
             padding-bottom: 3px;
             margin-bottom: 5px;
             display: block;
-            }
-            #filemanager-config_tabs {
-            flex: 1 1 auto;
-            }
-            .dialogFooterToolbar {
-            margin-top: auto;
             }
         </et2-styles>
     </et2-template>
