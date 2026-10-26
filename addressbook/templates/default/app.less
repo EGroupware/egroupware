@@ -104,6 +104,15 @@ div.addressbook_edit_general_picture {
 	padding-right: 10px;
 }
 
+/* The preferred way of contact radio stays right after its phone number */
+.addressbook_edit input.et2_radiobox {
+	flex: none;
+	width: auto;
+	height: auto;
+	align-self: center;
+	margin: 0 0 0 var(--sl-spacing-small);
+}
+
 #addressbook-edit {
 	#addressbook-edit_tel_prefer-tel_work {
 		left: 7px;
@@ -130,5 +139,22 @@ div.city_state_postcode {
 
 	> * {
 		padding-top: 10px;
+	}
+}
+
+/* Each tab keeps its address fields together in one box, spaced like the rows of the layout grid */
+[layout="2-column"] > et2-vbox::part(base) {
+	row-gap: var(--sl-spacing-small);
+}
+
+/* Where the layout stacks the labels above their inputs, the label of a row made of a label and
+ * several inputs (Occupation, City, Region) goes on a line of its own as well */
+@container (max-width: 36em) {
+	.label_row::part(base) {
+		flex-wrap: wrap;
+	}
+	.label_row > et2-description {
+		flex: 0 0 100% !important;
+		width: 100% !important;
 	}
 }

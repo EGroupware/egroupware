@@ -36,218 +36,124 @@
             </rows>
         </grid>
     </et2-template>
-    <et2-template  id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-        <grid width="94%">
-            <columns>
-                <column width="92"/>
-                <column width="230"/>
-                <column width="50"/>
-                <column width="92"/>
-                <column width="230"/>
-            </columns>
-            <rows>
-                <row>
-                    <et2-description  for="role" value="Role"></et2-description>
-                    <et2-hbox>
-                        <et2-textbox  id="role" tabindex="20" width="60%" maxlength="128" autocomplete="section-one"></et2-textbox>
-                        <et2-textbox  id="room" tabindex="21" placeholder="Room"></et2-textbox>
-                    </et2-hbox>
-                    <et2-description></et2-description>
-                    <et2-description  for="adr_one_street" value="street"></et2-description>
-                    <et2-textbox  id="adr_one_street" tabindex="11" maxlength="64" autocomplete="address-line1"></et2-textbox>
-                </row>
-                <row>
-                    <et2-description  for="assistent" value="Assistent"></et2-description>
-                    <et2-textbox  id="assistent" tabindex="22"></et2-textbox>
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
-                    <et2-textbox  statustext="address line 2" id="adr_one_street2" tabindex="12" maxlength="64" autocomplete="address-line2"></et2-textbox>
-                </row>
-                <row>
-                    <et2-description  for="tel_assistent" value="Assistent phone"></et2-description>
-                    <et2-url-phone  id="tel_assistent" tabindex="23"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_assistent" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_one_locality" value="city"></et2-description>
-                    <et2-box>
-                        <et2-hbox  class="city_state_postcode" disabled="@addr_format=city_state_postcode">
-                            <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
-                            <et2-textbox  statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" autocomplete="address-level2"></et2-textbox>
-                        </et2-hbox>
-                        <et2-hbox  class="city_state_postcode" disabled="!@addr_format=city_state_postcode">
-                            <et2-textbox  statustext="City" id="adr_one_locality" tabindex="13" maxlength="64" autocomplete="address-level2"></et2-textbox>
-                            <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="14" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
-                        </et2-hbox>
-                    </et2-box>
-                </row>
-                <row>
-                    <et2-description  for="tel_fax" value="fax"></et2-description>
-                    <et2-url-fax  id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_fax" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_one_countryname" value="country"></et2-description>
-                    <et2-select-country  id="adr_one_countrycode" tabindex="15" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
-                </row>
-                <row>
-                    <et2-description  for="tel_other" value="Other phone"></et2-description>
-                    <et2-url-phone  id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_other" ro_true="&amp;hearts;" />
-                    <et2-hbox>
-                        <et2-description  value="Region" disabled="@addr_format=city_state_postcode"></et2-description>
-                        <et2-description  value="State" disabled="!@addr_format=city_state_postcode"></et2-description>
-                    </et2-hbox>
-                    <et2-select-state  class="city_state_postcode" statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                </row>
-                <row>
-                    <et2-description  for="tel_car" value="car phone"></et2-description>
-                    <et2-url-phone  id="tel_car" tabindex="26"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_car" ro_true="&amp;hearts;" />
-                    <et2-description  disabled="@no_tid" for="tid" value="Type"></et2-description>
-                    <et2-select  id="tid" onchange="1" disabled="@no_tid" noLang="1"></et2-select>
-                </row>
-                <row disabled="@shared_disabled" valign="top">
-                    <et2-vbox>
-                        <et2-description  for="shared" value="Shared with"></et2-description>
-                        <et2-checkbox  id="shared_writable" label="writable" statustext="Create new shares writable"></et2-checkbox>
-                    </et2-vbox>
-                    <et2-select-account  id="shared_values" multiple="true" span="all" onchange="app.addressbook.shared_changed" accountType="both"></et2-select-account>
-                </row>
-            </rows>
-		</grid>
+    <et2-template  id="addressbook.edit.general" template="" lang="" group="0" version="1.9.004" layout="2-column" style="--label-width:9em; --column-min-width:30.5em">
+		<et2-vbox style="min-width:0">
+			<et2-hbox class="label_row">
+				<et2-description  for="role" value="Role" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-textbox  style="flex:3 1 0; min-width:0" id="role" tabindex="20" maxlength="128" autocomplete="section-one"></et2-textbox>
+				<et2-textbox  id="room" tabindex="21" placeholder="Room" style="flex:2 1 0; min-width:0"></et2-textbox>
+			</et2-hbox>
+			<et2-textbox  class="et2-label-fixed" label="Assistent" id="assistent" tabindex="22"></et2-textbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="Assistent phone" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_assistent" tabindex="23"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_assistent" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-fax  label="fax" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_fax" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="Other phone" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_other" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="car phone" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_car" tabindex="26"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_car" ro_true="&amp;hearts;" />
+			</et2-hbox>
+		</et2-vbox>
+		<et2-vbox style="min-width:0">
+			<et2-textbox  class="et2-label-fixed" label="street" id="adr_one_street" tabindex="11" maxlength="64" autocomplete="address-line1"></et2-textbox>
+			<et2-textbox  class="et2-label-fixed" label="address line 2" statustext="address line 2" id="adr_one_street2" tabindex="12" maxlength="64" autocomplete="address-line2"></et2-textbox>
+			<et2-hbox  class="city_state_postcode label_row" disabled="@addr_format=city_state_postcode">
+				<et2-description  for="adr_one_locality" value="city" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="5em" style="flex:none" maxlength="64" autocomplete="postal-code"></et2-textbox>
+				<et2-textbox  statustext="City" id="adr_one_locality" tabindex="14" style="flex:1" maxlength="64" autocomplete="address-level2"></et2-textbox>
+			</et2-hbox>
+			<et2-hbox  class="city_state_postcode label_row" disabled="!@addr_format=city_state_postcode">
+				<et2-description  for="adr_one_locality" value="city" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-textbox  statustext="City" id="adr_one_locality" tabindex="13" style="flex:1" maxlength="64" autocomplete="address-level2"></et2-textbox>
+				<et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="14" width="5em" style="flex:none" maxlength="64" autocomplete="postal-code"></et2-textbox>
+			</et2-hbox>
+			<et2-select-country  class="et2-label-fixed" label="country" id="adr_one_countrycode" tabindex="15" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
+			<et2-hbox  class="city_state_postcode label_row">
+				<et2-description  for="adr_one_region" value="Region" disabled="@addr_format=city_state_postcode" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-description  for="adr_one_region" value="State" disabled="!@addr_format=city_state_postcode" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-select-state  statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" class="city_state_postcode" style="flex:1" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
+			</et2-hbox>
+			<et2-select  class="et2-label-fixed" label="Type" id="tid" onchange="1" hidden="@no_tid" noLang="1"></et2-select>
+		</et2-vbox>
+		<et2-select-account  class="et2-label-fixed" label="Shared with" id="shared_values" multiple="true" span="all" hidden="@shared_disabled" onchange="app.addressbook.shared_changed" accountType="both"></et2-select-account>
+		<et2-checkbox  id="shared_writable" label="writable" statustext="Create new shares writable" span="all" hidden="@shared_disabled"></et2-checkbox>
 	</et2-template>
-	<et2-template  id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
-		<grid width="100%" overflow="auto">
-			<columns>
-				<column width="312"/>
-				<column width="50"/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<et2-select-cat  id="cat_id" multiple="true" placeholder="Category"></et2-select-cat>
-					<et2-description></et2-description>
-					<grid width="100%">
-						<columns>
-							<column width="92"/>
-							<column/>
-						</columns>
-						<rows>
-							<row valign="top">
-								<et2-description  value="Notes"></et2-description><et2-ai><et2-textarea  id="note" rows="10"></et2-textarea></et2-ai>
-							</row>
-							<row disabled="@hidebuttons">
-								<et2-description  value="Last date"></et2-description>
-								<et2-link  id="last_link" app=""></et2-link>
-							</row>
-							<row disabled="@hidebuttons">
-								<et2-description  value="Next date"></et2-description>
-								<et2-link  id="next_link" app=""></et2-link>
-                            </row>
-                            <row valign="top" class="smime_section_border">
-                                <et2-description  value="SMIME key"></et2-description>
-                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
-                            </row>
-                            <row valign="top">
-                                <et2-description  value="PGP key"></et2-description>
-                                <et2-vfs-upload  id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
-                            </row>
-                            <row valign="top">
-                                <et2-description  for="pubkey" value="Public key"></et2-description><et2-ai><et2-textarea  id="pubkey" rows="4" resizeRatio="0"></et2-textarea></et2-ai>
-                            </row>
-                        </rows>
-                    </grid>
-                </row>
-                <row valign="top">
-                    <et2-description  value="Geo location"></et2-description>
-                    <et2-description  value="Location"></et2-description>
-                    <et2-hbox>
-                        <et2-number  id="geo_lat" precision="6" statustext="Latitude" placeholder="Latitude" width="90"></et2-number>
-                        <et2-number  id="geo_lon" precision="6" statustext="Longitude" placeholder="Longitude" width="90"></et2-number>
-                        <et2-button-icon  id="geo_show_map" image="map" statustext="Show this location on the configured map" onclick="app.addressbook.showGeoOnMap"></et2-button-icon>
-                    </et2-hbox>
-                </row>
-            </rows>
-        </grid>
-    </et2-template>
-    <et2-template  id="addressbook.edit.home" template="" lang="" group="0" version="1.9.001">
-        <grid width="100%">
-            <columns>
-                <column width="92"/>
-                <column width="230"/>
-                <column width="50"/>
-                <column width="92"/>
-                <column width="230"/>
-                <column width="50"/>
-            </columns>
-            <rows>
-                <row>
-                    <et2-description  for="tel_home" value="Home phone"></et2-description>
-                    <et2-url-phone  id="tel_home" tabindex="27" autocomplete="section-two home tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_home" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_two_street" tabindex="32" value="street"></et2-description>
-                    <et2-textbox  id="adr_two_street" tabindex="33" maxlength="64" autocomplete="section-two address-line1"></et2-textbox>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description  for="tel_cell_private" value="mobile phone"></et2-description>
-                    <et2-url-phone  id="tel_cell_private" tabindex="28" autocomplete="section-two mobile tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_cell_private" ro_true="&amp;hearts;" />
-                    <et2-description></et2-description>
-                    <et2-textbox  statustext="address line 2" id="adr_two_street2" tabindex="34" maxlength="64" autocomplete="section-two address-line2"></et2-textbox>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description  for="tel_fax_home" value="fax"></et2-description>
-                    <et2-url-fax  id="tel_fax_home" tabindex="29" autocomplete="section-two fax tel"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_fax_home" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_two_locality" value="city"></et2-description>
-                    <et2-box>
-                        <et2-hbox  class="city_state_postcode" disabled="@addr_format2=city_state_postcode">
-                            <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
-                            <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" autocomplete="section-two address-level2"></et2-textbox>
-                        </et2-hbox>
-                        <et2-hbox  class="city_state_postcode" disabled="!@addr_format2=city_state_postcode">
-                            <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="34" autocomplete="section-two address-level2"></et2-textbox>
-                            <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="5em" maxlength="64" tabindex="36" autocomplete="section-two postal-code"></et2-textbox>
-                        </et2-hbox>
-                    </et2-box>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description  for="tel_pager" value="pager" autocomplete="section-two pager tel"></et2-description>
-                    <et2-url-phone  id="tel_pager" tabindex="30"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_pager" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_two_countryname" value="country"></et2-description>
-                    <et2-select-country  tabindex="37" id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description  for="bday" value="Birthday"></et2-description>
-                    <et2-date  id="bday" tabindex="31" dataFormat="Y-m-d" yearRange="c-90:c+2"></et2-date>
-                    <et2-description></et2-description>
-                    <et2-hbox>
-                        <et2-description  value="Region" disabled="@addr_format2=city_state_postcode"></et2-description>
-                        <et2-description  value="State" disabled="!@addr_format2=city_state_postcode"></et2-description>
-                    </et2-hbox>
-                    <et2-select-state  statustext="State" id="adr_two_region" tabindex="38" allowFreeEntries="true" maxlength="64" class="city_state_postcode" countryCode="$cont[adr_two_countrycode]" emptyLabel="Select one"></et2-select-state>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-description  for="email_home" value="EMail"></et2-description>
-                    <et2-url-email  id="email_home" tabindex="32" onchange="app.addressbook.check_value(widget,'$cont[id]');" autocomplete="section-two home email"></et2-url-email>
-                    <et2-description></et2-description>
-                    <et2-description  for="url_home" value="URL"></et2-description>
-                    <et2-url  id="url_home" tabindex="39" autocomplete="section-two url"></et2-url>
-                    <et2-description></et2-description>
-                </row>
-            </rows>
-		</grid>
+	<et2-template  id="addressbook.edit.details" template="" lang="" group="0" version="1.9.003" layout="edit" style="--label-width:9em">
+		<et2-select-cat  class="et2-label-fixed" label="Category" id="cat_id" multiple="true" placeholder="Category" span="all"></et2-select-cat>
+		<et2-ai  span="all"><et2-textarea  label="Notes" class="et2-label-fixed" id="note" rows="8"></et2-textarea></et2-ai>
+		<et2-hbox  span="all" hidden="@hidebuttons">
+			<et2-description  value="Last date" style="flex:none; width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-link  id="last_link" app=""></et2-link>
+		</et2-hbox>
+		<et2-hbox  span="all" hidden="@hidebuttons">
+			<et2-description  value="Next date" style="flex:none; width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-link  id="next_link" app=""></et2-link>
+		</et2-hbox>
+		<et2-hbox  span="all" class="smime_section_border">
+			<et2-description  value="SMIME key" style="flex:none; width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-vfs-upload  id="addressbook:$cont[id]:.files/smime-pubkey.crt" accept=".crt,.pem,.cer,application/x-x509-ca-cert,application/x-x509-user-cert" mime="/application\/(x-x509-(ca|user)|pkix)-cert/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
+		</et2-hbox>
+		<et2-hbox  span="all">
+			<et2-description  value="PGP key" style="flex:none; width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-vfs-upload  id="addressbook:$cont[id]:.files/pgp-pubkey.asc" accept=".asc,application/pgp-keys" mime="/(application\/pgp-keys|text\/plain)/" onStart="app.addressbook.pubkeyUploadStart"></et2-vfs-upload>
+		</et2-hbox>
+		<et2-ai  span="all"><et2-textarea  label="Public key" class="et2-label-fixed" id="pubkey" rows="4" resizeRatio="0"></et2-textarea></et2-ai>
+		<et2-hbox  span="all">
+			<et2-description  value="Geo location" style="flex:none; width:var(--label-width, 9em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-number  id="geo_lat" precision="6" statustext="Latitude" placeholder="Latitude" width="90"></et2-number>
+			<et2-number  id="geo_lon" precision="6" statustext="Longitude" placeholder="Longitude" width="90"></et2-number>
+			<et2-button-icon  id="geo_show_map" image="map" statustext="Show this location on the configured map" onclick="app.addressbook.showGeoOnMap"></et2-button-icon>
+		</et2-hbox>
+	</et2-template>
+	<et2-template  id="addressbook.edit.home" template="" lang="" group="0" version="1.9.002" layout="2-column" style="--label-width:9em; --column-min-width:30.5em">
+		<et2-vbox style="min-width:0">
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="Home phone" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_home" tabindex="27" autocomplete="section-two home tel"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_home" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="mobile phone" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_cell_private" tabindex="28" autocomplete="section-two mobile tel"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_cell_private" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-fax  label="fax" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_fax_home" tabindex="29" autocomplete="section-two fax tel"></et2-url-fax>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_fax_home" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-hbox  style="min-width:0">
+				<et2-url-phone  label="pager" class="et2-label-fixed" style="flex:1; min-width:0" id="tel_pager" tabindex="30" autocomplete="section-two pager tel"></et2-url-phone>
+				<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_pager" ro_true="&amp;hearts;" />
+			</et2-hbox>
+			<et2-date  class="et2-label-fixed" label="Birthday" id="bday" tabindex="31" dataFormat="Y-m-d" yearRange="c-90:c+2"></et2-date>
+			<et2-url-email  class="et2-label-fixed" label="EMail" id="email_home" tabindex="32" onchange="app.addressbook.check_value(widget,'$cont[id]');" autocomplete="section-two home email"></et2-url-email>
+		</et2-vbox>
+		<et2-vbox style="min-width:0">
+			<et2-textbox  class="et2-label-fixed" label="street" id="adr_two_street" tabindex="33" maxlength="64" autocomplete="section-two address-line1"></et2-textbox>
+			<et2-textbox  class="et2-label-fixed" label="address line 2" statustext="address line 2" id="adr_two_street2" tabindex="34" maxlength="64" autocomplete="section-two address-line2"></et2-textbox>
+			<et2-hbox  class="city_state_postcode label_row" disabled="@addr_format2=city_state_postcode">
+				<et2-description  for="adr_two_locality" value="city" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="5em" style="flex:none" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+				<et2-textbox  statustext="City" id="adr_two_locality" tabindex="36" style="flex:1" maxlength="64" autocomplete="section-two address-level2"></et2-textbox>
+			</et2-hbox>
+			<et2-hbox  class="city_state_postcode label_row" disabled="!@addr_format2=city_state_postcode">
+				<et2-description  for="adr_two_locality" value="city" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-textbox  statustext="City" id="adr_two_locality" tabindex="34" style="flex:1" maxlength="64" autocomplete="section-two address-level2"></et2-textbox>
+				<et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="36" width="5em" style="flex:none" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+			</et2-hbox>
+			<et2-select-country  class="et2-label-fixed" label="country" tabindex="37" id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
+			<et2-hbox  class="city_state_postcode label_row">
+				<et2-description  for="adr_two_region" value="Region" disabled="@addr_format2=city_state_postcode" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-description  for="adr_two_region" value="State" disabled="!@addr_format2=city_state_postcode" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
+				<et2-select-state  statustext="State" allowFreeEntries="true" id="adr_two_region" tabindex="38" maxlength="64" style="flex:1" countryCode="$cont[adr_two_countrycode]" emptyLabel="Select one" autocomplete="section-two"></et2-select-state>
+			</et2-hbox>
+			<et2-url  class="et2-label-fixed" label="URL" id="url_home" tabindex="39" autocomplete="section-two url"></et2-url>
+		</et2-vbox>
 	</et2-template>
 	<et2-template  id="addressbook.edit.links" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" overflow="auto">
@@ -285,121 +191,74 @@
     <et2-template  id="addressbook.edit.history" template="" lang="" group="0" version="1.9.001">
         <historylog id="history" width="100%"/>
     </et2-template>
-    <et2-template  id="addressbook.edit" template="" lang="" group="0" version="1.9.004" class="addressbook_edit">
-        <et2-template  id="addressbook.editname"></et2-template>
-        <grid class="addressbook_edit" border="1" width="100%">
-            <columns>
-                <column width="100"/>
-                <column width="250"/>
-                <column width="50"/>
-                <column width="100"/>
-                <column width="250"/>
-                <column width="50"/>
-            </columns>
-            <rows>
-                <row class="dialogHeader">
-                    <et2-box  align="center">
-                        <et2-hbox  disabled="@hidebuttons">
-                            <et2-lavatar  id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true"></et2-lavatar>
-                        </et2-hbox>
-                    </et2-box>
-                    <et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" placeholder="Name"></et2-textbox>
-                    <et2-description></et2-description>
-                    <et2-description  for="org_name" value="Organisation"></et2-description>
-                    <et2-textbox  id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" tabindex="7" autocomplete="organization"></et2-textbox>
-                    <et2-appicon></et2-appicon>
-                </row>
-                <row class="dialogHeader2">
-                    <et2-description  for="tel_work" value="Business phone"></et2-description>
-                    <et2-url-phone  id="tel_work" tabindex="17" class="telNumbers" autocomplete="work tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_work" ro_true="&amp;hearts;" />
-                    <et2-description  for="org_unit" value="department"></et2-description>
-                    <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="128"></et2-textbox>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogHeader3">
-                    <et2-description  for="tel_cell" value="mobile phone"></et2-description>
-                    <et2-url-phone  id="tel_cell" tabindex="18" class="telNumbers" autocomplete="mobile tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_cell" ro_true="&amp;hearts;" />
-                    <et2-description  for="title" value="Title"></et2-description>
-                    <et2-textbox  id="title" maxlength="128" tabindex="9" autocomplete="organization-title"></et2-textbox>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogHeader4">
-                    <et2-description  for="email" value="email"></et2-description>
-                    <et2-url-email  id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="19" autocomplete="work email"></et2-url-email>
-                    <et2-description></et2-description>
-                    <et2-description  for="url" value="url"></et2-description>
-                    <et2-url  id="url" tabindex="10" autocomplete="url"></et2-url>
-                    <et2-description></et2-description>
-                </row>
-                <row>
-                    <et2-tabbox  id="tabs" span="all" width="100%" tabHeight="340" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
-                        <tabs>
-                            <tab id="general" label="Organisation"/>
-                            <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-                            <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
-                            <tab id="links" label="Links" statustext="Links"/>
-                            <tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-                            <tab id="history" label="History"/>
-                        </tabs>
-                        <tabpanels>
-                            <et2-template  id="addressbook.edit.general"></et2-template>
-                            <et2-template  id="addressbook.edit.home"></et2-template>
-                            <et2-template  id="addressbook.edit.details"></et2-template>
-                            <et2-template  id="addressbook.edit.links"></et2-template>
-                            <et2-template  id="addressbook.edit.distribution_list"></et2-template>
-                            <et2-template  id="addressbook.edit.history"></et2-template>
-                        </tabpanels>
-                    </et2-tabbox>
-                </row>
-                <row class="dialogOperators">
-                    <et2-description  value="Addressbook"></et2-description>
-                    <et2-select  class="owner" statustext="Addressbook the contact should be saved to" id="owner" onchange="widget.getInstanceManager().submit(null,false,true); return false;" noLang="1"></et2-select>
-                    <et2-description></et2-description>
-                    <et2-description  value="own sorting"></et2-description>
-                    <et2-select  id="fileas_type" class="fileas" placeholder="Name" noLang="1"></et2-select>
-                    <et2-description></et2-description>
-                </row>
-                <row class="dialogOperators">
-					<et2-description  value="Created"></et2-description>
-					<et2-hbox  width="100%">
-						<et2-select-account  id="creator" readonly="true"></et2-select-account>
-						<et2-date-time  id="created" readonly="true" align="right"></et2-date-time>
-					</et2-hbox>
-					<et2-description></et2-description>
-					<et2-description  value="Last modified"></et2-description>
-					<et2-hbox  width="100%">
-						<et2-select-account  id="modifier" readonly="true"></et2-select-account>
-						<et2-date-time  id="modified" readonly="true" align="right"></et2-date-time>
-					</et2-hbox>
-					<et2-description></et2-description>
-				</row>
-				<row disabled="@hidebuttons" class="dialogFooterToolbar">
-					<et2-hbox  span="all" width="100%">
-						<et2-button  accesskey="s" label="Save" id="button[save]" class="button_save" image="save"></et2-button>
-						<et2-button  label="Apply" id="button[apply]" class="button_apply" image="apply"></et2-button>
-						<et2-button  label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; window.close(); return false;" image="cancel"></et2-button>
-						<et2-checkbox  statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" span="all" disabled="@hide_change_org"></et2-checkbox>
-                        <et2-button  align="right" label="Delete" id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
-					</et2-hbox>
-
-				</row>
-				<row disabled="!@showsearchbuttons" class="dialogOperators">
-					<et2-hbox  span="all">
-						<et2-select  label="Operator" id="operator" noLang="1"></et2-select>
-						<et2-select  id="meth_select" noLang="1"></et2-select>
-					</et2-hbox>
-				</row>
-				<row disabled="!@showsearchbuttons" class="dialogFooterToolbar">
-					<et2-hbox  span="all">
-						<et2-button  label="Search" id="button[search]" image="search"></et2-button>
-						<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="addressbook.edit" template="" lang="" group="0" version="1.9.005" class="addressbook_edit" layout="edit" style="--label-width:9em; --column-min-width:30.5em">
+		<et2-template  id="addressbook.editname" style="position:absolute"></et2-template>
+		<et2-hbox  class="dialogHeader" style="min-width:0">
+			<et2-lavatar  id="jpegphoto" image="$cont[photo]" contactId="$cont[id]" crop="false" editable="true" hidden="@hidebuttons" style="flex:none"></et2-lavatar>
+			<et2-textbox  id="n_fn" tabindex="-1" class="cursorHand" style="flex:1" placeholder="Name"></et2-textbox>
+			<et2-appicon  src="addressbook"></et2-appicon>
+		</et2-hbox>
+		<et2-textbox  class="et2-label-fixed" label="Organisation" id="org_name" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128" tabindex="7" autocomplete="organization"></et2-textbox>
+		<et2-textbox  class="et2-label-fixed" label="department" id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="128"></et2-textbox>
+		<et2-hbox  style="min-width:0">
+			<et2-url-phone  label="Business phone" class="et2-label-fixed telNumbers" style="flex:1; min-width:0" id="tel_work" tabindex="17" autocomplete="work tel"></et2-url-phone>
+			<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_work" ro_true="&amp;hearts;" />
+		</et2-hbox>
+		<et2-textbox  class="et2-label-fixed" label="Title" id="title" maxlength="128" tabindex="9" autocomplete="organization-title"></et2-textbox>
+		<et2-hbox  style="min-width:0">
+			<et2-url-phone  label="mobile phone" class="et2-label-fixed telNumbers" style="flex:1; min-width:0" id="tel_cell" tabindex="18" autocomplete="mobile tel"></et2-url-phone>
+			<radio statustext="select phone number as prefered way of contact" id="tel_prefer" set_value="tel_cell" ro_true="&amp;hearts;" />
+		</et2-hbox>
+		<et2-url  class="et2-label-fixed" label="url" id="url" tabindex="10" autocomplete="url"></et2-url>
+		<et2-url-email  class="et2-label-fixed" label="email" id="email" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="19" autocomplete="work email"></et2-url-email>
+		<et2-tabbox  id="tabs" span="all" tabHeight="auto" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
+			<tabs>
+				<tab id="general" label="Organisation"/>
+				<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
+				<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
+				<tab id="links" label="Links" statustext="Links"/>
+				<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
+				<tab id="history" label="History"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="addressbook.edit.general"></et2-template>
+				<et2-template  id="addressbook.edit.home"></et2-template>
+				<et2-template  id="addressbook.edit.details"></et2-template>
+				<et2-template  id="addressbook.edit.links"></et2-template>
+				<et2-template  id="addressbook.edit.distribution_list"></et2-template>
+				<et2-template  id="addressbook.edit.history"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-select  label="Addressbook" class="owner dialogOperators et2-label-fixed" statustext="Addressbook the contact should be saved to" id="owner" onchange="widget.getInstanceManager().submit(null,false,true); return false;" noLang="1"></et2-select>
+		<et2-select  label="own sorting" id="fileas_type" class="fileas et2-label-fixed" placeholder="Name" noLang="1"></et2-select>
+		<et2-hbox  class="dialogMeta">
+			<et2-description  value="Created" for="created"></et2-description>
+			<et2-hbox>
+				<et2-select-account  id="creator" readonly="true"></et2-select-account>
+				<et2-date-time  id="created" readonly="true" class="et2_nowrap"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  class="dialogMeta">
+			<et2-description  value="Last modified" for="modified"></et2-description>
+			<et2-hbox>
+				<et2-select-account  id="modifier" readonly="true"></et2-select-account>
+				<et2-date-time  id="modified" readonly="true" class="et2_nowrap"></et2-date-time>
+			</et2-hbox>
+		</et2-hbox>
+		<et2-hbox  span="all" hidden="@hidebuttons" class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  accesskey="s" label="Save" id="button[save]" class="button_save" image="save"></et2-button>
+			<et2-button  label="Apply" id="button[apply]" class="button_apply" image="apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" class="button_cancel" onclick="if($cont[view] || false) return true; window.close(); return false;" image="cancel"></et2-button>
+			<et2-checkbox  statustext="Apply changes to all members, whose fields have the same previous content" label="change all organisation members" id="change_org" disabled="@hide_change_org"></et2-checkbox>
+			<et2-button  align="right" label="Delete" id="button[delete]" class="button_delete" onclick="Et2Dialog.confirm(widget,'Do you really want to delete this contact?','Delete')" image="delete"></et2-button>
+		</et2-hbox>
+		<et2-hbox  span="all" hidden="!@showsearchbuttons" class="dialogOperators">
+			<et2-select  class="et2-label-fixed" label="Operator" id="operator" noLang="1"></et2-select>
+			<et2-select  id="meth_select" noLang="1"></et2-select>
+		</et2-hbox>
+		<et2-hbox  span="all" hidden="!@showsearchbuttons" class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  label="Search" id="button[search]" image="search"></et2-button>
+			<et2-button  label="Cancel" id="button[cancelsearch]" image="cancel"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>
