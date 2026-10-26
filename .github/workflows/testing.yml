@@ -827,7 +827,7 @@ jobs:
 
   jstest:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     # One job per browser per shard, so the suite runs on four runners that do not share a CPU
     # instead of four pages sharing one.  Measured on 4 cores (a runner's size): both browsers
     # together 338s, firefox alone 285s, chromium alone 157s, half the files in firefox 145s/152s
@@ -1001,8 +1001,36 @@ jobs:
         run: npm ci
 
       # Only this job's browser: downloading the other one costs ~10s and it is never launched.
+      # install-deps is an apt-get install of fonts and libraries from azure.archive.ubuntu.com,
+      # which regularly stalls for minutes per package and used to eat the whole job's timeout.
+      # The downloaded .debs are cached (apt skips a package whose .deb is already in
+      # /var/cache/apt/archives), and the step is bounded and retried instead of hanging.
+      # Saved even when the step failed, so a retry or the next run resumes with what arrived.
+      - name: Restore apt packages for Playwright ${{ matrix.browser }}
+        id: apt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/apt-archives
+          key: apt-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
+
       - name: Install Playwright system dependencies
-        run: npx playwright install-deps ${{ matrix.browser }}
+        timeout-minutes: 8
+        run: |
+          mkdir -p ~/apt-archives
+          sudo cp -n ~/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
+          for attempt in 1 2 3; do
+            if timeout 150 npx playwright install-deps ${{ matrix.browser }}; then ok=1; break; fi
+            echo "::warning::install-deps attempt $attempt failed or stalled"
+          done
+          cp -n /var/cache/apt/archives/*.deb ~/apt-archives/ 2>/dev/null || true
+          [ "${ok:-}" = 1 ]
+
+      - name: Save apt packages for Playwright ${{ matrix.browser }}
+        if: always() && steps.apt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/apt-archives
+          key: ${{ steps.apt-cache.outputs.cache-primary-key }}
 
       # package-lock.json is what pins the Playwright version, so a bump changes the key and
       # downloads the matching browser.  No restore-keys, for the same reason as above: a
