@@ -105,7 +105,7 @@
     "pdfjs-dist": "~5.4.624",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "sortablejs": "^1.14.0",
-    "tinymce": "^8.6.0"
+    "tinymce": "^8.10.0"
   },
   "overridesNote": "jsdom is pinned to html-encoding-sniffer@4 because html-encoding-sniffer@6 requires ESM-only @exodus/bytes from CommonJS under Node 24. @11ty/recursive-copy is forced to the patched 5.0.2 (brace-expansion DoS, GHSA-mh99-v99m-4gvg) since @11ty/eleventy@3.1.6 still pins ^4.0.4.",
   "overrides": {
@@ -121,6 +121,8 @@
     "core-js@3.29.1": true,
     "esbuild@0.28.1": true,
     "fsevents@2.3.3": true,
-    "fsevents@2.3.2": true
+    "fsevents@2.3.2": true,
+    "core-js-pure@3.37.1": true,
+    "rs-module-lexer@2.9.0": true
   }
 }
