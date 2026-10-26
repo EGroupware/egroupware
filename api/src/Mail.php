@@ -7512,7 +7512,12 @@ class Mail
 	 * Restricting it to the specific entity's own VFS attachment directory (eg.
 	 * "/apps/tracker/$tr_id/", computed by the caller from data it already trusts, never from
 	 * anything inside $_html2parse) narrows that to "can read files already part of this same
-	 * record", not "can read anything on the VFS".
+	 * record", not "can read anything on the VFS". A SECOND, equally required control gates this
+	 * alongside the prefix: the webdav.php URL's own host must match one of this install's own
+	 * known hosts (see the $same_origin computation below, which explains why and explicitly warns
+	 * against ever removing it) - without it, an entirely unrelated external URL that merely
+	 * contains the substring "/webdav.php" could be mistaken for a reference to this server's own
+	 * VFS at all.
 	 *
 	 * @param Mailer $_mailObject instance of the Mailer Object to be used
 	 * @param string $_html2parse the html to parse and to be altered, if conditions meet
@@ -7573,9 +7578,65 @@ class Mail
 						// and what it must (and must NOT) be derived from
 						if (!$data && $allowed_webdav_prefix && ($webdav_pos = stripos($decoded_url, '/webdav.php')) !== false)
 						{
-							$own_host = strtolower((string)parse_url(Framework::getUrl('/'), PHP_URL_HOST));
+							// The ONLY caller of this branch, notifications_email.inc.php, is
+							// frequently reached from a genuine CLI/cron context with no live request
+							// at all (eg. tracker's own "Ticket per Mail" mail-polling async job,
+							// tracker_mailhandler.inc.php) where $_SERVER['HTTP_HOST'] is simply unset
+							// (ralf: "not available most of the time in async jobs"). Found live
+							// 2026-10-26, ticket #126501 (still reproducing on a release that already
+							// had this fix): $own_host silently resolved empty there, so $same_origin
+							// below never matched the real, fully-qualified webdav.php url Et2HtmlArea
+							// embedded during the ORIGINAL (web-request) upload (built via
+							// Api\Framework::link() -> Session::link(), which prepends 'webserver_url'),
+							// and the image was never embedded at all.
+							//
+							// Checks 'webserver_url' (Setup config) ALONGSIDE $_SERVER['HTTP_HOST']
+							// (when present, ie. a live, synchronous request - eg. a staff member's own
+							// reply) rather than one OR the other - an install reachable through more
+							// than one valid hostname (a second DNS alias, a load balancer, a dev/
+							// staging domain) must keep matching via whichever one the CURRENT request
+							// actually arrived on, exactly as before this fix; 'webserver_url' is only
+							// ADDED as a second, always-available source of truth for when there is no
+							// request to ask at all. Deliberately NOT Header\Http::host(true)'s own
+							// Setup-hostname fallback ('hostname') - these are two independent config
+							// fields that routinely disagree (ralf: "the hostname field is almost
+							// always just 'localhost' and therefore meaningless" - Header\Http::host()
+							// itself already excludes exactly that value, making its own fallback a
+							// near-total no-op in practice; on-premise installs separately default
+							// 'webserver_url' to the relative "/egroupware", since the container has no
+							// way to know its own public domain at install time, and EGroupware's own
+							// support team routinely tells customers to change 'webserver_url'
+							// specifically - to a full absolute URL, so eg. notification email links
+							// are clickable - without ever touching the unrelated 'hostname' field).
+							// 'webserver_url' is PROVABLY the one that matches the embedded url, since
+							// it is the exact value Session::link() itself prepended to produce it in
+							// the first place. A still-relative 'webserver_url' (the on-premise default)
+							// has no host component to parse - equally harmless, since $decoded_url
+							// would then be relative too, already handled by $url_host === null below
+							// regardless of this.
+							//
+							// SECURITY: this host check (feeding $same_origin below) is NOT optional and
+							// must NOT be removed or bypassed, even though $allowed_webdav_prefix alone
+							// already restricts which VFS path may be read. $allowed_webdav_prefix is
+							// server-computed from trusted data and genuinely does gate WHICH file can
+							// ever be embedded - but this host check is what decides WHETHER a given
+							// <img> is even a candidate for that read in the first place, rather than
+							// some entirely unrelated external url that merely contains the substring
+							// "/webdav.php". This is the exact vulnerability class ticket #125961 closed
+							// (an attacker-supplied, auto-sent <img src="webdav.php/..."> silently read
+							// with the next staff member's own session/permissions) - widening this
+							// check to "any host" (or removing it) re-opens that class of bug. Only ever
+							// widen the set of hosts considered "us" (as this fix itself does, adding
+							// 'webserver_url' alongside the live request's own host) - never drop the
+							// check entirely.
+							$own_hosts = array_filter([
+								isset($_SERVER['HTTP_HOST']) ?
+									strtolower((string)parse_url('http://'.$_SERVER['HTTP_HOST'].'/', PHP_URL_HOST)) : null,
+								strtolower((string)parse_url(
+									(string)($GLOBALS['egw_info']['server']['webserver_url'] ?? ''), PHP_URL_HOST)),
+							]);
 							$url_host = parse_url($decoded_url, PHP_URL_HOST);
-							$same_origin = $url_host === null || (strcasecmp((string)$url_host, $own_host) === 0 &&
+							$same_origin = $url_host === null || (in_array(strtolower($url_host), $own_hosts, true) &&
 								in_array(strtolower(parse_url($decoded_url, PHP_URL_SCHEME) ?? ''), ['http', 'https'], true));
 							$webdav_path = urldecode(substr($decoded_url, $webdav_pos+strlen('/webdav.php')));
 							// reject "..", so eg. "/apps/tracker/$tr_id/../../other_ticket/secret.pdf"
