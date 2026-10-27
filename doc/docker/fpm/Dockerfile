@@ -57,7 +57,12 @@ RUN set -e \
 	&& chown -R www-data:www-data /var/lib/egroupware-push \
 	&& ln -s /var/lib/egroupware-push/config.inc.php /usr/share/egroupware/swoolepush \
 	# install cron-job and disable fallback async service and ability to switch them off in admin
-	&& sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > /etc/crontabs/www-data \
+	# egroupware.cron is in system-crontab format (schedule + USER + command, for /etc/cron.d/
+	# on Debian/Ubuntu); Alpine's busybox crond uses PER-USER crontabs under /etc/crontabs/<user>,
+	# which must NOT contain a user field - crond passes the line as-is to `sh -c`, so a leftover
+	# "apache"/"www-data" token here is not stripped and becomes the (nonexistent) command name,
+	# failing silently with "www-data: command not found" (exit 127) on every single run
+	&& sed 's/\tapache\t/\t/' doc/rpm-build/egroupware.cron > /etc/crontabs/www-data \
 	&& patch -p1 < doc/rpm-build/asyncservice.patch \
 	# mv sources to a different directory so entrypoint can rsync them to volume for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
