@@ -485,9 +485,9 @@ class Sql
 				break;
 		}
 		// if params also has an account_id filter, we need to intersect both (the negated account_id filter is already handled above)
-		if (!empty($params['account_id']))
+		if (!empty($param['account_id']))
 		{
-			$filter['account_id'] = isset($filter['account_id']) ? array_intersect($filter['account_id'], $params['account_id']) : $params['account_id'];
+			$filter['account_id'] = isset($filter['account_id']) ? array_intersect($filter['account_id'], $param['account_id']) : $param['account_id'];
 		}
 		// fix ambiguous account_id (used in accounts and contacts table)
 		if (array_key_exists('account_id', $filter))
