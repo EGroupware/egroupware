@@ -1134,6 +1134,18 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 				// the ones actually rendered, so they need the flag too, or they render as no-match.
 				this._markMatch(entry);
 
+				// An option group has an array value, its children are the actual options
+				const children = Array.isArray(entry.value) ? entry.value : entry.children;
+				if(Array.isArray(children))
+				{
+					normalised.total -= this._dropKnownChildren(children);
+					if(children.length == 0)
+					{
+						normalised.results.splice(i, 1);
+					}
+					continue;
+				}
+
 				const existing = this.select_options.find(o => o.value == entry.value);
 				if(existing)
 				{
@@ -1144,6 +1156,42 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			}
 
 			return <any>super.processRemoteResults(<any>normalised);
+		}
+
+		/**
+		 * Remove the children of a result option group that we already have as options, flagging
+		 * the option we have as a match.  Search results come back grouped (eg. CalendarOwner's
+		 * accounts / addressbook / resources), and the selected values are kept as plain options,
+		 * so without this every search lists the selected values a second time inside the group.
+		 *
+		 * @param {SelectOption[]} children the group's options, modified in place
+		 * @returns {number} how many children were removed
+		 */
+		private _dropKnownChildren(children : SelectOption[]) : number
+		{
+			let removed = 0;
+			for(let c = children.length - 1; c >= 0; c--)
+			{
+				const child = children[c];
+				const grandchildren = Array.isArray(child.value) ? child.value : child.children;
+				if(Array.isArray(grandchildren))
+				{
+					removed += this._dropKnownChildren(grandchildren);
+					if(grandchildren.length == 0)
+					{
+						children.splice(c, 1);
+					}
+					continue;
+				}
+				const existing = this.select_options.find(o => !Array.isArray(o.value) && o.value == child.value);
+				if(existing)
+				{
+					existing.isMatch = true;
+					children.splice(c, 1);
+					removed++;
+				}
+			}
+			return removed;
 		}
 
 		/**
