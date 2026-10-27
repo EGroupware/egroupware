@@ -229,6 +229,9 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Select
 			$search_options;
 
 
+		// The account_id filter is ours to set (see grants below), never taken from the client
+		unset($options['account_id']);
+
 		$results = array();
 		$is_admin = !empty($GLOBALS['egw_info']['user']['apps']['admin']);
 		$total = 0;
@@ -251,11 +254,31 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Select
 				$owngroup_options = $options+array('account_type'=>'owngroups');
 				$own_groups = Api\Accounts::link_query('',$owngroup_options);
 				$account_options = $options + ['account_type' => 'both', 'tag_list' => true];
-				$_results += $remove_contacts = Api\Accounts::link_query($search_text, $account_options);
-				$total += $account_options['total'];
 				if (!empty($_REQUEST['checkgrants']))
 				{
+					// limit the search itself to accounts we have grants for, as the result is limited
+					// to num_rows and filtering it afterwards would leave nothing but non-granted accounts
 					$grants = (array)$GLOBALS['egw']->acl->get_grants('calendar') + $own_groups;
+					if ($grants)
+					{
+						// hidden accounts stay hidden from non-admins: Accounts::search() ignores an
+						// account_id list that is empty after removing them, so drop them here
+						$account_ids = $is_admin ? array_keys($grants) : array_values(Api\Accounts::hidden2account_id(false, array_keys($grants)));
+						$account_options['account_id'] = $account_ids;
+					}
+				}
+				if (isset($account_options['account_id']) && !$account_options['account_id'])
+				{
+					$account_options['total'] = 0;
+				}
+				else
+				{
+					$_results += $remove_contacts = Api\Accounts::link_query($search_text, $account_options);
+				}
+				$total += $account_options['total'];
+				if (!empty($grants))
+				{
+					// backends not understanding the account_id filter still need the result reduced
 					$_results = array_intersect_key($_results, $grants);
 					// Grants reduces how many results we get.  This only works since we do accounts first.
 					$total = count($_results);
