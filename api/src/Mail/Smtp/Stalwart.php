@@ -164,7 +164,7 @@ class Stalwart extends Sql
 			$aliases = [];
 			foreach($account['aliases'] as $alias)
 			{
-				if ($alias['enabled'])
+				if ($alias['enable'] ?? $alias['enabled'] ?? true)    // Stalwart 1.0 renamed enabled to enable
 				{
 					$aliases[] = $alias['name'].'@'.$this->domain($account['domainId']);
 				}
@@ -235,7 +235,7 @@ class Stalwart extends Sql
 				throw new \Exception("Domain '$domain' not found --> create it!");
 			}
 			$aliases[] = [
-				'enabled' => true,
+				'enable' => true,    // Stalwart 0.16 used 'enabled', 1.0 rejects it with invalidPatch
 				'name' => self::name2stalwart($name),
 				'domainId' => $domainId,
 				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
