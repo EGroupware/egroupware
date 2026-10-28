@@ -587,9 +587,10 @@ class notifications {
 						{
 							if (!empty($this->popupsubject)) $lsubject = $this->popupsubject;
 							if ($this->popup_links) $llinks = $this->popup_links;
-							if (is_array($this->popup_data)) $popup_data = $this->popup_data;
-						} elseif ($backend == 'email') {
-							if (!empty($this->reply_to)) $popup_data = array( 'reply_to' => $this->reply_to );
+						}
+						if (($backend_data = $this->get_backend_data($backend)) !== null)
+						{
+							$popup_data = $backend_data;
 						}
 						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments, $popup_data??null);
 
@@ -856,6 +857,43 @@ class notifications {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Build the $_data array send()'s per-backend loop hands to a backend's own send()
+	 *
+	 * 'popup' gets $this->popup_data as-is (set via set_popupdata() - its own backend already
+	 * knows how to use its 'appname'/'id'/'data' shape).
+	 *
+	 * 'email' MUST also get $this->popup_data, not just 'reply_to': every Api\Storage\Tracking
+	 * subclass (tracker, projectmanager, infolog, calendar, resources, contacts, timesheet) calls
+	 * set_popupdata($this->app, $link, $link['id']) identically, and notifications_email::send()
+	 * needs that same 'appname'/'id' to compute Api\Mail::processURL2InlineImages()'s
+	 * $allowed_webdav_prefix security check (which app/entry's own VFS attachments may be
+	 * embedded inline). A previous version of this method replaced popup_data with just
+	 * ['reply_to' => ...] (or returned nothing at all when reply_to was empty) instead of merging
+	 * the two, so $allowed_webdav_prefix was always null and inline image embedding silently
+	 * never happened for ANY email notification through this path (found live, ticket #126501).
+	 *
+	 * Any other backend (jpopup, winpopup, ...) gets null - no equivalent data has ever been
+	 * defined for them.
+	 *
+	 * @param string $_backend 'email', 'popup', ...
+	 * @return array|null null if this backend has no backend-specific data at all
+	 */
+	protected function get_backend_data(string $_backend) : ?array
+	{
+		switch($_backend)
+		{
+			case 'popup':
+				return is_array($this->popup_data) ? $this->popup_data : null;
+			case 'email':
+				$data = is_array($this->popup_data) ? $this->popup_data : [];
+				if (!empty($this->reply_to)) $data['reply_to'] = $this->reply_to;
+				return $data ?: null;
+			default:
+				return null;
+		}
 	}
 
 	/**
