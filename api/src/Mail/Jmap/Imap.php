@@ -2773,8 +2773,22 @@ class Imap extends Jmap\Base
 		// applies to this shape anyway (no bodyValues, no attachments to add), hence the early
 		// return. A real Stalwart/JMAP account never reaches this at all (Email/set create is
 		// handled natively there, this method is shim-only).
+		//
+		// The type check is NOT optional - ticket #127051 (2026-10-28, found
+		// live against acc_id=18/shim): an ordinary single-part text/plain message has the EXACT
+		// SAME shape (bodyStructure present, no subParts, a blobId) once emailSubmissionSet()'s own
+		// re-fetch-then-resend cycle re-reads the just-created draft via emailGet() - every part,
+		// body text included, gets a blobId there (RFC 8621 gives every part one). Without this
+		// type check, a plain single-part message was wrongly treated as an opaque pre-encrypted
+		// blob too: setBasePart() with only setType()/setContents() (no setCharset() at all) skips
+		// Api\Mailer::_send()'s entire flowed/charset-handling branch (isset($this->_base)
+		// short-circuits it), so the message went out as a bare "Content-Type: text/plain" with no
+		// charset, no format=flowed, and no Content-Transfer-Encoding - exactly the reporter's
+		// symptom (umlauts garbled in other MUAs). A multipart/alternative message was never
+		// affected, since its re-fetched bodyStructure always has real subParts.
 		if (!empty($email['bodyStructure']) && empty($email['bodyStructure']['subParts']) &&
-			!empty($email['bodyStructure']['blobId']))
+			!empty($email['bodyStructure']['blobId']) &&
+			strtolower((string)($email['bodyStructure']['type'] ?? '')) === 'application/pkcs7-mime')
 		{
 			$raw = self::readUploadedBlob($accountId, (string)$email['bodyStructure']['blobId']);
 			if ($raw !== null)

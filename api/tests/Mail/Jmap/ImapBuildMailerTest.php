@@ -622,4 +622,45 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 		$this->assertEmpty($structure->getParts(), 'must be a single opaque leaf, no sub-parts at all');
 		$this->assertSame('opaque pkcs7-mime bytes (would be real ciphertext live)', $structure->getContents());
 	}
+
+	/**
+	 * Regression test for ticket #127051 (2026-10-28, live customer report moder@schotten-sozial.de,
+	 * confirmed by Birgit Becker): the S/MIME encrypt-only passthrough above (see its own docblock)
+	 * matched this shape too - a bare {type, blobId} bodyStructure with no subParts - for an
+	 * ORDINARY single-part text/plain message, not just real application/pkcs7-mime ciphertext.
+	 * emailSubmissionSet()'s re-fetch-then-resend cycle re-reads the just-created draft via
+	 * emailGet(), which sets a blobId on EVERY part (body text included, RFC 8621-correct) - for a
+	 * single-part plain message, that re-fetched bodyStructure is exactly {type: 'text/plain',
+	 * blobId: ..., partId: ...} with no subParts, matching the S/MIME branch's old (type-less)
+	 * condition. The message was then sent as a bare opaque leaf (setBasePart(), no setCharset() at
+	 * all) instead of going through the normal setBody() path, producing "Content-Type: text/plain"
+	 * with no charset, no format=flowed, and no Content-Transfer-Encoding - exactly the reporter's
+	 * symptom (umlauts garbled in other MUAs, eg. GMX). Fixed by requiring
+	 * type === 'application/pkcs7-mime' before taking the opaque-passthrough branch.
+	 */
+	public function testPlainSinglePartReFetchShapeIsNotTreatedAsSmimeOpaquePassthrough()
+	{
+		$blobId = $this->uploadBlob('Umlaut test: äöüÄÖÜß');
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Plain re-fetch shape',
+			'bodyValues' => ['body' => ['value' => 'Umlaut test: äöüÄÖÜß']],
+			// simulates emailGet()'s own bodyPartToJmap() output for a SINGLE-part plain message -
+			// no subParts, a blobId on the body part itself, same shape the S/MIME branch used to
+			// match unconditionally
+			'bodyStructure' => ['type' => 'text/plain', 'partId' => 'body', 'blobId' => $blobId],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+		$structure = $this->parse($raw);
+
+		$this->assertNotEquals('application/pkcs7-mime', strtolower($structure->getType()),
+			'an ordinary plain-text message must never be sent as an opaque pkcs7-mime leaf');
+		$this->assertEquals('text/plain', strtolower($structure->getType()));
+		$this->assertStringContainsStringIgnoringCase('charset=utf-8', $raw,
+			'charset must survive for a single-part plain message, ticket #127051');
+		$this->assertStringContainsStringIgnoringCase('format=flowed', $raw,
+			'format=flowed must survive for a single-part plain message, ticket #127051');
+		$this->assertSame('Umlaut test: äöüÄÖÜß', trim($structure->getContents()));
+	}
 }
