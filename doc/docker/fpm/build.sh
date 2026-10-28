@@ -74,3 +74,18 @@ else
     done
   }
 fi
+
+# a new release of the current branch (what :26 and :latest point to) is tested by the install tests of the packages in EGroupware/build.opensuse.org:
+# they install the just published image with the egroupware-docker package on the supported distros, a failure is visible in the Actions tab there.
+# Image-only releases do not touch that repository, so the (manual) workflow is triggered here, never fails the build, set NO_TESTS=1 to skip it
+[ -z "$NO_TESTS" -a -n "$extra_tags" -a "$BRANCH" = "$LATEST_BRANCH" ] && {
+  if command -v gh >/dev/null
+  then
+    gh workflow run package-tests.yml --repo EGroupware/build.opensuse.org --ref master -f distro=default -f test=all \
+      && echo "Started the package install tests: https://github.com/EGroupware/build.opensuse.org/actions/workflows/package-tests.yml" \
+      || echo "WARNING: could not start the package install tests (gh auth login?)" >&2
+  else
+    echo "WARNING: gh not found, package install tests NOT started" >&2
+  fi
+}
+true
