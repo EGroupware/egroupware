@@ -212,6 +212,17 @@ describe("MailApp.resolveExternalImages()", () =>
 		assert.deepEqual(Object.values(prefs.allowExternalDomains), ['example.org']);
 	});
 
+	it("offers only 'Show', no 'Allow', when the admin turned the Allow button off", () =>
+	{
+		prefs.externalContentAllowButton = '0';
+		const app = createMailApp();
+		const node = containerWithBlockedImages('https://example.org/photo.png');
+		app.resolveExternalImages(node);
+
+		const labels = Array.from(node.querySelectorAll('et2-button')).map((btn) => btn.textContent);
+		assert.deepEqual(labels, ['Show']);
+	});
+
 	/**
 	 * A JMAP-native body (MailJmap.wrapDocument()) blocks other external content by its CSP and
 	 * marks the body with the first blocked url, eg. for a CSS background - which needs a banner

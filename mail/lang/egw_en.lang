@@ -493,6 +493,7 @@ notify about new mail in this folders	mail	en	Notify about new email in these fo
 notify when new mails arrive in these folders	mail	en	notify when new emails arrive in these folders
 obsolet create right, combination rights of k and x	mail	en	Obsolet create right, combination rights of K and X
 obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete right, combination rights of E, T and X
+offer "allow" for blocked external content	mail	en	Offer "Allow" for blocked external content
 offer to add sender's s/mime certificate or pgp key to contact	mail	en	Offer to add sender's S/MIME certificate or PGP key to contact
 on	mail	en	on
 on behalf of	mail	en	On behalf of
@@ -699,6 +700,7 @@ show vertical	mail	en	Show vertical (3-column view)
 show vertical with all columns	mail	en	Show vertical with all columns
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in email list view.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the email.
+shows an "allow" button next to "show" in the banner of a mail with blocked external content, adding its domain to the listed domains. set to "no" to only offer "show", eg. to keep a list of allowed domains set by the admin for everyone.	mail	en	Shows an "Allow" button next to "Show" in the banner of a mail with blocked external content, adding its domain to the listed domains. Set to "no" to only offer "Show", eg. to keep a list of allowed domains set by the admin for everyone.
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated

@@ -4185,7 +4185,6 @@ export class MailApp extends EgwApp
 					showImages(external_images);
 				}
 			});
-			container.appendChild(allowBtn);
 
 			const showBtn = createButton('Show', this.egw.lang('Load content from %1 this time only', blocked_hosts), 'mailExternalShow');
 			showBtn.addEventListener('click', () =>
@@ -4221,7 +4220,12 @@ export class MailApp extends EgwApp
 				}
 			});
 			// Show before Allow, as Allow also does what Show does
-			container.insertBefore(showBtn, allowBtn);
+			container.appendChild(showBtn);
+			// you can turn "Allow" off, so only the allow-list in the preferences adds domains
+			if (egw.preference('externalContentAllowButton', 'mail') != '0')
+			{
+				container.appendChild(allowBtn);
+			}
 			if (frame)
 			{
 				// overlaid at the bottom of the body iframe, see .mail_externalImagesMsg in app.less

@@ -407,6 +407,14 @@ class mail_hooks
 				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
 				'no_sel_options' => true
 			),
+			'externalContentAllowButton' => array(
+				'type'   => 'select',
+				'label'  => 'Offer "Allow" for blocked external content',
+				'help'   => 'Shows an "Allow" button next to "Show" in the banner of a mail with blocked external content, adding its domain to the listed domains. Set to "no" to only offer "Show", eg. to keep a list of allowed domains set by the admin for everyone.',
+				'name'   => 'externalContentAllowButton',
+				'values' => $no_yes,
+				'default'=> '1',
+			),
 			'new_mail_notification' => [
 				'type' => 'select',
 				'label' => 'Show notification for new arriving mails',
