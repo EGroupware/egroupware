@@ -628,13 +628,19 @@ standard row layout:
 | Property                | Default | Effect                                                                 |
 |-------------------------|---------|------------------------------------------------------------------------|
 | `--row-height`          | `44px`  | Estimated row height used for virtual spacer rendering and empty rows. |
-| `--row-cell-max-height` | `none`  | Maximum height for normal row cells; taller content is clipped.        |
+| `--row-cell-max-height` | `20lh`  | Maximum height for normal row cells; taller content is clipped.        |
 
-Rows grow to fit their content by default. Set `--row-cell-max-height` to keep a list compact: a
-cell taller than the limit is clipped and fades out at the bottom, without a scrollbar of its own.
+Cells are limited to 20 lines by default.  Set `--row-cell-max-height` to change the limit, or to `none`
+for rows that grow to fit their content: a cell taller than the limit is clipped and fades out at the bottom, without a scrollbar of its own.
 Cells holding an `et2-customfields-list` scroll instead, so no field is hidden. The fade needs CSS
 scroll-driven animations; browsers without them clip without fading. It applies to normal row
 `td` / `th` cells; expanded rows and tile view use separate sizing paths.
+
+:::warning
+Keep the limit small.  A large limit, or `none`, lets a row grow to many screens tall (eg. a long
+HTML description).  That makes the list slow, and the virtualizer can then request far more pages
+than are visible.  The grid logs a console warning and drops the excess requests when it sees that.
+:::
 
 ```css
 et2-nextmatch {

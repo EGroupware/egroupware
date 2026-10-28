@@ -278,7 +278,7 @@ export default css`
 			box-sizing: border-box;
 			padding: 0px var(--sl-spacing-x-small);
 			min-width: 0;
-			max-height: var(--row-cell-max-height, none);
+			max-height: var(--row-cell-max-height, 20lh);
 			overflow-x: hidden;
 			/* Only bites when an app sets --row-cell-max-height: clip, no per-cell scrollbar */
 			overflow-y: hidden;
@@ -291,10 +291,11 @@ export default css`
 		}
 
 		/* Fade out the bottom of a clipped cell. The cell's own scroll timeline is only active while its
-		   content overflows, so cells that fit are left alone. Only when an app sets a limit: without
-		   one a few pixels of overflow (eg. a child's padding) would fade out the cell's last line. */
+		   content overflows, so cells that fit are left alone. Not when the limit is none: without one
+		   a few pixels of overflow (eg. a child's padding) would fade out the cell's last line.  An
+		   unset property is the 20-line default, so it fades too. */
 		@supports (animation-timeline: scroll(self)) {
-			@container style(--row-cell-max-height) {
+			@container not style(--row-cell-max-height: none) {
 				tbody td:not([data-dg-meta-cell="1"], :has(> et2-customfields-list)),
 				tbody th {
 					animation: dg-cell-clip-fade linear both;
