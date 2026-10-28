@@ -221,7 +221,7 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  * @csspart column-selection - Column selection action container in the header.
  *
  * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
- * @cssproperty [--row-cell-max-height=none] - Maximum height for individual row cells; taller content is clipped. Unlimited by default.
+ * @cssproperty [--row-cell-max-height=20lh] - Maximum height for individual row cells; taller content is clipped. Set to `none` for unlimited. Warning: large values, or `none`, let one row be many screens tall, which makes the list slow and can make it request far more pages than it shows.
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids calculate a width large enough for the expander when it is not supplied.
  * @cssproperty [--row-expander-size=var(--sl-spacing-large)] - Width and height of the row expand/collapse button.
  * @cssproperty [--row-expander-icon-size=0.5em] - Size of the default CSS triangle expander icon.
@@ -4551,7 +4551,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 *
 	 * @returns true if a request was actually queued
 	 */
-	private _queueChunkRequest(chunkStart : number) : boolean
+	private _queueChunkRequest(chunkStart : number, bulk : boolean = false) : boolean
 	{
 		if(!this._hasMissingRowsInChunk(chunkStart))
 		{
@@ -4569,7 +4569,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return false;
 		}
-		this._requestQueue.queueRequest(chunkStart, requestedCount, requestKey);
+		this._requestQueue.queueRequest(chunkStart, requestedCount, requestKey, bulk);
 		this._scheduleQueuedRequestProcessing();
 		return true;
 	}
@@ -6276,7 +6276,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			const firstChunk = Math.floor(first / this.pageSize) * this.pageSize;
 			for(let chunkStart = firstChunk; chunkStart <= last; chunkStart += this.pageSize)
 			{
-				queued = this._queueChunkRequest(chunkStart) || queued;
+				queued = this._queueChunkRequest(chunkStart, true) || queued;
 			}
 			// pendingPlaceholderCount, not `loading`: a request queued moments ago (by us or
 			// by the virtualizer) is only dispatched after the queue's debounce, so `loading`
@@ -6537,7 +6537,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return 1000;
 		}
-		return Math.max(0, Math.floor(this.pageSize / 2) * this.rowHeightEstimatePx - viewportPx);
+		// Never more than the library's own default.  The overhang is pixels but is filled with
+		// whatever rows are rendered at the time, and until the first page arrives that is 35px
+		// placeholders, not real rows: half a page of 3800px rows (a long description) is ~95000px,
+		// ~2700 placeholders, each asking for its page.  A row cap bounds the estimate, not that.
+		return Math.min(1000, Math.max(0, Math.floor(this.pageSize / 2) * this.rowHeightEstimatePx - viewportPx));
 	}
 
 	private _tileLayoutConfig()

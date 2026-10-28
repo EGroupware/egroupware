@@ -30,7 +30,7 @@ export class Et2DatagridRequestQueue
 	private _pendingPlaceholderRequests : Map<string, { start : number; requestedCount : number }> = new Map();
 	private _inFlightRequestKeys : Set<string> = new Set();
 	private _queuedRequestTimer : number | null = null;
-	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
+	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string; bulk : boolean }> = new Map();
 	private _oldestQueuedAt : number | null = null;
 
 	private _slowFetchDialog : Et2Dialog | null = null;
@@ -41,6 +41,14 @@ export class Et2DatagridRequestQueue
 
 	/** Caps how long newer arrivals can keep bumping the debounce timer before a flush is forced. */
 	private static readonly MAX_DISPATCH_DELAY_MS = 500;
+
+	/**
+	 * Most chunk requests a single flush will send for placeholder rows.  A screenful needs one or
+	 * two pages, so more than this at once means the virtualizer is rendering far more placeholders
+	 * than fit on screen - eg. an overhang sized from tall rows - and each page is a server query.
+	 * The excess is dropped, not queued, with a console warning.
+	 */
+	static readonly MAX_PLACEHOLDER_CHUNKS_PER_FLUSH = 5;
 
 	constructor(host : Et2DatagridRequestQueueHost)
 	{
@@ -93,8 +101,11 @@ export class Et2DatagridRequestQueue
 
 	/**
 	 * Queue a chunk request once and reserve placeholder capacity for its expected rows.
+	 *
+	 * @param bulk The caller deliberately wants many pages at once (see Et2Datagrid.loadRowRange()),
+	 * so the per-flush limit on placeholder requests does not apply.
 	 */
-	queueRequest(start : number, requestedCount : number, requestKey : string) : void
+	queueRequest(start : number, requestedCount : number, requestKey : string, bulk : boolean = false) : void
 	{
 		if(this._queuedRequests.has(requestKey) || this._inFlightRequestKeys.has(requestKey))
 		{
@@ -104,7 +115,7 @@ export class Et2DatagridRequestQueue
 		{
 			this._oldestQueuedAt = Date.now();
 		}
-		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey});
+		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey, bulk});
 		this._pendingPlaceholderRequests.set(requestKey, {start, requestedCount});
 		this._pendingPlaceholderCount += this.host._isEmbeddedInitialLoading() ? Math.min(requestedCount, 1) : requestedCount;
 		this.host.requestUpdate();
@@ -180,7 +191,26 @@ export class Et2DatagridRequestQueue
 		{
 			return;
 		}
-		const selected = Array.from(this._queuedRequests.values());
+		let selected = Array.from(this._queuedRequests.values());
+		const placeholderRequests = selected.filter(entry => !entry.bulk);
+		const limit = Et2DatagridRequestQueue.MAX_PLACEHOLDER_CHUNKS_PER_FLUSH;
+		if(placeholderRequests.length > limit)
+		{
+			// Keep the newest: the one the user is looking at is the one asked for last.
+			const dropped = new Set(placeholderRequests.slice(0, placeholderRequests.length - limit));
+			console.warn(
+				`Et2Datagrid: ${placeholderRequests.length} page requests queued at once, sending ${limit} and dropping ` +
+				`${dropped.size}.  Far more rows are being rendered than fit on screen, ` +
+				`eg. from very tall rows - check --row-cell-max-height.`
+			);
+			for(const entry of dropped)
+			{
+				this._queuedRequests.delete(entry.requestKey);
+				this._pendingPlaceholderRequests.delete(entry.requestKey);
+				this.releasePlaceholder(this.host._isEmbeddedInitialLoading() ? Math.min(entry.requestedCount, 1) : entry.requestedCount);
+			}
+			selected = selected.filter(entry => !dropped.has(entry));
+		}
 		for(const entry of selected)
 		{
 			this._queuedRequests.delete(entry.requestKey);

@@ -200,3 +200,94 @@ describe("Et2DatagridRequestQueue MAX_DISPATCH_DELAY_MS forced flush", () =>
 			"a request queued after clear() should get a fresh debounce window, not an immediate flush from the pre-clear() request's age");
 	});
 });
+
+/**
+ * Contract: one flush sends at most MAX_PLACEHOLDER_CHUNKS_PER_FLUSH placeholder page requests.
+ * More than that means the virtualizer is rendering far more placeholders than fit on screen, so
+ * the oldest are dropped (the newest are the ones the user is looking at), a warning is logged,
+ * and the dropped pages stop counting as pending so they can be asked for again.  Requests a
+ * caller marks bulk (Et2Datagrid.loadRowRange()) are exempt.
+ *
+ * Setup: the same fake host, requests queued directly and flushed, console.warn recorded.
+ *
+ * Pass criteria: only the newest `limit` are dispatched, one warning, pending count matches what
+ * was sent, a dropped key can be queued again; bulk requests all go out with no warning.
+ */
+describe("Et2DatagridRequestQueue runaway limit", () =>
+{
+	const limit = Et2DatagridRequestQueue.MAX_PLACEHOLDER_CHUNKS_PER_FLUSH;
+	let warnings : string[];
+	let originalWarn : typeof console.warn;
+
+	beforeEach(() =>
+	{
+		warnings = [];
+		originalWarn = console.warn;
+		console.warn = (message? : any) => { warnings.push(String(message)); };
+	});
+	afterEach(() =>
+	{
+		console.warn = originalWarn;
+	});
+
+	function queueMany(queue : Et2DatagridRequestQueue, count : number, bulk = false) : number[]
+	{
+		const starts = Array.from({length: count}, (_v, i) => i * 50);
+		for(const start of starts)
+		{
+			queue.queueRequest(start, 50, queue.requestKey(start, 50), bulk);
+		}
+		return starts;
+	}
+
+	it("sends only the newest placeholder requests and warns once", () =>
+	{
+		const queue = new Et2DatagridRequestQueue(createHost());
+		const starts = queueMany(queue, limit + 4);
+		const dispatched : number[] = [];
+
+		queue.flush((start) => dispatched.push(start));
+
+		assert.deepEqual(dispatched, starts.slice(4), "the oldest four should be dropped");
+		assert.lengthOf(warnings, 1);
+		assert.equal(queue.pendingPlaceholderCount, limit * 50, "dropped pages must not stay pending");
+	});
+
+	it("lets a dropped page be queued again", () =>
+	{
+		const queue = new Et2DatagridRequestQueue(createHost());
+		queueMany(queue, limit + 1);
+		queue.flush(() => {});
+
+		queue.queueRequest(0, 50, queue.requestKey(0, 50));
+		const dispatched : number[] = [];
+		queue.flush((start) => dispatched.push(start));
+
+		assert.deepEqual(dispatched, [0]);
+		assert.lengthOf(warnings, 1, "a single request is not a runaway");
+	});
+
+	it("does not limit bulk requests", () =>
+	{
+		const queue = new Et2DatagridRequestQueue(createHost());
+		const starts = queueMany(queue, limit + 4, true);
+		const dispatched : number[] = [];
+
+		queue.flush((start) => dispatched.push(start));
+
+		assert.deepEqual(dispatched, starts);
+		assert.lengthOf(warnings, 0);
+	});
+
+	it("does not warn at the limit", () =>
+	{
+		const queue = new Et2DatagridRequestQueue(createHost());
+		const starts = queueMany(queue, limit);
+		const dispatched : number[] = [];
+
+		queue.flush((start) => dispatched.push(start));
+
+		assert.deepEqual(dispatched, starts);
+		assert.lengthOf(warnings, 0);
+	});
+});
