@@ -35,6 +35,16 @@ RUN set -e \
 	&& apk del .build-deps .build-deps2 \
 	# use production php.ini as starting point, like Debian/ondrej's package does
 	&& cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
+	# activate OpenSSL's "legacy" provider (present on disk, inactive by default since the
+	# 1.1->3.x provider split): persisted secrets encrypted years ago under an old OpenSSL
+	# build (eg. openid/src/Keys.php's DB-password-encrypted RSA private key) can use PBE
+	# schemes (eg. classic PKCS#5 v1.5 pbeWithMD5AndDES-CBC) that only the legacy provider
+	# still understands; without this they fail to decrypt at all on this image
+	# ("error:0308010C:digital envelope routines::unsupported"), not because the secret
+	# changed, but because OpenSSL 3.x no longer loads that provider implicitly
+	&& sed -e 's|^default = default_sect|default = default_sect\nlegacy = legacy_sect|' \
+		-e 's|^\[default_sect\]|[default_sect]\nactivate = 1\n\n[legacy_sect]\nactivate = 1|' \
+		-i /etc/ssl/openssl.cnf \
 	# generic security baseline, relevant regardless of what extends this image:
 	# precautionary mitigation for CVE-2026-109618/CVE-2026-109619 (two critical PHP RCEs,
 	# one reportedly in the session.upload_progress handler) - nothing downstream uses it
