@@ -1,6 +1,6 @@
 # Mail: "Other users" / shared-mailbox namespace for JMAP (Stalwart) accounts
 
-## Status: Phase 1 + Phase 2 (full folder-tree browsing) implemented (2026-10-29)
+## Status: Phase 1-3 (tree browsing + message listing) implemented (2026-10-29)
 
 - Phase 1 (`cce71762b2`): `Jmap::bootstrap()` retains the Session's shared accounts
   (`$sharedAccounts`); `Imap\Jmap::getNameSpaceArray()` populates `others` from it.
@@ -27,13 +27,28 @@
     deliberately never subscribedOnly-filter inside a shared-account branch.
   - Live-confirmed end-to-end (boulder.egroupware.org acc_id=1, "teachers@boulder..." shared
     account): expanding "user" → the shared account → its real folders (Posteingang with unread
-    badge, Entwürfe, Gesendet, Papierkorb, Spam) all render correctly, translated, with no bogus
-    expand arrows on leaf folders; clicking one highlights it but correctly does nothing further
-    (noSelect holds, no crash, no wrong data loaded).
-- **Not yet implemented, deliberately deferred**: every node in a shared branch stays `noSelect` -
-  actually opening a shared mailbox's messages needs `getRows()`/`fetchRows()` (and likely
-  compose-from-shared-context, mark-as-read, move/delete, ...) to also support a foreign accountId,
-  a materially larger, separate increment. This phase only makes the structure visible/navigable.
+    badge, Entwürfe, Gesendet, Papierkorb, Spam) all render correctly, translated, with correct
+    expand arrows.
+- Phase 3 (`28385579b0`, `d56f25db1d`): `getRows()` now reads a shared account's own folder -
+  `resolveSharedAccountId()` resolves the "user/<name>/..." path's owner back to a real accountId
+  and threads it through Email/query+get, mailboxId()/mailboxRole()'s own caches (disambiguated via
+  a synthetic cacheProfileID), and resolveSmimeSignedAttachments(). Shared folders are selectable
+  again (the earlier `noSelect` was specifically because nothing could be listed yet). "All folders"
+  search deliberately stays scoped to the primary account always.
+  - **Live-confirmed end-to-end**: clicking into "teachers@..."'s Posteingang in the real tree
+    lists its actual message ("Reine Text Nachricht" from Ralf Becker) correctly.
+  - **Live-confirmed safe boundary**: clicking that message to read it does NOT crash or silently
+    act on the wrong data - the preview shows header metadata (already present in the row) but no
+    body, and console shows a clean `markOpenedMessageRead(): failed ... JmapUserError: notFound`
+    - exactly the designed degradation (markAsRead/fetchBody still assume this profile's own
+    accountId, get a clean "not found" from the server, nothing worse).
+- **Not yet implemented, deliberately deferred**: reading/acting on an individual message inside a
+  shared folder - `fetchBody()` and the dozen-plus other rowId-consuming methods in `jmap.ts`
+  (fetchForReply(), verifyPgpSignature(), markAsRead, move/delete, compose-from-shared-context, ...)
+  still assume this profile's own accountId. Live-confirmed this degrades safely today (see above),
+  but making it actually work is a materially larger, separate increment - would need the same
+  "parse row_id's SHARED_ACCOUNTS_ROOT_ID encoding, use the recovered accountId" treatment applied
+  to each one individually, audited rather than batch-converted.
 
 Follow-up to ticket #126691 (the Dovecot→Stalwart egroupware.org migration, see also
 `adc28974b4` - the Mailbox.isSubscribed crash fix for `mail/src/Ui.php::subscription()`, already
