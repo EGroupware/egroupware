@@ -272,7 +272,8 @@ class Stalwart extends Sql
 			{
 				unset($diff['quotas']);
 			}
-			if (($diff['aliases'] = $this->aliasesPatch($account['aliases']??[], $userData['stalwart']['aliases'], $userData['mailingLists'])) == (object)[])
+			// aliasesPatch() returns the complete new alias map, only send it if it differs from the current one
+			if (($diff['aliases'] = $this->aliasesPatch($account['aliases']??[], $userData['stalwart']['aliases'], $userData['mailingLists'])) == (object)$userData['stalwart']['aliases'])
 			{
 				unset($diff['aliases']);
 			}
@@ -666,10 +667,12 @@ class Stalwart extends Sql
 							'name' => explode('@', $alias_email)[0],
 							'domainId' => $this->domainId(explode('@', $alias_email)[1]),
 						]);
-						// remove offending alias first
+						// remove offending alias first (aliases is replaced as a whole, null is an invalid value in a map)
+						$remaining = $object['aliases'];
+						unset($remaining[$alias_key]);
 						$response = $this->jmapClient()->jmapCall([
 							['x:Account/set', [
-								'update' => (object)[$object['id'] => ['aliases' => (object)[$alias_key => null]]],
+								'update' => (object)[$object['id'] => ['aliases' => (object)$remaining]],
 							], 'a']
 						], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['update']))
@@ -962,7 +965,8 @@ class Stalwart extends Sql
 				return $n['name'] === $alias['name'] && $n['domainId'] === $alias['domainId'];
 			}))))
 			{
-				$aliases[$key] = null;
+				// removed alias: just leave it out, as "aliases" is replaced as a whole and null is an invalid value in a map
+				continue;
 			}
 			/* EGroupware has no NOT enabled aliases
 			elseif ($alias['enabled'] != $found[0]['enabled'])
@@ -991,10 +995,11 @@ class Stalwart extends Sql
 				unset($new[$key]);
 			}
 		}
-		$num_old = count(is_object($old) ? get_object_vars($old) : $old ?? []);
+		// keys of the existing aliases can have gaps (after removing one), so start after the highest one
+		$next_key = ($old_keys = array_keys(is_object($old) ? get_object_vars($old) : $old ?? [])) ? max($old_keys)+1 : 0;
 		foreach(array_values($new) as $k => $alias)
 		{
-			$aliases[$num_old+$k] = $alias;
+			$aliases[$next_key+$k] = $alias;
 		}
 		return (object)$aliases;    // aliases must be an object, never an array to be a JSON patch
 	}
