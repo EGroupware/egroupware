@@ -1505,6 +1505,8 @@ class admin_mail
 						Framework::message($ex->getMessage(), 'error');
 					}
 					$content += $account->params;
+					// accountStatus is "active" for Smtp\Sql, but the Stalwart id (can be "0") for Smtp\Stalwart: checkbox needs "active"
+					$content['accountStatus'] = ($content['accountStatus'] ?? '') !== '' ? Mail\Smtp::MAIL_ENABLED : '';
 					foreach(['acc_imap_password', 'acc_smtp_password'] as $n)
 					{
 						if (isset($content['acc_oauth_username']) && $content[$n] === Mail\Credentials::UNAVAILABLE)
@@ -3383,7 +3385,7 @@ class admin_mail
 					$userData += $ea_account->params;
 					$ea_account->saveUserData($_data['id'], $userData);
 					$msg = $account['account_fullname'].' (#'.$_data['id'].'): '.
-						($userData['accountStatus'] === 'active' ? lang('activated') : lang('deactivated'));
+						(($userData['accountStatus'] ?? '') !== '' ? lang('activated') : lang('deactivated'));
 				}
 				else
 				{
