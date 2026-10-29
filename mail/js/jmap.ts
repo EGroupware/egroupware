@@ -2082,24 +2082,27 @@ export class MailJmap
 		{
 			try
 			{
-				// retryIdempotentOnClose: true - found live (2026-10-29, pole.egroupware.org,
-				// "info@egroupware.org" account with 30 top-level mailboxes, reported "randomly,
-				// some users have it, others don't" plus a missing INBOX and bogus expand carets on
-				// genuinely-childless folders): this batch is one Mailbox/query PER unknown mailbox
-				// in `list` - for an account with many top-level folders, large enough to plausibly
-				// take longer to answer than the WebSocket's own ping/heartbeat window (the exact
-				// same race getRows()'s own main fetch already documents and guards against below -
-				// "a large-mailbox listing taking 20-28s can race the heartbeat into force-closing
-				// an otherwise-healthy connection"). Without this, a heartbeat-triggered reconnect
-				// mid-request orphans the pending promise forever (confirmed live via the console's
-				// own "JamWebSocketClient: received a WebSocket frame with no matching pending
-				// request" warning) - the whole caller (eg. getRootFolders()) hangs indefinitely,
-				// and since nothing ever reaches the catch below, hasChildren is never resolved
-				// either, leaving the "assume expandable" default stuck on real leaf folders.
-				const [checks] = await client.requestMany((t) => Object.fromEntries(
-					unknown.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
-				), {retryIdempotentOnClose: true});
-				unknown.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
+				// REAL root cause, found live (2026-10-29, pole.egroupware.org, "info@egroupware.org"
+				// account with 30 top-level mailboxes, reported "randomly, some users have it, others
+				// don't" plus a missing INBOX and bogus expand carets on genuinely-childless folders) -
+				// NOT actually random at all, fully reproducible for any account over the threshold:
+				// this batch is one Mailbox/query PER unknown mailbox in `list`. Stalwart's own session
+				// advertises urn:ietf:params:jmap:core's maxCallsInRequest (16 on this account), and a
+				// request with MORE method calls than that doesn't error cleanly, it just hangs
+				// indefinitely - confirmed live by bisection: exactly 16 calls in one request resolved
+				// in 35ms, 17 never resolved at all, every time. retryIdempotentOnClose (added first,
+				// kept as a general safety net for a genuinely dropped connection, but NOT what fixes
+				// this) can't help here - a retry would resubmit the exact same over-limit request and
+				// hang again the same way. Chunked into multiple requests of at most that many calls
+				// each instead, run in parallel (independent reads, no reason to serialize them).
+				const limit = await this.maxCallsInRequest(client);
+				await Promise.all(MailJmap.chunk(unknown, limit).map(async (part) =>
+				{
+					const [checks] = await client.requestMany((t) => Object.fromEntries(
+						part.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
+					), {retryIdempotentOnClose: true});
+					part.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
+				}));
 			}
 			catch (e)
 			{
@@ -2112,18 +2115,56 @@ export class MailJmap
 		if (!roots.length) return;
 		try
 		{
-			// retryIdempotentOnClose: true - same reasoning as the batch above, same risk (one
-			// Mailbox/query per namespace-root candidate, admittedly at most 1-2 here, but the cost
-			// of omitting it is total (an indefinite hang), not proportional to how rarely it fires
-			const [checks] = await client.requestMany((t) => Object.fromEntries(
-				roots.map((m, i) => [`s${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id, isSubscribed: true}, limit: 1})])
-			), {retryIdempotentOnClose: true});
-			roots.forEach((m, i) => m.hasSubscribedChildren = ((checks as any)[`s${i}`]?.ids?.length ?? 0) > 0);
+			// same maxCallsInRequest risk as above, in practice only ever 0-2 namespace-root
+			// candidates per level so chunking is a no-op in practice - done anyway for correctness,
+			// not because it's likely to matter here
+			const limit = await this.maxCallsInRequest(client);
+			await Promise.all(MailJmap.chunk(roots, limit).map(async (part) =>
+			{
+				const [checks] = await client.requestMany((t) => Object.fromEntries(
+					part.map((m, i) => [`s${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id, isSubscribed: true}, limit: 1})])
+				), {retryIdempotentOnClose: true});
+				part.forEach((m, i) => m.hasSubscribedChildren = ((checks as any)[`s${i}`]?.ids?.length ?? 0) > 0);
+			}));
 		}
 		catch (e)
 		{
 			console.error('MailJmap.resolveHasChildren(): failed, leaving hasSubscribedChildren unresolved', e);
 		}
+	}
+
+	/**
+	 * This session's own advertised urn:ietf:params:jmap:core maxCallsInRequest (RFC 8620 §2) - the
+	 * hard ceiling on how many method calls may appear in a single JMAP request. Exceeding it on a
+	 * real server (confirmed live against Stalwart) doesn't produce a clean "requestTooLarge" error,
+	 * it just never answers at all - see resolveHasChildren()'s own docblock for the full story.
+	 * Falls back to RFC 8620's own required minimum (every compliant server MUST support at least
+	 * 16) if the session can't be read for any reason - a conservative-but-safe default, never a
+	 * reason to skip chunking altogether.
+	 */
+	private async maxCallsInRequest(client : JamWebSocketClient) : Promise<number>
+	{
+		try
+		{
+			const session : any = await client.session;
+			const max = session?.capabilities?.['urn:ietf:params:jmap:core']?.maxCallsInRequest;
+			return typeof max === 'number' && max > 0 ? max : 16;
+		}
+		catch (e)
+		{
+			return 16;
+		}
+	}
+
+	/** Split `items` into consecutive groups of at most `size` each - plain array chunking, no JMAP-specific logic. */
+	private static chunk<T>(items : T[], size : number) : T[][]
+	{
+		const chunks : T[][] = [];
+		for (let i = 0; i < items.length; i += size)
+		{
+			chunks.push(items.slice(i, i + size));
+		}
+		return chunks;
 	}
 
 	/**

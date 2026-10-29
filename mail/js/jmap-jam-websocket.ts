@@ -396,6 +396,12 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	#pushCallbacks = new Set<(change : StateChange) => void>();
 	#pushEnabled = false;
 	#lastPushState : string | undefined;
+	// General concurrency gate (RFC 8620 §2's maxConcurrentRequests, see #acquireRequestSlot()'s
+	// own docblock) - how many WebSocket requests are currently awaiting a response, and anyone
+	// queued waiting for a free slot once that count is already at the session's own advertised
+	// limit.
+	#inFlightRequests = 0;
+	#requestWaiters : (() => void)[] = [];
 
 	constructor(config : Config)
 	{
@@ -764,6 +770,69 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	}
 
 	/**
+	 * This session's own advertised urn:ietf:params:jmap:core maxConcurrentRequests (RFC 8620 §2) -
+	 * the server's own ceiling on how many requests it will process at once from this client,
+	 * independent of maxCallsInRequest (the per-REQUEST ceiling on method calls - see
+	 * MailJmap.resolveHasChildren()'s own maxCallsInRequest()/chunk() handling of that one,
+	 * mail/js/jmap.ts). Falls back to the same conservative default as that one if the session
+	 * can't be read for any reason.
+	 */
+	async #maxConcurrentRequests() : Promise<number>
+	{
+		try
+		{
+			const session = await this.session;
+			const max = (session as unknown as {capabilities? : Record<string, {maxConcurrentRequests? : number}>})
+				.capabilities?.["urn:ietf:params:jmap:core"]?.maxConcurrentRequests;
+			return typeof max === "number" && max > 0 ? max : 16;
+		}
+		catch (e)
+		{
+			return 16;
+		}
+	}
+
+	/**
+	 * Gate: resolves once a request may actually be sent without exceeding
+	 * #maxConcurrentRequests() - queues (FIFO) if the limit is already reached, woken by
+	 * #releaseRequestSlot() as earlier requests complete. General fix for the SAME underlying
+	 * "server silently never answers a request past its own advertised limit" behavior
+	 * maxCallsInRequest already turned out to have (found live, 2026-10-29,
+	 * pole.egroupware.org) - ralf: a single caller that respects maxCallsInRequest (like
+	 * resolveHasChildren()'s own chunking) can still collectively send more CONCURRENT requests
+	 * than the server allows once overall traffic is high enough or the server is slow enough to
+	 * answer (more requests pile up "in flight" at once) - this isn't specific to one call site,
+	 * so it belongs here, in the shared transport, rather than in every individual caller.
+	 *
+	 * Deliberately only gates the WebSocket transport (#requestOverWebSocket()/
+	 * #requestManyOverWebSocket() below, both already-proven-safe true #-private async methods
+	 * that never call super) - NOT request()/requestMany() themselves, which must never become
+	 * async or reference a # token from inside an async body (see request()'s own docblock for
+	 * the two already-debugged Babel miscompilation bugs that constraint exists to avoid). The
+	 * HTTP-transport branch (used only when the WebSocket isn't open, or for
+	 * RetryableRequestOptions' one-off idempotent retry) is comparatively low-volume fallback
+	 * traffic, not the sustained-high-throughput path this is meant to protect.
+	 */
+	async #acquireRequestSlot() : Promise<void>
+	{
+		const max = await this.#maxConcurrentRequests();
+		if (this.#inFlightRequests < max)
+		{
+			this.#inFlightRequests++;
+			return;
+		}
+		await new Promise<void>((resolve) => this.#requestWaiters.push(resolve));
+		this.#inFlightRequests++;
+	}
+
+	/** Releases a slot acquired via #acquireRequestSlot() - must be called exactly once per successful acquire, success or failure, or the gate permanently under-counts capacity. */
+	#releaseRequestSlot() : void
+	{
+		this.#inFlightRequests--;
+		this.#requestWaiters.shift()?.();
+	}
+
+	/**
 	 * Send a JMAP request containing a single method call - transparent drop-in replacement for
 	 * JamClient.request(): uses the WebSocket transport when it's currently open, otherwise falls
 	 * straight back to the inherited HTTP implementation. Never falls back mid-flight (a request
@@ -811,39 +880,53 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		return this.#requestOverWebSocket(method, args, options);
 	}
 
-	/** The WebSocket-transport half of request() - see that method's docblock for why this is a true #private method, and why request() itself isn't async. */
+	/**
+	 * The WebSocket-transport half of request() - see that method's docblock for why this is a true
+	 * #private method, and why request() itself isn't async. Gated by #acquireRequestSlot()/
+	 * #releaseRequestSlot() (see the former's own docblock) - released in a finally so a request
+	 * that throws (a real server error, or #send()'s own rejection on a lost connection) still frees
+	 * its slot for whoever's queued behind it.
+	 */
 	async #requestOverWebSocket(method : string, args : unknown, options? : RequestOptions) : Promise<[any, Meta]>
 	{
-		const {using = [], createdIds : createdIdsInput} = options ?? {};
-		const id = `R${this.#nextId++}`;
-		const frame : WebSocketRequestFrame =
+		await this.#acquireRequestSlot();
+		try
 		{
-			"@type" : "Request",
-			id,
-			using : [...getCapabilitiesForMethodCalls(this.capabilities, [method]), ...using],
-			methodCalls : [[method, args, "r1"]],
-			createdIds : createdIdsInput
-		};
-
-		const response = await this.#send(id, frame);
-		const [methodResponse] = response.methodResponses;
-		const error = getErrorFromInvocation(methodResponse);
-		if (error)
-		{
-			throw error;
-		}
-
-		return [
-			methodResponse[1],
+			const {using = [], createdIds : createdIdsInput} = options ?? {};
+			const id = `R${this.#nextId++}`;
+			const frame : WebSocketRequestFrame =
 			{
-				sessionState : response.sessionState,
-				createdIds : response.createdIds,
-				// No real Fetch Response exists for a WebSocket frame. Meta.response is typed as a
-				// non-optional Response in jmap-jam; nothing in this codebase reads it today (checked
-				// mail/js/jmap.ts), so this deviation is documented here rather than worked around.
-				response : undefined as unknown as Response
+				"@type" : "Request",
+				id,
+				using : [...getCapabilitiesForMethodCalls(this.capabilities, [method]), ...using],
+				methodCalls : [[method, args, "r1"]],
+				createdIds : createdIdsInput
+			};
+
+			const response = await this.#send(id, frame);
+			const [methodResponse] = response.methodResponses;
+			const error = getErrorFromInvocation(methodResponse);
+			if (error)
+			{
+				throw error;
 			}
-		];
+
+			return [
+				methodResponse[1],
+				{
+					sessionState : response.sessionState,
+					createdIds : response.createdIds,
+					// No real Fetch Response exists for a WebSocket frame. Meta.response is typed as a
+					// non-optional Response in jmap-jam; nothing in this codebase reads it today (checked
+					// mail/js/jmap.ts), so this deviation is documented here rather than worked around.
+					response : undefined as unknown as Response
+				}
+			];
+		}
+		finally
+		{
+			this.#releaseRequestSlot();
+		}
 	}
 
 	/**
@@ -880,80 +963,98 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		return this.#requestManyOverWebSocket(draftsFn, options);
 	}
 
-	/** The WebSocket-transport half of requestMany() - see request()'s docblock for why this is a true #private method, and why requestMany() itself isn't async. */
+	/**
+	 * The WebSocket-transport half of requestMany() - see request()'s docblock for why this is a
+	 * true #private method, and why requestMany() itself isn't async. Gated by
+	 * #acquireRequestSlot()/#releaseRequestSlot() (see the former's own docblock) - released in a
+	 * finally so a request that throws (a real server error, or #send()'s own rejection on a lost
+	 * connection) still frees its slot for whoever's queued behind it. The retryIdempotentOnClose
+	 * fallback below keeps holding this WebSocket slot for its own HTTP retry's duration too -
+	 * slightly conservative (that retry doesn't actually touch the WebSocket's own concurrency
+	 * budget), but harmless and simpler than releasing early only for this one rare, already-
+	 * degraded-mode branch.
+	 */
 	async #requestManyOverWebSocket(
 		draftsFn : (proxy : DraftsProxy) => Record<string, DraftHandle>,
 		options : RetryableRequestOptions
 	) : Promise<[Record<string, any>, Meta]>
 	{
-		const {using = [], createdIds : createdIdsInput, retryIdempotentOnClose} = options;
-		const {methodCalls, methodNames} = buildRequestsFromDrafts(draftsFn);
-		const id = `R${this.#nextId++}`;
-		const frame : WebSocketRequestFrame =
-		{
-			"@type" : "Request",
-			id,
-			using : [...getCapabilitiesForMethodCalls(this.capabilities, methodNames), ...using],
-			methodCalls,
-			createdIds : createdIdsInput
-		};
-
-		let response : WebSocketResponseFrame;
+		await this.#acquireRequestSlot();
 		try
 		{
-			response = await this.#send(id, frame);
-		}
-		catch (e)
-		{
-			// See RetryableRequestOptions' own docblock - only for a lost connection, caller-opted-in
-			// idempotent calls, and only once (the retry itself goes over plain HTTP, not back onto a
-			// WebSocket that may just be reconnecting - same transport #transport would already pick
-			// on its own for any OTHER call made right now).
-			if (retryIdempotentOnClose && e instanceof WebSocketClosedBeforeResponseError)
+			const {using = [], createdIds : createdIdsInput, retryIdempotentOnClose} = options;
+			const {methodCalls, methodNames} = buildRequestsFromDrafts(draftsFn);
+			const id = `R${this.#nextId++}`;
+			const frame : WebSocketRequestFrame =
 			{
-				return super.requestMany(draftsFn as any, {using, createdIds : createdIdsInput});
-			}
-			throw e;
-		}
+				"@type" : "Request",
+				id,
+				using : [...getCapabilitiesForMethodCalls(this.capabilities, methodNames), ...using],
+				methodCalls,
+				createdIds : createdIdsInput
+			};
 
-		const errors = response.methodResponses
-			.map((invocation) => getErrorFromInvocation(invocation))
-			.filter((error) : error is ProblemDetails => error !== null);
-		if (errors.length > 0)
-		{
-			throw errors;
-		}
-
-		// A server can legitimately echo the SAME callId for an implicit companion method call it
-		// triggers as a side effect - eg. Stalwart returning an Email/set response tagged with the
-		// triggering EmailSubmission/set call's own callId, for an onSuccessUpdateEmail patch
-		// (RFC 8620 - the implicit call is considered part of the same client-labelled invocation).
-		// Naively keeping "last methodResponses entry wins" per callId (jmap-jam's own upstream
-		// behaviour, mirrored here before this fix) then silently discards the actual result the
-		// caller asked for in favour of that unrequested companion's - found live 2026-08-27,
-		// MailJmap.sendNewEmail()'s EmailSubmission/set result getting overwritten by Stalwart's
-		// own onSuccessUpdateEmail-triggered Email/set response, both tagged "submission" (the
-		// caller's own requestMany() key). Prefer whichever response's method actually matches
-		// what was requested for this callId; only fall back to last-wins for genuinely
-		// unrequested extras, which no caller destructures by key anyway.
-		const requestedMethodByCallId = new Map(methodCalls.map(([method, , callId]) => [callId, method]));
-		const result : Record<string, any> = {};
-		for (const [method, data, callId] of response.methodResponses)
-		{
-			if (!(callId in result) || requestedMethodByCallId.get(callId) === method)
+			let response : WebSocketResponseFrame;
+			try
 			{
-				result[callId] = data;
+				response = await this.#send(id, frame);
 			}
-		}
-
-		return [
-			result,
+			catch (e)
 			{
-				sessionState : response.sessionState,
-				createdIds : response.createdIds,
-				response : undefined as unknown as Response
+				// See RetryableRequestOptions' own docblock - only for a lost connection, caller-opted-in
+				// idempotent calls, and only once (the retry itself goes over plain HTTP, not back onto a
+				// WebSocket that may just be reconnecting - same transport #transport would already pick
+				// on its own for any OTHER call made right now).
+				if (retryIdempotentOnClose && e instanceof WebSocketClosedBeforeResponseError)
+				{
+					return super.requestMany(draftsFn as any, {using, createdIds : createdIdsInput});
+				}
+				throw e;
 			}
-		];
+
+			const errors = response.methodResponses
+				.map((invocation) => getErrorFromInvocation(invocation))
+				.filter((error) : error is ProblemDetails => error !== null);
+			if (errors.length > 0)
+			{
+				throw errors;
+			}
+
+			// A server can legitimately echo the SAME callId for an implicit companion method call it
+			// triggers as a side effect - eg. Stalwart returning an Email/set response tagged with the
+			// triggering EmailSubmission/set call's own callId, for an onSuccessUpdateEmail patch
+			// (RFC 8620 - the implicit call is considered part of the same client-labelled invocation).
+			// Naively keeping "last methodResponses entry wins" per callId (jmap-jam's own upstream
+			// behaviour, mirrored here before this fix) then silently discards the actual result the
+			// caller asked for in favour of that unrequested companion's - found live 2026-08-27,
+			// MailJmap.sendNewEmail()'s EmailSubmission/set result getting overwritten by Stalwart's
+			// own onSuccessUpdateEmail-triggered Email/set response, both tagged "submission" (the
+			// caller's own requestMany() key). Prefer whichever response's method actually matches
+			// what was requested for this callId; only fall back to last-wins for genuinely
+			// unrequested extras, which no caller destructures by key anyway.
+			const requestedMethodByCallId = new Map(methodCalls.map(([method, , callId]) => [callId, method]));
+			const result : Record<string, any> = {};
+			for (const [method, data, callId] of response.methodResponses)
+			{
+				if (!(callId in result) || requestedMethodByCallId.get(callId) === method)
+				{
+					result[callId] = data;
+				}
+			}
+
+			return [
+				result,
+				{
+					sessionState : response.sessionState,
+					createdIds : response.createdIds,
+					response : undefined as unknown as Response
+				}
+			];
+		}
+		finally
+		{
+			this.#releaseRequestSlot();
+		}
 	}
 }
 

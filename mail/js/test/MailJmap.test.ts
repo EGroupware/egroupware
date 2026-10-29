@@ -340,6 +340,73 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 			"primary fetch behind the live 'info@egroupware.org, 30 top-level mailboxes' report - " +
 			"must retry on close");
 	});
+
+	/**
+	 * The ACTUAL root cause of the live "info@egroupware.org, 30 top-level mailboxes" report, found
+	 * by bisecting live against Stalwart (2026-10-29): not a WebSocket heartbeat race at all - the
+	 * session's own advertised urn:ietf:params:jmap:core maxCallsInRequest (16 on that account) is a
+	 * hard per-request ceiling that a real server doesn't enforce by erroring cleanly, it just never
+	 * answers a request with more method calls than that at all. resolveHasChildren() builds one
+	 * Mailbox/query call PER mailbox needing resolution - deterministic, not random: any level with
+	 * MORE mailboxes than the limit hangs on literally every attempt, any level with fewer never does
+	 * (confirmed live: exactly 16 calls in one request resolved in 35ms, 17 never resolved at all).
+	 * retryIdempotentOnClose alone can't fix this - retrying resubmits the identical over-limit
+	 * request. Must split into multiple requests of at most that many calls each instead.
+	 */
+	it("chunks the hasChildren batch to respect the session's own advertised maxCallsInRequest", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const requestSizes : number[] = [];
+		const client = {
+			session: Promise.resolve({capabilities: {"urn:ietf:params:jmap:core": {maxCallsInRequest: 2}}}),
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const parentIdByKey : Record<string, string> = {};
+				const invocation = (args : any, key : string) => { parentIdByKey[key] = args.filter.parentId; return {$ref: (_path : string) => ({})}; };
+				let nextKey = 0;
+				const t = {Mailbox: {query: (args : any) => invocation(args, `k${nextKey++}`)}};
+				const returned = buildFn(t);
+				requestSizes.push(Object.keys(returned).length);
+				// every mailbox "has children" except the very first one overall ("m0")
+				const result : Record<string, any> = {};
+				Object.keys(returned).forEach((key, i) => { result[key] = {ids: parentIdByKey[`k${i}`] === "m0" ? [] : ["child"]}; });
+				return [result];
+			},
+		};
+		const mailboxes : any[] = Array.from({length: 5}, (_, i) => ({id: `m${i}`, name: `Folder${i}`}));
+
+		await (jmap as any).resolveHasChildren(client, "acc1", mailboxes, false);
+
+		assert.deepEqual(requestSizes, [2, 2, 1],
+			"5 mailboxes with maxCallsInRequest=2 must become 3 separate requests (2+2+1), never one request with 5 calls");
+		assert.isFalse(mailboxes[0].hasChildren);
+		assert.isTrue(mailboxes[1].hasChildren);
+		assert.isTrue(mailboxes[4].hasChildren, "the last chunk (a single leftover item) must still resolve correctly");
+	});
+
+	it("falls back to the RFC 8620 minimum (16) when the session can't be read", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let requestCount = 0;
+		const client = {
+			session: Promise.reject(new Error("boom")),
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				requestCount++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				const returned = buildFn({Mailbox: {query: (_args : any) => invocation()}});
+				const result : Record<string, any> = {};
+				Object.keys(returned).forEach((key) => { result[key] = {ids: []}; });
+				return [result];
+			},
+		};
+		const mailboxes : any[] = Array.from({length: 16}, (_, i) => ({id: `m${i}`, name: `Folder${i}`}));
+
+		await (jmap as any).resolveHasChildren(client, "acc1", mailboxes, false);
+
+		assert.equal(requestCount, 1, "exactly 16 items must still fit in one request using the fallback limit");
+		assert.isFalse(mailboxes[0].hasChildren);
+	});
 });
 
 /**

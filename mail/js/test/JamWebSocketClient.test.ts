@@ -458,6 +458,125 @@ describe("JamWebSocketClient.requestMany()", () =>
 	});
 });
 
+/**
+ * General fix for the SAME underlying class of bug maxCallsInRequest chunking already turned out
+ * to need (mail/js/jmap.ts's MailJmap.resolveHasChildren(), see its own docblock): a server-
+ * advertised ceiling that the server silently never answers past, rather than rejecting cleanly.
+ * maxConcurrentRequests is the analogous ceiling for how many requests may be outstanding AT ONCE -
+ * not specific to one call site (unlike maxCallsInRequest, fixed by chunking within one method),
+ * since overall request volume across the whole app (many different features, or simply more
+ * requests piling up "in flight" because the server is answering slowly) can exceed it even when
+ * every individual caller behaves - so this lives in the shared transport instead.
+ */
+describe("JamWebSocketClient - maxConcurrentRequests gate", () =>
+{
+	const OriginalWebSocket = (globalThis as any).WebSocket;
+	let fetchStub : sinon.SinonStub;
+
+	afterEach(() =>
+	{
+		fetchStub?.restore();
+		(globalThis as any).WebSocket = OriginalWebSocket;
+		FakeWebSocket.instances = [];
+	});
+
+	function fakeSessionWithLimit(maxConcurrentRequests : number) : any
+	{
+		return {
+			...fakeSession(true),
+			capabilities : {
+				...fakeSession(true).capabilities,
+				"urn:ietf:params:jmap:core" : {maxConcurrentRequests}
+			}
+		};
+	}
+
+	it("delays sending a request past the limit until an earlier one is answered", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSessionWithLimit(1));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const first = client.request(["Core/echo", {n : 1}]);
+		const second = client.request(["Core/echo", {n : 2}]);
+		await flush();
+
+		assert.equal(socket.sent.length, 1, "the second request must not be sent at all while the first is still outstanding");
+
+		const firstFrame = JSON.parse(socket.sent[0]);
+		socket.simulateMessage({
+			"@type" : "Response", requestId : firstFrame.id, sessionState : "state1",
+			methodResponses : [["Core/echo", {n : 1}, "r1"]]
+		});
+		await first;
+		await flush();
+
+		assert.equal(socket.sent.length, 2, "freeing the first slot must let the queued second request go out");
+		const secondFrame = JSON.parse(socket.sent[1]);
+		socket.simulateMessage({
+			"@type" : "Response", requestId : secondFrame.id, sessionState : "state1",
+			methodResponses : [["Core/echo", {n : 2}, "r1"]]
+		});
+		const [data] = await second;
+		assert.deepEqual(data, {n : 2});
+	});
+
+	it("releases the slot even when the request fails, so a queued request isn't stuck behind it forever", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSessionWithLimit(1));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const first = client.request(["Core/echo", {}]);
+		const second = client.request(["Core/echo", {}]);
+		await flush();
+		assert.equal(socket.sent.length, 1);
+
+		const firstFrame = JSON.parse(socket.sent[0]);
+		socket.simulateMessage({
+			"@type" : "RequestError", requestId : firstFrame.id,
+			type : "urn:ietf:params:jmap:error:notRequest", status : 400, detail : "boom"
+		});
+		await first.catch(() => {});
+		await flush();
+
+		assert.equal(socket.sent.length, 2, "a failed request must still free its slot for the next one queued");
+		socket.simulateMessage({
+			"@type" : "Response", requestId : JSON.parse(socket.sent[1]).id, sessionState : "state1",
+			methodResponses : [["Core/echo", {}, "r1"]]
+		});
+		await second;
+	});
+
+	it("does not gate at all when the session advertises no limit (falls back to a generous default)", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		client.request(["Core/echo", {n : 1}]);
+		client.request(["Core/echo", {n : 2}]);
+		await flush();
+
+		assert.equal(socket.sent.length, 2, "well under the RFC 8620 minimum fallback (16) - both must go out immediately");
+	});
+});
+
 describe("JamWebSocketClient.onPush()", () =>
 {
 	const OriginalWebSocket = (globalThis as any).WebSocket;
