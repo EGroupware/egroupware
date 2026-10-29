@@ -181,7 +181,7 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 			[{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
 		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
 
-		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId, false);
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
 
 		assert.equal(captured.mailboxQuery[0].accountId, "u", "must use the shared accountId, not the primary account's own ('ca')");
 		assert.isNull(captured.mailboxQuery[0].filter.parentId, "top level of the shared account's own hierarchy");
@@ -196,10 +196,28 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 			[{id : "real-inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
 		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
 
-		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId, false);
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
 
 		assert.equal(children[0].id,
 			(MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-inbox-id");
+	});
+
+	it("never filters by isSubscribed, unlike the primary account's own getMailboxChildren()", async() =>
+	{
+		// found live (2026-10-29, boulder.egroupware.org acc_id=1, "teachers@..." shared account):
+		// every mailbox in a shared account is typically isSubscribed:false (the viewer never
+		// subscribed to something they don't own) - a subscribedOnly fetch came back empty, and
+		// Et2Tree's own self-correction then made a real, populated shared account look like an
+		// empty dead end
+		const {jmap, captured} = jmapWithFakeClient([
+			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : false, hasChildren : false},
+		]);
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
+
+		assert.notProperty(captured.mailboxQuery[0].filter, "isSubscribed");
+		assert.lengthOf(children, 1, "an unsubscribed shared mailbox must still show up");
 	});
 
 	it("descends a further level using the real parent id recovered from the encoded parentId", async() =>
@@ -207,7 +225,7 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 		const {jmap, captured} = jmapWithFakeClient([]);
 		const encodedInboxId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-inbox-id";
 
-		await (jmap as any).getSharedAccountMailboxChildren("89", encodedInboxId, false);
+		await (jmap as any).getSharedAccountMailboxChildren("89", encodedInboxId);
 
 		assert.equal(captured.mailboxQuery[0].accountId, "u");
 		assert.equal(captured.mailboxQuery[0].filter.parentId, "real-inbox-id");

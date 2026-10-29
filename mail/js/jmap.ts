@@ -1548,8 +1548,7 @@ export class MailJmap
 	 *  getMailboxChildren()); a real JMAP error on this shared account specifically throws
 	 *  JmapUserError, same as getMailboxChildren()'s own error handling
 	 */
-	private async getSharedAccountMailboxChildren(profileID : string, encodedParentId : string,
-		subscribedOnly? : boolean) : Promise<any[] | null>
+	private async getSharedAccountMailboxChildren(profileID : string, encodedParentId : string) : Promise<any[] | null>
 	{
 		const rest = encodedParentId.slice(MailJmap.SHARED_ACCOUNTS_ROOT_ID.length);
 		const sepIdx = rest.indexOf(MailJmap.SHARED_ACCOUNT_SEP);
@@ -1560,15 +1559,20 @@ export class MailJmap
 			const token = await this.ensureToken(profileID);
 			if (!token) return null;
 			const client = this.clients[profileID];
-			const filter : Record<string, any> = {parentId: realParentId};
-			const effectiveSubscribedOnly = subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail'));
-			if (effectiveSubscribedOnly)
-			{
-				filter.isSubscribed = true;
-			}
+			// deliberately NEVER subscribedOnly here, regardless of the viewing user's own
+			// showAllFoldersInFolderPane preference or getMailboxChildren()'s own override param -
+			// found live (2026-10-29, boulder.egroupware.org acc_id=1, "teachers@..." shared
+			// account): every one of its mailboxes is isSubscribed:false (subscription is a
+			// per-viewer IMAP concept tied to one's OWN mailbox; a user who's never touched a
+			// mailbox someone else shared with them has obviously never subscribed to anything in
+			// it either). A subscribedOnly fetch therefore came back empty, and Et2Tree's own
+			// self-correcting "zero children -> clear hasChildren" (handleItemLazyLoad()) made a
+			// perfectly real, populated shared account look like an empty dead end. Browsing a
+			// shared account is inherently a "show me what's really there" operation, not a
+			// personal-subscription-filtered view.
 			const [{mailboxes}] = await client.requestMany((t) =>
 			{
-				const ids = t.Mailbox.query({accountId: sharedAccountId, filter});
+				const ids = t.Mailbox.query({accountId: sharedAccountId, filter: {parentId: realParentId}});
 				const mailboxes = t.Mailbox.get({accountId: sharedAccountId, ids: ids.$ref('/ids')});
 				return {ids, mailboxes};
 			});
@@ -1576,7 +1580,7 @@ export class MailJmap
 			// re-encode BEFORE resolveHasChildren() would be wrong the other way round: that call
 			// batch-queries Mailbox/query by these ids against sharedAccountId, so it must run
 			// against the real, un-prefixed ids first
-			await this.resolveHasChildren(client, sharedAccountId, list, effectiveSubscribedOnly);
+			await this.resolveHasChildren(client, sharedAccountId, list, false);
 			const prefix = MailJmap.SHARED_ACCOUNTS_ROOT_ID + sharedAccountId + MailJmap.SHARED_ACCOUNT_SEP;
 			list.forEach((m : any) => { m.id = prefix + m.id; m.noSelect = true; });
 			if (realParentId === null || list.some((m : any) => !!m.role))
@@ -1640,7 +1644,7 @@ export class MailJmap
 			}
 			if (parentId !== null && parentId.startsWith(MailJmap.SHARED_ACCOUNTS_ROOT_ID))
 			{
-				return this.getSharedAccountMailboxChildren(profileID, parentId, subscribedOnly);
+				return this.getSharedAccountMailboxChildren(profileID, parentId);
 			}
 			const client = this.clients[profileID];
 			// matches classic mail_ui's own default (mail_tree.inc.php's getInitialIndexTree()
