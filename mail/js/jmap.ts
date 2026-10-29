@@ -859,10 +859,39 @@ export class MailJmap
 	}
 
 	/**
+	 * Resolve a shared-account placeholder's display name (folderTree.ts's "user/<name>/..." path
+	 * segment, see getSharedAccountPlaceholders()) back to its real JMAP accountId, by re-reading
+	 * the same Session `accounts` map the placeholder was built from. Returns null if the name no
+	 * longer matches any non-personal account (eg. the share was revoked since the tree was last
+	 * loaded) - callers turn that into a clean "folder not found" JmapUserError, never a crash.
+	 */
+	private async resolveSharedAccountId(profileID : string, ownerName : string) : Promise<string | null>
+	{
+		const client = this.clients[profileID];
+		const session : any = await client.session;
+		for (const [id, a] of Object.entries<any>(session?.accounts || {}))
+		{
+			if (!a.isPersonal && (a.name || id) === ownerName)
+			{
+				return id;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Fetch mail-list rows directly from the JMAP server (or the local IMAP shim)
 	 *
 	 * Never throws for "this account isn't reachable right now" - returns null in that case,
 	 * so fetchRows() can surface it as a fetch failure instead of an unhandled rejection.
+	 *
+	 * Reading a shared account's own folder (doc/ai/projects/mail-jmap-shared-mailboxes.md's
+	 * "browsing into a shared account" follow-up) resolves the real accountId from `folder`'s own
+	 * "user/<name>/..." prefix and uses it for every per-message JMAP call below instead of this
+	 * account's own token.accountId - see `effectiveAccountId` right below. Still NOT a general
+	 * cross-account message-ACTION path (reply/delete/move/mark-read/...) - those separately
+	 * worked methods (fetchBody() etc.) still assume this account's own accountId; only listing is
+	 * covered so far.
 	 *
 	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
 	 */
@@ -884,7 +913,37 @@ export class MailJmap
 		// (Phase 2+, not yet real) non-supporting profile always resolves to the right state
 		this.app.updateThreadingToggle?.(!!token.supportsThreading);
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+
+		// shared-account folder ("user/<name>/...", see getSharedAccountPlaceholders()) - resolve
+		// the REAL owning accountId and strip the synthetic prefix down to the real path within
+		// that account, same decoding direction as MailJmap.getSharedAccountMailboxChildren()'s own
+		// encoding, just operating on a path string here instead of an opaque tree-node id.
+		let effectiveAccountId = token.accountId;
+		// disambiguates mailboxId()/mailboxRole()'s own profileID-keyed caches below from this
+		// account's own (unrelated) entries for the same literal folder name (eg. both accounts
+		// having their own "INBOX") - never used for anything other than cache-keying, so it's
+		// safe to be a synthetic string with no real meaning outside this function.
+		let cacheProfileID = profileID;
+		let realFolder = folder;
+		if (!token.isLocal && (folder === 'user' || folder.startsWith('user/')))
+		{
+			const [, ownerName, ...rest] = folder.split('/');
+			const resolved = ownerName ? await this.resolveSharedAccountId(profileID, ownerName) : null;
+			if (!resolved)
+			{
+				throw new JmapUserError(this.egw.lang("Folder '%1' not found", folder));
+			}
+			if (!rest.length)
+			{
+				// the owner placeholder node itself (noSelect in the tree, but nothing stops a
+				// stale/crafted selectedFolder from reaching here) - not a real mailbox
+				return {rows: [], total: 0};
+			}
+			effectiveAccountId = resolved;
+			cacheProfileID = profileID + '\u0000' + resolved;
+			realFolder = rest.join('/');
+		}
+		const mailboxId = await this.mailboxId(client, effectiveAccountId, cacheProfileID, realFolder);
 
 		const start = query.start || 0;
 		const limit = query.num_rows || 50;
@@ -915,11 +974,17 @@ export class MailJmap
 			return this.getThreadedRows(client, token, profileID, mailboxId, query, start, limit, fetchPreview);
 		}
 
+		// "All folders" search is always scoped to THIS account (token.accountId), regardless of
+		// whether the currently selected tree folder happens to be inside a shared account's own
+		// branch - "search everywhere" means everywhere in MY mailbox, never someone else's,
+		// independent of effectiveAccountId above (buildFilter() already omits inMailbox for it,
+		// so mailboxId/realFolder are irrelevant to this branch either way).
+		const queryAccountId = searchAllFolders ? token.accountId : effectiveAccountId;
 		const [[{ids, emails}], role] = await Promise.all([
 			client.requestMany((t) =>
 			{
 				const ids = t.Email.query({
-					accountId: token.accountId,
+					accountId: queryAccountId,
 					filter: this.buildFilter(query, mailboxId),
 					sort: this.buildSort(query),
 					position: start,
@@ -942,7 +1007,7 @@ export class MailJmap
 					properties.push('mailboxIds');
 				}
 				const emails = t.Email.get({
-					accountId: token.accountId,
+					accountId: queryAccountId,
 					ids: ids.$ref('/ids'),
 					properties,
 				});
@@ -957,10 +1022,10 @@ export class MailJmap
 			}),
 			// a single mailboxRole() lookup makes no sense across multiple real mailboxes -
 			// resolved per-row instead, below, once the actual result set is known
-			searchAllFolders ? Promise.resolve(null) : this.mailboxRole(client, token.accountId, profileID, mailboxId),
+			searchAllFolders ? Promise.resolve(null) : this.mailboxRole(client, effectiveAccountId, cacheProfileID, mailboxId),
 		]);
 		const emailList = emails.list || [];
-		await this.resolveSmimeSignedAttachments(client, token, mailboxId, emailList);
+		await this.resolveSmimeSignedAttachments(client, token.isLocal, queryAccountId, mailboxId, emailList);
 
 		let rows : any[];
 		if (searchAllFolders)
@@ -974,7 +1039,7 @@ export class MailJmap
 			const infoByMailboxId : Record<string, {role : string | null, name : string}> = {};
 			await Promise.all(distinctMailboxIds.map(async (mid : string) =>
 			{
-				infoByMailboxId[mid] = await this.mailboxRoleAndName(client, token.accountId, profileID, mid);
+				infoByMailboxId[mid] = await this.mailboxRoleAndName(client, queryAccountId, profileID, mid);
 			}));
 			rows = emailList.map((email : any) =>
 			{
@@ -986,8 +1051,17 @@ export class MailJmap
 		}
 		else
 		{
+			// re-encode with the same scheme getSharedAccountMailboxChildren() uses, so row_id
+			// (email2row()'s own account_id::profileID::mailboxId::emailId) at least fails safely
+			// (a clean "not found" from the server) rather than risking a same-looking-id collision
+			// against this account's own mailboxes, wherever a downstream method not yet updated
+			// for a foreign accountId (fetchBody() etc. - see this method's own docblock) parses it
+			// back assuming token.accountId
+			const encodedMailboxId = effectiveAccountId !== token.accountId
+				? MailJmap.SHARED_ACCOUNTS_ROOT_ID + effectiveAccountId + MailJmap.SHARED_ACCOUNT_SEP + mailboxId
+				: mailboxId;
 			const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
-			rows = emailList.map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient));
+			rows = emailList.map((email : any) => this.email2row(email, profileID, encodedMailboxId, showRecipient));
 		}
 
 		return {
@@ -1010,7 +1084,7 @@ export class MailJmap
 	 * ordinary page), never a blanket per-row fetch. Mutates the matching entries in `emails` in
 	 * place with their real `attachments` array.
 	 */
-	private async resolveSmimeSignedAttachments(client : JamClient, token : JmapToken, mailboxId : string,
+	private async resolveSmimeSignedAttachments(client : JamClient, isLocal : boolean, accountId : string, mailboxId : string,
 		emails : any[]) : Promise<void>
 	{
 		const suspects = emails.filter((email : any) =>
@@ -1020,15 +1094,15 @@ export class MailJmap
 			return;
 		}
 		const args : any = {
-			accountId: token.accountId,
+			accountId,
 			ids: suspects.map((email : any) => email.id),
 			properties: ['attachments'],
 		};
-		if (token.isLocal)
+		if (isLocal)
 		{
 			args.mailboxId = mailboxId;
 		}
-		const result = token.isLocal ?
+		const result = isLocal ?
 			await this.emailGetViaCacheableGet(client, args) :
 			(await client.requestMany((t) => ({emails: t.Email.get(args) as any})))[0].emails;
 		const attachmentsById = new Map((result.list || []).map((email : any) => [email.id, email.attachments]));
