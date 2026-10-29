@@ -286,7 +286,7 @@ class Stalwart extends Sql
 				{
 					$response = $this->jmapClient()->jmapCall([
 						['x:Account/set', [
-							'update' => [
+							'update' => (object)[    // Stalwart ids can be "0", which would be encoded as JSON array
 								($accountId=$userData['stalwart']['id']) => $diff,
 							]], 'a'
 						]], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
@@ -413,7 +413,7 @@ class Stalwart extends Sql
 		}
 		$response = $this->jmapClient()->jmapCall([
 			['x:Account/set', [
-				'update' => [
+				'update' => (object)[    // Stalwart ids can be "0", which would be encoded as JSON array
 					$userData['stalwart']['id'] => [
 						'credentials' => (object)["0" => [    // otherwise PHP's json_encode encodes it as JSON array
 							'@type' => 'Password',
@@ -563,7 +563,7 @@ class Stalwart extends Sql
 				// update group
 				$response = $this->jmapClient()->jmapCall([
 					['x:Account/set', [
-						'update' => [$groupId => $diff],
+						'update' => (object)[$groupId => $diff],
 					], 'a'],
 				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			}
@@ -669,7 +669,7 @@ class Stalwart extends Sql
 						// remove offending alias first
 						$response = $this->jmapClient()->jmapCall([
 							['x:Account/set', [
-								'update' => [$object['id'] => ['aliases' => [$alias_key => null]]],
+								'update' => (object)[$object['id'] => ['aliases' => (object)[$alias_key => null]]],
 							], 'a']
 						], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['update']))
@@ -776,7 +776,7 @@ class Stalwart extends Sql
 		{
 			$response = $this->jmapClient()->jmapCall([
 				['x:MailingList/set', [
-					'update' => [
+					'update' => (object)[
 						$stalwart_mailing_list['id'] => ['recipients' => $mailing_list['recipients']],
 					]
 				], 'a']
