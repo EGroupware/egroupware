@@ -42,6 +42,20 @@
     body, and console shows a clean `markOpenedMessageRead(): failed ... JmapUserError: notFound`
     - exactly the designed degradation (markAsRead/fetchBody still assume this profile's own
     accountId, get a clean "not found" from the server, nothing worse).
+- Phase 3b (`771a41ff25`), two more live-reported fixes after further click-through testing:
+  - Clicking an owner node directly (eg. "default") silently reverted to whatever was previously
+    selected instead of showing anything - it was `noSelect`, and `app.ts`'s `changeFolder()`
+    refuses to select a `noSelect` node at all. Fixed both ways: the placeholder is selectable now,
+    and `getRows()` redirects the bare "user/<name>" path to that account's own INBOX (mirrors how
+    clicking a real account's own root node already lands on its INBOX) - live-confirmed: clicking
+    "default" now correctly shows "No entries to display" (its genuinely empty INBOX), not the
+    primary account's own inbox contents.
+  - "noreply-" accounts (ralf: ACL-only groups with no real mailbox worth browsing into) are
+    suppressed entirely - new `sharedAccountEntries()` is now the single source of truth for both
+    the display-name list and the "does this account have anything worth a 'user' root" check, so
+    an account shared with nothing but noreply- groups shows no root at all (same "no empty/dead
+    root" rule as having nothing shared). Live-confirmed: boulder's own 3 noreply-* groups
+    disappeared from the tree, the other 5 real shared accounts unaffected.
 - **Not yet implemented, deliberately deferred**: reading/acting on an individual message inside a
   shared folder - `fetchBody()` and the dozen-plus other rowId-consuming methods in `jmap.ts`
   (fetchForReply(), verifyPgpSignature(), markAsRead, move/delete, compose-from-shared-context, ...)
