@@ -110,7 +110,7 @@ describe("MailJmap.getRows() - shared account folder", () =>
 		const jmap = new MailJmap(createFakeApp());
 		primeToken(jmap, "1", client);
 
-		const result = await jmap.getRows({selectedFolder : "1::user/teachers@example.invalid/INBOX"});
+		const result = await jmap.getRows({selectedFolder : "1::user/teachers/INBOX"});
 
 		assert.equal(captured.mailboxQueryAccountId, "o", "mailboxId() resolution must use the shared accountId");
 		assert.equal(captured.mailboxGetAccountId, "o", "mailboxRole() must use the shared accountId");
@@ -125,7 +125,7 @@ describe("MailJmap.getRows() - shared account folder", () =>
 		const jmap = new MailJmap(createFakeApp());
 		primeToken(jmap, "1", client);
 
-		const result = await jmap.getRows({selectedFolder : "1::user/teachers@example.invalid/INBOX"});
+		const result = await jmap.getRows({selectedFolder : "1::user/teachers/INBOX"});
 
 		assert.include(result.rows[0].row_id, "o\u0001real-inbox-id",
 			"a downstream method that doesn't yet understand this encoding must fail safely (not found), never silently collide with this profile's own real mailbox ids");
@@ -137,7 +137,7 @@ describe("MailJmap.getRows() - shared account folder", () =>
 		const jmap = new MailJmap(createFakeApp());
 		primeToken(jmap, "1", client);
 
-		const result = await jmap.getRows({selectedFolder : "1::user/teachers@example.invalid"});
+		const result = await jmap.getRows({selectedFolder : "1::user/teachers"});
 
 		assert.deepEqual(result, {rows : [], total : 0});
 		assert.equal(captured.calls, 0, "must never make a real JMAP call for the placeholder node itself");
@@ -152,14 +152,14 @@ describe("MailJmap.getRows() - shared account folder", () =>
 		let thrown : any;
 		try
 		{
-			await jmap.getRows({selectedFolder : "1::user/revoked@example.invalid/INBOX"});
+			await jmap.getRows({selectedFolder : "1::user/revoked/INBOX"});
 		}
 		catch (e)
 		{
 			thrown = e;
 		}
 		assert.exists(thrown);
-		assert.include(thrown.message, "revoked@example.invalid/INBOX");
+		assert.include(thrown.message, "user/revoked/INBOX");
 	});
 
 	it("leaves an ordinary (non-shared) folder completely unaffected - uses this profile's own accountId", async() =>

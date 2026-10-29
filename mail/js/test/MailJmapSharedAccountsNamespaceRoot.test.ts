@@ -130,7 +130,7 @@ describe("MailJmap.getSharedAccountPlaceholders()", () =>
 
 		assert.lengthOf(placeholders, 2, "the personal account must never appear as a shared placeholder");
 		const names = placeholders.map((p : any) => p.name).sort();
-		assert.deepEqual(names, ["birgit@example.invalid", "info@example.invalid"]);
+		assert.deepEqual(names, ["birgit", "info"], "domain (incl. '@') stripped - ralf, 2026-10-29");
 		for (const p of placeholders)
 		{
 			assert.isTrue(p.hasChildren, "expanding it must list the account's real folders");
@@ -140,6 +140,23 @@ describe("MailJmap.getSharedAccountPlaceholders()", () =>
 				p.id.startsWith((MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "l"),
 				"id must encode the shared accountId for getSharedAccountMailboxChildren() to recover");
 		}
+	});
+
+	it("keeps the full address for BOTH sides of a local-part collision across domains", async() =>
+	{
+		const jmap = jmapWithSession({
+			accounts : {
+				ca : {name : "ralf@example.invalid", isPersonal : true},
+				u : {name : "info@example.invalid", isPersonal : false},
+				v : {name : "info@other.invalid", isPersonal : false},
+			},
+		});
+
+		const placeholders = await (jmap as any).getSharedAccountPlaceholders("89");
+
+		const names = placeholders.map((p : any) => p.name).sort();
+		assert.deepEqual(names, ["info@example.invalid", "info@other.invalid"],
+			"stripping both to 'info' would collide and make the reverse lookup ambiguous");
 	});
 });
 
@@ -253,6 +270,6 @@ describe("MailJmap.getMailboxChildren() - shared-accounts root sentinel", () =>
 
 		assert.isFalse(realQueryMade, "must never make a real JMAP call for the synthetic sentinel parentId");
 		assert.lengthOf(children, 1);
-		assert.equal(children[0].name, "info@example.invalid");
+		assert.equal(children[0].name, "info");
 	});
 });

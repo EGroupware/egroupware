@@ -859,24 +859,44 @@ export class MailJmap
 	}
 
 	/**
-	 * Resolve a shared-account placeholder's display name (folderTree.ts's "user/<name>/..." path
-	 * segment, see getSharedAccountPlaceholders()) back to its real JMAP accountId, by re-reading
-	 * the same Session `accounts` map the placeholder was built from. Returns null if the name no
-	 * longer matches any non-personal account (eg. the share was revoked since the tree was last
-	 * loaded) - callers turn that into a clean "folder not found" JmapUserError, never a crash.
+	 * Non-personal (shared) accounts from this profile's own JMAP Session, as [accountId,
+	 * displayName] pairs - the single source of truth for both the "user/<name>/..." tree path
+	 * segment (getSharedAccountPlaceholders()) and its reverse lookup (resolveSharedAccountId()),
+	 * so the two can never drift apart.
+	 *
+	 * displayName strips the domain, including the '@' (ralf, 2026-10-29: every shared account here
+	 * is already on the same mail server/domain in practice, so the full address is just noise in
+	 * the tree) - UNLESS two different accountIds would then collide on the same local part, in
+	 * which case BOTH keep their full address instead, to avoid an ambiguous duplicate node (and an
+	 * unresolvable reverse lookup - resolveSharedAccountId() couldn't tell the two apart either).
 	 */
-	private async resolveSharedAccountId(profileID : string, ownerName : string) : Promise<string | null>
+	private async sharedAccountEntries(profileID : string) : Promise<[string, string][]>
 	{
 		const client = this.clients[profileID];
 		const session : any = await client.session;
-		for (const [id, a] of Object.entries<any>(session?.accounts || {}))
+		const shared = Object.entries<any>(session?.accounts || {}).filter(([, a]) => !a.isPersonal);
+		const stripped = shared.map(([id, a]) : [string, string, string] =>
 		{
-			if (!a.isPersonal && (a.name || id) === ownerName)
-			{
-				return id;
-			}
-		}
-		return null;
+			const full = a.name || id;
+			const at = full.indexOf('@');
+			return [id, at > 0 ? full.slice(0, at) : full, full];
+		});
+		const counts : Record<string, number> = {};
+		stripped.forEach(([, short]) => { counts[short] = (counts[short] || 0) + 1; });
+		return stripped.map(([id, short, full]) : [string, string] => [id, counts[short] > 1 ? full : short]);
+	}
+
+	/**
+	 * Resolve a shared-account placeholder's display name (folderTree.ts's "user/<name>/..." path
+	 * segment, see getSharedAccountPlaceholders()) back to its real JMAP accountId, via the same
+	 * sharedAccountEntries() both are built from. Returns null if the name no longer matches any
+	 * non-personal account (eg. the share was revoked since the tree was last loaded) - callers
+	 * turn that into a clean "folder not found" JmapUserError, never a crash.
+	 */
+	private async resolveSharedAccountId(profileID : string, ownerName : string) : Promise<string | null>
+	{
+		const entries = await this.sharedAccountEntries(profileID);
+		return entries.find(([, name]) => name === ownerName)?.[0] ?? null;
 	}
 
 	/**
@@ -1572,10 +1592,11 @@ export class MailJmap
 
 	/**
 	 * The "user" namespace root's own children - one placeholder entry per JMAP account shared
-	 * with us (session.accounts, isPersonal:false), named by its own `name` (the owner's address).
-	 * Its own id encodes the shared accountId with an empty real-mailbox-id suffix (see
-	 * getSharedAccountMailboxChildren()'s own docblock) - expanding it lists that account's real
-	 * top-level mailboxes via the SAME lazy per-level mechanism as the primary account.
+	 * with us, named by sharedAccountEntries()'s own display name (domain-stripped where
+	 * unambiguous - see its own docblock). Its own id encodes the shared accountId with an empty
+	 * real-mailbox-id suffix (see getSharedAccountMailboxChildren()'s own docblock) - expanding it
+	 * lists that account's real top-level mailboxes via the SAME lazy per-level mechanism as the
+	 * primary account.
 	 *
 	 * Still noSelect (it's a grouping node, not a real mailbox) but hasChildren:true (assume
 	 * expandable, same "no cheap hint" default as a real JMAP mailbox - see
@@ -1584,19 +1605,16 @@ export class MailJmap
 	 */
 	private async getSharedAccountPlaceholders(profileID : string) : Promise<any[]>
 	{
-		const client = this.clients[profileID];
-		const session : any = await client.session;
-		return Object.entries(session?.accounts || {})
-			.filter(([, a] : [string, any]) => !a.isPersonal)
-			.map(([accountId, a] : [string, any]) => ({
-				id: MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId + MailJmap.SHARED_ACCOUNT_SEP,
-				name: a.name || accountId,
-				parentId: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
-				role: null,
-				isSubscribed: true,
-				hasChildren: true,
-				noSelect: true,
-			}));
+		const entries = await this.sharedAccountEntries(profileID);
+		return entries.map(([accountId, name]) => ({
+			id: MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId + MailJmap.SHARED_ACCOUNT_SEP,
+			name,
+			parentId: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
+			role: null,
+			isSubscribed: true,
+			hasChildren: true,
+			noSelect: true,
+		}));
 	}
 
 	/**
