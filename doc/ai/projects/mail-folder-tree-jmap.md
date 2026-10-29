@@ -725,3 +725,41 @@ default (current account's Drafts folder) when there's no opener or nothing sele
 browser against boulder.egroupware.org - ralf reported the empty-folder-display bug from live
 testing there, which is the only live-testing feedback so far; the underlying cause (the
 `(array)` cast + missing label) is fixed but not yet re-confirmed live.
+
+## FIXED (2026-10-29): `buildFolderLevel()` filtered the account's own INBOX back out when unsubscribed
+
+Follow-up to the pole.egroupware.org "info@egroupware.org has no Inbox" report (see
+[[mail-jmap-jam-websocket]]'s Phase 7 for the separate `maxCallsInRequest` bug that was the first,
+necessary-but-insufficient fix for the same symptom). Once that fix made the expand carets correct
+again, ralf reported the Inbox was *still* missing - his own diagnosis, confirmed correct: "IMAP
+spec says Inbox should always be shown, independent if it's really subscribed or not."
+
+Every IMAP/JMAP account has exactly one INBOX, and some real-world accounts never report it as
+`\Subscribed` via LSUB (only its special-use siblings are) - `MailJmap.getRootFolders()` (`mail/js/
+jmap.ts`) already has a dedicated fallback for exactly this (a separate `Mailbox/query{name:
+'INBOX'}` lookup + explicit re-fetch-and-push when a subscribedOnly top-level query comes back
+without it), confirmed still working correctly. The bug was one layer up: `buildFolderLevel()`
+(`mail/js/folderTree.ts`) re-filters that same `top` array by `isSubscribed` independently (same
+"a direct fetch looked correct, the UI-level re-filter was the real remaining culprit" pattern
+already seen twice before in this project for the shared-mailbox `isSubscribed` fixes), and had no
+exemption for `role === 'inbox'` - so the freshly-injected, deliberately-unsubscribed INBOX was
+filtered straight back out immediately after being added. `isVisiblePassthrough()`'s existing
+`hasSubscribedChildren === true` escape hatch didn't help either, since that field is never
+computed for the late-injected INBOX (it's pushed onto `top` after `resolveHasChildren()` already
+ran over the rest of the level).
+
+**Fix**: added an explicit `isAlwaysVisibleInbox = options.isTopLevel && mailbox.role === 'inbox'`
+exemption to the visibility filter - matching the same `role === 'inbox' && isTopLevel` gating
+already used elsewhere in this file for the account's own INBOX (auto-open, ACL `data` flag), since
+that's the only depth a real INBOX can ever appear at (gated on `isTopLevel` so a shared/other-
+user's own nested INBOX - already never subscribedOnly-filtered at all via a separate mechanism,
+see [[mail-jmap-shared-mailboxes]] - isn't double-exempted here for no reason).
+
+**Test coverage**: `BuildFolderLevel.test.ts` gained 2 tests - the account's own top-level INBOX
+survives the subscribedOnly filter even when `isSubscribed: false`, and a `role: 'inbox'` node at
+`isTopLevel: false` (simulating a nested/foreign INBOX) is NOT exempted, confirming the gating is
+real. Full `mail` jstest group: 104/104 files, 1146 tests passing (up from 1144) on both Chromium
+and Firefox, no regressions. `npm run build` clean. Not yet re-confirmed live on pole itself
+(depends on ralf's own separate deployment there) - this file's logic carries none of
+`jmap-jam-websocket.ts`'s async/private-field/Babel risk (plain synchronous filter, no `#private`
+fields, no `super`), so the unit-test coverage is a reliable signal here, unlike that file.
