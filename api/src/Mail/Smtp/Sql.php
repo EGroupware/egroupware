@@ -297,7 +297,8 @@ class Sql extends Mail\Smtp
 					//error_log(__METHOD__.": ".__LINE__." row=".array2string($row).", flags['$row[mail_type]']=".array2string($flags[$row['mail_type']]));
 					if ($row['mail_value'] != $flags[$row['mail_type']])
 					{
-						if ($flags[$row['mail_type']])
+						// a Stalwart id of "0" is a valid TYPE_ENABLED value, but falsy
+						if ($flags[$row['mail_type']] || $row['mail_type'] == self::TYPE_ENABLED && (string)$flags[$row['mail_type']] !== '')
 						{
 							$this->db->update(self::TABLE, array(
 								'mail_value' => $flags[$row['mail_type']],
@@ -338,7 +339,7 @@ class Sql extends Mail\Smtp
 			self::TYPE_FORWARD => $_mailForwardingAddress,
 		) as $type => $values)
 		{
-			if ($values && (!$_forwarding_only || in_array($type, array(self::TYPE_FORWARD, self::TYPE_DELIVERY))))
+			if (($values || $type === self::TYPE_ENABLED && (string)$values !== '') && (!$_forwarding_only || in_array($type, array(self::TYPE_FORWARD, self::TYPE_DELIVERY))))
 			{
 				foreach((array)$values as $value)
 				{
