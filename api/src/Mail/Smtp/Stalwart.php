@@ -166,7 +166,7 @@ class Stalwart extends Sql
 			{
 				if ($alias['enabled'])
 				{
-					$aliases[] = $alias['name'].'@'.$this->domain($account['domainId']);
+					$aliases[] = $alias['name'].'@'.$this->domain($alias['domainId'] ?? $account['domainId']);    // aliases can be in other domains
 				}
 			}
 			// add mailing lists as aliases too
