@@ -1308,10 +1308,11 @@ sl-alert.mail_externalImagesMsg[variant="danger"]::part(base) {
 }
 sl-alert.mail_externalImagesMsg::part(message) {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: var(--sl-spacing-x-small);
   padding: var(--sl-spacing-3x-small) var(--sl-spacing-small);
+  padding-inline-end: 0;
 }
 sl-alert.mail_externalImagesMsg::part(close-button) {
   padding-inline-end: 0;
