@@ -524,6 +524,13 @@ export class MailJmap
 	// how long to skip re-checking a profile that just turned out not to be JMAP-eligible
 	private static readonly INELIGIBLE_RECHECK_INTERVAL = 5 * 60 * 1000;
 
+	// Synthetic parentId for the "user" namespace-root pseudo-mailbox injected by
+	// injectSharedAccountsRoot() below - never a real JMAP Mailbox id (those are opaque,
+	// server-assigned strings with no particular format, but never contain NUL), so this can't
+	// collide with one. getMailboxChildren() recognizes it to list the shared accounts themselves
+	// instead of making a real Mailbox/query call.
+	private static readonly SHARED_ACCOUNTS_ROOT_ID = '\u0000shared-accounts\u0000';
+
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
 	private tokens : Record<string, JmapToken> = {};
 	private tokenPromises : Record<string, Promise<JmapToken | null>> = {};
@@ -1428,6 +1435,76 @@ export class MailJmap
 	}
 
 	/**
+	 * Append a synthetic "user" namespace-root pseudo-mailbox to `top` (a real-JMAP account's own
+	 * already-fetched top level) whenever this account has any mailbox shared with it - doc/ai/
+	 * projects/mail-jmap-shared-mailboxes.md, ticket #126691 follow-up. Real JMAP (Stalwart) has no
+	 * NAMESPACE-equivalent concept at all, so unlike the local shim (JmapShim.php, real IMAP
+	 * underneath) this never comes from the server's own top-level Mailbox/get response - it has to
+	 * be synthesized client-side from the JMAP Session's own `accounts` map, confirmed live
+	 * (2026-10-29) to already list every account shared with us via an existing Mailbox.shareWith
+	 * ACL grant, no separate discovery/subscribe step needed.
+	 *
+	 * The raw name deliberately stays the classic "user" (ralf, 2026-10-29: don't complicate the
+	 * migration further) - isNamespaceRootName() already matches that literally, so buildNode()
+	 * picks it up automatically (people icon, non-selectable, sorted last) with no further changes.
+	 * Mutates `top` in place. No-op for a local/shim account (token.isLocal) - those already get a
+	 * real "user" namespace root from JmapShim's own server-side NAMESPACE-derived logic.
+	 *
+	 * @param profileID
+	 * @param token
+	 */
+	private async injectSharedAccountsRoot(profileID : string, token : JmapToken, top : any[]) : Promise<void>
+	{
+		if (token.isLocal) return;
+		const client = this.clients[profileID];
+		let session : any;
+		try
+		{
+			session = await client.session;
+		}
+		catch (e)
+		{
+			console.error('MailJmap.injectSharedAccountsRoot(): failed to read the JMAP session, skipping the "Other users" root', e);
+			return;
+		}
+		const hasSharedAccounts = Object.values(session?.accounts || {}).some((a : any) => !a.isPersonal);
+		if (!hasSharedAccounts) return;
+		top.push({
+			id: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
+			name: 'user',
+			parentId: null,
+			role: null,
+			isSubscribed: true,
+			hasChildren: true,
+		});
+	}
+
+	/**
+	 * The "user" namespace root's own children - one placeholder entry per JMAP account shared
+	 * with us (session.accounts, isPersonal:false), named by its own `name` (the owner's address).
+	 * Deliberately non-expandable/non-selectable for now (noSelect, hasChildren:false) - browsing
+	 * into a shared account's own folders is a separate, not-yet-implemented increment (see
+	 * doc/ai/projects/mail-jmap-shared-mailboxes.md's Phase 2 "open implementation question"); this
+	 * only surfaces WHICH accounts are shared with the user, same scope ralf explicitly asked for.
+	 */
+	private async getSharedAccountPlaceholders(profileID : string) : Promise<any[]>
+	{
+		const client = this.clients[profileID];
+		const session : any = await client.session;
+		return Object.entries(session?.accounts || {})
+			.filter(([, a] : [string, any]) => !a.isPersonal)
+			.map(([accountId, a] : [string, any]) => ({
+				id: MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId,
+				name: a.name || accountId,
+				parentId: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
+				role: null,
+				isSubscribed: true,
+				hasChildren: false,
+				noSelect: true,
+			}));
+	}
+
+	/**
 	 * Fetch one level's worth of a mailbox's direct children - lazy per-level folder-tree
 	 * loading (see doc/ai/projects/mail-folder-tree-jmap.md). Batches Mailbox/query (list
 	 * children of parentId) + Mailbox/get (full node data for those ids) in one request, the
@@ -1461,6 +1538,10 @@ export class MailJmap
 			if (!token)
 			{
 				return null;
+			}
+			if (parentId === MailJmap.SHARED_ACCOUNTS_ROOT_ID)
+			{
+				return this.getSharedAccountPlaceholders(profileID);
 			}
 			const client = this.clients[profileID];
 			// matches classic mail_ui's own default (mail_tree.inc.php's getInitialIndexTree()
@@ -1498,6 +1579,20 @@ export class MailJmap
 			{
 				this.applyTemplateOutboxRoles(list, token);
 			}
+			if (!token.isLocal)
+			{
+				// BEFORE injectSharedAccountsRoot() below - these batch-query by the already-real
+				// ids in `list`, which must never include the synthetic root's sentinel id
+				await this.resolveHasChildren(client, token.accountId, list, effectiveSubscribedOnly);
+				if (parentId === null)
+				{
+					await this.resolveAclCapable(client, token, list);
+				}
+			}
+			if (parentId === null)
+			{
+				await this.injectSharedAccountsRoot(profileID, token, list);
+			}
 			// sort role-tagged siblings into their fixed order (see folderTree.ts's sortTopLevel())
 			// whenever this level actually has any - not gated on isTopLevel: a shared/other-user
 			// mailbox's own special-folder set (eg. a folder nested under "Shared Folders") still
@@ -1508,14 +1603,6 @@ export class MailJmap
 			if (isTopLevel || list.some((m : any) => !!m.role))
 			{
 				sortTopLevel(list);
-			}
-			if (!token.isLocal)
-			{
-				await this.resolveHasChildren(client, token.accountId, list, effectiveSubscribedOnly);
-				if (parentId === null)
-				{
-					await this.resolveAclCapable(client, token, list);
-				}
 			}
 			return list;
 		}
@@ -1667,9 +1754,12 @@ export class MailJmap
 			this.applyTemplateOutboxRoles(top, token);
 			if (!token.isLocal)
 			{
+				// BEFORE injectSharedAccountsRoot() below - these batch-query by the already-real
+				// ids in `top`, which must never include the synthetic root's sentinel id
 				await this.resolveHasChildren(client, token.accountId, top, effectiveSubscribedOnly);
 				await this.resolveAclCapable(client, token, top);
 			}
+			await this.injectSharedAccountsRoot(profileID, token, top);
 
 			const inboxId = inboxIds.ids?.[0] ?? null;
 			// A subscribedOnly top-level query can legitimately come back without INBOX: some

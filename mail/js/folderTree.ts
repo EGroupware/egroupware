@@ -58,6 +58,15 @@ export interface JmapMailboxNode
 	 * in both cases.
 	 */
 	isNamespaceRoot? : boolean;
+	/**
+	 * Explicitly non-selectable regardless of isNamespaceRoot - unlike that field, setting this
+	 * does NOT opt into isVisibleNamespaceRoot()'s "must not be a dead end" visibility rule, so a
+	 * synthetic placeholder node (eg. one entry per JMAP account shared with us, see
+	 * MailJmap.getMailboxChildren()'s shared-accounts handling) can be shown with hasChildren:false
+	 * without being filtered out the way an empty namespace root deliberately is. Undefined
+	 * (falsy) for every ordinary mailbox.
+	 */
+	noSelect? : boolean;
 }
 
 export interface BuildFolderLevelOptions
@@ -304,7 +313,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// top-level INBOX, gated on isTopLevel same as `open` above (a shared/other-user
 		// mailbox's own nested INBOX is never what aclEnabled() looks up)
 		...(role === 'inbox' && isTopLevel ? {data: {acl: !!mailbox.aclCapable}} : {}),
-		...(isNamespaceRoot ? {data: {noSelect: true}} : {}),
+		...(isNamespaceRoot || mailbox.noSelect ? {data: {noSelect: true}} : {}),
 		...icons(role, isNamespaceRoot, egw),
 	};
 }
