@@ -79,6 +79,35 @@ describe("buildFolderLevel()", () =>
 	});
 
 	/**
+	 * Every IMAP/JMAP account has exactly one INBOX, which must always be shown regardless of its
+	 * own subscription state (ralf, 2026-10-29: some real-world accounts never report INBOX itself
+	 * as subscribed, only its special-use siblings) - MailJmap.getRootFolders() already fetches and
+	 * injects an unsubscribed INBOX into `top` for exactly this reason, but without this exemption
+	 * it was filtered straight back out here (isSubscribed:false, and hasSubscribedChildren is
+	 * never computed for it since it's injected after the rest of the level's own resolution
+	 * already ran) - live-reported as "Inbox is still missing" even after the carets themselves
+	 * were fixed.
+	 */
+	it("never filters out the account's own top-level INBOX even when unsubscribed", () =>
+	{
+		const nodes = build([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: false}),
+			mailbox({name: "Drafts", role: "drafts", isSubscribed: false}),
+		], {subscribedOnly: true});
+
+		assert.deepEqual(nodes.map((n) => n.label), ["translated(INBOX)"]);
+	});
+
+	it("does not exempt a role=inbox mailbox at a deeper level (isTopLevel:false)", () =>
+	{
+		const nodes = buildFolderLevel([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: false}),
+		], "42", "user/someone", {subscribedOnly: true, isTopLevel: false}, egw);
+
+		assert.equal(nodes.length, 0, "a nested INBOX-like node is not the account's own top-level INBOX");
+	});
+
+	/**
 	 * The shared/other-users namespace root ("user"/"shared") is a structural navigation doorway,
 	 * essentially never itself isSubscribed - subscribedOnly must never hide it, since JmapShim
 	 * already only reports it here when it has real accessible children (see
