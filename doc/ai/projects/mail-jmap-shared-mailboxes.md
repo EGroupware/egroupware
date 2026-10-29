@@ -1,17 +1,22 @@
 # Mail: "Other users" / shared-mailbox namespace for JMAP (Stalwart) accounts
 
-## Status: Phase 1 + Phase 2 (top level) implemented (2026-10-29)
+## Status: Phase 1 + Phase 2 (full folder-tree browsing) implemented (2026-10-29)
 
 - Phase 1 (`cce71762b2`): `Jmap::bootstrap()` retains the Session's shared accounts
   (`$sharedAccounts`); `Imap\Jmap::getNameSpaceArray()` populates `others` from it.
-- Phase 2, top level only (`af2b71ff8e`): the client-side tree now shows a conditional "user"
+- Phase 2, top level (`af2b71ff8e`): the client-side tree now shows a conditional "user"
   namespace root (only when the account actually has shared accounts) whose children list the
   shared account names - see `MailJmap.injectSharedAccountsRoot()`/`getSharedAccountPlaceholders()`
-  in `mail/js/jmap.ts`. Deliberately non-expandable/non-selectable placeholders for now.
-- **Not yet implemented**: browsing into a shared account's own folders (expanding one of the
-  placeholder nodes above into a real, lazily-loaded subtree). This needs the `accountId`-threading
-  work flagged below under Phase 2's "open implementation question" - genuinely deferred, not
-  started.
+  in `mail/js/jmap.ts`.
+- Phase 2b (`9fffdfe198`): expanding a shared-account placeholder now lists that account's REAL
+  mailboxes (names, hierarchy, roles/icons, expand state) via the same lazy per-level fetch, by
+  self-encoding the owning accountId into each node's own opaque id string
+  (`MailJmap.getSharedAccountMailboxChildren()`) - no changes needed to Et2Tree, FolderTreeNode or
+  app.ts's folderTreeAutoload(), which never need to know a foreign accountId is involved at all.
+- **Not yet implemented, deliberately deferred**: every node in a shared branch stays `noSelect` -
+  actually opening a shared mailbox's messages needs `getRows()`/`fetchRows()` (and likely
+  compose-from-shared-context, mark-as-read, move/delete, ...) to also support a foreign accountId,
+  a materially larger, separate increment. This phase only makes the structure visible/navigable.
 
 Follow-up to ticket #126691 (the Dovecot→Stalwart egroupware.org migration, see also
 `adc28974b4` - the Mailbox.isSubscribed crash fix for `mail/src/Ui.php::subscription()`, already
