@@ -29,6 +29,8 @@ use EGroupware\Api\CalDAV\RestClientTrait;
  * @property-read string $accountId JMAP accountId set during bootstrap / constructor
  * @property-read array $capabilities JMAP capabilities
  * @property-read array $accountCapabilities JMAP accountCapabilities of $this->accountId
+ * @property-read array<string,array> $sharedAccounts non-personal accounts from the Session's own
+ *  accounts map (accountId => raw account object) - mailboxes someone else shared with us
  * @property-read string $apiUrl e.g. "https://example.org:443/jmap/"
  * @property-read string $downloadUrl e.g. "https://example.org:443/jmap/download/{accountId}/{blobId}/{name}?accept={type}"
  * @property-read string $uploadUrl e.g. "https://example.org:443/jmap/upload/{accountId}/"
@@ -69,6 +71,20 @@ class Jmap extends Jmap\Base
 	protected string $accountId;
 	protected array $capabilities;
 	protected array $accountCapabilities;
+
+	/**
+	 * Non-personal accounts from the Session's own `accounts` map (accountId => raw account
+	 * object, same shape as the Session response: 'name', 'isPersonal'=false, 'isReadOnly',
+	 * 'accountCapabilities') - mailboxes someone else shared with us (RFC 9670 "JMAP for
+	 * Sharing"), confirmed live (2026-10-29, ticket #126691 follow-up,
+	 * doc/ai/projects/mail-jmap-shared-mailboxes.md) to already appear here from existing
+	 * Mailbox.shareWith ACL grants alone - no separate discovery/subscribe step needed.
+	 * bootstrap() used to discard every entry but the first isPersonal one; kept here instead so
+	 * Api\Mail\Imap\Jmap::getNameSpaceArray() can populate its 'others' key from real data.
+	 *
+	 * @var array<string,array>
+	 */
+	protected array $sharedAccounts = [];
 
 	protected string $apiUrl;
 	protected string $downloadUrl;
@@ -222,13 +238,17 @@ class Jmap extends Jmap\Base
 		}
 		$response = $this->api($url.'/.well-known/jmap');
 
+		$this->sharedAccounts = [];
 		foreach($response['accounts'] ?? [] as $id => $account)
 		{
 			if ($account['isPersonal'])
 			{
 				$accountId = $id;
 				$this->accountCapabilities = $account['accountCapabilities'] ?? [];
-				break;
+			}
+			else
+			{
+				$this->sharedAccounts[$id] = $account;
 			}
 		}
 		$this->capabilities = $response['capabilities'] ?? [];
@@ -731,6 +751,8 @@ class Jmap extends Jmap\Base
 				return $this->accountId;
 			case 'accountCapabilities':
 				return $this->accountCapabilities;
+			case 'sharedAccounts':
+				return $this->sharedAccounts;
 			case 'capabilities':
 				return $this->capabilities;
 			case 'downloadUrl':
@@ -768,6 +790,7 @@ class Jmap extends Jmap\Base
 		{
 			case 'accountId':
 			case 'accountCapabilities':
+			case 'sharedAccounts':
 			case 'capabilities':
 			case 'downloadUrl':
 			case 'uploadUrl':

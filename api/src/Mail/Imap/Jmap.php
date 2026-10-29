@@ -1663,17 +1663,23 @@ class Jmap extends Mail\Imap
 	 * what's actually the JMAP(S) endpoint for a JMAP account - found live 2026-09-08 via
 	 * mail_ui::importMessage()'s folder-picker (Compose::ajax_searchFolder() -> Api\Mail::
 	 * getFolderObjects() -> _getNameSpaces()), "Mail server closed the connection unexpectedly."
-	 * RFC 8621 has no IMAP-NAMESPACE-equivalent concept at all - every JMAP account only ever has
-	 * a flat, unprefixed personal hierarchy from this call's perspective (shared/other-user
-	 * mailboxes are just regular Mailbox objects with role=null, not a distinct namespace - see
-	 * folderTree.ts's own isNamespaceRootName() for how the client already treats that
-	 * client-side), so 'others'/'shared' are always empty here.
+	 * RFC 8621 has no IMAP-NAMESPACE-equivalent concept at all, so there's no real NAMESPACE reply
+	 * to synthesize 'others' from the usual way.
+	 *
+	 * 'others' is populated instead (2026-10-29, ticket #126691 follow-up, see
+	 * doc/ai/projects/mail-jmap-shared-mailboxes.md) whenever $this->jmapClient()->sharedAccounts
+	 * is non-empty - mailboxes someone else shared with us (RFC 9670 "JMAP for Sharing"), confirmed
+	 * live to already appear there from existing Mailbox.shareWith ACL grants alone, no separate
+	 * discovery/subscribe step needed. The raw prefix name deliberately stays the classic "user"
+	 * (ralf, 2026-10-29: keep migrations simple) - mail/js/folderTree.ts's isNamespaceRootName()
+	 * already matches that literally, and the UI already translates it to "Other users" for
+	 * display, so nothing client-side needs to change to recognize it.
 	 *
 	 * @return array
 	 */
 	function getNameSpaceArray()
 	{
-		return [
+		$result = [
 			'personal' => [[
 				'type' => 'personal',
 				'name' => '',
@@ -1682,5 +1688,16 @@ class Jmap extends Mail\Imap
 				'delimiter' => '/',
 			]],
 		];
+		if ($this->jmapClient()->sharedAccounts)
+		{
+			$result['others'] = [[
+				'type' => 'others',
+				'name' => 'user/',
+				'prefix' => 'user',
+				'prefix_present' => true,
+				'delimiter' => '/',
+			]];
+		}
+		return $result;
 	}
 }
