@@ -9011,10 +9011,20 @@ export class MailApp extends EgwApp
 		// put special folders as siblings of INBOX (parentPath === ''), others nest them under it
 		// (parentPath === 'INBOX') - both are covered.
 		const isTopLevel = parentPath === '' || parentPath === 'INBOX';
-		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, subscribedOnlyOverride).then((mailboxes) =>
+		// browsing INSIDE the "user" (shared-accounts) namespace root - MailJmap.
+		// getSharedAccountMailboxChildren() already never subscribedOnly-filters its own JMAP query
+		// (see its own docblock: a shared mailbox is typically isSubscribed:false for a viewer who's
+		// never touched it), but buildFolderLevel() below re-filters by isSubscribed independently
+		// for its OWN (unrelated) ancestor-chain-preserving reasons - without this override that
+		// second filter silently re-hid every real folder this path just correctly fetched (found
+		// live, 2026-10-29, boulder.egroupware.org acc_id=1: a real, populated shared account
+		// rendered as a permanently-empty expand).
+		const inSharedAccountBranch = parentPath === 'user' || parentPath.startsWith('user/');
+		const effectiveOverride = inSharedAccountBranch ? false : subscribedOnlyOverride;
+		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, effectiveOverride).then((mailboxes) =>
 		{
 			if (mailboxes === null) return null;
-			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const subscribedOnly = effectiveOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
 			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly, isTopLevel}, egw);
 		});
 	}
