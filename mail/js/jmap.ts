@@ -1461,6 +1461,18 @@ export class MailJmap
 	private async injectSharedAccountsRoot(profileID : string, token : JmapToken, top : any[]) : Promise<void>
 	{
 		if (token.isLocal) return;
+		// a real top-level Mailbox literally named "user"/"shared" already exists (found live,
+		// 2026-10-29, boulder.egroupware.org acc_id=89: a genuine mailbox id "q" named "user",
+		// hasChildren:false) - isNamespaceRootName() already treats it as the namespace root via
+		// its own name-based heuristic (same ambiguity isNamespaceRootMailbox()'s own docblock
+		// already documents for the classic/shim path), so injecting a SECOND, synthetic "user"
+		// node here would show two identical-looking root entries side by side. Skip injection
+		// entirely in that case rather than try to merge the two - a rare, pre-existing-data edge
+		// case, not worth the complexity of reconciling a real mailbox with a synthetic one.
+		if (top.some((m) => isNamespaceRootName(m.name)))
+		{
+			return;
+		}
 		const client = this.clients[profileID];
 		let session : any;
 		try

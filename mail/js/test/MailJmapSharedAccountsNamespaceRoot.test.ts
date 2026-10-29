@@ -56,6 +56,27 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 		assert.isTrue(root.isSubscribed, "must survive a subscribedOnly filter pass");
 	});
 
+	it("does not inject a duplicate when a real mailbox is already literally named 'user'", async() =>
+	{
+		// found live, 2026-10-29 (boulder.egroupware.org acc_id=89): a genuine pre-existing
+		// top-level mailbox named "user" - isNamespaceRootName() already treats it as the
+		// namespace root via its own heuristic, so a second, synthetic one must never be added
+		const jmap = jmapWithSession({
+			accounts : {
+				ca : {name : "ralf@example.invalid", isPersonal : true},
+				u : {name : "info@example.invalid", isPersonal : false},
+			},
+		});
+		const top : any[] = [
+			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null},
+			{id : "q", name : "user", role : null, parentId : null, hasChildren : false},
+		];
+
+		await (jmap as any).injectSharedAccountsRoot("89", {isLocal : false}, top);
+
+		assert.lengthOf(top, 2, "no second 'user' entry");
+	});
+
 	it("does nothing when every account is personal (the common case)", async() =>
 	{
 		const jmap = jmapWithSession({
