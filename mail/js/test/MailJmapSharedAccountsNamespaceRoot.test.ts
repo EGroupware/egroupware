@@ -187,7 +187,7 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 		assert.isNull(captured.mailboxQuery[0].filter.parentId, "top level of the shared account's own hierarchy");
 		assert.lengthOf(children, 1);
 		assert.equal(children[0].name, "Inbox");
-		assert.isTrue(children[0].noSelect, "not yet a real, openable mailbox - see the method's own docblock");
+		assert.isNotTrue(children[0].noSelect, "selectable now that getRows() reads a shared account's own folder");
 	});
 
 	it("re-encodes each returned mailbox's own id so a deeper expand still carries the shared accountId", async() =>

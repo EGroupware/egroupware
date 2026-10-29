@@ -1602,10 +1602,13 @@ export class MailJmap
 	/**
 	 * One level's worth of REAL mailboxes inside a shared account, for browsing into the folder
 	 * structure someone else shared with us (doc/ai/projects/mail-jmap-shared-mailboxes.md's own
-	 * "browsing into a shared account" follow-up to the placeholder-only first pass). Not yet
-	 * selectable/readable (every returned node stays noSelect - actually opening a shared mailbox's
-	 * messages needs getRows()/fetchRows() to also support a foreign accountId, a separate, larger
-	 * increment) - this only makes the real structure visible and navigable.
+	 * "browsing into a shared account" follow-up to the placeholder-only first pass). Selectable
+	 * (unlike getSharedAccountPlaceholders()'s own grouping nodes above) - getRows() learned to
+	 * read a shared account's own folder in the same project's getRows()/fetchRows() increment, so
+	 * clicking one of these now genuinely lists its messages. Reading/acting on an individual
+	 * message still doesn't work (fetchBody() and the dozen-plus other rowId-consuming methods
+	 * still assume this profile's own accountId - a separate, larger increment), but that degrades
+	 * safely (a clean "not found" error), not a reason to keep the folder itself unselectable.
 	 *
 	 * `encodedParentId` is SHARED_ACCOUNTS_ROOT_ID + accountId + SHARED_ACCOUNT_SEP + realMailboxId
 	 * (realMailboxId empty for that account's own top level, from getSharedAccountPlaceholders()
@@ -1655,8 +1658,13 @@ export class MailJmap
 			// batch-queries Mailbox/query by these ids against sharedAccountId, so it must run
 			// against the real, un-prefixed ids first
 			await this.resolveHasChildren(client, sharedAccountId, list, false);
+			// selectable since getRows() learned to read a shared account's own folder (doc/ai/
+			// projects/mail-jmap-shared-mailboxes.md's getRows()/fetchRows() increment) - the row
+			// LIST now genuinely works; reading/acting on an individual message still doesn't (see
+			// getRows()'s own docblock), which degrades safely (a clean "not found" from the still-
+			// unaware fetchBody() etc.), not a reason to keep blocking selection of the folder itself
 			const prefix = MailJmap.SHARED_ACCOUNTS_ROOT_ID + sharedAccountId + MailJmap.SHARED_ACCOUNT_SEP;
-			list.forEach((m : any) => { m.id = prefix + m.id; m.noSelect = true; });
+			list.forEach((m : any) => { m.id = prefix + m.id; });
 			if (realParentId === null || list.some((m : any) => !!m.role))
 			{
 				sortTopLevel(list);
