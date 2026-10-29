@@ -127,11 +127,12 @@ abstract class Base
 	public static function boolPatch(array $new, ?array $old=null) : object
 	{
 		$patch = [];
-		if (($added = $old ? array_diff_key($new, $old) : $new))
+		// $new and $old are lists of ids, so compare their values (not the list-keys, which are just positions)
+		if (($added = array_values(array_diff($new, $old ?? []))))
 		{
 			$patch = array_combine($added, array_fill(0, count($added), true));
 		}
-		if ($old && (($removed = array_diff_key($old, $new))))
+		if ($old && ($removed = array_values(array_diff($old, $new))))
 		{
 			$patch += array_combine($removed, array_fill(0, count($removed), null));
 		}
