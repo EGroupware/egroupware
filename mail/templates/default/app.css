@@ -126,6 +126,7 @@ tr.mail et2-vbox {
 tr.mail et2-vbox::part(base) {
   gap: var(--sl-spacing-2x-small);
   padding-block: var(--sl-spacing-2x-small);
+  box-sizing: border-box;
 }
 tr.mail et2-vbox span.description--content {
   max-height: 2lh;

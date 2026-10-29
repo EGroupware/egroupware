@@ -187,6 +187,8 @@ tr.mail {
 		&::part(base) {
 			gap: var(--sl-spacing-2x-small);
 			padding-block: var(--sl-spacing-2x-small);
+			// Keep the padding inside the base's 100% height, or it overflows the cell and the datagrid fades it out
+			box-sizing: border-box;
 		}
 
 

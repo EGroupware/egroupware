@@ -120,6 +120,7 @@ tr.mail et2-vbox::part(base) {
   align-items: stretch;
   gap: var(--sl-spacing-2x-small);
   padding-block: var(--sl-spacing-2x-small);
+  box-sizing: border-box;
 }
 tr.mail .mail_row_content,
 tr.mail .mail_row_content::part(base),
