@@ -127,25 +127,29 @@ and drop the 11th entry if that pushes the list over 10 - dropping it here does 
 file itself. The full set of project docs, including everything trimmed off this list, always
 lives in `doc/ai/projects/` - check there directly for anything not shown here.
 
-- `doc/ai/projects/mail-zpush-jmap-folders.md` - scoping the real fix for ActiveSync
-  (`mail_zpush.inc.php`) breaking on any Stalwart-migrated account: it implements no JMAP-specific
+- `doc/ai/projects/mail-zpush-jmap-folders.md` - **DONE**: closed the real gap behind ActiveSync
+  (`mail_zpush.inc.php`) breaking on any Stalwart-migrated account - it implements no JMAP-specific
   methods at all, so `Api\Mail`'s folder-management methods it calls (`getFolderStatus()`,
   `folderExists()`, `createFolder()`/`renameFolder()`/`deleteFolder()`, `getFolderObjects()`,
-  `reopen()`) fall through to raw `Horde_Imap_Client_Socket` calls neither `Imap\Jmap` nor
-  `Imap\Stalwart` override - found live via egroupware.org's own Stalwart migration breaking
+  `reopen()`) fell through to raw `Horde_Imap_Client_Socket` calls neither `Imap\Jmap` nor
+  `Imap\Stalwart` overrode - found live via egroupware.org's own Stalwart migration breaking
   ActiveSync's "Ping" mechanism entirely. Full method-by-method map of all 33 `Api\Mail` methods
-  `mail_zpush` calls: every message-level operation is already properly JMAP-native (dispatches to
-  a private `jmap<Method>()` helper or an inline guard) - the gap is narrowly confined to 9
-  folder-management methods, following the same `Mailbox/get`/`Mailbox/set` template `getACL()`/
-  `setACL()` already established - a bounded, single-class fix, not part of
-  [[mail-jmap-imap-inversion]]'s much larger Phase 2. 2 of the 9 (`subscribeMailbox`/
-  `listSubscribedMailboxes`) already shipped same-day by a separate session (`adc28974b4`), which hit
-  the identical gap independently via the **regular Mail UI**'s subscription popup, not ActiveSync -
-  confirms this isn't an ActiveSync-only problem. 7 remain (`getMailboxes`/`getStatus`/
-  `mailboxExist`/`openMailbox`/`createMailbox`/`renameMailbox`/`deleteMailbox`). A narrow, account-
-  specific stop-gap for `mail_zpush` itself already shipped and is confirmed working live
-  (`96c1f784ae`/`5280f53e10`). **Master only, no 26 backport for any of this** (ralf, 2026-10-29) -
-  26 is missing much more of this JMAP-compatibility surface and will be rebased onto master soon.
+  `mail_zpush` calls showed every message-level operation was already properly JMAP-native
+  (dispatches to a private `jmap<Method>()` helper or an inline guard) - the gap was narrowly
+  confined to 9 folder-management methods. All 9 now have JMAP-native `Imap\Jmap` overrides
+  (`Mailbox/get`/`Mailbox/set`, same template `getACL()`/`setACL()` established) - 2
+  (`subscribeMailbox`/`listSubscribedMailboxes`) shipped same-day by a separate session
+  (`adc28974b4`, hit independently via the **regular Mail UI**'s subscription popup, confirming this
+  wasn't ActiveSync-only), the remaining 7 (`listMailboxes`/`status`/`openMailbox`/`createMailbox`/
+  `renameMailbox`/`deleteMailbox` - `mailboxExist()` needed no override of its own) in `e90b7c8793`.
+  17 new mock-based tests plus the full related suite green; **live-verified** against
+  boulder.egroupware.org's own local Stalwart (real account, real authenticated session) - every
+  read path incl. the exact `Api\Mail::getFolderStatus()` call `AlterPingChanges()` makes returns
+  correct live data end-to-end (mutating ops not live-tested, see the doc's own "Verification"
+  section). The account-specific `mail_zpush::_mailInstance()` stop-gap (`96c1f784ae`/`5280f53e10`)
+  is now redundant but was deliberately left in place (harmless, already proven safe in production).
+  **Master only, no 26 backport for any of this** (ralf, 2026-10-29) - 26 is missing much more of
+  this JMAP-compatibility surface and will be rebased onto master soon.
 - `doc/ai/projects/mail-jmap-imap-inversion.md` - corrected (2026-10-29) a wrong 2026-08-26 Phase-2-
   scoping claim that `mail_zpush.inc.php` was "not a real consumer" of unguarded raw-IMAP calls - that
   screening only checked its own direct `icServer->` references, missing that it's a heavy consumer
