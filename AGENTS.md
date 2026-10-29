@@ -127,6 +127,30 @@ and drop the 11th entry if that pushes the list over 10 - dropping it here does 
 file itself. The full set of project docs, including everything trimmed off this list, always
 lives in `doc/ai/projects/` - check there directly for anything not shown here.
 
+- `doc/ai/projects/mail-zpush-jmap-folders.md` - scoping the real fix for ActiveSync
+  (`mail_zpush.inc.php`) breaking on any Stalwart-migrated account: it implements no JMAP-specific
+  methods at all, so `Api\Mail`'s folder-management methods it calls (`getFolderStatus()`,
+  `folderExists()`, `createFolder()`/`renameFolder()`/`deleteFolder()`, `getFolderObjects()`,
+  `reopen()`) fall through to raw `Horde_Imap_Client_Socket` calls neither `Imap\Jmap` nor
+  `Imap\Stalwart` override - found live via egroupware.org's own Stalwart migration breaking
+  ActiveSync's "Ping" mechanism entirely. Full method-by-method map of all 33 `Api\Mail` methods
+  `mail_zpush` calls: every message-level operation is already properly JMAP-native (dispatches to
+  a private `jmap<Method>()` helper or an inline guard) - the gap is narrowly confined to 7-8
+  folder-management methods. Proposes adding JMAP-native `Imap\Jmap` overrides for exactly those
+  (`getMailboxes`/`getStatus`/`mailboxExist`/`openMailbox`/`createMailbox`/`renameMailbox`/
+  `deleteMailbox`/`subscribeMailbox`/`listSubscribedMailboxes`), following the same `Mailbox/get`/
+  `Mailbox/set` template `getACL()`/`setACL()` already established - a bounded, single-class fix,
+  not part of [[mail-jmap-imap-inversion]]'s much larger Phase 2. A narrow, account-specific
+  stop-gap already shipped and is confirmed working live (`96c1f784ae`/`5280f53e10`); this doc scopes
+  the general fix every other Stalwart-migrated customer still needs. Not started.
+- `doc/ai/projects/mail-jmap-imap-inversion.md` - corrected (2026-10-29) a wrong 2026-08-26 Phase-2-
+  scoping claim that `mail_zpush.inc.php` was "not a real consumer" of unguarded raw-IMAP calls - that
+  screening only checked its own direct `icServer->` references, missing that it's a heavy consumer
+  of `Api\Mail` methods that call `icServer->` two or three layers down (see
+  [[mail-zpush-jmap-folders]], found via the same live outage). Phase 1 (restructuring already-JMAP-
+  native code into the new `Api\Jmap`/`Mail\Jmap` object model) stays committed+pushed from
+  2026-08-26; Phase 2 (making `Api\Mail` itself JMAP-shaped) stays scoped-but-not-started - still no
+  easy slice found among its own obvious candidates, independent of today's correction.
 - `doc/ai/projects/sql-fragment-type-safety.md` - closing GHSA-vx89-j2x7-5wp2's vulnerability
   *class* (not just its two entry points, already patched separately): `Api\Db` let a caller splice
   raw SQL into a `$where`/`$cols`/`$data` array via an integer array key, indistinguishable from an
@@ -258,31 +282,6 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   reading (dead `colfilter`, ignored `search`, calendar's apparently-dead `filter` SQL fragment, and
   the pass-through `validate()` that must be allowlisted before any of it is honoured), plus what a
   diff needs that a virtualized shadow-DOM row takes away from it.
-- `doc/ai/projects/smallpart-lti-library-update.md` - updated smallpart's `celtic/lti` LTI Tool
-  Provider library from `4.10.3` to `5.4.6`, which replaced several constants with enums and added
-  strict type hints to overridden methods (see the library's own Updating wiki page). Covers the
-  regression test harness built first (`smallpart/tests/LTI/` - `Config`/`DataConnector`/`Tool`/
-  `Session`, built against real (non-mocked) `ceLTIc\LTI\Platform`/`UserResult` objects) - it caught
-  every fatal error the version bump caused (enum constants, 9 methods needing added type hints
-  across `DataConnector`/`Tool`) with no new tests needed - plus the non-obvious composer mechanics
-  (an `egroupware/*` app's local `composer.json` edit is invisible to composer's resolver until
-  pushed, since these are resolved as git-VCS packages tracking the remote branch tip) and several
-  gotchas found while writing it (a fragile `$_POST` dependency in `DataConnector::loadPlatform()`'s
-  LTI 1.0 path, a dead-code bug in `Config::readByOauthKey()`, the 28-char issuer truncation in
-  `savePlatform()`). DONE: library bumped, all 33 harness tests + the unrelated `BoTest.php` green.
-  Still open: the real HTTP/OIDC/OAuth1-signed entry point and a live-LMS verification pass, neither
-  attempted (see the doc's "Status"/"Not covered" sections).
-- `doc/ai/projects/hashed-entries-build-pinning.md` - giving rollup's entry files (`app.min.js`,
-  `egw.min.js`, `etemplate2.js`) content hashes and pinning a document to one build's file graph, so
-  opening a not-yet-opened app after a rebuild stops forcing the user into a reload the build-epoch
-  design deliberately set out to spare them. Covers why the already-caught "Illegal constructor"
-  crash is not the motivation, why hashing without pinning fixes nothing, the confirmed-dead
-  `getImportMap()` trio and why an import map is probably unnecessary, the way hashing would silently
-  disable the existing `egw_import` dedup defence, the app-disclosure problem a verbatim manifest
-  would create, and why the pin must NOT live in the session (it would survive a reload and make the
-  "reload at your convenience" prompt a lie). Implemented and live (`a77de36152` +co-commits); the doc
-  now also tracks ticket #124112's follow-up findings and a running commit list. Two residual bugs
-  from that ticket still open - see the doc's "Status" section.
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
