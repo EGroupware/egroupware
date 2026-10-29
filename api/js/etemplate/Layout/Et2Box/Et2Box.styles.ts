@@ -10,6 +10,8 @@ export default css`
 	justify-content: flex-start;
 	align-items: stretch;
 	height: 100%;
+	/* Padding on ::part(base) must not push it past the host */
+	box-sizing: border-box;
 	}
 	:host([align="right"]) > div {
 	justify-content: flex-end;
