@@ -146,8 +146,9 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   boulder.egroupware.org's own local Stalwart (real account, real authenticated session) - every
   read path incl. the exact `Api\Mail::getFolderStatus()` call `AlterPingChanges()` makes returns
   correct live data end-to-end (mutating ops not live-tested, see the doc's own "Verification"
-  section). The account-specific `mail_zpush::_mailInstance()` stop-gap (`96c1f784ae`/`5280f53e10`)
-  is now redundant but was deliberately left in place (harmless, already proven safe in production).
+  section). The account-specific `mail_zpush::_mailInstance()` stop-gap (`96c1f784ae`) was then
+  **removed** (`2b0d16b9df`) so ActiveSync actually exercises the new overrides via real traffic,
+  instead of silently continuing through the old classic-IMAP fallback.
   **Master only, no 26 backport for any of this** (ralf, 2026-10-29) - 26 is missing much more of
   this JMAP-compatibility surface and will be rebased onto master soon.
 - `doc/ai/projects/mail-jmap-imap-inversion.md` - corrected (2026-10-29) a wrong 2026-08-26 Phase-2-

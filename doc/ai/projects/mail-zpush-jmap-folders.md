@@ -162,12 +162,12 @@ consistent and `uidvalidity` was stable across two consecutive calls.
    every real consumer (`getMailboxes()`, `getFolderObjects()`, `getStatus()`,
    `getMailboxCounters()`, `mailboxExist()`, `reopen()`, `createFolder()`, `renameFolder()`,
    `deleteFolder()`) picked this up transitively via ordinary virtual dispatch.
-3. The egroupware.org-specific stop-gap in `mail_zpush::_mailInstance()` (commits `96c1f784ae`/
-   `5280f53e10`) is now redundant - `Imap\Jmap` handles the account correctly without falling back
-   to a classic IMAP connection at all - but was left in place rather than removed, since it's
-   harmless (the `instanceof Mail\Imap\Jmap` guard there never fires once `_mailInstance()`'s own
-   stalwart.egroupware.org:443 check no longer needs to trigger a fallback) and removing it isn't
-   worth the risk/churn for a stop-gap that's already proven safe in production.
+3. The egroupware.org-specific stop-gap in `mail_zpush::_mailInstance()` (commit `96c1f784ae`) was
+   **removed** (`2b0d16b9df`) once the real fix was live-verified - keeping it would have kept
+   silently shadowing the new overrides for the one real account they were written for, routing
+   ActiveSync through the classic-IMAP fallback instead of actually exercising the fix via real
+   traffic. `mail_zpush.inc.php` is now byte-identical to its pre-`96c1f784ae` state.
+   `5280f53e10` (the separate `pushCallback()` null-folder TypeError fix) is unrelated and stays.
 
 ## Verification (done 2026-10-29)
 
