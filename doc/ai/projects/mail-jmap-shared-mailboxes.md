@@ -13,6 +13,23 @@
   self-encoding the owning accountId into each node's own opaque id string
   (`MailJmap.getSharedAccountMailboxChildren()`) - no changes needed to Et2Tree, FolderTreeNode or
   app.ts's folderTreeAutoload(), which never need to know a foreign accountId is involved at all.
+- Two real bugs found via live click-through testing (boulder.egroupware.org), both fixed and
+  verified against real Stalwart data before landing:
+  - `3e8f9e1faf`: a genuine pre-existing top-level mailbox literally named "user" (acc_id=89)
+    rendered as a visible duplicate alongside the synthetic root - `injectSharedAccountsRoot()`
+    now skips entirely when one already exists.
+  - `3b30ea9e1d` + `69077a83a0`: a shared account's own folders are typically `isSubscribed:false`
+    (the viewer never subscribed to someone else's mailbox) and were getting filtered out at BOTH
+    the JMAP-query layer (`jmap.ts`) and a second, independent client-side re-filter
+    (`app.ts`'s `buildFolderLevelData()` feeding `folderTree.ts`'s `buildFolderLevel()`) - found
+    only by actually clicking through the real tree (a direct `getMailboxChildren()` call alone
+    looked correct; the UI-level re-filter was the real remaining culprit). Both layers now
+    deliberately never subscribedOnly-filter inside a shared-account branch.
+  - Live-confirmed end-to-end (boulder.egroupware.org acc_id=1, "teachers@boulder..." shared
+    account): expanding "user" → the shared account → its real folders (Posteingang with unread
+    badge, Entwürfe, Gesendet, Papierkorb, Spam) all render correctly, translated, with no bogus
+    expand arrows on leaf folders; clicking one highlights it but correctly does nothing further
+    (noSelect holds, no crash, no wrong data loaded).
 - **Not yet implemented, deliberately deferred**: every node in a shared branch stays `noSelect` -
   actually opening a shared mailbox's messages needs `getRows()`/`fetchRows()` (and likely
   compose-from-shared-context, mark-as-read, move/delete, ...) to also support a foreign accountId,
