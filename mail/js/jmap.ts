@@ -869,6 +869,13 @@ export class MailJmap
 	 * the tree) - UNLESS two different accountIds would then collide on the same local part, in
 	 * which case BOTH keep their full address instead, to avoid an ambiguous duplicate node (and an
 	 * unresolvable reverse lookup - resolveSharedAccountId() couldn't tell the two apart either).
+	 *
+	 * A "noreply-" local part is suppressed entirely, not just relabeled (ralf, 2026-10-29: these
+	 * groups have no real mailbox a user would ever want to browse into - they exist purely to set
+	 * ACL via). This is also WHY injectSharedAccountsRoot() must check this method's own result
+	 * (not the Session's raw accounts map directly) for "does this account have anything shared
+	 * worth a 'user' root at all" - an account shared with nothing but noreply-* groups must show
+	 * no root, same "no empty/dead root" rule as having nothing shared at all.
 	 */
 	private async sharedAccountEntries(profileID : string) : Promise<[string, string][]>
 	{
@@ -880,7 +887,7 @@ export class MailJmap
 			const full = a.name || id;
 			const at = full.indexOf('@');
 			return [id, at > 0 ? full.slice(0, at) : full, full];
-		});
+		}).filter(([, short]) => !short.toLowerCase().startsWith('noreply-'));
 		const counts : Record<string, number> = {};
 		stripped.forEach(([, short]) => { counts[short] = (counts[short] || 0) + 1; });
 		return stripped.map(([id, short, full]) : [string, string] => [id, counts[short] > 1 ? full : short]);
@@ -953,15 +960,13 @@ export class MailJmap
 			{
 				throw new JmapUserError(this.egw.lang("Folder '%1' not found", folder));
 			}
-			if (!rest.length)
-			{
-				// the owner placeholder node itself (noSelect in the tree, but nothing stops a
-				// stale/crafted selectedFolder from reaching here) - not a real mailbox
-				return {rows: [], total: 0};
-			}
+			// the bare owner node itself (eg. "user/default") - mirrors how clicking a real
+			// account's own root node lands on its INBOX (ralf, 2026-10-29: "clicking on 'default'
+			// does not load the empty mailbox of the Default group, but still shows my own
+			// INBOX" - the placeholder is no longer noSelect, so a click actually reaches here now)
 			effectiveAccountId = resolved;
 			cacheProfileID = profileID + '\u0000' + resolved;
-			realFolder = rest.join('/');
+			realFolder = rest.length ? rest.join('/') : 'INBOX';
 		}
 		const mailboxId = await this.mailboxId(client, effectiveAccountId, cacheProfileID, realFolder);
 
@@ -1567,19 +1572,20 @@ export class MailJmap
 		{
 			return;
 		}
-		const client = this.clients[profileID];
-		let session : any;
+		let entries : [string, string][];
 		try
 		{
-			session = await client.session;
+			// sharedAccountEntries(), not a raw session.accounts check - a "noreply-" group must
+			// count as nothing shared too (see that method's own docblock), or an account shared
+			// with nothing else would still show an otherwise-always-empty root
+			entries = await this.sharedAccountEntries(profileID);
 		}
 		catch (e)
 		{
 			console.error('MailJmap.injectSharedAccountsRoot(): failed to read the JMAP session, skipping the "Other users" root', e);
 			return;
 		}
-		const hasSharedAccounts = Object.values(session?.accounts || {}).some((a : any) => !a.isPersonal);
-		if (!hasSharedAccounts) return;
+		if (!entries.length) return;
 		top.push({
 			id: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
 			name: 'user',
@@ -1598,10 +1604,15 @@ export class MailJmap
 	 * lists that account's real top-level mailboxes via the SAME lazy per-level mechanism as the
 	 * primary account.
 	 *
-	 * Still noSelect (it's a grouping node, not a real mailbox) but hasChildren:true (assume
-	 * expandable, same "no cheap hint" default as a real JMAP mailbox - see
-	 * folderTree.ts's own buildFolderLevel() docblock) - unlike before, this is no longer a dead
-	 * end: real folders are what you actually see once you expand it.
+	 * hasChildren:true (assume expandable, same "no cheap hint" default as a real JMAP mailbox -
+	 * see folderTree.ts's own buildFolderLevel() docblock) - this is no longer a dead end: real
+	 * folders are what you actually see once you expand it.
+	 *
+	 * Selectable (not noSelect) - clicking it lands on that account's own INBOX, the same
+	 * "account root -> its own INBOX" shortcut a real account's own root node already gives
+	 * (ralf, 2026-10-29: clicking it previously silently reverted to whatever was selected before,
+	 * since changeFolder() (mail/js/app.ts) refuses to select a noSelect node at all - see
+	 * getRows()'s own handling of the bare "user/<name>" path for the other half of this fix).
 	 */
 	private async getSharedAccountPlaceholders(profileID : string) : Promise<any[]>
 	{
@@ -1613,7 +1624,6 @@ export class MailJmap
 			role: null,
 			isSubscribed: true,
 			hasChildren: true,
-			noSelect: true,
 		}));
 	}
 

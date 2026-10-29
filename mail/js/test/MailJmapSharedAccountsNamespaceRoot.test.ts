@@ -77,6 +77,25 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 		assert.lengthOf(top, 2, "no second 'user' entry");
 	});
 
+	it("does not inject a 'user' root when the only shared accounts are 'noreply-' ACL-only groups", async() =>
+	{
+		// ralf, 2026-10-29: "noreply-" groups have no real mailbox a user would ever want to browse
+		// into - they exist purely to set ACL via. An account shared with nothing else must behave
+		// exactly like having nothing shared at all - no empty/dead root.
+		const jmap = jmapWithSession({
+			accounts : {
+				ca : {name : "ralf@example.invalid", isPersonal : true},
+				u : {name : "noreply-admins@example.invalid", isPersonal : false},
+				v : {name : "noreply-family@example.invalid", isPersonal : false},
+			},
+		});
+		const top : any[] = [{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null}];
+
+		await (jmap as any).injectSharedAccountsRoot("89", {isLocal : false}, top);
+
+		assert.lengthOf(top, 1, "no 'user' root when only noreply- groups are shared");
+	});
+
 	it("does nothing when every account is personal (the common case)", async() =>
 	{
 		const jmap = jmapWithSession({
@@ -116,7 +135,7 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 
 describe("MailJmap.getSharedAccountPlaceholders()", () =>
 {
-	it("returns one non-selectable, expandable-into-real-folders placeholder per shared account", async() =>
+	it("returns one selectable, expandable-into-real-folders placeholder per shared account", async() =>
 	{
 		const jmap = jmapWithSession({
 			accounts : {
@@ -134,12 +153,29 @@ describe("MailJmap.getSharedAccountPlaceholders()", () =>
 		for (const p of placeholders)
 		{
 			assert.isTrue(p.hasChildren, "expanding it must list the account's real folders");
-			assert.isTrue(p.noSelect, "a grouping node, not itself a real mailbox");
+			assert.isNotTrue(p.noSelect, "selectable - clicking it lands on that account's own INBOX");
 			assert.equal(p.parentId, (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID);
 			assert.isTrue(p.id.startsWith((MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u") ||
 				p.id.startsWith((MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "l"),
 				"id must encode the shared accountId for getSharedAccountMailboxChildren() to recover");
 		}
+	});
+
+	it("suppresses 'noreply-' ACL-only groups entirely", async() =>
+	{
+		const jmap = jmapWithSession({
+			accounts : {
+				ca : {name : "ralf@example.invalid", isPersonal : true},
+				u : {name : "info@example.invalid", isPersonal : false},
+				v : {name : "noreply-admins@example.invalid", isPersonal : false},
+				w : {name : "NOREPLY-family@example.invalid", isPersonal : false},
+			},
+		});
+
+		const placeholders = await (jmap as any).getSharedAccountPlaceholders("89");
+
+		assert.deepEqual(placeholders.map((p : any) => p.name), ["info"],
+			"noreply- groups (case-insensitively) have no real mailbox worth browsing into");
 	});
 
 	it("keeps the full address for BOTH sides of a local-part collision across domains", async() =>

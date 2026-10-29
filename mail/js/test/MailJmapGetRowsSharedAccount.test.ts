@@ -131,16 +131,22 @@ describe("MailJmap.getRows() - shared account folder", () =>
 			"a downstream method that doesn't yet understand this encoding must fail safely (not found), never silently collide with this profile's own real mailbox ids");
 	});
 
-	it("returns an empty result for the bare owner-placeholder path, with no JMAP call at all", async() =>
+	it("redirects the bare owner-placeholder path to that account's own INBOX", async() =>
 	{
-		const {client, captured} = fakeClient(SHARED_SESSION, []);
+		// ralf, 2026-10-29 (live report): clicking the owner node itself (eg. "default") used to
+		// silently revert to whatever was previously selected, since the placeholder was noSelect
+		// and app.ts's changeFolder() refuses to select a noSelect node at all. It's no longer
+		// noSelect (see getSharedAccountPlaceholders()'s own docblock) - a click now reaches here
+		// and must behave like clicking a real account's own root node: land on its INBOX, not an
+		// empty synthetic result.
+		const {client, captured} = fakeClient(SHARED_SESSION, [fakeEmail()]);
 		const jmap = new MailJmap(createFakeApp());
 		primeToken(jmap, "1", client);
 
 		const result = await jmap.getRows({selectedFolder : "1::user/teachers"});
 
-		assert.deepEqual(result, {rows : [], total : 0});
-		assert.equal(captured.calls, 0, "must never make a real JMAP call for the placeholder node itself");
+		assert.equal(captured.mailboxQueryAccountId, "o", "must resolve INBOX within the shared account, not the primary one");
+		assert.lengthOf(result.rows, 1);
 	});
 
 	it("throws a friendly error when the named owner is no longer shared with this user", async() =>
