@@ -365,6 +365,9 @@ export class NotificationsApp extends EgwApp
 					inner.innerHTML += notification.children[c].message;
 				});
 			}
+			// a message's <style> would apply to the whole window, eg. the dark mode of html notifications
+			// following the operating system, kdots' dark theme styles them instead
+			inner.querySelectorAll('style').forEach(style => style.remove());
 			message.appendChild(inner);
 
 			const moreInfo = document.createElement('div');
@@ -917,6 +920,8 @@ export class NotificationsApp extends EgwApp
 	getData(_message : string, _extra_data? : { [key : string] : any }) : NotifyMessage['data']
 	{
 		const dom = new DOMParser().parseFromString(_message, 'text/html');
+		// a <style> is no text of the message
+		dom.querySelectorAll('style').forEach(style => style.remove());
 		const link = dom.querySelector<HTMLElement>('div[data-id],div[data-url]');
 
 		const data : NotifyMessage['data'] = {

@@ -1049,6 +1049,7 @@ only supported by a few fully conformant clients (eg. from apple). if you have t
 only yours	common	de	Nur eigene
 oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
 open	common	de	Öffnen
+open %1	common	de	%1 öffnen
 open existing contact	common	de	Vorhandenen Kontakt öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Pop-up Fenster öffnen
@@ -1579,6 +1580,7 @@ weekend	common	de	Wochenende
 welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
+what changed	common	de	Was hat sich geändert
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 which groups	common	de	Welche Gruppen

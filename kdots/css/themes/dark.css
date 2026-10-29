@@ -816,6 +816,10 @@ span.flatpickr-weekday {
   * images that look like bootstrap icons can be inverted nicely into darkmode
   * This is deprecated, we should replace these either with et2-images or use the bootstrap icons directly
   **/
+  /**
+  * html notifications of Api\Storage\Tracking in the notifications popup, overriding their inline light styles
+  * Same colors as Tracking::HTML_DARK_RULES, which mails get instead, keep both in sync!
+  **/
 }
 html[data-darkmode="1"] #egw_fw_topmenu_info_items #topmenu_info_timer:before,
 .sl-theme-dark #egw_fw_topmenu_info_items #topmenu_info_timer:before {
@@ -824,6 +828,10 @@ html[data-darkmode="1"] #egw_fw_topmenu_info_items #topmenu_info_timer:before,
 html[data-darkmode="1"] egw-app,
 .sl-theme-dark egw-app {
   --application-header-text-color: var(--sl-color-neutral-900);
+}
+html[data-darkmode="1"] et2-toolbar,
+.sl-theme-dark et2-toolbar {
+  --sl-color-neutral-0: var(--sl-color-neutral-50);
 }
 html[data-darkmode="1"] .et2_container,
 .sl-theme-dark .et2_container {
@@ -849,9 +857,17 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-innerContainer,
   background: var(--sl-panel-background-color);
   border-bottom-color: var(--sl-panel-border-color);
 }
+html[data-darkmode="1"] .flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays,
+.sl-theme-dark .flatpickr-calendar .flatpickr-innerContainer .flatpickr-weekdays {
+  background: var(--sl-color-neutral-200);
+}
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months,
 .sl-theme-dark .flatpickr-calendar .flatpickr-months {
   background-color: var(--sl-color-neutral-200);
+}
+html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper,
+.sl-theme-dark .flatpickr-calendar .flatpickr-months .flatpickr-current-month .numInputWrapper {
+  background-color: var(--sl-color-neutral-50);
 }
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-months .flatpickr-month,
 .sl-theme-dark .flatpickr-calendar .flatpickr-months .flatpickr-month,
@@ -864,11 +880,12 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-weeks,
 .sl-theme-dark .flatpickr-calendar .flatpickr-weeks,
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-days,
 .sl-theme-dark .flatpickr-calendar .flatpickr-days {
-  border-left-color: var(--sl-panel-border-color);
+  border-color: var(--sl-panel-border-color);
+  border-right: none;
 }
 html[data-darkmode="1"] .flatpickr-calendar span.flatpickr-weekday,
 .sl-theme-dark .flatpickr-calendar span.flatpickr-weekday {
-  color: var(--sl-color-neutral-500);
+  color: var(--sl-color-neutral-700);
   background-color: var(--sl-color-neutral-200);
 }
 html[data-darkmode="1"] .flatpickr-calendar .flatpickr-time,
@@ -880,8 +897,77 @@ html[data-darkmode="1"] .flatpickr-calendar .flatpickr-time,
 .flatpickr-calendar.hasTime .sl-theme-dark .flatpickr-calendar .flatpickr-time {
   border-top: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
 }
-html[data-darkmode="1"] img[src^='/egroupware/node_modules/bootstrap-icons/icons/'],
-.sl-theme-dark img[src^='/egroupware/node_modules/bootstrap-icons/icons/'] {
+html[data-darkmode="1"] img[src*='/node_modules/bootstrap-icons/icons/'],
+.sl-theme-dark img[src*='/node_modules/bootstrap-icons/icons/'] {
   filter: invert(1);
 }
-/*# sourceMappingURL=dark.css.map */
+html[data-darkmode="1"] .egwpopup_message table.egwNotification,
+.sl-theme-dark .egwpopup_message table.egwNotification {
+  background-color: #22252b !important;
+  color: #e3e6eb !important;
+  border-color: #383d45 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationHeader,
+.sl-theme-dark .egwpopup_message .egwNotificationHeader {
+  background-color: #2b323c !important;
+  border-color: #383d45 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationHeader hr,
+.sl-theme-dark .egwpopup_message .egwNotificationHeader hr {
+  border-color: #4a525d !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationSection,
+.sl-theme-dark .egwpopup_message .egwNotificationSection,
+html[data-darkmode="1"] .egwpopup_message .egwNotificationValue,
+.sl-theme-dark .egwpopup_message .egwNotificationValue {
+  border-color: #383d45 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationLabel,
+.sl-theme-dark .egwpopup_message .egwNotificationLabel {
+  color: #a4abb7 !important;
+  border-color: #383d45 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationHeading,
+.sl-theme-dark .egwpopup_message .egwNotificationHeading {
+  color: #a4abb7 !important;
+}
+html[data-darkmode="1"] .egwpopup_message tr.egwNotificationModified > *,
+.sl-theme-dark .egwpopup_message tr.egwNotificationModified > * {
+  background-color: #3b3018 !important;
+}
+html[data-darkmode="1"] .egwpopup_message tr.egwNotificationModified > th,
+.sl-theme-dark .egwpopup_message tr.egwNotificationModified > th {
+  color: #ffd27a !important;
+  border-left-color: #b8892a !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationBadge,
+.sl-theme-dark .egwpopup_message .egwNotificationBadge {
+  color: #ffd27a !important;
+  border-color: #b8892a !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationBadge.egwNotificationNew,
+.sl-theme-dark .egwpopup_message .egwNotificationBadge.egwNotificationNew {
+  color: #93dbab !important;
+  background-color: #173322 !important;
+  border-color: #173322 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationComment,
+.sl-theme-dark .egwpopup_message .egwNotificationComment {
+  background-color: #2a2e35 !important;
+}
+html[data-darkmode="1"] .egwpopup_message .egwNotificationComment h3,
+.sl-theme-dark .egwpopup_message .egwNotificationComment h3 {
+  color: #a4abb7 !important;
+}
+html[data-darkmode="1"] .egwpopup_message td.egwNotificationNew,
+.sl-theme-dark .egwpopup_message td.egwNotificationNew {
+  border-left-color: #93dbab !important;
+}
+html[data-darkmode="1"] .egwpopup_message td.egwNotificationNew h3,
+.sl-theme-dark .egwpopup_message td.egwNotificationNew h3 {
+  color: #e3e6eb !important;
+}
+html[data-darkmode="1"] .egwpopup_message table.egwNotification a,
+.sl-theme-dark .egwpopup_message table.egwNotification a {
+  color: #8cbcff !important;
+}

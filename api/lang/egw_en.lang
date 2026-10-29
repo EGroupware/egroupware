@@ -1047,6 +1047,7 @@ only supported by a few fully conformant clients (eg. from apple). if you have t
 only yours	common	en	Only yours
 oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintenance.
 open	common	en	Open
+open %1	common	en	Open %1
 open existing contact	common	en	Open existing contact
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
@@ -1577,6 +1578,7 @@ weekend	common	en	Weekend
 welcome	common	en	Welcome
 western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
+what changed	common	en	What changed
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here. If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 which groups	common	en	Which groups
