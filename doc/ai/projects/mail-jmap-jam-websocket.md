@@ -623,3 +623,75 @@ and `heartbeatIntervalMs: 0` fully disabling it. `npx web-test-runner mail/js/te
 --node-resolve` - 123 total, all passing (up from 117 before this phase). Not yet live-verified against a real induced-zombie connection (hard to simulate deliberately without
 actually pulling a cable/killing a proxy mid-session) - covered by the fake-timer unit tests only for
 now.
+
+## Phase 7: `maxCallsInRequest`/`maxConcurrentRequests` - a server-advertised limit silently hangs instead of erroring (done, 2026-10-29)
+
+Reported directly by ralf as a pole.egroupware.org production bug, found via
+[[mail-jmap-shared-mailboxes]]'s own live testing (not specific to that feature - just where it
+surfaced first): the `info@egroupware.org` account had no Inbox, and childless folders like
+Drafts/Templates showed a bogus expand caret. Looked "random" across users at first ("users are
+reporting this kinda randomly, some have the problem, other wont"), but ralf's own correction
+pinned it down precisely: "if you had more then 16 folders in the 1st level, you're affected, if you
+have less, it works for you" - fully deterministic, not random at all.
+
+**Root cause, confirmed live by bisection against the real Stalwart tenant**: its own advertised
+`urn:ietf:params:jmap:core` `maxCallsInRequest` is 16, and a request with more method calls than
+that doesn't error cleanly - it just **never answers at all**. `MailJmap.resolveHasChildren()`
+(`mail/js/jmap.ts`) built one `Mailbox/query` call per mailbox needing resolution in a single
+`requestMany()` batch, so any folder level with more mailboxes than the limit hung on literally
+every attempt - exactly 16 calls in one request resolved in 35ms, 17 never resolved, every time,
+reproduced repeatedly. An initial, necessary-but-insufficient fix attempt
+(`retryIdempotentOnClose: true` on the affected calls) was kept as a general safety net for a
+genuinely dropped connection, but doesn't help here - retrying resubmits the identical over-limit
+request and hangs again the same way.
+
+**Fix** (`7055a18edf`):
+- `resolveHasChildren()` now reads the session's own `maxCallsInRequest` (new private
+  `maxCallsInRequest(client)` helper, falling back to RFC 8620's own required minimum of 16 if the
+  session can't be read) and splits its batch into chunks of at most that many calls each via a new
+  private static `chunk<T>()` helper, run in parallel (`Promise.all`) since they're independent
+  reads with no reason to serialize.
+- **General fix, explicitly requested by ralf** beyond the one call site ("we need the general fix,
+  to not trigger this again in random situations, which [with] much traffic and e.g. slower answers
+  from the jmap server"): a caller that correctly chunks against `maxCallsInRequest` can still
+  collectively have more requests *in flight at once* than the server allows under higher traffic or
+  a slower server - the same "silently never answers past its own advertised limit" failure mode,
+  just at the transport level instead of one call site. `JamWebSocketClient` now gates its own
+  WebSocket transport against the session's own `maxConcurrentRequests` (same RFC 8620 §2 capability
+  object, same 16-fallback pattern): new `#inFlightRequests`/`#requestWaiters` fields, `#maxConcurrentRequests()`,
+  and `#acquireRequestSlot()`/`#releaseRequestSlot()` (FIFO queue, released in a `finally` so a
+  request that throws still frees its slot for whoever's queued behind it).
+  - Deliberately scoped to **only** `#requestOverWebSocket()`/`#requestManyOverWebSocket()` (the two
+    existing, already-proven-safe true `#`-private async methods from Phase 1/2 above) - **not**
+    `request()`/`requestMany()` themselves, which must stay non-`async` per the Phase 4 Babel
+    miscompilation constraint (see above), and not the HTTP-fallback branch, which is comparatively
+    low-volume fallback traffic rather than the sustained-high-throughput path this is meant to
+    protect.
+  - Confirmed safe against both documented Babel bugs: neither method was newly made `async` (both
+    already were), and neither gained a new `super` call - the wrapping is a plain `await
+    this.#acquireRequestSlot(); try {...} finally { this.#releaseRequestSlot(); }` around each
+    method's existing body.
+
+**Live-verified** on boulder.egroupware.org (not pole - pole runs a separately-deployed instance,
+see [[mail-jmap-shared-mailboxes]]), per this file's own Phase 4 lesson that bug 2 "only fails live,
+in the browser, never at build or typecheck time":
+- `npm run build` succeeded (no Rollup re-parse failure, ruling out bug 1).
+- `read_console_messages` after loading the mail app showed only one pre-existing, unrelated
+  rocketchat error - nothing about `super`/undefined `this`.
+- A burst of 10 concurrent `getRootFolders()` calls (deliberately exceeding the 16-ish concurrency
+  budget's neighborhood under real traffic) all resolved correctly, proving the gate queues and
+  releases correctly rather than deadlocking.
+- `getMailboxChildren('89', ...)` (the real, public tree-loading path, on the same 16-top-level-mailbox
+  account shape that reproduced the original bug) correctly resolved `hasChildren` for all 16
+  folders - the exact symptom (stuck/hanging carets) no longer reproduces.
+
+**Test coverage**: `JamWebSocketClient.test.ts` gained a `describe("JamWebSocketClient -
+maxConcurrentRequests gate", ...)` block (3 tests: delays a request past the limit until an earlier
+one resolves, releases the slot on a failed request so a queued one isn't stuck, no gating when the
+session advertises no limit) - all 22 tests in that file pass. `MailJmap.test.ts` gained 2 tests for
+the chunking (`[2,2,1]` split for 5 mailboxes with a fake `maxCallsInRequest: 2`, and the RFC 8620
+minimum-16 fallback). Full `mail` jstest group: 104/104 test files, 1144 tests passing on both
+Chromium and Firefox, no regressions.
+
+Pushed to master (`7055a18edf`); not yet confirmed resolved on pole itself (depends on ralf's own
+separate deployment process there).
