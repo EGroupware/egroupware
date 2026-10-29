@@ -509,6 +509,11 @@ class Ui
 		// as getting all subscribed folders is very fast operation
 		// we can use it to get a comparison base for folders which
 		// got subscribed or unsubscribed by the user
+		// default to empty, not undefined/null, so a thrown exception below degrades to "no
+		// subscribed folders known" instead of crashing array_map() right after (found live,
+		// ticket #126691 follow-up: listSubscribedMailboxes() threw for a Stalwart/JMAP account
+		// and this left $subscribed unset entirely)
+		$subscribed = [];
 		try {
 			$subscribed = array_keys($this->mail_bo->icServer->listSubscribedMailboxes('',0,true) ?: []);
 		} catch (\Exception $ex) {

@@ -143,9 +143,12 @@ class Mailbox extends Type
 	 * the thin per-account wrapper around this that real callers use).
 	 *
 	 * @param ?string $accountId defaults to the session's own accountId
+	 * @param bool $subscribedOnly true: only mailboxes with isSubscribed=true (ancestors are
+	 *  still resolved from the full, unfiltered set, so a subscribed child's path never breaks
+	 *  just because an unsubscribed parent was filtered out)
 	 * @return array path => translated label
 	 */
-	public function listAllPaths(?string $accountId=null) : array
+	public function listAllPaths(?string $accountId=null, bool $subscribedOnly=false) : array
 	{
 		static $roleLabelKeys = [
 			'inbox' => 'INBOX', 'trash' => 'Trash', 'sent' => 'Sent', 'drafts' => 'Drafts',
@@ -187,6 +190,10 @@ class Mailbox extends Type
 		$paths = [];
 		foreach ($mailboxes as $mailbox)
 		{
+			if ($subscribedOnly && empty($mailbox['isSubscribed']))
+			{
+				continue;
+			}
 			$r = $resolve($mailbox);
 			$paths[$r['path']] = $r['label'];
 		}

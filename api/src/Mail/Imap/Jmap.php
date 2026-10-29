@@ -716,6 +716,76 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP-native listSubscribedMailboxes() - Mailbox isSubscribed property instead of IMAP
+	 * LIST/LSUB, for an account with no real IMAP connection behind it. parent::
+	 * listSubscribedMailboxes() is un-overridden on this class and falls through to
+	 * Horde_Imap_Client_Socket's raw listMailboxes() via a real socket connect - the same
+	 * fallthrough class as getACL()/listMailboxPaths() above (see
+	 * project_jmap_imap_fallthrough_cleanup).
+	 *
+	 * Found live (ticket #126691 follow-up, 2026-10-29, right after migrating egroupware.org to
+	 * Stalwart): mail/src/Ui.php's subscription() calls this unconditionally to seed/diff the
+	 * subscribe popup; its catch-block never set $subscribed on this throw, crashing
+	 * array_map() right after with "Argument #2 ($array) must be of type array, null given".
+	 * This override removes the throw at the source; Ui.php also gets a defensive default as a
+	 * general safety net, not a fix for this specific cause.
+	 *
+	 * @param string $reference unused - no IMAP hierarchy-reference concept over JMAP
+	 * @param mixed $restriction_search unused - always returns every subscribed mailbox
+	 * @param bool $returnAttributes true: assoc array mailbox-path => attributes (only
+	 *  SUBSCRIBED is meaningful - JMAP has no delimiter/ATTRIBUTES equivalent); false: plain
+	 *  list of paths - same contract shape as parent::listSubscribedMailboxes()
+	 * @return array mailbox path (canonical '/'-delimited, matching listMailboxPaths())
+	 */
+	public function listSubscribedMailboxes($reference = '', $restriction_search = 0, $returnAttributes = false)
+	{
+		$paths = (new JmapMailbox($this->jmapClient()))->listAllPaths(null, true);
+		if (!$returnAttributes)
+		{
+			return array_keys($paths);
+		}
+		$ret = [];
+		foreach (array_keys($paths) as $path)
+		{
+			$ret[$path] = ['MAILBOX' => $path, 'ATTRIBUTES' => [], 'delimiter' => '/', 'SUBSCRIBED' => true];
+		}
+		return $ret;
+	}
+
+	/**
+	 * JMAP-native subscribeMailbox() - Mailbox/set isSubscribed instead of IMAP SUBSCRIBE/
+	 * UNSUBSCRIBE, for an account with no real IMAP connection behind it (same fallthrough
+	 * class as listSubscribedMailboxes() above / getACL()/setACL() below). Unlike sharing,
+	 * subscription is a plain RFC 8621 Mailbox property - no mailShareSupported() capability
+	 * check needed.
+	 *
+	 * @param mixed $mailbox a mailbox path (canonical '/'-delimited, matching listMailboxPaths())
+	 * @param bool $subscribe true (default) = subscribe, false = unsubscribe
+	 * @throws \Horde_Imap_Client_Exception mailbox not found, or on any JMAP error
+	 */
+	public function subscribeMailbox($mailbox, $subscribe = true)
+	{
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'update' => [
+					$mailboxId => ['isSubscribed' => (bool)$subscribe],
+				],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set isSubscribed failed: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$mailboxId]));
+		}
+	}
+
+	/**
 	 * JMAP-native setACL() - patches Mailbox shareWith[principalId] instead of IMAP SETACL, for
 	 * accounts whose session advertises mail:share. Throws otherwise - NOT a fall back to the
 	 * classic IMAP implementation: Stalwart is JMAP-only, with no real IMAP connection ever

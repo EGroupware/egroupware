@@ -128,4 +128,35 @@ class MailboxListAllPathsTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame([], $mailbox->listAllPaths());
 	}
+
+	/**
+	 * Ticket #126691 follow-up: Imap\Jmap::listSubscribedMailboxes() (the JMAP-native replacement
+	 * for the raw-IMAP LIST/LSUB call this class has no connection to serve) relies on this
+	 * $subscribedOnly filter.
+	 */
+	public function testSubscribedOnlyFiltersOutUnsubscribedMailboxes()
+	{
+		$session = $this->fakeSession('acc1', [
+			['id' => 'inbox-id', 'name' => 'Inbox', 'parentId' => null, 'role' => 'inbox', 'isSubscribed' => true],
+			['id' => 'trash-id', 'name' => 'Trash', 'parentId' => null, 'role' => 'trash', 'isSubscribed' => false],
+		]);
+		$mailbox = new Mailbox($session);
+
+		$this->assertSame(['INBOX' => 'INBOX'], $mailbox->listAllPaths(null, true));
+	}
+
+	/**
+	 * A subscribed child's path must still resolve through an unsubscribed parent - ancestors are
+	 * taken from the full, unfiltered set, never from the $subscribedOnly-filtered result.
+	 */
+	public function testSubscribedOnlyStillResolvesPathThroughAnUnsubscribedParent()
+	{
+		$session = $this->fakeSession('acc1', [
+			['id' => 'inbox-id', 'name' => 'Inbox', 'parentId' => null, 'role' => 'inbox', 'isSubscribed' => false],
+			['id' => 'sub-id', 'name' => 'Projects', 'parentId' => 'inbox-id', 'role' => null, 'isSubscribed' => true],
+		]);
+		$mailbox = new Mailbox($session);
+
+		$this->assertSame(['INBOX/Projects' => 'INBOX/Projects'], $mailbox->listAllPaths(null, true));
+	}
 }
