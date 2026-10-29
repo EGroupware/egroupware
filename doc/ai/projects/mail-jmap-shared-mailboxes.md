@@ -56,6 +56,30 @@
     an account shared with nothing but noreply- groups shows no root at all (same "no empty/dead
     root" rule as having nothing shared). Live-confirmed: boulder's own 3 noreply-* groups
     disappeared from the tree, the other 5 real shared accounts unaffected.
+- Phase 3c (`7055a18edf`), a general JMAP-transport bug found via this feature's own live
+  testing - **not shared-mailbox-specific**, but discovered here because `info@egroupware.org` (one
+  of the shared accounts this doc already lists above) happens to have >16 top-level mailboxes:
+  - Reported directly by ralf as a pole.egroupware.org production bug: `info@egroupware.org` had no
+    Inbox, and childless folders like Drafts/Templates showed a bogus expand caret. Looked "random"
+    across users at first, but turned out fully deterministic - any account/level with MORE than 16
+    top-level mailboxes is affected, any with fewer never is.
+  - Root cause, confirmed live by bisection against the real Stalwart tenant: its own advertised
+    `urn:ietf:params:jmap:core` `maxCallsInRequest` is 16, and a request with more method calls than
+    that doesn't error cleanly - it never answers at all. `MailJmap.resolveHasChildren()`
+    (`mail/js/jmap.ts`) built one `Mailbox/query` call per mailbox needing resolution, so any level
+    with >16 mailboxes hung on literally every attempt (exactly 16 calls resolved in 35ms, 17 never
+    resolved, every time).
+  - Fixed by chunking `resolveHasChildren()`'s batches into groups of at most the session's own
+    `maxCallsInRequest` (run in parallel), plus a general concurrency gate on
+    `JamWebSocketClient`'s WebSocket transport (`#acquireRequestSlot()`/`#releaseRequestSlot()` in
+    `mail/js/jmap-jam-websocket.ts`) respecting the session's own `maxConcurrentRequests` - requested
+    by ralf explicitly as "the general fix", since a caller that chunks correctly can still
+    collectively have more requests in flight at once than the server allows under higher traffic or
+    a slower server.
+  - Live-verified on boulder.egroupware.org (acc_id=89, the same 16-top-level-mailbox shape): a
+    burst of 10 concurrent requests cleared the new gate without hanging, and `getMailboxChildren()`
+    correctly resolved `hasChildren` for all 16 folders (no more stuck/hanging carets). Pushed to
+    master; not yet confirmed resolved on pole itself (depends on ralf's own separate deployment).
 - **Not yet implemented, deliberately deferred**: reading/acting on an individual message inside a
   shared folder - `fetchBody()` and the dozen-plus other rowId-consuming methods in `jmap.ts`
   (fetchForReply(), verifyPgpSignature(), markAsRead, move/delete, compose-from-shared-context, ...)
