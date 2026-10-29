@@ -178,7 +178,7 @@
 		</grid>
 	</et2-template>
 	<et2-template  id="admin.mailaccount" template="" lang="" group="0" version="1.9.001" layout="edit" style="--label-width:13em">
-		<et2-hbox  class="dialogHeader" hidden="!@accounts">
+		<et2-hbox  class="dialogHeader" disabled="!@accounts">
 			<et2-select  label="Mail account" class="et2-label-fixed" id="acc_id" onchange="app.admin.change_account"></et2-select>
 		</et2-hbox>
 		<et2-hbox  class="dialogHeader">
