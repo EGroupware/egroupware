@@ -272,6 +272,41 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 		assert.equal(calls, 1, "already-known hasChildren must not trigger the extra batch");
 		assert.isFalse(result[0].hasChildren);
 	});
+
+	/**
+	 * Found live (2026-10-29, pole.egroupware.org, an account with 30 top-level mailboxes, reported
+	 * "randomly, some users have it, others don't" - a missing INBOX and bogus expand carets on
+	 * genuinely-childless folders): this batch's size scales with the number of mailboxes needing
+	 * resolution, large enough to plausibly outlast the WebSocket's own ping/heartbeat window (the
+	 * exact race getRows()'s own main fetch already guards against). Without retryIdempotentOnClose,
+	 * a heartbeat-triggered reconnect mid-request orphans the pending promise forever - confirmed
+	 * live via the console's own "JamWebSocketClient: received a WebSocket frame with no matching
+	 * pending request" warning - hanging the whole caller (eg. getRootFolders()) indefinitely.
+	 */
+	it("passes retryIdempotentOnClose so a heartbeat-triggered reconnect mid-batch doesn't hang forever", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capturedOptions : any[] = [];
+		let call = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any, options? : any) =>
+			{
+				capturedOptions.push(options);
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [[
+					{mailboxes: {list: [{id: "a", name: "Leaf"}]}},
+					{c0: {ids: []}},
+				][call++]];
+			}
+		};
+		primeToken(jmap, "1", client);
+
+		await jmap.getMailboxChildren("1", null, true);
+
+		assert.deepEqual(capturedOptions[1], {retryIdempotentOnClose: true},
+			"the hasChildren batch itself (call index 1, after the top-level fetch) must retry on close");
+	});
 });
 
 /**

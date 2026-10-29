@@ -2064,9 +2064,23 @@ export class MailJmap
 		{
 			try
 			{
+				// retryIdempotentOnClose: true - found live (2026-10-29, pole.egroupware.org,
+				// "info@egroupware.org" account with 30 top-level mailboxes, reported "randomly,
+				// some users have it, others don't" plus a missing INBOX and bogus expand carets on
+				// genuinely-childless folders): this batch is one Mailbox/query PER unknown mailbox
+				// in `list` - for an account with many top-level folders, large enough to plausibly
+				// take longer to answer than the WebSocket's own ping/heartbeat window (the exact
+				// same race getRows()'s own main fetch already documents and guards against below -
+				// "a large-mailbox listing taking 20-28s can race the heartbeat into force-closing
+				// an otherwise-healthy connection"). Without this, a heartbeat-triggered reconnect
+				// mid-request orphans the pending promise forever (confirmed live via the console's
+				// own "JamWebSocketClient: received a WebSocket frame with no matching pending
+				// request" warning) - the whole caller (eg. getRootFolders()) hangs indefinitely,
+				// and since nothing ever reaches the catch below, hasChildren is never resolved
+				// either, leaving the "assume expandable" default stuck on real leaf folders.
 				const [checks] = await client.requestMany((t) => Object.fromEntries(
 					unknown.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
-				));
+				), {retryIdempotentOnClose: true});
 				unknown.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
 			}
 			catch (e)
@@ -2080,9 +2094,12 @@ export class MailJmap
 		if (!roots.length) return;
 		try
 		{
+			// retryIdempotentOnClose: true - same reasoning as the batch above, same risk (one
+			// Mailbox/query per namespace-root candidate, admittedly at most 1-2 here, but the cost
+			// of omitting it is total (an indefinite hang), not proportional to how rarely it fires
 			const [checks] = await client.requestMany((t) => Object.fromEntries(
 				roots.map((m, i) => [`s${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id, isSubscribed: true}, limit: 1})])
-			));
+			), {retryIdempotentOnClose: true});
 			roots.forEach((m, i) => m.hasSubscribedChildren = ((checks as any)[`s${i}`]?.ids?.length ?? 0) > 0);
 		}
 		catch (e)
