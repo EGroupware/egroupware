@@ -530,6 +530,11 @@ export class MailJmap
 	// collide with one. getMailboxChildren() recognizes it to list the shared accounts themselves
 	// instead of making a real Mailbox/query call.
 	private static readonly SHARED_ACCOUNTS_ROOT_ID = '\u0000shared-accounts\u0000';
+	// Separates SHARED_ACCOUNTS_ROOT_ID + <shared accountId> from the real (possibly empty) JMAP
+	// Mailbox id nested underneath it - see getSharedAccountMailboxChildren()'s own docblock for
+	// the full encoding. \u0001 so it can never collide with a real id (same reasoning as the root
+	// sentinel above).
+	private static readonly SHARED_ACCOUNT_SEP = '\u0001';
 
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
 	private tokens : Record<string, JmapToken> = {};
@@ -1482,10 +1487,14 @@ export class MailJmap
 	/**
 	 * The "user" namespace root's own children - one placeholder entry per JMAP account shared
 	 * with us (session.accounts, isPersonal:false), named by its own `name` (the owner's address).
-	 * Deliberately non-expandable/non-selectable for now (noSelect, hasChildren:false) - browsing
-	 * into a shared account's own folders is a separate, not-yet-implemented increment (see
-	 * doc/ai/projects/mail-jmap-shared-mailboxes.md's Phase 2 "open implementation question"); this
-	 * only surfaces WHICH accounts are shared with the user, same scope ralf explicitly asked for.
+	 * Its own id encodes the shared accountId with an empty real-mailbox-id suffix (see
+	 * getSharedAccountMailboxChildren()'s own docblock) - expanding it lists that account's real
+	 * top-level mailboxes via the SAME lazy per-level mechanism as the primary account.
+	 *
+	 * Still noSelect (it's a grouping node, not a real mailbox) but hasChildren:true (assume
+	 * expandable, same "no cheap hint" default as a real JMAP mailbox - see
+	 * folderTree.ts's own buildFolderLevel() docblock) - unlike before, this is no longer a dead
+	 * end: real folders are what you actually see once you expand it.
 	 */
 	private async getSharedAccountPlaceholders(profileID : string) : Promise<any[]>
 	{
@@ -1494,14 +1503,88 @@ export class MailJmap
 		return Object.entries(session?.accounts || {})
 			.filter(([, a] : [string, any]) => !a.isPersonal)
 			.map(([accountId, a] : [string, any]) => ({
-				id: MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId,
+				id: MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId + MailJmap.SHARED_ACCOUNT_SEP,
 				name: a.name || accountId,
 				parentId: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
 				role: null,
 				isSubscribed: true,
-				hasChildren: false,
+				hasChildren: true,
 				noSelect: true,
 			}));
+	}
+
+	/**
+	 * One level's worth of REAL mailboxes inside a shared account, for browsing into the folder
+	 * structure someone else shared with us (doc/ai/projects/mail-jmap-shared-mailboxes.md's own
+	 * "browsing into a shared account" follow-up to the placeholder-only first pass). Not yet
+	 * selectable/readable (every returned node stays noSelect - actually opening a shared mailbox's
+	 * messages needs getRows()/fetchRows() to also support a foreign accountId, a separate, larger
+	 * increment) - this only makes the real structure visible and navigable.
+	 *
+	 * `encodedParentId` is SHARED_ACCOUNTS_ROOT_ID + accountId + SHARED_ACCOUNT_SEP + realMailboxId
+	 * (realMailboxId empty for that account's own top level, from getSharedAccountPlaceholders()
+	 * above) - every mailbox this returns gets the SAME encoding re-applied with its own real id
+	 * appended, so the scheme self-propagates to any depth without Et2Tree, FolderTreeNode, or
+	 * app.ts ever needing to know a foreign accountId is involved at all: the tree just keeps
+	 * handing back whatever opaque id string it was given, exactly like any other node.
+	 *
+	 * @param profileID the PRIMARY account's profile id (still used for ensureToken()/the client
+	 *  connection itself - sharing rides on the same already-authenticated JMAP session, see
+	 *  doc/ai/projects/mail-jmap-shared-mailboxes.md's "no new credential exposure" note)
+	 * @param encodedParentId see above
+	 * @return null if this account's own JMAP token isn't usable (same contract as
+	 *  getMailboxChildren()); a real JMAP error on this shared account specifically throws
+	 *  JmapUserError, same as getMailboxChildren()'s own error handling
+	 */
+	private async getSharedAccountMailboxChildren(profileID : string, encodedParentId : string,
+		subscribedOnly? : boolean) : Promise<any[] | null>
+	{
+		const rest = encodedParentId.slice(MailJmap.SHARED_ACCOUNTS_ROOT_ID.length);
+		const sepIdx = rest.indexOf(MailJmap.SHARED_ACCOUNT_SEP);
+		const sharedAccountId = rest.slice(0, sepIdx);
+		const realParentId = rest.slice(sepIdx + 1) || null;
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return null;
+			const client = this.clients[profileID];
+			const filter : Record<string, any> = {parentId: realParentId};
+			const effectiveSubscribedOnly = subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail'));
+			if (effectiveSubscribedOnly)
+			{
+				filter.isSubscribed = true;
+			}
+			const [{mailboxes}] = await client.requestMany((t) =>
+			{
+				const ids = t.Mailbox.query({accountId: sharedAccountId, filter});
+				const mailboxes = t.Mailbox.get({accountId: sharedAccountId, ids: ids.$ref('/ids')});
+				return {ids, mailboxes};
+			});
+			const list = mailboxes.list || [];
+			// re-encode BEFORE resolveHasChildren() would be wrong the other way round: that call
+			// batch-queries Mailbox/query by these ids against sharedAccountId, so it must run
+			// against the real, un-prefixed ids first
+			await this.resolveHasChildren(client, sharedAccountId, list, effectiveSubscribedOnly);
+			const prefix = MailJmap.SHARED_ACCOUNTS_ROOT_ID + sharedAccountId + MailJmap.SHARED_ACCOUNT_SEP;
+			list.forEach((m : any) => { m.id = prefix + m.id; m.noSelect = true; });
+			if (realParentId === null || list.some((m : any) => !!m.role))
+			{
+				sortTopLevel(list);
+			}
+			return list;
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.getSharedAccountMailboxChildren(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
+			console.error('MailJmap.getSharedAccountMailboxChildren(): failed, caller shows an error leaf', e);
+			return null;
+		}
 	}
 
 	/**
@@ -1542,6 +1625,10 @@ export class MailJmap
 			if (parentId === MailJmap.SHARED_ACCOUNTS_ROOT_ID)
 			{
 				return this.getSharedAccountPlaceholders(profileID);
+			}
+			if (parentId !== null && parentId.startsWith(MailJmap.SHARED_ACCOUNTS_ROOT_ID))
+			{
+				return this.getSharedAccountMailboxChildren(profileID, parentId, subscribedOnly);
 			}
 			const client = this.clients[profileID];
 			// matches classic mail_ui's own default (mail_tree.inc.php's getInitialIndexTree()

@@ -95,7 +95,7 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 
 describe("MailJmap.getSharedAccountPlaceholders()", () =>
 {
-	it("returns one non-selectable, non-expandable placeholder per shared account", async() =>
+	it("returns one non-selectable, expandable-into-real-folders placeholder per shared account", async() =>
 	{
 		const jmap = jmapWithSession({
 			accounts : {
@@ -112,10 +112,84 @@ describe("MailJmap.getSharedAccountPlaceholders()", () =>
 		assert.deepEqual(names, ["birgit@example.invalid", "info@example.invalid"]);
 		for (const p of placeholders)
 		{
-			assert.isFalse(p.hasChildren, "browsing into a shared account's own folders is a separate, not-yet-implemented increment");
-			assert.isTrue(p.noSelect, "not yet a real, openable mailbox");
+			assert.isTrue(p.hasChildren, "expanding it must list the account's real folders");
+			assert.isTrue(p.noSelect, "a grouping node, not itself a real mailbox");
 			assert.equal(p.parentId, (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID);
+			assert.isTrue(p.id.startsWith((MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u") ||
+				p.id.startsWith((MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "l"),
+				"id must encode the shared accountId for getSharedAccountMailboxChildren() to recover");
 		}
+	});
+});
+
+describe("MailJmap.getSharedAccountMailboxChildren()", () =>
+{
+	// same jmap-jam invocation-proxy convention as MailJmap.test.ts's own createMailboxProxyStub():
+	// requestMany()'s fake ignores buildFn's return value (only real jmap-jam cares about which
+	// keys were assigned), but still actually CALLS buildFn so Mailbox.query()'s real args get
+	// captured - the resolved data comes from this fake's own canned `resolvedList` instead.
+	function jmapWithFakeClient(resolvedList : any[])
+	{
+		const invocation = () => ({$ref : (_path : string) => ({})});
+		const captured : {mailboxQuery : any[]} = {mailboxQuery : []};
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Mailbox : {
+						query : (args : any) => { captured.mailboxQuery.push(args); return invocation(); },
+						get : (_args : any) => invocation(),
+					},
+				};
+				buildFn(t);
+				return [{mailboxes : {list : resolvedList}}];
+			},
+		};
+		const jmap = new MailJmap(createFakeApp());
+		(jmap as any).clients["89"] = client;
+		(jmap as any).tokens["89"] = {
+			sessionUrl : "https://example.com", accountId : "ca", access_token : "tok",
+			expires_at : Date.now() + 100000, isLocal : false, customLabels : {},
+		};
+		return {jmap, captured};
+	}
+
+	it("queries Mailbox/query against the SHARED accountId, not the primary one", async() =>
+	{
+		const {jmap, captured} = jmapWithFakeClient(
+			[{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId, false);
+
+		assert.equal(captured.mailboxQuery[0].accountId, "u", "must use the shared accountId, not the primary account's own ('ca')");
+		assert.isNull(captured.mailboxQuery[0].filter.parentId, "top level of the shared account's own hierarchy");
+		assert.lengthOf(children, 1);
+		assert.equal(children[0].name, "Inbox");
+		assert.isTrue(children[0].noSelect, "not yet a real, openable mailbox - see the method's own docblock");
+	});
+
+	it("re-encodes each returned mailbox's own id so a deeper expand still carries the shared accountId", async() =>
+	{
+		const {jmap} = jmapWithFakeClient(
+			[{id : "real-inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId, false);
+
+		assert.equal(children[0].id,
+			(MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-inbox-id");
+	});
+
+	it("descends a further level using the real parent id recovered from the encoded parentId", async() =>
+	{
+		const {jmap, captured} = jmapWithFakeClient([]);
+		const encodedInboxId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-inbox-id";
+
+		await (jmap as any).getSharedAccountMailboxChildren("89", encodedInboxId, false);
+
+		assert.equal(captured.mailboxQuery[0].accountId, "u");
+		assert.equal(captured.mailboxQuery[0].filter.parentId, "real-inbox-id");
 	});
 });
 
