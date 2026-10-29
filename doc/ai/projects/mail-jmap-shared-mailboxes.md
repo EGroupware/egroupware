@@ -1,6 +1,17 @@
 # Mail: "Other users" / shared-mailbox namespace for JMAP (Stalwart) accounts
 
-## Status: scoping only (2026-10-29), nothing implemented yet
+## Status: Phase 1 + Phase 2 (top level) implemented (2026-10-29)
+
+- Phase 1 (`cce71762b2`): `Jmap::bootstrap()` retains the Session's shared accounts
+  (`$sharedAccounts`); `Imap\Jmap::getNameSpaceArray()` populates `others` from it.
+- Phase 2, top level only (`af2b71ff8e`): the client-side tree now shows a conditional "user"
+  namespace root (only when the account actually has shared accounts) whose children list the
+  shared account names - see `MailJmap.injectSharedAccountsRoot()`/`getSharedAccountPlaceholders()`
+  in `mail/js/jmap.ts`. Deliberately non-expandable/non-selectable placeholders for now.
+- **Not yet implemented**: browsing into a shared account's own folders (expanding one of the
+  placeholder nodes above into a real, lazily-loaded subtree). This needs the `accountId`-threading
+  work flagged below under Phase 2's "open implementation question" - genuinely deferred, not
+  started.
 
 Follow-up to ticket #126691 (the Dovecot→Stalwart egroupware.org migration, see also
 `adc28974b4` - the Mailbox.isSubscribed crash fix for `mail/src/Ui.php::subscription()`, already
