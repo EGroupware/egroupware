@@ -1491,7 +1491,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		unset($data['stalwart'], $data['mailingLists'], $data['uid']);
 		if (isset($data['accountStatus']))
 		{
-			$data['accountStatus'] = !empty($data['accountStatus']);
+			$data['accountStatus'] = ($data['accountStatus'] ?? '') !== '';    // Stalwart ids can be "0"
 		}
 		ksort($data);
 

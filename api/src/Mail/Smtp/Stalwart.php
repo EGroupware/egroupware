@@ -129,7 +129,7 @@ class Stalwart extends Sql
 			{
 				unset($userData['accountStatus']);
 			}
-			elseif (!empty($userData['accountStatus']))
+			elseif (($userData['accountStatus'] ?? '') !== '')    // Stalwart ids can be "0", which empty() treats as unset
 			{
 				$response = $this->jmapClient()->jmapCall([
 					['x:Account/get', [
@@ -262,7 +262,7 @@ class Stalwart extends Sql
 			'memberGroupIds' => JmapHttp::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
 		], fn($val) => isset($val));    // keep empty array
 		// update account in Stalwart
-		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
+		if (($userData = $this->getUserData($_uidnumber)) && ($userData['accountStatus'] ?? '') !== '' && (string)$_accountStatus !== '')
 		{
 			if (!empty($userData['stalwart']['quotas'])) $account['quotas'] = array_merge($userData['stalwart']['quotas'], $account['quotas']);
 			// array_diff_assoc() does NOT work with non-scalar values!
@@ -337,11 +337,11 @@ class Stalwart extends Sql
 			}
 		}
 		// deactivate account in Stalwart
-		elseif ($userData && !empty($userData['accountStatus']) && $_accountStatus)
+		elseif ($userData && ($userData['accountStatus'] ?? '') !== '' && (string)$_accountStatus !== '')
 		{
 			// ToDo
 		}
-		elseif (empty($userData['accountStatus']) && $_accountStatus)
+		elseif (($userData['accountStatus'] ?? '') === '' && (string)$_accountStatus !== '')
 		{
 			$account['@type'] = 'User';
 			if (!isset($account['quotas']['maxDiskQuota'])) unset($account['quotas']);
