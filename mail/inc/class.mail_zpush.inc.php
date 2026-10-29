@@ -272,6 +272,66 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	}
 
 	/**
+	 * Mail::getInstance() wrapper with a narrow, literal stop-gap for egroupware.org's own domain
+	 *
+	 * mail_zpush implements NO JMAP-specific methods at all (unlike mail_ui/mail/jmap.php) - every
+	 * operation goes through Api\Mail's generic bo, which for anything Imap\Jmap/Imap\Stalwart does
+	 * NOT explicitly override (eg. getFolderStatus()'s getMailboxes() call, used by
+	 * AlterPingChanges() aka ActiveSync's "Ping"/push mechanism) falls through to Imap's raw IMAP
+	 * socket code - see doc/ai/projects/ JMAP/IMAP fallthrough notes. For egroupware.org's own
+	 * domain, migrated to Stalwart 2026-10-28, that means a raw IMAP handshake against
+	 * stalwart.egroupware.org:443, a JMAP-over-HTTPS port IMAP can never speak to at all (confirmed
+	 * live: every single ActiveSync ping failed from the moment of migration on).
+	 *
+	 * Until mail_zpush gets real JMAP support, redirect this one, exact, literal host:port
+	 * combination back to a classic IMAP endpoint that still works for it. This can NEVER affect
+	 * any other account/customer - the match is an exact host+port string/int comparison, not a
+	 * general Imap\Jmap/Stalwart fallback, so no other (correctly working) Stalwart migration is
+	 * touched by this.
+	 *
+	 * Deliberately using the externally-reachable mail.egroupware.org:993 (IMAPS), not the
+	 * cluster-internal mail:10143 directly - applying the exact same /var/www/mail-
+	 * overwrites.inc.php mechanism Mail\Account::getParamOverwrites() uses (see there) rewrites
+	 * mail.egroupware.org to mail:10143 for connections made from inside the cluster, so this one
+	 * value works correctly both in production (via that rewrite) and for anyone/anything
+	 * connecting from outside it (eg. this dev host), without needing a second, cluster-specific
+	 * literal here. Going through Mail\Account::imapServer() itself instead would also re-fetch
+	 * credentials from the DB and re-run OAuth/SSO detection - unwanted churn for what's meant to
+	 * be a narrow, read-only reuse of just the host-overwrite lookup.
+	 *
+	 * @return Mail
+	 */
+	private function _mailInstance() : Mail
+	{
+		$mail = Mail::getInstance(false, self::$profileID, true, false, true);
+		if ($mail->icServer instanceof Mail\Imap\Jmap &&
+			$mail->icServer->acc_imap_host === 'stalwart.egroupware.org' && (int)$mail->icServer->acc_imap_port === 443)
+		{
+			$params = $mail->icServer->params;
+			$params['acc_imap_type'] = Mail\Imap::class;
+			$params['acc_imap_host'] = 'mail.egroupware.org';
+			$params['acc_imap_port'] = 993;
+			$params['acc_imap_ssl'] = Mail\Account::SSL_SSL | Mail\Account::SSL_VERIFY;
+			// same overwrite-file lookup as Mail\Account::getParamOverwrites(), see there
+			static $overwrites = null;
+			if (!isset($overwrites))
+			{
+				if (file_exists($f = '/var/www/mail-overwrites.inc.php'))
+				{
+					include($f);
+				}
+				if (!isset($overwrites)) $overwrites = [];
+			}
+			if (isset($overwrites[$params['acc_imap_host']]))
+			{
+				$params = array_merge($params, $overwrites[$params['acc_imap_host']]);
+			}
+			$mail->icServer = new Mail\Imap($params, false);
+		}
+		return $mail;
+	}
+
+	/**
 	 * Open IMAP connection
 	 *
 	 * @param int $account integer id of account to use
@@ -290,7 +350,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$this->account = $account;
 			// todo: tell mail which account to use
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
-			$this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+			$this->mail = $this->_mailInstance();
 			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId))
 			{
 				self::$profileID = $this->mail->icServer->ImapServerId;
@@ -419,7 +479,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		//error_log("IMAP-Sendmail: Smartdata = ".array2string($smartdata));
 
 		// initialize our Mail
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = $this->_mailInstance();
 		$activeMailProfiles = $this->mail->getAccountIdentities(self::$profileID);
 		// use the standardIdentity
 		$activeMailProfile = Mail::getStandardIdentityForProfile($activeMailProfiles,self::$profileID);
@@ -902,7 +962,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!$mimesupport && $bodypreference !== false && ($key = array_search('4', $bodypreference))) unset($bodypreference[$key]);
 
 		//$this->debugLevel=4;
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = $this->_mailInstance();
 		ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$account = $_folderName = $xid = null;
 		$this->splitID($folderid,$account,$_folderName,$xid);
@@ -1324,7 +1384,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		$this->splitID($folderid, $account, $folder);
 
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = $this->_mailInstance();
 
 		$this->mail->reopen($folder);
 		// a TNEF/winmail.dat sub-attachment: $part is the "is_winmail" composite key
@@ -1425,7 +1485,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		$this->splitID($folderid, $account, $srcFolder);
 		$this->splitID($newfolderid, $account, $destFolder);
 		ZLog::Write(LOGLEVEL_DEBUG, "IMAP-MoveMessage: (SourceFolder: '$srcFolder'  id: '$id'  DestFolder: '$destFolder' )");
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = $this->_mailInstance();
 		$this->mail->reopen($destFolder);
 		$status = $this->mail->getFolderStatus($destFolder);
 		$uidNext = $status['uidnext'];
@@ -1844,7 +1904,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 
 		if ($type != 'mail') return false;
 
-		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
+		if (!isset($this->mail)) $this->mail = $this->_mailInstance();
 		if (!$this->mail->folderIsSelectable($folder))
 		{
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not select folder $folder returning fake state");
