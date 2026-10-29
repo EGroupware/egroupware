@@ -150,6 +150,31 @@ class Mailbox extends Type
 	 */
 	public function listAllPaths(?string $accountId=null, bool $subscribedOnly=false) : array
 	{
+		$paths = [];
+		foreach ($this->listAll($accountId) as $path => $mailbox)
+		{
+			if ($subscribedOnly && empty($mailbox['isSubscribed']))
+			{
+				continue;
+			}
+			$paths[$path] = $mailbox['_label'];
+		}
+		return $paths;
+	}
+
+	/**
+	 * List every mailbox in this account as flat "path => full Mailbox object" pairs - same
+	 * path-resolution as listAllPaths(), but keeping every JMAP property (id, parentId, name,
+	 * isSubscribed, totalEmails, unreadEmails, myRights, ...) instead of just the translated
+	 * label, plus a synthetic '_label' entry (what listAllPaths() returns). Used by
+	 * Imap\Jmap's listMailboxes()/openMailbox()/createMailbox()/renameMailbox()/deleteMailbox()
+	 * overrides, which all need the real mailboxId behind a canonical IMAP-style path.
+	 *
+	 * @param ?string $accountId defaults to the session's own accountId
+	 * @return array path => Mailbox object (+ '_label')
+	 */
+	public function listAll(?string $accountId=null) : array
+	{
 		static $roleLabelKeys = [
 			'inbox' => 'INBOX', 'trash' => 'Trash', 'sent' => 'Sent', 'drafts' => 'Drafts',
 			'junk' => 'Junk', 'templates' => 'Templates', 'outbox' => 'Outbox', 'archive' => 'Archive',
@@ -187,16 +212,12 @@ class Mailbox extends Type
 			];
 			return $resolved[$mailbox['id']] = $result;
 		};
-		$paths = [];
+		$byPath = [];
 		foreach ($mailboxes as $mailbox)
 		{
-			if ($subscribedOnly && empty($mailbox['isSubscribed']))
-			{
-				continue;
-			}
 			$r = $resolve($mailbox);
-			$paths[$r['path']] = $r['label'];
+			$byPath[$r['path']] = $mailbox + ['_label' => $r['label']];
 		}
-		return $paths;
+		return $byPath;
 	}
 }
