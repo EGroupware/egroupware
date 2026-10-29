@@ -1178,12 +1178,43 @@ class Jmap extends Mail\Imap
 				]));
 				$subscription_id = $this->jmap->createPushSubscription($client_id, $url, self::SUBSCRIBTION_TYPES, $expires, $this->jmap_sessionState)['id'];
 			}
-			// check the subscription is about to expire --> renew/extend it
-			elseif ((new Api\DateTime($subscriptions[0]['expires'])) < (new Api\DateTime('+1day')))
+			else
 			{
-				$this->jmap->updatePushSubscription($subscriptions[0]['id'], [
-					'expires' => $expires->format(JmapHttp::DATETIME_UTC_FORMAT),
-				]);
+				// Self-heal duplicates: PushSubscription/set's "create" has no server-side dedup on
+				// deviceClientId - two enablePush() calls racing each other (eg. two tabs loading the
+				// mail app within the same second) can each find zero matching subscriptions above and
+				// each create their own, leaving duplicates that each independently deliver every
+				// future push event to this one client, multiplying client-side notifications (found
+				// live, 2026-10-29: "3 notifications per received mail" reported on
+				// pole.egroupware.org). Keep whichever has the furthest-out expiry (the most recently
+				// created/renewed one) and destroy the rest on every call, not just the first time one
+				// is spotted - self-heals duplicates that accumulated before this fix existed too, not
+				// only preventing new ones.
+				usort($subscriptions, static fn($a, $b) => $b['expires'] <=> $a['expires']);
+				$keep = array_shift($subscriptions);
+				if ($subscriptions)
+				{
+					error_log(__METHOD__."() found ".(count($subscriptions)+1)." duplicate PushSubscriptions for ".
+						"deviceClientId=$client_id, destroying ".count($subscriptions)." and keeping id={$keep['id']}");
+				}
+				foreach ($subscriptions as $duplicate)
+				{
+					try
+					{
+						$this->jmap->destroyPushSubscription($duplicate['id'], $this->jmap_sessionState);
+					}
+					catch (\Exception $e)
+					{
+						_egw_log_exception($e);
+					}
+				}
+				// check the subscription is about to expire --> renew/extend it
+				if ((new Api\DateTime($keep['expires'])) < (new Api\DateTime('+1day')))
+				{
+					$this->jmap->updatePushSubscription($keep['id'], [
+						'expires' => $expires->format(JmapHttp::DATETIME_UTC_FORMAT),
+					]);
+				}
 			}
 
 			// get states to calculate changes
