@@ -57,11 +57,20 @@ function createFakeClient(identity : {id : string, email : string}) : {client : 
 				const t = {Email : {set : (_args : any) => ({created : {s1 : {id : 'draft-id'}}, notCreated : {}})}};
 				return [buildFn(t)];
 			}
-			const t = {
-				EmailSubmission : {
-					set : (_args : any) => ({created : {sub1 : {id : 'sub-id', blobId : 'blob-id'}}, notCreated : {}}),
-				},
-			};
+			if (call === 3)
+			{
+				const t = {
+					EmailSubmission : {
+						set : (_args : any) => ({created : {sub1 : {id : 'sub-id', blobId : 'blob-id'}}, notCreated : {}}),
+					},
+				};
+				return [buildFn(t)];
+			}
+			// sendNewEmail()'s own separate, explicit, notUpdated-checked follow-up Email/set call
+			// that files the Drafts->Sent move (no longer riding along as EmailSubmission/set's
+			// onSuccessUpdateEmail for a real-JMAP/non-local account - see that method's own
+			// docblock on why)
+			const t = {Email : {set : (_args : any) => ({updated : {'draft-id' : {}}, notUpdated : {}})}};
 			return [buildFn(t)];
 		},
 	};

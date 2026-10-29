@@ -290,16 +290,33 @@ class Transport extends \Horde_Mail_Transport
 		// submission (interactive compose AND any other Api\Mailer caller - notifications,
 		// mail-merge, cron - since they all share this one method via smtpTransport()).
 		$sentOverride = $this->account->acc_folder_sent ?: null;
-		$drafts_id = $sent_id = $sent_by_role_id = null;
+		$drafts_id = $sent_by_role_id = $sent_by_name_top_level_id = $sent_by_name_nested_id = null;
 		foreach ($jmap->mailbox->get()['list'] ?? [] as $mailbox)
 		{
 			if (($mailbox['role'] ?? null) === 'drafts') $drafts_id = $mailbox['id'];
 			if (($mailbox['role'] ?? null) === 'sent') $sent_by_role_id = $mailbox['id'];
-			if ($sentOverride !== null && $mailbox['name'] === $sentOverride) $sent_id = $mailbox['id'];
+			// Found live (help forum/Ingo - acc_id shared with ralf, "sent mail does NOT end up in
+			// HIS Sent folder"): a plain name-match is ambiguous whenever the user ALSO has some
+			// other, personal folder that happens to share the configured override's bare name
+			// (eg. Ingo's own "privat/Sent", unrelated to the account's real top-level, role=sent
+			// "Sent" mailbox) - this used to just overwrite $sent_id with whichever one the
+			// iteration order happened to reach LAST, silently filing the Sent-copy into a
+			// completely wrong, user-owned folder (no error anywhere, since the write itself
+			// succeeds - it's just the wrong mailbox). A deliberately-configured override is
+			// virtually always a TOP-LEVEL special folder (same assumption admin_mail::
+			// jmapMailboxes() makes when it pre-selects this value from the role='sent' mailbox's
+			// own name at wizard time) - preferring a top-level match over a nested one resolves
+			// the ambiguity correctly without disturbing the original (non-ambiguous, top-level)
+			// ticket/forum "Sent folder" fix this override exists for.
+			if ($sentOverride !== null && $mailbox['name'] === $sentOverride)
+			{
+				if (empty($mailbox['parentId'])) $sent_by_name_top_level_id = $mailbox['id'];
+				else $sent_by_name_nested_id = $mailbox['id'];
+			}
 		}
 		// override configured but its mailbox is gone (renamed/deleted) - fall back to role='sent'
 		// rather than failing the send outright, same safety net a missing classic IMAP folder gets
-		$sent_id ??= $sent_by_role_id;
+		$sent_id = $sent_by_name_top_level_id ?? $sent_by_name_nested_id ?? $sent_by_role_id;
 		if (!$drafts_id || !$sent_id)
 		{
 			throw new \Horde_Mail_Exception('Could not find Drafts/Sent mailbox by role for account #'.$this->account->acc_id);

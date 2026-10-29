@@ -6554,19 +6554,29 @@ export class MailJmap
 				}
 			}
 
+			// The IMAP-shim backend (Api\Mail\Jmap\Imap::emailSubmissionSet()) does its whole
+			// send+file-into-Sent+delete-draft dance in ONE go, driven entirely by parsing
+			// onSuccessUpdateEmail OUT of this very call's own $args (it has no separate Email/set
+			// "move" step at all, and its own per-target try/catch + Push-notification reporting,
+			// from the earlier #126 help-forum "Sent folder" fix, already surfaces a failure there
+			// visibly) - so it still needs onSuccessUpdateEmail embedded in THIS call, unchanged.
+			// A real-JMAP (Stalwart) account doesn't need or get that special handling below - see
+			// the separate explicit Email/set call just past the success check for why.
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
 					accountId: token.accountId,
 					create: {sub1: {emailId, identityId: submissionIdentityId}},
-					onSuccessUpdateEmail: {
-						'#sub1': {
-							[`mailboxIds/${draftsId}`]: null,
-							[`mailboxIds/${sentId}`]: true,
-							...extraFolderIds,
-							'keywords/$draft': null,
-							'keywords/$seen': true,
+					...(token.isLocal ? {
+						onSuccessUpdateEmail: {
+							'#sub1': {
+								[`mailboxIds/${draftsId}`]: null,
+								[`mailboxIds/${sentId}`]: true,
+								...extraFolderIds,
+								'keywords/$draft': null,
+								'keywords/$seen': true,
+							},
 						},
-					},
+					} : {}),
 				}),
 			}));
 			if (!submission.created?.sub1)
@@ -6586,6 +6596,51 @@ export class MailJmap
 			// ticket #125201 - see describeFailedRecipientsWarning()'s own docblock
 			const warning = describeFailedRecipientsWarning(this.egw, (submission.created.sub1 as any).failedRecipients);
 			if (warning) this.egw.message(warning, 'warning');
+			// Moving the just-submitted Draft -> Sent used to ride along as an EmailSubmission/set
+			// "onSuccessUpdateEmail" implicit follow-up call - found live (help forum/Ingo, acc_id
+			// shared with ralf - "sent mail does NOT end up in Sent folder", worked for ralf, not
+			// for Ingo on the SAME account config): jmap-jam's requestMany() only returns data for
+			// the INVOCATIONS the caller explicitly drafted - an implicit onSuccess* call's own
+			// result (including any notUpdated) is a separate, unnamed methodResponse entry that
+			// was silently discarded here, so if Stalwart ever rejected that implicit patch the
+			// message still sent fine but the Sent-copy filing failed with ZERO visible error.
+			// Issuing it as its own explicit, named Email/set call (same notUpdated-checking
+			// pattern as e.g. moveMessages()/renameMailbox() elsewhere in this file) trades one
+			// extra round-trip for actually seeing a failure here.
+			let sentMailboxId = sentId;
+			if (!token.isLocal)
+			{
+				try
+				{
+					const [{result}] = await client.requestMany((t) => ({
+						result: t.Email.set({
+							accountId: token.accountId,
+							update: {
+								[emailId] : {
+									[`mailboxIds/${draftsId}`]: null,
+									[`mailboxIds/${sentId}`]: true,
+									...extraFolderIds,
+									'keywords/$draft': null,
+									'keywords/$seen': true,
+								},
+							},
+						}),
+					}));
+					if (result?.notUpdated?.[emailId])
+					{
+						sentMailboxId = draftsId;	// the patch failed atomically - message is still where createDraftEmail() put it
+						this.egw.message(this.egw.lang('Mail sent successfully, but failed to copy it to the Sent folder')+
+							': '+(describeSetError(result.notUpdated) ?? this.egw.lang('unknown error')), 'warning');
+					}
+				}
+				catch (e)
+				{
+					sentMailboxId = draftsId;
+					console.error('MailJmap.sendNewEmail(): failed to file the Sent copy', e);
+					this.egw.message(this.egw.lang('Mail sent successfully, but failed to copy it to the Sent folder')+
+						': '+(describeJmapError(e) ?? this.egw.lang('unknown error')), 'warning');
+				}
+			}
 			if (existingDraftEmailId)
 			{
 				try
@@ -6605,7 +6660,7 @@ export class MailJmap
 					console.error('MailJmap.sendNewEmail(): failed to clean up the previous draft copy', e);
 				}
 			}
-			return {emailId, mailboxId : sentId, rawBlobId : (submission.created.sub1 as any).blobId};
+			return {emailId, mailboxId : sentMailboxId, rawBlobId : (submission.created.sub1 as any).blobId};
 		}
 		catch (e)
 		{
@@ -7064,6 +7119,37 @@ export class MailJmap
 	}
 
 	/**
+	 * Resolve the Sent mailbox id from an already-fetched Mailbox/get list - same "override by
+	 * name, fall back to role='sent'" convention as Api\Mail\Jmap\Transport::
+	 * resolveMailboxesAndIdentities() uses server-side (kept in sync with that method's own
+	 * docblock).
+	 *
+	 * Found live (help forum/Ingo - acc_id shared with ralf, "sent mail does NOT end up in HIS
+	 * Sent folder", worked for ralf on the SAME account config): a plain name-match is ambiguous
+	 * whenever the user ALSO has some other, personal folder that happens to share the configured
+	 * override's bare name (Ingo's own "privat/Sent", unrelated to the account's real top-level,
+	 * role=sent "Sent" mailbox) - Array.find() silently picked whichever one the list happened to
+	 * return first, filing the Sent-copy into a completely wrong, user-owned folder with no error
+	 * anywhere (the write itself succeeds - it's just the wrong mailbox). A deliberately-configured
+	 * override is virtually always a TOP-LEVEL special folder (same assumption admin_mail::
+	 * jmapMailboxes() makes when it pre-selects this value from the role='sent' mailbox's own name
+	 * at wizard time) - preferring a top-level match over a nested one resolves the ambiguity
+	 * without disturbing the original (non-ambiguous, top-level) ticket/forum "Sent folder" fix
+	 * this override exists for.
+	 */
+	private resolveSentFolderId(mailboxes : any[] | undefined, sentFolder? : string | null) : string | undefined
+	{
+		if (sentFolder)
+		{
+			const nameMatches = mailboxes?.filter((m : any) => m.name === sentFolder) ?? [];
+			const topLevel = nameMatches.find((m : any) => !m.parentId);
+			if (topLevel) return topLevel.id;
+			if (nameMatches.length) return nameMatches[0].id;
+		}
+		return mailboxes?.find((m : any) => m.role === 'sent')?.id;
+	}
+
+	/**
 	 * Shared setup for sendNewEmail()/saveDraft() - resolves the account's token, identity, and
 	 * Drafts (+ optionally Sent) mailbox id. IMAP-shim accounts gained Email/create +
 	 * EmailSubmission emulation (doc/ai/projects/mail-compose-jmap-migration.md's Step 2,
@@ -7112,10 +7198,7 @@ export class MailJmap
 		// the defined folder"): this always used role='sent' unconditionally before, silently
 		// ignoring it. Falls back to role='sent' if not configured, or if the configured mailbox
 		// no longer exists (renamed/deleted) - never hard-fails the send over a stale override.
-		const sentId = needSent ?
-			(token.sentFolder && mailboxes.list?.find((m : any) => m.name === token.sentFolder)?.id) ||
-				mailboxes.list?.find((m : any) => m.role === 'sent')?.id :
-			undefined;
+		const sentId = needSent ? this.resolveSentFolderId(mailboxes.list, token.sentFolder) : undefined;
 		if (!draftsId || (needSent && !sentId))
 		{
 			throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
