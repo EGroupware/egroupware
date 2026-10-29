@@ -1675,12 +1675,13 @@ export class MailJmap
 			// perfectly real, populated shared account look like an empty dead end. Browsing a
 			// shared account is inherently a "show me what's really there" operation, not a
 			// personal-subscription-filtered view.
+			// retryIdempotentOnClose: true - same risk/evidence as getRootFolders()'s own main fetch
 			const [{mailboxes}] = await client.requestMany((t) =>
 			{
 				const ids = t.Mailbox.query({accountId: sharedAccountId, filter: {parentId: realParentId}});
 				const mailboxes = t.Mailbox.get({accountId: sharedAccountId, ids: ids.$ref('/ids')});
 				return {ids, mailboxes};
-			});
+			}, {retryIdempotentOnClose: true});
 			const list = mailboxes.list || [];
 			// re-encode BEFORE resolveHasChildren() would be wrong the other way round: that call
 			// batch-queries Mailbox/query by these ids against sharedAccountId, so it must run
@@ -1770,6 +1771,10 @@ export class MailJmap
 				filter.isSubscribed = true;
 			}
 
+			// retryIdempotentOnClose: true - same risk/evidence as getRootFolders()'s own main
+			// fetch (see its comment): a Mailbox/get for every mailbox at this level can outlast
+			// the WebSocket heartbeat for a level with many siblings, orphaning the pending promise
+			// forever without this.
 			const [{mailboxes}] = await client.requestMany((t) =>
 			{
 				const ids = t.Mailbox.query({
@@ -1786,7 +1791,7 @@ export class MailJmap
 				// entirely and broke the result-reference ("missing field `resultOf`" from a real
 				// JMAP server, "Failed to resolve result reference" from JmapShim's local one)
 				return {ids, mailboxes};
-			});
+			}, {retryIdempotentOnClose: true});
 			const list = mailboxes.list || [];
 			if (isTopLevel)
 			{
@@ -1860,6 +1865,10 @@ export class MailJmap
 				filter.isSubscribed = true;
 			}
 
+			// retryIdempotentOnClose: true - this fetches EVERY mailbox in the account in one
+			// request, the largest/slowest of this class of call (see getRootFolders()'s own
+			// comment for the full risk/evidence) - at least as exposed to the heartbeat race as
+			// any per-level fetch, likely more so for an account with many folders.
 			const [{mailboxes}] = await client.requestMany((t) =>
 			{
 				const ids = t.Mailbox.query({
@@ -1871,7 +1880,7 @@ export class MailJmap
 					ids: ids.$ref('/ids'),
 				});
 				return {ids, mailboxes};
-			});
+			}, {retryIdempotentOnClose: true});
 			return mailboxes.list || [];
 		}
 		catch (e)
@@ -1951,6 +1960,15 @@ export class MailJmap
 				filter.isSubscribed = true;
 			}
 
+			// retryIdempotentOnClose: true - THE primary fetch behind the live report that started
+			// this (2026-10-29, pole.egroupware.org "info@egroupware.org", 30 top-level mailboxes:
+			// missing INBOX, bogus expand carets, "random, some users have it, others don't"). This
+			// is a Mailbox/get for every top-level mailbox PLUS two Mailbox/query calls in one
+			// request - exactly the kind of size-scaling batch that can outlast the WebSocket's own
+			// heartbeat window (see resolveHasChildren()'s own docblock for the full mechanism/
+			// evidence - initially only THAT function was fixed, which turned out to be necessary
+			// but not sufficient: this earlier, larger batch is the more likely place to actually
+			// lose the race first for an account with many top-level folders).
 			const [{topMailboxes, inboxIds}] = await client.requestMany((t) =>
 			{
 				const topIds = t.Mailbox.query({accountId: token.accountId, filter});
@@ -1961,7 +1979,7 @@ export class MailJmap
 				// and it's independent of the root query above, so it costs nothing extra here
 				const inboxIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}});
 				return {topIds, topMailboxes, inboxIds};
-			});
+			}, {retryIdempotentOnClose: true});
 
 			const top = topMailboxes.list || [];
 			this.applyTemplateOutboxRoles(top, token);
@@ -1989,7 +2007,7 @@ export class MailJmap
 			{
 				const [{mailboxes : inboxMailboxes}] = await client.requestMany((t) => ({
 					mailboxes: t.Mailbox.get({accountId: token.accountId, ids: [inboxId]}),
-				}));
+				}), {retryIdempotentOnClose: true});
 				const inboxMailbox = inboxMailboxes.list?.[0];
 				if (inboxMailbox)
 				{
@@ -2057,7 +2075,7 @@ export class MailJmap
 	 * @param subscribedOnly the effective value already resolved by the caller (own param or
 	 *  showAllFoldersInFolderPane preference, see getMailboxChildren()/getRootFolders())
 	 */
-	private async resolveHasChildren(client : JamClient, accountId : string, list : any[], subscribedOnly : boolean) : Promise<void>
+	private async resolveHasChildren(client : JamWebSocketClient, accountId : string, list : any[], subscribedOnly : boolean) : Promise<void>
 	{
 		const unknown = list.filter((m) => m.hasChildren === undefined || m.hasChildren === null);
 		if (unknown.length)
@@ -2151,7 +2169,7 @@ export class MailJmap
 	 * (folderPath.split('/') on '' yields [''], which would wrongly query for a mailbox literally
 	 * named '').
 	 */
-	private async mailboxIdOrNull(client : JamClient, accountId : string, profileID : string, path : string) : Promise<string | null>
+	private async mailboxIdOrNull(client : JamWebSocketClient, accountId : string, profileID : string, path : string) : Promise<string | null>
 	{
 		return path === '' ? null : this.mailboxId(client, accountId, profileID, path);
 	}
@@ -5794,7 +5812,7 @@ export class MailJmap
 	 * one level at a time and caching the result - client-side equivalent of the server's
 	 * Mail\Jmap::getMailboxId().
 	 */
-	private async mailboxId(client : JamClient, accountId : string, profileID : string, folderPath : string) : Promise<string>
+	private async mailboxId(client : JamWebSocketClient, accountId : string, profileID : string, folderPath : string) : Promise<string>
 	{
 		const cacheKey = profileID + '::' + folderPath;
 		if (this.mailboxIds[cacheKey])
@@ -5812,7 +5830,7 @@ export class MailJmap
 						accountId,
 						filter: parentId ? {name: part, parentId} : {name: part},
 					}),
-				}));
+				}), {retryIdempotentOnClose: true});
 				id = ids.ids?.[0];
 				if (!id)
 				{
@@ -8236,14 +8254,14 @@ export class MailJmap
 	 * per profileID+mailboxId since a role never changes once assigned - see email2row()'s own
 	 * `showRecipient` param, mail_ui::header2gridelements()'s old classic equivalent.
 	 */
-	private async mailboxRole(client : JamClient, accountId : string, profileID : string, mailboxId : string) : Promise<string | null>
+	private async mailboxRole(client : JamWebSocketClient, accountId : string, profileID : string, mailboxId : string) : Promise<string | null>
 	{
 		const cacheKey = profileID + '::' + mailboxId;
 		if (!(cacheKey in this.mailboxRoleCache))
 		{
 			const [{mailbox}] = await client.requestMany((t) => ({
 				mailbox: t.Mailbox.get({accountId, ids: [mailboxId], properties: ['role']}),
-			}));
+			}), {retryIdempotentOnClose: true});
 			this.mailboxRoleCache[cacheKey] = mailbox.list?.[0]?.role ?? null;
 		}
 		return this.mailboxRoleCache[cacheKey];
@@ -8264,14 +8282,14 @@ export class MailJmap
 	 *
 	 * @see doc/ai/projects/mail-cross-folder-search.md
 	 */
-	private async mailboxRoleAndName(client : JamClient, accountId : string, profileID : string, mailboxId : string) : Promise<{role : string | null, name : string}>
+	private async mailboxRoleAndName(client : JamWebSocketClient, accountId : string, profileID : string, mailboxId : string) : Promise<{role : string | null, name : string}>
 	{
 		const cacheKey = profileID + '::' + mailboxId;
 		if (!(cacheKey in this.mailboxRoleAndNameCache))
 		{
 			const [{mailbox}] = await client.requestMany((t) => ({
 				mailbox: t.Mailbox.get({accountId, ids: [mailboxId], properties: ['role', 'name']}),
-			}));
+			}), {retryIdempotentOnClose: true});
 			this.mailboxRoleAndNameCache[cacheKey] = {
 				role: mailbox.list?.[0]?.role ?? null,
 				name: mailbox.list?.[0]?.name ?? '',

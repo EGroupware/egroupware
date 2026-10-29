@@ -304,8 +304,41 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 
 		await jmap.getMailboxChildren("1", null, true);
 
+		assert.deepEqual(capturedOptions[0], {retryIdempotentOnClose: true},
+			"the level's own main Mailbox/query+get fetch (call index 0) must retry on close too - " +
+			"found live this was the MORE likely place to actually lose the heartbeat race first, " +
+			"since it runs before resolveHasChildren() even gets a chance");
 		assert.deepEqual(capturedOptions[1], {retryIdempotentOnClose: true},
 			"the hasChildren batch itself (call index 1, after the top-level fetch) must retry on close");
+	});
+
+	it("getRootFolders()'s own main fetch also passes retryIdempotentOnClose", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capturedOptions : any[] = [];
+		let call = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any, options? : any) =>
+			{
+				capturedOptions.push(options);
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [[
+					{topMailboxes: {list: [{id: "a", name: "Leaf", role: "inbox"}]}, inboxIds: {ids: ["a"]}},
+					{c0: {ids: []}},
+					{mailboxes: {list: []}},
+				][call++]];
+			},
+			session: Promise.resolve({accounts: {}}),
+		};
+		primeToken(jmap, "1", client);
+
+		await jmap.getRootFolders("1");
+
+		assert.deepEqual(capturedOptions[0], {retryIdempotentOnClose: true},
+			"the root-level Mailbox/get-for-every-top-level-mailbox fetch (call index 0) is the " +
+			"primary fetch behind the live 'info@egroupware.org, 30 top-level mailboxes' report - " +
+			"must retry on close");
 	});
 });
 
