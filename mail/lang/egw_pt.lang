@@ -33,7 +33,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	pt	Permitir
 allow external images	mail	pt	Permitir imagens externas
 allow external images from listed domains	mail	pt	Permitir imagens externas de domínios listados
-allow images from external sources in html emails	mail	pt	Permitir imagens de fontes externas em HTML e-mails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	pt	Permitir imagens de fontes externas em HTML e-mails. "Pedir permissão" mostra um aviso para as carregar apenas desta vez ("Exibir") ou sempre a partir do seu domínio ("Permitir"). "Pedir permissão, permitir apenas domínios listados" oferece apenas "Exibir", pelo que só os domínios listados são sempre permitidos, p.ex. conforme definido pelo administrador para todos.
 allow images from listed domains in html emails	mail	pt	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt	Permite a um utilizador ler, escrever e criar pastas e mensagens de correio eletrónico, enviar mensagens para as mesmas, anexar mensagens às mesmas e apagar mensagens
@@ -48,6 +48,7 @@ any status	mail	pt	qualquer estado
 append	mail	pt	anexar
 archive folder	mail	pt	Pasta de arquivo
 are you sure you want to delete all selected folders?	mail	pt	Tem a certeza de que pretende apagar todas as pastas selecionadas?
+ask for permission, only allow listed domains	mail	pt	Pedir permissão, permitir apenas domínios listados
 attach files	mail	pt	Anexar ficheiros
 attach users vcard at compose to every new mail	mail	pt	anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt	Anexar vCard

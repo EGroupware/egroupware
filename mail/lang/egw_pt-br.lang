@@ -32,7 +32,7 @@ all of	mail	pt-br	Todos
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pt-br	Todas as subpastas também serão excluídas, e todas as mensagens em todas as pastas afetadas serão perdidas
 allow external images	mail	pt-br	Permitir imagens externas
 allow external images from listed domains	mail	pt-br	Permitir imagens externas de domínios listados
-allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	pt-br	Permitir imagens de origem externa em e-mails em HTML. "Pedir permissão" mostra um aviso para carregá-las apenas desta vez ("Exibir") ou sempre de seu domínio ("Permitir"). "Pedir permissão, permitir apenas domínios listados" oferece apenas "Exibir", de modo que somente os domínios listados são sempre permitidos, p.ex. conforme definido pelo administrador para todos.
 allow images from listed domains in html emails	mail	pt-br	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt-br	Permitir aos usuários criar novas identidades
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt-br	Permite que um usuário leia, escreva e crie pastas e e-mails, publique neles, anexe mensagens a eles e exclua mensagens.
@@ -48,6 +48,7 @@ append	mail	pt-br	anexar
 archive folder	mail	pt-br	Pasta de arquivo
 are you sure you want to delete all selected folders?	mail	pt-br	Tem certeza de que deseja excluir todas as pastas selecionadas?
 are you sure you want to move folder %1 to folder %2?	mail	pt-br	Tem certeza de que deseja mover a pasta %1 para a pasta %2?
+ask for permission, only allow listed domains	mail	pt-br	Pedir permissão, permitir apenas domínios listados
 attach files	mail	pt-br	Anexar arquivos
 attach users vcard at compose to every new mail	mail	pt-br	Anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt-br	Anexar vCard

@@ -43,7 +43,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	bg	Покажи
 allow external images	mail	bg	Покажи външни изображения
 allow external images from listed domains	mail	bg	Показване на външни изображения от изброените домейни
-allow images from external sources in html emails	mail	bg	Показване на изображения от външни източници в HTML съобщения.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	bg	Показване на изображения от външни източници в HTML съобщения. "Попитайте за разрешение" показва съобщение, с което те могат да се заредят само този път ("Покажи") или винаги от техния домейн ("Разреши"). "Попитайте за разрешение, разрешавайте само изброените домейни" предлага само "Покажи", така че винаги са разрешени само изброените домейни, напр. зададени от администратора за всички.
 allow images from listed domains in html emails	mail	bg	Показване на изображения от изброени домейни в HTML съобщения.
 allow users to create further identities	mail	bg	позволява на потребителите да създават допълнителни самоличности
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	bg	Позволява на потребителя да чете, пише и създава папки и писма, да публикува в тях, да добавя съобщения и да изтрива съобщения.
@@ -65,6 +65,7 @@ are you sure you want to delete all selected folders?	mail	bg	Сигурни л�
 are you sure you want to move folder %1 to folder %2?	mail	bg	Сигурни ли сте, че искате преместите папка %1 в папка %2?
 arrival	mail	bg	Приет(и)
 ask for permission	mail	bg	Попитайте за разрешение
+ask for permission, only allow listed domains	mail	bg	Попитайте за разрешение, разрешавайте само изброените домейни
 attach files	mail	bg	Прикачи файлове
 attach users vcard at compose to every new mail	mail	bg	Прикачване на vCard на потребителите при съставяне на всяко ново писмо.
 attach vcard	mail	bg	Прикачете vCard

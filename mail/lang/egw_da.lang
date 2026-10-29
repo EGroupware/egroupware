@@ -26,7 +26,7 @@ all my email addresses	mail	da	alle mine e-mailadresser
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	da	Alle undermapper vil også blive slettet, og alle beskeder i alle berørte mapper vil gå tabt.
 allow external images	mail	da	Tillad eksterne billeder
 allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
-allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails. "Spørg om tilladelse" viser en meddelelse, hvor de kan indlæses kun denne gang ("Vis") eller altid fra deres domæne ("Tillad"). "Spørg om tilladelse, tillad kun listede domæner" tilbyder kun "Vis", så kun de listede domæner altid er tilladt, f.eks. som administratoren har fastsat for alle.
 allow images from listed domains in html emails	mail	da	Tillad billeder fra listede domæner i HTML-e-mails.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	da	Giver en bruger mulighed for at læse, skrive og oprette mapper og mails, sende til den, tilføje beskeder til den og slette beskeder.
 always allow external sources from %1	mail	da	Tillad altid eksterne kilder fra %1
@@ -38,6 +38,7 @@ answered	mail	da	Besvaret
 archive folder	mail	da	Arkivmappe
 are you sure you want to delete all selected folders?	mail	da	Er du sikker på, at du vil slette alle valgte mapper?
 are you sure you want to move folder %1 to folder %2?	mail	da	Er du sikker på, at du vil flytte mappe %1 til mappe %2?
+ask for permission, only allow listed domains	mail	da	Spørg om tilladelse, tillad kun listede domæner
 attach files	mail	da	Vedhæft filer
 attach users vcard at compose to every new mail	mail	da	Vedhæft brugerens vCard til hver ny mail ved oprettelse
 attachment	mail	da	Vedhæftet fil

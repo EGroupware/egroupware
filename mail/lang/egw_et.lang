@@ -23,7 +23,7 @@ all of	mail	et	kõik välja
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	et	Kõik alamkaustad kustutatakse samuti ja kõik sõnumid kõigis mõjutatud kaustades lähevad kaduma.
 allow external images	mail	et	Lubage väliseid pilte
 allow external images from listed domains	mail	et	Lubage väliseid pilte loetletud domeenidest
-allow images from external sources in html emails	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine. "Küsi luba" näitab teadet, millega saab need laadida ainult seekord ("Näita") või alati nende domeenilt ("Luba"). "Küsi luba, luba ainult loetletud domeene" pakub ainult "Näita", seega on alati lubatud ainult loetletud domeenid, nt nagu administraator on kõigile määranud.
 allow images from listed domains in html emails	mail	et	Lubage loetelus olevate domeenide pilte HTML-meilides.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	et	Võimaldab kasutajal lugeda, kirjutada ja luua kaustu ja kirju, postitada sinna, lisada sinna sõnumeid ja kustutada sõnumeid
 always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
@@ -35,6 +35,7 @@ answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 archive folder	mail	et	Arhiivikaust
 are you sure you want to delete all selected folders?	mail	et	Kas olete kindel, et soovite kustutada kõik valitud kaustad?
+ask for permission, only allow listed domains	mail	et	Küsi luba, luba ainult loetletud domeene
 attach files	mail	et	Failide lisamine
 attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
 attach vcard	mail	et	Kinnita vCard

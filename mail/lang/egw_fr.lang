@@ -43,7 +43,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	fr	Autoriser
 allow external images	mail	fr	Autoriser les images externes
 allow external images from listed domains	mail	fr	Autoriser les images externes des domaines listés
-allow images from external sources in html emails	mail	fr	Autoriser les images de sources externes dans les emails HTML.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	fr	Autoriser les images de sources externes dans les emails HTML. "Demander la permission" affiche un bandeau pour les charger cette fois seulement ("Afficher") ou toujours depuis leur domaine ("Autoriser"). "Demander la permission, autoriser uniquement les domaines listés" ne propose que "Afficher", ainsi seuls les domaines listés sont toujours autorisés, p.ex. tels que définis par l'administrateur pour tous.
 allow images from listed domains in html emails	mail	fr	Autoriser les images des domaines listes dans les emails HTML.
 allow users to create further identities	mail	fr	Autoriser les utilisateurs à créer d'autres identités
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fr	Permet à un utilisateur de lire, écrire et créer des dossiers et des messages, d'y poster, d'y ajouter des messages et de les supprimer.
@@ -65,6 +65,7 @@ are you sure you want to delete all selected folders?	mail	fr	Souhaitez-vous sup
 are you sure you want to move folder %1 to folder %2?	mail	fr	Souhaitez-vous transférer le dossier %1 dans le dossier %2
 arrival	mail	fr	Reçu
 ask for permission	mail	fr	Demander la permission
+ask for permission, only allow listed domains	mail	fr	Demander la permission, autoriser uniquement les domaines listés
 attach files	mail	fr	Joindre des fichiers
 attach users vcard at compose to every new mail	mail	fr	Attacher la vCard de l'utilisateur à chaque nouvel email.
 attach vcard	mail	fr	Attacher la vCard

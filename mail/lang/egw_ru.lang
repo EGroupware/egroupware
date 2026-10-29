@@ -23,7 +23,7 @@ all my email addresses	mail	ru	все мои адреса
 all of	mail	ru	Все из
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ru	Все вложенные папки также будут удалены, а все сообщения во всех затронутых папках будут потеряны
 allow external images	mail	ru	Разрешить внешние изображения
-allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML. "Запрашивать разрешение" показывает панель, чтобы загрузить их только в этот раз ("Показать") или всегда разрешать с их домена ("Разрешить"). "Запрашивать разрешение, разрешать только перечисленные домены" предлагает только "Показать", поэтому всегда разрешены только перечисленные домены, напр. заданные администратором для всех.
 allow users to create further identities	mail	ru	Разрешить пользователям создавать дополнительные идентичности
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ru	Позволяет пользователю читать, писать и создавать папки и письма, отправлять в них сообщения, добавлять в них сообщения и удалять их
 always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
@@ -35,6 +35,7 @@ any status	mail	ru	Любое состояние
 append	mail	ru	Дополнить
 archive folder	mail	ru	Архивная папка
 are you sure you want to delete all selected folders?	mail	ru	Вы уверены, что хотите удалить все выбранные папки?
+ask for permission, only allow listed domains	mail	ru	Запрашивать разрешение, разрешать только перечисленные домены
 attach files	mail	ru	Прикрепить файлы
 attach users vcard at compose to every new mail	mail	ru	Вкладывать визитку пользователя в каждое новое письмо.
 attach vcard	mail	ru	Вложить vCard (визитку)

@@ -42,7 +42,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	sl	Dovolite
 allow external images	mail	sl	Dovoli zunanje fotografije
 allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz domen s seznama
-allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML. "Prosite za dovoljenje" prikaže obvestilo, s katerim jih lahko naložite samo tokrat ("Prikaži") ali vedno iz njihove domene ("Dovolite"). "Prosite za dovoljenje, dovoli samo domene s seznama" ponuja samo "Prikaži", zato so vedno dovoljene samo domene s seznama, npr. kot jih je za vse nastavil skrbnik.
 allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih.
 allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sl	Uporabniku omogoča branje, pisanje in ustvarjanje map in poštnih sporočil, objavljanje v njih, dodajanje sporočil vanje in brisanje sporočil
@@ -64,6 +64,7 @@ are you sure you want to delete all selected folders?	mail	sl	Ali ste prepričan
 are you sure you want to move folder %1 to folder %2?	mail	sl	Ali ste prepričani, da želite premakniti mapo %1 v mapo %2?
 arrival	mail	sl	Sprejeto
 ask for permission	mail	sl	Prosite za dovoljenje
+ask for permission, only allow listed domains	mail	sl	Prosite za dovoljenje, dovoli samo domene s seznama
 attach files	mail	sl	Priložite datoteke
 attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju.
 attach vcard	mail	sl	Priloži vCard

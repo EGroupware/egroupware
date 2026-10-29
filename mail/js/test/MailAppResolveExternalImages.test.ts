@@ -212,9 +212,9 @@ describe("MailApp.resolveExternalImages()", () =>
 		assert.deepEqual(Object.values(prefs.allowExternalDomains), ['example.org']);
 	});
 
-	it("offers only 'Show', no 'Allow', when the admin turned the Allow button off", () =>
+	it("offers only 'Show', no 'Allow', under the 'ask for permission, only allow listed domains' preference", () =>
 	{
-		prefs.externalContentAllowButton = '0';
+		prefs.allowExternalIMGs = 3;
 		const app = createMailApp();
 		const node = containerWithBlockedImages('https://example.org/photo.png');
 		app.resolveExternalImages(node);

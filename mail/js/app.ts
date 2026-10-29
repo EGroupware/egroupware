@@ -4221,8 +4221,8 @@ export class MailApp extends EgwApp
 			});
 			// Show before Allow, as Allow also does what Show does
 			container.appendChild(showBtn);
-			// you can turn "Allow" off, so only the allow-list in the preferences adds domains
-			if (egw.preference('externalContentAllowButton', 'mail') != '0')
+			// "Ask for permission, only allow listed domains": only the allow-list in the preferences adds domains
+			if (pref_img != 3)
 			{
 				container.appendChild(allowBtn);
 			}

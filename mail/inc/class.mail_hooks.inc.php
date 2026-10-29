@@ -387,12 +387,14 @@ class mail_hooks
 			'allowExternalIMGs' => array(
 				'type'   => 'select',
 				'label'  => 'Allow external images',
-				'help'   => 'allow images from external sources in html emails',
+				'help'   => 'Allow images from external sources in HTML emails. "Ask for permission" shows a banner to load them this time only ("Show") or always from their domain ("Allow"). "Ask for permission, only allow listed domains" offers only "Show", so only the listed domains are always allowed, eg. as set by the admin for everyone.',
 				'name'   => 'allowExternalIMGs',
 				'values' => array(
 					0 => lang('Never'),
 					1 => lang('Always'),
-					2 => lang('Ask for permission')
+					2 => lang('Ask for permission'),
+					// no "Allow" adding to the listed domains, eg. to keep a list set by the admin for everyone
+					3 => lang('Ask for permission, only allow listed domains'),
 				),
 				'xmlrpc' => True,
 				'admin'  => True,
@@ -406,14 +408,6 @@ class mail_hooks
 				'name'   => 'allowExternalDomains',
 				'values' => $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalDomains'],
 				'no_sel_options' => true
-			),
-			'externalContentAllowButton' => array(
-				'type'   => 'select',
-				'label'  => 'Offer "Allow" for blocked external content',
-				'help'   => 'Shows an "Allow" button next to "Show" in the banner of a mail with blocked external content, adding its domain to the listed domains. Set to "no" to only offer "Show", eg. to keep a list of allowed domains set by the admin for everyone.',
-				'name'   => 'externalContentAllowButton',
-				'values' => $no_yes,
-				'default'=> '1',
 			),
 			'new_mail_notification' => [
 				'type' => 'select',

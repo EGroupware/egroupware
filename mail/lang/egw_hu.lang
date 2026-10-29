@@ -22,7 +22,7 @@ aliases+forwards	mail	hu	Aliasok+Továbbítás
 all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	hu	Az összes almappa is törlődik, és az összes érintett mappában lévő összes üzenet elveszik.
-allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben. Az "Engedély kérése" egy sávot jelenít meg, amellyel csak most tölthetők be ("Mutat"), vagy a domainjükről mindig engedélyezhetők ("Engedélyez"). Az "Engedély kérése, csak a felsorolt domainek engedélyezése" csak a "Mutat" lehetőséget kínálja, így csak a felsorolt domainek engedélyezettek mindig, pl. ahogy az adminisztrátor mindenkinek beállította.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	hu	Lehetővé teszi a felhasználó számára, hogy mappákat és leveleket olvasson, írjon és hozzon létre, hozzászóljon, üzeneteket csatoljon hozzájuk és üzeneteket töröljön.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
@@ -33,6 +33,7 @@ any of	mail	hu	bármennyi
 any status	mail	hu	bármilyen állapot
 archive folder	mail	hu	Archívum mappa
 are you sure you want to delete all selected folders?	mail	hu	Biztos, hogy az összes kiválasztott mappát törölni szeretné?
+ask for permission, only allow listed domains	mail	hu	Engedély kérése, csak a felsorolt domainek engedélyezése
 attach files	mail	hu	Fájlok csatolása
 attach users vcard at compose to every new mail	mail	hu	A felhasználók vCard-jának csatolása minden új levélhez a komponáláskor.
 attach vcard	mail	hu	vCard csatolása

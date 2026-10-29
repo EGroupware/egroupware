@@ -35,7 +35,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	cs	Povolit
 allow external images	mail	cs	Umožnit náhled z externích zdrojů
 allow external images from listed domains	mail	cs	Povolit externí obrázky z uvedených domén
-allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech. "Požádat o povolení" zobrazí lištu, kterou je lze načíst jen tentokrát ("Ukázat") nebo vždy z jejich domény ("Povolit"). "Požádat o povolení, povolit pouze uvedené domény" nabízí pouze "Ukázat", takže vždy povoleny jsou jen uvedené domény, např. nastavené administrátorem pro všechny.
 allow images from listed domains in html emails	mail	cs	Povolit obrázky z uvedených domén v e-mailech HTML.
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	cs	Umožňuje uživateli číst, zapisovat a vytvářet složky a poštu, odesílat do nich příspěvky, připojovat k nim zprávy a mazat je.
@@ -57,6 +57,7 @@ are you sure you want to delete all selected folders?	mail	cs	Opravdu chcete sma
 are you sure you want to move folder %1 to folder %2?	mail	cs	Opravdu chcete přesunout složku %1 do složky %2?
 arrival	mail	cs	Přijato
 ask for permission	mail	cs	Požádat o povolení
+ask for permission, only allow listed domains	mail	cs	Požádat o povolení, povolit pouze uvedené domény
 attach files	mail	cs	Připojit soubory
 attach users vcard at compose to every new mail	mail	cs	Ke každému novému e-mailu přiložit vizitky vCard uživatelů.
 attach vcard	mail	cs	Přidat vCard

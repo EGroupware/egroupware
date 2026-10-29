@@ -42,7 +42,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	sk	Povoliť
 allow external images	mail	sk	Povoliť externé obrázky
 allow external images from listed domains	mail	sk	Povoliť externé obrázky z domén na zozname
-allow images from external sources in html emails	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov. "Požiadať o povolenie" zobrazí lištu, ktorou ich možno načítať len tentoraz ("Zobraziť") alebo vždy z ich domény ("Povoliť"). "Požiadať o povolenie, povoliť len domény na zozname" ponúka len "Zobraziť", takže vždy povolené sú len domény na zozname, napr. nastavené administrátorom pre všetkých.
 allow images from listed domains in html emails	mail	sk	Povoliť pre HTML e-maily obrázky z domén na zozname.
 allow users to create further identities	mail	sk	Povoliť používateľom vytváranie ďalších identít
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sk	Umožňuje používateľovi čítať, zapisovať a vytvárať priečinky a poštu, odosielať do nich príspevky, pripájať do nich správy a odstraňovať správy
@@ -64,6 +64,7 @@ are you sure you want to delete all selected folders?	mail	sk	Ste si istí že c
 are you sure you want to move folder %1 to folder %2?	mail	sk	Ste si istí že chcete presunúť priečinok %1 do priečinka %2?
 arrival	mail	sk	Prijaté
 ask for permission	mail	sk	Požiadať o povolenie
+ask for permission, only allow listed domains	mail	sk	Požiadať o povolenie, povoliť len domény na zozname
 attach files	mail	sk	Priložiť súbory
 attach users vcard at compose to every new mail	mail	sk	Priložiť používateľovu vizitku VCard pri tvorbe každej novej správy
 attach vcard	mail	sk	Priložiť vCard

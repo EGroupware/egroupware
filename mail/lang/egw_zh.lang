@@ -20,7 +20,7 @@ aliases+forwards	mail	zh	别名+转发
 all my email addresses	mail	zh	我所有的电子邮件地址
 all of	mail	zh	所有的
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	zh	所有子文件夹也将被删除，所有受影响文件夹中的所有信息都将丢失
-allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	zh	在 HTML 邮件中允许外部图片来源。“请求许可”会显示提示栏，可仅此一次加载（“显示”）或始终允许其域名（“允许”）。“请求许可，仅允许列出的域名”只提供“显示”，因此只有列出的域名会始终被允许，例如由管理员为所有人设置的域名。
 allow users to create further identities	mail	zh	允许用户创建更多身份
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	zh	允许用户读取、写入和创建文件夹和邮件，向其发送邮件，向其添加邮件和删除邮件
 always respond / auto-responder	mail	zh	始终回复/自动回复
@@ -31,6 +31,7 @@ any of	mail	zh	任何
 any status	mail	zh	任何状态
 archive folder	mail	zh	归档文件夹
 are you sure you want to delete all selected folders?	mail	zh	您确定要删除所有选定的文件夹吗？
+ask for permission, only allow listed domains	mail	zh	请求许可，仅允许列出的域名
 attach files	mail	zh	附加文件
 attach users vcard at compose to every new mail	mail	zh	在撰写每封新邮件时附加用户的 vCard
 attach vcard	mail	zh	附加 vCard

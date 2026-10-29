@@ -34,7 +34,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	nl	Toestaan
 allow external images	mail	nl	Sta externe afbeeldingen toe
 allow external images from listed domains	mail	nl	Externe afbeeldingen van vermelde domeinen toestaan
-allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan. "Toestemming vragen" toont een melding om ze alleen deze keer te laden ("Weergeven") of altijd van hun domein toe te staan ("Toestaan"). "Toestemming vragen, alleen vermelde domeinen toestaan" biedt alleen "Weergeven", zodat alleen de vermelde domeinen altijd zijn toegestaan, bijv. zoals door de beheerder voor iedereen ingesteld.
 allow images from listed domains in html emails	mail	nl	Afbeeldingen van vermelde domeinen toestaan in HTML e-mails.
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	nl	Hiermee kan een gebruiker mappen en mails lezen, schrijven en aanmaken, er berichten in plaatsen, berichten toevoegen en berichten verwijderen.
@@ -55,6 +55,7 @@ are you sure you want to delete all selected folders?	mail	nl	Weet u zeker dat u
 are you sure you want to move folder %1 to folder %2?	mail	nl	Weet u zeker dat u map %1 wilt verplaatsen naar map %2?
 arrival	mail	nl	Ontvangen
 ask for permission	mail	nl	Toestemming vragen
+ask for permission, only allow listed domains	mail	nl	Toestemming vragen, alleen vermelde domeinen toestaan
 attach files	mail	nl	Bestanden toevoegen
 attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij elke nieuwe mail.
 attach vcard	mail	nl	Sluit vCard bij

@@ -43,7 +43,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	es-es	Permitir
 allow external images	mail	es-es	Permitir imágenes externas
 allow external images from listed domains	mail	es-es	Permitir imágenes externas de dominios listados
-allow images from external sources in html emails	mail	es-es	Permitir imágenes de origen externo en correos HTML.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	es-es	Permitir imágenes de origen externo en correos HTML. "Solicitar permiso" muestra un aviso para cargarlas solo esta vez ("Mostrar") o siempre desde su dominio ("Permitir"). "Solicitar permiso, permitir solo los dominios listados" ofrece solo "Mostrar", de modo que solo los dominios listados se permiten siempre, p.ej. tal como los ha definido el administrador para todos.
 allow images from listed domains in html emails	mail	es-es	Permitir imágenes de dominios listados en correos electrónicos HTML.
 allow users to create further identities	mail	es-es	Permitir a los usuarios crear nuevas identidades
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	es-es	Permite a un usuario leer, escribir y crear carpetas y correos, enviar mensajes, añadir mensajes y borrar mensajes.
@@ -65,6 +65,7 @@ are you sure you want to delete all selected folders?	mail	es-es	¿Está seguro 
 are you sure you want to move folder %1 to folder %2?	mail	es-es	¿Está seguro de que desea mover la carpeta %1 a la carpeta %2?
 arrival	mail	es-es	Recibido
 ask for permission	mail	es-es	Solicitar permiso
+ask for permission, only allow listed domains	mail	es-es	Solicitar permiso, permitir solo los dominios listados
 attach files	mail	es-es	Adjuntar archivos
 attach users vcard at compose to every new mail	mail	es-es	adjuntar vCard de los usuarios al componer a cada nuevo correo.
 attach vcard	mail	es-es	Adjuntar vCard

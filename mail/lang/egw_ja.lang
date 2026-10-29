@@ -43,7 +43,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	ja	許可
 allow external images	mail	ja	外部画像を許可
 allow external images from listed domains	mail	ja	指定ドメインからの外部画像を許可
-allow images from external sources in html emails	mail	ja	HTMLメールで外部ソースからの画像を許可。
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	ja	HTMLメールで外部ソースからの画像を許可。「権限を要求」は、今回のみ読み込む（「表示」）か、そのドメインから常に許可する（「許可」）ためのバナーを表示します。「権限を要求、指定ドメインのみ許可」は「表示」のみを提供するため、常に許可されるのは指定ドメイン（例: 管理者が全員向けに設定したもの）のみです。
 allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可。
 allow users to create further identities	mail	ja	追加名称の生成を許可
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ja	フォルダーとメールの読み書き、作成、投稿、メッセージの追加、削除ができます。
@@ -65,6 +65,7 @@ are you sure you want to delete all selected folders?	mail	ja	選択されたフ
 are you sure you want to move folder %1 to folder %2?	mail	ja	%2?フォルダ %1 をフォルダ %2 に移動してよろしいですか？
 arrival	mail	ja	受信
 ask for permission	mail	ja	権限を要求
+ask for permission, only allow listed domains	mail	ja	権限を要求、指定ドメインのみ許可
 attach files	mail	ja	ファイルの添付
 attach users vcard at compose to every new mail	mail	ja	新規メール作成時vCardを常に添付。
 attach vcard	mail	ja	vCardを添付

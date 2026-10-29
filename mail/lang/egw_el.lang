@@ -42,7 +42,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	el	Να επιτρέπεται
 allow external images	mail	el	Να επιτρέπονται εικόνες από εξωτερικές πηγές
 allow external images from listed domains	mail	el	Να επιτρέπονται εικόνες από εξωτερικές πηγές εφόσον ανοίκουν στα αναφερόμενα domains.
-allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails. Το "Να ρωτά για άδεια" εμφανίζει ένα μήνυμα για να φορτωθούν μόνο αυτή τη φορά ("εμφάνιση") ή πάντα από το domain τους ("Να επιτρέπεται"). Το "Να ρωτά για άδεια, να επιτρέπονται μόνο τα αναφερόμενα domains" προσφέρει μόνο το "εμφάνιση", ώστε να επιτρέπονται πάντα μόνο τα αναφερόμενα domains, π.χ. όπως τα όρισε ο διαχειριστής για όλους.
 allow images from listed domains in html emails	mail	el	Να επιτρέπονται οι εικόνες από τα αναφερόμενα domains σε μηνύματα τύπου HTML.
 allow users to create further identities	mail	el	να επιτρέπεται στους χρήστες να δημιουργούν πρόσθετες ταυτότητες
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	el	Επιτρέπει σε έναν χρήστη να διαβάζει, να γράφει και να δημιουργεί φακέλους και μηνύματα, να δημοσιεύει σε αυτούς, να προσθέτει μηνύματα σε αυτούς και να διαγράφει μηνύματα
@@ -64,6 +64,7 @@ are you sure you want to delete all selected folders?	mail	el	Είστε σίγ�
 are you sure you want to move folder %1 to folder %2?	mail	el	Είστε σίγουροι πως θέλετε να μεταφέρετε τον φάκελο %1 στον φάκελο %2;
 arrival	mail	el	Ελήφθη
 ask for permission	mail	el	Να ρωτά για άδεια
+ask for permission, only allow listed domains	mail	el	Να ρωτά για άδεια, να επιτρέπονται μόνο τα αναφερόμενα domains
 attach files	mail	el	Επισύναψη αρχείων
 attach users vcard at compose to every new mail	mail	el	Επισύναψη της vCard του χρήστη κατά την σύνταξη νέου μηνύματος.
 attach vcard	mail	el	Επισύναψη vCard

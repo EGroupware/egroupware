@@ -1,10 +1,11 @@
 (no subject)	mail	zh-tw	(沒有標題)
 add to addressbook	mail	zh-tw	加入通訊錄
 all of	mail	zh-tw	所有的
-allow images from external sources in html emails	mail	zh-tw	在 HTML 郵件中允許來自外部的圖片
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	zh-tw	在 HTML 郵件中允許來自外部的圖片。「請求許可」會顯示提示列，可僅此一次載入（「顯示」）或一律允許其網域（「允許」）。「請求許可，僅允許列出的網域」只提供「顯示」，因此只有列出的網域會一律被允許，例如由管理員為所有人設定的網域。
 always show html emails	mail	zh-tw	都用HTML顯示郵件
 any of	mail	zh-tw	任意的
 any status	mail	zh-tw	任意狀態
+ask for permission, only allow listed domains	mail	zh-tw	請求許可，僅允許列出的網域
 attachments	mail	zh-tw	附加檔案
 by date	mail	zh-tw	按日期
 check message against next rule also	mail	zh-tw	也用下一個規則檢查郵件

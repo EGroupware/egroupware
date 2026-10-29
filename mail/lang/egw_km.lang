@@ -40,7 +40,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	km	អនុញ្ញាត
 allow external images	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅ
 allow external images from listed domains	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅពីដែនដែលបានរាយបញ្ជី
-allow images from external sources in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីប្រភពខាងក្រៅនៅក្នុងអុីមែល HTML
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	km	អនុញ្ញាតឱ្យរូបភាពពីប្រភពខាងក្រៅនៅក្នុងអុីមែល HTML។ "សុំការអនុញ្ញាត" បង្ហាញសារមួយដើម្បីផ្ទុកវាតែម្តងនេះ ("បង្ហាញ") ឬជានិច្ចពីដែនរបស់វា ("អនុញ្ញាត")។ "សុំការអនុញ្ញាត ដោយអនុញ្ញាតតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះ" ផ្តល់តែ "បង្ហាញ" ដូច្នេះមានតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះដែលត្រូវបានអនុញ្ញាតជានិច្ច ឧ. ដូចដែលអ្នកគ្រប់គ្រងបានកំណត់សម្រាប់អ្នកទាំងអស់គ្នា។
 allow images from listed domains in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីដែនដែលបានរាយក្នុងអុីមែល HTML
 allow users to create further identities	mail	km	អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់បង្កើតអត្តសញ្ញាណបន្ថែម
 always	mail	km	ជានិច្ច
@@ -60,6 +60,7 @@ are you sure you want to delete all selected folders?	mail	km	តើអ្នក
 are you sure you want to move folder %1 to folder %2?	mail	km	តើ​អ្នក​ប្រាកដ​ថា​អ្នក​ចង់​ផ្លាស់ទី​ថត%1 ទៅ​ថត%2?
 arrival	mail	km	បានទទួល
 ask for permission	mail	km	សុំការអនុញ្ញាត
+ask for permission, only allow listed domains	mail	km	សុំការអនុញ្ញាត ដោយអនុញ្ញាតតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះ
 attach files	mail	km	ភ្ជាប់ឯកសារ
 attach users vcard at compose to every new mail	mail	km	ភ្ជាប់អ្នកប្រើប្រាស់ VCard នៅពេលសរសេរទៅគ្រប់សំបុត្រថ្មី។
 attach vcard	mail	km	ភ្ជាប់ vCard

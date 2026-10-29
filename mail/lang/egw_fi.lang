@@ -21,7 +21,7 @@ all my email addresses	mail	fi	kaikki sähköpostiosoitteeni
 all of	mail	fi	kaikki
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	fi	Myös kaikki alikansiot poistetaan, ja kaikki viestit kaikissa kansioissa menetetään.
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
-allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	fi	Salli kuvat ulkoisista lähteistä HTML-sähköposteissa. "Kysy lupaa" näyttää ilmoituksen, jolla ne voi ladata vain tällä kertaa ("Näytä") tai aina niiden verkkotunnuksesta ("Salli"). "Kysy lupaa, salli vain luetellut verkkotunnukset" tarjoaa vain "Näytä", joten aina sallittuja ovat vain luetellut verkkotunnukset, esim. ylläpitäjän kaikille määrittämät.
 allow images from listed domains in html emails	mail	fi	Salli listattujen verkkotunnusten kuvat HTML-sähköposteissa.
 allow users to create further identities	mail	fi	Salli käyttäjien luoda uusia identiteettejä
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fi	Käyttäjä voi lukea, kirjoittaa ja luoda kansioita ja sähköposteja, lähettää niihin viestejä, liittää niihin viestejä ja poistaa viestejä.
@@ -36,6 +36,7 @@ any status	mail	fi	Mikä tahansa tila
 archive folder	mail	fi	Arkistokansio
 are you sure you want to delete all selected folders?	mail	fi	Oletko varma, että haluat poistaa kaikki valitut kansiot?
 are you sure you want to move folder %1 to folder %2?	mail	fi	Haluatko varmasti siirtää kansion %1 kansioon %2?
+ask for permission, only allow listed domains	mail	fi	Kysy lupaa, salli vain luetellut verkkotunnukset
 attach files	mail	fi	Tiedostojen liittäminen
 attach users vcard at compose to every new mail	mail	fi	Liitä käyttäjän vCard-kortti jokaiseen uuteen sähköpostiin laatimisen yhteydessä.
 attach vcard	mail	fi	Liitä vCard

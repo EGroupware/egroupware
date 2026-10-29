@@ -48,7 +48,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	de	Erlauben
 allow external images	mail	de	Erlaube externe Bildquellen
 allow external images from listed domains	mail	de	Erlaube externe Inhalte der folgenden Domains
-allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Quellen in HTML-E-Mails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	de	Erlaube Bilder von externen Quellen in HTML-E-Mails. "Immer nachfragen" zeigt einen Hinweis, um sie einmalig zu laden ("Anzeigen") oder von ihrer Domain immer zu erlauben ("Erlauben"). "Immer nachfragen, nur aufgeführte Domains erlauben" bietet nur "Anzeigen" an, so dass nur die aufgeführten Domains immer erlaubt sind, z.B. wie vom Administrator für alle festgelegt.
 allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Quellen der folgenden Domains in HTML-E-Mails.
 allow users to create further identities	mail	de	Benutzer dürfen weitere Identitäten anlegen
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	de	Ermöglicht es einem Benutzer, Ordner und E-Mails zu lesen, zu schreiben und zu erstellen, darin zu posten, Nachrichten anzuhängen und Nachrichten zu löschen.
@@ -76,6 +76,7 @@ are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1
 arrival	mail	de	Empfangsdatum
 ask	mail	de	fragen
 ask for permission	mail	de	Immer nachfragen
+ask for permission, only allow listed domains	mail	de	Immer nachfragen, nur aufgeführte Domains erlauben
 attach files	mail	de	Dateien anhängen
 attach users vcard at compose to every new mail	mail	de	Füge die vCard des Benutzers an jede neue E-Mail an.
 attach vcard	mail	de	vCard hinzufügen
@@ -484,7 +485,6 @@ none, create all	mail	de	keine, erstellt alle
 nothing to change.	mail	de	Nichts zu Ändern.
 notify about new mail in this folders	mail	de	Über neue E-Mails in diesem Ordner benachrichtigen
 notify when new mails arrive in these folders	mail	de	Benachrichtigung, sobald neue E-Mails in den folgenden Ordnern ankommen
-offer "allow" for blocked external content	mail	de	"Erlauben" für blockierte externe Inhalte anbieten
 offer to add sender's s/mime certificate or pgp key to contact	mail	de	Anbieten, S/MIME-Zertifikat oder PGP-Schlüssel des Absenders zum Kontakt hinzuzufügen
 on	mail	de	am
 on behalf of	mail	de	Im Namen von
@@ -688,7 +688,6 @@ show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show vertical with all columns	mail	de	Vertikal mit Einzelspalten anzeigen
 show/hide preview pane in mail list view	mail	de	Definiert das Fensterlaout bzw. die Vorschau einer ausgewählten E-Mail.\n\n<b>Vertikal anzeigen (3-Spalten-Ansicht):</b>\nMailkonten (Seitenleiste), E-Mail-Kopfzeilen und die Vorschau werden in 3 Spalten vertikal nebeneinander angezeigt.\n<b>Vertikal mit Einzelspalten anzeigen:</b>\n3-Spalte-Ansicht, jedoch mit allen Spalten in der Kopfzeilen-Spalte. Benötigt deutlich mehr horizontalen Platz!\n<b>Horizontal anzeigen:</b>\nDie Vorschau wird unter der Kopfzeilen-Liste angezeigt.\n<b>Horizontal anzeigen, ausblenden wenn nichts ausgewählt:</b>\nHorizontale Anzeige, jedoch wird das Vorschaufenster ausgeblendet wenn keine E-Mail ausgewählt ist.\nMacht die Anzeige unruhiger, zeigt aber mehr Zeilen an.\n<b>Nie anzeigen:</b>\nEine Vorschau wird niemals angezeigt. Eine E-Mail muss zum Lesen in einem neuen Fenster geöffnet werden.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt für kurze Zeit eine sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
-shows an "allow" button next to "show" in the banner of a mail with blocked external content, adding its domain to the listed domains. set to "no" to only offer "show", eg. to keep a list of allowed domains set by the admin for everyone.	mail	de	Zeigt im Hinweis einer Mail mit blockierten externen Inhalten neben "Anzeigen" eine Schaltfläche "Erlauben", die deren Domain zu den aufgeführten Domains hinzufügt. Mit "Nein" wird nur "Anzeigen" angeboten, z.B. damit eine vom Administrator für alle gesetzte Liste erlaubter Domains bestehen bleibt.
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert

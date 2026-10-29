@@ -22,7 +22,7 @@ aliases+forwards	mail	pl	Aliasy+Przekazy
 all my email addresses	mail	pl	wszystkie moje adresy e-mail
 all of	mail	pl	wszystkie z
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pl	Wszystkie podfoldery również zostaną usunięte, a wszystkie wiadomości we wszystkich dotkniętych folderach zostaną utracone
-allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	pl	Zezwalaj na wyświetlanie obrazków z zewnętrznych serwerów w wiadomościach HTML. "Pytaj o zgodę" wyświetla pasek, aby załadować je tylko tym razem ("Pokaż") lub zawsze z ich domeny ("Zezwól"). "Pytaj o zgodę, zezwalaj tylko na wymienione domeny" oferuje tylko "Pokaż", więc zawsze dozwolone są tylko wymienione domeny, np. ustawione przez administratora dla wszystkich.
 allow users to create further identities	mail	pl	Zezwól użytkownikom na tworzenie kolejnych tożsamości
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pl	Umożliwia użytkownikowi odczytywanie, zapisywanie i tworzenie folderów i wiadomości e-mail, wysyłanie do nich wiadomości, dołączanie do nich wiadomości i usuwanie wiadomości
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
@@ -34,6 +34,7 @@ any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 archive folder	mail	pl	Folder archiwum
 are you sure you want to delete all selected folders?	mail	pl	Czy na pewno chcesz usunąć wszystkie wybrane foldery?
+ask for permission, only allow listed domains	mail	pl	Pytaj o zgodę, zezwalaj tylko na wymienione domeny
 attach files	mail	pl	Dołączanie plików
 attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila.
 attach vcard	mail	pl	Załącz vCard

@@ -43,7 +43,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	it	Permetti
 allow external images	mail	it	Permetti immagini esterne
 allow external images from listed domains	mail	it	Permetti immagini remote dai seguenti domini
-allow images from external sources in html emails	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML. "Richiedi permesso" mostra un avviso per caricarle solo questa volta ("Mostra") o sempre dal loro dominio ("Permetti"). "Richiedi permesso, permetti solo i domini elencati" offre solo "Mostra", quindi solo i domini elencati sono sempre permessi, p.es. come impostati dall'amministratore per tutti.
 allow images from listed domains in html emails	mail	it	permetti immagini remote dai domini seguenti nei messaggi HTML
 allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	it	Consente a un utente di leggere, scrivere e creare cartelle e messaggi, di inviarvi messaggi, di aggiungerne e di eliminarli.
@@ -65,6 +65,7 @@ are you sure you want to delete all selected folders?	mail	it	Sicuro di voler el
 are you sure you want to move folder %1 to folder %2?	mail	it	Sicuro di voler spostare la cartella %1 nella %2?
 arrival	mail	it	Ricevuti
 ask for permission	mail	it	Richiedi permesso
+ask for permission, only allow listed domains	mail	it	Richiedi permesso, permetti solo i domini elencati
 attach files	mail	it	Allega i file
 attach users vcard at compose to every new mail	mail	it	Allega la vCard dell'utente ogni volta che componi un nuovo messaggio.
 attach vcard	mail	it	Allega vCard

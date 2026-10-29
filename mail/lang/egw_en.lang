@@ -49,7 +49,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	en	Allow
 allow external images	mail	en	Allow external images
 allow external images from listed domains	mail	en	Allow external images from listed domains
-allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	en	Allow images from external sources in HTML emails. "Ask for permission" shows a banner to load them this time only ("Show") or always from their domain ("Allow"). "Ask for permission, only allow listed domains" offers only "Show", so only the listed domains are always allowed, eg. as set by the admin for everyone.
 allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails.
 allow users to create further identities	mail	en	Allow users to create further identities
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	en	Allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.
@@ -77,6 +77,7 @@ are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you w
 arrival	mail	en	Received
 ask	mail	en	ask
 ask for permission	mail	en	Ask for permission
+ask for permission, only allow listed domains	mail	en	Ask for permission, only allow listed domains
 attach files	mail	en	Attach files
 attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email.
 attach vcard	mail	en	Attach vCard
@@ -493,7 +494,6 @@ notify about new mail in this folders	mail	en	Notify about new email in these fo
 notify when new mails arrive in these folders	mail	en	notify when new emails arrive in these folders
 obsolet create right, combination rights of k and x	mail	en	Obsolet create right, combination rights of K and X
 obsolete delete right, combination rights of e, t and x	mail	en	Obsolete delete right, combination rights of E, T and X
-offer "allow" for blocked external content	mail	en	Offer "Allow" for blocked external content
 offer to add sender's s/mime certificate or pgp key to contact	mail	en	Offer to add sender's S/MIME certificate or PGP key to contact
 on	mail	en	on
 on behalf of	mail	en	On behalf of
@@ -700,7 +700,6 @@ show vertical	mail	en	Show vertical (3-column view)
 show vertical with all columns	mail	en	Show vertical with all columns
 show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in email list view.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the email.
-shows an "allow" button next to "show" in the banner of a mail with blocked external content, adding its domain to the listed domains. set to "no" to only offer "show", eg. to keep a list of allowed domains set by the admin for everyone.	mail	en	Shows an "Allow" button next to "Show" in the banner of a mail with blocked external content, adding its domain to the listed domains. Set to "no" to only offer "Show", eg. to keep a list of allowed domains set by the admin for everyone.
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
