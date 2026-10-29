@@ -135,14 +135,17 @@ lives in `doc/ai/projects/` - check there directly for anything not shown here.
   `Imap\Stalwart` override - found live via egroupware.org's own Stalwart migration breaking
   ActiveSync's "Ping" mechanism entirely. Full method-by-method map of all 33 `Api\Mail` methods
   `mail_zpush` calls: every message-level operation is already properly JMAP-native (dispatches to
-  a private `jmap<Method>()` helper or an inline guard) - the gap is narrowly confined to 7-8
-  folder-management methods. Proposes adding JMAP-native `Imap\Jmap` overrides for exactly those
-  (`getMailboxes`/`getStatus`/`mailboxExist`/`openMailbox`/`createMailbox`/`renameMailbox`/
-  `deleteMailbox`/`subscribeMailbox`/`listSubscribedMailboxes`), following the same `Mailbox/get`/
-  `Mailbox/set` template `getACL()`/`setACL()` already established - a bounded, single-class fix,
-  not part of [[mail-jmap-imap-inversion]]'s much larger Phase 2. A narrow, account-specific
-  stop-gap already shipped and is confirmed working live (`96c1f784ae`/`5280f53e10`); this doc scopes
-  the general fix every other Stalwart-migrated customer still needs. Not started.
+  a private `jmap<Method>()` helper or an inline guard) - the gap is narrowly confined to 9
+  folder-management methods, following the same `Mailbox/get`/`Mailbox/set` template `getACL()`/
+  `setACL()` already established - a bounded, single-class fix, not part of
+  [[mail-jmap-imap-inversion]]'s much larger Phase 2. 2 of the 9 (`subscribeMailbox`/
+  `listSubscribedMailboxes`) already shipped same-day by a separate session (`adc28974b4`), which hit
+  the identical gap independently via the **regular Mail UI**'s subscription popup, not ActiveSync -
+  confirms this isn't an ActiveSync-only problem. 7 remain (`getMailboxes`/`getStatus`/
+  `mailboxExist`/`openMailbox`/`createMailbox`/`renameMailbox`/`deleteMailbox`). A narrow, account-
+  specific stop-gap for `mail_zpush` itself already shipped and is confirmed working live
+  (`96c1f784ae`/`5280f53e10`). **Master only, no 26 backport for any of this** (ralf, 2026-10-29) -
+  26 is missing much more of this JMAP-compatibility surface and will be rebased onto master soon.
 - `doc/ai/projects/mail-jmap-imap-inversion.md` - corrected (2026-10-29) a wrong 2026-08-26 Phase-2-
   scoping claim that `mail_zpush.inc.php` was "not a real consumer" of unguarded raw-IMAP calls - that
   screening only checked its own direct `icServer->` references, missing that it's a heavy consumer

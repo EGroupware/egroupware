@@ -1,6 +1,10 @@
 # Mail: JMAP-native folder operations for `mail_zpush` (ActiveSync)
 
-## Status: not started - scoped 2026-10-29, triggered by a live ActiveSync outage
+## Status: in progress. Scoped 2026-10-29 from a live ActiveSync outage; 2 of 9 overrides already
+shipped by a separate session the same day (`adc28974b4`), triggered independently by the regular
+Mail UI hitting the identical gap - see "Progress" below. **Master only - do NOT backport any of
+this to 26** (ralf, 2026-10-29): 26 is missing much more of this JMAP-compatibility work and will
+be rebased onto master soon anyway, so backporting piecemeal now is wasted effort.
 
 ## How this was found
 
@@ -22,6 +26,25 @@ ActiveSync traffic successfully fetching/parsing a message afterward.
 **That stop-gap only helps egroupware.org's own account.** It's an exact host:port string match,
 deliberately not a general `Imap\Jmap`/`Imap\Stalwart` fallback - any other customer migrating to
 Stalwart hits the identical class of failure with no workaround. This doc scopes the real fix.
+
+## Progress: not ActiveSync-only - the regular Mail UI hit the same gap class independently
+
+Confirms this doc's premise from an unexpected direction: `adc28974b4` (2026-10-29, a separate
+session, ticket #126691 follow-up) found the **regular Mail UI's folder-subscription popup**
+crashing for the same Stalwart-migrated egroupware.org account - `mail/src/Ui.php`'s
+`subscription()` calls `icServer->listSubscribedMailboxes()` directly, which fell through to the
+same unoverridden raw-IMAP path, threw, and left `$subscribed` unset, crashing `array_map()` right
+after with `"Argument #2 ($array) must be of type array, null given"`. Fixed there by adding
+JMAP-native `listSubscribedMailboxes()`/`subscribeMailbox()` overrides to `Imap\Jmap`
+(`Mailbox.isSubscribed` / `Mailbox/set`, same pattern as `getACL()`/`setACL()`), extending
+`Api\Mail\Jmap\Mailbox::listAllPaths()` with a `$subscribedOnly` filter, plus a defensive default in
+`Ui.php`. Tests added: `api/tests/Mail/Imap/JmapSubscriptionNoRawImapFallbackTest.php`,
+`api/tests/Mail/Jmap/MailboxListAllPathsTest.php`.
+
+This removes 2 of the 9 methods originally scoped below from the remaining work (marked `DONE` in
+the table) and confirms the framing: these gaps hit **any** code path touching folder management
+for a JMAP/Stalwart account, server-side PHP mail code generally - not an ActiveSync-specific
+problem, exactly as flagged when this doc was written.
 
 ## Correction to [[mail-jmap-imap-inversion]]'s Phase 2 scoping
 
@@ -69,10 +92,12 @@ each one's actual implementation to see whether it's already JMAP-native or fall
 | `folderIsSelectable()` | calls `getFolderStatus()` internally - inherits the same gap | gates every `reopen()` |
 | `reopen()` | the gap above, **plus** its own direct `icServer->openMailbox()` call (2nd independent gap) | before almost every message operation |
 | `folderExists()` | `icServer->mailboxExist()` | folder existence checks - also the cause of the (harmless but noisy) `"mailboxExist... openMailbox failed"` log spam seen for unrelated reasons since before this migration |
-| `createFolder()` | `icServer->createMailbox()`/`subscribeMailbox()` | folder create |
+| `createFolder()` | `icServer->createMailbox()` (its `subscribeMailbox()` call is now JMAP-native, see "Progress" above) | folder create |
 | `renameFolder()` | `icServer->renameMailbox()` | folder rename |
-| `deleteFolder()` | `icServer->subscribeMailbox()`/`deleteMailbox()` | folder delete |
-| `getFolderObjects()` | `icServer->getMailboxes()`/`listSubscribedMailboxes()` | `GetFolderList()` |
+| `deleteFolder()` | `icServer->deleteMailbox()` (its `subscribeMailbox()` call is now JMAP-native, see "Progress" above) | folder delete |
+| `getFolderObjects()` | `icServer->getMailboxes()` (its `listSubscribedMailboxes()` call is now JMAP-native, see "Progress" above) | `GetFolderList()` |
+| ~~`listSubscribedMailboxes()`~~ | ~~unoverridden~~ | **DONE (`adc28974b4`)** - JMAP-native via `Mailbox.isSubscribed` |
+| ~~`subscribeMailbox()`~~ | ~~unoverridden~~ | **DONE (`adc28974b4`)** - JMAP-native via `Mailbox/set` |
 
 Every gap is a **folder-management** operation. Every message-level operation `mail_zpush` uses is
 already properly JMAP-native - this was built out for the main Mail UI and `mail_zpush` gets it for
@@ -80,15 +105,16 @@ free via the shared `Api\Mail` bo.
 
 ## Scope of the real fix
 
-Add JMAP-native overrides in `Imap\Jmap` (`api/src/Mail/Imap/Jmap.php`) for exactly the methods in
-the gap table: `getMailboxes()`, `getStatus()`, `mailboxExist()`, `openMailbox()` (reopen()'s 2nd
-gap - see below), `createMailbox()`, `renameMailbox()`, `deleteMailbox()`, `subscribeMailbox()`,
-`listSubscribedMailboxes()`. This is a bounded, single-class change (plus extending the existing
-`Api\Mail\Jmap\Mailbox` helper), following the exact template `getACL()`/`setACL()`/`deleteACL()`
-already established - JMAP `Mailbox/get`/`Mailbox/set` calls, not a rewrite of `mail_zpush` or
-`Api\Mail`. `Imap\Jmap`'s own class docblock already names this as the direction: *"Currently, JMAP
-is only partially used... everything else still uses an IMAP connection. @ToDo replace everything
-with JMAP no longer using / extending IMAP"*.
+Add JMAP-native overrides in `Imap\Jmap` (`api/src/Mail/Imap/Jmap.php`) for the remaining 7 methods
+in the gap table: `getMailboxes()`, `getStatus()`, `mailboxExist()`, `openMailbox()` (reopen()'s 2nd
+gap - see below), `createMailbox()`, `renameMailbox()`, `deleteMailbox()`. (`subscribeMailbox()`/
+`listSubscribedMailboxes()` are already done, see "Progress" above - 2 of the original 9.) This is a
+bounded, single-class change (plus extending the existing `Api\Mail\Jmap\Mailbox` helper), following
+the exact template `getACL()`/`setACL()`/`deleteACL()`/the now-shipped `subscribeMailbox()` already
+established - JMAP `Mailbox/get`/`Mailbox/set` calls, not a rewrite of `mail_zpush` or `Api\Mail`.
+`Imap\Jmap`'s own class docblock already names this as the direction: *"Currently, JMAP is only
+partially used... everything else still uses an IMAP connection. @ToDo replace everything with JMAP
+no longer using / extending IMAP"*.
 
 This is deliberately **not** part of [[mail-jmap-imap-inversion]]'s Phase 2 (the `Api\Jmap`/
 `Mail\Jmap` object-model rewrite) - that's a much larger, foundational, multi-session effort,
@@ -121,16 +147,17 @@ a regression.
 
 ## Proposed implementation
 
-1. **`api/src/Mail/Jmap/Mailbox.php`** (currently just `getMailboxId()`/`folderId2path()`/
-   `listAllPaths()`): add `get(array $ids = null, array $properties = ['name','parentId',
-   'totalEmails','unreadEmails','isSubscribed','myRights'])`, `create(string $name, ?string
-   $parentId)`, `update(string $id, array $patch)`, `destroy(string $id)` - thin wrappers around
-   `Mailbox/get`/`Mailbox/set`, mirroring `getACL()`'s existing `Mailbox/get` call shape exactly.
-2. **`api/src/Mail/Imap/Jmap.php`**: add the 9 overrides listed above, each translating its
-   IMAP-shaped parameters/return value to/from the `Jmap\Mailbox` helper's calls - same pattern as
-   `getACL()`/`setACL()`/`deleteACL()` (translate IMAP-shaped args in, JMAP call, translate JMAP
-   response back to the exact shape `Api\Mail` expects, so zero changes needed in `Api\Mail` or
-   `mail_zpush` themselves).
+1. **`api/src/Mail/Jmap/Mailbox.php`** (now has `getMailboxId()`/`folderId2path()`/`listAllPaths()`
+   incl. its new `$subscribedOnly` filter from `adc28974b4`): add `get(array $ids = null, array
+   $properties = ['name','parentId','totalEmails','unreadEmails','myRights'])`, `create(string
+   $name, ?string $parentId)`, `update(string $id, array $patch)`, `destroy(string $id)` - thin
+   wrappers around `Mailbox/get`/`Mailbox/set`, mirroring `getACL()`'s existing `Mailbox/get` call
+   shape and the now-shipped `subscribeMailbox()`'s `Mailbox/set` shape exactly.
+2. **`api/src/Mail/Imap/Jmap.php`**: add the remaining 7 overrides listed above, each translating
+   its IMAP-shaped parameters/return value to/from the `Jmap\Mailbox` helper's calls - same pattern
+   as `getACL()`/`setACL()`/`deleteACL()`/`subscribeMailbox()` (translate IMAP-shaped args in, JMAP
+   call, translate JMAP response back to the exact shape `Api\Mail` expects, so zero changes needed
+   in `Api\Mail` or `mail_zpush` themselves).
 3. No changes needed to `mail_zpush.inc.php` itself, nor to `Api\Mail` - this is purely filling in
    the missing `Imap\Jmap` overrides the existing per-method short-circuit pattern already expects.
 4. Once this ships, the egroupware.org-specific stop-gap in `mail_zpush::_mailInstance()` (commits
@@ -150,3 +177,8 @@ a regression.
 4. Remove the stop-gap (`96c1f784ae`'s `_mailInstance()` override and `5280f53e10`'s now-exercised-
    more-often `pushCallback()` null-folder guard can stay regardless, that one's unrelated/still
    correct) once (3) confirms the real fix covers it.
+
+**Branch policy (ralf, 2026-10-29): master only, no 26 backport for any of this work** - including
+the already-shipped `adc28974b4` and the stop-gap commits above. 26 is missing substantially more of
+this JMAP-compatibility surface than what's tracked in this doc, and will be rebased onto master
+soon, making a piecemeal backport now wasted effort.
