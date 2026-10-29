@@ -926,7 +926,10 @@ class Jmap extends Mail\Imap
 		$jmap = $stalwart->jmapClient();
 		$old_states = Api\Cache::getSession(__CLASS__, 'states:'.$mail_account->acc_id);
 		$sessionState = Api\Cache::getSession(__CLASS__, 'sessionState:'.$mail_account->acc_id);
-		$currentFolder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$mail_account->acc_id);
+		// default to INBOX: no session cache yet (eg. Stalwart's very first push for a session
+		// that hasn't opened a folder), $mailbox is not nullable - found live 2026-10-29 as a
+		// TypeError flooding the log after bulk-resubscribing push on a domain migration
+		$currentFolder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$mail_account->acc_id) ?? 'INBOX';
 		//error_log(__METHOD__."() client_data=".json_encode($client_data).", old_states=".json_encode($old_states).", current_folder='$currentFolder', data=".json_encode($data));
 		switch($data['@type'])
 		{
