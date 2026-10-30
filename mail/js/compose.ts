@@ -150,6 +150,25 @@ export class MailCompose
 	private signaturePlacement : 'top' | 'below' | 'none' = 'below';
 
 	/**
+	 * ticket #126191 follow-up (Ingo, 2026-10-16): "edit as new"/draft-continuation
+	 * (bootstrapComposeAsNew()) deliberately leaves a non-empty inherited body's own signature
+	 * untouched and unmarked - inserting/marking a fresh one would duplicate whatever the original
+	 * message already had (see that method's own docblock). That means the FIRST identity switch in
+	 * such a session has neither a SIGNATURE_MARKER_ID (HTML) nor insertedSignatureBlock (plain
+	 * text) to find - ralf's own call (2026-10-30): "open as new" should keep the body exactly
+	 * as-is, but on a MANUAL identity switch, best-effort try to recognize and replace whatever
+	 * signature is already there rather than just stacking a new one below it.
+	 *
+	 * "acc_id:ident_id" of the identity presumed to match whatever is currently sitting in the body
+	 * unmarked - set once by bootstrapComposeAsNew() for a non-empty inherited body, consulted by
+	 * updateSignatureForIdentity() only as a fallback when neither marker/tracked substring above is
+	 * found. Never updated again afterward - once a switch successfully (or unsuccessfully) acts on
+	 * it, any FURTHER switch either has a real marker to use instead (success) or has nothing better
+	 * to fall back on anyway (failure - the body's own actual content never matched to begin with).
+	 */
+	private lastKnownSignatureIdentity : string | null = null;
+
+	/**
 	 * Set once by bootstrapReply() - kept so a later identity switch (updateSignatureForIdentity())
 	 * still passes isReply through to composeBodyWithSignature() (the quoted body is already
 	 * non-empty by then, so the "no leading blank line above a non-empty new-compose body" rule
@@ -2204,6 +2223,11 @@ export class MailCompose
 		if (context.body.trim())
 		{
 			await this.setBodyValue(context.body);
+			// see lastKnownSignatureIdentity's own docblock - the identity selected right above is
+			// only a PRESUMPTION of whose signature is already sitting in this inherited body
+			// (correct for the common case: re-editing your own previous message under the same
+			// identity), consulted only as a fallback, never acted on blindly.
+			this.lastKnownSignatureIdentity = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '') || null;
 		}
 		else
 		{
@@ -2783,6 +2807,46 @@ export class MailCompose
 	}
 
 	/**
+	 * Best-effort fallback for updateSignatureForIdentity() - see lastKnownSignatureIdentity's own
+	 * docblock for why this exists and when it's actually consulted (only when neither the HTML
+	 * marker nor the plain-text insertedSignatureBlock is there to find). Byte-for-byte prefix/
+	 * suffix match only, against the trimmed body - no fuzzy matching, no attempt at a
+	 * differently-reformatted copy of the same signature.
+	 *
+	 * @param body current body (HTML or plain text, matching `field`)
+	 * @param field which of the identity's two signature variants to match against
+	 * @return the body with that match removed, or null if nothing matched (caller leaves the body
+	 *  untouched - the new signature just gets added alongside the old one for the user to clean up
+	 *  themselves, same as if this fallback didn't exist at all)
+	 */
+	private async stripLastKnownSignature(body : string, field : 'htmlSignature' | 'textSignature') : Promise<string | null>
+	{
+		if (!this.lastKnownSignatureIdentity) return null;
+		const [profileID, identId] = this.lastKnownSignatureIdentity.split(':', 2);
+		let identities : any[];
+		try
+		{
+			identities = await this.app.jmap.getIdentities(profileID);
+		}
+		catch (e)
+		{
+			return null;
+		}
+		const signature = identities.find((i) => i.id === identId)?.[field]?.trim();
+		if (!signature) return null;
+		const trimmed = body.trim();
+		if (trimmed.endsWith(signature))
+		{
+			return body.slice(0, body.lastIndexOf(signature));
+		}
+		if (trimmed.startsWith(signature))
+		{
+			return body.slice(body.indexOf(signature) + signature.length);
+		}
+		return null;
+	}
+
+	/**
 	 * "From"/identity dropdown's change handler while isJmapMode (see submitOnChange()) - re-derive
 	 * the pristine (signature-stripped) body, then insert the newly-selected identity's signature.
 	 *
@@ -2839,6 +2903,11 @@ export class MailCompose
 			{
 				marker.remove();
 			}
+			else
+			{
+				const stripped = await this.stripLastKnownSignature(doc.body.innerHTML, 'htmlSignature');
+				if (stripped !== null) doc.body.innerHTML = stripped;
+			}
 			if (this.isReplyCompose)
 			{
 				// ticket #126191 follow-up (Ingo, 2026-10-09): a reply/forward's own intro can span
@@ -2887,19 +2956,27 @@ export class MailCompose
 			}
 			pristine = doc.body.innerHTML;
 		}
-		else if (this.insertedSignatureBlock)
+		else
 		{
-			if (this.signaturePlacement === 'below' && current.endsWith(this.insertedSignatureBlock))
+			if (this.insertedSignatureBlock)
 			{
-				pristine = current.slice(0, current.length - this.insertedSignatureBlock.length);
+				if (this.signaturePlacement === 'below' && current.endsWith(this.insertedSignatureBlock))
+				{
+					pristine = current.slice(0, current.length - this.insertedSignatureBlock.length);
+				}
+				else if (this.signaturePlacement === 'top' && current.startsWith(this.insertedSignatureBlock))
+				{
+					pristine = current.slice(this.insertedSignatureBlock.length);
+				}
+				// else: can't confidently locate the previously-inserted signature (the user edited
+				// around/inside it) - leave the current value as pristine rather than guessing; this
+				// skips re-insertion once instead of risking a corrupted/duplicated signature
 			}
-			else if (this.signaturePlacement === 'top' && current.startsWith(this.insertedSignatureBlock))
+			else
 			{
-				pristine = current.slice(this.insertedSignatureBlock.length);
+				const stripped = await this.stripLastKnownSignature(current, 'textSignature');
+				if (stripped !== null) pristine = stripped;
 			}
-			// else: can't confidently locate the previously-inserted signature (the user edited
-			// around/inside it) - leave the current value as pristine rather than guessing; this
-			// skips re-insertion once instead of risking a corrupted/duplicated signature
 			hasRealContent = pristine.trim() !== '';
 		}
 		// ticket #126191 follow-up (Ingo): "before"/'top' placement only has meaning relative to a
