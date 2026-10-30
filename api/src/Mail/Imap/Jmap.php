@@ -1306,6 +1306,7 @@ class Jmap extends Mail\Imap
 				// new mail: EmailDelivery, Email, Mailbox, Thread
 				// flag change: Email, Mailbox
 				// change is an object with possible attributes: EMail, EmailDelivery, Mailbox, Thread, ...
+				$new_states = $old_states;
 				foreach($data['changed'] as $accountId => $states)
 				{
 					$changes = $jmap->getChanges($accountId, array_combine(array_keys($states), array_map(static function($state, $name) use($old_states, $accountId)
@@ -1313,7 +1314,23 @@ class Jmap extends Mail\Imap
 						return $old_states[$accountId][$name] ?? null;
 					}, $states, array_keys($states))), $currentFolder, $sessionState);
 					//error_log(__METHOD__."() data=".json_encode($data)." --> changes=".json_encode($changes));
+					// Advance our own diff baseline for the NEXT push, mirroring persist_jmap_state()
+					// and the client-side processWsPushStates() twin (mail/js/jmap.ts), which already
+					// does this unconditionally. Without this, every future push round re-diffs from
+					// this SAME old baseline instead of moving forward, re-surfacing already-handled
+					// changes again and again - once Email/changes's maxChanges=30 cap is hit, the
+					// window gets stuck there until something else (eg. a page reload) resets it.
+					// Found live 2026-10-30: a JMAP folder's unread badge stuck one behind the true
+					// count until reload, and repeat client notifications for already-seen mail.
+					foreach (['Mailbox' => 'mailbox-changes', 'Email' => 'email-changes'] as $name => $changesKey)
+					{
+						if (isset($states[$name], $changes[$changesKey]['newState']))
+						{
+							$new_states[$accountId][$name] = $changes[$changesKey]['newState'];
+						}
+					}
 				}
+				Api\Cache::setSession(__CLASS__, 'states:'.$mail_account->acc_id, $new_states);
 				// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
 				// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
 				// true, so this never actually short-circuited anything; fixed to check the real
