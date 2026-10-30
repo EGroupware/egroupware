@@ -972,6 +972,25 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 		// instead) - exactly this symptom.
 		height: auto !important;
 	}
+	// The #126671 fix above only addressed .mailDisplayContainer, the (by print time) EMPTY box
+	// left behind in the main document - but MailApp.preparePrint() copies the iframe BODY's own
+	// innerHTML into tmpPrintDiv, and that body's own root wrapper is THIS class (jmap.ts's
+	// wrapDocument(): `<body...><div class="mailDisplayBody ...">...`), so .mailDisplayBody is what
+	// actually ends up holding the real printed content inside tmpPrintDiv - with the exact same
+	// un-overridden "height: 100%" screen-only rule (further up) left in place. Ticket #126971 (two
+	// EGroupware staff, 2026-10-27): still "page 1 blank except header/sender/attachments, body on
+	// page 2" for SOME emails even after #126671 shipped - reproduced live (boulder, a real
+	// forwarded-mail test case from that ticket): tmpPrintDiv's only child is exactly
+	// div.mailDisplayBody. A non-empty box doesn't leave page 1 blank by being empty (as the
+	// #126671 case did) - Chrome's print pagination still resolves its "100%" against one page's
+	// worth of height regardless of where the box starts in the flow, and an oversized box that
+	// can't fit the REMAINING space on the page it starts on (here: whatever's left after the
+	// headers above it) gets pushed to start fresh on the next page instead of splitting - leaving
+	// page 1's remainder blank and the real content starting on page 2, same symptom as #126671,
+	// content/header-height dependent (why some emails reproduced it and others didn't).
+	.mailDisplayBody {
+		height: auto !important;
+	}
 	.mailDisplayAttachments{
 		border: none;
 		overflow: visible !important;
