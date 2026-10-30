@@ -4529,7 +4529,19 @@ class Imap extends Jmap\Base
 				$subType = strtolower($subPart['type'] ?? '');
 				if ($subType === 'application/pkcs7-signature' || $subType === 'application/x-pkcs7-signature')
 				{
-					return 'smime';
+					// ticket #127061 (Birgit, 2026-10-28): an S/MIME-signed meeting invite
+					// (multipart/signed wrapping eg. multipart/alternative with an inline
+					// text/calendar part) must still fall through to the classic, calendar-aware
+					// path (MessageDisplayHandler::get_load_email_data()'s own $calendar_part
+					// detection, further down) instead of being claimed here as a generic "smime"
+					// body - resolveSmime()/structureToHtml() have zero text/calendar awareness,
+					// which is exactly why these showed up as a plain-text invitation instead of
+					// the usual Accept/Decline/Tentative buttons. Mirrors
+					// Mail::jmapHasCalendarPart()'s own "is this an inline, non-attachment,
+					// non-empty text/calendar part" check - missed here originally even though the
+					// SMIME_TYPES flat check just below doesn't have this problem (text/calendar is
+					// never one of those types to begin with).
+					return self::hasInlineCalendarPart($bodyStructure) ? null : 'smime';
 				}
 			}
 			return null;
@@ -4543,6 +4555,30 @@ class Imap extends Jmap\Base
 			return 'tnef';
 		}
 		return null;
+	}
+
+	/**
+	 * Recursively check a JMAP bodyStructure for an INLINE text/calendar part (a meeting invite),
+	 * not a plain attached .ics file - same distinction, same shape ('type'/'disposition'/'size'/
+	 * 'subParts') as Mail::jmapHasCalendarPart()'s own private copy (a different class, so not
+	 * directly reusable from here) - see that method's own docblock for why.
+	 */
+	private static function hasInlineCalendarPart(array $structure) : bool
+	{
+		if (strtolower($structure['type'] ?? '') === 'text/calendar' &&
+			strtolower($structure['disposition'] ?? '') !== 'attachment' &&
+			($structure['size'] ?? 0) > 0)
+		{
+			return true;
+		}
+		foreach ($structure['subParts'] ?? [] as $sub)
+		{
+			if (self::hasInlineCalendarPart($sub))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
