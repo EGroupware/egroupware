@@ -36,7 +36,6 @@ Object.assign(egwStub, {
 	openDialog: sinon.stub(),
 	jsonq: sinon.stub().resolves(undefined),
 	jsonEncode: sinon.stub().callsFake(v => JSON.stringify(v)),
-	hashString: sinon.stub().returns(""),
 	app: sinon.stub().returns(null),
 	app_name: sinon.stub().returns("api"),
 	config: sinon.stub().returns(null),
@@ -404,6 +403,7 @@ describe('EgwFramework', () =>
 						alert.updateComplete = Promise.resolve(alert);
 						alert.hide = sinon.stub();
 						alert.restartAutoHide = sinon.stub();
+						alert.toast = sinon.stub();
 						created.push(alert);
 						return alert;
 					},
@@ -414,9 +414,21 @@ describe('EgwFramework', () =>
 			return popup;
 		};
 
-		beforeEach(() =>
+		it("shows the same message only once when it is reported several times at once", async() =>
 		{
-			egwStub.hashString.returns("same-message");
+			// eg. apply in a popup reporting its message via refresh_opener() AND message() in the same response
+			const popup = fakePopup();
+			popup.document.body.append = (alert : HTMLElement) => document.body.append(alert);
+
+			await Promise.all([
+				element.message("Event saved.", "success", null, true, null, popup),
+				element.message("Event saved.", "success", null, true, null, popup),
+				element.message("Event saved.", "success", null, true, null, popup),
+			]);
+
+			assert.equal(popup.created.length, 1, "the same message was stacked");
+			assert.equal(popup.created[0].restartAutoHide.callCount, 2, "the repeats did not restart the countdown");
+			popup.created[0].remove();
 		});
 
 		it("forgets the alert when the popup goes away", async() =>
@@ -424,11 +436,11 @@ describe('EgwFramework', () =>
 			// Left in the framework's list, the alert keeps the whole closed popup alive in the main window
 			const popup = fakePopup();
 			await element.message("Draft saved", "success", null, true, null, popup);
-			assert.isDefined((<any>element)._messages["same-message"], "alert was not tracked while the popup is open");
+			assert.isDefined((<any>element)._messages["Draft saved"], "alert was not tracked while the popup is open");
 
 			popup.listeners.pagehide();
 
-			assert.isUndefined((<any>element)._messages["same-message"], "alert of the closed popup is still referenced");
+			assert.isUndefined((<any>element)._messages["Draft saved"], "alert of the closed popup is still referenced");
 		});
 
 		it("does not reuse the alert of a popup that is gone for the same message", async() =>
@@ -442,7 +454,7 @@ describe('EgwFramework', () =>
 
 			assert.equal(popup.created.length, 2, "the stale alert was reused instead of showing the message again");
 			assert.isTrue(first.restartAutoHide.notCalled, "countdown of an alert nobody can see was restarted");
-			assert.notStrictEqual((<any>element)._messages["same-message"], first);
+			assert.notStrictEqual((<any>element)._messages["Draft saved"], first);
 		});
 	});
 });

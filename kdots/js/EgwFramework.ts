@@ -1106,7 +1106,12 @@ export class EgwFramework extends LitElement
 			_window = this.egw.window;
 		}
 
-		const hash = await this.egw.hashString(message);
+		// Keyed by the text itself, NOT an (async) hash of it: the lookup and the registration
+		// below must happen in the same tick, otherwise several calls in quick succession - eg.
+		// an apply in a popup reporting the same message via refresh_opener() and message() -
+		// all pass the check before the first one registered, and stack identical toasts.
+		// Firefox's crypto.subtle.digest() resolves late enough to make that the rule.
+		const hash = message;
 
 		// Do not add a same message twice if it's still not dismissed
 		if(typeof this._messages[hash] !== "undefined" && !this._messages[hash].isConnected)
@@ -1150,9 +1155,13 @@ export class EgwFramework extends LitElement
 		}
 
 		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(_window.document.createElement("egw-message"), attributes);
-		alert.addEventListener("sl-hide", (e) =>
+		alert.addEventListener("sl-hide", () =>
 		{
-			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
+			// a newer alert of a different type may have taken over the key meanwhile
+			if(this._messages[hash] === alert)
+			{
+				delete this._messages[hash];
+			}
 		});
 		_window.document.body.append(alert);
 		let returnPromise = alert.updateComplete.then(() => alert);
@@ -1175,7 +1184,6 @@ export class EgwFramework extends LitElement
 		}
 
 		this._messages[hash] = alert;
-		alert.dataset.hash = hash;
 
 		// An alert of a popup is only removed above by its own "sl-hide", which never comes if the popup is
 		// closed first: the entry would keep the whole closed popup alive in this (main) window.
