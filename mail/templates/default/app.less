@@ -991,6 +991,26 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	.mailDisplayBody {
 		height: auto !important;
 	}
+	// ticket #126971 follow-up (Ingo, 2026-10-30, STILL blank page 1 for yet another email after
+	// both fixes above): .mailDisplayContainer's own docblock above claims "its only CHILD actually
+	// rendered at print time is the mailvelope iframe" - wrong whenever the message has blocked
+	// external images, MailApp.resolveExternalImages() also inserts a REAL, visible
+	// .mail_externalImagesMsgHost > sl-alert.mail_externalImagesMsg banner as a child of this same
+	// container (screen-only rule further up: sl-alert positioned absolute/bottom:0 against this
+	// host's position:relative) - a live "click to load external images" nag with zero business in
+	// a printed page to begin with, same as egw_tooltip.ts's own overlay (see
+	// api/templates/default/etemplate2.css's own @media print rule for that one). Being absolutely
+	// positioned, it doesn't even contribute to .mailDisplayContainer's own (now auto) content
+	// height, but Chrome's print pagination still has to lay out and paint it somewhere, and found
+	// live this was enough to reproduce the exact same "blank page 1, body on page 2" symptom a
+	// third time, this time via a perfectly ordinary, non-S/MIME, non-forwarded message - the ONE
+	// thing it had in common with the two already-fixed repro cases was simply "not completely
+	// empty content wedged into a now zero/auto-height container". Hiding it outright is strictly
+	// better than trying to make its positioning print-safe - it would be meaningless on paper even
+	// if it rendered correctly.
+	.mail_externalImagesMsgHost {
+		display: none !important;
+	}
 	.mailDisplayAttachments{
 		border: none;
 		overflow: visible !important;

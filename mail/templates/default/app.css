@@ -825,6 +825,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .mailDisplayBody {
     height: auto !important;
   }
+  .mail_externalImagesMsgHost {
+    display: none !important;
+  }
   .mailDisplayAttachments {
     border: none;
     overflow: visible !important;
