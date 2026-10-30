@@ -2249,6 +2249,15 @@ ul[id$='favorites_popup_state'] span.filter_value {
 }
 
 @media print {
+	/* A live, hover-only overlay (egw_tooltip.ts) - never belongs in anything printed, whatever
+	   page happens to be showing one when print() is invoked (found live 2026-10-30, ticket
+	   #126971's "Drucken" tooltip baked into a printed mail - the real fix there was to stop
+	   binding a redundant tooltip in the first place, Et2Toolbar.ts's _makeInput(), but a
+	   genuinely distinct hint can still be showing elsewhere when printing happens). */
+	.egw_tooltip {
+		display: none !important;
+	}
+
 	.et2_container {
 		height: auto;
 	}
