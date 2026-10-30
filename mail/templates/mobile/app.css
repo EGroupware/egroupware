@@ -840,6 +840,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .mail_externalImagesMsgHost {
     display: none !important;
   }
+  #popupMainDiv {
+    height: auto !important;
+  }
   .mailDisplayAttachments {
     border: none;
     overflow: visible !important;
