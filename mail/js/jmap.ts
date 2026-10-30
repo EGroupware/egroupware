@@ -1637,15 +1637,16 @@ export class MailJmap
 	private async injectSharedAccountsRoot(profileID : string, token : JmapToken, top : any[]) : Promise<void>
 	{
 		if (token.isLocal) return;
-		// a real top-level Mailbox literally named "user"/"shared" already exists (found live,
-		// 2026-10-29, boulder.egroupware.org acc_id=89: a genuine mailbox id "q" named "user",
-		// hasChildren:false) - isNamespaceRootName() already treats it as the namespace root via
-		// its own name-based heuristic (same ambiguity isNamespaceRootMailbox()'s own docblock
-		// already documents for the classic/shim path), so injecting a SECOND, synthetic "user"
-		// node here would show two identical-looking root entries side by side. Skip injection
-		// entirely in that case rather than try to merge the two - a rare, pre-existing-data edge
-		// case, not worth the complexity of reconciling a real mailbox with a synthetic one.
-		if (top.some((m) => isNamespaceRootName(m.name)))
+		// a real top-level Mailbox literally named "user"/"shared" (found live, 2026-10-29,
+		// boulder.egroupware.org acc_id=89 and, 2026-10-30, ralf's own egroupware.org account: the
+		// Dovecot "user" namespace placeholder, imported as a real, empty mailbox) must not block the
+		// synthetic root - it is hidden as a namespace root by name, but being a childless dead end
+		// it would swallow every shared account. So an EMPTY one (no children, no mails, no role) is
+		// replaced by the synthetic root; one with real content keeps the old "skip injection"
+		// behaviour, as two identical-looking roots side by side would be worse
+		const isStale = (m : any) => isNamespaceRootName(m.name) && !m.role && m.hasChildren === false && !(m.totalEmails > 0);
+		const staleRoots = top.filter(isStale);
+		if (top.some((m) => isNamespaceRootName(m.name) && !staleRoots.includes(m)))
 		{
 			return;
 		}
@@ -1663,6 +1664,7 @@ export class MailJmap
 			return;
 		}
 		if (!entries.length) return;
+		staleRoots.forEach((m) => top.splice(top.indexOf(m), 1));
 		top.push({
 			id: MailJmap.SHARED_ACCOUNTS_ROOT_ID,
 			name: 'user',

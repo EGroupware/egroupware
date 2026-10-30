@@ -56,6 +56,27 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 		assert.isTrue(root.isSubscribed, "must survive a subscribedOnly filter pass");
 	});
 
+	it("replaces an EMPTY real mailbox named 'user' by the synthetic root", async() =>
+	{
+		// found live, 2026-10-30 (ralf's own egroupware.org account): the imported Dovecot "user"
+		// placeholder, a childless, mail-less top-level mailbox, hid every shared account
+		const jmap = jmapWithSession({
+			accounts : {
+				ca : {name : "ralf@example.invalid", isPersonal : true},
+				u : {name : "info@example.invalid", isPersonal : false},
+			},
+		});
+		const top : any[] = [
+			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null},
+			{id : "q", name : "user", role : null, parentId : null, hasChildren : false, totalEmails : 0},
+			{id : "p", name : "user", role : null, parentId : null, hasChildren : false, totalEmails : 0, isSubscribed : false},
+		];
+
+		await (jmap as any).injectSharedAccountsRoot("89", {isLocal : false}, top);
+
+		assert.deepEqual(top.map((m) => m.id), ["inbox-id", (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID]);
+	});
+
 	it("does not inject a duplicate when a real mailbox is already literally named 'user'", async() =>
 	{
 		// found live, 2026-10-29 (boulder.egroupware.org acc_id=89): a genuine pre-existing
@@ -69,12 +90,12 @@ describe("MailJmap.injectSharedAccountsRoot()", () =>
 		});
 		const top : any[] = [
 			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null},
-			{id : "q", name : "user", role : null, parentId : null, hasChildren : false},
+			{id : "q", name : "user", role : null, parentId : null, hasChildren : false, totalEmails : 3},
 		];
 
 		await (jmap as any).injectSharedAccountsRoot("89", {isLocal : false}, top);
 
-		assert.lengthOf(top, 2, "no second 'user' entry");
+		assert.lengthOf(top, 2, "no second 'user' entry (this one holds mail, so it is kept)");
 	});
 
 	it("does not inject a 'user' root when the only shared accounts are 'noreply-' ACL-only groups", async() =>
