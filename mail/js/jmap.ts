@@ -461,6 +461,43 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
 }
 
 /**
+ * True if `problem` (a single raw SetError-like value, or an array of them - eg. from
+ * describeJmapError()'s own caught-exception shape) is/contains a JMAP "forbidden" type.
+ * Callers pass individual problem values (eg. `...Object.values(result.notUpdated ?? {})`), not
+ * the raw id-keyed SetError map itself - this does not recurse into plain objects other than
+ * arrays.
+ */
+function isForbiddenProblem(problem : any) : boolean
+{
+	if (Array.isArray(problem)) return problem.some(isForbiddenProblem);
+	return !!problem && typeof problem === 'object' && problem.type === 'forbidden';
+}
+
+/**
+ * Build a user-facing message for a failed write against a SHARED (someone else's) mailbox or
+ * message - almost always means the owner hasn't granted the specific ACL right this action
+ * needs, not a generic JMAP failure (ralf, 2026-10-30: "it's important that these operations ...
+ * might fail, and we need a reasonable error to the user, mostly it will be that he has not been
+ * granted enough rights by the owner, to do that action"). Falls back to the ordinary
+ * describeSetError()/describeJmapError() message for anything that ISN'T specifically a
+ * "forbidden" SetError/problem, so a genuinely different failure (eg. a stale/renamed mailbox)
+ * still shows its own real reason instead of a misleading blanket "no rights" message.
+ *
+ * @param problems one or more raw SetError-map / caught-exception values to inspect for a
+ *  "forbidden" type - pass everything you have (eg. both `result.notUpdated` and, in a catch
+ *  block, the caught `e`), order doesn't matter
+ */
+export function describeSharedAccountError(egw : { lang(key : string, ...args : any[]) : string },
+	fallback : string | null, ...problems : any[]) : string
+{
+	if (problems.some(isForbiddenProblem))
+	{
+		return egw.lang('You do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them');
+	}
+	return fallback ?? egw.lang('Account not reachable');
+}
+
+/**
  * Ticket #125201: Api\Mail\Jmap\Imap::emailSubmissionSet()'s own shim-only "failedRecipients"
  * extension (address => reason, EmailSubmission/set's created.sub1 - see that PHP code's own
  * docblock) - present, non-empty, only when Api\Mailer::send() itself already recovered from a
@@ -535,6 +572,30 @@ export class MailJmap
 	// the full encoding. \u0001 so it can never collide with a real id (same reasoning as the root
 	// sentinel above).
 	private static readonly SHARED_ACCOUNT_SEP = '\u0001';
+
+	/**
+	 * Decode a message row-id's own mailboxId segment back into {accountId, mailboxId} - undoing
+	 * getRows()'s own row-id encoding (SHARED_ACCOUNTS_ROOT_ID + accountId + SHARED_ACCOUNT_SEP +
+	 * realMailboxId, see that method's own docblock around its `encodedMailboxId` local) for a
+	 * message whose row came from a shared account's folder. Returns null for an ordinary,
+	 * non-prefixed mailboxId - callers fall back to the viewer's own token.accountId in that case.
+	 */
+	private static decodeSharedMailboxId(mailboxId : string) : { accountId : string, mailboxId : string } | null
+	{
+		if (!mailboxId.startsWith(MailJmap.SHARED_ACCOUNTS_ROOT_ID)) return null;
+		const rest = mailboxId.slice(MailJmap.SHARED_ACCOUNTS_ROOT_ID.length);
+		const sepIdx = rest.indexOf(MailJmap.SHARED_ACCOUNT_SEP);
+		if (sepIdx < 0) return null;
+		return {accountId: rest.slice(0, sepIdx), mailboxId: rest.slice(sepIdx + 1)};
+	}
+
+	/** Inverse of decodeSharedMailboxId() - only needed where a real (non row-id-sourced) mailboxId must be re-encoded before being handed to updateIds()/destroyIds() (eg. moveAllMatching() and friends, driven by a plain queryAllIds() id list rather than JmapMessageReference[]). `viewerAccountId` is the profile's own token.accountId - returns `mailboxId` unchanged when `accountId` matches it (nothing to encode). */
+	private static encodeSharedMailboxId(accountId : string, viewerAccountId : string, mailboxId : string) : string
+	{
+		return accountId !== viewerAccountId
+			? MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId + MailJmap.SHARED_ACCOUNT_SEP + mailboxId
+			: mailboxId;
+	}
 
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
 	private tokens : Record<string, JmapToken> = {};
@@ -907,6 +968,38 @@ export class MailJmap
 	}
 
 	/**
+	 * Resolve a "folder/path" (EGroupware convention, as used throughout this file) to the REAL
+	 * owning JMAP accountId, a cache-disambiguating profileID, and the real path within that
+	 * account - transparently handling the shared-account "user/<name>/..." synthetic prefix
+	 * (see getSharedAccountPlaceholders()) the same way getRows() already does, so this isn't
+	 * duplicated per caller. The WebSocket client itself never changes (this.clients[profileID] -
+	 * JMAP multiplexes several accountIds over one session, see RFC 8620 §2), only the accountId
+	 * passed into each JMAP method call does.
+	 *
+	 * @throws JmapUserError if path starts with "user/<name>" and <name> no longer matches any
+	 *  currently-shared account (eg. the share was revoked since the tree was last loaded)
+	 */
+	private async resolveMailboxOwner(token : JmapToken, profileID : string, path : string) :
+		Promise<{accountId : string, cacheProfileID : string, folder : string}>
+	{
+		if (!token.isLocal && (path === 'user' || path.startsWith('user/')))
+		{
+			const [, ownerName, ...rest] = path.split('/');
+			const resolved = ownerName ? await this.resolveSharedAccountId(profileID, ownerName) : null;
+			if (!resolved)
+			{
+				throw new JmapUserError(this.egw.lang("Folder '%1' not found", path));
+			}
+			return {
+				accountId: resolved,
+				cacheProfileID: profileID + '\u0000' + resolved,
+				folder: rest.length ? rest.join('/') : 'INBOX',
+			};
+		}
+		return {accountId: token.accountId, cacheProfileID: profileID, folder: path};
+	}
+
+	/**
 	 * Fetch mail-list rows directly from the JMAP server (or the local IMAP shim)
 	 *
 	 * Never throws for "this account isn't reachable right now" - returns null in that case,
@@ -945,29 +1038,12 @@ export class MailJmap
 		// the REAL owning accountId and strip the synthetic prefix down to the real path within
 		// that account, same decoding direction as MailJmap.getSharedAccountMailboxChildren()'s own
 		// encoding, just operating on a path string here instead of an opaque tree-node id.
-		let effectiveAccountId = token.accountId;
-		// disambiguates mailboxId()/mailboxRole()'s own profileID-keyed caches below from this
-		// account's own (unrelated) entries for the same literal folder name (eg. both accounts
-		// having their own "INBOX") - never used for anything other than cache-keying, so it's
-		// safe to be a synthetic string with no real meaning outside this function.
-		let cacheProfileID = profileID;
-		let realFolder = folder;
-		if (!token.isLocal && (folder === 'user' || folder.startsWith('user/')))
-		{
-			const [, ownerName, ...rest] = folder.split('/');
-			const resolved = ownerName ? await this.resolveSharedAccountId(profileID, ownerName) : null;
-			if (!resolved)
-			{
-				throw new JmapUserError(this.egw.lang("Folder '%1' not found", folder));
-			}
-			// the bare owner node itself (eg. "user/default") - mirrors how clicking a real
-			// account's own root node lands on its INBOX (ralf, 2026-10-29: "clicking on 'default'
-			// does not load the empty mailbox of the Default group, but still shows my own
-			// INBOX" - the placeholder is no longer noSelect, so a click actually reaches here now)
-			effectiveAccountId = resolved;
-			cacheProfileID = profileID + '\u0000' + resolved;
-			realFolder = rest.length ? rest.join('/') : 'INBOX';
-		}
+		// cacheProfileID disambiguates mailboxId()/mailboxRole()'s own profileID-keyed caches below
+		// from this account's own (unrelated) entries for the same literal folder name (eg. both
+		// accounts having their own "INBOX") - never used for anything other than cache-keying, so
+		// it's safe to be a synthetic string with no real meaning outside this function.
+		const {accountId: effectiveAccountId, cacheProfileID, folder: realFolder} =
+			await this.resolveMailboxOwner(token, profileID, folder);
 		const mailboxId = await this.mailboxId(client, effectiveAccountId, cacheProfileID, realFolder);
 
 		const start = query.start || 0;
@@ -1265,7 +1341,8 @@ export class MailJmap
 			return {rows: [], total: 0};
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const owner = await this.resolveMailboxOwner(token, profileID, folder);
+		const mailboxId = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
 		const properties = [
 			'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
 			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY, MailJmap.PRIORITY_HEADER_PROPERTY,
@@ -2227,7 +2304,8 @@ export class MailJmap
 	{
 		const token = await this.ensureToken(profileID);
 		if (!token) return null;
-		return this.mailboxIdOrNull(this.clients[profileID], token.accountId, profileID, path);
+		const owner = await this.resolveMailboxOwner(token, profileID, path);
+		return this.mailboxIdOrNull(this.clients[profileID], owner.accountId, owner.cacheProfileID, owner.folder);
 	}
 
 	/**
@@ -2258,6 +2336,24 @@ export class MailJmap
 	}
 
 	/**
+	 * Build the catch-block error message for a mailbox/message mutation that may target a
+	 * SHARED (non-own) account - see describeSharedAccountError()'s own docblock. Only applies
+	 * the "insufficient rights" framing when `ownerAccountId` is known AND differs from
+	 * `viewerAccountId` (ie. the operation really was against someone else's account); otherwise
+	 * behaves exactly like the plain `describeJmapError(e) ?? this.egw.lang('Account not
+	 * reachable')` every mutation method used before this file supported shared accounts.
+	 */
+	private mutationCatchMessage(e : any, ownerAccountId? : string, viewerAccountId? : string) : string
+	{
+		const message = describeJmapError(e);
+		if (ownerAccountId && viewerAccountId && ownerAccountId !== viewerAccountId)
+		{
+			return describeSharedAccountError(this.egw, message, e);
+		}
+		return message ?? this.egw.lang('Account not reachable');
+	}
+
+	/**
 	 * Create a new mailbox - the JMAP path for addFolder() (mail/js/app.ts).
 	 *
 	 * @param profileID
@@ -2268,27 +2364,32 @@ export class MailJmap
 	 */
 	async createMailbox(profileID : string, parentPath : string, name : string) : Promise<void>
 	{
+		let token : JmapToken | null = null;
+		let owner : { accountId : string, cacheProfileID : string, folder : string } | undefined;
 		try
 		{
-			const token = await this.ensureToken(profileID);
+			token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
-			const parentId = await this.mailboxIdOrNull(client, token.accountId, profileID, parentPath);
+			owner = await this.resolveMailboxOwner(token, profileID, parentPath);
+			const parentId = await this.mailboxIdOrNull(client, owner.accountId, owner.cacheProfileID, owner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: token.accountId, create: {c0: {name, parentId}}}),
+				result: t.Mailbox.set({accountId: owner.accountId, create: {c0: {name, parentId}}}),
 			}));
 			if (!(result.created && result.created['c0']))
 			{
-				throw new JmapUserError(describeSetError(result.notCreated) ?? this.egw.lang('Failed to create folder %1', name));
+				const fallback = describeSetError(result.notCreated) ?? this.egw.lang('Failed to create folder %1', name);
+				throw new JmapUserError(owner.accountId !== token.accountId
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notCreated ?? {}))
+					: fallback);
 			}
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
 			console.error('MailJmap.createMailbox(): failed', e);
-			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+			throw new JmapUserError(this.mutationCatchMessage(e, owner?.accountId, token?.accountId));
 		}
 	}
 
@@ -2302,71 +2403,92 @@ export class MailJmap
 	 */
 	async renameMailbox(profileID : string, path : string, newName : string) : Promise<void>
 	{
+		let token : JmapToken | null = null;
+		let owner : { accountId : string, cacheProfileID : string, folder : string } | undefined;
 		try
 		{
-			const token = await this.ensureToken(profileID);
+			token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
-			const id = await this.mailboxId(client, token.accountId, profileID, path);
+			owner = await this.resolveMailboxOwner(token, profileID, path);
+			const id = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {name: newName}}}),
+				result: t.Mailbox.set({accountId: owner.accountId, update: {[id]: {name: newName}}}),
 			}));
 			if (result.updated && Object.prototype.hasOwnProperty.call(result.updated, id))
 			{
-				this.invalidateMailboxIdCache(profileID, path);
+				this.invalidateMailboxIdCache(owner.cacheProfileID, owner.folder);
 			}
 			else
 			{
-				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to rename folder %1', path));
+				const fallback = describeSetError(result.notUpdated) ?? this.egw.lang('Failed to rename folder %1', path);
+				throw new JmapUserError(owner.accountId !== token.accountId
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notUpdated ?? {}))
+					: fallback);
 			}
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
 			console.error('MailJmap.renameMailbox(): failed', e);
-			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+			throw new JmapUserError(this.mutationCatchMessage(e, owner?.accountId, token?.accountId));
 		}
 	}
 
 	/**
-	 * Move a mailbox to a new parent - the JMAP path for moveFolder(). Same-account only
-	 * (moveFolder() already rejects a cross-account move before ever calling this).
+	 * Move a mailbox to a new parent - the JMAP path for moveFolder(). `path` and `newParentPath`
+	 * are each independently resolved via resolveMailboxOwner() (either may be the viewer's own
+	 * account or a shared account's "user/<name>/..." path) - a move within the SAME resolved
+	 * account (including both ends inside the same shared account) proceeds normally, but moving
+	 * between two genuinely DIFFERENT accountIds has no JMAP mechanism (a Mailbox can't be
+	 * reparented across accounts) and throws JmapUnsupportedOperationError.
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to move
 	 * @param newParentPath canonical path of the new parent, '' for the top level
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
+	 * @throws JmapUnsupportedOperationError if path and newParentPath resolve to different accounts
 	 */
 	async moveMailbox(profileID : string, path : string, newParentPath : string) : Promise<void>
 	{
+		let token : JmapToken | null = null;
+		let owner : { accountId : string, cacheProfileID : string, folder : string } | undefined;
 		try
 		{
-			const token = await this.ensureToken(profileID);
+			token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
-			const id = await this.mailboxId(client, token.accountId, profileID, path);
-			const newParentId = await this.mailboxIdOrNull(client, token.accountId, profileID, newParentPath);
+			owner = await this.resolveMailboxOwner(token, profileID, path);
+			const newParentOwner = await this.resolveMailboxOwner(token, profileID, newParentPath);
+			if (owner.accountId !== newParentOwner.accountId)
+			{
+				throw new JmapUnsupportedOperationError(
+					this.egw.lang('Moving a folder between different accounts is not supported'));
+			}
+			const id = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
+			const newParentId = await this.mailboxIdOrNull(client, newParentOwner.accountId, newParentOwner.cacheProfileID, newParentOwner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {parentId: newParentId}}}),
+				result: t.Mailbox.set({accountId: owner.accountId, update: {[id]: {parentId: newParentId}}}),
 			}));
 			if (result.updated && Object.prototype.hasOwnProperty.call(result.updated, id))
 			{
-				this.invalidateMailboxIdCache(profileID, path);
+				this.invalidateMailboxIdCache(owner.cacheProfileID, owner.folder);
 			}
 			else
 			{
-				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to move folder %1', path));
+				const fallback = describeSetError(result.notUpdated) ?? this.egw.lang('Failed to move folder %1', path);
+				throw new JmapUserError(owner.accountId !== token.accountId
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notUpdated ?? {}))
+					: fallback);
 			}
 		}
 		catch (e)
 		{
-			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
+			if (e instanceof JmapUserError || e instanceof JmapUnsupportedOperationError) throw e;
 			console.error('MailJmap.moveMailbox(): failed', e);
-			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+			throw new JmapUserError(this.mutationCatchMessage(e, owner?.accountId, token?.accountId));
 		}
 	}
 
@@ -2379,31 +2501,36 @@ export class MailJmap
 	 */
 	async deleteMailbox(profileID : string, path : string) : Promise<void>
 	{
+		let token : JmapToken | null = null;
+		let owner : { accountId : string, cacheProfileID : string, folder : string } | undefined;
 		try
 		{
-			const token = await this.ensureToken(profileID);
+			token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
-			const id = await this.mailboxId(client, token.accountId, profileID, path);
+			owner = await this.resolveMailboxOwner(token, profileID, path);
+			const id = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: token.accountId, destroy: [id]}),
+				result: t.Mailbox.set({accountId: owner.accountId, destroy: [id]}),
 			}));
 			if (Array.isArray(result.destroyed) && result.destroyed.includes(id))
 			{
-				this.invalidateMailboxIdCache(profileID, path);
+				this.invalidateMailboxIdCache(owner.cacheProfileID, owner.folder);
 			}
 			else
 			{
-				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete folder %1', path));
+				const fallback = describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete folder %1', path);
+				throw new JmapUserError(owner.accountId !== token.accountId
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notDestroyed ?? {}))
+					: fallback);
 			}
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
 			console.error('MailJmap.deleteMailbox(): failed', e);
-			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+			throw new JmapUserError(this.mutationCatchMessage(e, owner?.accountId, token?.accountId));
 		}
 	}
 
@@ -2417,27 +2544,32 @@ export class MailJmap
 	 */
 	async setMailboxSubscribed(profileID : string, path : string, subscribed : boolean) : Promise<void>
 	{
+		let token : JmapToken | null = null;
+		let owner : { accountId : string, cacheProfileID : string, folder : string } | undefined;
 		try
 		{
-			const token = await this.ensureToken(profileID);
+			token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
-			const id = await this.mailboxId(client, token.accountId, profileID, path);
+			owner = await this.resolveMailboxOwner(token, profileID, path);
+			const id = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {isSubscribed: subscribed}}}),
+				result: t.Mailbox.set({accountId: owner.accountId, update: {[id]: {isSubscribed: subscribed}}}),
 			}));
 			if (!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id)))
 			{
-				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to subscribe/unsubscribe folder %1', path));
+				const fallback = describeSetError(result.notUpdated) ?? this.egw.lang('Failed to subscribe/unsubscribe folder %1', path);
+				throw new JmapUserError(owner.accountId !== token.accountId
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notUpdated ?? {}))
+					: fallback);
 			}
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
 			console.error('MailJmap.setMailboxSubscribed(): failed', e);
-			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+			throw new JmapUserError(this.mutationCatchMessage(e, owner?.accountId, token?.accountId));
 		}
 	}
 
@@ -6290,6 +6422,13 @@ export class MailJmap
 	 * Despite the name (kept to avoid touching its many existing keyword-patch callers), also used
 	 * for mailboxIds patches (moveMessages()) - the JMAP shape ({[id]: {property: value}}) is the
 	 * same either way, Email/set doesn't care what the property is.
+	 *
+	 * `mailboxId` may carry the shared-account row-id encoding (SHARED_ACCOUNTS_ROOT_ID + accountId
+	 * + SHARED_ACCOUNT_SEP + realMailboxId, see getRows()'s own docblock) when the message being
+	 * updated lives in a shared account's folder - decoded here via decodeSharedMailboxId() so the
+	 * Email/set call targets the message's REAL owning accountId, not just this profile's own
+	 * token.accountId (only ever relevant for a real-JMAP/non-local token - see
+	 * resolveMailboxOwner()'s own guard; a local shim account never produces this encoding).
 	 */
 	private async updateKeywords(profileID : string, mailboxId : string,
 		update : Record<string, Record<string, any>>) : Promise<any>
@@ -6303,10 +6442,11 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		const args : any = {accountId: token.accountId, update};
+		const decoded = MailJmap.decodeSharedMailboxId(mailboxId);
+		const args : any = {accountId: decoded?.accountId ?? token.accountId, update};
 		if (token.isLocal)
 		{
-			args.mailboxId = mailboxId;
+			args.mailboxId = decoded?.mailboxId ?? mailboxId;
 		}
 		try
 		{
@@ -6315,7 +6455,10 @@ export class MailJmap
 			}));
 			if (result?.notUpdated && Object.keys(result.notUpdated).length)
 			{
-				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages'));
+				const fallback = describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages');
+				throw new JmapUserError(decoded
+					? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notUpdated))
+					: fallback);
 			}
 			return result;
 		}
@@ -6323,7 +6466,10 @@ export class MailJmap
 		{
 			if (e instanceof JmapUserError) throw e;
 			console.error('MailJmap.updateKeywords(): failed', e);
-			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+			const message = describeJmapError(e);
+			throw new JmapUserError(decoded
+				? describeSharedAccountError(this.egw, message, e)
+				: (message ?? this.egw.lang('Unable to connect to the mail server')));
 		}
 	}
 
@@ -6335,6 +6481,62 @@ export class MailJmap
 			(groups[key] ||= []).push(reference);
 			return groups;
 		}, {} as Record<string, JmapMessageReference[]>);
+	}
+
+	/**
+	 * Copy an email from one JMAP account into another via Email/copy (RFC 8620 §5.4) - the only
+	 * JMAP mechanism for moving/copying a message across accounts (an Email's own `mailboxIds`
+	 * patch can only ever reference mailboxes within its OWN account, see resolveMailboxOwner()'s
+	 * docblock). Used whenever a move/copy's resolved target mailbox belongs to a DIFFERENT
+	 * accountId than the message's own current account - eg. filing a message into, or out of, a
+	 * shared folder someone else owns.
+	 *
+	 * `keywords` carries over the source message's own flags (read/flagged/labels/...) onto the
+	 * copy - RFC 8620's Email/copy create object follows normal Email/set create semantics, where
+	 * `mailboxIds` is the only property the RFC requires, but a bare `{}` here would silently
+	 * reset every flag on the new copy, which is not what a user-facing move/copy action should
+	 * do. Pass the source message's own `keywords` (fetched via fetchEmailKeywords()), or omit it
+	 * for a brand-new message that legitimately has none yet (sendNewEmail()'s extraFolderIds
+	 * filing of a message that was never anything but a fresh Draft/Sent copy).
+	 *
+	 * @throws JmapUserError - callers should prefer describeSharedAccountError() for the message
+	 *  when either side of the copy is a shared (non-own) account, since a failure here is most
+	 *  often an ACL/rights problem on the owner's side, not a generic error. The raw per-item
+	 *  SetError value(s) (if any) are attached as `.problems` on the thrown error so a caller can
+	 *  feed them into describeSharedAccountError()'s own isForbiddenProblem() detection - the
+	 *  thrown message text alone (eg. the bare word "forbidden", from formatProblem()'s own
+	 *  `type` fallback when the server gives no `description`) isn't reliably re-parseable.
+	 */
+	private async copyEmailCrossAccount(client : JamWebSocketClient, fromAccountId : string, accountId : string,
+		emailId : string, mailboxId : string, keywords : Record<string, boolean> = {}) : Promise<string>
+	{
+		const [{result}] = await client.requestMany((t) => ({
+			result: t.Email.copy({
+				fromAccountId,
+				accountId,
+				create: {c0: {id: emailId, mailboxIds: {[mailboxId]: true}, keywords}},
+			}),
+		}));
+		if (!result.created?.c0)
+		{
+			const error : any = new JmapUserError(describeSetError(result.notCreated) ?? this.egw.lang('Failed to copy message'));
+			error.problems = Object.values(result.notCreated ?? {});
+			throw error;
+		}
+		return result.created.c0.id;
+	}
+
+	/** Batch-fetch {emailId: keywords} for copyEmailCrossAccount()'s own flag-preservation - empty map for an empty `ids`. */
+	private async fetchEmailKeywords(client : JamWebSocketClient, accountId : string, ids : string[]) :
+		Promise<Record<string, Record<string, boolean>>>
+	{
+		if (!ids.length) return {};
+		const [{emails}] = await client.requestMany((t) => ({
+			emails: t.Email.get({accountId, ids, properties: ['id', 'keywords']}),
+		}));
+		const byId : Record<string, Record<string, boolean>> = {};
+		(emails.list || []).forEach((email : any) => { byId[email.id] = email.keywords || {}; });
+		return byId;
 	}
 
 	/** Add or remove one independently stackable label. */
@@ -6430,20 +6632,76 @@ export class MailJmap
 	}
 
 	/**
-	 * Move messages to another mailbox within the SAME account, via JMAP Email/set mailboxIds -
-	 * a server-internal reference change, same as the classic IMAP COPY+move path already was for
-	 * same-account moves (no message bytes pass through us either way) - the win here is protocol
-	 * purity for Stalwart (no IMAP connection needed for this action at all) and a uniform
-	 * JMAP-shaped interface for the local shim.
-	 *
-	 * Cross-account moves are explicitly out of scope (see plan) - throws so the caller
-	 * (app.ts) falls back to the existing server-side ajax_copyMessages(), unchanged.
+	 * Resolve, for one groupReferences() group (all sharing the same profileID+mailboxId), the
+	 * group's own real owning accountId - decoding the shared-account row-id encoding carried on
+	 * `group[0].mailboxId` when present (see decodeSharedMailboxId()'s docblock), falling back to
+	 * `viewerAccountId` (the profile's own token.accountId) for an ordinary, non-shared reference.
+	 */
+	private groupSourceAccountId(group : JmapMessageReference[], viewerAccountId : string) : string
+	{
+		return MailJmap.decodeSharedMailboxId(group[0].mailboxId)?.accountId ?? viewerAccountId;
+	}
+
+	/**
+	 * Move or copy a batch of messages (all living in the SAME source mailbox, identified by
+	 * `sourceMailboxId` - which may carry the shared-account row-id encoding, see
+	 * decodeSharedMailboxId()) into `targetAccountId`/`targetMailboxId`. Same resolved accountId on
+	 * both ends -> an ordinary Email/set patch (updateIds(), via `patch`); a genuinely different
+	 * accountId -> Email/copy (RFC 8620 §5.4, the only cross-account mechanism) followed by
+	 * destroying the originals (only for a move, and only once every copy has succeeded - never
+	 * destroy-then-copy). Used by both moveMessages()/copyMessages() (one call per
+	 * groupReferences() group) and moveAllMatching()/copyAllMatching() (one call for the whole
+	 * queryAllIds() result, which is always a single source mailbox already).
+	 */
+	private async moveOrCopyIds(profileID : string, sourceAccountId : string, sourceMailboxId : string, ids : string[],
+		targetAccountId : string, targetMailboxId : string, patch : Record<string, any>, client : JamWebSocketClient,
+		destroyOriginal : boolean) : Promise<void>
+	{
+		if (!ids.length) return;
+		if (sourceAccountId === targetAccountId)
+		{
+			await this.updateIds(profileID, sourceMailboxId, ids, patch);
+			return;
+		}
+		try
+		{
+			const keywordsById = await this.fetchEmailKeywords(client, sourceAccountId, ids);
+			await Promise.all(ids.map(id => this.copyEmailCrossAccount(
+				client, sourceAccountId, targetAccountId, id, targetMailboxId, keywordsById[id])));
+		}
+		catch (e)
+		{
+			console.error('MailJmap.moveOrCopyIds(): cross-account copy failed', e);
+			// every failure reaching here is inherently about a cross-account copy (the
+			// sourceAccountId !== targetAccountId guard above already established that), so
+			// describeSharedAccountError() is always the right framing - not just for a plain
+			// jmap-jam rejection, but also for copyEmailCrossAccount()'s own JmapUserError, whose
+			// `.problems` (see that method's docblock) carries the raw SetError value(s) needed to
+			// tell a real "forbidden" apart from some other failure (eg. a stale target mailbox).
+			const fallback = e instanceof JmapUserError ? e.message : describeJmapError(e);
+			throw new JmapUserError(describeSharedAccountError(this.egw, fallback, e, (e as any)?.problems ?? []));
+		}
+		if (destroyOriginal)
+		{
+			await this.destroyIds(profileID, sourceMailboxId, ids);
+		}
+	}
+
+	/**
+	 * Move messages to another mailbox, via JMAP Email/set mailboxIds for a same-account move (a
+	 * server-internal reference change, same as the classic IMAP COPY+move path already was - no
+	 * message bytes pass through us either way), or, when the target folder resolves to a
+	 * genuinely DIFFERENT JMAP accountId than a given message's own current account (eg. filing
+	 * into, or out of, a shared folder someone else owns), Email/copy (RFC 8620 §5.4) into the
+	 * target followed by destroying the original - only once the copy has actually succeeded,
+	 * never destroy-then-copy.
 	 *
 	 * @param references
-	 * @param targetProfileID must equal every reference's own profileID
+	 * @param targetProfileID must equal every reference's own profileID (shared accounts still
+	 *  ride on the SAME JMAP session/profile - see resolveMailboxOwner()'s own docblock; only a
+	 *  real, separate EGroupware mail profile is out of scope, same as before)
 	 * @param targetFolderPath EGroupware "/"-joined folder path of the destination, within
-	 *  targetProfileID - resolved to a JMAP Mailbox id via the same cached mailboxId() lookup
-	 *  getRows()/toggleForAll() already use
+	 *  targetProfileID - resolved via resolveMailboxOwner()/mailboxId(), same as getRows()
 	 */
 	async moveMessages(references : JmapMessageReference[], targetProfileID : string, targetFolderPath : string) : Promise<void>
 	{
@@ -6456,22 +6714,21 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		const targetMailboxId = await this.mailboxId(
-			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
+		const client = this.clients[targetProfileID];
+		const targetOwner = await this.resolveMailboxOwner(token, targetProfileID, targetFolderPath);
+		const targetMailboxId = await this.mailboxId(client, targetOwner.accountId, targetOwner.cacheProfileID, targetOwner.folder);
 		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
-			this.updateIds(group[0].profileID, group[0].mailboxId,
-				group.map(reference => reference.emailId), {mailboxIds: {[targetMailboxId]: true}})));
+			this.moveOrCopyIds(group[0].profileID, this.groupSourceAccountId(group, token.accountId), group[0].mailboxId,
+				group.map(reference => reference.emailId), targetOwner.accountId, targetMailboxId,
+				{mailboxIds: {[targetMailboxId]: true}}, client, true)));
 	}
 
 	/**
-	 * Copy messages to another mailbox within the SAME account, via JMAP Email/set's PatchObject
-	 * syntax (RFC 8620 §5.3) - a partial "mailboxIds/<id>": true patch *adds* the target mailbox
+	 * Copy messages to another mailbox, via JMAP Email/set's PatchObject syntax (RFC 8620 §5.3) for
+	 * a same-account copy - a partial "mailboxIds/<id>": true patch *adds* the target mailbox
 	 * without touching the message's existing ones, unlike moveMessages()'s full-property
-	 * replacement. Real JMAP servers (Stalwart) support this natively, no new server code needed;
-	 * the local shim's emailSet() is extended to recognise this patch-path shape too.
-	 *
-	 * Cross-account copies are out of scope, same as moveMessages() - throws so the caller falls
-	 * back to the existing server-side ajax_copyMessages().
+	 * replacement - or Email/copy (RFC 8620 §5.4) for a genuinely cross-account copy, same split as
+	 * moveMessages() but never destroying the original.
 	 */
 	async copyMessages(references : JmapMessageReference[], targetProfileID : string, targetFolderPath : string) : Promise<void>
 	{
@@ -6484,11 +6741,13 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		const targetMailboxId = await this.mailboxId(
-			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
+		const client = this.clients[targetProfileID];
+		const targetOwner = await this.resolveMailboxOwner(token, targetProfileID, targetFolderPath);
+		const targetMailboxId = await this.mailboxId(client, targetOwner.accountId, targetOwner.cacheProfileID, targetOwner.folder);
 		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
-			this.updateIds(group[0].profileID, group[0].mailboxId,
-				group.map(reference => reference.emailId), {[`mailboxIds/${targetMailboxId}`]: true})));
+			this.moveOrCopyIds(group[0].profileID, this.groupSourceAccountId(group, token.accountId), group[0].mailboxId,
+				group.map(reference => reference.emailId), targetOwner.accountId, targetMailboxId,
+				{[`mailboxIds/${targetMailboxId}`]: true}, client, false)));
 	}
 
 	/**
@@ -6579,12 +6838,28 @@ export class MailJmap
 			// IMAP has no such concept). A path that no longer resolves (renamed/deleted folder) is
 			// skipped rather than failing the whole send - same safety net sentFolder's own
 			// fallback gets in resolveComposeContext().
+			//
+			// A path resolving to a DIFFERENT (shared) account can NOT go into extraFolderIds - an
+			// Email's own mailboxIds patch can only ever reference mailboxes within its OWN account
+			// (see resolveMailboxOwner()'s own docblock) - those are collected into
+			// foreignExtraFolders instead, and filed via a separate Email/copy (RFC 8620 §5.4) call
+			// AFTER the message has actually been created and sent (see below, near sentMailboxId).
 			const extraFolderIds : Record<string, true> = {};
+			const foreignExtraFolders : { accountId : string, mailboxId : string }[] = [];
 			for (const path of email.folder ?? [])
 			{
 				try
 				{
-					extraFolderIds[`mailboxIds/${await this.mailboxId(client, token.accountId, profileID, path)}`] = true;
+					const owner = await this.resolveMailboxOwner(token, profileID, path);
+					const resolvedMailboxId = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
+					if (owner.accountId === token.accountId)
+					{
+						extraFolderIds[`mailboxIds/${resolvedMailboxId}`] = true;
+					}
+					else
+					{
+						foreignExtraFolders.push({accountId: owner.accountId, mailboxId: resolvedMailboxId});
+					}
 				}
 				catch (e)
 				{
@@ -6678,6 +6953,27 @@ export class MailJmap
 					this.egw.message(this.egw.lang('Mail sent successfully, but failed to copy it to the Sent folder')+
 						': '+(describeJmapError(e) ?? this.egw.lang('unknown error')), 'warning');
 				}
+			}
+			// File the just-sent message into any additional folder(s) that resolved to a DIFFERENT
+			// (shared) account - see foreignExtraFolders' own docblock above for why these couldn't
+			// ride along in extraFolderIds. One Email/copy per target, never failing the (already
+			// successful) send over an extra filing folder - same try/catch-and-skip behaviour
+			// extraFolderIds' own resolution loop already has.
+			if (foreignExtraFolders.length)
+			{
+				const keywordsById = await this.fetchEmailKeywords(client, token.accountId, [emailId]);
+				await Promise.all(foreignExtraFolders.map(async(target) =>
+				{
+					try
+					{
+						await this.copyEmailCrossAccount(
+							client, token.accountId, target.accountId, emailId, target.mailboxId, keywordsById[emailId]);
+					}
+					catch (e)
+					{
+						console.error(`MailJmap.sendNewEmail(): could not file the sent copy into shared account '${target.accountId}', skipping it`, e);
+					}
+				}));
 			}
 			if (existingDraftEmailId)
 			{
@@ -8026,7 +8322,12 @@ export class MailJmap
 		}
 	}
 
-	/** Permanently destroy a (possibly large) set of ids, in QUERY_PAGE_SIZE-sized Email/set calls. */
+	/**
+	 * Permanently destroy a (possibly large) set of ids, in QUERY_PAGE_SIZE-sized Email/set calls.
+	 *
+	 * `mailboxId` may carry the shared-account row-id encoding - see updateKeywords()'s own
+	 * docblock for the identical decodeSharedMailboxId() reasoning, applied here the same way.
+	 */
 	private async destroyIds(profileID : string, mailboxId : string, ids : string[]) : Promise<void>
 	{
 		const token = await this.ensureToken(profileID);
@@ -8034,24 +8335,28 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
+		const decoded = MailJmap.decodeSharedMailboxId(mailboxId);
 		try
 		{
 			for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
 			{
 				const args : any = {
-					accountId: token.accountId,
+					accountId: decoded?.accountId ?? token.accountId,
 					destroy: ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE),
 				};
 				if (token.isLocal)
 				{
-					args.mailboxId = mailboxId;
+					args.mailboxId = decoded?.mailboxId ?? mailboxId;
 				}
 				const [{result}] = await this.clients[profileID].requestMany((t) => ({
 					result: t.Email.set(args) as any,
 				}));
 				if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
 				{
-					throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
+					const fallback = describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages');
+					throw new JmapUserError(decoded
+						? describeSharedAccountError(this.egw, fallback, ...Object.values(result.notDestroyed))
+						: fallback);
 				}
 			}
 		}
@@ -8059,18 +8364,20 @@ export class MailJmap
 		{
 			if (e instanceof JmapUserError) throw e;
 			console.error('MailJmap.destroyIds(): failed', e);
-			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+			const message = describeJmapError(e);
+			throw new JmapUserError(decoded
+				? describeSharedAccountError(this.egw, message, e)
+				: (message ?? this.egw.lang('Unable to connect to the mail server')));
 		}
 	}
 
 	/**
-	 * Move every message matching the current NextMatch filter(s) to another mailbox within the
-	 * SAME account - same underlying Email/set mailboxIds patch as moveMessages(), just driven by
-	 * a re-run filter query (queryAllIds()) instead of an explicit selection, mirroring
-	 * toggleForAll()'s "act on everything matching the filter" shape.
-	 *
-	 * Cross-account moves are out of scope, same as moveMessages() - throws so the caller falls
-	 * back to the existing server-side ajax_copyMessages().
+	 * Move every message matching the current NextMatch filter(s) to another mailbox - same
+	 * underlying Email/set mailboxIds patch as moveMessages() for a same-account move, just driven
+	 * by a re-run filter query (queryAllIds()) instead of an explicit selection, mirroring
+	 * toggleForAll()'s "act on everything matching the filter" shape; a genuinely cross-account
+	 * move (either the source folder being browsed, or the target, resolves to a shared account)
+	 * uses Email/copy + destroy instead, same split as moveMessages().
 	 */
 	async moveAllMatching(query : JmapGetRowsQuery, targetProfileID : string, targetFolderPath : string) : Promise<void>
 	{
@@ -8085,16 +8392,20 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
-		const targetMailboxId = await this.mailboxId(client, token.accountId, targetProfileID, targetFolderPath);
-		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
-		await this.updateIds(profileID, mailboxId, ids, {mailboxIds: {[targetMailboxId]: true}});
+		const sourceOwner = await this.resolveMailboxOwner(token, profileID, folder);
+		const targetOwner = await this.resolveMailboxOwner(token, targetProfileID, targetFolderPath);
+		const mailboxId = await this.mailboxId(client, sourceOwner.accountId, sourceOwner.cacheProfileID, sourceOwner.folder);
+		const targetMailboxId = await this.mailboxId(client, targetOwner.accountId, targetOwner.cacheProfileID, targetOwner.folder);
+		const ids = await this.queryAllIds(client, sourceOwner.accountId, this.buildFilter(query, mailboxId));
+		const encodedMailboxId = MailJmap.encodeSharedMailboxId(sourceOwner.accountId, token.accountId, mailboxId);
+		await this.moveOrCopyIds(profileID, sourceOwner.accountId, encodedMailboxId, ids,
+			targetOwner.accountId, targetMailboxId, {mailboxIds: {[targetMailboxId]: true}}, client, true);
 	}
 
 	/**
-	 * Copy every message matching the current NextMatch filter(s) to another mailbox within the
-	 * SAME account - see copyMessages() for the PatchObject mechanism. Cross-account copies are out
-	 * of scope, same as moveAllMatching().
+	 * Copy every message matching the current NextMatch filter(s) to another mailbox - see
+	 * copyMessages() for the PatchObject (same account) vs. Email/copy (cross-account) split,
+	 * applied here the same way as moveAllMatching().
 	 */
 	async copyAllMatching(query : JmapGetRowsQuery, targetProfileID : string, targetFolderPath : string) : Promise<void>
 	{
@@ -8109,10 +8420,14 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
-		const targetMailboxId = await this.mailboxId(client, token.accountId, targetProfileID, targetFolderPath);
-		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
-		await this.updateIds(profileID, mailboxId, ids, {[`mailboxIds/${targetMailboxId}`]: true});
+		const sourceOwner = await this.resolveMailboxOwner(token, profileID, folder);
+		const targetOwner = await this.resolveMailboxOwner(token, targetProfileID, targetFolderPath);
+		const mailboxId = await this.mailboxId(client, sourceOwner.accountId, sourceOwner.cacheProfileID, sourceOwner.folder);
+		const targetMailboxId = await this.mailboxId(client, targetOwner.accountId, targetOwner.cacheProfileID, targetOwner.folder);
+		const ids = await this.queryAllIds(client, sourceOwner.accountId, this.buildFilter(query, mailboxId));
+		const encodedMailboxId = MailJmap.encodeSharedMailboxId(sourceOwner.accountId, token.accountId, mailboxId);
+		await this.moveOrCopyIds(profileID, sourceOwner.accountId, encodedMailboxId, ids,
+			targetOwner.accountId, targetMailboxId, {[`mailboxIds/${targetMailboxId}`]: true}, client, false);
 	}
 
 	/**
@@ -8138,9 +8453,11 @@ export class MailJmap
 			return;
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
-		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
-		await this.destroyIds(profileID, mailboxId, ids);
+		const owner = await this.resolveMailboxOwner(token, profileID, folder);
+		const mailboxId = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
+		const ids = await this.queryAllIds(client, owner.accountId, this.buildFilter(query, mailboxId));
+		const encodedMailboxId = MailJmap.encodeSharedMailboxId(owner.accountId, token.accountId, mailboxId);
+		await this.destroyIds(profileID, encodedMailboxId, ids);
 	}
 
 	/**
@@ -8183,13 +8500,15 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const owner = await this.resolveMailboxOwner(token, profileID, folder);
+		const mailboxId = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
+		const encodedMailboxId = MailJmap.encodeSharedMailboxId(owner.accountId, token.accountId, mailboxId);
 		const filter = this.buildFilter(query, mailboxId);
 		const customFlag = MailJmap.CUSTOM_FLAGS.includes(actionId);
 		const keyword = customFlag ? this.customFlagKeyword(actionId) : this.labelKeyword(actionId);
 		const [setIds, removeIds] = await Promise.all([
-			this.queryAllIds(client, token.accountId, this.withKeyword(filter, keyword, false)),
-			this.queryAllIds(client, token.accountId, this.withKeyword(filter, keyword, true)),
+			this.queryAllIds(client, owner.accountId, this.withKeyword(filter, keyword, false)),
+			this.queryAllIds(client, owner.accountId, this.withKeyword(filter, keyword, true)),
 		]);
 
 		const setPatch = this.keywordPatch(keyword, true);
@@ -8210,8 +8529,8 @@ export class MailJmap
 		{
 			Object.assign(removePatch, this.keywordPatch('$flagged', false));
 		}
-		await this.updateIds(profileID, mailboxId, setIds, setPatch);
-		await this.updateIds(profileID, mailboxId, removeIds, removePatch);
+		await this.updateIds(profileID, encodedMailboxId, setIds, setPatch);
+		await this.updateIds(profileID, encodedMailboxId, removeIds, removePatch);
 	}
 
 	/** Clear all labels from every message matching the current NextMatch filters. */
@@ -8224,13 +8543,15 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
-		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
-		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
+		const owner = await this.resolveMailboxOwner(token, profileID, folder);
+		const mailboxId = await this.mailboxId(client, owner.accountId, owner.cacheProfileID, owner.folder);
+		const ids = await this.queryAllIds(client, owner.accountId, this.buildFilter(query, mailboxId));
+		const encodedMailboxId = MailJmap.encodeSharedMailboxId(owner.accountId, token.accountId, mailboxId);
 		const patch : Record<string, boolean | null> = {};
 		['$label1', '$label2', '$label3', '$label4', '$label5',
 			...Object.keys(this.app.getCustomLabels()).map(id => '$' + id.toLowerCase())]
 			.forEach(keyword => Object.assign(patch, this.keywordPatch(keyword, false)));
-		await this.updateIds(profileID, mailboxId, ids, patch);
+		await this.updateIds(profileID, encodedMailboxId, ids, patch);
 	}
 
 	/**

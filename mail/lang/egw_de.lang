@@ -261,6 +261,7 @@ export csr	mail	de	CSR exportieren
 expunge	mail	de	Bereinigen
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
+failed to copy message	mail	de	Kopieren der Nachricht fehlgeschlagen
 failed to copy messages	mail	de	Kopieren der Nachrichten fehlgeschlagen
 failed to create folder %1	mail	de	Anlegen des Ordners %1 fehlgeschlagen
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
@@ -442,6 +443,7 @@ move to archive	mail	de	Verschiebe in Archivordner
 move to bcc and send	mail	de	Nach Bcc verschieben und senden
 move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 verschoben.
+moving a folder between different accounts is not supported	mail	de	Verschieben eines Ordners zwischen unterschiedlichen Konten wird nicht unterstützt
 moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt.
 name and domain	mail	de	Name und Domain
 name and email	mail	de	Name und E-Mail
@@ -812,6 +814,7 @@ wrote	mail	de	schrieb
 yes, offer copy option	mail	de	Ja, mit Kopier-Option
 you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das End-Datum verwenden.
+you do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them	mail	de	Sie haben nicht ausreichende Rechte für diese Aktion in diesem freigegebenen Ordner - bitten Sie den Besitzer des Ordners, Ihnen die nötigen Rechte einzuräumen
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you may add this key into your contact, if you trust this signature.	mail	de	Sie können diesen Schlüssel in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.

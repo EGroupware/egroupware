@@ -266,6 +266,7 @@ export csr	mail	en	Export CSR
 expunge	mail	en	Expunge
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
+failed to copy message	mail	en	Failed to copy message
 failed to copy messages	mail	en	Failed to copy messages
 failed to create folder %1	mail	en	Failed to create folder %1
 failed to delete %1	mail	en	Failed to delete %1
@@ -449,6 +450,7 @@ move to archive	mail	en	Move to archive folder
 move to bcc and send	mail	en	Move to Bcc and send
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3.
+moving a folder between different accounts is not supported	mail	en	Moving a folder between different accounts is not supported
 moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported.
 name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
@@ -825,6 +827,7 @@ wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
+you do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them	mail	en	You do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
 you may add this key into your contact, if you trust this signature.	mail	en	You may add this key into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.
