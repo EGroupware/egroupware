@@ -1,5 +1,17 @@
 egroupware-docker (26.10.20261030) hardy; urgency=low
 
+  * SECURITY: one critical security update in EGroupware and one in TinyMCE, everyone is strongly advised to update to this release!
+  * SAML: repair config.php stuck calling canSetSameSiteNone() statically
+  * Mail: importing a valid .eml file no longer rejected as "wrong type"
+  * Mail: notification images embedded via webdav.php still broken on async/cron sends
+  * Mail: fix CSP-header "502 Bad Gateway" via large allowExternalDomains allowlist
+  * Mail: 1st page in printed mail only had the headers (serveral different cases fixed)
+  * Mail: an S/MIME-signed meeting invite was shown as plain text instead of the Accept/Decline/Tentative buttons
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 30 Oct 2026 12:50:58 +0100
+
+egroupware-docker (26.10.20261030) hardy; urgency=low
+
   Could not query changelog for 26.10, eg. no last tag found!
 
  -- Ralf Becker <rb@egroupware.org>  Fri, 30 Oct 2026 12:43:20 +0100
