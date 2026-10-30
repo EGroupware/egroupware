@@ -1030,6 +1030,24 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	#popupMainDiv {
 		height: auto !important;
 	}
+	// ticket #126971 - the ACTUAL root cause for Ingo's and ralf's own still-reproducing test cases
+	// (both Word/Outlook-authored emails, confirmed live via a clean incognito print still failing
+	// after all four fixes above were verified correctly deployed): nothing to do with height at
+	// all. Word's own HTML export embeds, inline in the message body's OWN <style> block:
+	//   @page WordSection1 { size: 612pt 792pt; margin: ...; }
+	//   div.WordSection1 { page: WordSection1; }
+	// `page` is a real CSS Paged Media property that assigns an element to a NAMED page; Chrome's
+	// print engine forces a page break wherever content switches from the default (unnamed) page to
+	// a named one. Since the message body is embedded directly into this document (not sandboxed in
+	// an iframe by the time it's printed - see tmpPrintDiv's own docblock above), this untrusted,
+	// arbitrary email-authored CSS is honored exactly like our own: the header area above stays on
+	// the default page, then div.WordSectionN forces a break before it - headers alone on page 1,
+	// the actual body starting fresh on page 2, completely independent of any element's height.
+	// Word numbers this class per page break in the SOURCE document (WordSection1, WordSection2,
+	// ...), so reset every element's `page` back to auto, not just a specific numbered class.
+	.tmpPrintDiv, .tmpPrintDiv * {
+		page: auto !important;
+	}
 	.mailDisplayAttachments{
 		border: none;
 		overflow: visible !important;
