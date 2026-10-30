@@ -4033,15 +4033,53 @@ export class MailJmap
 			return false;
 		}
 		const type = (part.type || '').toLowerCase();
+		if (type === 'multipart/signed' &&
+			(part.subParts || []).some((sub : any) => MailJmap.isSmimeSignaturePart(sub?.type)))
+		{
+			// Decisive here - deliberately does NOT fall through to the generic recursive walk
+			// below. That walk would otherwise independently rediscover the signature sub-part
+			// itself (application/pkcs7-signature is its own, separate SPECIAL_CASE_TYPES member)
+			// and return true regardless of this check, undoing it - found while fixing ticket
+			// #127061 (Birgit, 2026-10-28): an S/MIME-signed meeting invite (multipart/signed
+			// wrapping eg. multipart/alternative with an inline text/calendar part) must still fall
+			// through to the classic, calendar-aware server path instead of being claimed here -
+			// the server-side special-case renderer this routes to (resolveSmime()/
+			// structureToHtml(), via ajax_resolveSpecialCaseBody()) has zero text/calendar
+			// awareness, which is exactly why these showed up as a plain-text invitation instead of
+			// the usual Accept/Decline/Tentative buttons. Same carve-out as the flat
+			// SPECIAL_CASE_TYPES match below, just needed separately here since this is its own,
+			// independent condition - see MailJmap.hasInlineCalendarPart()'s own docblock (mirrors
+			// the server-side Mail::jmapHasCalendarPart() this fix is the client-side twin of).
+			return !MailJmap.hasInlineCalendarPart(part);
+		}
 		if ((MailJmap.SPECIAL_CASE_TYPES.has(type) &&
 				(type !== 'text/calendar' || ((part.disposition || '').toLowerCase() !== 'attachment' && (part.size || 0) > 0))) ||
-			(part.name || '').toLowerCase() === 'winmail.dat' ||
-			(type === 'multipart/signed' &&
-				(part.subParts || []).some((sub : any) => MailJmap.isSmimeSignaturePart(sub?.type))))
+			(part.name || '').toLowerCase() === 'winmail.dat')
 		{
 			return true;
 		}
 		return (part.subParts || []).some((sub : any) => this.isSpecialCase(sub));
+	}
+
+	/**
+	 * Recursively check a bodyStructure/subParts tree for an INLINE text/calendar part (a meeting
+	 * invite), not a plain attached .ics file - same distinction, same shape as this file's own
+	 * flat SPECIAL_CASE_TYPES carve-out (isSpecialCase()'s own docblock) and server-side
+	 * Mail::jmapHasCalendarPart()/Jmap\Imap::hasInlineCalendarPart() (api/src/Mail.php,
+	 * api/src/Mail/Jmap/Imap.php) - kept as three separate copies since none of these three
+	 * classes/languages share a common base to put one shared implementation in.
+	 */
+	private static hasInlineCalendarPart(part : any) : boolean
+	{
+		if (!part) return false;
+		const type = (part.type || '').toLowerCase();
+		if (type === 'text/calendar' &&
+			(part.disposition || '').toLowerCase() !== 'attachment' &&
+			(part.size || 0) > 0)
+		{
+			return true;
+		}
+		return (part.subParts || []).some((sub : any) => MailJmap.hasInlineCalendarPart(sub));
 	}
 
 	/**
