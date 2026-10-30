@@ -1114,7 +1114,9 @@ export class EgwFramework extends LitElement
 		const hash = message;
 
 		// Do not add a same message twice if it's still not dismissed
-		if(typeof this._messages[hash] !== "undefined" && !this._messages[hash].isConnected)
+		// Ask the inner sl-alert, not the <egw-message> itself: toast() moves the sl-alert into the
+		// toast stack and removes its host, so the host of every visible toast is disconnected
+		if(typeof this._messages[hash] !== "undefined" && !this._messages[hash].alert?.isConnected)
 		{
 			// belongs to a window that has been closed meanwhile
 			delete this._messages[hash];
