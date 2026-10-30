@@ -2190,7 +2190,10 @@ export class MailCompose
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
 		// before the signature insertion below, which reads the selected identity
-		await this.applyPreferredIdentityForNewCompose();
+		if (!(await this.selectIdentityMatchingFrom(context)))
+		{
+			await this.applyPreferredIdentityForNewCompose();
+		}
 
 		// cc/bcc unconditional (even when empty) - found live 2026-09-08 (see bootstrapReply()'s
 		// own identical fix): an `if (context.cc.length)` guard here left whatever was already
@@ -2768,6 +2771,43 @@ export class MailCompose
 		if (!this.isJmapMode) return;
 		await this.applyPreferredIdentityForNewCompose();
 		await this.applySignatureForCurrentIdentity(String(this.currentBodyWidget()?.get_value() ?? ''));
+	}
+
+	/**
+	 * "Edit as new"/draft-continuation (bootstrapComposeAsNew()) should reopen under the SAME
+	 * identity the original message was actually sent/drafted as, when that identity still exists -
+	 * unconditional, no `defaultIdentity` preference gate (unlike selectIdentityForRecipients()'s
+	 * own reply/forward-only 'default-matching' opt-in, which matches against the RECIPIENT
+	 * addresses instead) since this isn't about picking a preferred identity for a brand-new
+	 * message, it's about preserving the identity of the message actually being re-edited. Ralf,
+	 * 2026-10-30 (ticket #126191 follow-up ask): also makes lastKnownSignatureIdentity's own
+	 * best-effort old-signature match (updateSignatureForIdentity()) far more likely to actually
+	 * succeed on a later identity switch, since the presumed identity now usually IS the one the
+	 * body's own inherited signature really belongs to, not whatever the generic
+	 * preferred-identity preference happened to pick instead.
+	 *
+	 * @return true if a match was found and applied - caller skips its own generic
+	 *  preferred-identity fallback (applyPreferredIdentityForNewCompose()) in that case; false for
+	 *  no match (the original message's own From isn't any of this account's own identities - eg.
+	 *  reopening something someone else sent you) or identities failing to load, either of which
+	 *  falls through to that same generic fallback instead
+	 */
+	private async selectIdentityMatchingFrom(context : JmapReplyContext) : Promise<boolean>
+	{
+		let identities : any[];
+		try
+		{
+			identities = await this.app.jmap.getIdentities(context.profileID);
+		}
+		catch (e)
+		{
+			return false;
+		}
+		const fromEmails = new Set(context.from.map((a) => a.email.toLowerCase()));
+		const match = identities.find((i) => fromEmails.has(i.email.toLowerCase()));
+		if (!match) return false;
+		this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${match.id}`);
+		return true;
 	}
 
 	/**
