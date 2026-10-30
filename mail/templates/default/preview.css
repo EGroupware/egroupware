@@ -123,6 +123,11 @@ img[alt*="[blocked external image:"] {
   border-top: 1px solid #8f8b8b;
   box-shadow: #8f8b8b 0px 1px 13px 2px;
 }
+@media print {
+  .mail_externalImagesMsg {
+    display: none !important;
+  }
+}
 .mail_externalImagesMsg.red {
   background: rgba(204, 0, 51, 0.8) !important;
 }

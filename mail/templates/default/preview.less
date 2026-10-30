@@ -151,6 +151,24 @@ img[alt*="[blocked external image:"] {
   box-shadow: rgb(143, 139, 139) 0px 1px 13px 2px;
 }
 
+// ticket #126971 (Ingo, 2026-10-30, "getestet auf pole" - reproduced live via the ticket's own
+// attached test .eml): this banner is appended as a sibling of .mailDisplayBody inside the mail
+// body iframe (MailApp.resolveExternalImages(), mail/js/app.ts - appends straight to `_node.body`),
+// so it ends up copied into tmpPrintDiv right along with it, still carrying this "position: fixed"
+// (fixed to the VIEWPORT, not even scoped to a container) with no @media print override at all -
+// confirmed live (my.egroupware.org, this exact ticket's own attachment) via
+// getComputedStyle(...).position === 'fixed' on the actual rendered element. A live "click to
+// load external images" nag has no business in a printed page to begin with (same principle as
+// master's own newer et2-ai/sl-alert replacement for this banner, which no longer ships this file
+// at all - see mail/templates/default/app.less's own .mail_externalImagesMsgHost print rule there);
+// hiding it outright sidesteps whatever Chrome's print pagination does with a lingering
+// position:fixed element entirely, rather than trying to characterize that quirk precisely.
+@media print {
+  .mail_externalImagesMsg {
+    display: none !important;
+  }
+}
+
 .mail_externalImagesMsg.red {
   background: rgba(204, 0, 51, 0.8) !important;
 }
