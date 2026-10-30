@@ -9258,26 +9258,6 @@ export class MailApp extends EgwApp
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
-		// A native title="..." tooltip (eg. this very "Drucken" toolbar/menu item's own, or the
-		// default-action label on an attachment row the mouse ends up resting over once the
-		// toolbar's dropdown closes) can end up baked into window.print()'s captured page - it's
-		// an overlay the browser itself paints straight from the hovered node's title text on its
-		// OWN hover-delay timer, not a DOM node any @media print rule can reach, and NOTHING done
-		// right before print() can dismiss one already showing (tried a pointer-events toggle
-		// there first - confirmed live 2026-10-30, ralf: "I still get the tooltip on the printed
-		// page" - the mouse genuinely never moves between the click/keypress that triggered
-		// printing and window.print() finally firing ~1s later, long enough for the hover timer to
-		// fire at least once, maybe more than once as content reflows underneath the still
-		// stationary cursor). The only reliable fix is to never let that timer find title text to
-		// show in the first place: strip every title attribute right NOW, synchronously with the
-		// very click/keypress that invoked printing - before preparePrint()'s own async wait below
-		// even starts, well ahead of any hover-delay timer - restoring them once the print flow is
-		// done, same lifetime as tmpPrintDiv's own display toggle further down.
-		const strippedTitles : [Element, string][] = Array.from(document.querySelectorAll('[title]'))
-			.map((el) : [Element, string] => [el, el.getAttribute('title')]);
-		strippedTitles.forEach(([el]) => el.removeAttribute('title'));
-		const restoreTitles = () => strippedTitles.forEach(([el, title]) => el.setAttribute('title', title));
-
 		// Wait for preparePrint()'s own async tmpPrintDiv copy (which itself waits out any
 		// still-decoding inline images, see its own docblock) before the rest of this - otherwise
 		// this method's own flat, independent 1000ms timer below could win the race and print
@@ -9295,7 +9275,7 @@ export class MailApp extends EgwApp
 				// template's own shadow-DOM/slot chain (see that method's own docblock for why).
 				const tmpPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
 				if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
-				const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; restoreTitles(); };
+				const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
 				if ('onafterprint' in window)
 				{
 					window.addEventListener('afterprint', hideAgain, {once: true});

@@ -478,11 +478,20 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			label: action.caption,
 			readonly: action.readonly || this.readonly,
 		};
-		if((action.hint || action.caption) && !egwIsMobile())
+		// "list"-slotted (the overflow "..." dropdown) always renders the caption as plain, fully
+		// visible text right there in the row - falling back to the SAME caption as the tooltip
+		// there is a pure duplicate that serves no purpose, and a tooltip can end up baked into a
+		// window.print() of whatever page happens to be showing it (found live 2026-10-30, ticket
+		// #126971 - a "Drucken" tooltip sitting in a printed mail). A real, distinct action.hint is
+		// still worth showing there (it says something the caption doesn't) - only the
+		// caption-as-its-own-tooltip fallback is skipped, and only for the list slot; a main-row
+		// icon-only button (no caption slotted as text) still needs it.
+		const slot = this._preference[action.id] ? "list" : "";
+		if((action.hint || (action.caption && slot !== "list")) && !egwIsMobile())
 		{
 			attrs.statustext = action.hint || action.caption;
 		}
-		attrs.slot = this._preference[action.id] ? "list" : "";
+		attrs.slot = slot;
 
 		if(isToggleSwitch)
 		{
