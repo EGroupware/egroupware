@@ -806,6 +806,9 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .mailDisplayBody {
     height: auto !important;
   }
+  #popupMainDiv {
+    height: auto !important;
+  }
   .mailDisplayAttachments {
     border: none;
     overflow: visible !important;

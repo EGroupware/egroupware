@@ -972,6 +972,31 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 	.mailDisplayBody {
 		height: auto !important;
 	}
+	// ticket #126971 follow-up (ralf, 2026-10-30, STILL blank page 1 even with the fixes above
+	// confirmed live via the loaded stylesheets): #popupMainDiv - the whole popup's own top-level
+	// wrapper, a DIRECT CHILD of body, wrapping the headers block and everything up to
+	// .mailDisplayContainer - has its own screen-only "height: 100%" (further up in this file)
+	// with no print override HERE at all. kdots/css/src/popups.less *does* attempt one
+	// (`#popupMainDiv { height: auto; ... }` inside its own @media print), but at EQUAL
+	// specificity (both are plain ID-selector rules) cascade order decides, and this app's own
+	// unconditional (non-media-queried) screen rule loads AFTER the shared kdots framework CSS -
+	// so it silently wins under print too, exactly undoing kdots' own fix. Since #popupMainDiv is
+	// the very first element in body, it doesn't get "pushed to the next page" the way
+	// .mailDisplayContainer/.mailDisplayBody above did - instead ITS OWN enforced one-page-tall
+	// height simply reserves that whole page for itself, with the (short) headers rendering at the
+	// top and the rest left blank within its own box, before tmpPrintDiv (a SIBLING of this div,
+	// not a descendant - MailApp.preparePrint() appends it straight to body) gets to start on the
+	// page after. Same fix: a local, !important override wins regardless of load order, instead of
+	// relying on kdots' own non-!important attempt.
+	//
+	// NOTE: master's own version of this fix lands right next to its .mail_externalImagesMsgHost
+	// print rule - a DIFFERENT fix, for a DOM structure 26 doesn't have (26's own equivalent is
+	// mail/templates/default/preview.less's .mail_externalImagesMsg, already backported separately
+	// as commit 010ed892ec) - deliberately NOT cherry-picked here too, same "verify the selector
+	// applies on this branch" discipline as that fix.
+	#popupMainDiv {
+		height: auto !important;
+	}
 	.mailDisplayAttachments{
 		border: none;
 		overflow: visible !important;
