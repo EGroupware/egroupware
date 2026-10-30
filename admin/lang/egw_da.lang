@@ -75,6 +75,7 @@ all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	da	Giv brugeren mulighed for at gemme sin adgangskode under 'Sikkerhed og adgangskoder' til SingleSignOn.
 allow user to set 'remember me' token	admin	da	Tillad brugeren at indstille »Husk mig«-token
+allowed just as second factor	admin	da	Tilladt kun som anden faktor
 alternate email address	admin	da	Alternativ e-mail adresse
 anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen).
@@ -115,7 +116,6 @@ category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
 certificate	admin	da	Certifikat
 certificate details	admin	da	Detaljer om certifikatet
-certificate validation in days	admin	da	Certifikatvalidering i dage
 change access	admin	da	Skift adgangsrettigheder
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
@@ -180,9 +180,14 @@ deny access to user accounts	admin	da	Nægt adgang til bruger kontoer
 deny all users access to grant other users access to their entries ?	admin	da	Nægt alle brugere at give adgang til andre brugere til deres data
 description can not exceed 255 characters in length !	admin	da	Beskrivelse må ikke overstige 255 tegn!
 determines the order the fields are displayed	admin	da	Bestemmer rækkefølgen felterne bliver vist
+direct login without password or second factor	admin	da	Direkte login uden adgangskode eller anden faktor
 disable	admin	da	Deaktivere
 disable "auto completion" of the login form	admin	da	Deaktivere "auto færdigørelse" på loginsiden
+disable certificate validation	admin	da	Deaktiver certifikatvalidering
+disable pgp encryption (mailvelope)	admin	da	Deaktiver PGP-kryptering (Mailvelope)
+disabled	admin	da	Deaktiveret
 disabled (not recomended)	admin	da	Deaktiveret (ikke anbefalet)
+disabled, do not show on login page	admin	da	Deaktiveret, vis ikke på login-siden
 display	admin	da	Vis
 displayed length of input field (set rows=1 to limit length)	admin	da	Viset længde af inputfelt (sæt rækker=1 for at begrænse længden)
 do not delete the category and return back to the list	admin	da	Slet IKKE denne kategori og vend tilbage til listen
@@ -407,6 +412,7 @@ saves this entry	admin	da	Gem denne postering
 search categories	admin	da	Søg kategorier
 search groups	admin	da	Søg grupper
 search peer servers	admin	da	Søg peer servere
+secret deleted, two factor authentication disabled.	admin	da	Hemmelighed slettet, tofaktorautentificering deaktiveret.
 security	admin	da	Sikkerhed
 select accounts for which the custom field should be readonly	admin	da	Vælg konti, hvor det brugerdefinerede felt skal være skrivebeskyttet
 select group managers	admin	da	Vælg gruppe håndtering
@@ -454,7 +460,6 @@ sorry, that group name has already been taken.	admin	da	Beklager, det gruppenavn
 sorry, the above users are still a member of the group %1	admin	da	Beklager, overstående brugere er stadig medlem af gruppen %1.
 sorry, the follow users are still a member of the group %1	admin	da	Beklager, følgende brugere er stadig medlem af gruppen %1.
 sort the entries	admin	da	Sorter resultaterne
-ssl	admin	da	SSL
 standard	admin	da	Standart
 standard imap server	admin	da	Standart IMAP server
 standard smtp-server	admin	da	Standart SMTP server

@@ -1,4 +1,5 @@
 %1 attachments	mail	sk	%1 príloh
+%1 attachments downloaded	mail	sk	Stiahlo sa %1 príloh.
 %1 for all users	mail	sk	%1 pre všetkých používateľov
 %1 has been added to blacklisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na čiernu listinu
 %1 has been added to whiltelisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na bielu listinu
@@ -11,7 +12,9 @@
 (leave empty for no quota)	mail	sk	(Ak nechcete kvótu, ponechajte prázdne)
 (no subject)	mail	sk	(bez predmetu)
 (not connected)	mail	sk	(nepripojené)
+account	mail	sk	Účet
 account editable by user	mail	sk	používateľ môže upraviť účet
+account not reachable	mail	sk	Účet nie je dostupný.
 acl rights retrieve failed, seems there are no rights set!	mail	sk	Zlyhalo prevzatie ACL práv, zdá sa že žiadne práva nie sú nastavené!
 acl rights retrieved successfully	mail	sk	ACL práva boli úspešne prevzaté
 activating by date requires a start- and end-date!	mail	sk	Aktivácia dátumom vyžaduje dátum začiatku AJ konca!
@@ -26,6 +29,7 @@ add files as %1	mail	sk	Pridať súbor ako %1
 add folder	mail	sk	Pridať priečinok
 add raw message, ignore mail attachments	mail	sk	Previesť poštu na položku, pridať nespracovanú správu (ignorovať prílohy pošty)
 add this certificate into contact	mail	sk	Pridať tento certifikát do kontaktu
+add this key into contact	mail	sk	Pridať tento kľúč do kontaktu
 add to addressbook	mail	sk	Pridať do adresára
 adding %1 to blacklisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na čiernu listinu zlyhalo z dôvodu: %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na bielu listinu zlyhalo z dôvodu: %2
@@ -78,6 +82,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	sk	Upozornenie: všetky prílohy budú odoslané ako %1!
 before reply, visible during compose	mail	sk	Pred odpoveď, viditeľné počas písania
 blacklisted mails are marked as spam	mail	sk	E-maily na čiernej listine sa označia ako Spam
+blue	mail	sk	Modrá
 but check shared folders	mail	sk	ale skontrolovať zdieľané priečinky
 by date	mail	sk	Podľa dátumu
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sk	V predvolenom nastavení sa "http://" nahradí len "https://". Nebojte sa nakonfigurovať 'https://proxy.egroupware.org/' aj na načítanie obrázkov dostupných len cez http.
@@ -86,6 +91,7 @@ can not open imap connection	mail	sk	Nedá sa otvoriť spojenie IMAP
 can not resolve the winmail.dat attachment!	mail	sk	Neviem spracovať prílohu winmail.dat!
 canceled deletion due to user interaction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
 certificate details	mail	sk	Podrobnosti o certifikáte
+certificate does not match the stored private key!	mail	sk	Certifikát nezodpovedá uloženému súkromnému kľúču!
 certificate imported.	mail	sk	Certifikát bol importovaný.
 certificate in text	mail	sk	Certifikát v texte
 certificate info for email %1	mail	sk	Informácia o certifikáte pre správu %1
@@ -111,6 +117,7 @@ confirm	mail	sk	Potvrdiť
 confirm attach message	mail	sk	Potvrdiť priloženú správu
 confirm move to folder	mail	sk	Potvrdiť presun do priečinka
 connect to profile %1	mail	sk	Pripojiť k profilu %1
+connection could not be established, use the wizard to check why!	mail	sk	Nepodarilo sa nadviazať spojenie, skontrolujte pomocou sprievodcu, prečo!
 connection status	mail	sk	Stav pripojenia
 contact label	mail	sk	Štítok kontaktu
 contains	mail	sk	obsahuje
@@ -122,8 +129,11 @@ convert only mail to item (ignore possible attachments)	mail	sk	Konvertovať iba
 copied %1 message(s) from %2 to %3	mail	sk	Skopírovaných %1 správ z %2 do %3.
 copy to	mail	sk	Kopírovať do
 could not append message:	mail	sk	Nepodarilo sa pripojiť správu:
+could not decrypt stored private key, wrong passphrase?	mail	sk	Nepodarilo sa dešifrovať uložený súkromný kľúč, nesprávna heslová fráza?
+could not download %1	mail	sk	Prílohu %1 sa nepodarilo stiahnuť.
 could not save the acl because some names are empty	mail	sk	Nepodarilo sa uložiť ACL! Pretože niektoré mená sú prázdne
 create new account	mail	sk	Vytvoriť nový účet
+create private key and export csr	mail	sk	Vytvoriť súkromný kľúč a exportovať CSR
 create self-signed certificate	mail	sk	Vytvoriť certifikát s vlastným podpisom
 cross account forward attachment is not allowed!	mail	sk	Pripojenie krížového účtu dopredu nie je povolené!
 current folder	mail	sk	Aktuálny priečinok
@@ -185,6 +195,7 @@ don't use draft folder	mail	sk	Nepoužívať priečinok návrhov
 don't use sent	mail	sk	Nepoužívať [Odoslana pošta]
 don't use template folder	mail	sk	Nepoužívať [Šablóny]
 don't use trash	mail	sk	Nepoužívať [Odpadkový kôš]
+download all attachments	mail	sk	Stiahnuť všetky prílohy
 download attachments	mail	sk	Stiahnuť prílohy
 draft	mail	sk	Návrh
 draft folder	mail	sk	Priečinok návrhov
@@ -274,6 +285,7 @@ general	admin	sk	Všeobecné
 general settings	mail	sk	Všeobecné nastavenia
 get acl rights failed from imap server!	mail	sk	Získanie ACL práv zlyalo pre IMAP server!
 greater than	mail	sk	Väčšie než
+green	mail	sk	Zelená
 ham folder	mail	sk	Priečinok dobrých správ
 handling of external http images / mixed content in mails	mail	sk	Spracovanie externých obrázkov http / zmiešaného obsahu v e-mailoch
 header	mail	sk	Hlavička
@@ -332,6 +344,7 @@ junk	mail	sk	Spam
 junk folder	mail	sk	Priečinok Spam
 keep a copy	mail	sk	Ponechať si kópiu
 keep a copy of the message in your inbox	mail	sk	Ponechať kópiu správy v priečinku Doručenej pošty
+key fingerprint	mail	sk	Otlačok kľúča
 kilobytes	mail	sk	kilobajtov
 last used signature	mail	sk	Naposledy použitý podpis
 later	mail	sk	Neskôr
@@ -403,7 +416,9 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	sk	žiadne priečinky
 no message body supplied	mail	sk	Nebolo zadané telo správy
 no plain text part found	mail	sk	Nebola nájdená žiadna čisto textová časť
+no private key stored to import a certificate for!	mail	sk	Nie je uložený žiadny súkromný kľúč, pre ktorý by sa dal importovať certifikát!
 no recipient address given!	mail	sk	Nebol zadaný adresát!
+no s/mime private key stored for this account.	mail	sk	Pre tento účet nie je uložený žiadny súkromný kľúč S/MIME.
 no send folder set in preferences	mail	sk	V predvoľbách nebol nastavený priečinok odoslanej pošty
 no signature	mail	sk	Žiadny podpis
 no sneak preview in list	mail	sk	Bez náhľadu v zozname
@@ -417,6 +432,7 @@ none, create all	mail	sk	žiadne, vytvoriť všetko
 nothing to change.	mail	sk	Niet čo zmeniť.
 notify about new mail in this folders	mail	sk	Upozorniť na nové správy v týchto priečinkoch
 notify when new mails arrive in these folders	mail	sk	Upozorniť keď sa nové správy objavia v týchto priečinkoch
+offer to add sender's s/mime certificate or pgp key to contact	mail	sk	Ponuka pridať certifikát S/MIME alebo kľúč PGP odosielateľa do kontaktov
 on	mail	sk	ohľadom
 on behalf of	mail	sk	V mene
 on vacation	mail	sk	Na dovolenke
@@ -433,14 +449,18 @@ only store message in inbox, do not send vacation notice	mail	sk	Uložiť správ
 open in html mode	mail	sk	Otvoriť v režime HTML
 open in text mode	mail	sk	Otvoriť v textovom režime
 open with collabora office	mail	sk	Otvoriť pomocou Collabora Online
+orange	mail	sk	Oranžová
 organisation	admin	sk	Organizácia
 organization	mail	sk	Organizácia
 organization | real name email	mail	sk	Organizácia | Skutočné meno [E-mail]
 original message	mail	sk	Pôvodná správa
 outbox	mail	sk	Odoslané správy
+passphrase, if private key is protected	mail	sk	Heslová fráza, ak je súkromný kľúč chránený
 password protect	mail	sk	chrániť heslom
 permission denied	mail	sk	Prístup bol odmietnutý
 personal signature	mail	sk	Osobný podpis
+pgp key info for email %1	mail	sk	Informácie o kľúči PGP pre e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	sk	Správa podpísaná PGP / S/MIME, nenašiel sa žiadny verejný kľúč na overenie podpisu
 please configure access to an existing individual imap account.	mail	sk	Prosím nakonfigurujte prístup k existujúcemu osobnému IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sk	Prosím nastavte si svoj S/MIME certifikát v karte Šifrovanie v okne Upraviť účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sk	Prosím opýtajte sa svojho administrátora, či váš server podporuje filtrovanie na strane servera, a ako ich zapnúť v EGroupware pre váš aktívny účet (%1) s ID: %2.
@@ -460,8 +480,10 @@ preview pane	mail	sk	Rozloženie okna
 primary profile	mail	sk	Základný profil
 printing	mail	sk	Tlač
 printview	mail	sk	Náhľad pre tlač
+private key created, downloading csr...	mail	sk	Súkromný kľúč bol vytvorený, sťahuje sa CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	sk	Spracovanie súboru %1 zlyhalo. Nesplnil základné obmedzenia.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sk	Zadajte predvolený text pre neprítomnosť (používa sa pre nové odpovede počas neprítomnosti keď predtým nebola nastavená žiadna správa)
+purple	mail	sk	Fialová
 push notifications	mail	sk	Oznámenia Push
 quicksearch	mail	sk	Rýchle hľadanie
 quicksearch (with cc)	mail	sk	Rýchle hľadanie (vrátane kópie)
@@ -477,6 +499,7 @@ real name organization email	mail	sk	Skutočné meno Organizácia [E-mail]
 reason!	mail	sk	dôvod!
 receive notification	mail	sk	Vyžiadať potvrdenie o prečítaní
 recursively	mail	sk	Vrátane podpriečinkov
+red	mail	sk	Červená
 refresh time in minutes	mail	sk	Čas obnovovania (v minútach)
 refused to delete folder inbox	mail	sk	Odmietol odstrániť priečinok INBOX
 refused to delete folder with subfolders	mail	sk	Odmietol odstrániť priečinok aj s podpriečinkami
@@ -647,6 +670,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sk	Odosielateľ správy si vyžiadal potvrdenie o tom, že ste si jeho správu už prečítali. Chcete, aby sa mu toto potvrdenie odoslalo?
 the mimeparser can not parse this message.	mail	sk	Analyzátor MIME nedokázal spracovať túto správu.
 the rule with priority %1 successfully saved!	mail	sk	Toto pravidlo s prioritou %1 bolo úspešne uložené!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	sk	Certifikát S/MIME uložený v adresári pre %1 nezodpovedá certifikátu vášho účtu – skontrolujte, či v adresári nie sú duplicitné záznamy pre túto adresu.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	sk	Celková veľkosť príloh presahuje limit %1 MB. Bolo prechod na odkaz na stiahnutie.
 then	mail	sk	TAK
 there is no imap server configured.	mail	sk	Nie je nastavený žiadny IMAP server.
@@ -693,6 +717,7 @@ what do do with html email	mail	sk	Čo robiť s HTML správou
 what order the list columns are in	mail	sk	V akom poradí sú stĺpce zoznamu
 what to do when you delete a message	mail	sk	Čo robiť pri odstraňovaní správy.
 what to do when you send a message	mail	sk	Čo robiť pri odosielaní správy.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	sk	Keď podpísaná správa odhalí certifikát/kľúč, ktorý ešte nie je uložený pre daného odosielateľa, opýtajte sa, či ho chcete pridať – overený podpis od už známeho kontaktu sa vždy pridáva automaticky bez opýtania
 when deleting messages	mail	sk	Ako odstraňovať správy
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	sk	Pri zobrazovaní sráv vo vyskakovacom okne sa má okno použiť pre všetky správy, alebo má mať každá správa vlastné okno
 when saving messages as item of a different app	mail	sk	Pri ukladaní správ ako položiek inej aplikácie.
@@ -713,6 +738,7 @@ yes, offer copy option	mail	sk	Áno, ponúknuť možnosť kópie
 you can select what info to be displayed on email tag	mail	sk	Môžete vybrať, ktoré informácie sa majú zobrazovať na e-mailovej značke.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sk	Pre dátum začiatku môžete použiť $$start$$ a pre dátum ukončenia $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	sk	Môžete pridať tento certifikát do vášho kontaktu, ak dôverujete tomuto podpisu.
+you may add this key into your contact, if you trust this signature.	mail	sk	Tento kľúč môžete pridať do svojho kontaktu, ak tomuto podpisu dôverujete.
 you need to enter your s/mime passphrase to send this message.	mail	sk	Ak chcete odoslať túto správu, zadajte vaše S/MIME heslo.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sk	Potrebujete nainštalovať zásuvný modul Maildevelope ktorý je dostupný pre Chrome a Firefox od %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	sk	Najpr musíte správu uložiť ako návrh, až potom ju môžete uložiť do VFS

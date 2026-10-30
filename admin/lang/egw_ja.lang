@@ -103,6 +103,7 @@ allow the user to store his password under 'security & passwords' for singlesign
 allow user to set 'remember me' token	admin	ja	ユーザが「Remember me」トークンを設定できるようにする
 allow users to change forwards	admin	ja	ユーザによるフォワードの変更を許可する
 allow users to create identities for aliases	admin	ja	ユーザがエイリアスの ID を作成できるようにする
+allowed just as second factor	admin	ja	2段階認証としてのみ許可
 alternate email address	admin	ja	代替メール・アドレス
 and logged in	admin	ja	ログインしました
 anonymous user	admin	ja	匿名ユーザ
@@ -166,7 +167,6 @@ category list	admin	ja	カテゴリ一覧
 category saved.	admin	ja	カテゴリを保存しました。
 certificate	admin	ja	証明書
 certificate details	admin	ja	証明書の詳細
-certificate validation in days	admin	ja	証明書検証日数
 change access	admin	ja	アクセス権の変更
 change account_id	admin	ja	アカウント ID を変更する
 change acl rights	admin	ja	ACL 権限を変更する
@@ -277,15 +277,18 @@ deny all users access to preferences ?	admin	ja	Deny all users access to prefere
 description can not exceed 255 characters in length !	admin	ja	Description can not exceed 255 characters in length!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	ja	Destination account #%1 does exist and is NOT renamed itself! Can not merge accounts, it will violate unique contains. Delete with transfer of data instead.
 determines the order the fields are displayed	admin	ja	項目の表示順
+direct login without password or second factor	admin	ja	パスワードや2段階認証なしで直接ログイン
 disable	admin	ja	無効化
-disable "auto completion" of the login form	admin	ja	Disable "auto completion" of the login form
+disable "auto completion" of the login form	admin	ja	ログインフォームの「自動入力」を無効化
 disable all	admin	ja	全て無効化
+disable certificate validation	admin	ja	証明書の検証を無効化
 disable minifying of javascript and css files	admin	ja	JavaScriptとCSSファイルののミニファイを抑止
+disable pgp encryption (mailvelope)	admin	ja	PGP暗号化（Mailvelope）を無効化
+disabled	admin	ja	無効
 disabled (not recomended)	admin	ja	無効（非推奨）
+disabled, do not show on login page	admin	ja	無効、ログインページに表示しない
 display	admin	ja	表示
 displayed length of input field (set rows=1 to limit length)	admin	ja	入力項目の表示長（長さを制限する場合は行を 1 にしてください）
-displaying html messages is disabled	admin	ja	HTML メッセージの表示を禁止
-displaying plain messages is disabled	admin	ja	プレーン・テキスト・メッセージの表示を禁止
 do not delete the category and return back to the list	admin	ja	カテゴリを削除せずに一覧に戻る
 do not generate email addresses	admin	ja	電子メール・アドレスを生成しない
 do not offer introduction video	admin	ja	紹介ビデオを提供しない
@@ -397,7 +400,7 @@ force users to change their password regularily?(empty for no,number for after t
 forward also to	admin	ja	Forward also to
 forward email's to	admin	ja	メールを転送 転送先:
 forward only	admin	ja	Forward only
-forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	ja	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
+forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	ja	「転送のみ」を選択すると、IMAPメールボックスやメールの保存が無効になり、指定されたアドレスへメールが転送されるのみとなります。
 full name	admin	ja	氏名
 general	admin	ja	一般
 generate certificate	admin	ja	証明書の生成
@@ -682,7 +685,7 @@ scheduled	admin	ja	スケジュール済み
 search categories	admin	ja	カテゴリを検索
 search groups	admin	ja	グループを検索
 search peer servers	admin	ja	ピア・サーバを検索
-secure connection	admin	ja	セキュア接続
+secret deleted, two factor authentication disabled.	admin	ja	シークレットが削除され、2段階認証が無効化されました。
 security	admin	ja	セキュリティ
 select accounts for which the custom field should be visible	admin	ja	カスタム項目を閲覧できるアカウントを選択してください。
 select group managers	admin	ja	グループ管理者を選択
@@ -738,7 +741,6 @@ sorry, the above users are still a member of the group %1	admin	ja	Sorry, the ab
 sorry, the follow users are still a member of the group %1	admin	ja	Sorry, the follow users are still a member of the group %1 .
 sort the entries	admin	ja	Sort the entries
 source account #%1 does not exist!	admin	ja	Source account #%1 does NOT exist!
-ssl	admin	ja	SSL
 standard	admin	ja	標準
 standard identity	admin	ja	標準名称
 standard imap server	admin	ja	標準 IMAP サーバー

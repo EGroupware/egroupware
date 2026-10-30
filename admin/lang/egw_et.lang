@@ -63,6 +63,7 @@ all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	et	Lubage kasutajal salvestada oma parool SingleSignOn'i jaoks jaotises „Turvalisus ja paroolid“.
 allow user to set 'remember me' token	admin	et	Luba kasutajal määrata „Mäleta mind“ märgis
+allowed just as second factor	admin	et	Lubatud ainult teise autentimisfaktorina
 alternate email address	admin	et	Alternatiivne email aadress
 anonymous user	admin	et	Anonymous kasutaja
 anonymous user (not shown in list sessions)	admin	et	Anonüümne Kasutaja (pole nähtav protsesside listis).
@@ -93,7 +94,6 @@ categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
 certificate	admin	et	Sertifikaat
 certificate details	admin	et	Sertifikaadi andmed
-certificate validation in days	admin	et	Sertifikaadi valideerimine päevade jooksul
 change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
 change domain of email address and aliases	admin	et	E-posti aadressi domeeni ja varjunimede muutmine
@@ -143,10 +143,14 @@ deny access to groups	admin	et	Keela ligipääs gruppidele
 deny access to home screen message	admin	et	Keela ligipääs pealehe sõnumile
 deny access to phpinfo	admin	et	Keela ligipääs phpinfo-le
 deny access to user accounts	admin	et	Keela ligipääs kasutaja kontodele
+direct login without password or second factor	admin	et	Otsene sisselogimine ilma paroolita või teise autentimisfaktorita
 disable	admin	et	Keela
+disable certificate validation	admin	et	Keela sertifikaadi valideerimine
+disable pgp encryption (mailvelope)	admin	et	Keela PGP-krüpteerimine (Mailvelope)
+disabled	admin	et	Keelatud
 disabled (not recomended)	admin	et	Väljalülitatud (pole soovitav)
+disabled, do not show on login page	admin	et	Keelatud, ära näita sisselogimislehel
 displayed length of input field (set rows=1 to limit length)	admin	et	Sisendvälja kuvatud pikkus (pikkuse piiramiseks seadke read=1)
-displaying html messages is disabled	admin	et	HTML kirjade näitamine on välja lülitatud
 document root (default)	admin	et	Dokument root (vaikimisi)
 domainname	admin	et	Doomeninimi
 down	admin	et	Alla
@@ -284,6 +288,7 @@ retention period for history-log (in years)	admin	et	Ajaloo-logi säilitamise pe
 revoke this token	admin	et	Selle sümboli tühistamine
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
+secret deleted, two factor authentication disabled.	admin	et	Salasõna kustutatud, kahefaktoriline autentimine keelatud.
 security	admin	et	Turvalisus
 select accounts for which the custom field should be readonly	admin	et	Valige kontod, mille jaoks kohandatud väli peaks olema ainult lugemiseks mõeldud
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	et	Valige rakendused, millega soovite, et token oleks piiratud, või jätke vaikimisi kõik rakendused.
@@ -310,7 +315,6 @@ smtp server name	admin	et	SMTP serveri nimi
 smtp settings	admin	et	SMTP setingud
 smtp-server port	admin	et	SMTP serveri port
 sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi on juba võetud.
-ssl	admin	et	SSL
 start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
 that loginid has already been taken	admin	et	See logimis-ID on juba võetud.

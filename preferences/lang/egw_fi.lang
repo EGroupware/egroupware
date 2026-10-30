@@ -8,7 +8,11 @@ a template defines the layout of egroupware and it contains icons for each appli
 a theme defines the colors and fonts used by the template.	preferences	fi	Teema määrittelee mallipohjan värit ja kirjasimet.
 acl grants have been updated	preferences	fi	Käyttöoikeudet on päivitetty
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	fi	Aktivoi tämä vaihtoehto, jos haluat näyttää värikkäämpiä sovelluskuvakkeita avoimissa välilehdissä. Jos vaihtoehto ei ole valittuna, kuvakkeet näkyvät oletusarvoisesti vaaleana mukautettuna värinä.
+allows to set a default or force the active application tab for new logins.	preferences	fi	Mahdollistaa oletusasetuksen määrittämisen tai aktiivisen sovellusvälilehden pakottamisen uusille kirjautumisille.
+allows to set a default or force the open application tabs.	preferences	fi	Mahdollistaa oletusasetuksen määrittämisen tai avoimien sovellusvälilehtien pakottamisen.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fi	Kaikki listat näyttävät valitsemasi määrän hakutuloksia sivulla. Jos valitset liian suuren numeron, se voi hidastaa sovellusta, liian pienestä on taas vaikea saada kokonaiskuvaa.
+app chooser icons	preferences	fi	Sovellusvalitsimen kuvakkeet
+app chooser icons + text	preferences	fi	Sovellusvalitsimen kuvakkeet + teksti
 applications list scroll area	preferences	fi	Sivuvalikon vierityspainike
 are you sure you want to delete this category ?	preferences	fi	Haluatko varmasti poistaa tämän kategorian?
 are you sure?	preferences	fi	Oletko varma?
@@ -37,9 +41,11 @@ display thumbnails for linked images	preferences	fi	Näytä linkitettyjen kuvien
 div	preferences	fi	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fi	Haluatko näyttää kellonajan 24 tunnin muodossa, vai näyttää 12 tuntia ja am/pm -lyhenteen?
 edit custom fields	preferences	fi	Muokkaa lisäkenttiä
+editor and preview	preferences	fi	Editori ja esikatselu
+editor only	preferences	fi	Vain editori
 enable	preferences	fi	Ota käyttöön
-enable drag and drop functionality (experimental)	preferences	fi	Drag & Drop
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fi	Ota käyttöön / pois käytöstä 'drag and drop' toiminto kaikissa sovelluksissa. Jos selain ei tue toimintoa, se otetaan pois käytöstä automaattisesti.
+enable/disable menubar from top of the editor.	preferences	fi	Ota käyttöön tai poista käytöstä valikkopalkki editorin yläosasta.
+enabled features in toolbar	preferences	fi	Työkalurivillä käytössä olevat ominaisuudet
 enter code to authenticate the actions below	preferences	fi	Syötä koodi alla olevien toimintojen todentamiseksi
 enter code to verify correct setup	preferences	fi	Syötä koodi oikeiden asetusten tarkistamiseksi
 enter your new password	preferences	fi	Anna uusi salasana
@@ -57,7 +63,6 @@ how do you like to display accounts	preferences	fi	Käyttäjätilien esitystapa
 how do you like to select accounts	preferences	fi	Käyttäjätilien valinta
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fi	Jos olet samalla aikavyöhykkeellä kuin palvelin, valitse 0 tuntia, muuten valitse oikea aikavyöhyke.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fi	Navigointipalkin kuvakkeiden maksimimäärä. Loput kuvakkeet näytetään navigointipalkin oikeasta reunasta avautuvasta pudotusvalikosta.
-how many toolbar buttons are available	preferences	fi	Työkalujen määrä
 how should egroupware display dates for you.	preferences	fi	Näytettävän päiväyksen muoto
 how to update lists	preferences	fi	Luetteloiden päivittäminen
 icon	preferences	fi	Kuvake
@@ -73,6 +78,7 @@ language	preferences	fi	Kieli
 limit following groups to only create application passwords via templates	preferences	fi	Nämä ryhmät rajoittavat vain sovellusten salasanojen luomista mallien avulla.
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	fi	SingleSignOnin kautta kirjautuminen ei anna salasanaa, joka välitetään sähköposti- tai tiedostopalvelimille.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	fi	Tekee vasemmalla olevasta sivupalkista vierityspainikkeella varustetun sivupalkin vieritettäväksi ylös/alas (hyödyllinen tablettien käyttäjille).
+markdown view	preferences	fi	Markdown-näkymä
 max matches per page	preferences	fi	Osumien maksimimäärä sivulla
 max number of icons in navbar	preferences	fi	Kuvakkeiden maksimimäärä navigaatiopalkissa
 no default	preferences	fi	Ei oletusta
@@ -81,6 +87,7 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fi	Huom! Tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 number format	preferences	fi	Numeroiden muoto
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fi	Vanha ja uusi salasana ovat samanlaiset. Valitse uusi salasana.
+open application tabs	preferences	fi	Avoimet sovellusvälilehdet
 open popups in	preferences	fi	Avaa ponnahdusikkunat
 p: paragraph	preferences	fi	p: Paragraph
 password changed	preferences	fi	Salasana vaihdettu!
@@ -117,6 +124,7 @@ show_more_apps	common	fi	Näytä lisää sovelluksia
 singlesignon and passwords	preferences	fi	SingleSignOn ja salasanat
 spellchecker language	addressbook	fi	Oikolukuohjelman kieli
 store password retrievable for singlesignon	common	fi	Tallenna salasana, joka voidaan hakea SingleSignOn-järjestelmää varten.
+text editor settings	preferences	fi	Tekstieditorin asetukset
 text only	preferences	fi	Vain teksti
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu näyttää kaikki käytettävissä olevat käyttäjät (saattaa hidastaa järjestelmää, jos käyttäjiä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
@@ -135,8 +143,9 @@ what to display for an avatar, if there is no photo	preferences	fi	Mitä näytet
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fi	Näytä Etusivu ja Poistu -kuvakkeet yläpalkissa.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Valitse merkistökoodaus CSV tuontiin ja vientiin.
 which currency symbol or name should be used in egroupware.	preferences	fi	Rahayksikkö: symboli tai nimi.
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	fi	Missä näkymässä Markdown-yhteensopivat tekstikentät avautuvat. Kentän näkymän vaihtaminen päivittää tämän asetuksen.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
-you do not have permission to set acl's in this mode!	preferences	fi	Et voi määritellä käyttöoikeuksia tässä tilassa!
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	fi	Voit valita työkalurivillä käytössä olevat ominaisuudet.
 you must enter a password	preferences	fi	Anna salasana
 your preferences	preferences	fi	Henkilökohtaiset asetukset

@@ -93,6 +93,7 @@ all users	admin	fi	Kaikki käyttäjät
 allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	fi	Salli käyttäjän tallentaa salasanansa SingleSignOnin 'Security & Passwords' -kohdassa.
 allow user to set 'remember me' token	admin	fi	Salli käyttäjän asettaa ‘Muista minut’ -merkki.
+allowed just as second factor	admin	fi	Sallittu vain toisena tunnistautumistapana
 alternate email address	admin	fi	Vaihtoehtoinen sähköpostiosoite
 anonymous user	admin	fi	Anonyymi käyttäjä
 anonymous user (not shown in list sessions)	admin	fi	Anonyymi käyttäjä (ei näytetä kirjautuneiden luettelossa).
@@ -152,7 +153,6 @@ category list	admin	fi	Kategorialuettelo
 category saved.	admin	fi	Kategoria tallennettu.
 certificate	admin	fi	Varmenne
 certificate details	admin	fi	Varmenteen tiedot
-certificate validation in days	admin	fi	Varmenteen validointi päivinä
 change access	admin	fi	Muuta käyttöoikeuksia
 change account_id	admin	fi	Vaihda account_ID
 change acl rights	admin	fi	Muuta ACL -oikeuksia
@@ -247,12 +247,16 @@ deny all users access to grant other users access to their entries ?	admin	fi	Es
 deny all users access to preferences ?	admin	fi	Estetäänkö kaikilta käyttäjiltä pääsy asetuksiin
 description can not exceed 255 characters in length !	admin	fi	Kuvaus ei voi ylittää 255 merkkiä!
 determines the order the fields are displayed	admin	fi	Määrittelee järjestyksen, jossa kentät näytetään
+direct login without password or second factor	admin	fi	Suora kirjautuminen ilman salasanaa tai toista tunnistautumistapaa
 disable	admin	fi	Ota pois käytöstä
 disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen täyttö" ei käytössä
+disable certificate validation	admin	fi	Poista varmenteen vahvistus käytöstä
+disable pgp encryption (mailvelope)	admin	fi	Poista PGP-salaus käytöstä (Mailvelope)
+disabled	admin	fi	Pois käytöstä
 disabled (not recomended)	admin	fi	Ei käytössä (ei suositella)
+disabled, do not show on login page	admin	fi	Pois käytöstä, älä näytä kirjautumissivulla
 display	admin	fi	Näytä
 displayed length of input field (set rows=1 to limit length)	admin	fi	Näytetty syöttökentän pituus (rajoittaa pituutta asettamalla rivit=1)
-displaying html messages is disabled	admin	fi	HTML viestien näyttäminen on estetty
 do not delete the category and return back to the list	admin	fi	Kategoriaa EI poisteta ja palataan luetteloon
 document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
 domainname	admin	fi	Verkkotunnus
@@ -594,6 +598,7 @@ scheduled	admin	fi	Ajastettu toiminto
 search categories	admin	fi	Etsi kategoroita
 search groups	admin	fi	Etsi ryhmiä
 search peer servers	admin	fi	Etsi rinnakkaispalvelimia
+secret deleted, two factor authentication disabled.	admin	fi	Salasana poistettu, kaksivaiheinen tunnistautuminen pois käytöstä.
 security	admin	fi	Tietoturva
 select accounts for which the custom field should be readonly	admin	fi	Valitse tilit, joille mukautetun kentän on oltava lukukiellossa
 select accounts for which the custom field should be visible	admin	fi	Valitse käyttäjät joille lisäkenttien tulisi olla näkyvillä.
@@ -644,7 +649,6 @@ sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on
 sorry, the above users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1.
 sorry, the follow users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1.
 sort the entries	admin	fi	Lajittele kohteet
-ssl	admin	fi	SSL
 standard	admin	fi	Vakio
 standard imap server	admin	fi	Vakio IMAP -palvelin
 standard smtp-server	admin	fi	Vakio SMTP -palvelin

@@ -360,7 +360,6 @@ sorry, that group name has already been taken.	admin	hr	Nažalost, to ime grupe 
 sorry, the above users are still a member of the group %1	admin	hr	Nažalost, gornji korisnici su još uvijek pripadnici grupe %1
 sorry, the follow users are still a member of the group %1	admin	hr	Nažalost, slijedeći korisnici su još uvijek pripadnici grupe %1
 sort the entries	admin	hr	Rasporedi zapise
-ssl	admin	hr	ssl
 standard	admin	hr	Standard
 standard imap server	admin	hr	Standard IMAP server
 standard smtp-server	admin	hr	Standard SMTP server

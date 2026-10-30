@@ -1,4 +1,5 @@
 %1 attachments	mail	sl	%1 priloge
+%1 attachments downloaded	mail	sl	Preneseno je bilo %1 prilog.
 %1 for all users	mail	sl	%1 za vse uporabnike
 %1 has been added to blacklisted email addresses	mail	sl	%1 je bilo dodanih na črno listirane e-poštne naslove
 %1 has been added to whiltelisted email addresses	mail	sl	%1 je bil dodan na podrejene e-poštne naslove
@@ -11,7 +12,9 @@
 (leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
 (no subject)	mail	sl	(brez zadeve)
 (not connected)	mail	sl	(brez povezave)
+account	mail	sl	Račun
 account editable by user	mail	sl	Račun, ki ga lahko uredi uporabnik
+account not reachable	mail	sl	Račun ni dosegljiv.
 acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
 acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene
 activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
@@ -26,6 +29,7 @@ add files as %1	mail	sl	Dodajte datoteke kot %1
 add folder	mail	sl	Dodaj mapo
 add raw message, ignore mail attachments	mail	sl	Pretvori pošto v element, dodaj neobdelano sporočilo (ne upoštevaj priponk)
 add this certificate into contact	mail	sl	Dodajte to potrdilo v stik
+add this key into contact	mail	sl	Dodaj ta ključ v stik
 add to addressbook	mail	sl	Dodaj v adresar
 adding %1 to blacklisted email addresses failed because of %2	mail	sl	Dodajanje %1 na e-poštne naslove, ki so na seznamu, ni uspelo zaradi %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sl	Dodajanje %1 v privzete e-poštne naslove ni uspelo zaradi %2
@@ -78,6 +82,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	sl	Zavedajte se, da bodo vse priloge poslane v načinu %1!
 before reply, visible during compose	mail	sl	Pred odgovorom, ki je viden med sestavljanjem
 blacklisted mails are marked as spam	mail	sl	Črna pošta je označena kot vsiljena pošta
+blue	mail	sl	Modra
 but check shared folders	mail	sl	vendar preverite mape v skupni rabi
 by date	mail	sl	Po datumu
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sl	Privzeto se "http://" nadomesti z "https://". Lahko konfigurirate 'https://proxy.egroupware.org/' tudi za nalaganje slik, ki so na voljo samo prek protokola http.
@@ -86,6 +91,7 @@ can not open imap connection	mail	sl	Povezave IMAP ni mogoče odpreti
 can not resolve the winmail.dat attachment!	mail	sl	V priponki winmail.dat ni mogoče rešiti!
 canceled deletion due to user interaction	mail	sl	preklican izbris zaradi interakcije uporabnika
 certificate details	mail	sl	Podrobnosti o certifikatu
+certificate does not match the stored private key!	mail	sl	Potrdilo se ne ujema s shranjenim zasebnim ključem!
 certificate imported.	mail	sl	Potrdilo je uvoženo.
 certificate in text	mail	sl	Potrdilo v besedilu
 certificate info for email %1	mail	sl	Podatki o certifikatu za e-poštni naslov %1
@@ -111,6 +117,7 @@ confirm	mail	sl	Potrdi
 confirm attach message	mail	sl	Potrdite sporočilo o prijavi
 confirm move to folder	mail	sl	Potrdite premik v mapo
 connect to profile %1	mail	sl	Povežite se z profilom% 1
+connection could not be established, use the wizard to check why!	mail	sl	Povezave ni bilo mogoče vzpostaviti, s pomočjo čarovnika preverite, zakaj!
 connection status	mail	sl	Stanje povezave
 contact label	mail	sl	Oznaka za stike
 contains	mail	sl	Vsebuje
@@ -122,8 +129,10 @@ convert only mail to item (ignore possible attachments)	mail	sl	Pretvorite samo 
 copied %1 message(s) from %2 to %3	mail	sl	Kopirali %1 sporočil od %2 do %3.
 copy to	mail	sl	Kopiraj v
 could not append message:	mail	sl	Ni bilo mogoče dodati sporočila:
+could not download %1	mail	sl	%1 ni bilo mogoče prenesti.
 could not save the acl because some names are empty	mail	sl	ACL ni bilo mogoče shraniti, ker so nekatera imena prazna
 create new account	mail	sl	Ustvariti nov račun
+create private key and export csr	mail	sl	Ustvari zasebni ključ in izvozi CSR
 create self-signed certificate	mail	sl	Ustvari samopodpisani certifikat
 cross account forward attachment is not allowed!	mail	sl	Priključitev naprej med računi ni dovoljena!
 current folder	mail	sl	trenutna mapa
@@ -185,6 +194,7 @@ don't use draft folder	mail	sl	Ne uporabljaj mape Osnutki
 don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
 don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
 don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
+download all attachments	mail	sl	Prenesi vse priloge
 download attachments	mail	sl	Prenesite priloge
 draft	mail	sl	Osnutek
 draft folder	mail	sl	Mapa Osnutki
@@ -274,6 +284,7 @@ general	admin	sl	Splošno
 general settings	mail	sl	Splošne nastavitve
 get acl rights failed from imap server!	mail	sl	Pridobite ACL pravice iz strežnika IMAP!
 greater than	mail	sl	Večje kakor
+green	mail	sl	Zelena
 ham folder	mail	sl	Ham mapa
 handling of external http images / mixed content in mails	mail	sl	Ravnanje z zunanjimi slikami http / mešano vsebino v e-poštnih sporočilih
 header	mail	sl	Glava
@@ -332,6 +343,7 @@ junk	mail	sl	Smeti
 junk folder	mail	sl	Neželena mapa
 keep a copy	mail	sl	Ohrani kopijo
 keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
+key fingerprint	mail	sl	Prstni odtis ključa
 kilobytes	mail	sl	Kilobajtov
 last used signature	mail	sl	Zadnji uporabljeni podpis
 later	mail	sl	Pozneje
@@ -403,7 +415,9 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	sl	Brez mapo
 no message body supplied	mail	sl	Telo sporočila ni priloženo
 no plain text part found	mail	sl	Ni najdenega čistega besedila
+no private key stored to import a certificate for!	mail	sl	Ni shranjenega zasebnega ključa, za katerega bi lahko uvozili certifikat!
 no recipient address given!	mail	sl	Ni nobenega nsalove prejemnika!
+no s/mime private key stored for this account.	mail	sl	Za ta račun ni shranjen noben zasebni ključ S/MIME.
 no send folder set in preferences	mail	sl	Ne pošljite mape nastavljene v nastavitvah
 no signature	mail	sl	brez podpisa
 no sneak preview in list	mail	sl	Na seznamu ni predogleda
@@ -417,6 +431,7 @@ none, create all	mail	sl	Prazno, ustvari vse
 nothing to change.	mail	sl	Brez sprememb.
 notify about new mail in this folders	mail	sl	V teh mapah obvestite o novi pošti
 notify when new mails arrive in these folders	mail	sl	obvestite, kdaj v te mape pride nova pošta
+offer to add sender's s/mime certificate or pgp key to contact	mail	sl	Ponudba za dodajanje S/MIME-certifikata ali PGP-ključa pošiljatelja v stik
 on	mail	sl	Vključeno
 on behalf of	mail	sl	V imenu
 on vacation	mail	sl	Na dopustu
@@ -433,14 +448,18 @@ only store message in inbox, do not send vacation notice	mail	sl	Sporočilo shra
 open in html mode	mail	sl	Odpri v načinu HTML
 open in text mode	mail	sl	Odpri v besedilnem načinu
 open with collabora office	mail	sl	Odpiranje s programom Collabora Online
+orange	mail	sl	Oranžna
 organisation	admin	sl	Organizacija
 organization	mail	sl	Organizacija
 organization | real name email	mail	sl	Organizacija | Resnično ime [E-pošta]
 original message	mail	sl	Izvirno sporočilo
 outbox	mail	sl	V pošiljanju
+passphrase, if private key is protected	mail	sl	Geslo, če je zasebni ključ zaščiten
 password protect	mail	sl	zaščita z geslom
 permission denied	mail	sl	Dostop zavrnjen
 personal signature	mail	sl	Osebni podpis
+pgp key info for email %1	mail	sl	Podatki o PGP-ključu za e-pošto %1
+pgp/mime signed message, no public key found to verify the signature	mail	sl	Sporočilo, podpisano s PGP/S/MIME, ni bilo najdeno javnega ključa za preverjanje podpisa
 please configure access to an existing individual imap account.	mail	sl	Nastavite dostop do obstoječega računa IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sl	Konfigurirajte svoj S/MIME potrdilo na kartici Šifriranje, ki se nahaja v pogovornem oknu Urejanje računa.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sl	Obrnite se na skrbnika, da potrdite, ali vaš strežnik podpira filtre za strežnike in kako jih omogočite v programu EGroupware za vaš aktivni račun (%1) z ID: %2.
@@ -460,8 +479,11 @@ preview pane	mail	sl	Postavitev okna
 primary profile	mail	sl	Osnovni profil
 printing	mail	sl	Tiskanje
 printview	mail	sl	Predogled tiskanja
+private key created, downloading csr...	mail	sl	Zasebni ključ je ustvarjen, prenašanje CSR-ja ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	sl	Obdelava datoteke %1 ni uspela. Ni bilo mogoče zadostiti osnovnim omejitvam.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sl	Podajte privzeto besedilo za počitnice (uporablja se za nova sporočila za počitnice, če predhodno ni bilo sporočila)
+public key	mail	sl	Javni ključ
+purple	mail	sl	Vijolična
 push notifications	mail	sl	Potisna obvestila
 quicksearch	mail	sl	Hitro iskanje
 quicksearch (with cc)	mail	sl	Hitro iskanje (+ kopiranje)
@@ -477,6 +499,7 @@ real name organization email	mail	sl	Resnično ime Organizacija [Email]
 reason!	mail	sl	razlog!
 receive notification	mail	sl	Sprejmi obvestilo
 recursively	mail	sl	Rekurzivno
+red	mail	sl	Rdeča
 refresh time in minutes	mail	sl	Osvežitveni čas v minutah
 refused to delete folder inbox	mail	sl	zavrnil brisanje mape INBOX
 refused to delete folder with subfolders	mail	sl	zavrnil brisanje mape s podmapami
@@ -647,6 +670,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sl	Pošiljatelj sporočila je zahteval potrdilo, da ste sporočilo prebrali. Želite poslati obvestilo o tem?
 the mimeparser can not parse this message.	mail	sl	MIME parser ne more prebrati tega sporočila.
 the rule with priority %1 successfully saved!	mail	sl	Pravilo s prednostjo %1 je uspešno shranjeno!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	sl	S/MIME-potrdilo, shranjeno v imeniku za %1, se ne ujema s potrdilom vašega računa – preverite, ali v imeniku obstajajo podvojeni vnosi za ta naslov.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	sl	Skupna velikost prilog presega omejitev %1 MB. Preusmerjeno na povezavo za prenos.
 then	mail	sl	THEN
 there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
@@ -693,6 +717,7 @@ what do do with html email	mail	sl	Kaj storiti s HTML e-pošto
 what order the list columns are in	mail	sl	Kakšen je vrstni red stolpcev v seznamu
 what to do when you delete a message	mail	sl	Kaj storiti, ko izbrišete sporočilo.
 what to do when you send a message	mail	sl	Kaj storiti, ko pošljete sporočilo.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	sl	Ko podpisano sporočilo razkrije certifikat/ključ, ki za tega pošiljatelja še ni shranjen, vprašajte, ali ga želite dodati – preverjen podpis od že znanega stika se vedno doda samodejno brez vprašanja
 when deleting messages	mail	sl	Ob brisanju sporočil
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	sl	Pri prikazu sporočil v pojavnem okencu ponovno uporabite isti pojavni okni ali za vsako sporočilo odpirajte novo pojavno okno
 when saving messages as item of a different app	mail	sl	Pri shranjevanju sporočil kot elementa druge aplikacije.
@@ -713,6 +738,7 @@ yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
 you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $$end$$ lahko uporabite $$start$$ za končni datum.
 you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.
+you may add this key into your contact, if you trust this signature.	mail	sl	Ta ključ lahko dodate v svoj stik, če zaupate temu podpisu.
 you need to enter your s/mime passphrase to send this message.	mail	sl	Za pošiljanje tega sporočila morate vnesti geslo za S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sl	Morate namestiti vtičnik Mailvelope, ki je na voljo za Chrome in Firefox iz %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	sl	Najprej morate shraniti sporočilo kot osnutek, da ga lahko shranite v VFS

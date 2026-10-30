@@ -1,27 +1,44 @@
 %1 - preferences	preferences	et	%1 - Eelistused
+access token revoked.	preferences	et	Juurdepääsutoken tühistatud.
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	et	Aktiveeri, et avatud vahekaartidel kuvataks värvikamad rakenduse ikoonid. Kui valik on märkimata, kuvatakse ikoonid vaikimisi heledamates värvides.
+allows to set a default or force the active application tab for new logins.	preferences	et	Võimaldab määrata vaikimisi või sundida aktiivse rakenduse vahekaarti uute sisselogimiste korral.
+allows to set a default or force the open application tabs.	preferences	et	Võimaldab määrata vaikimisi või sundida avatud rakenduste vahelehti.
+app chooser icons	preferences	et	Rakenduste valiku ikoonid
+app chooser icons + text	preferences	et	Rakenduste valiku ikoonid + tekst
 applications list scroll area	preferences	et	Külgmise menüü kerimisnuppu
 are you sure you want to delete this category ?	preferences	et	Oled kindel, et tahad kustutada kategooriat ?
 are you sure?	preferences	et	Oled sa kindel?
+close after selection	preferences	et	Sulge pärast valikut
 code is invalid	preferences	et	Kood on kehtetu
 code is required	preferences	et	Kood on nõutav
 color	preferences	et	Värv
 country	preferences	et	Riik
+current password	preferences	et	Praegune parool
+custom login box color, defaults to above color darkened	preferences	et	Sisselogimiskasti kohandatud värv, vaikimisi on see eespool näidatud värvi tumedam versioon
 custom login box text color, defaults to white	preferences	et	Sisselogimisvälja teksti värvi saab ise määrata, vaikimisi on see valge
+custom sidebar menu active color, defaults to above color darkened	preferences	et	Külgriba menüü aktiivse värvi kohandamine, vaikimisi on see eespool näidatud värvi tumedam versioon
 dark mode theme	preferences	et	Tumedas režiimis teema
 default	preferences	et	vaikimisi
 default preferences	preferences	et	Vaikimisi eelistused
 delete categories	preferences	et	Kustuta kategooriad
 deny following groups access to application passwords	preferences	et	Keelata järgmiste rühmade juurdepääs rakenduste paroolidele
+deny following groups access to edit categories	admin	et	Keela järgmistel rühmadel juurdepääs kategooriate muutmisele
 deny following groups access to preferences	admin	et	Keelata järgmiste rühmade juurdepääs eelistustele
 disable	preferences	et	Keela
+disable two factor auth	preferences	et	Lülita kahefaktoriline autentimine välja
+editor and preview	preferences	et	Redaktor ja eelvaade
+editor only	preferences	et	Ainult redaktor
 enable	preferences	et	luba
+enable/disable menubar from top of the editor.	preferences	et	Lülita redaktori ülaosas asuv menüüriba sisse või välja.
 enter code to authenticate the actions below	preferences	et	Sisestage kood allpool toodud tegevuste autentimiseks
 enter code to verify correct setup	preferences	et	Sisestage kood korrektse seadistuse kontrollimiseks
 enter your new password	preferences	et	Sisesta uus parool
 enter your old password	preferences	et	Sisesta vana parool
+failed to delete secret!	preferences	et	Salasõna kustutamine ebaõnnestus!
+failed to store secret!	preferences	et	Salasõna salvestamine ebaõnnestus!
 fast	preferences	et	Kiire
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	et	Kiire uuendamine lisab uued kirjed alati nimekirja ülaosas ja uuendab olemasolevad nimekirjad kohapeal, välja arvatud juhul, kui nimekiri on sorteeritud viimase muudatuse järgi. Täpne värskendamine teeb täieliku värskenduse, kui nimekiri ei ole sorteeritud viimase muudatuse järgi.
+features of the editor	preferences	et	Redaktori funktsioonid
 forced preferences	preferences	et	Sunnitud eelistused
 generate new qrcode to disable existing one, after enabling the new one!	preferences	et	Loo uus QR-kood, et keelata olemasolev QR-kood (pärast uue koodi lubamist)
 help off	preferences	et	Lülita abi välja
@@ -38,23 +55,28 @@ language	preferences	et	Keel
 limit following groups to only create application passwords via templates	preferences	et	Need rühmad piiravad ainult rakenduste paroolide loomist mallide kaudu
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	et	SingleSignOn kaudu sisselogimine ei anna parooli edasi posti- või failiserverile.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	et	Teeb vasakpoolse küljeriba koos kerimisnupuga üles/alla keritavaks (kasulik tahvelarvutite kasutajatele).
+markdown view	preferences	et	Markdown-vaade
 no default	preferences	et	Mitte vaikimisi
 old password and new password are the same. this is invalid. you must enter a new password	preferences	et	Vana parool ja uus parool on samad. Peate sisestama uue parooli!
+open application tabs	preferences	et	Avatud rakenduste vahelehed
 open popups in	preferences	et	Ava hüpikaknad
 password stored	preferences	et	Salasõna salvestatakse.
 popup window	preferences	et	Hüpikaknas
 preferences saved.	preferences	et	Eelistused salvestatud.
+preview only	preferences	et	Ainult eelvaade
 re-enter your password	preferences	et	Sisesta parool uuesti
 reset qrcode	preferences	et	QR-koodi lähtestamine
 same window	preferences	et	Peaknas
 scan qrcode with a time-based one-time password (totp) app:	preferences	et	Skaneeri QR-koodi TOTP (Time-based one-time password) rakendusega:
 set content size	preferences	et	Sisu suuruse määramine
 show app icons in there app color	preferences	et	Näita rakenduse ikoone rakenduse värvides
+show links between egroupware aps as	common	et	Rakenduste ikoonid ja lingid
 show qrcode	preferences	et	Näita QR-koodi
 show qrcode to enable on an additional device.	preferences	et	Kuvab QR-koodi uuesti, et seadistada see teistes seadmetes
 show_more_apps	common	et	Näita rohkem programme
 singlesignon and passwords	preferences	et	SingleSignOn ja paroolid
 store password retrievable for singlesignon	common	et	SingleSignOni jaoks taastatav salasõna salvestamine
+text editor settings	preferences	et	Tekstiredaktori seaded
 text only	preferences	et	Ainult tekst
 the old password is not correct	preferences	et	Vana parool pole õige
 the two passwords are not the same	preferences	et	Kaks parooli pole identsed
@@ -65,5 +87,8 @@ use first %1 letters from username	preferences	et	Kasuta kasutajanime esimesi %1
 use initials from first and last name	preferences	et	Kasuta ees- ja perekonnanime algustähti
 used instead of the application color.	preferences	et	Kasutatakse rakenduse värvi asemel.
 what to display for an avatar, if there is no photo	preferences	et	Mida kuvada avatariks, kui puudub foto.
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	et	Millises vaates avatakse Markdown-tugi toetavad tekstiväljad. Välja vaate vahetamine uuendab seda seadet.
+you can show the linked entries with icons only, icons with app-name or both.	common	et	Näita rakendusi ainult ikoonidega, ikoonidega koos rakenduse nimega või mõlemaga.
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	et	Võid valida, millised funktsioonid tööriistaribal aktiveeritakse.
 you must enter a password	preferences	et	Sa pead sisestama parooli
 your preferences	preferences	et	Teie eelistused

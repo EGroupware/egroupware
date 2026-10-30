@@ -1,9 +1,13 @@
 %1 attachments	mail	tr	%1 ekler
+%1 attachments downloaded	mail	tr	%1 ek indirildi.
 %1 for all users	mail	tr	Tüm kullanıcılar için %1
 %1 is not writable by you!	mail	tr	%1 sizin tarafınızdan yazılabilir DEĞİLDİR!
 %1 mails selected	mail	tr	%1 e-posta seçildi
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	tr	%1 için %2 Sieve uzantısı gerekiyor, belki %1 veya daha yüksek gün sayısını deneyebilirsiniz.
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
+account	mail	tr	Hesap
+account editable by user	mail	tr	Kullanıcı tarafından düzenlenebilir hesap
+account not reachable	mail	tr	Hesaba erişilemiyor.
 acl rights retrieve failed, seems there are no rights set!	mail	tr	ACL hakları geri alma başarısız oldu, ayarlanmış hak yok gibi görünüyor!
 activating by date requires a start- and end-date!	mail	tr	Tarihe göre etkinleştirme için başlangıç VE bitiş tarihi gerekir!
 add all my aliases	mail	tr	Tüm takma adlarımı ekle
@@ -11,6 +15,7 @@ add as new	mail	tr	Yeni olarak ekle
 add files as %1	mail	tr	Dosyaları %1 olarak ekle
 add raw message, ignore mail attachments	mail	tr	Postayı öğeye dönüştürün, ham mesaj ekleyin (posta eklerini yok sayın)
 add this certificate into contact	mail	tr	Bu sertifikayı iletişime ekleyin
+add this key into contact	mail	tr	Bu anahtarı kişilere ekle
 adding %1 to blacklisted email addresses failed because of %2	mail	tr	Kara listedeki e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
 adding %1 to whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
 after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
@@ -21,6 +26,7 @@ allow users to create further identities	mail	tr	Kullanıcıların yeni kimlikle
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	tr	Bir kullanıcının klasörleri ve postaları okumasına, yazmasına ve oluşturmasına, bunlara mesaj göndermesine, bunlara mesaj eklemesine ve mesajları silmesine izin verir
 always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
+an error happend while trying to remove acl rights from the account %1!	mail	tr	%1 hesabından ACL haklarını kaldırmaya çalışırken bir hata oluştu!
 answered	mail	tr	Cevaplandı
 archive folder	mail	tr	Arşiv Klasörü
 are you sure you want to delete all selected folders?	mail	tr	Seçili tüm klasörleri silmek istediğinizden emin misiniz?
@@ -29,12 +35,15 @@ attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluştu
 attach vcard	mail	tr	vCard ekle
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
 attachments, ...	mail	tr	ekler, ...
+available personal email-accounts/profiles	mail	tr	kullanılabilir kişisel e-posta hesapları/profilleri
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın.\nDevam etmek ister misiniz?
 be aware that all attachments will be sent as %1!	mail	tr	Tüm eklerin %1 olarak gönderileceğini unutmayın!
+blue	mail	tr	Mavi
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
 caching of flags	mail	tr	Bayrakların önbelleğe alınması
 can not resolve the winmail.dat attachment!	mail	tr	winmail.dat eki çözümlenemiyor!
 certificate details	mail	tr	Sertifika Detayları
+certificate does not match the stored private key!	mail	tr	Sertifika, kayıtlı özel anahtarla eşleşmiyor!
 certificate imported.	mail	tr	Sertifika içe aktarıldı.
 certificate in text	mail	tr	Metin içinde sertifika
 certificate info for email %1	mail	tr	E-posta %1 için sertifika bilgisi
@@ -46,12 +55,17 @@ check to save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak olu�
 check to save as tracker entry on send	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
 checking admin credentials failed	mail	tr	Yönetici kimlik bilgilerinin denetlenmesi başarısız oldu
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
+connection could not be established, use the wizard to check why!	mail	tr	Bağlantı kurulamadı; nedenini öğrenmek için sihirbazı kullanın!
 contact label	mail	tr	İletişim etiketi
 continue	mail	tr	Devam et
 convert mail to item and attach its attachments to this item (standard)	mail	tr	E-postayı öğeye dönüştürme ve eklerini bu öğeye ekleme (standart)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	tr	E-postayı öğeye dönüştürün, eklerini ekleyin ve ham mesajı (.eml) ek olarak ekleyin
 convert only mail to item (ignore possible attachments)	mail	tr	Yalnızca e-postayı öğeye dönüştürün (olası ekleri göz ardı edin)
 copied %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ı %2'den %3'e kopyalandı.
+could not decrypt stored private key, wrong passphrase?	mail	tr	Kaydedilmiş özel anahtarın şifresi çözülemedi, şifre yanlış mı?
+could not download %1	mail	tr	%1 indirilemedi.
+create new account	mail	tr	Yeni hesap oluştur
+create private key and export csr	mail	tr	Özel anahtar oluştur ve CSR'yi dışa aktar
 create self-signed certificate	mail	tr	Kendi kendine imzalanmış sertifika oluştur
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
@@ -66,17 +80,21 @@ deleted	mail	tr	Silindi
 deleted %1 messages in %2	mail	tr	%2 içinde %1 mesaj silindi.
 disable	mail	tr	Engelle
 disable caching of flags	mail	tr	Bayrakların önbelleğe alınmasını devre dışı bırak
+do you really want to remove all rights from this account?	mail	tr	Bu hesaptaki tüm hakları gerçekten kaldırmak istiyor musunuz?
 do you really want to toggle flag %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you really want to toggle label %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	tr	Seçili mesajları başka bir klasöre taşımadan önce sizden onay istenmesini istiyor musunuz?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	tr	E-postalar geldiğinde diğer e-posta adreslerine e-posta ile bildirim düzenlenmesini/kurulumunu engellemek istiyor musunuz( Sieve etkin olsa bile)?
 don't use draft folder	mail	tr	Taslak klasörünü kullanma
+download all attachments	mail	tr	Tüm ekleri indir
+download attachments	mail	tr	Ekleri indir
 draft	mail	tr	Taslak
 draft folder	mail	tr	Taslak Klasörü
 drafts	mail	tr	Taslaklar
 drafts folder	mail	tr	Taslaklar Klasörü
 edit account	mail	tr	Hesap düzenle
+edit account ...	mail	tr	Hesabı düzenle ...
 email address	mail	tr	E-posta adresi
 email notification update failed! you need to set an email address!	mail	tr	E-posta bildirimi güncellemesi başarısız oldu! Bir e-posta adresi belirlemeniz gerekiyor!
 emailaddress	admin	tr	E-posta adresi
@@ -109,6 +127,7 @@ folder %1 has been created successfully, although the subscription failed becaus
 forward to	mail	tr	İleriye doğru
 from	mail	tr	Nereden
 get acl rights failed from imap server!	mail	tr	IMAP sunucusundan ACL haklarını alma başarısız oldu!
+green	mail	tr	Yeşil
 ham folder	mail	tr	Ham klasörü
 handling of external http images / mixed content in mails	mail	tr	E-postalarda harici http görüntülerinin / karışık içeriğin işlenmesi
 header	mail	tr	Başlık
@@ -145,6 +164,7 @@ junk	mail	tr	Hurda
 junk folder	mail	tr	Önemsiz klasör
 keep a copy	mail	tr	Bir kopyasını saklayın
 keep a copy of the message in your inbox	mail	tr	Mesajın bir kopyasını gelen kutunuzda saklayın
+key fingerprint	mail	tr	Anahtar parmak izi
 kilobytes	mail	tr	kilobayt
 last used signature	mail	tr	En son kullanılan imza
 later	mail	tr	Daha sonra
@@ -178,6 +198,7 @@ move selected to	mail	tr	Seçileni şuraya taşı
 move to	mail	tr	Şuraya git
 move to archive	mail	tr	Arşiv klasörüne taşı
 moved %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ını %2'den %3'e taşıdı.
+moving folders from one mailaccount to another is not supported	mail	tr	Klasörlerin bir e-posta hesabından diğerine taşınması desteklenmemektedir.
 name and domain	mail	tr	İsim ve alan adı
 name of account	mail	tr	Hesap adı
 name of header, only letters, numbers and dash (-) allowed	mail	tr	Başlık adı, yalnızca harfler, rakamlar ve tire (-) kullanılabilir.
@@ -192,21 +213,28 @@ no access	mail	tr	Erişim yok
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	tr	TO/CC/BCC adresi verilmedi ve mesajın kaydedileceği bir klasör belirtilmedi.
 no adress, to send this mail to, supplied	mail	tr	Bu e-postanın gönderileceği bir adres belirtilmedi
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	tr	Klasör hedefi sağlanmadı ve mesajı kaydetmek için bir klasör veya postayı saklamak için başka bir önlem (InfoLog/Ticketsystem'e kaydet) sağlanmadı, ancak gerekli.
+no private key stored to import a certificate for!	mail	tr	Sertifikayı içe aktarmak için kaydedilmiş özel anahtar yok!
+no s/mime private key stored for this account.	mail	tr	Bu hesap için kaydedilmiş S/MIME özel anahtarı yok.
 no sneak preview in list	mail	tr	Mesaj önizlemesi yok
 non	mail	tr	Olmayan
+offer to add sender's s/mime certificate or pgp key to contact	mail	tr	Gönderenin S/MIME sertifikasını veya PGP anahtarını kişiye eklemeyi öner
 once per day	mail	tr	Günde bir kez
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	tr	Yalnızca parolayı farklı bir kanaldan / bu postanın dışında alıcılara iletirseniz anlamlıdır!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	tr	Sadece kök seviyesindeki sorgularda tüm klasörleri döndürmeyen bazı sunucular için bu seviyedeki tüm klasörleri almak için gereklidir
 open in html mode	mail	tr	HTML modunda açın
 open in text mode	mail	tr	Metin modunda aç
 open with collabora office	mail	tr	Collabora Online ile Açın
+orange	mail	tr	Turuncu
 organisation	admin	tr	Organizasyon
 organization	mail	tr	Organizasyon
 organization | real name email	mail	tr	Organizasyon | Gerçek ad [E-posta]
 original message	mail	tr	Orijinal mesaj
 outbox	mail	tr	Giden Kutusu
+passphrase, if private key is protected	mail	tr	Özel anahtar korunuyorsa şifre
 permission denied	mail	tr	İzin verilmedi
 personal signature	mail	tr	Kişisel imza
+pgp key info for email %1	mail	tr	%1 e-postası için PGP anahtar bilgileri
+pgp/mime signed message, no public key found to verify the signature	mail	tr	PGP / S/MIME ile imzalanmış mesaj; imzayı doğrulamak için herhangi bir açık anahtar bulunamadı
 please configure access to an existing individual imap account.	mail	tr	Lütfen mevcut bir bireysel IMAP hesabına erişimi yapılandırın.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	tr	Lütfen S/MIME sertifikanızı Hesabı Düzenle iletişim kutusunda bulunan Şifreleme sekmesinde yapılandırın.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı filtre kurallarını destekleyip desteklemediğini ve bunları ID: %2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
@@ -219,8 +247,11 @@ post	mail	tr	gönder
 predefined addresses for compose	mail	tr	Compose için önceden tanımlanmış adresler
 preview pane	mail	tr	Pencere düzeni
 printing	mail	tr	Baskı
+private key created, downloading csr...	mail	tr	Özel anahtar oluşturuldu, CSR indiriliyor...
 processing of file %1 failed. failed to meet basic restrictions.	mail	tr	%1 dosyasının işlenmesi başarısız oldu. Temel kısıtlamalar karşılanamadı.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	tr	Varsayılan bir tatil metni sağlayın (daha önce ayarlanmış bir mesaj olmadığında yeni tatil mesajlarında kullanılır)
+public key	mail	tr	Genel anahtar
+purple	mail	tr	Mor
 push notifications	mail	tr	Anlık bildirimler
 quicksearch	mail	tr	Hızlı Arama
 quicksearch (with cc)	mail	tr	Hızlı Arama (+Kopya)
@@ -229,6 +260,8 @@ read / unread	mail	tr	Okundu / Okunmadı
 real name	mail	tr	Gerçek isim
 real name email	mail	tr	Gerçek isim [E-posta]
 real name organization email	mail	tr	Gerçek isim Organizasyon [E-posta]
+red	mail	tr	Kırmızı
+reloaded account %1	mail	tr	%1 hesabı yeniden yüklendi.
 reloaded folder %1	mail	tr	Klasör %1 yeniden yüklendi
 remember the password for	mail	tr	için şifreyi hatırlayın
 remove all	mail	tr	Tümünü kaldırın
@@ -311,6 +344,7 @@ the %1 's acl removed from the %2	mail	tr	%1'in ACL'si %2'den kaldırıldı.
 the %1 's acl, including its subfolders, removed from the %2	mail	tr	Alt klasörleri de dahil olmak üzere %1'in ACL'si %2'den kaldırıldı.
 the imap server need to meet certain requirements and be configured for it:	mail	tr	IMAP sunucusunun belirli gereksinimleri karşılaması VE bunun için yapılandırılmış olması gerekir:
 the rule with priority %1 successfully saved!	mail	tr	Öncelik %1 olan kural başarıyla kaydedildi!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	tr	%1 adresi için adres defterinde saklanan S/MIME sertifikası, hesabınızın kendi sertifikasıyla eşleşmiyor – bu adres için adres defterinde yinelenen girişler olup olmadığını kontrol edin.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	tr	Eklerin toplam boyutu %1 MB sınırını aşıyor. İndirme bağlantısına geçildi.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	tr	Sieve komut dosyasını depolamak için yer kalmadı, lütfen mailserver'ınızın yapılandırmasındaki sieve_maxscriptsize seçeneğini kontrol edin.
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	tr	Bu işlem, seçilen ileti dizilerindeki tüm iletileri etkiler – toplamda %1 ileti. Devam etmek istiyor musunuz?
@@ -323,16 +357,19 @@ trash	mail	tr	Çöp
 trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
+vacation messages with start and end date require an admin account to be set!	mail	tr	Başlangıç ve bitiş tarihi içeren tatil mesajları için bir yönetici hesabı ayarlanması gerekir!
 validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
 validate selected addresses on submit:	mail	tr	Gönderirken seçilen adresleri doğrula:
 view header lines	mail	tr	Başlık satırlarını görüntüle
 what to do when you delete a message	mail	tr	Bir mesajı sildiğinizde ne yapmalısınız?
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	tr	İmzalı bir mesajda, o gönderen için henüz kaydedilmemiş bir sertifika/anahtar ortaya çıktığında, bunu eklemek isteyip istemediğiniz sorulur — zaten bilinen bir kişiden gelen doğrulanmış bir imza, sorulmaksızın her zaman otomatik olarak eklenir
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	tr	Hangi e-posta kimliğiyle (imzasıyla) başlamak istersiniz?\n“Kişisel imza” seçeneğinde her zaman ilk kişisel imza kullanılır.
 write	mail	tr	Yaz
 write & delete	mail	tr	yaz & sil
 yes, offer copy option	mail	tr	Evet, kopyalama seçeneği sun
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.
 you may add this certificate into your contact, if you trust this signature.	mail	tr	Bu imzaya güveniyorsanız, bu sertifikayı kişinize ekleyebilirsiniz.
+you may add this key into your contact, if you trust this signature.	mail	tr	Bu imzaya güveniyorsanız, bu anahtarı kişinize ekleyebilirsiniz.
 you need to enter your s/mime passphrase to send this message.	mail	tr	Bu mesajı göndermek için S/MIME parolanızı girmeniz gerekir.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	tr	Chrome ve Firefox için mevcut olan Mailvelope eklentisini %1'den yüklemeniz gerekir.
 you need to save the message as draft first before to be able to save it into vfs	mail	tr	Mesajı VFS'ye kaydedebilmek için önce taslak olarak kaydetmeniz gerekir

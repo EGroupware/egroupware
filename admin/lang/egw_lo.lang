@@ -423,7 +423,6 @@ sorry, that group name has already been taken.	admin	lo	ຂໍອະໄພ, ຊ�
 sorry, the above users are still a member of the group %1	admin	lo	ຂໍອະໄພ, ຜູ້ໃຊ້ຂ້າງເທີງຍັງເປັນສະມາຊິກຂອງກຸ່ມ %1
 sorry, the follow users are still a member of the group %1	admin	lo	ຂໍອະໄພ, ຜູ້ໃຊ້ຕໍ່ໄປນີ້ຍັງເປັນສະມາຊິກຂອງກຸ່ມ %1
 sort the entries	admin	lo	ການຈັດລຽນລາຍການ
-ssl	admin	lo	ssl
 standard	admin	lo	ມາດຕະຖານ
 standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
 standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້

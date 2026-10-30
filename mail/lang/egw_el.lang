@@ -1,4 +1,5 @@
 %1 attachments	mail	el	%1 συννημένα
+%1 attachments downloaded	mail	el	Λήφθηκαν %1 συνημμένα.
 %1 for all users	mail	el	%1 για όλους τους χρήστες
 %1 has been added to blacklisted email addresses	mail	el	%1 προστέθηκε στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
 %1 has been added to whiltelisted email addresses	mail	el	%1 προστέθηκε στη λευκή λίστα (whitelist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
@@ -10,6 +11,7 @@
 (leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
 (no subject)	mail	el	(χωρίς θέμα)
 (not connected)	mail	el	(χωρίς σύνδεση)
+account	mail	el	Λογαριασμός
 account editable by user	mail	el	ο λογαριασμός είναι επεξεργάσιμος από τον χρήστη
 account not reachable	mail	el	Ο λογαριασμός δεν είναι προσβάσιμος.
 acl rights retrieve failed, seems there are no rights set!	mail	el	Η λήψη των δικαιωμάτων ACL απέτυχε, φαίνεται πως δεν έχουν οριστεί δικαιώματα!
@@ -26,6 +28,7 @@ add files as %1	mail	el	Προσθήκη αρχείων ως %1
 add folder	mail	el	Προσθήκη φακέλου
 add raw message, ignore mail attachments	mail	el	Μετατροπή αλληλογραφίας σε αντικείμενο, προσθήκη ακατέργαστου μηνύματος (αγνοήστε τα συνημμένα της αλληλογραφίας)
 add this certificate into contact	mail	el	Προσθήκη αυτού του πιστοποιητικού στην επαφή
+add this key into contact	mail	el	Προσθήκη αυτού του κλειδιού στην επαφή
 add to addressbook	mail	el	προσθήκη στο βιβλίο διευθύνσεων
 adding %1 to blacklisted email addresses failed because of %2	mail	el	Απέτυχε η προσθήκη "%1" στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου λόγω %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	el	Απέτυχε η προσθήκη "%1" στη λευκή λίστα (whitelist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου λόγω %2
@@ -78,6 +81,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	el	Λάβετε υπόψη σας πως όλα τα συνημμένα θα σταλούν ως %1!
 before reply, visible during compose	mail	el	Πριν από την απάντηση. Θα εμφανίζεται κατά την διάρκεια της σύνταξης του μηνύματος
 blacklisted mails are marked as spam	mail	el	Μηνύματα που βρίσκονται στη μαύρη λίστα μαρκάρονται ως ανεπίκλητα μηνύματα (spam)
+blue	mail	el	Μπλε
 but check shared folders	mail	el	να ελέγχονται όμως οι κοινοί φάκελοι
 by date	mail	el	Βάσει ημερομηνίας
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	el	Από προεπιλογή, το 'http://' αντικαθίσταται απλώς με το 'https://'. Μπορείτε να ρυθμίσετε το 'https://proxy.egroupware.org/' ώστε να φορτώνει επίσης εικόνες που είναι διαθέσιμες μόνο μέσω http.
@@ -86,6 +90,7 @@ can not open imap connection	mail	el	Δεν είναι δυνατή η σύνδ�
 can not resolve the winmail.dat attachment!	mail	el	Αδυναμία λήψης του συνημμένου τύπου winmail.dat!
 canceled deletion due to user interaction	mail	el	Ακυρώθηκε η διαγραφή λόγω παρέμβασης του χρήστη
 certificate details	mail	el	Λεπτομέρειες πιστοποιητικού
+certificate does not match the stored private key!	mail	el	Το πιστοποιητικό δεν ταιριάζει με το αποθηκευμένο ιδιωτικό κλειδί!
 certificate imported.	mail	el	Το πιστοποιητικό εισήχθη.
 certificate in text	mail	el	Πιστοποιητικό σε κείμενο
 certificate info for email %1	mail	el	Πληροφορίες πιστοποιητικού για το μήνυμα %1
@@ -111,6 +116,7 @@ confirm	mail	el	Επιβεβαίωση
 confirm attach message	mail	el	Επιβεβαίωση επισύναψης μηνύματος
 confirm move to folder	mail	el	Επιβεβαίωση μετακίνησης σε φάκελο
 connect to profile %1	mail	el	Σύνδεση στο προφίλ %1
+connection could not be established, use the wizard to check why!	mail	el	Δεν ήταν δυνατή η σύνδεση. Χρησιμοποιήστε τον οδηγό για να διαπιστώσετε το λόγο!
 connection status	mail	el	Κατάσταση σύνδεσης
 contact label	mail	el	Ετικέτα επικοινωνίας
 contains	mail	el	περιέχει
@@ -122,8 +128,11 @@ convert only mail to item (ignore possible attachments)	mail	el	Μετατροπ
 copied %1 message(s) from %2 to %3	mail	el	Το μήνυμα %1 αντιγράφηκε από το %2 στο %3.
 copy to	mail	el	Αντιγραφή στο
 could not append message:	mail	el	Δεν μπόρεσα να προσθέσω το μήνυμα:
+could not decrypt stored private key, wrong passphrase?	mail	el	Δεν ήταν δυνατή η αποκρυπτογράφηση του αποθηκευμένου ιδιωτικού κλειδιού, λάθος φράση πρόσβασης;
+could not download %1	mail	el	Δεν ήταν δυνατή η λήψη του %1.
 could not save the acl because some names are empty	mail	el	Τα δικαιώματα ACL δεν μπόρεσαν να αποθηκευθούν γιατί κάποια όνοματα είναι κενά
 create new account	mail	el	Δημιουργία νέου λογαριασμού
+create private key and export csr	mail	el	Δημιουργία ιδιωτικού κλειδιού και εξαγωγή CSR
 create self-signed certificate	mail	el	Δημιουργία αυτο-υπογεγραμμένου πιστοποιητικού
 cross account forward attachment is not allowed!	mail	el	Δεν επιτρέπεται η εμπροσθοβαρής σύνδεση διασταυρούμενων λογαριασμών!
 current folder	mail	el	Τρέχον φάκελος
@@ -181,6 +190,7 @@ don't use draft folder	mail	el	Μην χρησιμοποιείτε των φάκ
 don't use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντα
 don't use template folder	mail	el	Απενεργοποίηση φακέλου προτύπων
 don't use trash	mail	el	Απενεργοποίηση κάδου απορριμάτων
+download all attachments	mail	el	Λήψη όλων των συνημμένων
 download attachments	mail	el	Λήψη συνημμένων
 draft	mail	el	Σχέδιο
 draft folder	mail	el	Φάκελος για προσχέδια
@@ -267,6 +277,7 @@ general	admin	el	Γενικά
 general settings	mail	el	Γενικές ρυθμίσεις
 get acl rights failed from imap server!	mail	el	Αποτυχία λήψης δικαιωμάτων ACL από το διακομιστή IMAP!
 greater than	mail	el	μεγαλύτερο από
+green	mail	el	Πράσινο
 ham folder	mail	el	Φάκελος Ham
 handling of external http images / mixed content in mails	mail	el	Χειρισμός εξωτερικών εικόνων / μικτού περιεχομένου σε μηνύματα ηλεκτρονικού ταχυδρομείου
 header	mail	el	Κεφαλή
@@ -323,6 +334,7 @@ junk	mail	el	Junk
 junk folder	mail	el	Φάκελος Junk
 keep a copy	mail	el	Διατήρηση αντιγράφου
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
+key fingerprint	mail	el	Δακτυλικό αποτύπωμα κλειδιού
 kilobytes	mail	el	kilobytes
 last used signature	mail	el	Τελευταία υπογραφή που χρησιμοποιήθηκε
 later	mail	el	Αργότερα
@@ -391,6 +403,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	el	δεν υπάρχουν φάκελοι
 no message body supplied	mail	el	δεν δόθηκε κορμός μηνύματος
 no plain text part found	mail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
+no private key stored to import a certificate for!	mail	el	Δεν υπάρχει αποθηκευμένο ιδιωτικό κλειδί για την εισαγωγή πιστοποιητικού!
 no recipient address given!	mail	el	Δεν έχει οριστεί διεύθυνση ηλεκτρονικού ταχυδρομείου για τον παραλήπτη!
 no s/mime private key stored for this account.	mail	el	Δεν έχει αποθηκευτεί ιδιωτικό κλειδί S/MIME για αυτόν τον λογαριασμό.
 no send folder set in preferences	mail	el	Δεν έχει οριστεί φάκελος απεσταλμένων στις ρυθμίσεις
@@ -404,6 +417,7 @@ non	mail	el	Μη
 none, create all	mail	el	κανένα, δημιουργία όλων
 notify about new mail in this folders	mail	el	Να ενημερώνομαι για νέα μηνύματα σε αυτούς τους φακέλους
 notify when new mails arrive in these folders	mail	el	ειδοποίηση όταν φτάνουν νέα μηνύματα ηλεκτρονικού ταχυδρομείου σε αυτούς τους φακέλους
+offer to add sender's s/mime certificate or pgp key to contact	mail	el	Προσφορά προσθήκης του πιστοποιητικού S/MIME ή του κλειδιού PGP του αποστολέα στην επαφή
 on	mail	el	πάνω
 on behalf of	mail	el	Για λογαριασμό του/της
 on vacation	mail	el	Σε διακοπές
@@ -417,14 +431,18 @@ only one window	mail	el	μόνο ένα παράθυρο
 open in html mode	mail	el	Άνοιγμα σε λειτουργία HTLM
 open in text mode	mail	el	Άνοιγμα σε λειτουργία κειμένου
 open with collabora office	mail	el	Άνοιγμα με το Collabora Online
+orange	mail	el	Πορτοκαλί
 organisation	admin	el	οργανισμός
 organization	mail	el	οργανισμός
 organization | real name email	mail	el	Οργανισμός | Πραγματικό όνομα [Email]
 original message	mail	el	Αρχικό μήνυμα
 outbox	mail	el	Εξερχόμενα
+passphrase, if private key is protected	mail	el	Φράση πρόσβασης, εάν το ιδιωτικό κλειδί είναι προστατευμένο
 password protect	mail	el	προστασία με συνθηματικό
 permission denied	mail	el	Άδεια απορρίπτεται
 personal signature	mail	el	Προσωπική υπογραφή
+pgp key info for email %1	mail	el	Πληροφορίες κλειδιού PGP για το email %1
+pgp/mime signed message, no public key found to verify the signature	mail	el	Μήνυμα υπογεγραμμένο με PGP / S/MIME, δεν βρέθηκε δημόσιο κλειδί για την επαλήθευση της υπογραφής
 please configure access to an existing individual imap account.	mail	el	Παρακαλούμε ρυθμίστε την πρόσβαση σε έναν υπάρχοντα μεμονωμένο λογαριασμό IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	el	Παρακαλούμε ρυθμίστε το πιστοποιητικό S/MIME στην καρτέλα Κρυπτογράφηση που βρίσκεται στο παράθυρο διαλόγου Επεξεργασία λογαριασμού.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	el	Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας για να επιβεβαιώσετε αν ο διακομιστής σας υποστηρίζει κανόνες φίλτρων σε επίπεδο διακομιστή και πώς να τους ενεργοποιήσετε στο EGroupware για τον ενεργό λογαριασμό σας (%1) με ID: %2.
@@ -444,8 +462,11 @@ preview pane	mail	el	Περιοχή προεπισκόπισης
 primary profile	mail	el	Πρωτεύων προφίλ
 printing	mail	el	εκτυπώνει
 printview	mail	el	εμφάνιση εκτύπωσης
+private key created, downloading csr...	mail	el	Δημιουργήθηκε το ιδιωτικό κλειδί, λήψη CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	el	Η επεξεργασία του αρχείου %1 απέτυχε. Απέτυχε να ικανοποιήσει τους βασικούς περιορισμούς.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	el	Παροχή ενός προεπιλεγμένου κειμένου διακοπών, (χρησιμοποιείται σε νέα μηνύματα διακοπών όταν δεν έχει ρυθμιστεί μήνυμα προηγουμένως)
+public key	mail	el	Δημόσιο κλειδί
+purple	mail	el	Μωβ
 push notifications	mail	el	Ειδοποιήσεις Push
 quicksearch	mail	el	Γρήγορη αναζήτηση
 quicksearch (with cc)	mail	el	Γρήγορη αναζήτηση (περιλαμβ. πεδίο κοινοποίησης)
@@ -457,6 +478,7 @@ real name email	mail	el	Πραγματικό όνομα [διεύθυνση ηλ
 real name organization email	mail	el	Πραγματικό όνομα οργανισμός [διεύθυνση ηλεκτρονικού ταχυδρομείου]
 reason!	mail	el	Αιτιολογία!
 receive notification	mail	el	Λήψη ειδοποίησης
+red	mail	el	Κόκκινο
 refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
 reject with	mail	el	απόρριψη με
 reloaded account %1	mail	el	Επαναφόρτωση του λογαριασμού %1.
@@ -607,6 +629,7 @@ the %1 's acl removed from the %2	mail	el	Το ACL του %1 αφαιρέθηκ�
 the %1 's acl, including its subfolders, removed from the %2	mail	el	Η ACL του %1, συμπεριλαμβανομένων των υποφακέλων του, αφαιρέθηκε από τον %2.
 the imap server need to meet certain requirements and be configured for it:	mail	el	Ο διακομιστής IMAP πρέπει να πληροί ορισμένες απαιτήσεις ΚΑΙ να έχει ρυθμιστεί γι' αυτό:
 the rule with priority %1 successfully saved!	mail	el	Ο κανόνας με προτεραιότητα %1 αποθηκεύτηκε επιτυχώς!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	el	Το πιστοποιητικό S/MIME που είναι αποθηκευμένο στο βιβλίο διευθύνσεων για το %1 δεν ταιριάζει με το πιστοποιητικό του λογαριασμού σας — ελέγξτε αν υπάρχουν διπλές καταχωρήσεις στο βιβλίο διευθύνσεων για αυτή τη διεύθυνση.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	el	Το συνολικό μέγεθος των συνημμένων υπερβαίνει το όριο των %1 MB. Έγινε μετατροπή σε σύνδεσμο λήψης.
 then	mail	el	ΜΕΤΑ
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	el	Δεν έχει απομείνει χώρος για την αποθήκευση του σεναρίου Sieve, παρακαλούμε ελέγξτε την επιλογή sieve_maxscriptsize στη ρύθμιση παραμέτρων του διακομιστή αλληλογραφίας σας.
@@ -640,6 +663,7 @@ view header lines	mail	el	Προβολή γραμμών κεφαλής
 what do do with html email	mail	el	Τι να συμβαίνει με μηνύματα τύπου HTML
 what to do when you delete a message	mail	el	Τι να συμβαίνει όταν διαγράφετε ένα μήνυμα.
 what to do when you send a message	mail	el	Τι να συμβαίνει όταν στέλνετε ένα μήνυμα.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	el	Όταν ένα υπογεγραμμένο μήνυμα αποκαλύπτει ένα πιστοποιητικό/κλειδί που δεν έχει αποθηκευτεί ακόμη για αυτόν τον αποστολέα, ρωτήστε αν θέλετε να το προσθέσετε — μια επαληθευμένη υπογραφή από μια ήδη γνωστή επαφή προστίθεται πάντα αυτόματα χωρίς να ζητηθεί επιβεβαίωση
 when deleting messages	mail	el	όταν γίνεται διαγραφή μηνυμάτων
 when sending messages	mail	el	όταν στέλνονται μηνύματα
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	el	Με ποια ταυτότητα ηλεκτρονικού ταχυδρομείου (υπογραφή) θέλετε να ξεκινήσετε; Για την προσωπική υπογραφή χρησιμοποιούμε πάντα την πρώτη προσωπική υπογραφή
@@ -654,6 +678,7 @@ yes, offer copy option	mail	el	ναι, να προτείνεται δυνατό�
 you can select what info to be displayed on email tag	mail	el	Μπορείτε να επιλέξετε ποιες πληροφορίες θα εμφανίζονται στην ετικέτα email.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	el	Μπορείτε να χρησιμοποιήσετε $$start$$ για την παραπάνω ημερομηνία έναρξης και $$end$$ για την ημερομηνία λήξης.
 you may add this certificate into your contact, if you trust this signature.	mail	el	Μπορείτε να προσθέσετε αυτό το πιστοποιητικό στην επαφή σας, αν εμπιστεύεστε αυτή την υπογραφή.
+you may add this key into your contact, if you trust this signature.	mail	el	Μπορείτε να προσθέσετε αυτό το κλειδί στην επαφή σας, αν εμπιστεύεστε αυτή την υπογραφή.
 you need to enter your s/mime passphrase to send this message.	mail	el	Για να στείλετε αυτό το μήνυμα, πρέπει να εισαγάγετε τη συνθηματική φράση S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	el	Πρέπει να εγκαταστήσετε το πρόσθετο Mailvelope που είναι διαθέσιμο για Chrome και Firefox από το %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	el	Πρέπει πρώτα να αποθηκεύσετε το μήνυμα ως προσχέδιο πριν μπορέσετε να το αποθηκεύσετε στο VFS

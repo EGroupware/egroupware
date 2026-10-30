@@ -69,6 +69,5 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which currency symbol or name should be used in egroupware.	preferences	zh-tw	您希望在EGroupware中使用什麼貨幣符號或名稱。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh-tw	您可以指定只顯示應用程式圖示或是加上它的名稱。
-you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒有權限設定ACL在這個模式
 you must enter a password	preferences	zh-tw	您必須輸入密碼
 your preferences	preferences	zh-tw	您的偏好設定

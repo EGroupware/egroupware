@@ -92,6 +92,7 @@ allow anonymous access to this app	admin	cs	Povolit anonymní přístup k této 
 allow remote administration from following install id's (comma separated)	admin	cs	Povolit vzdálenou administraci z následujících instalačních ID (oddělených čárkami).
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	cs	Povolit uživateli uložit heslo v části „Zabezpečení a hesla“ pro SingleSignOn.
 allow user to set 'remember me' token	admin	cs	Umožnit uživateli nastavit token „Zapamatovat si mě“.
+allowed just as second factor	admin	cs	Povoleno pouze jako druhý faktor
 alternate email address	admin	cs	Alternativní e-mailová adresa
 anonymous user	admin	cs	Anonymní uživatel
 anonymous user (not shown in list sessions)	admin	cs	Anonymní uživatel (nezobrazuje se v seznamu relací).
@@ -154,7 +155,6 @@ category list	admin	cs	Seznam kategorie
 category saved.	admin	cs	Kategorie byla uložena.
 certificate	admin	cs	Certifikát
 certificate details	admin	cs	Podrobnosti o certifikátu
-certificate validation in days	admin	cs	Ověření platnosti certifikátu ve dnech
 change access	admin	cs	Změnit přístupová práva
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
@@ -250,12 +250,16 @@ deny access to user accounts	admin	cs	Zablokovat přístup k uživatelským úč
 deny all users access to grant other users access to their entries ?	admin	cs	Zablokovat všem uživatelům právo přidělit přístup k vlastním záznamům jiným uživatelům
 description can not exceed 255 characters in length !	admin	cs	Popis nesmí překročit délku 255 znaků!
 determines the order the fields are displayed	admin	cs	Určuje pořadí zobrazování položek
+direct login without password or second factor	admin	cs	Přímé přihlášení bez hesla nebo druhého faktoru
 disable	admin	cs	Zakázat
 disable "auto completion" of the login form	admin	cs	Zakázat funkci "automatického dokončení" na přihlašovacím formuláři
+disable certificate validation	admin	cs	Deaktivovat ověřování certifikátů
+disable pgp encryption (mailvelope)	admin	cs	Deaktivovat šifrování PGP (Mailvelope)
+disabled	admin	cs	Deaktivováno
 disabled (not recomended)	admin	cs	Zakázáno (nedoporučuje se)
+disabled, do not show on login page	admin	cs	Deaktivováno, nezobrazovat na přihlašovací stránce
 display	admin	cs	Zobrazit
 displayed length of input field (set rows=1 to limit length)	admin	cs	Zobrazená délka vstupního pole (pro omezení délky nastavte řádky=1)
-displaying html messages is disabled	admin	cs	Zobrazování HTML zpráv je zakázáno
 do not delete the category and return back to the list	admin	cs	NEmazat kategorii a vrátit se zpět na seznam
 do not generate email addresses	admin	cs	Negenerujte e-mailové adresy
 document root (default)	admin	cs	Kořenový adresář dokumentů (výchozí)
@@ -588,6 +592,7 @@ scheduled	admin	cs	Naplánováno
 search categories	admin	cs	Prohledat kategorie
 search groups	admin	cs	Prohledat skupiny
 search peer servers	admin	cs	Prohledat peer servery
+secret deleted, two factor authentication disabled.	admin	cs	Tajný kód smazán, dvoufaktorové ověřování deaktivováno.
 security	admin	cs	Zabezpečení
 select accounts for which the custom field should be readonly	admin	cs	Výběr účtů, pro které má být vlastní pole pouze pro čtení
 select accounts for which the custom field should be visible	admin	cs	Vybrat účty, pro které má být uživatelsky definované pole viditelné.
@@ -642,7 +647,6 @@ sorry, the above users are still a member of the group %1	admin	cs	Lituji, výš
 sorry, the follow users are still a member of the group %1	admin	cs	Lituji, následující uživatelé jsou stále členy skupiny %1.
 sort the entries	admin	cs	Třídit záznamy
 source account #%1 does not exist!	admin	cs	Zdrojový účet #%1 NEexistuje!
-ssl	admin	cs	SSL
 standard	admin	cs	Standardní
 standard identity	admin	cs	Standardní identita
 standard imap server	admin	cs	Standardní IMAP server

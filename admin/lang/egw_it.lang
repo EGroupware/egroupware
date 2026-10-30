@@ -112,7 +112,7 @@ allow user to set 'remember me' token	admin	it	Consenti di impostare l'opzione "
 allow users to change forwards	admin	it	Permetti agli utenti di modificare gli inoltri
 allow users to create identities for aliases	admin	it	Permettere agli utenti di creare identità per gli alias
 allowed for get requests, default in modern browsers, if attribute is not set	admin	it	consentito per le richieste di ricezione, impostazione predefinita nei browser moderni, se l'attributo non è impostato
-allowed just as second factor	admin	it	consentito solo come secondo fattore
+allowed just as second factor	admin	it	Consentito solo come secondo fattore
 alternate email address	admin	it	Indirizzo email alternativo
 and logged in	admin	it	e collegato
 anonymous user	admin	it	Utente anonimo
@@ -185,7 +185,6 @@ category list	admin	it	Elenco categorie
 category saved.	admin	it	Categoria salvata.
 certificate	admin	it	Certificato
 certificate details	admin	it	Dettagli del certificato
-certificate validation in days	admin	it	Convalida del certificato in giorni
 change access	admin	it	Modifica dei diritti di accesso
 change account_id	admin	it	Cambia ID Account
 change acl rights	admin	it	Cambia i permessi ACL
@@ -318,10 +317,11 @@ deny all users access to preferences ?	admin	it	Nega l'accesso alle preferenze a
 description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più lunga di 255 caratteri!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	it	L'account di destinazione #%1 non esiste e non viene rinominato autonomamente! Non è possibile fondere gli account, violerebbe le regole di univocità. Eliminare trasferendo prima i dati.
 determines the order the fields are displayed	admin	it	Determina l'ordine di visualizzazione dei campi
-direct login without password or second factor	admin	it	login diretto senza password o doppio fattore
+direct login without password or second factor	admin	it	Login diretto senza password o doppio fattore
 disable	admin	it	Disabilita
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
 disable all	admin	it	Disabilitare tutto
+disable certificate validation	admin	it	Disabilita la convalida del certificato
 disable minifying of javascript and css files	admin	it	Disabilita la compressione di file JavaScript e CSS
 disable pgp encryption (mailvelope)	admin	it	Disabilita codifica PGP (Mailvelope)
 disabled	admin	it	Disattivato
@@ -329,8 +329,6 @@ disabled (not recomended)	admin	it	Disabilitato (non consigliato)
 disabled, do not show on login page	admin	it	Disabilitato, non mostrare nella pagina di accesso
 display	admin	it	Visualizza
 displayed length of input field (set rows=1 to limit length)	admin	it	Lunghezza del campo di inserimento (impostare righe=1 per limitare la lunghezza)
-displaying html messages is disabled	admin	it	la visualizzazione HTML dei messaggi è disabilitata
-displaying plain messages is disabled	admin	it	la visualizzazione semplice dei messaggi è disabilitata
 do not delete the category and return back to the list	admin	it	NON eliminare la categoria e torna alla lista
 do not generate email addresses	admin	it	Non generare indirizzi email
 do not offer introduction video	admin	it	Non proporre i video di introduzione
@@ -769,7 +767,6 @@ search categories	admin	it	Cerca categorie
 search groups	admin	it	Cerca gruppi
 search peer servers	admin	it	Cerca peer servers
 secret deleted, two factor authentication disabled.	admin	it	Segreto eliminato, autenticazione a due fattori disattivata.
-secure connection	admin	it	Connessione sicura
 security	admin	it	Sicurezza
 select accounts for which the custom field should be readonly	admin	it	Selezionare i conti per i quali il campo personalizzato deve essere di sola lettura
 select accounts for which the custom field should be visible	admin	it	Seleziona account ai quali il campo personalizzato sarà visibile.
@@ -833,7 +830,6 @@ sorry, the above users are still a member of the group %1	admin	it	Spiacente, l'
 sorry, the follow users are still a member of the group %1	admin	it	Spiacente, i seguenti utenti sono ancora membri del gruppo %1.
 sort the entries	admin	it	Ordina le voci
 source account #%1 does not exist!	admin	it	L'account di origine #%1 non esiste!
-ssl	admin	it	SSL
 standard	admin	it	Standard
 standard identity	admin	it	Identità di base
 standard imap server	admin	it	Server IMAP standard

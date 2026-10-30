@@ -90,6 +90,7 @@ allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot
 allow remote administration from following install id's (comma separated)	admin	nl	Sta beheer of afstand toe vanaf de volgende installatie IDs (komma gescheiden)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	nl	Sta de gebruiker toe om zijn wachtwoord op te slaan onder 'Beveiliging & wachtwoorden' voor SingleSignOn.
 allow user to set 'remember me' token	admin	nl	Gebruiker toestaan om ‘Onthoud mij’ token in te stellen
+allowed just as second factor	admin	nl	Alleen toegestaan als tweede authenticatiefactor
 alternate email address	admin	nl	Alternatief emailadres
 anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
@@ -143,7 +144,6 @@ category list	admin	nl	Categorieënlijst
 category saved.	admin	nl	Categorie opgeslagen.
 certificate	admin	nl	Certificaat
 certificate details	admin	nl	Details certificaat
-certificate validation in days	admin	nl	Validatie certificaat in dagen
 change account_id	admin	nl	Wijzig Account-ID
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
@@ -224,12 +224,15 @@ deny access to user accounts	admin	nl	Toegang tot gebruikersaccounts weigeren
 deny all users access to grant other users access to their entries ?	admin	nl	Ontneem alle gebruikers de mogelijkheid elkaar toegang te geven tot hun gegevens
 description can not exceed 255 characters in length !	admin	nl	Beschrijving mag niet de 255 tekens overschreiden in lengte!
 determines the order the fields are displayed	admin	nl	Bepaalt de volgorde waarin de velden worden getoond
+direct login without password or second factor	admin	nl	Direct inloggen zonder wachtwoord of tweede authenticatiefactor
 disable	admin	nl	Deactiveren
 disable "auto completion" of the login form	admin	nl	Automatisch afmaken uischakelen in het loginformulier
+disable certificate validation	admin	nl	Certificaatvalidatie uitschakelen
+disable pgp encryption (mailvelope)	admin	nl	PGP-versleuteling uitschakelen (Mailvelope)
+disabled	admin	nl	Uitgeschakeld
 disabled (not recomended)	admin	nl	Uitgeschakeld (niet aanbevolen)
+disabled, do not show on login page	admin	nl	Uitgeschakeld, niet weergeven op inlogpagina
 display	admin	nl	Weergave
-displaying html messages is disabled	admin	nl	Weergeven van HTML berichten is uitgeschakeld
-displaying plain messages is disabled	admin	nl	Weergeven standaard vericht is uitgeschakeld
 do not delete the category and return back to the list	admin	nl	De categorie NIET verwijderen en terugkeren naar de lijst
 document root (default)	admin	nl	Document root (standaard)
 domainname	admin	nl	Domeinnaam
@@ -523,6 +526,7 @@ saving of message %1 failed. destination folder %2 does not exist.	admin	nl	Bewa
 search categories	admin	nl	Doorzoek de categorieën
 search groups	admin	nl	Doorzoek de groepen
 search peer servers	admin	nl	Doorzoek de peer-servers
+secret deleted, two factor authentication disabled.	admin	nl	Geheim verwijderd, tweefactorauthenticatie uitgeschakeld.
 security	admin	nl	Beveiliging
 select group managers	admin	nl	Selecteer Groepsmanagers
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
@@ -568,7 +572,6 @@ sorry, that group name has already been taken.	admin	nl	Sorry, die groepsnaam be
 sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.
 sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
 sort the entries	admin	nl	Sorteer de records
-ssl	admin	nl	SSL
 standard	admin	nl	Standaard
 standard imap server	admin	nl	Standaard IMAP-server
 standard smtp-server	admin	nl	Standaard SMTP-server

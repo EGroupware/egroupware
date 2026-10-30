@@ -88,6 +88,7 @@ all applications	admin	id	Semua aplikasi
 all users	admin	id	Semua pengguna
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	id	Izinkan pengguna untuk menyimpan kata sandinya di bawah 'Keamanan & Kata Sandi' untuk SingleSignOn.
 allow user to set 'remember me' token	admin	id	Izinkan pengguna untuk mengatur token 'Ingat saya'
+allowed just as second factor	admin	id	Hanya diizinkan sebagai faktor kedua
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
 anonymous user (not shown in list sessions)	admin	id	Pengguna anonim. Tidak ditampilkan dalam sesi daftar
@@ -124,7 +125,6 @@ category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
 certificate	admin	id	Sertifikat
 certificate details	admin	id	Detail sertifikat
-certificate validation in days	admin	id	Validasi sertifikat dalam hitungan hari
 change access	admin	id	Mengubah hak akses
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
@@ -180,8 +180,13 @@ deny access	admin	id	Deny Access
 deny access to access log	admin	id	Tolak akses ke log akses
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	Menentukan urutan field ditampilkan
+direct login without password or second factor	admin	id	Masuk langsung tanpa kata sandi atau faktor kedua
 disable	admin	id	Nonaktifkan
+disable certificate validation	admin	id	Nonaktifkan validasi sertifikat
+disable pgp encryption (mailvelope)	admin	id	Nonaktifkan enkripsi PGP (Mailvelope)
+disabled	admin	id	Dinonaktifkan
 disabled (not recomended)	admin	id	Dinonaktifkan (tidak disarankan)
+disabled, do not show on login page	admin	id	Dinonaktifkan, jangan tampilkan di halaman masuk
 display	admin	id	Tampilan
 document root (default)	admin	id	Document root (default)
 domainname	admin	id	Nama Domain
@@ -387,6 +392,7 @@ saves this entry	admin	id	Simpan entri ini
 search categories	admin	id	Cari kategori
 search groups	admin	id	Cari kelompok
 search peer servers	admin	id	Cari peer servers
+secret deleted, two factor authentication disabled.	admin	id	Kunci rahasia telah dihapus, otentikasi dua faktor dinonaktifkan.
 security	admin	id	Kemanan
 select group managers	admin	id	Pilih Manajer Kelompok
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	id	Pilih aplikasi yang Anda inginkan untuk membatasi token, atau biarkan default untuk semua aplikasi.
@@ -420,7 +426,6 @@ smtp-server hostname or ip address	admin	id	Nama atau alamat IP server SMTP
 smtp-server port	admin	id	Port server SMTP
 soap	admin	id	SOAP
 sort the entries	admin	id	Urutkan entri
-ssl	admin	id	SSL
 standard	admin	id	Standar
 standard imap server	admin	id	Server IMAP Standar
 standard smtp-server	admin	id	Server SMTP Standar

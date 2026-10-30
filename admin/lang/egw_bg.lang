@@ -98,6 +98,7 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 aliases	admin	bg	Псевдоними
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	bg	Разрешете на потребителя да съхранява паролата си в „Сигурност и пароли“ за SingleSignOn.
 allow user to set 'remember me' token	admin	bg	Позволете на потребителя да зададе токъна "Запомни ме
+allowed just as second factor	admin	bg	Разрешено само като втори фактор
 application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
@@ -128,6 +129,13 @@ day	admin	bg	Ден
 db backup and restore	admin	bg	Архивиране и възстановяване на БД
 deleted	admin	bg	Изтрит
 deny access to access log	admin	bg	Отказ на достъп до лога за достъп
+direct login without password or second factor	admin	bg	Пряко влизане без парола или втори фактор
+disable	admin	bg	Деактивирай
+disable certificate validation	admin	bg	Деактивирай проверката на сертификатите
+disable pgp encryption (mailvelope)	admin	bg	Деактивирай PGP криптиране (Mailvelope)
+disabled	admin	bg	Деактивирано
+disabled (not recomended)	admin	bg	Деактивирано (не се препоръчва)
+disabled, do not show on login page	admin	bg	Деактивирано, да не се показва на страницата за влизане
 displayed length of input field (set rows=1 to limit length)	admin	bg	Показване на дължината на входното поле (задайте rows=1, за да ограничите дължината)
 egroupware version	admin	bg	Версия на EGroupware
 enable sieve	admin	bg	Активиране на Sieve
@@ -178,6 +186,7 @@ regular expression to find part to use as container	admin	bg	Редовен из
 requested	admin	bg	Заявена
 retention period for history-log (in years)	admin	bg	Срок на съхранение на историята (в години)
 revoke this token	admin	bg	Отмяна на този токън
+secret deleted, two factor authentication disabled.	admin	bg	Секретът е изтрит, двуфакторната автентификация е деактивирана.
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	bg	Изберете приложенията, до които искате да бъде ограничен токенът, или оставете по подразбиране всички приложения.
 serial number	admin	bg	Сериен номер

@@ -19,8 +19,6 @@ display thumbnails for linked images	preferences	lo	ສະແດງພາບຂ�
 div	preferences	lo	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lo	ທ່ານມັກຮູບແບບເວລາ 24 ຊົ່ວໂມງ ຫຼື 12 ຊົ່ວໂມງ
 edit custom fields	preferences	lo	ແກ້ໄຂຟີລທີ່ກໍານົດເອງ
-enable drag and drop functionality (experimental)	preferences	lo	ເປີດໃຊ້ງານຟັງຊັນຈັບມາໃສ່
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານຟັງຊັນຈັບມາໃສໃນທຸກແອບພຼີຊັນ. ຖ້າໜ້າຕ່າງບໍ່ສະໜັບສະໜູນການຈັບມາໃສ່, ຈະປິດອັດຕະໂນມັດ. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
 enter your new password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຂອງທ່ານ
 enter your old password	preferences	lo	ໃສ່ລະຫັດຜ່ານເກົ່າຂອງທ່ານ
 failed to change password.	preferences	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
@@ -77,6 +75,5 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	lo	ເຄື່ອງໝາຍສະກຸນເງິນ ຫຼື ຊ
 you can show the applications as icons only, icons with app-name or both.	preferences	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ແອບພຼິເຄຊັນໃຊ້ງານດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
 you can show the linked entries with icons only, icons with app-name or both.	common	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
-you do not have permission to set acl's in this mode!	preferences	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຕັ້ງ ACL
 you must enter a password	preferences	lo	ທ່ານຕ້ອງໃສ່ລະຫັດຜ່ານ
 your preferences	preferences	lo	ການຕັ້ງຄ່າຂອງທ່ານ

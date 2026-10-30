@@ -4,37 +4,54 @@
 24 hour	preferences	da	24 timer
 a template defines the layout of egroupware and it contains icons for each application.	preferences	da	En skabelon definerer layoutet for EGroupware og den indeholder ikoner for hver applikation.
 a theme defines the colors and fonts used by the template.	preferences	da	Et tema, præcisere farverne og skrifttyperne brugt af skabelonen
+access token revoked.	preferences	da	Adgangstoken tilbagekaldt.
 acl grants have been updated	preferences	da	ACL rettighederne er blevet opdateret
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	da	Aktiver for at vise mere farverige app-ikoner i de åbne faner. Hvis dette ikke er markeret, vises de som standard i en lysere brugerdefineret farve.
+allows to set a default or force the active application tab for new logins.	preferences	da	Giver mulighed for at indstille en standard eller tvinge den aktive programfane ved nye logins.
+allows to set a default or force the open application tabs.	preferences	da	Giver mulighed for at indstille en standard eller tvinge de åbne programfaner.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	da	Enhver liste i EGroupware vil vise dette antal resultater eller linier.\nFor mange vil gøre visningen af listen langsommere, for få vil koste dig overblikket.
+app chooser icons	preferences	da	Ikoner i app-vælgeren
+app chooser icons + text	preferences	da	Ikoner i app-vælgeren + tekst
 applications list scroll area	preferences	da	Rulleknap til sidemenu
 are you sure you want to delete this category ?	preferences	da	Er du sikker på at du vil slette denne kategori?
 are you sure?	preferences	da	Er du sikker?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	da	Du kan ændre et adgangskode ved at angive gammel og ny adgangskode. Returnerer TRUE hvis det lykkes og FALSE ellers.
+close after selection	preferences	da	Luk efter valg
 code is invalid	preferences	da	Koden er ugyldig
 code is required	preferences	da	Koden er påkrævet
 color	preferences	da	Farve
 country	preferences	da	Land
+current password	preferences	da	Nuværende adgangskode
+custom login box color, defaults to above color darkened	preferences	da	Brugerdefineret farve til login-feltet; standardindstillingen er en mørkere version af ovenstående farve
 custom login box text color, defaults to white	preferences	da	Brugerdefineret tekstfarve i login-feltet, standardfarven er hvid
+custom sidebar menu active color, defaults to above color darkened	preferences	da	Brugerdefineret aktiv farve til sidebjælkemenuen; standardindstillingen er en mørkere version af ovenstående farve
 dark mode theme	preferences	da	Tema i mørk tilstand
 date format	preferences	da	Dato format
 default	preferences	da	standard
 default preferences	preferences	da	Standard Præferencer
 delete categories	preferences	da	Slet kategorier
 deny following groups access to application passwords	preferences	da	Nægt følgende grupper adgang til programadgangskoder
+deny following groups access to edit categories	admin	da	Nægt følgende grupper adgang til at redigere kategorier
 deny following groups access to preferences	admin	da	Nægt følgende grupper adgang til præferencer
 description can not exceed 255 characters in length !	preferences	da	Beskrivelse må ikke være over 255 tegn!
 disable	preferences	da	Deaktivere
+disable two factor auth	preferences	da	Deaktiver tofaktorautentificering
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	da	Foretrækker du et 24 timers tids format, eller 12 timers med AM og PM
 edit custom fields	preferences	da	Ret valgfrie felter
+editor and preview	preferences	da	Redigeringsværktøj og forhåndsvisning
+editor only	preferences	da	Kun redigeringsværktøj
 enable	preferences	da	aktivere
+enable/disable menubar from top of the editor.	preferences	da	Aktivér/deaktiver menulinjen øverst i redigeringsværktøjet.
 enter code to authenticate the actions below	preferences	da	Indtast koden for at godkende nedenstående handlinger
 enter code to verify correct setup	preferences	da	Indtast koden for at bekræfte korrekt opsætning
 enter your new password	preferences	da	Indtast din nye adgangskode
 enter your old password	preferences	da	Indtast din gamle adgangskode
 failed to change password.	preferences	da	Det lykkedes ikke at ændre adgangskoden.
+failed to delete secret!	preferences	da	Det lykkedes ikke at slette hemmeligheden!
+failed to store secret!	preferences	da	Det lykkedes ikke at gemme hemmeligheden!
 fast	preferences	da	Hurtig
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	da	Hurtig opdatering tilføjer nye poster altid øverst på listen og opdaterer eksisterende poster på stedet, medmindre listen er sorteret efter senest ændret. Præcise opdateringer foretager en fuldstændig opdatering, hvis listen ikke er sorteret efter senest ændrede.
+features of the editor	preferences	da	Funktioner i redigeringsværktøjet
 forced preferences	preferences	da	Tvungne præferencer
 generate new qrcode to disable existing one, after enabling the new one!	preferences	da	Generer ny QR-kode for at deaktivere den eksisterende (efter aktivering af den nye)
 help off	preferences	da	Ingen Hjælp
@@ -56,17 +73,20 @@ language	preferences	da	Sprog
 limit following groups to only create application passwords via templates	preferences	da	Disse grupper begrænser kun programadgangskoder, der kan oprettes via skabeloner
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	da	Når man logger ind via SingleSignOn, får man ikke en adgangskode til at sende videre til mail- eller filservere.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	da	Gør sidepanelet til venstre med scroll-knap scrollbart op/ned (nyttigt for brugere på tablets).
+markdown view	preferences	da	Markdown-visning
 max matches per page	preferences	da	Maksimale antal resultater pr. side
 max number of icons in navbar	preferences	da	Maksimal antal ikoner i navigations bjælken.
 no default	preferences	da	Ingen Standard
 no user-selection at all	common	da	Intet bruger-valg
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	da	Bemærk: Denne feature vil *ikke* ændre Din e-mails adgangskode. Dette skal gøres manuelt.
 old password and new password are the same. this is invalid. you must enter a new password	preferences	da	Den gamle og den nye adgangskode er ens. Du skal indtaste en ny adgangskode!
+open application tabs	preferences	da	Åbne programfaner
 open popups in	preferences	da	Åbn pop op-vinduer i
 password stored	preferences	da	Adgangskoden gemmes.
 popup window	preferences	da	Pop op-vindue
 popup with search	preferences	da	Popup vindue med søg
 preferences saved.	preferences	da	Indstillinger gemt.
+preview only	preferences	da	Kun forhåndsvisning
 re-enter your password	preferences	da	Indtast Din adgangskode igen
 reset qrcode	preferences	da	Nulstil QR-kode
 same window	preferences	da	I hovedvinduet
@@ -81,6 +101,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	da	Skal antal aktive brugere vises hele tiden?
 show app icons in there app color	preferences	da	Vis app-ikoner i appens farve
 show helpmessages by default	preferences	da	Vis hjælp som standard
+show links between egroupware aps as	common	da	App-ikoner og links
 show navigation bar as	preferences	da	Vis navigationsbjælke som
 show number of current users	preferences	da	Vis antal aktive brugere
 show qrcode	preferences	da	Vis QR-kode
@@ -89,6 +110,7 @@ show text on navigation icons	preferences	da	Vis tekst på navigationsbjælkens 
 show_more_apps	common	da	Vis flere applikationer
 singlesignon and passwords	preferences	da	SingleSignOn og adgangskoder
 store password retrievable for singlesignon	common	da	Gem adgangskode, der kan hentes til SingleSignOn
+text editor settings	preferences	da	Indstillinger for tekstredigeringsværktøjet
 text only	preferences	da	Kun tekst
 the old password is not correct	preferences	da	Den gamle adgangskode er ikke korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	da	Udvælgelses vinduet viser alle tilgængelige brugere (kan være meget langsom i systemer med mange brugere). Popup vinduet med søg giver mulighed for at søge efter brugere eller grupper.
@@ -106,7 +128,9 @@ users choice	preferences	da	Brugerens valg
 what to display for an avatar, if there is no photo	preferences	da	Hvad der skal vises som avatar, hvis der ikke er noget foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which currency symbol or name should be used in egroupware.	preferences	da	Hvilket valuta symbol eller navn skal bruges i EGroupware.
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	da	Hvilken visning tekstfelter med Markdown-understøttelse åbnes i. Hvis du skifter visning i et felt, opdateres denne indstilling.
 you can show the applications as icons only, icons with app-name or both.	preferences	da	Du kan få vist applikationerne som Kun ikoner, Ikoner med navn eller begge dele.
-you do not have permission to set acl's in this mode!	preferences	da	Du har ikke rettigheder til at sætte ACL's
+you can show the linked entries with icons only, icons with app-name or both.	common	da	Vis programmer kun med ikoner, med ikoner og programnavn eller begge dele.
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	da	Du kan vælge, hvilke funktioner der skal aktiveres i værktøjslinjen.
 you must enter a password	preferences	da	Du skal angive en adgangskode
 your preferences	preferences	da	Dine præferencer

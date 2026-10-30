@@ -285,7 +285,6 @@ soap	admin	eu	SOAP
 sorry, that group name has already been taken.	admin	eu	Talde izen hau hartuta dago
 sorry, the follow users are still a member of the group %1	admin	eu	Ondorengo erabiltzaileak oraindik %1 taldeko kideak dira
 sort the entries	admin	eu	sarrerak ordenatu
-ssl	admin	eu	ssl
 standard	admin	eu	estandar
 standard imap server	admin	eu	IMAP zerbitzari estandarra
 standard smtp-server	admin	eu	SMTP zerbitzari estandarra

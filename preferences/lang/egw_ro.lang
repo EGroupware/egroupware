@@ -1,5 +1,9 @@
 %1 - preferences	preferences	ro	%1 - Preferințe
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	ro	Activează pentru a afișa pictograme mai colorate ale aplicațiilor în filele deschise. Dacă nu este bifată, acestea vor avea implicit o culoare personalizată mai deschisă.
+allows to set a default or force the active application tab for new logins.	preferences	ro	Permite setarea unei valori implicite sau forțarea filelor active ale aplicației la noile autentificări.
+allows to set a default or force the open application tabs.	preferences	ro	Permite setarea unei valori implicite sau forțarea filelor de aplicații deschise.
+app chooser icons	preferences	ro	Pictograme în selectorul de aplicații
+app chooser icons + text	preferences	ro	Pictograme în selectorul de aplicații + text
 applications list scroll area	preferences	ro	Buton de derulare pentru meniul lateral
 are you sure you want to delete this category ?	preferences	ro	Sunteți sigur că doriți să ștergeți această categorie?
 are you sure?	preferences	ro	Sunteți sigur?
@@ -7,40 +11,63 @@ code is invalid	preferences	ro	Codul nu este valabil
 code is required	preferences	ro	Codul este necesar
 custom login box text color, defaults to white	preferences	ro	Culoarea textului din caseta de autentificare poate fi personalizată; culoarea implicită este alb
 dark mode theme	preferences	ro	Tema modului întunecat
+date format	preferences	ro	Formatul datei
 default preferences	preferences	ro	Preferințe implicite
 deny following groups access to application passwords	preferences	ro	Interzice accesul următoarelor grupuri la parolele aplicațiilor
 deny following groups access to preferences	admin	ro	Interziceți accesul următoarelor grupuri la preferințe
+do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	ro	Doriți să vedeți întotdeauna data și ora complete, dacă spațiul este limitat, sau doar ora pentru ziua de azi și data în celelalte cazuri?
+editor and preview	preferences	ro	Editor și previzualizare
+editor only	preferences	ro	Numai editor
+enable/disable menubar from top of the editor.	preferences	ro	Activare/dezactivare a barei de meniu din partea de sus a editorului.
+enabled features in toolbar	preferences	ro	Funcții activate în bara de instrumente
 enter code to authenticate the actions below	preferences	ro	Introduceți codul pentru a autentifica acțiunile de mai jos
 enter code to verify correct setup	preferences	ro	Introduceți codul pentru a verifica configurarea corectă
 enter your old password	preferences	ro	Introduceți parola veche
 fast	preferences	ro	Rapid
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ro	Actualizarea rapidă adaugă noi intrări întotdeauna în partea de sus a listei și le actualizează pe cele existente pe loc, cu excepția cazului în care lista este ordonată după ultima modificare. Actualizările exacte fac o reîmprospătare completă, dacă lista nu este ordonată după ultima modificare.
+features of the editor	preferences	ro	Caracteristici ale editorului
 forced preferences	preferences	ro	Preferințe forțate
+full date and time	preferences	ro	Data și ora complete
 generate new qrcode to disable existing one, after enabling the new one!	preferences	ro	Generați un nou cod QR pentru a-l dezactiva pe cel existent (după activarea celui nou)
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ro	Cu câte ore sunteți înainte sau în urma fusului orar al serverului?\nDacă vă aflați în același fus orar cu serverul, selectați 0 ore; în caz contrar, selectați data și ora locale.
+how should egroupware display dates for you.	preferences	ro	Selectați formatul de afișare a datei
 how to update lists	preferences	ro	Cum se actualizează listele
+icons and text	preferences	ro	Pictograme și text
+icons only	preferences	ro	Numai pictograme
 if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ro	Dacă este activată, parola introdusă va fi stocată și transmisă către alte servere, atunci când vă conectați prin SSO.
 it sets content size (text only) according to selected size.	preferences	ro	Setează dimensiunea conținutului (numai pentru text) în funcție de dimensiunea selectată.
 limit following groups to only create application passwords via templates	preferences	ro	Aceste grupuri restricționează doar parolele aplicațiilor pentru a fi create prin intermediul șabloanelor
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ro	Conectarea prin SingleSignOn nu oferă o parolă pentru a o transmite către serverele de e-mail sau de fișiere.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ro	Lista de aplicații poate fi derulată cu ajutorul butoanelor de derulare sus/jos (util pentru utilizatorii care lucrează cu un mouse fără rotiță de derulare).
+markdown view	preferences	ro	Vizualizare Markdown
 old password and new password are the same. this is invalid. you must enter a new password	preferences	ro	Parola veche și parola nouă sunt identice. Trebuie să introduceți o parolă nouă!
+open application tabs	preferences	ro	Filele de aplicații deschise
 open popups in	preferences	ro	Deschide ferestrele pop-up în
 password stored	preferences	ro	Parolă stocată.
 popup window	preferences	ro	Fereastră pop-up
 preferences saved.	preferences	ro	Preferințe salvate.
+preview only	preferences	ro	Numai previzualizare
 reset qrcode	preferences	ro	Resetați codul QR
 same window	preferences	ro	În fereastra principală
 scan qrcode with a time-based one-time password (totp) app:	preferences	ro	Scanați codul QR cu o aplicație TOTP (Time-based one-time password):
 set content size	preferences	ro	Setați dimensiunea conținutului
+shortened date/time display	preferences	ro	Afișare scurtă a datei/orei
 show app icons in there app color	preferences	ro	Afișează pictogramele aplicațiilor în culoarea aplicației
+show links between egroupware aps as	common	ro	Pictograme și linkuri ale aplicațiilor
 show qrcode	preferences	ro	Afișează codul QR
 show qrcode to enable on an additional device.	preferences	ro	Afișează din nou codul QR pentru a-l configura pe alte dispozitive
 singlesignon and passwords	preferences	ro	SingleSignOn și parolele
 store password retrievable for singlesignon	common	ro	Stocați parola recuperabilă pentru SingleSignOn
+text editor settings	preferences	ro	Setări editor de text
 the old password is not correct	preferences	ro	Parola veche nu este corectă!
 thousands separator is only used for displaying and not for editing numbers.	preferences	ro	Formatul numerelor poate fi setat pentru afișarea numerelor.
+time for today, date otherwise	preferences	ro	Ora pentru ziua de azi, data în celelalte cazuri
 use first %1 letters from username	preferences	ro	Utilizați primele %1 litere din numele de utilizator
 use initials from first and last name	preferences	ro	Utilizați inițialele de la nume și prenume
 used instead of the application color.	preferences	ro	Se utilizează în locul culorii aplicației.
 what to display for an avatar, if there is no photo	preferences	ro	Ce să se afișeze pentru un avatar, dacă nu există o fotografie
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	ro	Modul de vizualizare în care se deschid câmpurile de text compatibile cu Markdown. Schimbarea modului de vizualizare într-un câmp actualizează această setare.
+you can show the applications as icons only, icons with app-name or both.	preferences	ro	Puteți afișa aplicațiile doar ca pictograme, pictograme cu numele aplicației sau ambele.
+you can show the linked entries with icons only, icons with app-name or both.	common	ro	Afișează aplicațiile doar cu pictograme, cu pictograme și numele aplicației sau ambele.
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	ro	Puteți selecta funcțiile care să fie activate în bara de instrumente.
 your preferences	preferences	ro	Preferințele dvs

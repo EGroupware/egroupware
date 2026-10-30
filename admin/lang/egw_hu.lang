@@ -89,6 +89,7 @@ all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	hu	Engedélyezze a felhasználónak, hogy jelszavát a 'Biztonság és jelszavak' alatt tárolja a SingleSignOn-hoz.
 allow user to set 'remember me' token	admin	hu	Engedélyezi a felhasználó számára az „Emlékezz rám” token beállítását
+allowed just as second factor	admin	hu	Csak második hitelesítési tényezőként engedélyezve
 alternate email address	admin	hu	Alternatív emailcím
 anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor).
@@ -146,7 +147,6 @@ category list	admin	hu	Kategórialista
 category saved.	admin	hu	Kategória mentve.
 certificate	admin	hu	Tanúsítvány
 certificate details	admin	hu	A tanúsítvány részletei
-certificate validation in days	admin	hu	Tanúsítvány érvényesítés napokban
 change access	admin	hu	Hozzáférési jogok módosítása
 change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
@@ -239,13 +239,16 @@ deny all users access to grant other users access to their entries ?	admin	hu	Mi
 deny all users access to preferences ?	admin	hu	Minden felhasználó hozzáférésének megtagadása a beállításokhoz
 description can not exceed 255 characters in length !	admin	hu	A leírás nem haladhatja meg a 255 karaktert!
 determines the order the fields are displayed	admin	hu	Megjelenített mezők rendezésének meghatározása
+direct login without password or second factor	admin	hu	Közvetlen bejelentkezés jelszó vagy második hitelesítési tényező nélkül
 disable	admin	hu	Letilt
 disable "auto completion" of the login form	admin	hu	Az automatikus kiegészítés tiltása a bejelentkezőképernyőn
-disabled	admin	hu	Mozgáskorlátozottak
+disable certificate validation	admin	hu	Tanúsítvány-ellenőrzés letiltása
+disable pgp encryption (mailvelope)	admin	hu	PGP-titkosítás letiltása (Mailvelope)
+disabled	admin	hu	Letiltva
 disabled (not recomended)	admin	hu	Tiltott (nem ajánlott)
+disabled, do not show on login page	admin	hu	Letiltva, ne jelenjen meg a bejelentkezési oldalon
 display	admin	hu	Megjelenítés
 displayed length of input field (set rows=1 to limit length)	admin	hu	A beviteli mező megjelenített hossza (a hossz korlátozásához állítsa be a sorok=1 értéket).
-displaying html messages is disabled	admin	hu	HTML levelek megjelenítése tiltva
 do not delete the category and return back to the list	admin	hu	A kategória törlése NÉLKÜL vissza a listázáshoz
 document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
 domainname	admin	hu	Tartománynév
@@ -534,6 +537,7 @@ saves this entry	admin	hu	Bejegyzés mentése
 search categories	admin	hu	Kategóriák keresése
 search groups	admin	hu	Csoportok keresése
 search peer servers	admin	hu	Peer szerverek keresése
+secret deleted, two factor authentication disabled.	admin	hu	A titkos kulcs törölve, a kétfaktoros hitelesítés letiltva.
 security	admin	hu	Biztonság
 select accounts for which the custom field should be readonly	admin	hu	Olyan számlák kiválasztása, amelyeknél az egyéni mező csak olvasható legyen
 select accounts for which the custom field should be visible	admin	hu	Válassza ki azokat a számlákat, amelyek számára az egyéni mező látható legyen
@@ -583,7 +587,6 @@ sorry, that group name has already been taken.	admin	hu	Már létezik csoport ez
 sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1.
 sorry, the follow users are still a member of the group %1	admin	hu	A következő felhasználók már a(z) %1 csoport tagjai.
 sort the entries	admin	hu	Elemek rendezése
-ssl	admin	hu	SSL
 standard	admin	hu	Szabványos
 standard imap server	admin	hu	Szabványos IMAP-kiszolgáló
 standard smtp-server	admin	hu	Szabványos SMTP-kiszolgáló

@@ -1,4 +1,5 @@
 %1 attachments	mail	fr	%1 pièces jointes
+%1 attachments downloaded	mail	fr	%1 manust on alla laaditud.
 %1 for all users	mail	fr	%1 pour tous les utilisateurs
 %1 has been added to blacklisted email addresses	mail	fr	%1 ajouté à la liste noire
 %1 has been added to whiltelisted email addresses	mail	fr	%1 ajouté à la liste blanche
@@ -11,6 +12,7 @@
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
 (not connected)	mail	fr	(non connecté)
+account	mail	fr	Compte
 account editable by user	mail	fr	compte modifiable par l'utilisateur
 account not reachable	mail	fr	Compte inaccessible.
 acl rights retrieve failed, seems there are no rights set!	mail	fr	L'extraction des droits ACL a échoué, il semble qu'il n'y ait pas de droits définis !
@@ -27,6 +29,7 @@ add files as %1	mail	fr	Ajouter les fichiers comme %1
 add folder	mail	fr	Ajouter un dossier
 add raw message, ignore mail attachments	mail	fr	Convertir le courrier en élément, ajouter un message brut (ignorer les pièces jointes)
 add this certificate into contact	mail	fr	Ajouter ce certificat sur le contact
+add this key into contact	mail	fr	Lisa see võti kontaktile
 add to addressbook	mail	fr	Ajouter au carnet d'adresses
 adding %1 to blacklisted email addresses failed because of %2	mail	fr	L'ajout de %1 aux adresses email de la liste noire a échoué à cause de %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	fr	L'ajout de %1 aux adresses email de la liste blanche a échoué à cause de %2
@@ -79,6 +82,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	fr	Attention, toutes les pièces jointes seront envoyées comme %1 !
 before reply, visible during compose	mail	fr	Avant la réponse, visible pendant la rédaction
 blacklisted mails are marked as spam	mail	fr	Les mails en liste noire sont marqués comme spam
+blue	mail	fr	Bleu
 but check shared folders	mail	fr	sauf les dossiers partagés sélectionnés
 by date	mail	fr	Par date
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fr	Par défaut, 'http://' est simplement remplacé par 'https://'. N'hésitez pas à configurer 'https://proxy.egroupware.org/' pour qu'il charge également les images disponibles uniquement via http.
@@ -87,6 +91,7 @@ can not open imap connection	mail	fr	Ne peut pas ouvrir de connexion IMAP
 can not resolve the winmail.dat attachment!	mail	fr	Impossible de lire le fichier winmail.dat !
 canceled deletion due to user interaction	mail	fr	Suppression annulée par une interaction utilisateur
 certificate details	mail	fr	Détails du certificat
+certificate does not match the stored private key!	mail	fr	Sertifikaat ei vasta salvestatud privaatvõtmele!
 certificate imported.	mail	fr	Certificat importé.
 certificate in text	mail	fr	Certificat en texte
 certificate info for email %1	mail	fr	Info de certificat pour l'email %1
@@ -112,6 +117,7 @@ confirm	mail	fr	Confirmer
 confirm attach message	mail	fr	Confirmer l'attachement au message
 confirm move to folder	mail	fr	Confirmer le déplacement vers un dossier
 connect to profile %1	mail	fr	Connexion au profil %1
+connection could not be established, use the wizard to check why!	mail	fr	Impossible d'établir la connexion. Utilisez l'assistant pour en connaître la raison !
 connection status	mail	fr	Statut de la connexion
 contact label	mail	fr	Etiquette de contact
 contains	mail	fr	contient
@@ -123,8 +129,11 @@ convert only mail to item (ignore possible attachments)	mail	fr	ne convertir que
 copied %1 message(s) from %2 to %3	mail	fr	Copie de %1 message(s) de %2 à %3.
 copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
+could not decrypt stored private key, wrong passphrase?	mail	fr	Impossible de déchiffrer la clé privée enregistrée. Phrase de passe incorrecte ?
+could not download %1	mail	fr	%1-i ei õnnestunud alla laadida.
 could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL certains noms sont vides
 create new account	mail	fr	Créer un nouveau compte
+create private key and export csr	mail	fr	Loo privaatvõti ja ekspordi CSR
 create self-signed certificate	mail	fr	Créer un certificat auto-signé
 cross account forward attachment is not allowed!	mail	fr	La pièce jointe du compte croisé n'est pas autorisée !
 current folder	mail	fr	Dossier actif
@@ -185,6 +194,7 @@ don't use draft folder	mail	fr	Ne pas utiliser un dossier Brouillon
 don't use sent	mail	fr	Ne pas utiliser Eléments envoyés
 don't use template folder	mail	fr	Ne pas utiliser le dossier des modèles
 don't use trash	mail	fr	Ne pas utiliser la Corbeille
+download all attachments	mail	fr	Laadi alla kõik manused
 download attachments	mail	fr	Télécharger les pièces jointes
 draft	mail	fr	Brouillon
 draft folder	mail	fr	dossier brouillon
@@ -274,6 +284,7 @@ general	admin	fr	General
 general settings	mail	fr	Paramètres principaux
 get acl rights failed from imap server!	mail	fr	Obtenir les droits ACL du serveur IMAP sans succès !
 greater than	mail	fr	Plus grand que
+green	mail	fr	Vert
 ham folder	mail	fr	Dossier Ham
 handling of external http images / mixed content in mails	mail	fr	Traitement des images http externes / contenu mixte dans les courriers électroniques
 header	mail	fr	En-tête
@@ -332,6 +343,7 @@ junk	mail	fr	Indésirables
 junk folder	mail	fr	Dossier des indésirables
 keep a copy	mail	fr	Garder une copie
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
+key fingerprint	mail	fr	Empreinte digitale de la clé
 kilobytes	mail	fr	kilo-octets
 last used signature	mail	fr	Dernière signature utilisée
 later	mail	fr	Plus tard
@@ -403,6 +415,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	fr	Pas de dossier
 no message body supplied	mail	fr	Pas de corps de message
 no plain text part found	mail	fr	Aucune section texte plein trouvée
+no private key stored to import a certificate for!	mail	fr	Aucune clé privée enregistrée pour importer un certificat !
 no recipient address given!	mail	fr	Il n'a pas d'adresse de destinataire
 no s/mime private key stored for this account.	mail	fr	Aucune clé privée S/MIME n'est enregistrée pour ce compte.
 no send folder set in preferences	mail	fr	Aucun dossier "Envoyés" défini dans les préférences
@@ -418,6 +431,7 @@ none, create all	mail	fr	aucun, créer tous
 nothing to change.	mail	fr	Ne rien changer
 notify about new mail in this folders	mail	fr	M'avertir des nouveaux messages dans ce dossier
 notify when new mails arrive in these folders	mail	fr	M'avertir lorsque de nouveaux messages arrivent dans ces dossiers
+offer to add sender's s/mime certificate or pgp key to contact	mail	fr	Proposer d'ajouter le certificat S/MIME ou la clé PGP de l'expéditeur au contact
 on	mail	fr	le
 on behalf of	mail	fr	De la part de
 on vacation	mail	fr	En vacances
@@ -434,14 +448,18 @@ only store message in inbox, do not send vacation notice	mail	fr	Ne conserver le
 open in html mode	mail	fr	Ouvrir en mode HTML
 open in text mode	mail	fr	Ouvrir en mode texte
 open with collabora office	mail	fr	Ouvrir avec Collabora Online
+orange	mail	fr	Orange
 organisation	admin	fr	Organisation
 organization	mail	fr	Entreprise
 organization | real name email	mail	fr	Organisation | Nom réel [Email]
 original message	mail	fr	Message d'origine
 outbox	mail	fr	Boîte d'envoi
+passphrase, if private key is protected	mail	fr	Phrase de passe, si la clé privée est protégée
 password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
 personal signature	mail	fr	Signature personnelle
+pgp key info for email %1	mail	fr	Informations sur la clé PGP pour l'e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	fr	Message signé PGP / S/MIME : aucune clé publique trouvée pour vérifier la signature
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fr	Veuillez configurer votre certificat S/MIME dans l'onglet Encryption situé dans la boîte de dialogue Edit Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fr	Veuillez contacter votre administrateur pour savoir si votre serveur prend en charge les règles de filtrage côté serveur et comment les activer dans EGroupware pour votre compte actif (%1) avec ID :%2.
@@ -461,8 +479,11 @@ preview pane	mail	fr	Disposition des fenêtres
 primary profile	mail	fr	Profil primaire
 printing	mail	fr	Impression
 printview	mail	fr	Vue d'impression
+private key created, downloading csr...	mail	fr	Privaatvõti loodud, CSR-i allalaadimine käib ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	fr	Le traitement du fichier %1 a échoué. Les restrictions de base n'ont pas été respectées.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	fr	fournir un message d'absence par défaut (pour les nouveaux messages d'absence lorsque aucun message n'existait auparavant)
+public key	mail	fr	Clé publique
+purple	mail	fr	Violet
 push notifications	mail	fr	Notifications push
 quicksearch	mail	fr	Recherche Rapide
 quicksearch (with cc)	mail	fr	Recherche rapide (avec les CC)
@@ -478,6 +499,7 @@ real name organization email	mail	fr	Non réel de l'organisation [Email]
 reason!	mail	fr	motif !
 receive notification	mail	fr	Recevoir une notification
 recursively	mail	fr	Récursivement
+red	mail	fr	Rouge
 refresh time in minutes	mail	fr	Temps de rafraîchissement en minutes
 refused to delete folder inbox	mail	fr	Impossible de supprimer le dossier "boîte de réception"
 refused to delete folder with subfolders	mail	fr	Impossible de supprimer le dossier et ses sous-dossiers
@@ -648,6 +670,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	fr	L'expéditeur du message a demandé une réponse pour indiquer que vous avez lu ce message. Souhaitez-vous envoyer un accusé de réception ?
 the mimeparser can not parse this message.	mail	fr	L'analyseur mime ne peut pas décoder ce message.
 the rule with priority %1 successfully saved!	mail	fr	La règle avec la priorité %1 a été sauvegardée avec succès !
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	fr	Le certificat S/MIME enregistré dans le carnet d'adresses pour %1 ne correspond pas au certificat de votre compte. Vérifiez s'il existe des entrées en double dans le carnet d'adresses pour cette adresse.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	fr	La taille totale des pièces jointes dépasse la limite de %1 Mo. On a opté pour un lien de téléchargement.
 then	mail	fr	ALORS
 there is no imap server configured.	mail	fr	Il n'y a pas de serveur IMAP configuré.
@@ -694,6 +717,7 @@ what do do with html email	mail	fr	Que faire avec les emails en HTML
 what order the list columns are in	mail	fr	Quel ordre pour les colonnes de la liste
 what to do when you delete a message	mail	fr	Ce qu'il faut faire quand vous supprimez un message.
 what to do when you send a message	mail	fr	Ce qu'il faut faire quand vous envoyez un message.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	fr	Lorsqu'un message signé révèle un certificat ou une clé qui n'est pas encore enregistré(e) pour cet expéditeur, demander s'il faut l'ajouter – une signature vérifiée provenant d'un contact déjà connu est toujours ajoutée automatiquement sans demander confirmation
 when deleting messages	mail	fr	Quand j'efface les messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	fr	Lorsque vous affichez des messages dans une fenêtre contextuelle, vous pouvez réutiliser la même fenêtre pour tous les messages ou ouvrir une nouvelle fenêtre pour chaque message
 when saving messages as item of a different app	mail	fr	lors de l'enregistrement des messages en tant qu'éléments d'une autre application.
@@ -714,6 +738,7 @@ yes, offer copy option	mail	fr	oui, proposer une option de copie
 you can select what info to be displayed on email tag	mail	fr	Vous pouvez sélectionner les informations à afficher sur l'étiquette de l'e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	fr	Vous pouvez utiliser $$start$$ pour la date de début et $$end$$ pour la date de fin.
 you may add this certificate into your contact, if you trust this signature.	mail	fr	Vous pouvez ajouter ce certificat à votre contact si vous avez confiance en cette signature.
+you may add this key into your contact, if you trust this signature.	mail	fr	Vous pouvez ajouter cette clé à votre contact si vous faites confiance à cette signature.
 you need to enter your s/mime passphrase to send this message.	mail	fr	Vous devez saisir votre phrase de passe S/MIME pour envoyer ce message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	fr	Vous devez installer le plugin Mailvelope, disponbible pour Chrome et Firefox depuis %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	fr	Vous devez enregistrer votre message comme brouillon avant de pouvoir l'enregistrer dans le VFS

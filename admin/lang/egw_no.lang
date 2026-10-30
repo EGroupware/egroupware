@@ -23,6 +23,7 @@
 %1 user %2	admin	no	%1 bruker %2
 (de)activate mail accounts	admin	no	(de)aktivere e-postkontoer
 (no subject)	admin	no	(uten emne)
+2-factor-authentication for interactive login	admin	no	Tofaktorautentisering for interaktiv pålogging
 access token revoked.	admin	no	Tilgangstoken tilbakekalt.
 account	admin	no	Konto
 account active	admin	no	Aktiv konto
@@ -73,6 +74,7 @@ all users	admin	no	Alle brukere
 allow anonymous access to this app	admin	no	Tillat anonym tilgang til denne applikasjonen
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	no	Tillat brukeren å lagre passordet sitt under «Sikkerhet og passord» for SingleSignOn.
 allow user to set 'remember me' token	admin	no	Tillat brukeren å angi «Husk meg»-token
+allowed just as second factor	admin	no	Tillatt kun som andre faktor
 alternate email address	admin	no	Alternativ e-mailadresse
 anonymous user	admin	no	Anonym bruker
 anonymous user (not shown in list sessions)	admin	no	Anonym Bruker (vises ikke i sesjonsliste)
@@ -113,7 +115,6 @@ category %1 has been saved !	admin	no	Kategori %1 er lagret
 category list	admin	no	Kategoriliste
 certificate	admin	no	Sertifikat
 certificate details	admin	no	Detaljer om sertifikatet
-certificate validation in days	admin	no	Sertifikatvalidering i dager
 change access	admin	no	Endre tilgangsrettigheter
 change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
@@ -180,9 +181,14 @@ deny access to user accounts	admin	no	Nekt tilgang til brukerkontoer
 deny all users access to grant other users access to their entries ?	admin	no	Nekt alle brukere tilgang til å tillate andre brukere tilgang til deres innlegg
 description can not exceed 255 characters in length !	admin	no	Beskrivelse kan ikke overgå 255 karakterer!
 determines the order the fields are displayed	admin	no	Avgjør rekkefølge feltene vises i
+direct login without password or second factor	admin	no	Direkte pålogging uten passord eller andre faktor
 disable	admin	no	Deaktiver
 disable "auto completion" of the login form	admin	no	Deaktiver "autofullfør" i login vindu
+disable certificate validation	admin	no	Deaktiver sertifikatvalidering
+disable pgp encryption (mailvelope)	admin	no	Deaktiver PGP-kryptering (Mailvelope)
+disabled	admin	no	Deaktivert
 disabled (not recomended)	admin	no	Deaktivert (ikke anbefalt)
+disabled, do not show on login page	admin	no	Deaktivert, vis ikke på påloggingssiden
 display	admin	no	Vis
 do not delete the category and return back to the list	admin	no	IKKE slett denne kategorien og returner til listen
 domainname	admin	no	Domenenavn
@@ -402,6 +408,7 @@ saves this entry	admin	no	Lagrer innslaget
 search categories	admin	no	Søk kategorier
 search groups	admin	no	Søk grupper
 search peer servers	admin	no	Søk peer servere
+secret deleted, two factor authentication disabled.	admin	no	Hemmelig kode slettet, tofaktorautentisering deaktivert.
 security	admin	no	Sikkerhet
 select group managers	admin	no	Velg gruppeleder
 select permissions this group will have	admin	no	Velg tillatelser for denne gruppen
@@ -442,7 +449,6 @@ sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavn
 sorry, the above users are still a member of the group %1	admin	no	Beklager, ovenstående bruker er fortsatt medlem av gruppe %1
 sorry, the follow users are still a member of the group %1	admin	no	Beklager, følgende brukere er fortsatt medlemmer av gruppe %1
 sort the entries	admin	no	Sorter forekomstene
-ssl	admin	no	SSL
 standard	admin	no	Standard
 standard imap server	admin	no	Standard IMAP tjener
 standard smtp-server	admin	no	Standard SMTP tjener

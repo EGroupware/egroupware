@@ -1,4 +1,5 @@
 %1 attachments	mail	ja	%1 個の添付ファイル
+%1 attachments downloaded	mail	ja	%1件の添付ファイルがダウンロードされました。
 %1 for all users	mail	ja	すべてのユーザーに %1
 %1 has been added to blacklisted email addresses	mail	ja	ブラックリストに %1 を追加しました
 %1 has been added to whiltelisted email addresses	mail	ja	ホワイトリストに %1 を追加しました
@@ -11,6 +12,7 @@
 (leave empty for no quota)	mail	ja	（空欄にするとクォータ設定無し）
 (no subject)	mail	ja	(件名無し)
 (not connected)	mail	ja	(接続されていません)
+account	mail	ja	アカウント
 account editable by user	mail	ja	ユーザによるアカウント編集可能
 account not reachable	mail	ja	アカウントにアクセスできません。
 acl rights retrieve failed, seems there are no rights set!	mail	ja	ACL 権限の取得に失敗しました（権限不足の可能性）!
@@ -27,6 +29,7 @@ add files as %1	mail	ja	ファイルを %1 として追加してください
 add folder	mail	ja	フォルダを追加
 add raw message, ignore mail attachments	mail	ja	メールをアイテムに変換し、生のメッセージを追加する（メールの添付ファイルは無視する）
 add this certificate into contact	mail	ja	アドレス帳に証明書を追加
+add this key into contact	mail	ja	この鍵を連絡先に追加
 add to addressbook	mail	ja	アドレス帳に追加
 adding %1 to blacklisted email addresses failed because of %2	mail	ja	ブラックリストに %1 を追加できません（%2）
 adding %1 to whiltelisted email addresses failed because of %2	mail	ja	ホワイトリストに %1 を追加できません（%2）
@@ -79,6 +82,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	ja	すべての添付ファイルが %1 として送信されることに注意してください！
 before reply, visible during compose	mail	ja	返信前（メール作成中は表示）
 blacklisted mails are marked as spam	mail	ja	ブラックリスト・メールをスパムとして処理
+blue	mail	ja	青
 but check shared folders	mail	ja	ただし共有フォルダを検査する
 by date	mail	ja	日時
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ja	デフォルトでは'http://'は'https://'に置き換えられます。http経由でのみ利用可能な画像も読み込むように、'https://proxy.egroupware.org/'を自由に設定してください。
@@ -87,6 +91,7 @@ can not open imap connection	mail	ja	IMAP接続をオープンできませんで
 can not resolve the winmail.dat attachment!	mail	ja	添付の winmail.dat を解決できません!
 canceled deletion due to user interaction	mail	ja	ユーザ割り込みのため削除を中止
 certificate details	mail	ja	証書詳細
+certificate does not match the stored private key!	mail	ja	証明書が保存されている秘密鍵と一致しません！
 certificate in text	mail	ja	証明書本文
 certificate info for email %1	mail	ja	メール %1 の証明書情報
 certificate issued by	mail	ja	発行者
@@ -111,6 +116,7 @@ confirm	mail	ja	確認
 confirm attach message	mail	ja	添付メッセージの確認
 confirm move to folder	mail	ja	フォルダ移動の確認
 connect to profile %1	mail	ja	プロフィール %1 に接続
+connection could not be established, use the wizard to check why!	mail	ja	接続できませんでした。ウィザードを使って原因を確認してください！
 connection status	mail	ja	接続状態
 contact label	mail	ja	連絡先ラベル
 contains	mail	ja	含む
@@ -122,8 +128,11 @@ convert only mail to item (ignore possible attachments)	mail	ja	メール本文�
 copied %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージが %2 から %3 にコピーされました。
 copy to	mail	ja	コピー先
 could not append message:	mail	ja	メッセージを追加できませんでした：
+could not decrypt stored private key, wrong passphrase?	mail	ja	保存されている秘密鍵を復号できませんでした。パスフレーズが間違っている可能性がありますか？
+could not download %1	mail	ja	%1をダウンロードできませんでした。
 could not save the acl because some names are empty	mail	ja	名前の一部が空欄のためACLを保存できませんでした
 create new account	mail	ja	新規アカウントの作成
+create private key and export csr	mail	ja	秘密鍵を作成し、CSRをエクスポート
 create self-signed certificate	mail	ja	自己署名証明書を作成
 cross account forward attachment is not allowed!	mail	ja	クロスアカウントでの転送添付ができない!
 current folder	mail	ja	現在のフォルダ
@@ -185,6 +194,7 @@ don't use draft folder	mail	ja	下書きフォルダを使用しない
 don't use sent	mail	ja	送信済みフォルダを使用しない
 don't use template folder	mail	ja	テンプレート・フォルダを使用しない
 don't use trash	mail	ja	ゴミ箱フォルダを使用しない
+download all attachments	mail	ja	すべての添付ファイルをダウンロード
 download attachments	mail	ja	添付ファイルをダウンロード
 draft	mail	ja	ドラフト
 draft folder	mail	ja	下書きフォルダ
@@ -274,6 +284,7 @@ general	admin	ja	一般
 general settings	mail	ja	一般設定
 get acl rights failed from imap server!	mail	ja	IMAP サーバーから ACL 権限を取得できませんでした!
 greater than	mail	ja	指定値よりサイズが大きい
+green	mail	ja	緑
 ham folder	mail	ja	ハム・フォルダ
 handling of external http images / mixed content in mails	mail	ja	メール内の外部 http 画像/混合コンテンツの処理
 header	mail	ja	メール・ヘッダを表示
@@ -332,6 +343,7 @@ junk	mail	ja	ジャンク
 junk folder	mail	ja	ジャンク・フォルダ
 keep a copy	mail	ja	コピーを残す
 keep a copy of the message in your inbox	mail	ja	インボックスのメッセージのコピーを保持
+key fingerprint	mail	ja	鍵のフィンガープリント
 kilobytes	mail	ja	kB
 last used signature	mail	ja	最後に使用した署名
 later	mail	ja	後で
@@ -403,6 +415,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	ja	フォルダ無し
 no message body supplied	mail	ja	メッセージ本文がありません
 no plain text part found	mail	ja	プレーン・テキストのパートがありません
+no private key stored to import a certificate for!	mail	ja	証明書をインポートするための秘密鍵が保存されていません！
 no recipient address given!	mail	ja	送信先がありません!
 no s/mime private key stored for this account.	mail	ja	このアカウントには S/MIME 秘密鍵が保存されていません。
 no send folder set in preferences	mail	ja	送信済みフォルダが設定されていません
@@ -418,6 +431,7 @@ none, create all	mail	ja	無し（全て作成）
 nothing to change.	mail	ja	変更無し。
 notify about new mail in this folders	mail	ja	これらのフォルダの新着メールを通知する
 notify when new mails arrive in these folders	mail	ja	これらのフォルダに新着がある場合に通知
+offer to add sender's s/mime certificate or pgp key to contact	mail	ja	送信者のS/MIME証明書またはPGP鍵を連絡先に追加するかどうかを確認する
 on	mail	ja	オン
 on behalf of	mail	ja	を代表して
 on vacation	mail	ja	休暇中
@@ -434,14 +448,18 @@ only store message in inbox, do not send vacation notice	mail	ja	INBOXにのみ�
 open in html mode	mail	ja	HTML モードで開く
 open in text mode	mail	ja	テキスト・モードで開く
 open with collabora office	mail	ja	Collabora Onlineで開く
+orange	mail	ja	オレンジ
 organisation	admin	ja	組織・団体
 organization	mail	ja	組織・団体
 organization | real name email	mail	ja	団体名｜本名 [メールアドレス］
 original message	mail	ja	オリジナルメッセージ
 outbox	mail	ja	送信ボックス
+passphrase, if private key is protected	mail	ja	秘密鍵が保護されている場合のパスフレーズ
 password protect	mail	ja	パスワード保護
 permission denied	mail	ja	権限が拒否されました
 personal signature	mail	ja	個人用署名
+pgp key info for email %1	mail	ja	メール %1 用のPGP鍵情報
+pgp/mime signed message, no public key found to verify the signature	mail	ja	PGP / S/MIME で署名されたメッセージですが、署名を検証するための公開鍵が見つかりません
 please configure access to an existing individual imap account.	mail	ja	個人用 IMAP アカウントを構成してください。
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ja	アカウント編集ダイアログの暗号タブでS/MIME証明書を構成してください。
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ja	サーバーがサーバー側フィルター・ルールに対応している場合は、アカウント %1（ID: %2）がフィルター機能をEGroupwaraから利用できるかどうか管理者にお問い合わせ下さい。
@@ -461,8 +479,11 @@ preview pane	mail	ja	プリビュー画面
 primary profile	mail	ja	プライマリ・プロフィール
 printing	mail	ja	印刷中
 printview	mail	ja	印刷用表示
+private key created, downloading csr...	mail	ja	秘密鍵が作成されました。CSRをダウンロード中...
 processing of file %1 failed. failed to meet basic restrictions.	mail	ja	ファイル %1 の処理に失敗しました。基本的な制限値に抵触。
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ja	不在通知の内容の既定値を定義します
+public key	mail	ja	公開鍵
+purple	mail	ja	紫
 push notifications	mail	ja	プッシュ通知
 quicksearch	mail	ja	クイック検索
 quicksearch (with cc)	mail	ja	クイック検索 (CCを含む)
@@ -478,6 +499,7 @@ real name organization email	mail	ja	本名 組織名 [Eメール］
 reason!	mail	ja	理由!
 receive notification	mail	ja	受信通知
 recursively	mail	ja	再帰
+red	mail	ja	赤
 refresh time in minutes	mail	ja	更新間隔(分）
 refused to delete folder inbox	mail	ja	フォルダ インボックス の削除を拒否されました
 refused to delete folder with subfolders	mail	ja	フォルダ（サブフォルダを含む）の削除を拒否されました
@@ -648,6 +670,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	ja	送信元が既読確認を求めています。既読確認を送信しますか？
 the mimeparser can not parse this message.	mail	ja	MIMEパーサーでこのメッセージをパースできません。
 the rule with priority %1 successfully saved!	mail	ja	優先順位 %1 のルールを保存しました!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	ja	アドレス帳に保存されている %1 の S/MIME 証明書が、このアカウントの証明書と一致しません。このアドレスについて、アドレス帳に重複したエントリがないか確認してください。
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	ja	添付ファイルの合計サイズが %1 MB の制限を超えています。ダウンロードリンクに切り替えました。
 then	mail	ja	次に
 there is no imap server configured.	mail	ja	IMAP サーバーが構成されていません。
@@ -694,6 +717,7 @@ what do do with html email	mail	ja	HTMLメール作成時の動作
 what order the list columns are in	mail	ja	項目リストの表示順
 what to do when you delete a message	mail	ja	メッセージ削除時の動作。
 what to do when you send a message	mail	ja	メッセージ送信時の動作。
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	ja	署名されたメッセージに含まれる証明書や鍵が、その送信者についてまだ保存されていない場合、追加するかどうかを確認します。ただし、既知の連絡先からの検証済みの署名は、確認なしに常に自動的に追加されます
 when deleting messages	mail	ja	メッセージ削除時の動作
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	ja	メッセージをポップアップで表示する時、単一のポップアップを再利用するかメッセージ毎に新規ポップアップを開くか
 when saving messages as item of a different app	mail	ja	他のアプリケーションにメッセージ保存時の動作。
@@ -714,6 +738,7 @@ yes, offer copy option	mail	ja	はい（コピー・オプションあり）
 you can select what info to be displayed on email tag	mail	ja	メールタグに表示する情報を選択できます。
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ja	開始日を $$start$$、終了日を $$end$$ で記述できます。
 you may add this certificate into your contact, if you trust this signature.	mail	ja	署名を信頼できる場合は、この証明書をアドレス帳に追加することができます。
+you may add this key into your contact, if you trust this signature.	mail	ja	この署名を信頼する場合は、この鍵を連絡先に追加することができます。
 you need to enter your s/mime passphrase to send this message.	mail	ja	S/MIME パスフレーズを入力してメッセージを送信します。
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ja	ChromeとFirefoxで利用可能なMailvelopeプラグインを%1からインストールする必要があります。
 you need to save the message as draft first before to be able to save it into vfs	mail	ja	VFSに保存するには、前もってメッセージを下書きとして保存する必要があります。

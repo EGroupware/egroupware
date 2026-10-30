@@ -78,6 +78,7 @@ all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lv	Ļaujiet lietotājam saglabāt savu paroli sadaļā “Drošība un paroles” vienotai pieejai SingleSignOn.
 allow user to set 'remember me' token	admin	lv	Atļaut lietotājam iestatīt žetonu "Atcerēties mani
+allowed just as second factor	admin	lv	Atļauts tikai kā otrais autentifikācijas faktors
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
 anonymous user	admin	lv	Nezināmais lietotājs
 anonymous user (not shown in list sessions)	admin	lv	Nezināmais lietotājs (Netiek parādīts sesiju sarakstā)
@@ -118,7 +119,6 @@ category %1 has been saved !	admin	lv	Kategorija %1 tika saglabāta!
 category list	admin	lv	Kategoriju saraksts
 certificate	admin	lv	Sertifikāts
 certificate details	admin	lv	Informācija par sertifikātu
-certificate validation in days	admin	lv	Sertifikāta apstiprināšana dienās
 change access	admin	lv	Mainīt piekļuves tiesības
 change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
@@ -183,9 +183,14 @@ deny access to user accounts	admin	lv	Liegt pieeju lietotāju kontiem
 deny all users access to grant other users access to their entries ?	admin	lv	Liegt visu lietotāju pieeju atļaut citiem lietotajiem piekļūt viņū ierakstiem?
 description can not exceed 255 characters in length !	admin	lv	Apraksts nedrīkst pārsniegt 255 simbolus!
 determines the order the fields are displayed	admin	lv	Nosaka kārtību, kādā tiek attēloti lauki
+direct login without password or second factor	admin	lv	Tieša pieteikšanās bez paroles vai otrā autentifikācijas faktora
 disable	admin	lv	Deaktivizēt
 disable "auto completion" of the login form	admin	lv	Neatļaut automātikso aizpildīšanos autorizācijas formā
+disable certificate validation	admin	lv	Atspējot sertifikāta validāciju
+disable pgp encryption (mailvelope)	admin	lv	Atspējot PGP šifrēšanu (Mailvelope)
+disabled	admin	lv	Atspējots
 disabled (not recomended)	admin	lv	Neatļauts (nav ieteicams)
+disabled, do not show on login page	admin	lv	Atspējots, nerādīt pieteikšanās lapā
 display	admin	lv	Attēlo(display)
 do not delete the category and return back to the list	admin	lv	Neizdzēst kategoriju in atgriezties uz sarakstu
 domainname	admin	lv	Domēna vārds
@@ -401,6 +406,7 @@ saves this entry	admin	lv	Saglabā šo ierakstu
 search categories	admin	lv	Meklēt kategorijas
 search groups	admin	lv	Meklēt grupas
 search peer servers	admin	lv	Meklēt vienādranga serverus
+secret deleted, two factor authentication disabled.	admin	lv	Slepenais kods dzēsts, divpakāpju autentifikācija atspējota.
 security	admin	lv	Drošība
 select group managers	admin	lv	Atzīmēt Grupu pārvaldniekus
 select permissions this group will have	admin	lv	Atzīmēt kādas tiesības būs šai grupai
@@ -441,7 +447,6 @@ sorry, that group name has already been taken.	admin	lv	Atvainojiet, šis grupas
 sorry, the above users are still a member of the group %1	admin	lv	Atvainojiet, iepriekšminētie lietotāji joprojām pieder grupai %1
 sorry, the follow users are still a member of the group %1	admin	lv	Atvainojiet, sekojošie lietotāji joprojām pieder grupai %1
 sort the entries	admin	lv	Grupēt ierakstus
-ssl	admin	lv	SSL
 standard	admin	lv	Standarta
 standard imap server	admin	lv	Standarta IMAP serveris
 standard smtp-server	admin	lv	Standarta SMTP serveris

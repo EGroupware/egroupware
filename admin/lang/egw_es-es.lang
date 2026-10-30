@@ -112,7 +112,7 @@ allow user to set 'remember me' token	admin	es-es	Permitir al usuario configurar
 allow users to change forwards	admin	es-es	Permitir a los usuarios cambiar reenvíos
 allow users to create identities for aliases	admin	es-es	Permitir a los usuarios crear identidades para alias
 allowed for get requests, default in modern browsers, if attribute is not set	admin	es-es	permitido para peticiones get, por defecto en navegadores modernos, si el atributo no está establecido
-allowed just as second factor	admin	es-es	permitido como segundo factor
+allowed just as second factor	admin	es-es	Permitido como segundo factor
 alternate email address	admin	es-es	Dirección de correo-e alterna
 and logged in	admin	es-es	y conectado
 anonymous user	admin	es-es	Usuario anónimo
@@ -185,7 +185,6 @@ category list	admin	es-es	Lista de categorías
 category saved.	admin	es-es	Se ha guardado la categoria.
 certificate	admin	es-es	Certificado
 certificate details	admin	es-es	Certificate details
-certificate validation in days	admin	es-es	Validación del certificado en días
 change access	admin	es-es	Cambiar derechos de acceso
 change account_id	admin	es-es	Cambiar el campo account ID
 change acl rights	admin	es-es	Cambiar permisos de ACL
@@ -318,10 +317,11 @@ deny all users access to preferences ?	admin	es-es	Denegar a todos los usuarios 
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	es-es	¡La cuenta de destino nº %1 no existe y NO se renombra a sí misma! No se pueden mezclar cuentas, ya que violaría los contenidos únicos. Borre con transferencia de datos en lugar de esto.
 determines the order the fields are displayed	admin	es-es	Determina el orden en que se muestran los campos
-direct login without password or second factor	admin	es-es	inicio de sesión directo sin contraseña o segundo factor
+direct login without password or second factor	admin	es-es	Inicio de sesión directo sin contraseña o segundo factor
 disable	admin	es-es	Deshabilitar
 disable "auto completion" of the login form	admin	es-es	Deshabilitar completado automático en el formulario de inicio de sesión
 disable all	admin	es-es	Deshabilitar todo
+disable certificate validation	admin	es-es	Desactivar la validación de certificados
 disable minifying of javascript and css files	admin	es-es	Deshabilitar la reducción de archivos JavaScript y CSS
 disable pgp encryption (mailvelope)	admin	es-es	Deshabilitar el cifrado PGP (Mailvelope)
 disabled	admin	es-es	Deshabilitado
@@ -329,8 +329,6 @@ disabled (not recomended)	admin	es-es	Deshabilitado (no se recomienda)
 disabled, do not show on login page	admin	es-es	deshabilitado, no se muestra en la página de inicio de sesión
 display	admin	es-es	Mostrar
 displayed length of input field (set rows=1 to limit length)	admin	es-es	Longitud visualizada del campo de entrada (establecer filas=1 para limitar la longitud)
-displaying html messages is disabled	admin	es-es	Mostrar los mensajes en HTML está desactivado
-displaying plain messages is disabled	admin	es-es	Mostrar mensajes simples está deshabilitado
 do not delete the category and return back to the list	admin	es-es	NO borrar la categoría y regresar a la lista
 do not generate email addresses	admin	es-es	No generar direcciones de correo-e
 do not offer introduction video	admin	es-es	No ofrecer video introductorio
@@ -769,7 +767,6 @@ search categories	admin	es-es	Buscar categorías
 search groups	admin	es-es	Buscar grupos
 search peer servers	admin	es-es	Buscar servidores 'peer'
 secret deleted, two factor authentication disabled.	admin	es-es	Secreto eliminado, autenticación de dos factores desactivada.
-secure connection	admin	es-es	Conexión segura
 security	admin	es-es	Seguridad
 select accounts for which the custom field should be readonly	admin	es-es	Seleccione las cuentas para las cuales el campo personalizado debe ser de solo lectura
 select accounts for which the custom field should be visible	admin	es-es	Seleccionar las cuentas para las que el campo personalizado debe estar visible.
@@ -833,7 +830,6 @@ sorry, the above users are still a member of the group %1	admin	es-es	Lo siento,
 sorry, the follow users are still a member of the group %1	admin	es-es	Los siguientes usuarios todavía son miembros del grupo %1.
 sort the entries	admin	es-es	Ordenar las entradas
 source account #%1 does not exist!	admin	es-es	¡La cuenta de origen nº %1 NO existe!
-ssl	admin	es-es	SSL
 standard	admin	es-es	Estándar
 standard identity	admin	es-es	Identidad estándar
 standard imap server	admin	es-es	Servidor IMAP estándar

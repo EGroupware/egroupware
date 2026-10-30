@@ -1,4 +1,5 @@
 %1 attachments	mail	cs	%1 příloh
+%1 attachments downloaded	mail	cs	Bylo staženo %1 příloh.
 %1 for all users	mail	cs	%1 pro všechny uživatele
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
@@ -7,6 +8,7 @@
 (leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
 (no subject)	mail	cs	(žádný předmět)
 (not connected)	mail	cs	(nepřipojeno)
+account	mail	cs	Účet
 account editable by user	mail	cs	Účet může být upraven uživatelem
 account not reachable	mail	cs	Účet není dostupný.
 acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
@@ -19,6 +21,7 @@ add files as %1	mail	cs	Přidat soubory jako %1
 add folder	mail	cs	Přidat složku
 add raw message, ignore mail attachments	mail	cs	Převést poštu na položku, přidat nezpracovanou zprávu (ignorovat přílohy pošty)
 add this certificate into contact	mail	cs	Přidat tento certifikát do kontaktu
+add this key into contact	mail	cs	Přidat tento klíč do kontaktů
 add to addressbook	mail	cs	Přidat do adresáře
 adding %1 to blacklisted email addresses failed because of %2	mail	cs	Přidání %1 na černou listinu e-mailových adres se nezdařilo kvůli %2.
 adding %1 to whiltelisted email addresses failed because of %2	mail	cs	Přidání %1 do e-mailových adres na whiltelistu se nezdařilo kvůli %2.
@@ -70,6 +73,7 @@ available personal email-accounts/profiles	mail	cs	Dostupné osobní e-mailové 
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	cs	Upozorňujeme, že přidáním všech vybraných souborů v režimu %1 se změní i všechny existující přílohy v seznamu na režim %2. \n \n Chcete pokračovat?
 be aware that all attachments will be sent as %1!	mail	cs	Upozorňujeme, že všechny přílohy budou odeslány jako %1!
 before reply, visible during compose	mail	cs	Před odpovědí, viditelně během vytváření zprávy
+blue	mail	cs	Modrá
 but check shared folders	mail	cs	ale zkontrolovat sdílené složky
 by date	mail	cs	Datumem
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	cs	Ve výchozím nastavení je "http://" nahrazeno pouze "https://". Nebojte se nastavit 'https://proxy.egroupware.org/' tak, aby načítal také obrázky dostupné pouze přes http.
@@ -78,6 +82,7 @@ can not open imap connection	mail	cs	Není možné otevřít spojení se servere
 can not resolve the winmail.dat attachment!	mail	cs	Nelze vyřešit přílohu winmail.dat!
 canceled deletion due to user interaction	mail	cs	Mazání bylo přerušeno uživatelem
 certificate details	mail	cs	Podrobnosti o certifikátu
+certificate does not match the stored private key!	mail	cs	Certifikát neodpovídá uloženému soukromému klíči!
 certificate imported.	mail	cs	Certifikát byl importován.
 certificate in text	mail	cs	Certifikát v textu
 certificate info for email %1	mail	cs	Informace o certifikátu pro e-mail %1
@@ -103,6 +108,7 @@ confirm	mail	cs	Potvrzení
 confirm attach message	mail	cs	Potvrzení přílohy e-mailu
 confirm move to folder	mail	cs	Potvrzení při přesunu složky
 connect to profile %1	mail	cs	Připojit k profilu %1
+connection could not be established, use the wizard to check why!	mail	cs	Nepodařilo se navázat spojení, zkontrolujte pomocí průvodce, proč!
 connection status	mail	cs	Stav připojení
 contact label	mail	cs	Štítek kontaktu
 contains	mail	cs	obsahuje
@@ -114,8 +120,11 @@ convert only mail to item (ignore possible attachments)	mail	cs	Pouze změnit e-
 copied %1 message(s) from %2 to %3	mail	cs	%1 zpráv(a/y) byla(y) zkopírovány z %2 do %3.
 copy to	mail	cs	Kopírovat do
 could not append message:	mail	cs	Není možné připojit zprávu:
+could not decrypt stored private key, wrong passphrase?	mail	cs	Nepodařilo se dešifrovat uložený soukromý klíč, nesprávná heslová fráze?
+could not download %1	mail	cs	Nelze stáhnout %1.
 could not save the acl because some names are empty	mail	cs	Není možné uložit ACL, protože některá ze jmen jsou prázdná
 create new account	mail	cs	Přidat účet
+create private key and export csr	mail	cs	Vytvořit soukromý klíč a exportovat CSR
 create self-signed certificate	mail	cs	Vytvořit certifikát s vlastním podpisem
 cross account forward attachment is not allowed!	mail	cs	Připojení křížového účtu není povoleno!
 current folder	mail	cs	Aktuální složka
@@ -176,6 +185,7 @@ don't use draft folder	mail	cs	Nepoužívat složku Rozepsané
 don't use sent	mail	cs	Nepoužívat Odeslané
 don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
+download all attachments	mail	cs	Stáhnout všechny přílohy
 download attachments	mail	cs	Stáhnout přílohy
 draft	mail	cs	Návrh
 draft folder	mail	cs	Rozepsané
@@ -265,6 +275,7 @@ general	admin	cs	Obecné
 general settings	mail	cs	Obecné nastavení
 get acl rights failed from imap server!	mail	cs	Získání práv ACL ze serveru IMAP se nezdařilo!
 greater than	mail	cs	Větší než
+green	mail	cs	Zelená
 ham folder	mail	cs	Složka Ham
 handling of external http images / mixed content in mails	mail	cs	Zpracování externích obrázků http / smíšeného obsahu v e-mailech
 header	mail	cs	Záhlaví
@@ -323,6 +334,7 @@ junk	mail	cs	Nevyžádané
 junk folder	mail	cs	Složka nevyžádané pošty
 keep a copy	mail	cs	Ponechte si kopii
 keep a copy of the message in your inbox	mail	cs	Zachovat kopii zprávy ve vaší schránce
+key fingerprint	mail	cs	Otisk klíče
 kilobytes	mail	cs	kilobytů
 last used signature	mail	cs	Naposledy použitý podpis
 later	mail	cs	Později
@@ -394,6 +406,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	cs	žádné složky
 no message body supplied	mail	cs	Tělo zprávy není podporováno
 no plain text part found	mail	cs	Nebyla nalezena část ve formě prostého textu
+no private key stored to import a certificate for!	mail	cs	Není uložen žádný soukromý klíč, pro který by bylo možné importovat certifikát!
 no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
 no s/mime private key stored for this account.	mail	cs	Pro tento účet není uložen žádný soukromý klíč S/MIME.
 no send folder set in preferences	mail	cs	V parametrech nastavení není definována složka pro odeslanou poštu
@@ -409,6 +422,7 @@ none, create all	mail	cs	žádné, vytvořit všechny
 nothing to change.	mail	cs	Není třeba nic měnit.
 notify about new mail in this folders	mail	cs	Oznámit nový e-mail v těchto složkách
 notify when new mails arrive in these folders	mail	cs	Oznámí, pokud do těchto složkek bude doručen nový e-mail
+offer to add sender's s/mime certificate or pgp key to contact	mail	cs	Nabídka přidání certifikátu S/MIME nebo klíče PGP odesílatele do kontaktů
 on	mail	cs	na
 on behalf of	mail	cs	Jménem
 on vacation	mail	cs	Na dovolené
@@ -425,14 +439,18 @@ only store message in inbox, do not send vacation notice	mail	cs	Uložit zprávu
 open in html mode	mail	cs	Otevřít v režimu HTML
 open in text mode	mail	cs	Otevřit v textovém režimu
 open with collabora office	mail	cs	Otevřít pomocí Collabora Online
+orange	mail	cs	Oranžová
 organisation	admin	cs	Organizace
 organization	mail	cs	Organizace
 organization | real name email	mail	cs	Organizace | Skutečné jméno [E-mail]
 original message	mail	cs	Původní zpráva
 outbox	mail	cs	Odeslaná pošta
+passphrase, if private key is protected	mail	cs	Přístupová fráze, pokud je soukromý klíč chráněn
 password protect	mail	cs	Chráněno heslem
 permission denied	mail	cs	Přístup zamítnut
 personal signature	mail	cs	Osobní podpis
+pgp key info for email %1	mail	cs	Informace o klíči PGP pro e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	cs	Zpráva podepsaná pomocí PGP / S/MIME, nebyl nalezen žádný veřejný klíč pro ověření podpisu
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v EGroupware pro váš účet %1 s identifikací %2 povolit.
@@ -452,8 +470,11 @@ preview pane	mail	cs	Rozložení okna
 primary profile	mail	cs	Výchozí profil
 printing	mail	cs	Tisk
 printview	mail	cs	Náhled pro tisk
+private key created, downloading csr...	mail	cs	Soukromý klíč byl vytvořen, stahuje se CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	cs	Zpracování souboru %1 nebylo úspěšné. Nebyla splněna základní omezení.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	cs	Zadejte výchozí text automatické odpovědi
+public key	mail	cs	Veřejný klíč
+purple	mail	cs	Fialová
 push notifications	mail	cs	Oznámení Push
 quicksearch	mail	cs	Rychlé hledání
 quicksearch (with cc)	mail	cs	Rychlé hledání (včetně příjemce v kopii)
@@ -469,6 +490,7 @@ real name organization email	mail	cs	Skutečné jméno Organizace [Email]
 reason!	mail	cs	Důvod!
 receive notification	mail	cs	Přijaté oznámení
 recursively	mail	cs	Opakovatelně
+red	mail	cs	Červená
 refresh time in minutes	mail	cs	Čas obnovování v minutách
 refused to delete folder inbox	mail	cs	Smazání složky pro doručenou poštu bylo odmítnuto
 refused to delete folder with subfolders	mail	cs	Smazání složky s podsložkami bylo odmítnuto
@@ -635,6 +657,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	cs	Odesílatel požaduje zaslání potvrzení o přečtení zprávy. Přejete si potvrzení odeslat?
 the mimeparser can not parse this message.	mail	cs	MIMEparser nemůže zpracovat tuto zprávu.
 the rule with priority %1 successfully saved!	mail	cs	Pravidlo s prioritou %1 bylo úspěšně uloženo!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	cs	Certifikát S/MIME uložený v adresáři pro %1 se neshoduje s certifikátem vašeho účtu – zkontrolujte, zda v adresáři neexistují duplicitní záznamy pro tuto adresu.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	cs	Celková velikost příloh překračuje limit %1 MB. Bylo přepnuto na odkaz ke stažení.
 then	mail	cs	POTOM
 there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
@@ -681,6 +704,7 @@ what do do with html email	mail	cs	Co udělat s e-mailem ve formátu HTML
 what order the list columns are in	mail	cs	Pořadí seznamu sloupců
 what to do when you delete a message	mail	cs	Co udělat při smazání zprávy.
 what to do when you send a message	mail	cs	Co udělat při odeslání zprávy.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	cs	Pokud podepsaná zpráva odhalí certifikát/klíč, který pro daného odesílatele ještě není uložen, zeptejte se, zda jej chcete přidat – ověřený podpis od již známého kontaktu se vždy přidává automaticky bez dotazu
 when deleting messages	mail	cs	Při mazání zpráv
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	cs	Pokud se zprávy zobrazují ve vyskakovacích oknech, použít při zobrazení další zprávy stejné, nebo nové vyskakovací okno
 when saving messages as item of a different app	mail	cs	při uložení zprávy jako záznamu do jiné aplikace.
@@ -700,6 +724,7 @@ yes, offer copy option	mail	cs	Ano, nabídnout volbu kopírování
 you can select what info to be displayed on email tag	mail	cs	Můžete vybrat, jaké informace se mají zobrazit na e-mailové značce.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	cs	Jako počáteční datum můžete použít $$start$$, jako koncové pak $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	cs	Tento certifikát můžete přidat do svého kontaktu, pokud tomuto podpisu důvěřujete.
+you may add this key into your contact, if you trust this signature.	mail	cs	Tento klíč můžete přidat do svého kontaktu, pokud tomuto podpisu důvěřujete.
 you need to enter your s/mime passphrase to send this message.	mail	cs	Pro odeslání této zprávy musíte zadat svou přístupovou frázi S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	cs	Je nutné nainstalovat zásuvný modul Mailvelope pro Chrome a Firefox z %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	cs	Před tím, než bude možné zprávu uložit do VFS je nutné uložit ji jako koncept

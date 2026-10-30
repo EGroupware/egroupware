@@ -169,7 +169,6 @@ category list	admin	km	Category list
 category saved.	admin	km	Category saved.
 certificate	admin	km	Certificate
 certificate details	admin	km	Certificate details
-certificate validation in days	admin	km	Certificate validation in days
 change account_id	admin	km	ផ្លាស់ប្តូរលេខសម្គាល់គណនី
 change acl rights	admin	km	ផ្លាស់ប្តូរសិទ្ធិ ACL
 change config settings	admin	km	ផ្លាស់ប្តូរការកំណត់រចនាសម្ព័ន្ធ
@@ -306,8 +305,6 @@ disabled (not recomended)	admin	km	បានបិទ (មិនត្រូវ�
 disabled, do not show on login page	admin	km	បានបិទ សូមកុំបង្ហាញនៅលើទំព័រចូល
 display	admin	km	បង្ហាញ
 displayed length of input field (set rows=1 to limit length)	admin	km	បង្ហាញប្រវែងនៃវាលបញ្ចូល (កំណត់ជួរ = 1 ដល់ប្រវែងកំណត់)
-displaying html messages is disabled	admin	km	ការបង្ហាញសារ html ត្រូវបានបិទ
-displaying plain messages is disabled	admin	km	ការបង្ហាញសារធម្មតាត្រូវបានបិទ
 do not delete the category and return back to the list	admin	km	កុំលុបប្រភេទ ហើយត្រឡប់ទៅបញ្ជីវិញ។
 do not generate email addresses	admin	km	កុំបង្កើតអាសយដ្ឋានអ៊ីមែល
 do not offer introduction video	admin	km	កុំផ្តល់វីដេអូណែនាំ
@@ -726,7 +723,6 @@ scheduled	admin	km	បានកំណត់ពេល
 search categories	admin	km	ស្វែងរកប្រភេទ
 search groups	admin	km	ស្វែងរកក្រុម
 search peer servers	admin	km	ស្វែងរកម៉ាស៊ីនមេ
-secure connection	admin	km	ការតភ្ជាប់សុវត្ថិភាព
 security	admin	km	សន្តិសុខ
 select accounts for which the custom field should be visible	admin	km	ជ្រើសរើសគណនីដែលវាលផ្ទាល់ខ្លួនគួរតែអាចមើលឃើញ។
 select group managers	admin	km	ជ្រើសរើសអ្នកគ្រប់គ្រងក្រុម
@@ -785,7 +781,6 @@ sorry, the above users are still a member of the group %1	admin	km	សូមអ�
 sorry, the follow users are still a member of the group %1	admin	km	សូមអភ័យទោស អ្នកប្រើប្រាស់ដែលតាមដាននៅតែជាសមាជិកនៃក្រុម %1 ។
 sort the entries	admin	km	តម្រៀបធាតុ
 source account #%1 does not exist!	admin	km	គណនីប្រភព #%1 មិនមានទេ!
-ssl	admin	km	ssl
 standard	admin	km	ស្តង់ដារ
 standard identity	admin	km	អត្តសញ្ញាណស្តង់ដារ
 standard imap server	admin	km	ម៉ាស៊ីនមេ IMAP ស្តង់ដារ

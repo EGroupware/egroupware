@@ -91,6 +91,7 @@ allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta a
 allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDs (separados por vírgulas).
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt-br	Permitir que o usuário armazene sua senha em “Security & Passwords” para SingleSignOn.
 allow user to set 'remember me' token	admin	pt-br	Permitir que o usuário defina o token "Lembrar de mim"
+allowed just as second factor	admin	pt-br	Permitido apenas como segundo fator
 alternate email address	admin	pt-br	Endereço de e-mail alternativo
 and logged in	admin	pt-br	e registrada no
 anonymous user	admin	pt-br	Usuário Anônimo
@@ -154,7 +155,6 @@ category list	admin	pt-br	Lista de Categorias
 category saved.	admin	pt-br	Categoria salva.
 certificate	admin	pt-br	Certificado
 certificate details	admin	pt-br	Detalhes do certificado
-certificate validation in days	admin	pt-br	Validação do certificado em dias
 change access	admin	pt-br	Alterar direitos de acesso
 change account_id	admin	pt-br	Alterar ID da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
@@ -243,13 +243,16 @@ deny access to user accounts	admin	pt-br	Negar acesso às contas de usuários
 deny all users access to grant other users access to their entries ?	admin	pt-br	Não permitir que usuários concedam acesso aos seus registros para outros usuários?
 description can not exceed 255 characters in length !	admin	pt-br	A descrição não deverá exceder 255 caracteres!
 determines the order the fields are displayed	admin	pt-br	Determinar a ordem de exibição dos campos
+direct login without password or second factor	admin	pt-br	Login direto sem senha ou segundo fator
 disable	admin	pt-br	Desabilitada
 disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formulário de entrada
+disable certificate validation	admin	pt-br	Desativar validação de certificado
+disable pgp encryption (mailvelope)	admin	pt-br	Desativar criptografia PGP (Mailvelope)
+disabled	admin	pt-br	Desativado
 disabled (not recomended)	admin	pt-br	Desabilitar (não recomendado)
+disabled, do not show on login page	admin	pt-br	Desativado, não exibir na página de login
 display	admin	pt-br	Exibir
 displayed length of input field (set rows=1 to limit length)	admin	pt-br	Comprimento exibido do campo de entrada (defina rows=1 para limitar o comprimento)
-displaying html messages is disabled	admin	pt-br	exibir mensagens em HTML é desativada
-displaying plain messages is disabled	admin	pt-br	exibição de mensagens simples é desativado
 do not delete the category and return back to the list	admin	pt-br	NÃO remova essa categoria e retorne à lista
 document root (default)	admin	pt-br	Pasta raiz (padrão)
 domainname	admin	pt-br	Nome do domínio
@@ -558,7 +561,7 @@ saves this entry	admin	pt-br	Salvar este registro
 search categories	admin	pt-br	Pesquisar categorias
 search groups	admin	pt-br	Pesquisar grupos
 search peer servers	admin	pt-br	Pesquisar servidores parceiros
-secure connection	admin	pt-br	Conexão segura
+secret deleted, two factor authentication disabled.	admin	pt-br	Segredo excluído, autenticação de dois fatores desativada.
 security	admin	pt-br	Segurança
 select accounts for which the custom field should be readonly	admin	pt-br	Selecione as contas para as quais o campo personalizado deve ser somente leitura
 select group managers	admin	pt-br	Selecione Manutenção de Grupos
@@ -609,7 +612,6 @@ sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo j�
 sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1.
 sorry, the follow users are still a member of the group %1	admin	pt-br	Desculpe, os seguintes usuários ainda são membros do grupo %1.
 sort the entries	admin	pt-br	Ordenar as entradas
-ssl	admin	pt-br	SSL
 standard	admin	pt-br	Padrão
 standard identity	admin	pt-br	Identidade padrão
 standard imap server	admin	pt-br	Servidor IMAP padrão
