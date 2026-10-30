@@ -6,6 +6,9 @@ cd $(dirname $0)
 BASE_REPO=quay.io/egroupware/php
 REPO=quay.io/egroupware
 IMAGE=egroupware
+# keep Docker Hub in sync too - stylite/docker/Dockerfile and doc/docker/docker-compose.yml
+# still pull the bare (docker.io) name, not quay.io
+DOCKERHUB_IMAGE=egroupware/egroupware
 DEFAULT_PHP_VERSION=8.5
 PHP_VERSION=$DEFAULT_PHP_VERSION
 # which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
@@ -74,6 +77,16 @@ else
     done
   }
 fi
+
+# mirror the same tags to Docker Hub (egroupware/egroupware) - stylite/docker/Dockerfile and
+# doc/docker/docker-compose.yml still pull the bare (docker.io) name. This is a registry-to-
+# registry copy (imagetools, no rebuild), but still re-uploads every layer from wherever it
+# runs, so run it on dev.egroupware.org (better upload bandwidth than here) and in the
+# background - it does not block the EPL image build that layers on top of the quay.io tag
+hub_tags=$(echo "$extra_tags" | sed "s#$REPO/$IMAGE#$DOCKERHUB_IMAGE#g")
+ssh dev "nohup docker buildx imagetools create --tag $DOCKERHUB_IMAGE:$TAG $hub_tags $REPO/$IMAGE:$TAG > /tmp/dockerhub-sync-$TAG.log 2>&1 &" \
+  && echo "Docker Hub sync for $TAG started in the background on dev (log: dev:/tmp/dockerhub-sync-$TAG.log)" \
+  || echo "WARNING: could not start the Docker Hub sync on dev" >&2
 
 # a new release of the current branch (what :26 and :latest point to) is tested by the install tests of the packages in EGroupware/build.opensuse.org:
 # they install the just published image with the egroupware-docker package on the supported distros, a failure is visible in the Actions tab there.
