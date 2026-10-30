@@ -1,4 +1,5 @@
 %1 attachments	mail	it	%1 allegati
+%1 attachments downloaded	mail	it	%1 allegati scaricati.
 %1 for all users	mail	it	%1 per tutti gli utenti
 %1 has been added to blacklisted email addresses	mail	it	%1 è stato aggiunto alla blacklist della posta elettronica
 %1 has been added to whiltelisted email addresses	mail	it	%1 è stato aggiunto alla whitelist della posta elettronica
@@ -11,6 +12,7 @@
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
+account	mail	it	Account
 account editable by user	mail	it	Account modificabile dall'utente
 account not reachable	mail	it	Account non raggiungibile.
 acl rights retrieve failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
@@ -27,6 +29,7 @@ add files as %1	mail	it	Aggiungere i file come %1
 add folder	mail	it	Aggiungi cartella
 add raw message, ignore mail attachments	mail	it	Convertire la posta in oggetto, aggiungere il messaggio grezzo (ignorare gli allegati della posta)
 add this certificate into contact	mail	it	Aggiungi questo certificato nel contatto
+add this key into contact	mail	it	Aggiungi questa chiave ai contatti
 add to addressbook	mail	it	Aggiungi alla rubrica
 adding %1 to blacklisted email addresses failed because of %2	mail	it	L'inserimento di %1 alla blacklist è fallito a causa di %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	it	L'inserimento di %1 alla whitelist è fallito a causa di %2
@@ -78,6 +81,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	it	Attenzione: tutti gli allegati saranno inviati in modalità %1!
 before reply, visible during compose	mail	it	Prima della risposta, visibile durante la composizione
 blacklisted mails are marked as spam	mail	it	Segnare posta proveniente da indirizzi in blacklist come Spam
+blue	mail	it	Blu
 but check shared folders	mail	it	ma controlla le cartelle condivise
 by date	mail	it	Per data
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	it	Per impostazione predefinita, 'http://' è semplicemente sostituito da 'https://'. È possibile configurare 'https://proxy.egroupware.org/' per caricare anche le immagini disponibili solo via http.
@@ -86,6 +90,7 @@ can not open imap connection	mail	it	Impossibile stabilire una connessione IMAP
 can not resolve the winmail.dat attachment!	mail	it	Non è stato possibile risolvere l'allegato winmail.dat!
 canceled deletion due to user interaction	mail	it	Eliminazione interrotta a causa di azione da parte dell'utente
 certificate details	mail	it	Dettagli del certificato
+certificate does not match the stored private key!	mail	it	Il certificato non corrisponde alla chiave privata memorizzata!
 certificate imported.	mail	it	Certificato importato.
 certificate in text	mail	it	Certificato in testo
 certificate info for email %1	mail	it	Informazione del certificato per email %1
@@ -111,6 +116,7 @@ confirm	mail	it	Confermare
 confirm attach message	mail	it	Conferma allegato al messaggio
 confirm move to folder	mail	it	Conferma lo spostamento alla cartella
 connect to profile %1	mail	it	Connetti al profilo %1
+connection could not be established, use the wizard to check why!	mail	it	Impossibile stabilire la connessione: usa la procedura guidata per capire perché!
 connection status	mail	it	Stato della connessione
 contact label	mail	it	Etichetta di contatto
 contains	mail	it	contiene
@@ -122,8 +128,11 @@ convert only mail to item (ignore possible attachments)	mail	it	Converti solo Ma
 copied %1 message(s) from %2 to %3	mail	it	Copiato %1 messaggi(o) da %2 %3.
 copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
+could not decrypt stored private key, wrong passphrase?	mail	it	Impossibile decrittografare la chiave privata memorizzata; passphrase errata?
+could not download %1	mail	it	Impossibile scaricare %1.
 could not save the acl because some names are empty	mail	it	Impossibile salvare l'ACL perché alcuni nomi sono vuoti
 create new account	mail	it	Crea nuovo account
+create private key and export csr	mail	it	Crea una chiave privata ed esporta il CSR
 create self-signed certificate	mail	it	Crea certificato autofirmato
 cross account forward attachment is not allowed!	mail	it	Non è consentito l'attacco incrociato di conti in avanti!
 current folder	mail	it	cartella corrente
@@ -185,6 +194,7 @@ don't use draft folder	mail	it	Non usare la cartella Bozze
 don't use sent	mail	it	Non usare Posta Inviata
 don't use template folder	mail	it	Non usare la cartella Modelli
 don't use trash	mail	it	Non usare il Cestino
+download all attachments	mail	it	Scarica tutti gli allegati
 download attachments	mail	it	Scarica allegati
 draft	mail	it	Bozza
 draft folder	mail	it	Cartella Bozze
@@ -274,6 +284,7 @@ general	admin	it	Generale
 general settings	mail	it	Impostazioni generali
 get acl rights failed from imap server!	mail	it	Impossibile rilevare i permessi ACL per il server IMAP
 greater than	mail	it	Superiore a
+green	mail	it	Verde
 ham folder	mail	it	Cartella Ham
 handling of external http images / mixed content in mails	mail	it	Gestione di immagini esterne http / contenuti misti nelle mail
 header	mail	it	Intestazione (header)
@@ -332,6 +343,7 @@ junk	mail	it	Spazzatura
 junk folder	mail	it	Cartella mail spazzatura
 keep a copy	mail	it	Conserva una copia
 keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
+key fingerprint	mail	it	Impronta digitale della chiave
 kilobytes	mail	it	kilobyte
 last used signature	mail	it	Ultima firma utilizzata
 later	mail	it	Più tardi
@@ -403,6 +415,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	it	Nessuna cartella
 no message body supplied	mail	it	Nessun corpo del messaggio fornito
 no plain text part found	mail	it	Non c'è una parte di testo semplice
+no private key stored to import a certificate for!	mail	it	Nessuna chiave privata memorizzata per cui importare un certificato!
 no recipient address given!	mail	it	Nessun indirizzo destinatario!
 no s/mime private key stored for this account.	mail	it	Nessuna chiave privata S/MIME memorizzata per questo account.
 no send folder set in preferences	mail	it	Nessuna cartella per la posta inviata è stata impostata nelle preferenze
@@ -418,6 +431,7 @@ none, create all	mail	it	Nessuno, crea tutti
 nothing to change.	mail	it	Nulla da modificare.
 notify about new mail in this folders	mail	it	Notifica quando arrivano nuovi messaggi in questa cartella
 notify when new mails arrive in these folders	mail	it	Notifica quando arrivano nuovi messaggi in queste cartelle
+offer to add sender's s/mime certificate or pgp key to contact	mail	it	Proponi di aggiungere il certificato S/MIME o la chiave PGP del mittente ai contatti
 on	mail	it	Su
 on behalf of	mail	it	Per conto di
 on vacation	mail	it	In vacanza
@@ -434,14 +448,18 @@ only store message in inbox, do not send vacation notice	mail	it	Memorizza il me
 open in html mode	mail	it	Apri in modalità HTML
 open in text mode	mail	it	Apri in modalità testo
 open with collabora office	mail	it	Aprire con Collabora Online
+orange	mail	it	Arancione
 organisation	admin	it	Organizzazione
 organization	mail	it	organizzazione
 organization | real name email	mail	it	Organizzazione | Nome reale [Email]
 original message	mail	it	Messaggio originale
 outbox	mail	it	Posta in uscita
+passphrase, if private key is protected	mail	it	Passphrase, se la chiave privata è protetta
 password protect	mail	it	proteggi con password
 permission denied	mail	it	Permesso negato
 personal signature	mail	it	Firma personale
+pgp key info for email %1	mail	it	Informazioni sulla chiave PGP per l'e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	it	Messaggio firmato con PGP / S/MIME, nessuna chiave pubblica trovata per verificare la firma
 please configure access to an existing individual imap account.	mail	it	Configura l'accesso ad un account IMAP esistente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	it	Per favore configurare il certificato S/MIME nel tab "Cifratura" che si trova nella finestra "modifica account".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	it	Per favore contattare il proprio amministratore per validare il supporto di regole di filtri lato Server, e come abilitarli in EGroupware per il tuo account attivo (%1) con ID: %2.
@@ -461,8 +479,11 @@ preview pane	mail	it	Pannello di anteprima
 primary profile	mail	it	Profilo primario
 printing	mail	it	In stampa
 printview	mail	it	Vista stampa
+private key created, downloading csr...	mail	it	Chiave privata creata, download CSR in corso ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	it	Elaborazione del file %1 non riuscita. Non sono state soddisfate le regole di base delle restrizioni di caricamento.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	it	Inserire il testo predefinito per l'autorisponditore delle ferie, (usato nei messaggi di vacanza quando non viene prima impostato un messaggio)
+public key	mail	it	Chiave pubblica
+purple	mail	it	Viola
 push notifications	mail	it	Notifiche push
 quicksearch	mail	it	Ricerca Veloce
 quicksearch (with cc)	mail	it	Ricerca veloce (incluso CC)
@@ -478,6 +499,7 @@ real name organization email	mail	it	Nome reale Organizzazione [Email]
 reason!	mail	it	motivo!
 receive notification	mail	it	Ricevi notifica
 recursively	mail	it	Ricorsivamente
+red	mail	it	Rosso
 refresh time in minutes	mail	it	Tempo di aggiornamento in minuti
 refused to delete folder inbox	mail	it	rifiutato di eliminare la cartella INBOX
 refused to delete folder with subfolders	mail	it	rifiutato di eliminare la cartella con le sottocartelle
@@ -648,6 +670,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	it	Il mittente del messaggio ha richiesto la ricevuta di lettura. Vuoi inviarla?
 the mimeparser can not parse this message.	mail	it	Il MIME parser non riesce a interpretare il messaggio.
 the rule with priority %1 successfully saved!	mail	it	La regola con priorità %1 è stata salvata!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	it	Il certificato S/MIME memorizzato nella rubrica per %1 non corrisponde al certificato del tuo account: verifica se nella rubrica sono presenti voci duplicate relative a questo indirizzo.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	it	La dimensione totale degli allegati supera il limite di %1 MB. Si è passati al link per il download.
 then	mail	it	DI
 there is no imap server configured.	mail	it	Non c'è alcun server IMAP configurato.
@@ -694,6 +717,7 @@ what do do with html email	mail	it	Cosa fare con email scritte in HTML
 what order the list columns are in	mail	it	Quale ordine usare per le colonne delle liste
 what to do when you delete a message	mail	it	Cosa fare all'atto dell'eliminazione di un messaggio.
 what to do when you send a message	mail	it	Cosa fare all'atto dell'invio di un messaggio.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	it	Quando un messaggio firmato rivela un certificato/una chiave non ancora memorizzati per quel mittente, chiedere se aggiungerli: una firma verificata proveniente da un contatto già noto viene sempre aggiunta automaticamente senza chiedere conferma
 when deleting messages	mail	it	Durante la cancellazione dei messaggi
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	it	Quando si visualizzano messaggi in una finestra popup, riutilizzarlo oppure aprirne uno nuovo per ogni messaggio
 when saving messages as item of a different app	mail	it	quando si salvano messaggi in una applicazione diversa.
@@ -714,6 +738,7 @@ yes, offer copy option	mail	it	Sì, fornisci l'ozione di copia
 you can select what info to be displayed on email tag	mail	it	È possibile selezionare le informazioni da visualizzare sul tag e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	it	Puoi usare $$start$$ per la data di inizio e $$end$$ per la data fine.
 you may add this certificate into your contact, if you trust this signature.	mail	it	Puoi aggiungere questo certificato nel tuo contatto se ti fidi della firma.
+you may add this key into your contact, if you trust this signature.	mail	it	È possibile aggiungere questa chiave al proprio contatto, se ci si fida di questa firma.
 you need to enter your s/mime passphrase to send this message.	mail	it	È necessario inserire la frase di accesso S/MIME per inviare questo messaggio.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	it	E' necessario installare il plugin Mailvelope disponibile per Chrome e Firefox da %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	it	Devi prima salvare il messaggio come bozza per poterlo salvare nel VFS

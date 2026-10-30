@@ -9,12 +9,14 @@ a theme defines the colors and fonts used by the template.	preferences	de	Das Th
 access token revoked.	preferences	de	Token zurückgezogen
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde aktualisiert
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	de	Aktiviere um farbigere Anwendungsicons in den offenen Reitern anzuzeigen. Wenn nicht aktiviert werden diese in einer aufgehellten Anwendungsfarbe angezeigt
+allows to set a default or force the active application tab for new logins.	preferences	de	Ermöglicht es, eine Standardeinstellung festzulegen oder den aktiven Anwendungs-Tab bei neuen Anmeldungen zu erzwingen.
+allows to set a default or force the open application tabs.	preferences	de	Ermöglicht es, einen Standard festzulegen oder die geöffneten Anwendungsregisterkarten zu erzwingen.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.\nZu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
+app chooser icons	preferences	de	Symbole in der App-Auswahl
+app chooser icons + text	preferences	de	Symbole in der App-Auswahl + Text
 applications list scroll area	preferences	de	Scroll-Button für Seitenmenü
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass Sie diese Kategorie löschen wollen?
 are you sure?	preferences	de	Sind Sie sicher?
-audio effect	preferences	de	Audio-Effekt
-audio effect enables|disables sound effects used in the theme	preferences	de	Audio Effekte (Sound) für das Thema aktivieren|deaktivieren.
 automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
 automatically start with this format block. small paragraph adds less line space between new lines.	preferences	de	Startet mit diesem Format. "Schmaler Absatz" fügt weniger Zeilenabstand zwischen neuen Zeilen hinzu.
@@ -56,12 +58,12 @@ div	preferences	de	div
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	de	Möchten Sie immer Datum und Uhrzeit sehen, auch wenn weniger Platz vorhanden ist, oder für heute nur die Uhrzeit und ansonsten nur das Datum?
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	de	Bevorzugen Sie ein 24 Stunden Zeitformat oder 12 Stunden mit angehängtem Vor-/Nachmittag.
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
+editor and preview	preferences	de	Editor und Vorschau
+editor only	preferences	de	Nur Editor
 enable	preferences	de	Aktivieren
-enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
 enable menubar	preferences	de	Menüleiste aktivieren
 enable/disable menubar from top of the editor.	preferences	de	Aktivieren/Deaktivieren der Menüleiste am oberen Rand des Editors.
 enabled features in toolbar	preferences	de	Aktivierte Funktionen in der Symbolleiste
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	de	Eine verschlüsselte LDAP Verbindung ist erforderlich um Passwörter zu ändern, aber in Ihre Installation nicht konfiguriert.
 enter code to authenticate the actions below	preferences	de	Geben Sie den Code zur Authentifizierung der folgenden Aktionen ein
 enter code to verify correct setup	preferences	de	Bitte geben sie den Code ein um die Einrichtung zu überprüfen
@@ -91,7 +93,6 @@ how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wie viele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?\n Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldown-Menü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
-how many toolbar buttons are available	preferences	de	Wie viele Buttons sind in der Symbolleiste verfügbar
 how should egroupware display dates for you.	preferences	de	Wie soll EGroupware das Datum für Sie anzeigen?
 how to update lists	preferences	de	Wie sollen Listen aktualisiert werden
 icon	preferences	de	Symbol
@@ -111,6 +112,7 @@ logging in via singlesignon does not provide a password to pass it on to mail- o
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Macht die Seitenleiste links mit Scroll-Button nach oben/unten scrollbar (nützlich für Benutzer auf Tablets).
+markdown view	preferences	de	Markdown-Ansicht
 max matches per page	preferences	de	Maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 new secret generated, you need to save it to disable the old one!	preferences	de	Neuer Schlüssel generiert, Sie müssen ihn jetzt speichern und den alten ungültig zu machen!
@@ -122,6 +124,7 @@ notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist nicht erlaubt. Sie müssen ein neues Passwort vergeben.
+open application tabs	preferences	de	Geöffnete Anwendungsregisterkarten
 open popups in	preferences	de	Öffne Pop-ups in
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
@@ -139,6 +142,7 @@ popup window	preferences	de	Pop-up-Fenster
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert.
 preformatted	preferences	de	Vorformatiert
+preview only	preferences	de	Nur Vorschau
 pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
 px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
@@ -206,9 +210,9 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import/Export. Der Standard-Zeichensatz ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	de	In welcher Ansicht werden Markdown-fähige Textfelder geöffnet? Wenn Sie die Ansicht in einem Feld ändern, wird diese Einstellung aktualisiert.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
-you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesem Modus zu setzen.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	de	Sie können Funktionen auswählen, die in der Symbolleiste aktiviert werden sollen.
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 you need to enter your password to make any security changes!	preferences	de	Sie müssen Ihr Passwort eingeben um sicherheitskritische Änderungen zu machen.

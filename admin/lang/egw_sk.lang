@@ -110,7 +110,7 @@ allow the user to store his password under 'security & passwords' for singlesign
 allow user to set 'remember me' token	admin	sk	Povoliť používateľovi nastaviť príznak 'Zapamätaj si ma'
 allow users to change forwards	admin	sk	Povoliť používateľom zmeniť preposielania
 allow users to create identities for aliases	admin	sk	Povoliť používateľom vytvárať identity pre aliasy
-allowed just as second factor	admin	sk	povolené len ako druhý faktor
+allowed just as second factor	admin	sk	Povolené len ako druhý faktor
 alternate email address	admin	sk	Alternatívna E-mailová adresa
 and logged in	admin	sk	a prihlásený
 anonymous user	admin	sk	Anonymný používateľ
@@ -181,7 +181,6 @@ category list	admin	sk	Zoznam kategórií
 category saved.	admin	sk	Kategória uložená.
 certificate	admin	sk	Certifikát
 certificate details	admin	sk	Podrobnosti o certifikáte
-certificate validation in days	admin	sk	Platnosť certifikátu v dňoch
 change access	admin	sk	Zmena prístupových práv
 change account_id	admin	sk	Zmeniť ID účtu
 change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
@@ -311,19 +310,18 @@ deny all users access to preferences ?	admin	sk	Zakázať všetkým používate�
 description can not exceed 255 characters in length !	admin	sk	Dĺžka popisu nemôže presiahnuť 255 znakov!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	sk	Cieľový účet #%1 neexistuje a NIE je premenovaný! Nemôžem zlúčiť účty, porušilo by to jedinečný obsah. Namiesto toho zmazať s prenosom dát.
 determines the order the fields are displayed	admin	sk	Určuje poradie, v akom sa položky zobrazujú
-direct login without password or second factor	admin	sk	priame prihlásenie bez hesla alebo druhého faktora
+direct login without password or second factor	admin	sk	Priame prihlásenie bez hesla alebo druhého faktora
 disable	admin	sk	Vypnúť
 disable "auto completion" of the login form	admin	sk	Vypnúť automatické dopĺňanie v prihlasovacej stránke
 disable all	admin	sk	Vypnúť všetko
+disable certificate validation	admin	sk	Vypnúť overovanie certifikátov
 disable minifying of javascript and css files	admin	sk	Zakázať minimalizáciu súborov JavaScript a CSS
 disable pgp encryption (mailvelope)	admin	sk	Vypnúť PGP šifrovanie (Mailvelope)
 disabled	admin	sk	Vypnuté
 disabled (not recomended)	admin	sk	Vypnuté (neodporúča sa)
-disabled, do not show on login page	admin	sk	vypnuté, nezobrazovať na prihlasovacej stránke
+disabled, do not show on login page	admin	sk	Vypnuté, nezobrazovať na prihlasovacej stránke
 display	admin	sk	Zobraziť
 displayed length of input field (set rows=1 to limit length)	admin	sk	Zobrazovaná dĺžka vstupného poľa (ak chcete obmedziť dĺžku, nastavte rows=1)
-displaying html messages is disabled	admin	sk	Zobrazovanie HTML správ je vypnuté
-displaying plain messages is disabled	admin	sk	Zobrazovanie správ ako čistého textu je vypnuté
 do not delete the category and return back to the list	admin	sk	NEodstraňovať túto kategóriu a vrátiť sa naspäť do zoznamu
 do not generate email addresses	admin	sk	Negenerovať e-mailovú adresu
 do not offer introduction video	admin	sk	Neponúkať úvodné video
@@ -759,7 +757,6 @@ search categories	admin	sk	Hľadať v kategóriách
 search groups	admin	sk	Hľadať v skupinách
 search peer servers	admin	sk	Hľadať v peer serveroch
 secret deleted, two factor authentication disabled.	admin	sk	Tajomstvo odstránené, dvojfaktorové overovanie vypnuté.
-secure connection	admin	sk	Bezpečné pripojenie
 security	admin	sk	Zabezpečenie
 select accounts for which the custom field should be readonly	admin	sk	Vyberte účty, pre ktoré má byť vlastné pole len na čítanie
 select accounts for which the custom field should be visible	admin	sk	Vyberte účty, pre ktoré bude vlastné pole viditeľné.
@@ -823,7 +820,6 @@ sorry, the above users are still a member of the group %1	admin	sk	Ľutujem, uve
 sorry, the follow users are still a member of the group %1	admin	sk	Ľutujem, nasledujúci používatelia sú stále členmi skupiny %1.
 sort the entries	admin	sk	Triediť záznamy
 source account #%1 does not exist!	admin	sk	Zdrojový účet #%1 NEexistuje!
-ssl	admin	sk	SSL
 standard	admin	sk	Štandard
 standard identity	admin	sk	Štandardná identita
 standard imap server	admin	sk	Štandardný IMAP server

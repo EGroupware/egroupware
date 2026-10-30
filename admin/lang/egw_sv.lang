@@ -80,6 +80,7 @@ all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	sv	Tillåt användaren att lagra sitt lösenord under ”Säkerhet & lösenord” för SingleSignOn.
 allow user to set 'remember me' token	admin	sv	Tillåt användaren att ställa in ”Kom ihåg mig”-token
+allowed just as second factor	admin	sv	Tillåtet endast som andra autentiseringsfaktor
 alternate email address	admin	sv	Alternerande e-post adress
 anonymous user	admin	sv	Anonym användare
 anonymous user (not shown in list sessions)	admin	sv	Anonym användare (visas inte bland sessioner)
@@ -126,7 +127,6 @@ category %1 has been saved !	admin	sv	Kategori %1 har sparats
 category list	admin	sv	Kategorilista
 certificate	admin	sv	Certifikat
 certificate details	admin	sv	Detaljer om certifikatet
-certificate validation in days	admin	sv	Certifikatsvalidering i dagar
 change access	admin	sv	Ändra åtkomsträttigheter
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
@@ -197,11 +197,15 @@ deny access to user accounts	admin	sv	Neka åtkomst till användarkonton
 deny all users access to grant other users access to their entries ?	admin	sv	Neka alla användare möjlighet att ge andra användare åtkomst till egna poster?
 description can not exceed 255 characters in length !	admin	sv	Beskrivning får inte vara längre än 255 tecken!
 determines the order the fields are displayed	admin	sv	Avgör sorteringen av visade fält
+direct login without password or second factor	admin	sv	Direkt inloggning utan lösenord eller andra autentiseringsfaktor
 disable	admin	sv	Inaktivera
 disable "auto completion" of the login form	admin	sv	Inaktivera "automatisk ifyllnad" av inloggningsformuläret
+disable certificate validation	admin	sv	Inaktivera certifikatvalidering
+disable pgp encryption (mailvelope)	admin	sv	Inaktivera PGP-kryptering (Mailvelope)
+disabled	admin	sv	Inaktiverad
 disabled (not recomended)	admin	sv	Inaktiverad (rekommenderas ej)
+disabled, do not show on login page	admin	sv	Inaktiverad, visas inte på inloggningssidan
 display	admin	sv	Visa
-displaying html messages is disabled	admin	sv	Cisa HTML meddelanden är inaktiverat
 do not delete the category and return back to the list	admin	sv	Ta EJ bort kategorin och gå tillbaka till listan
 domainname	admin	sv	Domän namn
 down	admin	sv	Ner
@@ -447,6 +451,7 @@ saves this entry	admin	sv	Spara post
 search categories	admin	sv	Sök kategorier
 search groups	admin	sv	Sök grupper
 search peer servers	admin	sv	Sök peer servers
+secret deleted, two factor authentication disabled.	admin	sv	Hemlig nyckel raderad, tvåfaktorsautentisering inaktiverad.
 security	admin	sv	Säkerhet
 select group managers	admin	sv	Välj gruppansvariga
 select permissions this group will have	admin	sv	Välj behörigheter denna grupp skall ha
@@ -487,7 +492,6 @@ sorry, that group name has already been taken.	admin	sv	Beklagar, gruppnamnet ä
 sorry, the above users are still a member of the group %1	admin	sv	Beklagar, användarna ovan är fortfarande medlemmar i gruppen %1
 sorry, the follow users are still a member of the group %1	admin	sv	Beklagar, följande användare är fortfarande medlem av gruppen %1
 sort the entries	admin	sv	Sortera posterna
-ssl	admin	sv	SSL
 standard	admin	sv	Standard
 standard imap server	admin	sv	Standard IMAP server
 standard smtp-server	admin	sv	Standard SMTP server

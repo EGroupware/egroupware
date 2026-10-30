@@ -1,10 +1,12 @@
 %1 attachments	mail	da	%1 vedhæftede filer
+%1 attachments downloaded	mail	da	%1 vedhæftede filer er downloadet.
 %1 for all users	mail	da	%1 for alle brugere
 %1 is not writable by you!	mail	da	%1 kan IKKE skrives af dig!
 %1 mails selected	mail	da	%1 e-mails valgt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	da	%1 kræver Sieve-udvidelsen %2, prøv måske %1 eller et højere antal dage.
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
+account	mail	da	Konto
 account editable by user	mail	da	Kontoen kan redigeres af brugeren
 account not reachable	mail	da	Der kan ikke oprettes forbindelse til kontoen.
 acl rights retrieve failed, seems there are no rights set!	mail	da	ACL-rettighedshentning mislykkedes, der er tilsyneladende ikke indstillet nogen rettigheder!
@@ -16,6 +18,7 @@ add files as %1	mail	da	Tilføj filer som %1
 add folder	mail	da	Tilføj mappe
 add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
 add this certificate into contact	mail	da	Tilføj dette certifikat til kontakt
+add this key into contact	mail	da	Føj denne nøgle til kontakten
 add to addressbook	mail	da	tilføj til adressebog
 adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til sortlistede e-mailadresser mislykkedes på grund af %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
@@ -47,10 +50,12 @@ attachments, ...	mail	da	vedhæftede filer, ...
 available personal email-accounts/profiles	mail	da	tilgængelige personlige e-mail-konti/profiler
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	da	Vær opmærksom på, at ved at tilføje alle valgte filer som %1-tilstand, vil det også ændre alle eksisterende vedhæftede filer på listen til %2-tilstand. \n \n Vil du gerne fortsætte?
 be aware that all attachments will be sent as %1!	mail	da	Vær opmærksom på, at alle vedhæftede filer vil blive sendt som %1!
+blue	mail	da	Blå
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	da	Som standard erstattes 'http://' bare med 'https://'. Du er velkommen til at konfigurere 'https://proxy.egroupware.org/' til også at indlæse billeder, der kun er tilgængelige via http.
 caching of flags	mail	da	Caching af flag
 can not resolve the winmail.dat attachment!	mail	da	Kan ikke løse winmail.dat-vedhæftningen!
 certificate details	mail	da	Detaljer om certifikatet
+certificate does not match the stored private key!	mail	da	Certifikatet stemmer ikke overens med den gemte private nøgle!
 certificate in text	mail	da	Certifikat i tekst
 certificate info for email %1	mail	da	Certifikatinfo for e-mail %1
 certificate issued by	mail	da	Certifikat udstedt af
@@ -65,6 +70,7 @@ checking admin credentials failed	mail	da	Kontrol af administratorlegitimation m
 compose	mail	da	Ny meddelse
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	da	Konfigurerede værdier vil automatisk blive indstillet i dialogboksen for det respekterede felt, når du skriver en ny e-mail.
 connect to profile %1	mail	da	Opret forbindelse til profil %1
+connection could not be established, use the wizard to check why!	mail	da	Det var ikke muligt at oprette forbindelse. Brug guiden til at finde ud af hvorfor!
 contact label	mail	da	Kontakt-label
 contains	mail	da	indeholder
 continue	mail	da	Fortsæt
@@ -73,7 +79,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	da	Konverter kun e-mail til emne (ignorér eventuelle vedhæftede filer)
 copied %1 message(s) from %2 to %3	mail	da	Kopierede %1 meddelelse(r) fra %2 til %3.
 copy to	mail	da	Kopier til
+could not decrypt stored private key, wrong passphrase?	mail	da	Det var ikke muligt at dekryptere den gemte private nøgle – forkert adgangskode?
+could not download %1	mail	da	Det var ikke muligt at downloade %1.
 create new account	mail	da	Opret ny konto
+create private key and export csr	mail	da	Opret en privat nøgle og eksporter CSR
 cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 current subject	mail	da	Nuværende emne
 default sorting order	mail	da	Standart soterings rækkefølge
@@ -104,6 +113,7 @@ does not match	mail	da	passer ikke sammen
 does not match regexp	mail	da	passer ikke til regexp
 don't use sent	mail	da	Brug ikke Sendt
 don't use trash	mail	da	Brug ikke skraldespand
+download all attachments	mail	da	Download alle vedhæftede filer
 draft	mail	da	Udkast
 draft folder	mail	da	Udkast til mappe
 drafts	mail	da	Udkast
@@ -144,6 +154,7 @@ forward to	mail	da	Gå videre til
 from	mail	da	Fra
 general	admin	da	Generelt
 get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
+green	mail	da	Grøn
 ham folder	mail	da	Ham-mappe
 handling of external http images / mixed content in mails	mail	da	Håndtering af eksterne http-billeder / blandet indhold i mails
 header	mail	da	Overskrift
@@ -161,6 +172,7 @@ if mail header	mail	da	hvis e-mail-overskrift
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	da	Hvis du vil se en forhåndsvisning af en mail ved at klikke på emnet, skal du aktivere dette.
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
+import ca-signed certificate for this key	mail	da	Importer et CA-signeret certifikat til denne nøgle
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	da	Import af besked %1 mislykkedes. Kunne ikke gemme beskeden i mappen %2 pga: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	da	Import af besked %1 mislykkedes. Destinationsmappen %2 findes ikke.
 import of message %1 failed. destination folder not set.	mail	da	Import af meddelelse %1 mislykkedes. Destinationsmappe ikke indstillet.
@@ -179,6 +191,7 @@ junk	mail	da	Junk
 junk folder	mail	da	Junk-mappe
 keep a copy	mail	da	Behold en kopi
 keep a copy of the message in your inbox	mail	da	Opbevar en kopi af beskeden i din indbakke
+key fingerprint	mail	da	Nøglefingeraftryk
 kilobytes	mail	da	Kilobyte
 later	mail	da	Senere
 learning as ham (not spam) failed because of %1	mail	da	Læring som skinke (ikke spam) mislykkedes på grund af %1
@@ -229,9 +242,11 @@ new message type	mail	da	Ny meddelelsestype
 new subject	mail	da	Nyt emne
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	da	Ingen adresse TO/CC/BCC angivet, og ingen mappe til at gemme beskeden i angivet.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	da	Ingen mappedestination angivet, og ingen mappe til at gemme beskeden eller anden foranstaltning til at gemme mailen (gem til InfoLog/Ticketsystem) angivet, men påkrævet.
+no private key stored to import a certificate for!	mail	da	Der er ingen gemt privat nøgle, som certifikatet kan importeres til!
 no s/mime private key stored for this account.	mail	da	Der er ikke gemt nogen privat S/MIME-nøgle for denne konto.
 no sneak preview in list	mail	da	Ingen visning af meddelelser
 non	mail	da	Nej
+offer to add sender's s/mime certificate or pgp key to contact	mail	da	Tilbud om at tilføje afsenderens S/MIME-certifikat eller PGP-nøgle til kontakten
 once per day	mail	da	Once per day
 only email	mail	da	Kun e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	da	Giver kun mening, hvis du transporterer adgangskoden gennem en anden kanal/uden for denne mail til modtageren!
@@ -240,12 +255,16 @@ only needed for some servers, that do not return all folders on root level queri
 open in html mode	mail	da	Åbn i HTML-tilstand
 open in text mode	mail	da	Åbn i teksttilstand
 open with collabora office	mail	da	Åbn med Collabora Online
+orange	mail	da	Orange
 organisation	admin	da	Organisation
 organization	mail	da	Organisation
 organization | real name email	mail	da	Organisation | Rigtigt navn [E-mail]
 original message	mail	da	Original besked
 outbox	mail	da	Udbakke
+passphrase, if private key is protected	mail	da	Adgangskode, hvis den private nøgle er beskyttet
 permission denied	mail	da	Adgang nægtet
+pgp key info for email %1	mail	da	PGP-nøgleoplysninger for e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	da	PGP- / S/MIME-signeret besked, ingen offentlig nøgle fundet til at verificere signaturen
 please configure access to an existing individual imap account.	mail	da	Konfigurer venligst adgang til en eksisterende individuel IMAP-konto.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	da	Konfigurer dit S/MIME-certifikat under fanen Encryption i dialogboksen Rediger konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	da	Kontakt din administrator for at få bekræftet, om din server understøtter filterregler på serversiden, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID:%2.
@@ -256,8 +275,11 @@ post	mail	da	Send
 predefined addresses for compose	mail	da	Foruddefinerede adresser til sammensætning
 preview pane	mail	da	Vindueslayout
 printing	mail	da	Udskrivning
+private key created, downloading csr...	mail	da	Privat nøgle oprettet, henter CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	da	Behandling af fil %1 mislykkedes. Opfyldte ikke de grundlæggende begrænsninger.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	da	Angiv en standard ferietekst, (bruges på nye feriebeskeder, når der ikke var oprettet en besked tidligere)
+public key	mail	da	Offentlig nøgle
+purple	mail	da	Lilla
 push notifications	mail	da	Push-meddelelser
 quicksearch	mail	da	Hurtigsøgning
 quicksearch (with cc)	mail	da	Hurtigsøgning (+Kopi)
@@ -265,6 +287,7 @@ read / unread	mail	da	Læst / Ulæst
 real name	mail	da	Rigtigt navn
 real name email	mail	da	Rigtigt navn [e-mail]
 real name organization email	mail	da	Rigtigt navn Organisation [E-mail]
+red	mail	da	Rød
 refresh time in minutes	mail	da	Opdaterings interval i minutter
 reloaded account %1	mail	da	Kontoen %1 er genindlæst.
 reloaded folder %1	mail	da	Genindlæst mappe %1
@@ -341,6 +364,7 @@ the %1 's acl removed from the %2	mail	da	ACL'en for %1 fjernet fra %2.
 the %1 's acl, including its subfolders, removed from the %2	mail	da	%1's ACL, inklusive dens undermapper, fjernet fra %2.
 the imap server need to meet certain requirements and be configured for it:	mail	da	IMAP-serveren skal opfylde visse krav OG være konfigureret til det:
 the rule with priority %1 successfully saved!	mail	da	Reglen med prioritet %1 er gemt med succes!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	da	Det S/MIME-certifikat, der er gemt i adressebogen for %1, stemmer ikke overens med din kontos eget certifikat – tjek, om der er dobbelte poster i adressebogen for denne adresse.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	da	Den samlede størrelse af vedhæftede filer overskrider grænsen på %1 MB. Der er skiftet til et downloadlink.
 then	mail	da	SÅ
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	da	Der er ikke plads til at gemme sieve-script, tjek venligst sieve_maxscriptsize-indstillingen i din mailservers konfiguration.
@@ -359,6 +383,7 @@ vacation messages with start and end date require an admin account to be set!	ma
 validate addresses on submit:	mail	da	Valider adresserne, når du sender:
 view header lines	mail	da	Vis overskriftslinjer
 what to do when you delete a message	mail	da	Hvad man skal gøre, når man sletter en besked.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	da	Når en signeret besked afslører et certifikat/en nøgle, der endnu ikke er gemt for den pågældende afsender, skal du spørge, om den skal tilføjes – en verificeret signatur fra en allerede kendt kontakt tilføjes altid automatisk uden at spørge
 when deleting messages	mail	da	Når meddelser slettes
 write	mail	da	Skriv
 write & delete	mail	da	skriv og slet
@@ -366,6 +391,7 @@ wrote	mail	da	skrev
 you can select what info to be displayed on email tag	mail	da	Du kan vælge, hvilke oplysninger der skal vises på e-mail-tagget.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	da	Du kan bruge $$start$$ for ovenstående startdato og $$end$$ for slutdatoen.
 you may add this certificate into your contact, if you trust this signature.	mail	da	Du kan tilføje dette certifikat til din kontakt, hvis du stoler på denne signatur.
+you may add this key into your contact, if you trust this signature.	mail	da	Du kan tilføje denne nøgle til din kontakt, hvis du stoler på denne signatur.
 you need to enter your s/mime passphrase to send this message.	mail	da	Du skal indtaste din S/MIME-passphrase for at sende denne besked.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	da	Du skal installere Mailvelope-plugin, der er tilgængeligt til Chrome og Firefox fra %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	da	Du skal først gemme beskeden som kladde, før du kan gemme den i VFS

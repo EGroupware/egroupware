@@ -1,5 +1,5 @@
 %1 attachments	mail	de	%1 Anhänge
-%1 attachments downloaded	mail	de	%1 Anhänge heruntergeladen
+%1 attachments downloaded	mail	de	%1 Anhänge heruntergeladen.
 %1 for all users	mail	de	%1 für alle Benutzer
 %1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blacklist hinzugefügt
 %1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Whitelist hinzugefügt
@@ -140,7 +140,7 @@ copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
 could not attach '%1': the original message is no longer available (deleted or moved).	mail	de	Anhang '%1' konnte nicht angefügt werden: die ursprüngliche Nachricht ist nicht mehr verfügbar (gelöscht oder verschoben).
 could not decrypt stored private key, wrong passphrase?	mail	de	Gespeicherter privater Schlüssel konnte nicht entschlüsselt werden, falsche Passphrase?
-could not download %1	mail	de	Konnte %1 nicht herunterladen
+could not download %1	mail	de	Konnte %1 nicht herunterladen.
 could not generate certificate!	mail	de	Zertifikat konnte nicht erstellt werden!
 could not generate csr.	mail	de	CSR konnte nicht erstellt werden.
 could not read uploaded certificate!	mail	de	Hochgeladenes Zertifikat konnte nicht gelesen werden!
@@ -294,11 +294,11 @@ flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
-folder '%1' not found	mail	de	Ordner '%1' nicht gefunden
 folder %1 %2 failed because of %3!	mail	de	Ordner %1 %2 fehlgeschlagen, da %3!
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	de	Ordner %1 wurde erfolgreich angelegt, obwohl das Abonnieren fehlgeschlagen ist, weil: %2
 folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verschoben
+folder '%1' not found	mail	de	Ordner '%1' nicht gefunden
 folder management	mail	de	Ordner-Verwaltung
 folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
@@ -535,7 +535,7 @@ preview pane	mail	de	Fensterlayout
 primary profile	mail	de	Primäres Profil
 printing	mail	de	Drucke
 printview	mail	de	Druckansicht
-private key created, downloading csr...	mail	de	Privater Schlüssel erstellt, CSR wird heruntergeladen...
+private key created, downloading csr...	mail	de	Privater Schlüssel erstellt, CSR wird heruntergeladen ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	de	Vorschlagstext für eine Abwesenheitsnotiz (wenn noch kein eigener Benachrichtigungstext vorhanden ist)
 public key	mail	de	Öffentlicher Schlüssel
@@ -821,20 +821,3 @@ you need to select some folders first (by clicking on them)!	mail	de	Sie müssen
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\nBitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.\nWenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
-no s/mime private key stored for this account.	mail	de	Kein S/MIME privater Schlüssel für dieses Konto gespeichert.
-could not generate csr.	mail	de	CSR konnte nicht erstellt werden.
-create self-signed certificate	mail	de	Selbstsigniertes Zertifikat erstellen
-export csr	mail	de	CSR exportieren
-import ca-signed certificate for this key	mail	de	CA-signiertes Zertifikat für diesen Schlüssel importieren
-passphrase, if private key is protected	mail	de	Passphrase, falls der private Schlüssel geschützt ist
-import certificate	mail	de	Zertifikat importieren
-create private key and export csr	mail	de	Privaten Schlüssel erstellen und CSR exportieren
-private key created, downloading csr...	mail	de	Privater Schlüssel erstellt, CSR wird heruntergeladen...
-self-signed certificate created.	mail	de	Selbstsigniertes Zertifikat erstellt.
-certificate imported.	mail	de	Zertifikat importiert.
-could not generate certificate!	mail	de	Zertifikat konnte nicht erstellt werden!
-common name and email address are required!	mail	de	Common Name und E-Mail-Adresse sind erforderlich!
-no private key stored to import a certificate for!	mail	de	Kein privater Schlüssel gespeichert, für den ein Zertifikat importiert werden könnte!
-could not read uploaded certificate!	mail	de	Hochgeladenes Zertifikat konnte nicht gelesen werden!
-could not decrypt stored private key, wrong passphrase?	mail	de	Gespeicherter privater Schlüssel konnte nicht entschlüsselt werden, falsche Passphrase?
-certificate does not match the stored private key!	mail	de	Zertifikat passt nicht zum gespeicherten privaten Schlüssel!

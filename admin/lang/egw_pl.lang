@@ -90,6 +90,7 @@ allow anonymous access to this app	admin	pl	Pozwól na dostęp anonimowy do tej 
 allow remote administration from following install id's (comma separated)	admin	pl	Zezwól na zdalną administrację z tych ID instalacji (rozdzielone przecinkiem)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pl	Zezwól użytkownikowi na przechowywanie hasła w sekcji „Bezpieczeństwo i hasła” dla SingleSignOn.
 allow user to set 'remember me' token	admin	pl	Umożliwienie użytkownikowi ustawienia tokenu "Zapamiętaj mnie"
+allowed just as second factor	admin	pl	Dopuszczone wyłącznie jako drugi czynnik
 alternate email address	admin	pl	Alternatywny adres email
 anonymous user	admin	pl	Użytkownik anonimowy
 anonymous user (not shown in list sessions)	admin	pl	Użytkownik anonimowy (nie pojawia się w wykazie sesji)
@@ -145,7 +146,6 @@ category list	admin	pl	Lista kategorii
 category saved.	admin	pl	Kategoria zapisana.
 certificate	admin	pl	Certyfikat
 certificate details	admin	pl	Szczegóły certyfikatu
-certificate validation in days	admin	pl	Walidacja certyfikatu w dniach
 change access	admin	pl	Zmiana praw dostępu
 change account_id	admin	pl	Zmień account_ID
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
@@ -229,11 +229,15 @@ deny access to user accounts	admin	pl	Odmów dostępu do kont użytkowników
 deny all users access to grant other users access to their entries ?	admin	pl	Odmówić dostępu do przydzielania praw innym użytkownikom do ich wpisów?
 description can not exceed 255 characters in length !	admin	pl	Opis nie może przekraczać 255 znaków!
 determines the order the fields are displayed	admin	pl	Decyduje o kolejności, w jakiej pola zostaną pokazane
+direct login without password or second factor	admin	pl	Bezpośrednie logowanie bez hasła ani drugiego czynnika
 disable	admin	pl	Wyłącz
 disable "auto completion" of the login form	admin	pl	Wyłacz funkcję automatycznego wypełniania formularzy w przeglądarce (auto completion)
+disable certificate validation	admin	pl	Wyłącz weryfikację certyfikatów
+disable pgp encryption (mailvelope)	admin	pl	Wyłącz szyfrowanie PGP (Mailvelope)
+disabled	admin	pl	Wyłączone
 disabled (not recomended)	admin	pl	Wyłączone (nie zalecane)
+disabled, do not show on login page	admin	pl	Wyłączone, nie wyświetlaj na stronie logowania
 display	admin	pl	Wyświetl
-displaying html messages is disabled	admin	pl	Wyświetlanie wiadomości w HTML jest wyłączone
 do not delete the category and return back to the list	admin	pl	NIE usuwaj tej kategorii i wróć do listy
 document root (default)	admin	pl	Katalog główny serwera WWW (domyślnie)
 domainname	admin	pl	Nazwa domeny
@@ -551,6 +555,7 @@ scheduled	admin	pl	Zaplanowany
 search categories	admin	pl	Wyszukiwanie kategorii
 search groups	admin	pl	Wyszukiwanie grup
 search peer servers	admin	pl	Wyszukiwanie serwerów równorzędnych (peer servers)
+secret deleted, two factor authentication disabled.	admin	pl	Sekret usunięty, uwierzytelnianie dwuskładnikowe wyłączone.
 security	admin	pl	Zabezpieczenie
 select accounts for which the custom field should be visible	admin	pl	Wybierz konta dla których ma być widoczne pole własne
 select group managers	admin	pl	Wybierz managera grupy
@@ -599,7 +604,6 @@ sorry, that group name has already been taken.	admin	pl	Niestety, ta nazwa grupy
 sorry, the above users are still a member of the group %1	admin	pl	Niestety, następujący użytkownik wciąż jest członkiem grupy %1
 sorry, the follow users are still a member of the group %1	admin	pl	Niestety, następujący użytkownicy wciąż należą do grupy %1
 sort the entries	admin	pl	Sortuj wiersze
-ssl	admin	pl	SSL
 standard	admin	pl	Standard
 standard imap server	admin	pl	Standardowy serwer IMAP
 standard smtp-server	admin	pl	Standardowy serwer SMTP

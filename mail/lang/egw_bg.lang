@@ -1,4 +1,5 @@
 %1 attachments	mail	bg	%1 прикачени файлове
+%1 attachments downloaded	mail	bg	Изтеглени са %1 прикачени файла.
 %1 for all users	mail	bg	%1 за всички потребители
 %1 has been added to blacklisted email addresses	mail	bg	%1 е добавен към имейл адресите в "черения списък"
 %1 has been added to whiltelisted email addresses	mail	bg	%1 е добавен към имейл адресите в "белия списък"
@@ -11,6 +12,7 @@
 (leave empty for no quota)	mail	bg	(Оставете празна, за да нямате квота)
 (no subject)	mail	bg	(без тема)
 (not connected)	mail	bg	(няма връзка)
+account	mail	bg	Акаунт
 account editable by user	mail	bg	акаунт редактируем от потребителя
 account not reachable	mail	bg	Няма достъп до акаунта.
 acl rights retrieve failed, seems there are no rights set!	mail	bg	Извличането на ACL права не бе успешно, изглежда няма зададени права!
@@ -27,6 +29,7 @@ add files as %1	mail	bg	Добавете файлове като %1
 add folder	mail	bg	Добавете папка
 add raw message, ignore mail attachments	mail	bg	Конвертиране на поща в елемент, добавяне на необработено съобщение (игнориране на прикачени файлове към поща)
 add this certificate into contact	mail	bg	Добавете този сертификат в контакта
+add this key into contact	mail	bg	Добави този ключ към контакта
 add to addressbook	mail	bg	Добави към Адресния указател
 adding %1 to blacklisted email addresses failed because of %2	mail	bg	Добавянето на %1 в черния списък на имейл адресите не бе успешно поради %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	bg	Добавянето на %1 в белия списък на имейл адресите не бе успешно поради %2
@@ -78,6 +81,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	bg	Имайте предвид, че всички прикачени файлове ще бъдат изпратени като %1!
 before reply, visible during compose	mail	bg	Да бъде видим докато се съставя, преди отговор
 blacklisted mails are marked as spam	mail	bg	Имейли от "черния списък" да се маркират като спам
+blue	mail	bg	Синьо
 but check shared folders	mail	bg	но проверете споделените папки
 by date	mail	bg	по дата
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	bg	По подразбиране "http://" се заменя само с "https://". Чувствайте се свободни да конфигурирате 'https://proxy.egroupware.org/' да зарежда и изображения, достъпни само чрез http.
@@ -86,6 +90,7 @@ can not open imap connection	mail	bg	Не може да се отвори IMAP �
 can not resolve the winmail.dat attachment!	mail	bg	Не може да разреши прикачения winmail.dat файл!
 canceled deletion due to user interaction	mail	bg	анулирано изтриване поради взаимодействие с потребителя
 certificate details	mail	bg	Подробности за сертификата
+certificate does not match the stored private key!	mail	bg	Сертификатът не съвпада със съхранения частен ключ!
 certificate imported.	mail	bg	Сертификатът е импортиран.
 certificate in text	mail	bg	Сертификат в текст
 certificate info for email %1	mail	bg	Информация за сертификат за имейл %1
@@ -111,6 +116,7 @@ confirm	mail	bg	Потвърди
 confirm attach message	mail	bg	Потвърди прикаченото съобщение
 confirm move to folder	mail	bg	Потвърди преместването в папката
 connect to profile %1	mail	bg	Свържете се с профил %1
+connection could not be established, use the wizard to check why!	mail	bg	Не може да се установи връзка – използвайте помощника, за да проверите защо!
 connection status	mail	bg	Статус на връзката
 contact label	mail	bg	Етикет за контакт
 contains	mail	bg	съдържа
@@ -122,8 +128,11 @@ convert only mail to item (ignore possible attachments)	mail	bg	конверти
 copied %1 message(s) from %2 to %3	mail	bg	Копирано е съобщение(я) %1 от %2 в %3.
 copy to	mail	bg	Копиране в
 could not append message:	mail	bg	Съобщение не можа да се добави:
+could not decrypt stored private key, wrong passphrase?	mail	bg	Не може да се декриптира съхраненият частен ключ – грешна парола?
+could not download %1	mail	bg	Не можа да се изтегли %1.
 could not save the acl because some names are empty	mail	bg	ACL не можа да се запази, защото някои имена са празни
 create new account	mail	bg	Създаване на нов акаунт
+create private key and export csr	mail	bg	Създай частен ключ и експортирай CSR
 create self-signed certificate	mail	bg	Създаване на самоподписан сертификат
 cross account forward attachment is not allowed!	mail	bg	Не е разрешено прикачването на кръстосана сметка напред!
 current folder	mail	bg	текуща папка
@@ -184,6 +193,7 @@ don't use draft folder	mail	bg	Не използвай "Чернови"
 don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
+download all attachments	mail	bg	Изтегли всички прикачени файлове
 download attachments	mail	bg	Изтеглете прикачени файлове
 draft	mail	bg	Проект
 draft folder	mail	bg	папка "Чернови"
@@ -273,6 +283,7 @@ general	admin	bg	Общи
 general settings	mail	bg	Основни настройки
 get acl rights failed from imap server!	mail	bg	Получете ACL права от сървъра за IMAP!
 greater than	mail	bg	по-голямо от
+green	mail	bg	Зелено
 ham folder	mail	bg	Папка "Ham"
 handling of external http images / mixed content in mails	mail	bg	Обработка на външни http изображения / смесено съдържание в имейли
 header	mail	bg	Заглавка (Header)
@@ -331,6 +342,7 @@ junk	mail	bg	Нежелани
 junk folder	mail	bg	Папка с нежелани файлове
 keep a copy	mail	bg	Запазване на копие
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
+key fingerprint	mail	bg	Отпечатък на ключа
 kilobytes	mail	bg	килобайта
 last used signature	mail	bg	Последно използван подпис
 later	mail	bg	По-късно
@@ -386,6 +398,7 @@ no access	mail	bg	Няма достъп
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	bg	Не е предоставена дестинация на папката и не е предоставена папка за записване на съобщението или друга мярка за съхраняване на пощата (записване в InfoLog/Ticketsystem), но се изисква.
 no plain text part found	mail	bg	липсва текстова част
+no private key stored to import a certificate for!	mail	bg	Няма съхранен частен ключ, с който да се импортира сертификат!
 no recipient address given!	mail	bg	Не е посочен адрес на получател!
 no s/mime private key stored for this account.	mail	bg	За този акаунт няма запазен частен ключ S/MIME.
 no signature	mail	bg	няма подпис
@@ -393,6 +406,7 @@ no sneak preview in list	mail	bg	Няма предварителен прегл�
 no subject given!	mail	bg	Не е посочена Тема!
 no vacation notice text provided. please enter a message.	mail	bg	Не е предоставен текст на известието за отпуск. Моля, въведете съобщение.
 non	mail	bg	Не
+offer to add sender's s/mime certificate or pgp key to contact	mail	bg	Предложение за добавяне на S/MIME сертификата или PGP ключа на изпращача към контакта
 on	mail	bg	на
 once per day	mail	bg	Веднъж на ден
 only email	mail	bg	Само имейл
@@ -403,13 +417,17 @@ only one window	mail	bg	само в един прозорец
 open in html mode	mail	bg	Отваряне в режим HTML
 open in text mode	mail	bg	Отваряне в текстов режим
 open with collabora office	mail	bg	Отваряне с Collabora Online
+orange	mail	bg	Оранжево
 organisation	admin	bg	Организация
 organization	mail	bg	организация
 organization | real name email	mail	bg	Организация | Истинско име [Email]
 original message	mail	bg	Оригинално съобщение
 outbox	mail	bg	Изходяща поща
+passphrase, if private key is protected	mail	bg	Passphrase, if private key is protected
 permission denied	mail	bg	Не е позволено
 personal signature	mail	bg	Личен подпис
+pgp key info for email %1	mail	bg	Информация за PGP ключа за имейл %1
+pgp/mime signed message, no public key found to verify the signature	mail	bg	Съобщение, подписано с PGP / S/MIME – не е намерен публичен ключ за проверка на подписа
 please configure access to an existing individual imap account.	mail	bg	Моля, конфигурирайте достъпа до съществуващ индивидуален IMAP акаунт.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	bg	Моля, конфигурирайте сертификата си S/MIME в раздела Encryption (Шифроване), намиращ се в диалоговия прозорец за редактиране на акаунта.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с вашия администратор, за да потвърдите дали сървърът ви поддържа филтърни правила на сървъра и как да ги активирате в EGroupware за вашия активен акаунт (%1) с ID: %2.
@@ -427,8 +445,11 @@ prevent managing vacation notice	mail	bg	Предотвратяване на у�
 preview pane	mail	bg	Оформление на прозореца
 printing	mail	bg	Отпечатване
 printview	mail	bg	изглед за печат
+private key created, downloading csr...	mail	bg	Създаден е частен ключ, изтегляне на CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	bg	Обработката на файл %1 не е успешна. Не успя да отговори на основните ограничения.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	bg	Предоставете текст по подразбиране за ваканция (използва се при нови съобщения за ваканция, когато преди това не е имало създадено съобщение)
+public key	mail	bg	Публичен ключ
+purple	mail	bg	Лилаво
 push notifications	mail	bg	Известия Push
 quicksearch	mail	bg	Бързо търсене
 quicksearch (with cc)	mail	bg	Бързо търсене (+Копиране)
@@ -436,6 +457,7 @@ read / unread	mail	bg	Прочетено / Непрочетено
 real name	mail	bg	Истинско име
 real name email	mail	bg	Истинско име [Имейл]
 real name organization email	mail	bg	Истинско име Организация [Имейл]
+red	mail	bg	Червено
 refresh time in minutes	mail	bg	Време на опресняване в минути
 reject with	mail	bg	откажи с
 reloaded account %1	mail	bg	Акаунтът %1 беше презареден.
@@ -524,6 +546,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	bg	Подателят на съобщението е заявил обратна разписка. Желаете ли да му я изпратите?
 the mimeparser can not parse this message.	mail	bg	MIME анализаторът не може да обработи това съобщение.
 the rule with priority %1 successfully saved!	mail	bg	Правилото с приоритет %1 е записано успешно!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	bg	S/MIME сертификатът, съхранен в адресната книга за %1, не съвпада със сертификата на вашия акаунт – проверете дали в адресната книга има дублиращи се записи за този адрес.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	bg	Общият размер на прикачените файлове надвишава ограничението от %1 MB. Преминава се към линк за изтегляне.
 then	mail	bg	ТОГАВА
 there is no imap server configured.	mail	bg	Няма конфигуриран IMAP сървър.
@@ -546,6 +569,7 @@ vacation start-date must be before the end-date!	mail	bg	Началото на �
 validate selected addresses on submit:	mail	bg	Потвърдете адресите при изпращане:
 view header lines	mail	bg	Заглавна част (Header)
 what to do when you delete a message	mail	bg	Какво да правите, когато изтривате съобщение.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	bg	Когато подписано съобщение разкрие сертификат/ключ, който все още не е съхранен за този изпращач, попитайте дали да го добавите – проверен подпис от вече известен контакт винаги се добавя автоматично, без да се пита
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	bg	С коя имейл идентичност (подпис) искате да започнете. За личния подпис винаги използваме първия личен подпис
@@ -555,6 +579,7 @@ yes, offer copy option	mail	bg	Да, предлага се опция за ко�
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	bg	Можете да използвате $$start$$ за горната начална дата и $$end$$ за крайната дата.
 you may add this certificate into your contact, if you trust this signature.	mail	bg	Можете да добавите този сертификат в контакта си, ако имате доверие на този подпис.
+you may add this key into your contact, if you trust this signature.	mail	bg	Можете да добавите този ключ към вашия контакт, ако имате доверие в този подпис.
 you need to enter your s/mime passphrase to send this message.	mail	bg	За да изпратите това съобщение, трябва да въведете своята S/MIME парола.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	bg	Трябва да инсталирате приставката Mailvelope, която е налична за Chrome и Firefox от %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	bg	Трябва първо да запазите съобщението като чернова, преди да можете да го запазите във VFS

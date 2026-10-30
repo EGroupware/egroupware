@@ -1,9 +1,11 @@
 %1 attachments	mail	et	%1 manused
+%1 attachments downloaded	mail	et	%1 manust on alla laaditud.
 %1 for all users	mail	et	%1 kõigile kasutajatele
 %1 is not writable by you!	mail	et	%1 ei ole sinu poolt kirjutatav!
 %1 mails selected	mail	et	%1 valitud e-kirjad
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	et	%1 nõuab sõela laiendust %2, võib-olla proovige %1 või suuremat arvu päevi.
 (leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
+account	mail	et	Cuenta
 account editable by user	mail	et	Kasutaja saab kontot muuta
 account not reachable	mail	et	Kontole ei ole juurdepääsu.
 acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
@@ -13,6 +15,7 @@ add as new	mail	et	Lisada uueks
 add files as %1	mail	et	Lisage failid %1
 add raw message, ignore mail attachments	mail	et	Konverteeri post objektiks, lisa toores sõnum (ignoreeri posti manuseid)
 add this certificate into contact	mail	et	Lisa see sertifikaat kontakti
+add this key into contact	mail	et	Lisa see võti kontaktile
 adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamine musta nimekirja kantud e-posti aadressidele ebaõnnestus %2 tõttu
 adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
@@ -44,11 +47,13 @@ attachments, ...	mail	et	manused, ...
 available personal email-accounts/profiles	mail	et	saadaval olevad isiklikud e-posti kontod/profiilid
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	et	Olge teadlik, et kui lisate kõik valitud failid %1 režiimi, muudab see ka kõik olemasolevad manused nimekirjas samuti %2 režiimi. \n \n Kas soovite jätkata?
 be aware that all attachments will be sent as %1!	mail	et	Olge teadlik, et kõik manused saadetakse kui %1!
+blue	mail	et	Sinine
 by date	mail	et	Kuupäeva järgi
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	et	Vaikimisi asendatakse "http://" lihtsalt "https://". Saate vabalt konfigureerida 'https://proxy.egroupware.org/', et laadida ka pilte, mis on saadaval ainult http kaudu.
 caching of flags	mail	et	Lipude vahemälu
 can not resolve the winmail.dat attachment!	mail	et	Ei saa lahendada winmail.dat manustust!
 certificate details	mail	et	Sertifikaadi üksikasjad
+certificate does not match the stored private key!	mail	et	Sertifikaat ei vasta salvestatud privaatvõtmele!
 certificate imported.	mail	et	Sertifikaat on imporditud.
 certificate in text	mail	et	Sertifikaadi tekst
 certificate info for email %1	mail	et	Sertifikaadi info e-posti %1 jaoks
@@ -62,6 +67,7 @@ check to save as infolog on send	mail	et	Märkige nupp, et luua pärast saatmist
 check to save as tracker entry on send	mail	et	Kontrollida nuppu, et luua piletina pärast saatmist
 checking admin credentials failed	mail	et	Administraatori volituste kontrollimine ebaõnnestus
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
+connection could not be established, use the wizard to check why!	mail	et	Ühendust ei õnnestunud luua – kasuta abimeest, et selgitada välja põhjus!
 contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
 continue	mail	et	Jätka
@@ -69,7 +75,10 @@ convert mail to item and attach its attachments to this item (standard)	mail	et	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	et	Teisenda e-kiri elemendiks, lisa selle manuseid ja lisa manusena toorsõnum (.eml)
 convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
 copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse.
+could not decrypt stored private key, wrong passphrase?	mail	et	Salvestatud privaatvõtit ei õnnestunud dešifreerida – vale parool?
+could not download %1	mail	et	%1-i ei õnnestunud alla laadida.
 create new account	mail	et	Loo uus konto
+create private key and export csr	mail	et	Loo privaatvõti ja ekspordi CSR
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 default signature	mail	et	Vaikimisi allkiri
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
@@ -99,6 +108,8 @@ do you want to prevent the editing/setup of notification by mail to other emaila
 does not contain	mail	et	ei sisalda
 don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
+download all attachments	mail	et	Laadi alla kõik manused
+download attachments	mail	et	Laadi manused alla
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
 edit account ...	mail	et	Muuda kontot ...
@@ -132,6 +143,7 @@ forward	mail	et	Edasi
 forward to	mail	et	Edasi saata
 general	admin	et	Üldine
 get acl rights failed from imap server!	mail	et	ACL-õiguste saamine IMAP-serverist ebaõnnestus!
+green	mail	et	Roheline
 ham folder	mail	et	Ham kaust
 handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
 header	mail	et	Pealkiri
@@ -165,6 +177,7 @@ junk	mail	et	Junk
 junk folder	mail	et	Junkkaust
 keep a copy	mail	et	Säilitada koopia
 keep a copy of the message in your inbox	mail	et	Hoidke sõnumi koopia oma postkastis
+key fingerprint	mail	et	Võtme sõrmejälg
 kilobytes	mail	et	kilobaidid
 last used signature	mail	et	Viimati kasutatud allkiri
 later	mail	et	Hiljem
@@ -212,10 +225,12 @@ new message type	mail	et	Uue sõnumi tüüp
 new subject	mail	et	Uus teema
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	et	Ei ole esitatud aadressi TO/CC/BCC ja ei ole esitatud kausta, kuhu sõnum salvestada.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	et	Kaustade sihtkoht puudub, samuti ei ole ette nähtud kausta sõnumi salvestamiseks või muud meedet posti salvestamiseks (salvestada InfoLogi/Ticketsüsteemi), kuid see on vajalik.
+no private key stored to import a certificate for!	mail	et	Sertifikaadi importimiseks pole salvestatud ühtegi privaatvõtit!
 no s/mime private key stored for this account.	mail	et	Selle konto jaoks pole salvestatud ühtegi S/MIME privaatvõtit.
 no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub
 non	mail	et	Mitte
+offer to add sender's s/mime certificate or pgp key to contact	mail	et	Paku lisada saatja S/MIME-sertifikaat või PGP-võti kontaktile
 on	mail	et	:
 once per day	mail	et	Üks kord päevas
 only email	mail	et	Ainult e-post
@@ -224,12 +239,16 @@ only name	mail	et	Ainult nimi
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	et	Vajalik ainult mõnede serverite puhul, mis ei tagasta kõiki kaustu juurtasandi päringutele, et saada kõik kaustad selle taseme jaoks kätte.
 only one window	mail	et	ainult üks aken
 open with collabora office	mail	et	Avamine Collabora Online'iga
+orange	mail	et	Oranž
 organisation	admin	et	Organisatsioon
 organization | real name email	mail	et	Organisatsioon | Tegelik nimi [E-post]
 original message	mail	et	Algne sõnum
 outbox	mail	et	Väljaminev postkast
+passphrase, if private key is protected	mail	et	Parool, kui privaatvõti on kaitstud
 permission denied	mail	et	Õigused puuduvad
 personal signature	mail	et	Isiklik allkiri
+pgp key info for email %1	mail	et	PGP-võtme andmed e-posti aadressile %1
+pgp/mime signed message, no public key found to verify the signature	mail	et	PGP / S/MIME-allkirjastatud sõnum, allkirja kontrollimiseks ei leitud avalikku võtit
 please configure access to an existing individual imap account.	mail	et	Palun seadista juurdepääs olemasolevale individuaalsele IMAP-kontolele.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	et	Palun konfigureerige oma S/MIME-sertifikaat vahekaardil Encryption, mis asub dialoogis Muuda kontot.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid filterreegleid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
@@ -240,8 +259,11 @@ post	mail	et	saatke
 predefined addresses for compose	mail	et	Koostamise jaoks etteantud aadressid
 preview pane	mail	et	Akna paigutus
 printing	mail	et	Trükkimine
+private key created, downloading csr...	mail	et	Privaatvõti loodud, CSR-i allalaadimine käib ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	et	Faili %1 töötlemine ebaõnnestus. Ei õnnestunud täita põhipiiranguid.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	et	Anda vaikimisi puhkuse tekst (kasutatakse uute puhkuse sõnumite puhul, kui varem ei ole sõnumit määratud).
+public key	mail	et	Avalik võti
+purple	mail	et	Lilla
 push notifications	mail	et	Push-teated
 quicksearch	mail	et	Kiirotsing
 quicksearch (with cc)	mail	et	Kiirotsing (+Kopeerimine)
@@ -249,6 +271,7 @@ read / unread	mail	et	Loetud / Lugemata
 real name	mail	et	Tegelik nimi
 real name email	mail	et	Tegelik nimi [E-post]
 real name organization email	mail	et	Tegelik nimi Organisatsioon [E-post]
+red	mail	et	Punane
 refresh time in minutes	mail	et	Värkendamise aeg minutites
 reloaded account %1	mail	et	Konto %1 laaditi uuesti.
 reloaded folder %1	mail	et	Uuesti laaditud kaust %1
@@ -318,6 +341,7 @@ the %1 's acl removed from the %2	mail	et	%1-i ACL eemaldati %2-st.
 the %1 's acl, including its subfolders, removed from the %2	mail	et	%1-i ACL, sealhulgas selle alamkaustad, eemaldatud %2-st.
 the imap server need to meet certain requirements and be configured for it:	mail	et	IMAP-server peab vastama teatavatele nõuetele JA olema selleks konfigureeritud:
 the rule with priority %1 successfully saved!	mail	et	Reegel prioriteediga %1 edukalt salvestatud!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	et	El certificado S/MIME almacenado en la libreta de direcciones para %1 no coincide con el certificado de tu cuenta; comprueba si hay entradas duplicadas en la libreta de direcciones para esta dirección.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	et	Manuste kogumaht ületab piirmäära %1 MB. Vahetati allalaadimislingiks.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	et	Sieve skripti salvestamiseks ei ole enam ruumi, palun kontrollige sieve_maxscriptsize valikut oma mailserveri seadistuses.
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	et	See tegevus mõjutab kõiki valitud vestlusketi(de) sõnumeid – kokku %1 sõnumit. Jätkata?
@@ -334,6 +358,7 @@ vacation messages with start and end date require an admin account to be set!	ma
 validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
 view header lines	mail	et	Vaata pealkirja ridu
 what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	et	Kui allkirjastatud sõnumis ilmneb, et selle saatja sertifikaati/võtit pole veel salvestatud, küsitakse, kas soovid seda lisada – juba tuntud kontaktilt pärit kinnitatud allkiri lisatakse alati automaatselt ilma küsimata
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	et	Millise e-posti identiteediga (allkirjaga) soovid alustada? Isikliku allkirja puhul kasutame alati esimest isiklikku allkirja
 write	mail	et	Kirjuta
 write & delete	mail	et	kirjutamine ja kustutamine
@@ -341,6 +366,7 @@ yes, offer copy option	mail	et	Jah, paku kopeerimisvõimalust
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.
 you may add this certificate into your contact, if you trust this signature.	mail	et	Te võite lisada selle sertifikaadi oma kontakti, kui te usaldate seda allkirja.
+you may add this key into your contact, if you trust this signature.	mail	et	Võid lisada selle võtme oma kontaktide hulka, kui usaldad seda allkirja.
 you need to enter your s/mime passphrase to send this message.	mail	et	Selle sõnumi saatmiseks peate sisestama oma S/MIME parooli.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	et	Teil on vaja paigaldada Mailvelope'i plugin, mis on saadaval Chrome'ile ja Firefoxile alates %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	et	Te peate enne sõnumi VFS-i salvestamist salvestama selle eelnõuna.

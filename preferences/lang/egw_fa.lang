@@ -66,6 +66,5 @@ users choice	preferences	fa	پسند کاربرها
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fa	وقتی بگوئید «بله» نمایه های «خانه» و «خروج» در نوار ناوبری نمایش داده خواهند شد.
 which currency symbol or name should be used in egroupware.	preferences	fa	کدام واحد (نماد) پولی باید در گروه افزار استفاده شود
 you can show the applications as icons only, icons with app-name or both.	preferences	fa	می توانید فقط نمایه، نمایه با متن، یا متن خالی نام کاربرد را در نوار ناوبری ببینید.
-you do not have permission to set acl's in this mode!	preferences	fa	شما دسترسی کافی ندارید.
 you must enter a password	preferences	fa	شما باید یک گذرواژه وارد کنید
 your preferences	preferences	fa	تنظیمات شما

@@ -1,0 +1,11 @@
+2-factor-authentication for interactive login	admin	ar	المصادقة الثنائية لتسجيل الدخول التفاعلي
+allowed just as second factor	admin	ar	مسموح به كعامل ثانٍ فقط
+direct login without password or second factor	admin	ar	تسجيل الدخول المباشر بدون كلمة مرور أو عامل ثانٍ
+disable	admin	ar	تعطيل
+disable "auto completion" of the login form	admin	ar	تعطيل «الإكمال التلقائي» لنموذج تسجيل الدخول
+disable certificate validation	admin	ar	تعطيل التحقق من صحة الشهادة
+disable pgp encryption (mailvelope)	admin	ar	PGP (Mailvelope)تعطيل تشفير
+disabled	admin	ar	معطل
+disabled (not recomended)	admin	ar	معطل (غير موصى به)
+disabled, do not show on login page	admin	ar	معطل، لا تظهر في صفحة تسجيل الدخول
+secret deleted, two factor authentication disabled.	admin	ar	تم حذف السر، وتم تعطيل المصادقة الثنائية.

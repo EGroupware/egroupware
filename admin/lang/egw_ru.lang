@@ -92,6 +92,7 @@ allow anonymous access to this app	admin	ru	Разрешить анонимны�
 allow remote administration from following install id's (comma separated)	admin	ru	Разрешить удалённое администрирование со следующих идентификаторов установки (разделённых запятыми)
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ru	Разрешите пользователю хранить свой пароль в разделе «Безопасность и пароли» для SingleSignOn.
 allow user to set 'remember me' token	admin	ru	Разрешить пользователю устанавливать токен "Запомнить меня"
+allowed just as second factor	admin	ru	Разрешено только в качестве второго фактора
 alternate email address	admin	ru	Добавочный адрес эл. почты
 anonymous user	admin	ru	Анонимный пользователь
 anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сеансов)
@@ -150,7 +151,6 @@ category list	admin	ru	Список категорий
 category saved.	admin	ru	Категория сохранена
 certificate	admin	ru	Сертификат
 certificate details	admin	ru	Информация о сертификате
-certificate validation in days	admin	ru	Срок действия сертификата в днях
 change access	admin	ru	Изменение прав доступа
 change account_id	admin	ru	Сменить идентификатор учётной записи
 change acl rights	admin	ru	Сменить права ACL
@@ -249,13 +249,16 @@ deny all users access to grant other users access to their entries ?	admin	ru	З
 deny all users access to preferences ?	admin	ru	Закрыть всем пользователям доступ к настройкам
 description can not exceed 255 characters in length !	admin	ru	Описание не может быть длиннее 255 знаков!
 determines the order the fields are displayed	admin	ru	Определяет порядок отображения полей
+direct login without password or second factor	admin	ru	Прямой вход без пароля или второго фактора
 disable	admin	ru	Запретить
 disable "auto completion" of the login form	admin	ru	Отключить автозаполнение формы авторизации
+disable certificate validation	admin	ru	Отключить проверку сертификатов
 disable minifying of javascript and css files	admin	ru	Отключить минимизацию javascript и файлов CSS
+disable pgp encryption (mailvelope)	admin	ru	Отключить шифрование PGP (Mailvelope)
+disabled	admin	ru	Отключено
 disabled (not recomended)	admin	ru	Отключено (не рекомендуется)
+disabled, do not show on login page	admin	ru	Отключено, не отображать на странице входа
 display	admin	ru	Отобразить
-displaying html messages is disabled	admin	ru	Показ сообщений как HTML отключен
-displaying plain messages is disabled	admin	ru	Показ сообщений как текст отключен.
 do not delete the category and return back to the list	admin	ru	НЕ удалять категорию и вернуться назад к списку
 document root (default)	admin	ru	Корневой каталог документов (по умолчанию)
 domainname	admin	ru	Имя Домена
@@ -610,6 +613,7 @@ scheduled	admin	ru	Запланировано
 search categories	admin	ru	Поиск категорий
 search groups	admin	ru	Поиск групп
 search peer servers	admin	ru	Поиск равноправных серверов
+secret deleted, two factor authentication disabled.	admin	ru	Секрет удален, двухфакторная аутентификация отключена.
 security	admin	ru	Безопасность
 select accounts for which the custom field should be visible	admin	ru	Выбрать учётные записи, для которых пользовательское поле будет видимо
 select group managers	admin	ru	Выбрать менеджеров группы
@@ -659,7 +663,6 @@ sorry, that group name has already been taken.	admin	ru	Извините, так
 sorry, the above users are still a member of the group %1	admin	ru	Извините, указанные выше пользователи являются членами группы %1
 sorry, the follow users are still a member of the group %1	admin	ru	Извините, следующие пользователи являются членами группы %1
 sort the entries	admin	ru	Сортировать записи
-ssl	admin	ru	SSL
 standard	admin	ru	Стандартный
 standard imap server	admin	ru	Стандартный IMAP сервер
 standard smtp-server	admin	ru	Стандартный SMTP сервер

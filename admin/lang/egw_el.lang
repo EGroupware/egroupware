@@ -82,6 +82,7 @@ all users	admin	el	Ολοι οι χρήστες
 allow anonymous access to this app	admin	el	Επιτρέπεται ανώνυμη πρόσβαση σε αυτή την εφαρμογή
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	el	Επιτρέψτε στο χρήστη να αποθηκεύσει τον κωδικό πρόσβασής του στο πλαίσιο 'Ασφάλεια & κωδικοί πρόσβασης' για το SingleSignOn.
 allow user to set 'remember me' token	admin	el	Επιτρέψτε στο χρήστη να ορίσει το διακριτικό "Να με θυμάσαι"
+allowed just as second factor	admin	el	Επιτρέπεται μόνο ως δεύτερος παράγοντας
 alternate email address	admin	el	εναλλακτική διεύθυνση email
 anonymous user	admin	el	Ανώνυμος χρήστης
 anonymous user (not shown in list sessions)	admin	el	Ανώνυμος χρήστης.
@@ -130,7 +131,6 @@ category %1 has been saved !	admin	el	Κατηγορία %1 έχει σωθεί!
 category list	admin	el	Λίστα κατηγοριών
 certificate	admin	el	Πιστοποιητικό
 certificate details	admin	el	Λεπτομέρειες πιστοποιητικού
-certificate validation in days	admin	el	Επικύρωση πιστοποιητικού σε ημέρες
 change access	admin	el	Αλλαγή δικαιωμάτων πρόσβασης
 change acl rights	admin	el	αλλαγή ACL δικαιομάτων
 change config settings	admin	el	Αλλαγή ρυθμήσεων διαμόρφωσης
@@ -202,12 +202,16 @@ deny access to user accounts	admin	el	Αρνηση πρόσβασης στους
 deny all users access to grant other users access to their entries ?	admin	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους
 description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
 determines the order the fields are displayed	admin	el	καθορίζει τη σειρά εμφάνισης των πεδίων
+direct login without password or second factor	admin	el	Άμεση σύνδεση χωρίς κωδικό πρόσβασης ή δεύτερο παράγοντα
 disable	admin	el	Απενεργοποίηση
 disable "auto completion" of the login form	admin	el	Απενεργοποίηση "αυτόματης συμπλήρωσης" της φόρμας εισαγωγής
+disable certificate validation	admin	el	Απενεργοποίηση επικύρωσης πιστοποιητικού
+disable pgp encryption (mailvelope)	admin	el	Απενεργοποίηση κρυπτογράφησης PGP (Mailvelope)
+disabled	admin	el	Απενεργοποιημένο
 disabled (not recomended)	admin	el	απενεργοποίηση (δεν προτείνεται)
+disabled, do not show on login page	admin	el	Απενεργοποιημένο, να μην εμφανίζεται στη σελίδα σύνδεσης
 display	admin	el	Εμφάνιση
 displayed length of input field (set rows=1 to limit length)	admin	el	Εμφανιζόμενο μήκος πεδίου εισαγωγής (ορίστε rows=1 για να περιορίσετε το μήκος)
-displaying html messages is disabled	admin	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
 do not delete the category and return back to the list	admin	el	μην διαγράψεις την κατηγορία και επέστρεψε στην λίστα
 document root (default)	admin	el	Document root
 down	admin	el	κάτω
@@ -440,6 +444,7 @@ saves this entry	admin	el	Αποθηκεύει την καταχώρηση
 search categories	admin	el	Ψάξιμο κατηγοριών
 search groups	admin	el	Ψάξιμο ομάδων
 search peer servers	admin	el	Ψάξιμο ισότιμων server
+secret deleted, two factor authentication disabled.	admin	el	Το μυστικό διαγράφηκε, η επαλήθευση δύο παραγόντων απενεργοποιήθηκε.
 security	admin	el	Ασφάλεια
 select accounts for which the custom field should be readonly	admin	el	Επιλογή λογαριασμών για τους οποίους το προσαρμοσμένο πεδίο θα πρέπει να είναι μόνο για ανάγνωση
 select group managers	admin	el	Επιλέξτε Ομαδα Διαχειριστών
@@ -476,7 +481,6 @@ sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό
 sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1.
 sorry, the follow users are still a member of the group %1	admin	el	Συγνώμη, οι ακόλουθοι χρήστες είναι ακόμα μέλοι της ομάδας %1.
 sort the entries	admin	el	ταξινόμηση των εισόδων
-ssl	admin	el	SSL
 standard	admin	el	συνήθης
 standard imap server	admin	el	συνήθης IMAP server
 standard smtp-server	admin	el	συνήθης SMTP server

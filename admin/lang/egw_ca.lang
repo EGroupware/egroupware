@@ -382,7 +382,6 @@ sorry, that group name has already been taken.	admin	ca	Aquest nom de grup ja es
 sorry, the above users are still a member of the group %1	admin	ca	Els usuaris anteriors encara no són membres del grup %1
 sorry, the follow users are still a member of the group %1	admin	ca	Els usuaris següents encara són membres del grup %1
 sort the entries	admin	ca	ordenar les entrades
-ssl	admin	ca	ssl
 standard	admin	ca	Estàndar
 standard imap server	admin	ca	Servidor IMAP estàndar
 standard smtp-server	admin	ca	Servidor SMTP estàndar

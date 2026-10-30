@@ -80,6 +80,7 @@ all users	admin	pt	Todos os utilizadores
 allow anonymous access to this app	admin	pt	Permitir acesso anónimo a esta aplicação
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt	Permitir que o utilizador guarde a sua palavra-passe em 'Segurança e palavras-passe' para SingleSignOn.
 allow user to set 'remember me' token	admin	pt	Permitir ao utilizador definir o token "Lembrar-me"
+allowed just as second factor	admin	pt	Permitido apenas como segundo fator
 alternate email address	admin	pt	Endereço de correio electrónico alternativo
 anonymous user	admin	pt	Utilizador anónimo
 anonymous user (not shown in list sessions)	admin	pt	Utilizador anónimo (não exibido na lista de sessões)
@@ -125,7 +126,6 @@ category %1 has been saved !	admin	pt	A categoria %1 foi guardada!
 category list	admin	pt	Lista de categorias
 certificate	admin	pt	Certificado
 certificate details	admin	pt	Detalhes do certificado
-certificate validation in days	admin	pt	Validação do certificado em dias
 change access	admin	pt	Alterar direitos de acesso
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
@@ -194,12 +194,15 @@ deny access to user accounts	admin	pt	Negar acesso às contas de utilizadores
 deny all users access to grant other users access to their entries ?	admin	pt	Negar a todos os utilizadores a possibilidade de conceder o acesso de outros utilizadores aos seus registos?
 description can not exceed 255 characters in length !	admin	pt	A descrição não pode exceder os 255 caracteres!
 determines the order the fields are displayed	admin	pt	Determina a ordem de apresentação dos campos
+direct login without password or second factor	admin	pt	Início de sessão direto sem palavra-passe nem segundo fator
 disable	admin	pt	Desactivar
 disable "auto completion" of the login form	admin	pt	Desactivar a funcionalidade de "informação de formulários guardada" no formulário de acesso
+disable certificate validation	admin	pt	Desativar validação de certificados
+disable pgp encryption (mailvelope)	admin	pt	Desativar encriptação PGP (Mailvelope)
+disabled	admin	pt	Desativado
 disabled (not recomended)	admin	pt	Desactivado (não recomendado)
+disabled, do not show on login page	admin	pt	Desativado, não mostrar na página de início de sessão
 display	admin	pt	Visualizar
-displaying html messages is disabled	admin	pt	exibir mensagens em HTML é desativada
-displaying plain messages is disabled	admin	pt	exibição de mensagens simples é desativado
 do not delete the category and return back to the list	admin	pt	NÃO eliminar a categoria e voltar para a lista
 do not generate email addresses	admin	pt	Não gerar endereços de correio eletrónico
 domainname	admin	pt	Nome de domínio
@@ -441,6 +444,7 @@ saves this entry	admin	pt	Guarda este registo
 search categories	admin	pt	Pesquisar categorias
 search groups	admin	pt	Pesquisar grupos
 search peer servers	admin	pt	Pesquisar servidores remotos
+secret deleted, two factor authentication disabled.	admin	pt	Segredo eliminado, autenticação de dois fatores desativada.
 security	admin	pt	Segurança
 select group managers	admin	pt	Seleccionar gestores de grupos
 select permissions this group will have	admin	pt	Seleccione as permissões concedidas a este grupo
@@ -484,7 +488,6 @@ sorry, that group name has already been taken.	admin	pt	Desculpe, mas já existe
 sorry, the above users are still a member of the group %1	admin	pt	Desculpe, mas os utilizadores em cima ainda são membros do grupo %1
 sorry, the follow users are still a member of the group %1	admin	pt	Desculpe, mas os seguintes utilizadores ainda são membros do grupo %1
 sort the entries	admin	pt	Apresentar os registos
-ssl	admin	pt	SSL
 standard	admin	pt	Por omissão
 standard imap server	admin	pt	Servidor IMAP por omissão
 standard smtp-server	admin	pt	Servidor SMTP por omissão

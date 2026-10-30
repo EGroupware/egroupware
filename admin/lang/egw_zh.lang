@@ -76,6 +76,7 @@ allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程
 allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	zh	允许用户在单点登录的 “安全与密码 ”下存储密码。
 allow user to set 'remember me' token	admin	zh	允许用户设置 “记住我 ”令牌
+allowed just as second factor	admin	zh	仅允许作为第二重验证方式
 alternate email address	admin	zh	候选邮箱地址
 anonymous user	admin	zh	匿名用户
 anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
@@ -128,7 +129,6 @@ category list	admin	zh	类别列表
 category saved.	admin	zh	类别已保存。
 certificate	admin	zh	证书
 certificate details	admin	zh	证书详细信息
-certificate validation in days	admin	zh	证书有效天数
 change access	admin	zh	更改访问权限
 change account_id	admin	zh	更改帐户 ID
 change acl rights	admin	zh	更改 ACL 权限
@@ -209,11 +209,15 @@ deny access to user accounts	admin	zh	拒绝对用户账户的访问
 deny all users access to grant other users access to their entries ?	admin	zh	拒绝所有用户准予其他用户使用他们的账户登录？
 description can not exceed 255 characters in length !	admin	zh	描述不得超过255个字符长度！
 determines the order the fields are displayed	admin	zh	确定显示字段域顺序
+direct login without password or second factor	admin	zh	无需密码或第二重验证即可直接登录
 disable	admin	zh	禁用
 disable "auto completion" of the login form	admin	zh	禁用登录表单的“自动完成”
+disable certificate validation	admin	zh	禁用证书验证
+disable pgp encryption (mailvelope)	admin	zh	禁用 PGP 加密（Mailvelope）
+disabled	admin	zh	已禁用
 disabled (not recomended)	admin	zh	禁用 (不推荐)
+disabled, do not show on login page	admin	zh	已禁用，不在登录页面显示
 display	admin	zh	显示
-displaying html messages is disabled	admin	zh	显示HTML邮件被禁用
 do not delete the category and return back to the list	admin	zh	不要删除类别和返回其列表
 document root (default)	admin	zh	文件根目录 (默认)
 domainname	admin	zh	域名
@@ -495,6 +499,7 @@ scheduled	admin	zh	计划
 search categories	admin	zh	搜索类别
 search groups	admin	zh	搜索组
 search peer servers	admin	zh	搜索对等服务器
+secret deleted, two factor authentication disabled.	admin	zh	密钥已删除，双因素认证已禁用。
 security	admin	zh	安全
 select group managers	admin	zh	选择组管理器
 select permissions this group will have	admin	zh	选择该组权限
@@ -539,7 +544,6 @@ sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被
 sorry, the above users are still a member of the group %1	admin	zh	抱歉，以上用户仍然是%1组的成员
 sorry, the follow users are still a member of the group %1	admin	zh	抱歉，以下用户仍然是%1组的成员
 sort the entries	admin	zh	按序排列条目
-ssl	admin	zh	SSL
 standard	admin	zh	标准
 standard imap server	admin	zh	标准 IMAP 服务器
 standard smtp-server	admin	zh	标准 SMTP 服务器

@@ -1,10 +1,14 @@
 %1 attachments	mail	sv	%1 bilagor
+%1 attachments downloaded	mail	sv	%1 bilagor har hämtats.
 %1 for all users	mail	sv	%1 för alla användare
 %1 is not writable by you!	mail	sv	%1 är INTE skrivbar av dig!
 %1 mails selected	mail	sv	%1 e-postmeddelanden valda
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	sv	%1 kräver Sieve-tillägget %2, prova kanske %1 eller ett högre antal dagar.
 (leave empty for no quota)	mail	sv	(Lämna tomt för ingen kvot)
 (no subject)	mail	sv	(ingen rubrik)
+account	mail	sv	Konto
+account editable by user	mail	sv	Konto kan redigeras av användaren
+account not reachable	mail	sv	Konto kan inte nås.
 acl rights retrieve failed, seems there are no rights set!	mail	sv	Hämtning av ACL-rättigheter misslyckades, det verkar inte finnas några rättigheter angivna!
 activating by date requires a start- and end-date!	mail	sv	Aktivering efter datum kräver ett start- OCH slutdatum!
 add all my aliases	mail	sv	Lägg till alla mina alias
@@ -13,6 +17,7 @@ add files as %1	mail	sv	Lägg till filer som %1
 add folder	mail	sv	Lägg till mapp
 add raw message, ignore mail attachments	mail	sv	Konvertera e-post till objekt, lägg till obearbetat meddelande (ignorera bifogade filer)
 add this certificate into contact	mail	sv	Lägg till detta certifikat i kontakt
+add this key into contact	mail	sv	Lägg till den här nyckeln i kontakten
 add to addressbook	mail	sv	Lägg till i Adressbok
 adding %1 to blacklisted email addresses failed because of %2	mail	sv	Att lägga till %1 till svartlistade e-postadresser misslyckades på grund av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sv	Lägga till %1 till whiltelisted e-postadresser misslyckades på grund av %2
@@ -25,6 +30,7 @@ allow users to create further identities	mail	sv	Tillåt användare att skapa yt
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sv	Tillåter en användare att läsa, skriva och skapa mappar och e-postmeddelanden, posta till dem, lägga till meddelanden till dem och radera meddelanden
 always show html emails	mail	sv	Visa alltid HTML e-post
 always show notifiction	mail	sv	Visar alltid meddelande
+an error happend while trying to remove acl rights from the account %1!	mail	sv	Ett fel uppstod när du försökte ta bort ACL-behörigheter från kontot %1!
 answered	mail	sv	Svarat
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
@@ -37,14 +43,17 @@ attach vcard	mail	sv	Bifoga vCard
 attachment has been saved successfully.	mail	sv	Bilagan har sparats framgångsrikt.
 attachments	mail	sv	Bilagor
 attachments, ...	mail	sv	bilagor, ...
+available personal email-accounts/profiles	mail	sv	Tillgängliga personliga e-postkonton/profiler
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge.\nVill du fortsätta?
 be aware that all attachments will be sent as %1!	mail	sv	Tänk på att alla bilagor kommer att skickas som %1!
 before reply, visible during compose	mail	sv	Före svar, synlig under skrivning
+blue	mail	sv	Blå
 by date	mail	sv	Enligt datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
 caching of flags	mail	sv	Cachelagring av flaggor
 can not resolve the winmail.dat attachment!	mail	sv	Kan inte lösa winmail.dat-bilagan!
 certificate details	mail	sv	Detaljer om certifikat
+certificate does not match the stored private key!	mail	sv	Certifikatet stämmer inte överens med den sparade privata nyckeln!
 certificate imported.	mail	sv	Certifikatet har importerats.
 certificate in text	mail	sv	Intyg i textform
 certificate info for email %1	mail	sv	Certifikatinformation för e-post %1
@@ -63,6 +72,7 @@ condition	mail	sv	Vilkor
 configuration settings	mail	sv	Inställningar för konfiguration
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sv	De konfigurerade värdena kommer att ställas in automatiskt i dialogrutan för det respekterade fältet när du skriver ett nytt e-postmeddelande.
 connect to profile %1	mail	sv	Anslut till profil %1
+connection could not be established, use the wizard to check why!	mail	sv	Det gick inte att upprätta en anslutning. Använd guiden för att ta reda på varför!
 contact label	mail	sv	Etikett för kontakt
 contains	mail	sv	Innehåller
 continue	mail	sv	Fortsätt
@@ -71,7 +81,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	sv	Konvertera endast e-post till objekt (ignorera eventuella bilagor)
 copied %1 message(s) from %2 to %3	mail	sv	Kopierade %1 meddelande(n) från %2 till %3.
 copy to	mail	sv	Kopiera
+could not decrypt stored private key, wrong passphrase?	mail	sv	Det gick inte att dekryptera den lagrade privata nyckeln – fel lösenfras?
+could not download %1	mail	sv	Det gick inte att hämta %1.
 create new account	mail	sv	Skapa nytt konto
+create private key and export csr	mail	sv	Skapa privat nyckel och exportera CSR
 create self-signed certificate	mail	sv	Skapa ett självsignerat certifikat
 cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
 current subject	mail	sv	Aktuellt ämne
@@ -98,6 +111,7 @@ do you really want to apply %1 to all messages in the current view?	mail	sv	Vill
 do you really want to delete folder %1 ?	mail	sv	Vill du verkligen RADERA mapp %1?
 do you really want to mark all messages as read in the current folder?	mail	sv	Vill du verkligen markera ALLA meddelanden som lästa i den aktuella mappen?
 do you really want to remove all labels from all messages in the current folder?	mail	sv	Vill du verkligen ta bort ALLA etiketter från ALLA meddelanden i den aktuella mappen?
+do you really want to remove all rights from this account?	mail	sv	Vill du verkligen ta bort alla behörigheter från detta konto?
 do you really want to toggle flag %1 for all messages in the current view?	mail	sv	Vill du verkligen växla flaggan %1 för ALLA meddelanden i den aktuella vyn?
 do you really want to toggle label %1 for all messages in the current view?	mail	sv	Vill du verkligen växla etiketten %1 för ALLA meddelanden i den aktuella vyn?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sv	Vill du bli ombedd att bekräfta innan du bifogar valda meddelanden till ett nytt e-postmeddelande?
@@ -109,12 +123,14 @@ does not match regexp	mail	sv	Matchar inte regexp
 don't use draft folder	mail	sv	Använd inte Utkast
 don't use sent	mail	sv	Använd inte Skickat
 don't use trash	mail	sv	Använd inte Borttaget
+download all attachments	mail	sv	Hämta alla bilagor
 download attachments	mail	sv	Ladda ner bilagor
 draft	mail	sv	Utkast
 draft folder	mail	sv	Utkast katalog
 drafts	mail	sv	Utkast
 drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
+edit account ...	mail	sv	Redigera konto ...
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
 email address	mail	sv	E-post adress
 email notification update failed! you need to set an email address!	mail	sv	Uppdateringen av e-postmeddelanden misslyckades! Du måste ange en e-postadress!
@@ -156,6 +172,7 @@ from	mail	sv	Från
 general	admin	sv	Allmänt
 get acl rights failed from imap server!	mail	sv	Få ACL-rättigheter misslyckades från IMAP-server!
 greater than	mail	sv	Större än
+green	mail	sv	Grön
 ham folder	mail	sv	Ham-mappen
 handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
 header	mail	sv	Rubrik
@@ -198,6 +215,7 @@ junk	mail	sv	Skräppost
 junk folder	mail	sv	Mapp för skräppost
 keep a copy	mail	sv	Behåll en kopia
 keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
+key fingerprint	mail	sv	Nyckelfingeravtryck
 kilobytes	mail	sv	Kb
 last used signature	mail	sv	Senast använda signatur
 later	mail	sv	Senare
@@ -254,8 +272,11 @@ no address to/cc/bcc supplied, and no folder to save message to provided.	mail	s
 no adress, to send this mail to, supplied	mail	sv	ingen adress angavs till vem detta e-postmeddelande skulle skickas
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sv	Ingen mappdestination angiven, och ingen mapp för att spara meddelandet eller annan åtgärd för att lagra posten (spara till InfoLog/Ticketsystem) angiven, men krävs.
 no plain text part found	mail	sv	Hittade inget textfält
+no private key stored to import a certificate for!	mail	sv	Ingen privat nyckel lagrad att importera ett certifikat till!
+no s/mime private key stored for this account.	mail	sv	Ingen privat S/MIME-nyckel lagrad för detta konto.
 no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
 non	mail	sv	Nej
+offer to add sender's s/mime certificate or pgp key to contact	mail	sv	Förslag att lägga till avsändarens S/MIME-certifikat eller PGP-nyckel till kontakten
 on	mail	sv	På
 once per day	mail	sv	En gång per dag
 one address is not valid	mail	sv	En adress är ogiltig
@@ -267,13 +288,18 @@ only one window	mail	sv	Endast ett fönster
 open in html mode	mail	sv	Öppna i HTML-läge
 open in text mode	mail	sv	Öppna i textläge
 open with collabora office	mail	sv	Öppna med Collabora Online
+orange	mail	sv	Orange
 organisation	admin	sv	Organisation
 organization	mail	sv	Organisation
 organization | real name email	mail	sv	Organisation | Verkligt namn [E-post]
 original message	mail	sv	Ursprungligt meddelande
 outbox	mail	sv	Utkorg
+passphrase, if private key is protected	mail	sv	Lösenfras, om den privata nyckeln är skyddad
 permission denied	mail	sv	Åtkomst nekad
 personal signature	mail	sv	Personlig signatur
+pgp key info for email %1	mail	sv	PGP-nyckelinformation för e-postadressen %1
+pgp/mime signed message, no public key found to verify the signature	mail	sv	PGP- / S/MIME-signerat meddelande, ingen offentlig nyckel hittades för att verifiera signaturen
+please configure access to an existing individual imap account.	mail	sv	Konfigurera åtkomst till ett befintligt enskilt IMAP-konto.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sv	Konfigurera ditt S/MIME-certifikat på fliken Kryptering i dialogrutan Redigera konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder filterregler på serversidan och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder semestermeddelanden på servern och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
@@ -285,8 +311,11 @@ post	mail	sv	skicka
 predefined addresses for compose	mail	sv	Fördefinierade adresser för sammansättning
 preview pane	mail	sv	Fönsterlayout
 printing	mail	sv	Utskrift
+private key created, downloading csr...	mail	sv	Privat nyckel skapad, hämtar CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	sv	Bearbetning av fil %1 misslyckades. Misslyckades med att uppfylla grundläggande begränsningar.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	sv	Ange en standardtext för semester, (används i nya semestermeddelanden när inget meddelande har ställts in tidigare)
+public key	mail	sv	Offentlig nyckel
+purple	mail	sv	Lila
 push notifications	mail	sv	Push-meddelanden
 quicksearch	mail	sv	Snabbsök
 quicksearch (with cc)	mail	sv	Snabbsök (+Kopia)
@@ -294,8 +323,10 @@ read / unread	mail	sv	Läst / Oläst
 real name	mail	sv	Verkligt namn
 real name email	mail	sv	Verkligt namn [E-post]
 real name organization email	mail	sv	Verkligt namn Organisation [E-post]
+red	mail	sv	Röd
 refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
 reject with	mail	sv	Avvisa med
+reloaded account %1	mail	sv	Konto %1 har laddats om.
 reloaded folder %1	mail	sv	Återladdad mapp %1
 remember the password for	mail	sv	Kom ihåg lösenordet för
 remove all	mail	sv	Radera samtliga
@@ -389,6 +420,7 @@ the %1 's acl, including its subfolders, removed from the %2	mail	sv	ACL:n för 
 the imap server need to meet certain requirements and be configured for it:	mail	sv	IMAP-servern måste uppfylla vissa krav OCH vara konfigurerad för detta:
 the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet.
 the rule with priority %1 successfully saved!	mail	sv	Regeln med prioritet %1 sparades framgångsrikt!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	sv	S/MIME-certifikatet som är lagrat i adressboken för %1 stämmer inte överens med ditt kontos eget certifikat – kontrollera om det finns dubbla adressboksposter för denna adress.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	sv	Den totala storleken på bilagorna överskrider gränsen på %1 MB. Har bytt till nedladdningslänk.
 then	mail	sv	SEN
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	sv	Det finns inget utrymme kvar för att lagra sieve-skript, kontrollera alternativet sieve_maxscriptsize i e-postserverns konfiguration.
@@ -403,11 +435,13 @@ trash folder	mail	sv	Borttaget
 unconditional	mail	sv	Alltid
 unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst
+vacation messages with start and end date require an admin account to be set!	mail	sv	För att kunna skapa semestermeddelanden med start- och slutdatum måste ett administratörskonto vara angivet!
 vacation notice	mail	sv	Frånvaro meddelande
 validate addresses on submit:	mail	sv	Validera adresser när du skickar:
 validate selected addresses on submit:	mail	sv	Validera valda adresser vid inlämning:
 view header lines	mail	sv	Visa brevhuvudet
 what to do when you delete a message	mail	sv	Vad du ska göra när du tar bort ett meddelande.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	sv	När ett signerat meddelande avslöjar ett certifikat/en nyckel som ännu inte är lagrad för den avsändaren, fråga om den ska läggas till – en verifierad signatur från en redan känd kontakt läggs alltid till automatiskt utan att fråga
 when deleting messages	mail	sv	Vid meddelande radering
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	sv	Vilken e-postidentitet (signatur) vill du börja med?\nFör ”Personlig signatur” använder vi alltid den första personliga signaturen.
 write	mail	sv	Skriv
@@ -417,6 +451,7 @@ yes, offer copy option	mail	sv	Ja, visa kopieringsalternativ
 you can select what info to be displayed on email tag	mail	sv	Du kan välja vilken information som ska visas på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sv	Du kan använda $$start$$ för ovanstående startdatum och $$end$$ för slutdatum.
 you may add this certificate into your contact, if you trust this signature.	mail	sv	Du kan lägga till detta certifikat i din kontakt, om du litar på denna signatur.
+you may add this key into your contact, if you trust this signature.	mail	sv	Du kan lägga till denna nyckel i din kontakt, om du litar på denna signatur.
 you need to enter your s/mime passphrase to send this message.	mail	sv	Du måste ange din S/MIME lösenfras för att skicka detta meddelande.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sv	Du måste installera Mailvelope-plugin som finns tillgängligt för Chrome och Firefox från %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	sv	Du måste spara meddelandet som utkast först innan du kan spara det i VFS

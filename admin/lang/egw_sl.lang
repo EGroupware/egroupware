@@ -102,6 +102,7 @@ allow the user to store his password under 'security & passwords' for singlesign
 allow user to set 'remember me' token	admin	sl	Dovolite uporabniku, da nastavi žeton „Zapomni si me“
 allow users to change forwards	admin	sl	Uporabnikom omogočite, da spremenijo naprej
 allow users to create identities for aliases	admin	sl	Dovoli uporabnikom, da ustvarijo identitete za vzdevke
+allowed just as second factor	admin	sl	Dovoljeno le kot drugi dejavnik
 alternate email address	admin	sl	Alternativen E-naslov
 and logged in	admin	sl	in prijavljeni
 anonymous user	admin	sl	Anonimni uporabnik
@@ -165,7 +166,6 @@ category list	admin	sl	Seznam kategorij
 category saved.	admin	sl	Kategorije shranjena.
 certificate	admin	sl	Certifikat
 certificate details	admin	sl	Podrobnosti o potrdilu
-certificate validation in days	admin	sl	Veljavnost potrdila v dnevih
 change access	admin	sl	Spreminjanje pravic dostopa
 change account_id	admin	sl	Spremeni ID računa
 change acl rights	admin	sl	Spremeni pravice ACL
@@ -279,16 +279,18 @@ deny all users access to preferences ?	admin	sl	Zavrni vse uporabnike dostop do 
 description can not exceed 255 characters in length !	admin	sl	Opis po dolžini ne sme presegati 255 znakov!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	sl	Ciljni račun #%1 obstaja in se NE preimenuje! Ne morete združiti računov, bo kršil edinstveno vsebino. Namesto tega izbrišite s prenosom podatkov.
 determines the order the fields are displayed	admin	sl	Določa vrstni red prikaza polj
+direct login without password or second factor	admin	sl	Neposredna prijava brez gesla ali drugega dejavnika
 disable	admin	sl	Onemogoči
 disable "auto completion" of the login form	admin	sl	Prepreči samodejno izpolnjevanje prijavne forme
 disable all	admin	sl	Onemogoči vse
+disable certificate validation	admin	sl	Onemogoči preverjanje veljavnosti certifikata
 disable minifying of javascript and css files	admin	sl	Onemogoči minifiranje datotek javascripta in CSS
+disable pgp encryption (mailvelope)	admin	sl	Onemogoči šifriranje PGP (Mailvelope)
 disabled	admin	sl	Onemogočeno
 disabled (not recomended)	admin	sl	Onemogočeno (ni priporočeno)
+disabled, do not show on login page	admin	sl	Onemogočeno, ne prikazuj na strani za prijavo
 display	admin	sl	Prikaži
 displayed length of input field (set rows=1 to limit length)	admin	sl	prikazana dolžina vnosnega polja (nastavite vrstice = 1, da omejite dolžino)
-displaying html messages is disabled	admin	sl	Prikazovanje sporočil HTML je onemogočeno
-displaying plain messages is disabled	admin	sl	prikazovanje navadnih sporočil je onemogočeno
 do not delete the category and return back to the list	admin	sl	<B>Ne</B> izbriši kategorije in se vrni nazaj na seznam.
 do not generate email addresses	admin	sl	Ne ustvarjajte e-poštnih naslovov
 do not offer introduction video	admin	sl	Ne predlagajte uvodnega videoposnetka
@@ -686,7 +688,7 @@ scheduled	admin	sl	Načrtovan
 search categories	admin	sl	Išči po kategorijah
 search groups	admin	sl	Išči skupine
 search peer servers	admin	sl	Išči po vzporednih strežnikih
-secure connection	admin	sl	Varna povezava
+secret deleted, two factor authentication disabled.	admin	sl	Skrivnost izbrisana, dvofaktorska avtentifikacija onemogočena.
 security	admin	sl	Varnost
 select accounts for which the custom field should be visible	admin	sl	Izberite račune, za katere je treba videti polje po meri.
 select group managers	admin	sl	Izberite oskrbnike skupin
@@ -741,7 +743,6 @@ sorry, the above users are still a member of the group %1	admin	sl	Zgornji upora
 sorry, the follow users are still a member of the group %1	admin	sl	Naslednji uporabniki so še vedno člani skupine %1:
 sort the entries	admin	sl	Razvrsti vnose
 source account #%1 does not exist!	admin	sl	Izvorni račun #%1 NE obstaja!
-ssl	admin	sl	SSL
 standard	admin	sl	Standarden
 standard identity	admin	sl	Standardna identiteta
 standard imap server	admin	sl	Standardni IMAP strežnik

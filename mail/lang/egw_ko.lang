@@ -1,8 +1,10 @@
 %1 attachments	mail	ko	첨부 파일: %1개
+%1 attachments downloaded	mail	ko	%1개의 첨부 파일이 다운로드되었습니다.
 %1 for all users	mail	ko	모든 사용자에 대해 %1
 %1 is not writable by you!	mail	ko	%1은(는) 사용자가 쓸 수 없습니다!
 %1 mails selected	mail	ko	%1 이메일 선택됨
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ko	%1 には Sieve 拡張機能 %2 が必要です。%1 またはそれ以上の日数をお試しください。
+account	mail	ko	계정
 account editable by user	mail	ko	사용자가 직접 편집할 수 있는 계정
 account not reachable	mail	ko	계정에 접속할 수 없습니다.
 acl rights retrieve failed, seems there are no rights set!	mail	ko	ACL 권한 검색에 실패했습니다. 설정된 권한이 없는 것 같습니다.
@@ -10,6 +12,7 @@ activating by date requires a start- and end-date!	mail	ko	날짜별로 활성�
 add as new	mail	ko	신규로 추가
 add files as %1	mail	ko	파일을 %1로 추가
 add this certificate into contact	mail	ko	이 인증서를 연락처에 추가
+add this key into contact	mail	ko	이 키를 연락처에 추가
 adding %1 to blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 adding %1 to whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용되지 않은 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 all my email addresses	mail	ko	내 모든 이메일 주소
@@ -27,10 +30,12 @@ attachments, ...	mail	ko	첨부 파일, ...
 available personal email-accounts/profiles	mail	ko	사용 가능한 개인 이메일 계정/프로필
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ko	선택한 모든 파일을 %1 모드로 추가하면 목록에 있는 모든 기존 첨부 파일도 %2 모드로 변경되므로 주의하십시오. \계속하시겠습니까?
 be aware that all attachments will be sent as %1!	mail	ko	모든 첨부 파일이 %1로 전송된다는 점에 유의하세요!
+blue	mail	ko	파란색
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ko	기본적으로 'http://'는 'https://'로 대체됩니다. 'https://proxy.egroupware.org/'를 설정하여 http를 통해서만 사용할 수 있는 이미지도 로드하도록 자유롭게 설정할 수 있습니다.
 caching of flags	mail	ko	플래그 캐싱
 can not resolve the winmail.dat attachment!	mail	ko	winmail.dat 첨부 파일을 확인할 수 없습니다!
 certificate details	mail	ko	인증서 세부 정보
+certificate does not match the stored private key!	mail	ko	인증서가 저장된 개인 키와 일치하지 않습니다!
 certificate imported.	mail	ko	인증서가 가져왔습니다.
 certificate in text	mail	ko	텍스트 인증서
 certificate info for email %1	mail	ko	이메일 %1에 대한 인증서 정보
@@ -41,13 +46,17 @@ check to save as calendar event on send	mail	ko	전송 후 이벤트로 생성�
 check to save as infolog on send	mail	ko	전송 후 인포로그로 만들려면 확인 버튼 선택
 check to save as tracker entry on send	mail	ko	전송 후 티켓으로 만들려면 확인 버튼 선택
 checking admin credentials failed	mail	ko	관리자 자격 증명 확인에 실패했습니다.
+connection could not be established, use the wizard to check why!	mail	ko	연결을 설정할 수 없습니다. 마법사를 사용하여 원인을 확인해 보세요!
 contact label	mail	ko	연락처 레이블
 continue	mail	ko	계속
 convert mail to item and attach its attachments to this item (standard)	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 이 항목에 첨부하기(표준)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 첨부하며 원시 메시지(.eml)를 첨부 파일로 추가합니다.
 convert only mail to item (ignore possible attachments)	mail	ko	이메일만 항목으로 변환(가능한 첨부 파일 무시)
 copied %1 message(s) from %2 to %3	mail	ko	%2에서 %3으로 %1 메시지를 복사했습니다.
+could not decrypt stored private key, wrong passphrase?	mail	ko	저장된 개인 키를 복호화할 수 없습니다. 암호가 틀린 것입니까?
+could not download %1	mail	ko	%1을(를) 다운로드할 수 없습니다.
 create new account	mail	ko	새 계정 만들기
+create private key and export csr	mail	ko	개인 키를 생성하고 CSR을 내보내기
 create self-signed certificate	mail	ko	자체 서명된 인증서 생성
 cross account forward attachment is not allowed!	mail	ko	계정 간 첨부 파일 전달은 허용되지 않습니다!
 default identity for compose	mail	ko	작성 시 기본 신원
@@ -63,6 +72,8 @@ do you want to be asked for confirmation before attaching selected messages to n
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ko	선택한 메시지를 다른 폴더로 옮기기 전에 확인 메시지를 표시하시겠습니까?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ko	다른 이메일 주소로 이메일이 도착할 경우('체'가 활성화된 경우에도) 이메일로 알림을 수정/설정하지 못하도록 하시겠습니까?
 don't use draft folder	mail	ko	초안 폴더 사용 안 함
+download all attachments	mail	ko	모든 첨부 파일 다운로드
+download attachments	mail	ko	첨부 파일 다운로드
 draft	mail	ko	초안
 draft folder	mail	ko	초안 폴더
 drafts	mail	ko	초안
@@ -99,6 +110,7 @@ forward to	mail	ko	전달 대상
 from	mail	ko	부터
 general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
+green	mail	ko	초록색
 ham folder	mail	ko	햄 폴더
 handling of external http images / mixed content in mails	mail	ko	전자 메일의 외부 http 이미지/혼합 콘텐츠 처리
 header	mail	ko	헤더
@@ -137,6 +149,7 @@ junk	mail	ko	정크
 junk folder	mail	ko	정크 폴더
 keep a copy	mail	ko	사본 보관
 keep a copy of the message in your inbox	mail	ko	받은 편지함에 메시지 사본을 보관합니다
+key fingerprint	mail	ko	키 지문
 kilobytes	mail	ko	킬로바이트
 last used signature	mail	ko	최근 사용한 서명
 later	mail	ko	나중에
@@ -171,8 +184,10 @@ no access	mail	ko	액세스 권한 없음
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ko	TO/CC/BCC 주소가 제공되지 않았으며 메시지를 저장할 폴더가 제공되지 않았습니다.
 no adress, to send this mail to, supplied	mail	ko	이 이메일을 보낼 주소가 제공되지 않았습니다.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ko	폴더 대상은 제공되지 않았으며 메시지를 저장할 폴더 또는 메일을 저장할 다른 방법(InfoLog/Ticketsystem에 저장)은 제공되지 않았지만 필수입니다.
+no private key stored to import a certificate for!	mail	ko	인증서를 가져올 개인 키가 저장되어 있지 않습니다!
 no s/mime private key stored for this account.	mail	ko	이 계정에 저장된 S/MIME 개인 키가 없습니다.
 non	mail	ko	비
+offer to add sender's s/mime certificate or pgp key to contact	mail	ko	발신자의 S/MIME 인증서 또는 PGP 키를 연락처에 추가할지 묻기
 only email	mail	ko	이메일만
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ko	이 메일이 아닌 다른 채널을 통해 수신자에게 비밀번호를 전송하는 경우에만 의미가 있습니다!
 only name	mail	ko	이름만
@@ -180,12 +195,16 @@ only needed for some servers, that do not return all folders on root level queri
 open in html mode	mail	ko	HTML 모드에서 열기
 open in text mode	mail	ko	텍스트 모드로 열기
 open with collabora office	mail	ko	콜러보라 온라인에서 열기
+orange	mail	ko	주황색
 organisation	admin	ko	조직
 organization | real name email	mail	ko	조직 | 실명 [이메일]
 original message	mail	ko	원본 메시지
 outbox	mail	ko	받은 편지함
+passphrase, if private key is protected	mail	ko	개인 키가 보호되어 있는 경우 암호
 permission denied	mail	ko	접근권한이 없습니다
 personal signature	mail	ko	개인 서명
+pgp key info for email %1	mail	ko	이메일 %1에 대한 PGP 키 정보
+pgp/mime signed message, no public key found to verify the signature	mail	ko	PGP/S/MIME으로 서명된 메시지이지만, 서명을 확인할 공개 키가 없습니다.
 please configure access to an existing individual imap account.	mail	ko	기존의 개별 IMAP 계정에 대한 액세스 권한을 구성해 주십시오.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ko	계정 수정 대화 상자의 암호화 탭에서 S/MIME 인증서를 구성하세요.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ko	관리자에게 문의하여 서버가 서버측 필터 규칙을 지원하는지 여부와 ID:%2의 활성 계정(%1)에 대해 EGroupware에서 이를 사용하도록 설정하는 방법을 확인하십시오.
@@ -195,8 +214,11 @@ please select a address	mail	ko	주소를 선택하세요
 predefined addresses for compose	mail	ko	작성 시 미리 정의된 값
 preview pane	mail	ko	창 레이아웃
 printing	mail	ko	인쇄
+private key created, downloading csr...	mail	ko	개인 키가 생성되었습니다. CSR을 다운로드 중입니다...
 processing of file %1 failed. failed to meet basic restrictions.	mail	ko	%1 파일을 처리하지 못했습니다. 기본 제한을 충족하지 못했습니다.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ko	기본 휴가 텍스트를 입력하세요(이전에 설정된 메시지가 없는 경우 새 휴가 메시지에 사용됨)
+public key	mail	ko	공개 키
+purple	mail	ko	보라색
 push notifications	mail	ko	푸시 알림
 quicksearch	mail	ko	빠른 검색
 quicksearch (with cc)	mail	ko	빠른 검색(+복사)
@@ -204,6 +226,7 @@ read / unread	mail	ko	읽기/읽지 않음
 real name	mail	ko	실명
 real name email	mail	ko	실명 [이메일]
 real name organization email	mail	ko	실명 조직 [이메일]
+red	mail	ko	빨간색
 reloaded account %1	mail	ko	계정 %1을 다시 불러왔습니다.
 reloaded folder %1	mail	ko	폴더 %1을(를) 다시 로드했습니다
 remember the password for	mail	ko	다음 비밀번호를 기억하세요
@@ -264,6 +287,7 @@ the %1 's acl removed from the %2	mail	ko	%2에서 %1의 ACL이 제거되었습�
 the %1 's acl, including its subfolders, removed from the %2	mail	ko	하위 폴더를 포함한 %1의 ACL이 %2에서 제거되었습니다.
 the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
 the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	ko	%1의 주소록에 저장된 S/MIME 인증서가 귀하의 계정 인증서와 일치하지 않습니다. 이 주소에 대한 중복된 주소록 항목이 있는지 확인해 주세요.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	ko	첨부 파일의 총 용량이 %1 MB 제한을 초과합니다. 다운로드 링크로 전환되었습니다.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ko	체 스크립트를 저장할 공간이 없으므로 메일 서버의 구성에서 sieve_maxscriptsize 옵션을 확인하세요.
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	ko	이 작업은 선택한 스레드의 모든 메시지에 적용되며, 총 %1개의 메시지가 포함됩니다. 계속하시겠습니까?
@@ -280,6 +304,7 @@ validate addresses on submit:	mail	ko	제출할 주소의 유효성을 검사합
 validate selected addresses on submit:	mail	ko	제출 시 선택한 주소 확인:
 view header lines	mail	ko	헤더 줄 보기
 what to do when you delete a message	mail	ko	메시지를 삭제할 때 수행할 작업입니다.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	ko	서명된 메시지에서 해당 발신자에 대해 아직 저장되지 않은 인증서/키가 발견되면, 이를 추가할지 묻습니다. 이미 알려진 연락처의 검증된 서명은 별도의 확인 없이 항상 자동으로 추가됩니다.
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	ko	어떤 메일 신원(서명)으로 시작하시겠습니까?\n“개인 서명”의 경우 항상 첫 번째 개인 서명이 사용됩니다.
 write	mail	ko	쓰기
 write & delete	mail	ko	쓰기 및 삭제
@@ -287,6 +312,7 @@ yes, offer copy option	mail	ko	예, 복사 옵션 제공
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ko	위의 시작 날짜는 $$start$$로, 종료 날짜는 $$end$$로 사용할 수 있습니다.
 you may add this certificate into your contact, if you trust this signature.	mail	ko	이 서명을 신뢰하는 경우 이 인증서를 연락처에 추가할 수 있습니다.
+you may add this key into your contact, if you trust this signature.	mail	ko	이 서명을 신뢰한다면, 이 키를 연락처에 추가할 수 있습니다.
 you need to enter your s/mime passphrase to send this message.	mail	ko	이 메시지를 보내려면 S/MIME 암호를 입력해야 합니다.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ko	%1에서 Chrome 및 Firefox에 사용할 수 있는 메일봉투 플러그인을 설치해야 합니다.
 you need to save the message as draft first before to be able to save it into vfs	mail	ko	메시지를 VFS에 저장하려면 먼저 메시지를 초안으로 저장해야 합니다.

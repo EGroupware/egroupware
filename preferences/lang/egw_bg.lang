@@ -3,33 +3,52 @@
 12 hour	preferences	bg	12-часово време
 24 hour	preferences	bg	24-часово време
 a theme defines the colors and fonts used by the template.	preferences	bg	Темата задава използваните цветве и шрифтове.
+access token revoked.	preferences	bg	Достъпният токен е отменен.
 acl grants have been updated	preferences	bg	Правата за достъп бяха обновени
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	bg	Активирайте, за да покажете по-цветни икони на приложенията в отворените раздели. Ако не е отбелязано, по подразбиране се използват по-светли персонализирани цветове.
+allows to set a default or force the active application tab for new logins.	preferences	bg	Позволява да се зададе по подразбиране или да се наложи активният раздел на приложението при нови влизания.
+allows to set a default or force the open application tabs.	preferences	bg	Позволява да се зададат по подразбиране или да се наложат отворените раздели на приложенията.
+app chooser icons	preferences	bg	Икони в избора на приложения
+app chooser icons + text	preferences	bg	Икони в избора на приложения + текст
 applications list scroll area	preferences	bg	Бутон за превъртане на страничното меню
 are you sure you want to delete this category ?	preferences	bg	Наистина ли искате да изтриете тази категория?
 are you sure?	preferences	bg	Сигурни ли сте?
+close after selection	preferences	bg	Затваряне след избор
 code is invalid	preferences	bg	Кодът е невалиден
 code is required	preferences	bg	Кодът е задължителен
 color	preferences	bg	Цвят
 country	preferences	bg	Държава
+current password	preferences	bg	Текуща парола
+custom login box color, defaults to above color darkened	preferences	bg	Персонализиран цвят на полето за вход; по подразбиране се използва по-тъмен вариант на горния цвят
 custom login box text color, defaults to white	preferences	bg	Цвят на текста в полето за вход по избор, по подразбиране е бял
+custom sidebar menu active color, defaults to above color darkened	preferences	bg	Персонализиран цвят за активно състояние на менюто в страничната лента; по подразбиране се използва по-тъмен вариант на горния цвят
 date format	preferences	bg	Формат на датата
 default	preferences	bg	по подразбиране
 default preferences	preferences	bg	Настройки по подразбиране
 delete categories	preferences	bg	Изтриване на категории
 deny following groups access to application passwords	preferences	bg	Забранете достъпа на следните групи до паролите на приложенията
+deny following groups access to edit categories	admin	bg	Отказване на достъп за редактиране на категории на следните групи
 deny following groups access to preferences	admin	bg	Забрана за достъп до предпочитанията на следните групи
 description can not exceed 255 characters in length !	preferences	bg	Описанието не може да превишава 255 символа!
 disable	preferences	bg	Забранява
+disable two factor auth	preferences	bg	Деактивиране на двуфакторната автентификация
+do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	bg	Искате ли винаги да виждате пълната дата и час, ако има малко място, или само часа за днес, а в противен случай – само датата?
 edit custom fields	preferences	bg	Редакция на полета по избор
+editor and preview	preferences	bg	Редактор и предварителен преглед
+editor only	preferences	bg	Само редактор
 enable	preferences	bg	позволява
+enable/disable menubar from top of the editor.	preferences	bg	Активиране/деактивиране на менюто в горната част на редактора.
 enter code to authenticate the actions below	preferences	bg	Въведете кода, за да удостоверите действията по-долу
 enter code to verify correct setup	preferences	bg	Въведете кода, за да потвърдите правилната настройка
 enter your new password	preferences	bg	Въведете нова парола
 enter your old password	preferences	bg	Въведете старата парола
+failed to delete secret!	preferences	bg	Не успяхме да изтрием тайната!
+failed to store secret!	preferences	bg	Не успяхме да запазим тайната!
 fast	preferences	bg	Бърз
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	bg	Бързото актуализиране добавя нови записи винаги отгоре на списъка и актуализира съществуващите на място, освен ако списъкът не е подреден по последна промяна. Точните актуализации извършват пълно обновяване, ако списъкът не е подреден по последна промяна.
+features of the editor	preferences	bg	Функции на редактора
 forced preferences	preferences	bg	Принудителни предпочитания
+full date and time	preferences	bg	Пълна дата и час
 generate new qrcode to disable existing one, after enabling the new one!	preferences	bg	Генериране на нов QR код за деактивиране на съществуващия (след активиране на новия)
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите
@@ -45,32 +64,40 @@ it sets content size (text only) according to selected size.	preferences	bg	То
 language	preferences	bg	Език
 limit following groups to only create application passwords via templates	preferences	bg	Тези групи ограничават само паролите за приложения, които се създават чрез шаблони
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	bg	Влизането чрез SingleSignOn не осигурява парола, която да се предава на пощенски или файлови сървъри.
+make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	bg	Прави страничната лента вляво с бутон за превъртане превъртаема нагоре/надолу (полезно за потребители на таблети).
+markdown view	preferences	bg	Изглед „Markdown“
 max matches per page	preferences	bg	Максимален брой съвпадения на страница
 max number of icons in navbar	preferences	bg	Максимален брой картинки в лентата за управление
 no default	preferences	bg	Без стойност по подразбиране
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	bg	Бележка: Това НЕ сменя паролата ви за пощата. Нейната смяна трябва да се направи по друг начин.
 old password and new password are the same. this is invalid. you must enter a new password	preferences	bg	Старата парола и новата парола са еднакви. Трябва да въведете нова парола!
+open application tabs	preferences	bg	Отворени раздели на приложенията
 open popups in	preferences	bg	Отваряне на изскачащи прозорци в
 password stored	preferences	bg	Запазена парола.
 popup window	preferences	bg	Изскачащ прозорец
 preferences saved.	preferences	bg	Запазени предпочитания.
+preview only	preferences	bg	Само предварителен преглед
 re-enter your password	preferences	bg	Въведете отново паролата
 reset qrcode	preferences	bg	Нулиране на QR кода
 same window	preferences	bg	В главния прозорец
 scan qrcode with a time-based one-time password (totp) app:	preferences	bg	Сканиране на QR кода с приложение TOTP (Time-based one-time password):
 select one	preferences	bg	Изберете
 set content size	preferences	bg	Задаване на размера на съдържанието
+shortened date/time display	preferences	bg	Съкратено показване на дата/час
 show app icons in there app color	preferences	bg	Показване на иконите на приложенията в цвета на приложението
+show links between egroupware aps as	common	bg	Икони и връзки към приложения
 show number of current users	preferences	bg	Показване на броя включени в момента потребители
 show qrcode	preferences	bg	Показване на QR код
 show qrcode to enable on an additional device.	preferences	bg	Показва отново QR кода, за да го настроите на други устройства
 singlesignon and passwords	preferences	bg	SingleSignOn и пароли
 store password retrievable for singlesignon	common	bg	Съхраняване на парола, която може да се извлича за SingleSignOn
+text editor settings	preferences	bg	Настройки на текстовия редактор
 text only	preferences	bg	Само текст
 the old password is not correct	preferences	bg	Старата парола не е правилна!
 the two passwords are not the same	preferences	bg	Паролите не съвпадат
 theme (colors/fonts) selection	preferences	bg	Избор на тема (цветове и шрифтове)
 thousands separator is only used for displaying and not for editing numbers.	preferences	bg	Форматът на числата може да бъде зададен за показване на числата.
+time for today, date otherwise	preferences	bg	Час за днес, а в противен случай – само датата
 time format	preferences	bg	Формат на часа
 use default	preferences	bg	Използване на стойност по подразбиране
 use first %1 letters from username	preferences	bg	Използвайте първите %1 букви от потребителското име
@@ -79,5 +106,7 @@ used instead of the application color.	preferences	bg	Използва се вм
 users choice	preferences	bg	По избор на потребителя
 what to display for an avatar, if there is no photo	preferences	bg	Какво да се показва за аватар, ако няма снимка
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на EGroupware.
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	bg	В какъв режим се отварят текстовите полета, поддържащи Markdown. Промяната на режима в дадено поле актуализира тази настройка.
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	bg	Можете да изберете функциите, които да бъдат активирани в лентата с инструменти.
 you must enter a password	preferences	bg	Трябва да въведете парола
 your preferences	preferences	bg	Вашите настройки

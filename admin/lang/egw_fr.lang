@@ -112,7 +112,7 @@ allow user to set 'remember me' token	admin	fr	AUtoriser les utilisateurs à uti
 allow users to change forwards	admin	fr	Autoriser les utilisateurs à changer les transferts
 allow users to create identities for aliases	admin	fr	Autoriser les utilisateurs à créer des identités pour les alias
 allowed for get requests, default in modern browsers, if attribute is not set	admin	fr	autorisé pour les requêtes get, par défaut dans les navigateurs modernes, si l'attribut n'est pas défini
-allowed just as second factor	admin	fr	autorisé uniquement en second facteur
+allowed just as second factor	admin	fr	Autorisé uniquement en second facteur
 alternate email address	admin	fr	Adresse email alternative
 and logged in	admin	fr	et connecté(s)
 anonymous user	admin	fr	Utilisateur anonyme
@@ -185,7 +185,6 @@ category list	admin	fr	Liste de catégories
 category saved.	admin	fr	Catégorie enregistrée.
 certificate	admin	fr	Certificat
 certificate details	admin	fr	Détails du certificat
-certificate validation in days	admin	fr	Validité du certificat en jours
 change access	admin	fr	Modifier les droits d'accès
 change account_id	admin	fr	Changer l'ID du compte
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
@@ -318,10 +317,11 @@ deny all users access to preferences ?	admin	fr	Refuser à tous les utilisateurs
 description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	fr	Le compte de destination #%1 existe déjà et ne peut être renommé ! Impossible de fusionner les comptes, cela violerait les contraintes d'intégrité. Essayez plutôt de supprimer avec transfert de données.
 determines the order the fields are displayed	admin	fr	Détermine l'ordre d'affichage des champs
-direct login without password or second factor	admin	fr	connexion directe sans mot de passe ni second facteur
+direct login without password or second factor	admin	fr	Connexion directe sans mot de passe ni second facteur
 disable	admin	fr	Désactiver
 disable "auto completion" of the login form	admin	fr	Désactiver l'auto-complétion dans le formulaire de login
 disable all	admin	fr	Tout désactiver
+disable certificate validation	admin	fr	Désactiver la validation des certificats
 disable minifying of javascript and css files	admin	fr	Désactiver la minification du code JavaScript et CSS
 disable pgp encryption (mailvelope)	admin	fr	Désactiver le chiffrement PGP (Mailvelope)
 disabled	admin	fr	Désactivé
@@ -329,8 +329,6 @@ disabled (not recomended)	admin	fr	Désactivé (pas recommandé)
 disabled, do not show on login page	admin	fr	Désactivé, ne pas montrer sur la page de connexion
 display	admin	fr	Afficher
 displayed length of input field (set rows=1 to limit length)	admin	fr	longueur affichée pour le champ input (mettre rows=1 pour limiter la longueur)
-displaying html messages is disabled	admin	fr	L'affichage des messages HTML est désactivé.
-displaying plain messages is disabled	admin	fr	L'affichage des texte brut est désactivé.
 do not delete the category and return back to the list	admin	fr	Ne PAS supprimer la catégorie et retourner à la liste
 do not generate email addresses	admin	fr	Ne pas générer les adresses email
 do not offer introduction video	admin	fr	Ne pas proposer la vidéo d'introduction
@@ -770,7 +768,6 @@ search categories	admin	fr	Chercher des catégories
 search groups	admin	fr	Chercher des groupes
 search peer servers	admin	fr	Chercher des serveurs Pairs
 secret deleted, two factor authentication disabled.	admin	fr	Secret effacé, authentification à double facteur désactivée.
-secure connection	admin	fr	Connexion sécurisée
 security	admin	fr	Sécurité
 select accounts for which the custom field should be readonly	admin	fr	Sélectionner les comptes pour lesquels le champ personnalisé doit être en lecture seule
 select accounts for which the custom field should be visible	admin	fr	Sélectionner les comptes pour lesquels le champ personnalisé devrait être visible.
@@ -834,7 +831,6 @@ sorry, the above users are still a member of the group %1	admin	fr	Désolé, les
 sorry, the follow users are still a member of the group %1	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1.
 sort the entries	admin	fr	Trier les entrées
 source account #%1 does not exist!	admin	fr	Le compte source #%1 n'existe pas !
-ssl	admin	fr	SSL
 standard	admin	fr	Standard
 standard identity	admin	fr	Identité standard
 standard imap server	admin	fr	Serveur IMAP standard

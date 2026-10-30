@@ -71,6 +71,7 @@ all users	admin	uk	Всі користувачі
 allow anonymous access to this app	admin	uk	Дозволити анонімний доступ до цього приложення
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	uk	Дозволити користувачеві зберігати свій пароль у розділі «Безпека та паролі» для SingleSignOn.
 allow user to set 'remember me' token	admin	uk	Дозволити користувачеві встановлювати токен "Запам'ятати мене
+allowed just as second factor	admin	uk	Дозволено лише як другий фактор
 anonymous user	admin	uk	Анонімний користувач
 anonymous user (not shown in list sessions)	admin	uk	Анонімний користувач (не показується в переліку сесій)
 anonymous user. not shown in list sessions.	admin	uk	Анонімний користувач. Не відображається в сеансах списку
@@ -108,7 +109,6 @@ category %1 has been saved !	admin	uk	Категорія % збережено!
 category list	admin	uk	Перелік категорій
 certificate	admin	uk	Сертифікат
 certificate details	admin	uk	Інформація про сертифікат
-certificate validation in days	admin	uk	Термін дії сертифіката в днях
 change access	admin	uk	Змінити права доступу
 change acl rights	admin	uk	Змінити ACL права
 change config settings	admin	uk	Змінити конфігураційні установки
@@ -165,9 +165,14 @@ deny access to user accounts	admin	uk	Заборонити доступ до р�
 deny all users access to grant other users access to their entries ?	admin	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів?
 description can not exceed 255 characters in length !	admin	uk	Довжина опису не може перевищувати 255 символів!
 determines the order the fields are displayed	admin	uk	визначає послідовність показу полів
+direct login without password or second factor	admin	uk	Прямий вхід без пароля або другого фактора
 disable	admin	uk	Відключити
 disable "auto completion" of the login form	admin	uk	Відключити "авто заповнення" у формі входу
+disable certificate validation	admin	uk	Вимкнути перевірку сертифікатів
+disable pgp encryption (mailvelope)	admin	uk	Вимкнути шифрування PGP (Mailvelope)
+disabled	admin	uk	Вимкнено
 disabled (not recomended)	admin	uk	відключено (не рекомендується)
+disabled, do not show on login page	admin	uk	Вимкнено, не показувати на сторінці входу
 display	admin	uk	Показувати
 do not delete the category and return back to the list	admin	uk	НЕ видаляти категорію та повернутись до переліку
 edit account	admin	uk	Редагувати рахунок
@@ -340,6 +345,7 @@ saves this entry	admin	uk	Зберігає цей запис
 search categories	admin	uk	Шукати категорії
 search groups	admin	uk	Шукати групи
 search peer servers	admin	uk	Шукати peer сервери
+secret deleted, two factor authentication disabled.	admin	uk	Секрет видалено, двофакторна автентифікація вимкнена.
 security	admin	uk	Безпека
 select group managers	admin	uk	Визначити керівників групи
 select permissions this group will have	admin	uk	Визначити права цієї групи
@@ -371,7 +377,6 @@ sorry, that group name has already been taken.	admin	uk	Вибачте, така
 sorry, the above users are still a member of the group %1	admin	uk	Вибачте, вищевказані користувачі все ще члени групи %1
 sorry, the follow users are still a member of the group %1	admin	uk	Вибачте, нижчевказані користувачі все ще члени групи %1
 sort the entries	admin	uk	сортувати записи
-ssl	admin	uk	SSL
 standard	admin	uk	стандарт
 start testjob!	admin	uk	Стартувати тестове завдання!
 submit changes	admin	uk	Відіслати зміни

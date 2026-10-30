@@ -19,8 +19,6 @@ disable	preferences	ca	Deshabilitar
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ca	Preferiu el format de temps de 24 hores, o bé el de 12 hores amb "am/pm" darrere ?
 edit custom fields	preferences	ca	Editar camps personalitzats
 enable	preferences	ca	Habilitar
-enable drag and drop functionality (experimental)	preferences	ca	Habilita funcionalitat d'arrossegar i deixar anar (experimental)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ca	Habilita o deshabilita funcions d'arrossegar i deixar anar a totes les aplicacions. Si el navegador no permet l'arrossegar i deixar anar, serà inhabilitat automàticament. Aquesta funció és experimental de moment.
 enter your new password	preferences	ca	Entreu la nova contrasenya
 enter your old password	preferences	ca	Escriu la contrasenya antiga
 failed to change password.	preferences	ca	Error al canviar la contrasenya.
@@ -70,6 +68,5 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	ca	Quin símbol o nom de moneda s'ha d'utilitzar a EGroupware?
 you can show the applications as icons only, icons with app-name or both.	preferences	ca	Podeu mostrar les aplicacions com: només icones, només nom o bé ambdós.
-you do not have permission to set acl's in this mode!	preferences	ca	No teniu permís per establir LCA's en aquest mode!
 you must enter a password	preferences	ca	Heu d'entrar una contrasenya
 your preferences	preferences	ca	Les vostres Preferències

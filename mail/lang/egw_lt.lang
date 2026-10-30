@@ -1,9 +1,11 @@
 %1 attachments	mail	lt	%1 priedai
+%1 attachments downloaded	mail	lt	Atsisiųsta %1 priedų.
 %1 for all users	mail	lt	%1 visiems naudotojams
 %1 is not writable by you!	mail	lt	%1 NEGALIMA rašyti!
 %1 mails selected	mail	lt	pasirinktas %1 el. laiškas
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lt	%1 reikia "Sieve" plėtinio %2, galbūt pabandykite %1 arba didesnį dienų skaičių.
 (leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
+account	mail	lt	Paskyra
 account editable by user	mail	lt	Vartotojas gali redaguoti paskyrą
 account not reachable	mail	lt	Paskyra nepasiekiama.
 acl rights retrieve failed, seems there are no rights set!	mail	lt	ACL teisių atkūrimas nepavyko, atrodo, kad nėra nustatytų teisių!
@@ -13,6 +15,7 @@ add as new	mail	lt	Pridėti kaip naują
 add files as %1	mail	lt	Pridėti failus kaip %1
 add raw message, ignore mail attachments	mail	lt	Konvertuoti laiškus į elementą, pridėti neapdorotą pranešimą (ignoruoti laiškų priedus)
 add this certificate into contact	mail	lt	Pridėti šį sertifikatą prie kontaktų
+add this key into contact	mail	lt	Pridėti šį raktą į kontaktą
 adding %1 to blacklisted email addresses failed because of %2	mail	lt	Pridėti %1 į juodąjį sąrašą įtrauktų el. pašto adresų nepavyko dėl %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	lt	Įtraukti %1 į "whiltelisted" el. pašto adresus nepavyko dėl %2
 after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
@@ -34,10 +37,12 @@ attachments, ...	mail	lt	Priedai, ...
 available personal email-accounts/profiles	mail	lt	galimos asmeninės el. pašto paskyros/profiliai
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	lt	Atkreipkite dėmesį, kad pridedant visus pasirinktus failus kaip %1 režimą, taip pat bus pakeisti visi sąraše esami priedai į %2 režimą.\nAr norite tęsti?
 be aware that all attachments will be sent as %1!	mail	lt	Žinokite, kad visi priedai bus išsiųsti kaip %1!
+blue	mail	lt	Mėlyna
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lt	Pagal numatytuosius nustatymus "http://" tiesiog pakeičiama "https://". Galite laisvai konfigūruoti 'https://proxy.egroupware.org/', kad taip pat būtų įkeliami vaizdai, prieinami tik per http.
 caching of flags	mail	lt	Vėliavų spartinimas
 can not resolve the winmail.dat attachment!	mail	lt	Negalima išspręsti winmail.dat priedo!
 certificate details	mail	lt	Sertifikato informacija
+certificate does not match the stored private key!	mail	lt	Sertifikatas nesutampa su išsaugotu privačiu raktu!
 certificate imported.	mail	lt	Sertifikatas importuotas.
 certificate in text	mail	lt	Sertifikato tekstas
 certificate info for email %1	mail	lt	Sertifikato informacija apie el. pašto %1
@@ -49,13 +54,17 @@ check to save as infolog on send	mail	lt	Pažymėkite mygtuką, kad po išsiunti
 check to save as tracker entry on send	mail	lt	Pažymėkite mygtuką, jei norite sukurti kaip bilietą po išsiuntimo
 checking admin credentials failed	mail	lt	Nepavyko patikrinti administratoriaus įgaliojimų
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
+connection could not be established, use the wizard to check why!	mail	lt	Nepavyko užmegzti ryšio – pasinaudokite vedliu, kad išsiaiškintumėte priežastį!
 contact label	mail	lt	Kontaktų etiketė
 continue	mail	lt	Tęsti
 convert mail to item and attach its attachments to this item (standard)	mail	lt	Konvertuoti el. laišką į elementą ir pridėti jo priedus prie šio elemento (standartinis)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lt	Konvertuoti el. laišką į elementą, pridėti jo priedus ir pridėti neapdorotą pranešimą (.eml) kaip priedą
 convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik el. laišką į elementą (ignoruoti galimus priedus)
 copied %1 message(s) from %2 to %3	mail	lt	Nukopijuotas %1 pranešimas (-ai) iš %2 į %3.
+could not decrypt stored private key, wrong passphrase?	mail	lt	Nepavyko iššifruoti išsaugoto privataus rakto – galbūt neteisinga slaptažodžio frazė?
+could not download %1	mail	lt	Nepavyko atsisiųsti %1.
 create new account	mail	lt	Sukurti naują paskyrą
+create private key and export csr	mail	lt	Sukurti privatų raktą ir eksportuoti CSR
 create self-signed certificate	mail	lt	Sukurti savarankiškai pasirašytą sertifikatą
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
@@ -75,6 +84,8 @@ do you want to be asked for confirmation before attaching selected messages to n
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	lt	Ar norite, kad prieš perkeliant pasirinktus laiškus į kitą aplanką būtų prašoma patvirtinimo?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lt	Ar norite neleisti redaguoti ir (arba) nustatyti pranešimo el. paštu kitiems el. pašto adresams, jei gaunami el. laiškai(, net jei „Sieve“ įjungtas)?
 don't use draft folder	mail	lt	Nenaudoti juodraščių aplanko
+download all attachments	mail	lt	Atsisiųsti visus priedus
+download attachments	mail	lt	Atsisiųsti priedus
 draft	mail	lt	Juodraštis
 draft folder	mail	lt	Juodraščių aplankas
 drafts	mail	lt	Juodraščiai
@@ -107,6 +118,7 @@ folder %1 %2 failed because of %3!	mail	lt	Aplankas %1 %2 nepavyko dėl %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	lt	Aplankas %1 sukurtas sėkmingai, nors prenumerata nepavyko dėl %2
 forward to	mail	lt	Pirmyn į
 get acl rights failed from imap server!	mail	lt	Nepavyko gauti ACL teisių iš IMAP serverio!
+green	mail	lt	Žalia
 ham folder	mail	lt	Kumpio aplankas
 handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
 header	mail	lt	Antraštė
@@ -145,6 +157,7 @@ junk	mail	lt	Šiukšlių
 junk folder	mail	lt	Šiukšlių aplankas
 keep a copy	mail	lt	Pasilikti kopiją
 keep a copy of the message in your inbox	mail	lt	Laikykite žinutės kopiją gautųjų laiškų dėžutėje
+key fingerprint	mail	lt	Rakto piršto atspaudas
 kilobytes	mail	lt	kilobaitai
 last used signature	mail	lt	Paskutinis naudotas parašas
 later	mail	lt	Vėliau
@@ -193,9 +206,11 @@ no access	mail	lt	Nėra prieigos
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	lt	Nepateiktas adresas TO/CC/BCC ir nepateiktas aplankas, į kurį būtų galima išsaugoti pranešimą.
 no adress, to send this mail to, supplied	mail	lt	Nepateiktas adresas, kuriam būtų galima siųsti šį el. laišką
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	lt	Nepateikta aplankų paskirties vieta, taip pat nepateiktas aplankas, kuriame būtų galima išsaugoti pranešimą, ar kita priemonė laiškui saugoti (išsaugoti informaciniame žurnale / bilietų sistemoje), tačiau ji būtina.
+no private key stored to import a certificate for!	mail	lt	Nėra išsaugoto privataus rakto, kuriam būtų galima importuoti sertifikatą!
 no s/mime private key stored for this account.	mail	lt	Šiai paskyrai nėra išsaugotas joks S/MIME privatus raktas.
 no sneak preview in list	mail	lt	Nėra pranešimo peržiūros
 non	mail	lt	Ne
+offer to add sender's s/mime certificate or pgp key to contact	mail	lt	Siūloma pridėti siuntėjo S/MIME sertifikatą arba PGP raktą prie kontakto
 only email	mail	lt	Tik el. paštas
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	lt	Prasminga tik tuo atveju, jei slaptažodį gavėjams perduodate kitu kanalu / ne šiuo paštu!
 only name	mail	lt	Tik vardas ir pavardė
@@ -203,11 +218,15 @@ only needed for some servers, that do not return all folders on root level queri
 open in html mode	mail	lt	Atidaryti HTML režimu
 open in text mode	mail	lt	Atidaryti teksto režimu
 open with collabora office	mail	lt	Atidaryti naudojant Collabora Online
+orange	mail	lt	Oranžinė
 organisation	admin	lt	Organizacija
 organization | real name email	mail	lt	Organizacija | Tikrasis vardas [El. paštas]
 original message	mail	lt	Originali žinutė
 outbox	mail	lt	Gautų laiškų dėžutė
+passphrase, if private key is protected	mail	lt	Slaptažodžio frazė, jei privatus raktas yra apsaugotas
 personal signature	mail	lt	Asmeninis parašas
+pgp key info for email %1	mail	lt	PGP rakto informacija el. pašto adresui %1
+pgp/mime signed message, no public key found to verify the signature	mail	lt	PGP / S/MIME pasirašytas pranešimas, nerastas viešasis raktas parašui patikrinti
 please configure access to an existing individual imap account.	mail	lt	Prašome sukonfigūruoti prieigą prie esamos individualios IMAP paskyros.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lt	Sukonfigūruokite S/MIME sertifikatą paskyros redagavimo dialogo lange esančiame skirtuke Šifravimas.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lt	Susisiekite su administratoriumi, kad patikrintumėte, ar jūsų serveris palaiko serverio filtravimo taisykles ir kaip jas įjungti "EGroupware" aktyviajai paskyrai (%1) su ID: %2.
@@ -218,8 +237,11 @@ post	mail	lt	siųsti
 predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
 preview pane	mail	lt	Langų išdėstymas
 printing	mail	lt	Spausdinimas
+private key created, downloading csr...	mail	lt	Sukurtas privatus raktas, atsisiunčiama CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	lt	Nepavyko apdoroti %1 failo. Nepavyko įvykdyti pagrindinių apribojimų.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	lt	Pateikite numatytąjį atostogų tekstą (naudojamas naujuose atostogų pranešimuose, kai anksčiau nebuvo nustatytas joks pranešimas)
+public key	mail	lt	Viešasis raktas
+purple	mail	lt	Violetinė
 push notifications	mail	lt	Push pranešimai
 quicksearch	mail	lt	Greita paieška
 quicksearch (with cc)	mail	lt	Greita paieška (+ kopijavimas)
@@ -227,6 +249,7 @@ read / unread	mail	lt	Skaityti / Neperskaityta
 real name	mail	lt	Tikrasis vardas
 real name email	mail	lt	Tikrasis vardas [El. paštas]
 real name organization email	mail	lt	Tikrasis vardas Organizacija [El. paštas]
+red	mail	lt	Raudona
 reloaded account %1	mail	lt	Paskyra %1 perkrauta.
 reloaded folder %1	mail	lt	Perkrautas aplankas %1
 remember the password for	mail	lt	Prisiminti slaptažodį
@@ -295,6 +318,7 @@ the %1 's acl removed from the %2	mail	lt	%1 ACL pašalinta iš %2.
 the %1 's acl, including its subfolders, removed from the %2	mail	lt	Iš %2 pašalintas %1 ACL, įskaitant jo pakatalogius.
 the imap server need to meet certain requirements and be configured for it:	mail	lt	IMAP serveris turi atitikti tam tikrus reikalavimus IR būti sukonfigūruotas:
 the rule with priority %1 successfully saved!	mail	lt	Taisyklė su prioritetu %1 sėkmingai išsaugota!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	lt	Adresų knygoje, susijusioje su %1, saugomas S/MIME sertifikatas nesutampa su jūsų paskyros sertifikatu – patikrinkite, ar adresų knygoje nėra dvigubų įrašų, susijusių su šiuo adresu.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	lt	Priedų bendras dydis viršija %1 MB ribą. Perjungta į atsisiuntimo nuorodą.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	lt	Neliko vietos sieve scenarijui saugoti, patikrinkite sieve_maxscriptsize parinktį savo pašto serverio konfigūracijoje.
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	lt	Šis veiksmas paveiks visus pasirinktų pokalbių srautų pranešimus – iš viso %1 pranešimų. Tęsti?
@@ -311,12 +335,14 @@ validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
 validate selected addresses on submit:	mail	lt	Patvirtinti pasirinktus adresus pateikiant:
 view header lines	mail	lt	Peržiūrėti antraštės eilutes
 what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	lt	Kai pasirašytame pranešime aptinkamas sertifikatas ar raktas, kuris dar nėra išsaugotas tam siuntėjui, paklauskite, ar norite jį pridėti – patikrintas parašas iš jau žinomo kontakto visada pridedamas automatiškai, nekeliant klausimo
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lt	Kokiu tapatybės profiliu (parašu) norite pradėti?\nPasirinkus „Asmeninis parašas“, visada naudojamas pirmasis asmeninis parašas.
 write & delete	mail	lt	rašyti ir ištrinti
 yes, offer copy option	mail	lt	Taip, siūlyti kopijavimo parinktį
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lt	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.
+you may add this key into your contact, if you trust this signature.	mail	lt	Galite pridėti šį raktą prie savo kontakto, jei pasitikite šiuo parašu.
 you need to enter your s/mime passphrase to send this message.	mail	lt	Norėdami išsiųsti šią žinutę, turite įvesti savo S/MIME slaptažodį.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	lt	Jums reikia įdiegti "Mailvelope" įskiepį, kurį "Chrome" ir "Firefox" galima įsigyti iš %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	lt	Kad galėtumėte išsaugoti pranešimą kaip juodraštį, pirmiausia turite jį išsaugoti VFS

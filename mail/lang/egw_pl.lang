@@ -1,10 +1,12 @@
 %1 attachments	mail	pl	%1 załączników
+%1 attachments downloaded	mail	pl	Pobrano %1 załączników.
 %1 for all users	mail	pl	%1 dla wszystkich użytkowników
 %1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
 %1 mails selected	mail	pl	Wybrano %1 wiadomości e-mail
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pl	%1 wymaga rozszerzenia Sieve %2, może wypróbuj %1 lub wyższą liczbę dni.
 (leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)
+account	mail	pl	Konto
 account editable by user	mail	pl	Konto edytowalne przez użytkownika
 account not reachable	mail	pl	Brak dostępu do konta.
 acl rights retrieve failed, seems there are no rights set!	mail	pl	Pobieranie uprawnień ACL nie powiodło się, wygląda na to, że nie ustawiono żadnych uprawnień!
@@ -14,6 +16,7 @@ add as new	mail	pl	Dodaj jako nowy
 add files as %1	mail	pl	Dodaj pliki jako %1
 add raw message, ignore mail attachments	mail	pl	Konwersja poczty do elementu, dodanie surowej wiadomości (ignorowanie załączników do poczty)
 add this certificate into contact	mail	pl	Dodaj ten certyfikat do kontaktu
+add this key into contact	mail	pl	Dodaj ten klucz do kontaktów
 add to addressbook	mail	pl	Dodaj do książki adresowej
 adding %1 to blacklisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail na czarnej liście nie powiodło się z powodu %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail z białej listy nie powiodło się z powodu %2
@@ -43,11 +46,13 @@ attachments, ...	mail	pl	załączniki, ...
 available personal email-accounts/profiles	mail	pl	dostępne osobiste konta e-mail/profile
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2.\nCzy chcesz kontynuować?
 be aware that all attachments will be sent as %1!	mail	pl	Pamiętaj, że wszystkie załączniki zostaną wysłane w trybie %1!
+blue	mail	pl	Niebieski
 by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
 caching of flags	mail	pl	Buforowanie flag
 can not resolve the winmail.dat attachment!	mail	pl	Nie można rozwiązać załącznika winmail.dat!
 certificate details	mail	pl	Szczegóły certyfikatu
+certificate does not match the stored private key!	mail	pl	Certyfikat nie pasuje do zapisanego klucza prywatnego!
 certificate imported.	mail	pl	Certyfikat zaimportowano.
 certificate in text	mail	pl	Certyfikat w wersji tekstowej
 certificate info for email %1	mail	pl	Informacje o certyfikacie dla wiadomości e-mail %1
@@ -59,6 +64,7 @@ compose	mail	pl	Utwórz
 compose as new	mail	pl	Utwórz nowe
 condition	mail	pl	Warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
+connection could not be established, use the wizard to check why!	mail	pl	Nie udało się nawiązać połączenia – skorzystaj z kreatora, aby sprawdzić, dlaczego!
 contact label	mail	pl	Etykieta kontaktu
 contains	mail	pl	zawiera
 continue	mail	pl	Fortsett
@@ -67,7 +73,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	pl	Konwertowanie tylko wiadomości e-mail do elementu (ignorowanie ewentualnych załączników)
 copied %1 message(s) from %2 to %3	mail	pl	Skopiowano %1 wiadomości z %2 do %3.
 copy to	mail	pl	Kopiuj do
+could not decrypt stored private key, wrong passphrase?	mail	pl	Nie udało się odszyfrować zapisanego klucza prywatnego – może hasło jest nieprawidłowe?
+could not download %1	mail	pl	Nie udało się pobrać %1.
 create new account	mail	pl	Utwórz nowe konto
+create private key and export csr	mail	pl	Utwórz klucz prywatny i wyeksportuj CSR
 create self-signed certificate	mail	pl	Utwórz certyfikat z podpisem własnym
 cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
 current subject	mail	pl	Aktualny temat
@@ -106,6 +115,8 @@ don't use draft folder	mail	pl	Nie używaj folderu szkiców
 don't use sent	mail	pl	Nie używaj Wysłanych
 don't use template folder	mail	pl	Nie używaj folderu szablonów
 don't use trash	mail	pl	Nie używaj Kosza
+download all attachments	mail	pl	Pobierz wszystkie załączniki
+download attachments	mail	pl	Pobierz załączniki
 draft	mail	pl	Szkic
 draft folder	mail	pl	Folder szkiców
 drafts	mail	pl	Szkice
@@ -161,6 +172,7 @@ from	mail	pl	Z
 general	admin	pl	Główne
 get acl rights failed from imap server!	mail	pl	Pobieranie uprawnień ACL z serwera IMAP nie powiodło się!
 greater than	mail	pl	Większe niż
+green	mail	pl	Zielony
 ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header	mail	pl	Nagłówek
@@ -204,6 +216,7 @@ junk	mail	pl	Śmieci
 junk folder	mail	pl	Folder śmieci
 keep a copy	mail	pl	Behold en kopi
 keep a copy of the message in your inbox	mail	pl	Zachowaj kopię wiadomości w folderze ODEBRANE
+key fingerprint	mail	pl	Odcisk palca klucza
 kilobytes	mail	pl	kilobajtów
 last used signature	mail	pl	Ostatnio używany podpis
 later	mail	pl	Później
@@ -258,6 +271,7 @@ no adress, to send this mail to, supplied	mail	pl	Nie podano adresu, na który m
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pl	Nie podano miejsca docelowego folderu ani folderu do zapisania wiadomości lub innego środka do przechowywania poczty (zapisz w InfoLog/Ticketsystem), ale jest to wymagane.
 no folders	mail	pl	brak folderów
 no plain text part found	mail	pl	Brak części 'czystym' tekstem
+no private key stored to import a certificate for!	mail	pl	Nie ma zapisanego klucza prywatnego, dla którego można by zaimportować certyfikat!
 no recipient address given!	mail	pl	Nie podano adresu docelowego!
 no s/mime private key stored for this account.	mail	pl	Dla tego konta nie zapisano klucza prywatnego S/MIME.
 no signature	mail	pl	brak podpisu
@@ -266,6 +280,7 @@ no subject given!	mail	pl	Nie podano tematu!
 non	mail	pl	Nie
 none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
+offer to add sender's s/mime certificate or pgp key to contact	mail	pl	Zaproponuj dodanie certyfikatu S/MIME lub klucza PGP nadawcy do kontaktów
 on	mail	pl	na
 once per day	mail	pl	Raz dziennie
 one address is not valid	mail	pl	Jeden adres nie jest poprawny
@@ -277,13 +292,17 @@ only one window	mail	pl	tylko jedno okno
 open in html mode	mail	pl	Otwórz w trybie HTML
 open in text mode	mail	pl	Otwórz w trybie tekstowym
 open with collabora office	mail	pl	Otwórz za pomocą Collabora Online
+orange	mail	pl	Pomarańczowy
 organisation	admin	pl	Organizacja
 organization	mail	pl	Instytucja
 organization | real name email	mail	pl	Organizacja | Prawdziwa nazwa [Email]
 original message	mail	pl	Oryginalna wiadomość
 outbox	mail	pl	Skrzynka nadawcza
+passphrase, if private key is protected	mail	pl	Hasło, jeśli klucz prywatny jest chroniony
 permission denied	mail	pl	Dostęp zabroniony
 personal signature	mail	pl	Podpis osobisty
+pgp key info for email %1	mail	pl	Informacje o kluczu PGP dla wiadomości e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	pl	Wiadomość podpisana PGP / S/MIME — nie znaleziono klucza publicznego do weryfikacji podpisu
 please configure access to an existing individual imap account.	mail	pl	Proszę skonfigurować dostęp do istniejącego konta IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pl	Skonfiguruj certyfikat S/MIME w zakładce Szyfrowanie znajdującej się w oknie dialogowym Edytuj konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje reguły filtrowania po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID: %2.
@@ -297,8 +316,11 @@ predefined addresses for compose	mail	pl	Predefiniowane adresy dla kompozycji
 preview pane	mail	pl	Układ okna
 printing	mail	pl	Drukowanie
 printview	mail	pl	Wydrukuj widok
+private key created, downloading csr...	mail	pl	Klucz prywatny utworzony, pobieranie CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pl	Podaj domyślny tekst urlopu (używany w nowych wiadomościach urlopowych, gdy nie było wcześniej skonfigurowanej wiadomości)
+public key	mail	pl	Klucz publiczny
+purple	mail	pl	Fioletowy
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	Szybkie wyszukiwanie (+Kopia)
@@ -306,6 +328,7 @@ read / unread	mail	pl	Przeczytane / Nieprzeczytane
 real name	mail	pl	Prawdziwe imię i nazwisko
 real name email	mail	pl	Prawdziwe imię i nazwisko [Email]
 real name organization email	mail	pl	Prawdziwa nazwa Organizacja [Email]
+red	mail	pl	Czerwony
 refresh time in minutes	mail	pl	Czas odświeżania w minutach
 reject with	mail	pl	odrzuć z
 reloaded account %1	mail	pl	Ponownie załadowano konto %1.
@@ -398,6 +421,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości.
 the rule with priority %1 successfully saved!	mail	pl	Reguła z priorytetem %1 została pomyślnie zapisana!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	pl	Certyfikat S/MIME zapisany w książce adresowej dla %1 nie zgadza się z certyfikatem Twojego konta — sprawdź, czy w książce adresowej nie ma zduplikowanych wpisów dla tego adresu.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	pl	Łączny rozmiar załączników przekracza limit %1 MB. Przełączono na link do pobrania.
 then	mail	pl	WTEDY
 there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP.
@@ -421,6 +445,7 @@ validate addresses on submit:	mail	pl	Weryfikacja adresów przy wysyłaniu:
 validate selected addresses on submit:	mail	pl	Sprawdź poprawność wybranych adresów podczas wysyłania:
 view header lines	mail	pl	Pokaż linie nagłówka
 what to do when you delete a message	mail	pl	Co zrobić po usunięciu wiadomości.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	pl	Gdy podpisana wiadomość zawiera certyfikat/klucz, który nie został jeszcze zapisany dla tego nadawcy, zapytaj, czy chcesz go dodać — zweryfikowany podpis od już znanego kontaktu jest zawsze dodawany automatycznie bez pytania
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
@@ -433,6 +458,7 @@ yes, offer copy option	mail	pl	Tak, oferuj opcję kopii
 you can select what info to be displayed on email tag	mail	pl	Możesz wybrać, jakie informacje mają być wyświetlane w tagu e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pl	Możesz użyć $$start$$ dla powyższej daty początkowej i $$end$$ dla daty końcowej.
 you may add this certificate into your contact, if you trust this signature.	mail	pl	Możesz dodać ten certyfikat do swojego kontaktu, jeśli ufasz temu podpisowi.
+you may add this key into your contact, if you trust this signature.	mail	pl	Możesz dodać ten klucz do swojego kontaktu, jeśli ufasz temu podpisowi.
 you need to enter your s/mime passphrase to send this message.	mail	pl	Aby wysłać tę wiadomość, należy wprowadzić hasło S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	pl	Musisz zainstalować wtyczkę Mailvelope dostępną dla Chrome i Firefox z %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	pl	Aby móc zapisać wiadomość w VFS, należy najpierw zapisać ją jako wersję roboczą.

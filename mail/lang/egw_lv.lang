@@ -1,10 +1,12 @@
 %1 attachments	mail	lv	%1 pielikumi
+%1 attachments downloaded	mail	lv	Lejupielādēti %1 pielikumi.
 %1 for all users	mail	lv	%1 visiem lietotājiem
 %1 is not writable by you!	mail	lv	%1 jums NAV rakstāms!
 %1 mails selected	mail	lv	atlasīti %1 e-pasti
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lv	%1 nepieciešams Sieve paplašinājums %2, varbūt izmēģiniet %1 vai lielāku dienu skaitu.
 (leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
 (no subject)	mail	lv	(nav temata)
+account	mail	lv	Konts
 account editable by user	mail	lv	Lietotājs var rediģēt kontu
 account not reachable	mail	lv	Konts nav pieejams.
 acl rights retrieve failed, seems there are no rights set!	mail	lv	ACL tiesību atgūšana neizdevās, šķiet, nav iestatītas tiesības!
@@ -14,6 +16,7 @@ add as new	mail	lv	Pievienot kā jaunu
 add files as %1	mail	lv	Pievienot failus kā %1
 add raw message, ignore mail attachments	mail	lv	Pārvērst pastu vienumā, pievienot neapstrādātu ziņojumu (ignorēt pasta pielikumus)
 add this certificate into contact	mail	lv	Pievienot šo sertifikātu kontaktā
+add this key into contact	mail	lv	Pievienot šo atslēgu kontaktam
 add to addressbook	mail	lv	pievienot adrešu grāmatai
 adding %1 to blacklisted email addresses failed because of %2	mail	lv	%1 pievienošana melnajā sarakstā iekļautajām e-pasta adresēm neizdevās %2 dēļ
 adding %1 to whiltelisted email addresses failed because of %2	mail	lv	%1 pievienošana e-pasta adresēm, kas iekļautas sarakstā, neizdevās %2 dēļ
@@ -37,10 +40,12 @@ attachments, ...	mail	lv	pielikumi, ...
 available personal email-accounts/profiles	mail	lv	pieejamie personīgie e-pasta konti/profili
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	lv	Ņemiet vērā, ka, pievienojot visus atlasītos failus %1 režīmā, tiks mainīti arī visi sarakstā esošie pielikumi uz %2 režīmu. \n \n \n Vai vēlaties turpināt?
 be aware that all attachments will be sent as %1!	mail	lv	Ņemiet vērā, ka visi pielikumi tiks nosūtīti kā %1!
+blue	mail	lv	Zils
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lv	Pēc noklusējuma "http://" tiek aizstāts ar "https://". Varat konfigurēt 'https://proxy.egroupware.org/', lai ielādētu arī attēlus, kas pieejami tikai caur http.
 caching of flags	mail	lv	Karodziņu kešēšana
 can not resolve the winmail.dat attachment!	mail	lv	Nevar atrisināt winmail.dat pielikumu!
 certificate details	mail	lv	Sertifikāta informācija
+certificate does not match the stored private key!	mail	lv	Sertifikāts nesakrīt ar saglabāto privāto atslēgu!
 certificate imported.	mail	lv	Sertifikāts importēts.
 certificate in text	mail	lv	Sertifikāts tekstā
 certificate info for email %1	mail	lv	Sertifikāta informācija par e-pasta %1
@@ -50,6 +55,7 @@ changing subject failed folder %1 does not exist	mail	lv	Mainīt tēmu neizdevā
 checking admin credentials failed	mail	lv	Pārbaudīt administratora akreditācijas datus neizdevās
 compose	mail	lv	Rakstīt jaunu
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
+connection could not be established, use the wizard to check why!	mail	lv	Neizdevās izveidot savienojumu — izmanto vedni, lai noskaidrotu iemeslu!
 contact label	mail	lv	Kontakta etiķete
 contains	mail	lv	satur
 continue	mail	lv	Turpināt
@@ -58,7 +64,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	lv	Konvertēt tikai e-pastu vienumam (neņemot vērā iespējamos pielikumus).
 copied %1 message(s) from %2 to %3	mail	lv	Nokopēts %1 ziņojums(-i) no %2 uz %3.
 copy to	mail	lv	Kopēt Uz:
+could not decrypt stored private key, wrong passphrase?	mail	lv	Neizdevās atšifrēt saglabāto privāto atslēgu — varbūt nepareiza paroles frāze?
+could not download %1	mail	lv	Neizdevās lejupielādēt %1.
 create new account	mail	lv	Izveidot jaunu kontu
+create private key and export csr	mail	lv	Izveidot privāto atslēgu un eksportēt CSR
 create self-signed certificate	mail	lv	Izveidot pašparakstītu sertifikātu
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
 current subject	mail	lv	Pašreizējais temats
@@ -88,6 +97,8 @@ does not match	mail	lv	neatbilst
 don't use draft folder	mail	lv	Nelietot izstrādājumu mapi
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
+download all attachments	mail	lv	Lejupielādēt visus pielikumus
+download attachments	mail	lv	Lejupielādēt pielikumus
 draft	mail	lv	Izstrādājums
 draft folder	mail	lv	Izstrādājumu mape
 drafts	mail	lv	Izstrādājumi
@@ -130,6 +141,7 @@ from	mail	lv	No
 general	admin	lv	Vispārējs
 get acl rights failed from imap server!	mail	lv	ACL tiesību iegūšana no IMAP servera neizdevās!
 greater than	mail	lv	lielāks nekā
+green	mail	lv	Zaļš
 ham folder	mail	lv	Šķiņķa mape
 handling of external http images / mixed content in mails	mail	lv	Ārējo http attēlu apstrāde / jaukts saturs e-pasta ziņojumos
 header	mail	lv	Virsraksts
@@ -168,6 +180,7 @@ junk	mail	lv	Junk
 junk folder	mail	lv	Surogātpasta mape
 keep a copy	mail	lv	Saglabāt kopiju
 keep a copy of the message in your inbox	mail	lv	saglabājiet ziņojuma kopiju savā iesūtnē
+key fingerprint	mail	lv	Atslēgas pirksta nospiedums
 kilobytes	mail	lv	kb
 last used signature	mail	lv	Pēdējā izmantotā paraksta
 later	mail	lv	Vēlāk
@@ -217,9 +230,11 @@ no access	mail	lv	Nav piekļuves
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	lv	Nav norādītas adreses TO/CC/BCC un nav norādīta mape, kurā saglabāt ziņojumu.
 no adress, to send this mail to, supplied	mail	lv	nav norādīta adrese, uz kuru nosūtīt šo e-pasta vēstuli.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	lv	Nav sniegts mapes galamērķis, un nav sniegta mape ziņojuma saglabāšanai vai cits pasākums pasta saglabāšanai (saglabāt InfoLog/Ticketsystem), bet tas ir nepieciešams.
+no private key stored to import a certificate for!	mail	lv	Nav saglabāta privātā atslēga, lai importētu sertifikātu!
 no s/mime private key stored for this account.	mail	lv	Šim kontam nav saglabāts S/MIME privātais atslēgas.
 no sneak preview in list	mail	lv	Nav ziņojuma priekšskatījuma
 non	mail	lv	Nav
+offer to add sender's s/mime certificate or pgp key to contact	mail	lv	Piedāvājums pievienot sūtītāja S/MIME sertifikātu vai PGP atslēgu kontaktam
 on	mail	lv	ieslēgts
 only email	mail	lv	Tikai e-pasts
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	lv	Ir jēga tikai tad, ja paroli pa citu kanālu / ārpus šī pasta saņēmējiem transportējat pa citu kanālu!
@@ -228,13 +243,17 @@ only needed for some servers, that do not return all folders on root level queri
 open in html mode	mail	lv	Atvērt HTML režīmā
 open in text mode	mail	lv	Atvērt teksta režīmā
 open with collabora office	mail	lv	Atvērt ar Collabora Online
+orange	mail	lv	Oranžs
 organisation	admin	lv	Organizācija
 organization	mail	lv	organizācija
 organization | real name email	mail	lv	Organizācija | Īstais vārds [E-pasts]
 original message	mail	lv	Sākotnējā ziņa
 outbox	mail	lv	Iesūtne
+passphrase, if private key is protected	mail	lv	Paroles frāze, ja privātā atslēga ir aizsargāta
 permission denied	mail	lv	Atļauja liegta
 personal signature	mail	lv	Personīgais paraksts
+pgp key info for email %1	mail	lv	PGP atslēgas informācija e-pastam %1
+pgp/mime signed message, no public key found to verify the signature	mail	lv	PGP / S/MIME parakstīts ziņojums, nav atrasts publiskais atslēgas, lai pārbaudītu parakstu
 please configure access to an existing individual imap account.	mail	lv	Lūdzu, konfigurējiet piekļuvi esošajam individuālajam IMAP kontam.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lv	Lūdzu, konfigurējiet savu S/MIME sertifikātu Encryption cilnē, kas atrodas konta rediģēšanas dialoglodziņā.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lv	Lūdzu, sazinieties ar savu administratoru, lai pārliecinātos, vai jūsu serveris atbalsta servera filtrēšanas noteikumus un kā tos iespējot EGroupware aktīvajam kontam (%1) ar ID: %2.
@@ -245,8 +264,11 @@ post	mail	lv	sūtīt
 predefined addresses for compose	mail	lv	Lepriekš noteiktas adreses sastādīšanai
 preview pane	mail	lv	Loga izkārtojums
 printing	mail	lv	Drukāšana
+private key created, downloading csr...	mail	lv	Privātais atslēgas izveidots, tiek lejupielādēts CSR ...
 processing of file %1 failed. failed to meet basic restrictions.	mail	lv	Failu %1 apstrāde nav izdevusies. Neizdevās izpildīt pamatierobežojumus.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	lv	Norādiet noklusējuma atvaļinājuma tekstu (izmanto jaunos atvaļinājuma ziņojumos, ja iepriekš nav bijis iestatīts neviens ziņojums)
+public key	mail	lv	Publiskā atslēga
+purple	mail	lv	Violets
 push notifications	mail	lv	Push paziņojumi
 quicksearch	mail	lv	Ātrā meklēšana
 quicksearch (with cc)	mail	lv	Ātrā meklēšana (+kopēšana)
@@ -254,6 +276,7 @@ read / unread	mail	lv	Lasīt / Neizlasīts
 real name	mail	lv	Īstais vārds
 real name email	mail	lv	Īstais vārds [E-pasts]
 real name organization email	mail	lv	Īstais vārds Organizācija [E-pasts]
+red	mail	lv	Sarkans
 refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
 reloaded account %1	mail	lv	Konta %1 atkārtota ielāde.
 reloaded folder %1	mail	lv	Pārlādēta mape %1
@@ -335,6 +358,7 @@ the %1 's acl removed from the %2	mail	lv	%1's ACL noņemts no %2.
 the %1 's acl, including its subfolders, removed from the %2	mail	lv	%1 ACL, ieskaitot tā apakšmapes, noņemts no %2.
 the imap server need to meet certain requirements and be configured for it:	mail	lv	IMAP serverim ir jāatbilst noteiktām prasībām UN tas ir jākonfigurē:
 the rule with priority %1 successfully saved!	mail	lv	Noteikums ar prioritāti %1 veiksmīgi saglabāts!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	lv	S/MIME sertifikāts, kas saglabāts %1 adresgrāmatā, nesakrīt ar jūsu konta sertifikātu — pārbaudiet, vai adresgrāmatā nav divu vienādu ierakstu ar šo adresi.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	lv	Pielikumu kopējais apjoms pārsniedz %1 MB ierobežojumu. Ir pārslēgts uz lejupielādes saiti.
 then	mail	lv	THEN
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	lv	Nav atlicis vietas sieve skripta uzglabāšanai, lūdzu, pārbaudiet sieve_maxscriptsize opciju sava pasta servera konfigurācijā.
@@ -354,6 +378,7 @@ validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
 validate selected addresses on submit:	mail	lv	Apstiprināt izvēlētos adreses pēc nosūtīšanas:
 view header lines	mail	lv	Skatīt virsraksta rindas
 what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	lv	Ja parakstītā ziņojumā tiek atklāts sertifikāts/atslēga, kas vēl nav saglabāta šim sūtītājam, jautājiet, vai to pievienot — pārbaudīts paraksts no jau zināma kontakta vienmēr tiek pievienots automātiski, nejautājot
 when deleting messages	mail	lv	Kad dzēš vēstules
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lv	Ar kuru e-pasta identitāti (parakstu) vēlaties sākt?\nIzvēloties „Personīgais paraksts”, mēs vienmēr izmantojam pirmo personīgo parakstu.
 write	mail	lv	Rakstīt
@@ -363,6 +388,7 @@ yes, offer copy option	mail	lv	Jā, piedāvāt kopēšanas iespēju
 you can select what info to be displayed on email tag	mail	lv	Varat izvēlēties, kāda informācija tiks rādīta e-pasta birkā.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lv	Iepriekš minētajam sākuma datumam varat izmantot $$start$$, bet beigu datumam - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lv	Jūs varat pievienot šo sertifikātu savā kontaktā, ja uzticaties šim parakstam.
+you may add this key into your contact, if you trust this signature.	mail	lv	Jūs varat pievienot šo atslēgu savam kontaktam, ja uzticaties šim parakstam.
 you need to enter your s/mime passphrase to send this message.	mail	lv	Lai nosūtītu šo ziņojumu, jums ir jāievada S/MIME parole.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	lv	Jums nepieciešams instalēt Mailvelope spraudni, kas pieejams Chrome un Firefox no %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	lv	Pirms ziņojuma saglabāšanas VFS jums vispirms ir jāsaglabā ziņojums kā melnraksts

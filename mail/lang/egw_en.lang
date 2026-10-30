@@ -1,5 +1,5 @@
 %1 attachments	mail	en	%1 attachments
-%1 attachments downloaded	mail	en	%1 attachments downloaded
+%1 attachments downloaded	mail	en	%1 attachments downloaded.
 %1 for all users	mail	en	%1 for all users
 %1 has been added to blacklisted email addresses	mail	en	%1 has been added to blacklisted email addresses
 %1 has been added to whiltelisted email addresses	mail	en	%1 has been added to whiltelisted email addresses
@@ -12,6 +12,7 @@
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	en	A pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. Leave empty for the default of 800px.
 account	mail	en	Account
 account editable by user	mail	en	Account editable by user
 account not reachable	mail	en	Account not reachable
@@ -141,7 +142,7 @@ copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not attach '%1': the original message is no longer available (deleted or moved).	mail	en	Could not attach '%1': the original message is no longer available (deleted or moved).
 could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
-could not download %1	mail	en	Could not download %1
+could not download %1	mail	en	Could not download %1.
 could not generate certificate!	mail	en	Could not generate certificate!
 could not generate csr.	mail	en	Could not generate CSR.
 could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
@@ -299,11 +300,11 @@ flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in
 flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2.
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
-folder '%1' not found	mail	en	Folder '%1' not found
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
 folder %1 %2 failed!	mail	en	Folder %1 %2 failed!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	en	Folder %1 has been created successfully, although the subscription failed because of %2
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
+folder '%1' not found	mail	en	Folder '%1' not found
 folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
@@ -424,7 +425,6 @@ match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
 max. width of inline images in a mail body or signature (in px)	mail	en	Max. width of inline images in a mail body or signature (in px)
-a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	en	A pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. Leave empty for the default of 800px.
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct email processing!
 message body	mail	en	Message body
 message learned as ham (not spam) and moved back to inbox	mail	en	Message learned as ham (not spam) and moved back to inbox
@@ -522,7 +522,7 @@ perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expun
 permission denied	mail	en	Permission denied
 personal signature	mail	en	Personal signature
 pgp key info for email %1	mail	en	PGP key info for email %1
-pgp/mime signed message, no public key found to verify the signature	mail	en	PGP/MIME signed message, no public key found to verify the signature
+pgp/mime signed message, no public key found to verify the signature	mail	en	PGP / S/MIME signed message, no public key found to verify the signature
 pgp/mime signed message, signature does not belong to sender %1	mail	en	PGP/MIME signed message, signature does NOT belong to sender %1
 pgp/mime signed message, signature verification failed for %1	mail	en	PGP/MIME signed message, signature verification FAILED for %1
 pgp/mime signed message, signature verified for %1	mail	en	PGP/MIME signed message, signature verified for %1
@@ -744,6 +744,7 @@ the entered passphrase is not correct! please try again.	mail	en	The entered pas
 the folder %1 's acls saved	mail	en	The folder %1's ACLs saved
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the imap server need to meet certain requirements and be configured for it:	mail	en	The IMAP server need to meet certain requirements AND be configured for it:
+the mail was sent successfully to all recipients, except the following: %1	mail	en	The mail was sent successfully to all recipients, except the following: %1
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The MIME parser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
@@ -751,7 +752,6 @@ the s/mime certificate stored in the address book for %1 does not match your acc
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 the total size of the attachments exceeds the limit of %1 mb	mail	en	The total size of the attachments exceeds the limit of %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link.
-the mail was sent successfully to all recipients, except the following: %1	mail	en	The mail was sent successfully to all recipients, except the following: %1
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
@@ -834,20 +834,3 @@ you need to select some folders first (by clicking on them)!	mail	en	You need to
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new email
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.
-no s/mime private key stored for this account.	mail	en	No S/MIME private key stored for this account.
-could not generate csr.	mail	en	Could not generate CSR.
-create self-signed certificate	mail	en	Create self-signed certificate
-export csr	mail	en	Export CSR
-import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
-passphrase, if private key is protected	mail	en	Passphrase, if private key is protected
-import certificate	mail	en	Import certificate
-create private key and export csr	mail	en	Create private key and export CSR
-private key created, downloading csr...	mail	en	Private key created, downloading CSR...
-self-signed certificate created.	mail	en	Self-signed certificate created.
-certificate imported.	mail	en	Certificate imported.
-could not generate certificate!	mail	en	Could not generate certificate!
-common name and email address are required!	mail	en	Common name and email address are required!
-no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
-could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
-could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
-certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!

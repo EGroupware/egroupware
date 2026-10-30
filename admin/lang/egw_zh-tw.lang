@@ -149,7 +149,6 @@ disable	admin	zh-tw	停用
 disable "auto completion" of the login form	admin	zh-tw	停止登入頁面中的自動完成功能
 disabled (not recomended)	admin	zh-tw	停用(不建議)
 display	admin	zh-tw	顯示
-displaying html messages is disabled	emailadmin	zh-tw	顯示 html 信件的功能停用中
 do not delete the category and return back to the list	admin	zh-tw	不要刪除這個類別並且回到清單
 document root (default)	admin	zh-tw	文件根目錄（預設）
 domainname	emailadmin	zh-tw	網域名稱
@@ -424,7 +423,6 @@ sorry, that group name has already been taken.	admin	zh-tw	抱歉，群組名稱
 sorry, the above users are still a member of the group %1	admin	zh-tw	抱歉，以上使用者仍然是群組%1的成員
 sorry, the follow users are still a member of the group %1	admin	zh-tw	很抱歉，下列使用者仍然屬於群組 %1
 sort the entries	admin	zh-tw	排序
-ssl	admin	zh-tw	ssl
 standard	emailadmin	zh-tw	標準
 standard imap server	emailadmin	zh-tw	標準IMAP伺服器
 standard smtp-server	emailadmin	zh-tw	標準SMTP伺服器

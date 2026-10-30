@@ -81,6 +81,7 @@ all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	tr	Kullanıcının parolasını SingleSignOn için 'Güvenlik ve Parolalar' altında saklamasına izin verin.
 allow user to set 'remember me' token	admin	tr	Kullanıcının ‘Beni hatırla’ belirtecini ayarlamasına izin ver
+allowed just as second factor	admin	tr	Yalnızca ikinci faktör olarak izin verilir
 anonymous user	admin	tr	Anonim kullanıcı
 anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez.
 anonymous user. not shown in list sessions.	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez
@@ -122,7 +123,6 @@ category %1 has been saved !	admin	tr	Kategori %1 kaydedildi!
 category list	admin	tr	Kategori listesi
 certificate	admin	tr	Sertifika
 certificate details	admin	tr	Sertifika detayları
-certificate validation in days	admin	tr	Gün içinde sertifika doğrulama
 change access	admin	tr	Erişim haklarını değiştirme
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
@@ -180,9 +180,14 @@ deny access to site configuration	admin	tr	Site ayarlarına erişimi engelle
 deny access to user accounts	admin	tr	Kullanıcı hesaplarına erişimi engelle
 deny all users access to grant other users access to their entries ?	admin	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle
 description can not exceed 255 characters in length !	admin	tr	Açıklama en fazla 255 karakter olabilir!
+direct login without password or second factor	admin	tr	Şifre veya ikinci faktör olmadan doğrudan oturum açma
 disable	admin	tr	Engelle
 disable "auto completion" of the login form	admin	tr	Sistem girişi "Otomatik tamamla" özelliğini kullanma
+disable certificate validation	admin	tr	Sertifika doğrulamasını devre dışı bırak
+disable pgp encryption (mailvelope)	admin	tr	PGP şifrelemesini devre dışı bırak (Mailvelope)
+disabled	admin	tr	Devre dışı
 disabled (not recomended)	admin	tr	Kullanılmıyor (Önerilmiyor)
+disabled, do not show on login page	admin	tr	Devre dışı, oturum açma sayfasında gösterilmesin
 display	admin	tr	Görüntüle
 do not delete the category and return back to the list	admin	tr	Kategoriyi <b>silme</b> ve listeye geri dön
 edit account	admin	tr	Hesap düzenle
@@ -364,6 +369,7 @@ save the category and return back to the list	admin	tr	Kategoriyi kaydet ve list
 search categories	admin	tr	Kategorileri ara
 search groups	admin	tr	Grupları ara
 search peer servers	admin	tr	Peer sunucuları ara
+secret deleted, two factor authentication disabled.	admin	tr	Gizli anahtar silindi, iki faktörlü kimlik doğrulama devre dışı bırakıldı.
 security	admin	tr	Güvenlik
 select group managers	admin	tr	Grup yöneticilerini seç
 select permissions this group will have	admin	tr	Bu gurubun sahip olacağı izinleri seçiniz
@@ -398,7 +404,6 @@ sorry, that group name has already been taken.	admin	tr	Üzgünüm, o group ismi
 sorry, the above users are still a member of the group %1	admin	tr	Üzgünüm, yukarıdaki kullanıcılar hala %1 grubunun üyeleridir.
 sorry, the follow users are still a member of the group %1	admin	tr	Üzgünüm, şu kullanıcılar hala %1 grubunun üyeleridir.
 sort the entries	admin	tr	Girdileri sırala
-ssl	admin	tr	SSL
 standard	admin	tr	Standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!

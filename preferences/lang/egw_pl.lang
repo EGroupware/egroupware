@@ -4,42 +4,61 @@
 24 hour	preferences	pl	24 godzinny
 a template defines the layout of egroupware and it contains icons for each application.	preferences	pl	Szablony określają wygląd EGroupware i zawierają ikonki dla wszystkich aplikacji
 a theme defines the colors and fonts used by the template.	preferences	pl	Tematy służą do określenia kolorów i czcionek używanych w szablonie
+access token revoked.	preferences	pl	Token dostępu został cofnięty.
 acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	pl	Aktywuj, aby wyświetlać bardziej kolorowe ikony aplikacji w otwartych kartach. Jeśli opcja nie jest zaznaczona, domyślnie wyświetlane są ikony w jasnym kolorze niestandardowym.
+allows to set a default or force the active application tab for new logins.	preferences	pl	Umożliwia ustawienie domyślnej lub wymuszenie aktywnej karty aplikacji przy nowych logowaniach.
+allows to set a default or force the open application tabs.	preferences	pl	Umożliwia ustawienie domyślnych lub wymuszenie otwartych kart aplikacji.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w EGroupware będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
+app chooser icons	preferences	pl	Ikony w selektorze aplikacji
+app chooser icons + text	preferences	pl	Ikony w selektorze aplikacji + tekst
 applications list scroll area	preferences	pl	Przycisk przewijania dla menu bocznego
 are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie?
 are you sure?	preferences	pl	Czy na pewno?
 br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
+close after selection	preferences	pl	Zamknij po dokonaniu wyboru
 code is invalid	preferences	pl	Kod jest nieprawidłowy
 code is required	preferences	pl	Kod jest wymagany
 color	preferences	pl	Kolor
 country	preferences	pl	Państwo
+current password	preferences	pl	Aktualne hasło
+custom login box color, defaults to above color darkened	preferences	pl	Niestandardowy kolor pola logowania; domyślnie jest to przyciemniona wersja powyższego koloru
 custom login box text color, defaults to white	preferences	pl	Niestandardowy kolor tekstu w polu logowania; domyślnie biały
+custom sidebar menu active color, defaults to above color darkened	preferences	pl	Niestandardowy kolor aktywacji menu bocznego; domyślnie jest to przyciemniona wersja powyższego koloru
 dark mode theme	preferences	pl	Motyw trybu ciemnego
 date format	preferences	pl	Format daty
 default	preferences	pl	domyślne
 default preferences	preferences	pl	Ustawienia domyślne
 delete categories	preferences	pl	Kategorie domyślne
+deny following groups access to application passwords	preferences	pl	Odmów następującym grupom dostępu do haseł aplikacji
+deny following groups access to edit categories	admin	pl	Odmów następującym grupom dostępu do edycji kategorii
 deny following groups access to preferences	admin	pl	Odmowa dostępu do preferencji następującym grupom
 description can not exceed 255 characters in length !	preferences	pl	Opis nie może przekraczać 255 znaków!
 disable	preferences	pl	Wyłącz
+disable two factor auth	preferences	pl	Wyłącz uwierzytelnianie dwuskładnikowe
 display thumbnails for linked images	preferences	pl	Wyświetlaj miniatury linkowanych obrazków
 div	preferences	pl	div
+do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	pl	Czy zawsze chcesz widzieć pełną datę i godzinę, jeśli jest mało miejsca, czy tylko godzinę dla dzisiejszego dnia, a w pozostałych przypadkach datę?
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pl	Czy preferujesz wyświetlanie godziny w formacie 24 godzinnym czy w 12 godzinnym z dołączeniem przed południem/po południu?
 edit custom fields	preferences	pl	Edytuj pola użytkownika
+editor and preview	preferences	pl	Edytor i podgląd
+editor only	preferences	pl	Tylko edytor
 enable	preferences	pl	włącz
-enable drag and drop functionality (experimental)	preferences	pl	Włącz funkcjonalność przeciągnij i upuść (eksperymentalne)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
+enable/disable menubar from top of the editor.	preferences	pl	Włączanie/wyłączanie paska menu u góry edytora.
+enabled features in toolbar	preferences	pl	Włączone funkcje na pasku narzędzi
 enter code to authenticate the actions below	preferences	pl	Wprowadź kod, aby uwierzytelnić poniższe działania
 enter code to verify correct setup	preferences	pl	Wprowadź kod, aby zweryfikować poprawność konfiguracji
 enter your new password	preferences	pl	Wprowadź nowe hasło
 enter your old password	preferences	pl	Wprowadź stare hasło
 failed to change password.	preferences	pl	Zmiana hasła nieudana.
+failed to delete secret!	preferences	pl	Nie udało się usunąć klucza tajnego!
+failed to store secret!	preferences	pl	Nie udało się zapisać klucza tajnego!
 fast	preferences	pl	Szybki
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	pl	Szybka aktualizacja dodaje nowe wpisy zawsze na górze listy i aktualizuje istniejące na miejscu, chyba że lista jest posortowana według ostatniej modyfikacji. Dokładne aktualizacje wykonują pełne odświeżenie, jeśli lista nie jest posortowana według ostatniej modyfikacji.
+features of the editor	preferences	pl	Funkcje edytora
 forced preferences	preferences	pl	Ustawienia wymuszone
+full date and time	preferences	pl	Pełna data i godzina
 generate new qrcode to disable existing one, after enabling the new one!	preferences	pl	Wygeneruj nowy kod QR, aby wyłączyć istniejący (po włączeniu nowego)
 help off	preferences	pl	Wyłącz wyświetlanie pomocy
 hours	preferences	pl	godzin
@@ -61,6 +80,7 @@ language	preferences	pl	Język
 limit following groups to only create application passwords via templates	preferences	pl	Odmowa następującym grupom dostępu do haseł aplikacji
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pl	Logowanie przez SingleSignOn nie zapewnia hasła do przekazania go do serwerów poczty lub plików.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pl	Sprawia, że pasek boczny po lewej stronie z przyciskiem przewijania można przewijać w górę/w dół (przydatne dla użytkowników tabletów).
+markdown view	preferences	pl	Widok Markdown
 max matches per page	preferences	pl	Maksymalna liczba trafień na stronie
 max number of icons in navbar	preferences	pl	Maksymalna liczba ikonek w pasku nawigacji
 no default	preferences	pl	Bez domyślnego
@@ -69,6 +89,7 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia hasła do twojej skrzynki pocztowej! Należy to zrobić ręcznie.
 number format	preferences	pl	Format liczbowy
 old password and new password are the same. this is invalid. you must enter a new password	preferences	pl	Stare hasło i nowe hasło są takie same. Musisz wprowadzić nowe hasło!
+open application tabs	preferences	pl	Otwarte karty aplikacji
 open popups in	preferences	pl	Otwórz wyskakujące okienka w
 p: paragraph	preferences	pl	p: Paragraf
 password stored	preferences	pl	Przechowywane hasło.
@@ -90,6 +111,7 @@ selectbox with groupmembers	common	pl	Lista rozwijana z członkami grup
 selectbox with primary group and search	preferences	pl	Lista rozwijana z członkami grupy domyślnej i wyszukiwaniem
 set content size	preferences	pl	Ustaw rozmiar zawartości
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pl	Ustaw to według własnych upodobań. Ze względów bezpieczeństwa Twoich danych możesz nie chcieć pokazywać publicznie Twojej nazwy użytkownika.
+shortened date/time display	preferences	pl	Skrócony wyświetlacz daty/godziny
 should the number of active sessions be displayed for you all the time.	preferences	pl	Czy wyświetlać liczbę aktywnych sesji?
 show app icons in there app color	preferences	pl	Pokaż ikony aplikacji w kolorze aplikacji
 show helpmessages by default	preferences	pl	Wyświetlaj pomoc domyślnie
@@ -103,6 +125,7 @@ show_more_apps	common	pl	Wyświetl wiecej aplikacji
 singlesignon and passwords	preferences	pl	SingleSignOn i hasła
 spellchecker language	addressbook	pl	Język sprawdzania pisowni
 store password retrievable for singlesignon	common	pl	Przechowuj hasło, które można odzyskać dla SingleSignOn
+text editor settings	preferences	pl	Ustawienia edytora tekstu
 text only	preferences	pl	Tylko tekst
 the old password is not correct	preferences	pl	Wprowadzone stare hasło nie jest poprawne
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub adresu poczty elektronicznej.
@@ -112,6 +135,7 @@ the two passwords are not the same	preferences	pl	Te dwa hasła nie są identycz
 theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
 this server is located in the %1 timezone	preferences	pl	Ten serwer znajduje się w strefie czasowej %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	pl	Format liczb można ustawić dla wyświetlania liczb.
+time for today, date otherwise	preferences	pl	Godzina dla dzisiejszego dnia, w pozostałych przypadkach data
 time format	preferences	pl	Format czasu
 use default	preferences	pl	Domyślne
 use first %1 letters from username	preferences	pl	Użyj pierwszych %1 liter z nazwy użytkownika
@@ -121,8 +145,9 @@ users choice	preferences	pl	Wybierają użytkownicy
 what to display for an avatar, if there is no photo	preferences	pl	Co wyświetlać jako awatar, jeśli nie ma zdjęcia
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w EGroupware
+which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	pl	Wybór widoku, w którym otwierają się pola tekstowe obsługujące Markdown. Zmiana widoku w polu powoduje aktualizację tej opcji.
 you can show the applications as icons only, icons with app-name or both.	preferences	pl	Możesz wybrać wyświetlanie aplikacji w formie ikon, tekstów lub obydwojga.
 you can show the linked entries with icons only, icons with app-name or both.	common	pl	Możesz pokazać podlinkowane wpisy jako ikony lub ikony z nazwą aplikacji.
-you do not have permission to set acl's in this mode!	preferences	pl	Nie posiadasz uprawnień do usawianie uprawnień dostępowych (ACL) w tym trybie!
+you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	pl	Możesz wybrać funkcje, które mają być włączone na pasku narzędzi.
 you must enter a password	preferences	pl	Musisz wprowadzić hasło
 your preferences	preferences	pl	Twoje ustawienia

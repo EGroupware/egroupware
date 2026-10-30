@@ -63,6 +63,5 @@ use default	preferences	eu	Lehenetsia erabili
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	eu	Bai aukeratzen bada sarrera eta irteera botoiak aplikazio nagusien barran agertuko dira.
 which currency symbol or name should be used in egroupware.	preferences	eu	EGroupwarek erabili behar duen txanpon sinbolo edo izena.
 you can show the applications as icons only, icons with app-name or both.	preferences	eu	Ikonoak ikono moduan edota izenarekin ikus ditzakezu edota biak batera.
-you do not have permission to set acl's in this mode!	preferences	eu	Ez daukazu baimenik ACL modu honetan jartzeko
 you must enter a password	preferences	eu	Pasahitz bat sartu behar duzu
 your preferences	preferences	eu	Zure hobespenak

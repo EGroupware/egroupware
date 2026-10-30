@@ -42,6 +42,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lt	Po kiek nesėkmingų prisijungimo bandymų IP adresas turėtų būti užblokuotas. Numatytasis = 15
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
 allow user to set 'remember me' token	admin	lt	Leisti naudotojui nustatyti žetoną "Prisiminti mane"
+allowed just as second factor	admin	lt	Leidžiama tik kaip antrasis autentifikavimo veiksnys
 anonymous user. not shown in list sessions.	admin	lt	Anoniminis naudotojas. Nerodoma sąrašo sesijose
 blocking after wrong password	admin	lt	Blokavimas po neteisingo slaptažodžio
 bulk changes	admin	lt	Masiniai pakeitimai
@@ -49,7 +50,6 @@ bulk password reset	admin	lt	Masinis slaptažodžio keitimas
 can be used to show groups by container, if enabled	admin	lt	Galima naudoti grupėms pagal konteinerį rodyti, jei įjungta
 certificate	admin	lt	Sertifikatas
 certificate details	admin	lt	Sertifikato informacija
-certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
 change access	admin	lt	Keisti prieigos teises
 change domain of email address and aliases	admin	lt	Pakeisti el. pašto adreso domeną ir slapyvardžius
 clear security tokens	admin	lt	Išvalyti saugumo žetonus
@@ -61,6 +61,13 @@ custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
 delete certificate	admin	lt	Ištrinti sertifikatą
 deny access to access log	admin	lt	Drausti prieigą prie prieigos žurnalo
+direct login without password or second factor	admin	lt	Tiesioginis prisijungimas be slaptažodžio ar antrojo autentifikavimo veiksnio
+disable	admin	lt	Išjungti
+disable certificate validation	admin	lt	Išjungti sertifikato patvirtinimą
+disable pgp encryption (mailvelope)	admin	lt	Išjungti PGP šifravimą (Mailvelope)
+disabled	admin	lt	Išjungta
+disabled (not recomended)	admin	lt	Išjungta (nerekomenduojama)
+disabled, do not show on login page	admin	lt	Išjungta, nerodyti prisijungimo puslapyje
 error revoking token!	admin	lt	Klaida atšaukti žetoną!
 error storing token!	admin	lt	Klaida saugant simbolį!
 export certificate as p12	admin	lt	Eksportuoti sertifikatą kaip p12
@@ -96,6 +103,7 @@ own install id:	admin	lt	Nuosavas diegimo ID:
 regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
 retention period for history-log (in years)	admin	lt	Istorijos žurnalo saugojimo laikotarpis (metais)
 revoke this token	admin	lt	Atšaukti šį simbolį
+secret deleted, two factor authentication disabled.	admin	lt	Slaptažodis ištrintas, dviejų veiksnių autentifikavimas išjungtas.
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	lt	Pasirinkite programas, kurioms norite, kad simbolis būtų taikomas tik jums, arba palikite numatytąjį variantą - visos programos.
 set a random password	admin	lt	Nustatykite atsitiktinį slaptažodį
 show access log	admin	lt	Prieigos žurnalas

@@ -1,10 +1,12 @@
 %1 attachments	mail	hu	%1 mellékletek
+%1 attachments downloaded	mail	hu	%1 melléklet letöltve.
 %1 for all users	mail	hu	%1 minden felhasználó számára
 %1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
 %1 mails selected	mail	hu	%1 kiválasztott e-mail
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	hu	%1 Sieve kiterjesztést igényel %2, esetleg próbálja meg %1 vagy magasabb számú napot.
 (leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	hu	(nincs tárgy)
+account	mail	hu	Fiók
 account editable by user	mail	hu	A felhasználó szerkesztheti a fiókot
 account not reachable	mail	hu	A fiók nem érhető el.
 acl rights retrieve failed, seems there are no rights set!	mail	hu	Az ACL-jogok lekérdezése sikertelen, úgy tűnik, nincsenek jogok beállítva!
@@ -14,6 +16,7 @@ add as new	mail	hu	Újként hozzáadni
 add files as %1	mail	hu	Fájlok hozzáadása %1-ként
 add raw message, ignore mail attachments	mail	hu	Leveleket elemmé alakítani, nyers üzenetet hozzáadni (figyelmen kívül hagyni a levél mellékleteket)
 add this certificate into contact	mail	hu	Adja hozzá ezt a tanúsítványt a kapcsolathoz
+add this key into contact	mail	hu	A kulcs hozzáadása a névjegyhez
 add to addressbook	mail	hu	Címjegyzékhez hozzáad
 adding %1 to blacklisted email addresses failed because of %2	mail	hu	%1 hozzáadása a feketelistán szereplő e-mail címekhez %2 miatt sikertelen
 adding %1 to whiltelisted email addresses failed because of %2	mail	hu	%1 hozzáadása a listán szereplő e-mail címekhez %2 miatt sikertelen
@@ -42,11 +45,13 @@ attachments, ...	mail	hu	mellékletek, ...
 available personal email-accounts/profiles	mail	hu	elérhető személyes e-mail-fiókok/profilok
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	hu	Figyeljen arra, hogy az összes kiválasztott fájl %1 módban történő hozzáadásával a listában lévő összes meglévő mellékletet is %2 módra változtatja.\nSzeretné folytatni?
 be aware that all attachments will be sent as %1!	mail	hu	Vegye figyelembe, hogy az összes mellékletet %1 módban küldi el!
+blue	mail	hu	Kék
 by date	mail	hu	Dátum szerint
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	hu	Alapértelmezés szerint a "http://" helyébe a "https://" lép. Nyugodtan konfigurálhatja a 'https://proxy.egroupware.org/'-t úgy, hogy csak http-n keresztül elérhető képeket is betöltsön.
 caching of flags	mail	hu	A zászlók gyorsítótárazása
 can not resolve the winmail.dat attachment!	mail	hu	Nem tudja feloldani a winmail.dat csatolmányt!
 certificate details	mail	hu	Tanúsítvány részletei
+certificate does not match the stored private key!	mail	hu	A tanúsítvány nem egyezik a tárolt titkos kulccsal!
 certificate imported.	mail	hu	A tanúsítvány importálva.
 certificate in text	mail	hu	Tanúsítvány szöveges formában
 certificate info for email %1	mail	hu	Tanúsítvány-információ az e-mail %1-hez
@@ -62,6 +67,7 @@ compose	mail	hu	Szerkeszt
 compose as new	mail	hu	Szerkesztés újként
 condition	mail	hu	Feltétel
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
+connection could not be established, use the wizard to check why!	mail	hu	Nem sikerült létrehozni a kapcsolatot. Használd a varázslót, hogy kiderítsd, miért!
 contact label	mail	hu	Kapcsolat címke
 contains	mail	hu	tartalmaz
 continue	mail	hu	Folytassa
@@ -70,7 +76,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	hu	Csak az e-mailt alakítja át elemmé (figyelmen kívül hagyva az esetleges mellékleteket)
 copied %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) átmásolása %2-ből %3-ba.
 copy to	mail	hu	Másold ide:
+could not decrypt stored private key, wrong passphrase?	mail	hu	Nem sikerült visszafejteni a tárolt titkos kulcsot – esetleg helytelen a jelszó?
+could not download %1	mail	hu	A %1 fájlt nem sikerült letölteni.
 create new account	mail	hu	Új fiók létrehozása
+create private key and export csr	mail	hu	Titkos kulcs létrehozása és a CSR exportálása
 create self-signed certificate	mail	hu	Önaláírt tanúsítvány létrehozása
 cross account forward attachment is not allowed!	mail	hu	Kereszt számla előre csatolása nem megengedett!
 current subject	mail	hu	Jelenlegi téma
@@ -108,6 +117,7 @@ don't use draft folder	mail	hu	Ne használd a 'Vázlat' mappát
 don't use sent	mail	hu	Ne használja a 'Elküldött' mappát
 don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
 don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
+download all attachments	mail	hu	Az összes melléklet letöltése
 download attachments	mail	hu	Letöltés mellékletek
 draft	mail	hu	Vázlat
 draft folder	mail	hu	Vázlat mappa
@@ -161,6 +171,7 @@ from	mail	hu	Tól:
 general	admin	hu	Általános
 get acl rights failed from imap server!	mail	hu	Az ACL-jogok lekérdezése sikertelen az IMAP-kiszolgálóról!
 greater than	mail	hu	Nagyobb mint
+green	mail	hu	Zöld
 ham folder	mail	hu	Ham mappa
 handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
 header	mail	hu	Fejléc
@@ -198,6 +209,7 @@ junk	mail	hu	Szemét
 junk folder	mail	hu	Szemét mappa
 keep a copy	mail	hu	Megtartani egy másolatot
 keep a copy of the message in your inbox	mail	hu	Másolat megőrzése a Bejövő postafiókban
+key fingerprint	mail	hu	Kulcs ujjlenyomat
 kilobytes	mail	hu	kilobájt
 last used signature	mail	hu	Legutóbb használt aláírás
 later	mail	hu	Később
@@ -252,6 +264,7 @@ no adress, to send this mail to, supplied	mail	hu	nem adták meg azt a címet, a
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	hu	Nincs megadott mappa célállomás, és nincs mappa az üzenet mentésére vagy más intézkedés a levelek tárolására (mentés az InfoLog/Ticketystembe), de szükséges.
 no folders	mail	hu	nincs mappa
 no plain text part found	mail	hu	Nem található egyszerű szöveges tartalom
+no private key stored to import a certificate for!	mail	hu	Nincs tárolt titkos kulcs, amelyhez tanúsítványt lehetne importálni!
 no recipient address given!	mail	hu	Címzett nincs megadva!
 no s/mime private key stored for this account.	mail	hu	Ehhez a fiókhoz nincs tárolva S/MIME titkos kulcs.
 no signature	mail	hu	nincs aláírás
@@ -259,6 +272,7 @@ no sneak preview in list	mail	hu	Nincs üzenet előnézet
 no subject given!	mail	hu	Az üzenethez nincs tárgy megadva!
 non	mail	hu	Nem
 none, create all	mail	hu	egyik sem, összes létrehozása
+offer to add sender's s/mime certificate or pgp key to contact	mail	hu	Felajánlás a feladó S/MIME-tanúsítványának vagy PGP-kulcsának hozzáadására a névjegyhez
 on	mail	hu	be
 once per day	mail	hu	Naponta egyszer
 one address is not valid	mail	hu	Egy cím érvénytelen
@@ -270,13 +284,17 @@ only one window	mail	hu	csak egy ablak
 open in html mode	mail	hu	Megnyitás HTML módban
 open in text mode	mail	hu	Megnyitás szöveges módban
 open with collabora office	mail	hu	Megnyitás a Collabora Online segítségével
+orange	mail	hu	Narancssárga
 organisation	admin	hu	Szervezet
 organization	mail	hu	Szervezet
 organization | real name email	mail	hu	Szervezet | Valódi név [Email]
 original message	mail	hu	Eredeti üzenet
 outbox	mail	hu	Kimenő postaláda
+passphrase, if private key is protected	mail	hu	Jelszó, ha a titkos kulcs védett
 permission denied	mail	hu	Hozzáférés megtagadva
 personal signature	mail	hu	Személyes aláírás
+pgp key info for email %1	mail	hu	PGP-kulcsadatok az %1 e-mailhez
+pgp/mime signed message, no public key found to verify the signature	mail	hu	PGP / S/MIME aláírt üzenet, nem található nyilvános kulcs az aláírás ellenőrzéséhez
 please configure access to an existing individual imap account.	mail	hu	Kérjük, konfigurálja a hozzáférést egy meglévő egyéni IMAP-fiókhoz.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	hu	Kérjük, konfigurálja az S/MIME tanúsítványt a Fiók szerkesztése párbeszédpanelen található Titkosítás fülön.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, forduljon a rendszergazdához, hogy ellenőrizze, támogatja-e a szerver a szerveroldali szűrőszabályokat, és hogyan engedélyezheti azokat az EGroupware-ben az Ön aktív fiókja (%1) számára az ID: %2 azonosítóval.
@@ -289,8 +307,11 @@ predefined addresses for compose	mail	hu	Előre definiált címek az összeáll�
 preview pane	mail	hu	Ablak elrendezés
 printing	mail	hu	Nyomtatás
 printview	mail	hu	Nyomtatási kép
+private key created, downloading csr...	mail	hu	A titkos kulcs létrehozva, a CSR letöltése folyamatban...
 processing of file %1 failed. failed to meet basic restrictions.	mail	hu	A %1 fájl feldolgozása sikertelen. Az alapvető korlátozások nem teljesültek.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	hu	Adjon meg egy alapértelmezett vakáció szöveget (új vakációs üzeneteknél használatos, ha korábban nem volt üzenet beállítva)
+public key	mail	hu	Nyilvános kulcs
+purple	mail	hu	Lila
 push notifications	mail	hu	Push értesítések
 quicksearch	mail	hu	Gyorskeresés
 quicksearch (with cc)	mail	hu	Gyorskeresés (+másolás)
@@ -298,6 +319,7 @@ read / unread	mail	hu	Olvasott / Olvasatlan
 real name	mail	hu	Valódi név
 real name email	mail	hu	Valódi név [Email]
 real name organization email	mail	hu	Valódi név Szervezet [Email]
+red	mail	hu	Piros
 refresh time in minutes	mail	hu	Frissítési időintervallum percben
 reject with	mail	hu	elutasítás
 reloaded account %1	mail	hu	A %1 fiók újratöltése.
@@ -386,6 +408,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	hu	A feladó kéri tértivevényt küldését amely jelzi, hogy megkaptad az üzenetet. Szeretnéd hogy elküldjem?
 the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
 the rule with priority %1 successfully saved!	mail	hu	A %1 prioritású szabály sikeresen mentve!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	hu	A %1 címhez a címjegyzékben tárolt S/MIME-tanúsítvány nem egyezik meg a fiókod saját tanúsítványával – ellenőrizd, hogy nincs-e duplikált bejegyzés a címjegyzékben ehhez a címhez.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	hu	A mellékletek összmérete meghaladja a %1 MB-os korlátot. Letöltési linkre váltottunk.
 then	mail	hu	AKKOR
 there is no imap server configured.	mail	hu	Nincs IMAP szerver beállítva.
@@ -408,6 +431,7 @@ vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete kor�
 validate addresses on submit:	mail	hu	Érvényesítse a címeket az elküldéskor:
 view header lines	mail	hu	Fejléc tartalom megjelenítése
 what to do when you delete a message	mail	hu	Mi a teendő, ha töröl egy üzenetet.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	hu	Ha egy aláírt üzenet olyan tanúsítványt/kulcsot tár fel, amely még nincs tárolva az adott feladóhoz, kérdezze meg, hogy hozzáadja-e – egy már ismert névjegy ellenőrzött aláírása mindig automatikusan hozzáadódik, kérdés nélkül
 when deleting messages	mail	hu	Üzenet törlése esetén
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve
 which folders - in general - should not be automatically created, if not existing	mail	hu	melyik mappa ne legyen automatikusan létrehozva
@@ -419,6 +443,7 @@ yes, offer copy option	mail	hu	Igen, másolási lehetőség
 you can select what info to be displayed on email tag	mail	hu	Kiválaszthatja, hogy milyen információk jelenjenek meg az e-mail címke.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	hu	A fenti kezdő dátumhoz használhatja a $$start$$$-t, a végdátumhoz pedig a $$end$$$-t.
 you may add this certificate into your contact, if you trust this signature.	mail	hu	Ezt a tanúsítványt hozzáadhatod a kapcsolatodhoz, ha megbízol ebben az aláírásban.
+you may add this key into your contact, if you trust this signature.	mail	hu	Hozzáadhatja ezt a kulcsot a névjegyéhez, ha megbízik ebben az aláírásban.
 you need to enter your s/mime passphrase to send this message.	mail	hu	Az üzenet elküldéséhez meg kell adnia az S/MIME jelszavát.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	hu	Telepítenie kell a Chrome és Firefox elérhető Mailvelope plugint a %1 oldalról.
 you need to save the message as draft first before to be able to save it into vfs	mail	hu	Az üzenetet először vázlatként kell elmentenie, mielőtt a VFS-be menthetné.

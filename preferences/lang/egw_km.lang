@@ -11,8 +11,6 @@ acl grants have been updated	preferences	km	ជំនួយ ACL ត្រូវ�
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	km	ការចុះបញ្ជីណាមួយនៅក្នុង EGroupware នឹងបង្ហាញចំនួនធាតុ ឬបន្ទាត់នេះក្នុងមួយទំព័រ។ ការបង្ហាញទំព័រយឺតពេក តិចពេកនឹងធ្វើឱ្យអ្នកចំណាយលើទិដ្ឋភាពទូទៅ។
 applications list scroll area	preferences	km	តំបន់រមូរបញ្ជីកម្មវិធី
 are you sure you want to delete this category ?	preferences	km	តើអ្នកប្រាកដថាចង់លុបប្រភេទនេះទេ?
-audio effect	preferences	km	បែបផែនសំឡេង
-audio effect enables|disables sound effects used in the theme	preferences	km	បែបផែនសំឡេងបើក|បិទបែបផែនសំឡេងដែលប្រើក្នុងរូបរាង
 automatically start with this font	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងពុម្ពអក្សរនេះ។
 automatically start with this font size	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងទំហំពុម្ពអក្សរនេះ។
 automatically start with this format block. small paragraph adds less line space between new lines.	preferences	km	ចាប់ផ្តើមដោយស្វ័យប្រវត្តិជាមួយនឹងប្លុកទម្រង់នេះ។\n<b>កថាខណ្ឌតូច</b> បន្ថែមចន្លោះបន្ទាត់តិចជាងរវាងបន្ទាត់ថ្មី។
@@ -48,11 +46,9 @@ div	preferences	km	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	km	ជ្រើសរើសទម្រង់ពេលវេលាដែលបានបង្ហាញ។ 24 ម៉ោងឬ 12 ម៉ោងជាមួយព្រឹក / រសៀលភ្ជាប់។
 edit custom fields	preferences	km	កែសម្រួលវាលផ្ទាល់ខ្លួន
 enable	preferences	km	បើក
-enable drag and drop functionality (experimental)	preferences	km	អូសហើយទម្លាក់
 enable menubar	preferences	km	បើករបារម៉ឺនុយ
 enable/disable menubar from top of the editor.	preferences	km	បើក / បិទរបារម៉ឺនុយពីកំពូលនៃកម្មវិធីនិពន្ធ។
 enabled features in toolbar	preferences	km	បានបើកមុខងារនៅក្នុងរបារឧបករណ៍
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	km	បើក ឬបិទមុខងារអូស និងទម្លាក់ក្នុងកម្មវិធីទាំងអស់។ ប្រសិនបើកម្មវិធីរុករកមិនគាំទ្រការអូស និងទម្លាក់ វានឹងបិទដោយស្វ័យប្រវត្តិ។
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	km	ការភ្ជាប់ LDAP ដែលបានអ៊ិនគ្រីបគឺតម្រូវឱ្យផ្លាស់ប្តូរពាក្យសម្ងាត់ ប៉ុន្តែវាមិនត្រូវបានកំណត់រចនាសម្ព័ន្ធនៅក្នុងការដំឡើងរបស់អ្នកទេ។
 enter code to verify correct setup	preferences	km	បញ្ចូលលេខកូដដើម្បីផ្ទៀងផ្ទាត់ការដំឡើងត្រឹមត្រូវ។
 enter your new password	preferences	km	បញ្ចូលពាក្យសម្ងាត់ថ្មី។
@@ -79,7 +75,6 @@ how do you like to display accounts	preferences	km	ការបង្ហាញ�
 how do you like to select accounts	preferences	km	ជ្រើសរើសគណនី
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	km	តើ​អ្នក​នៅ​ខាង​មុខ ឬ​បន្ទាប់​ពី​តំបន់​ម៉ោង​របស់​ម៉ាស៊ីនមេ​ប៉ុន្មាន​ម៉ោង?\nប្រសិន​បើ​អ្នក​នៅ​ក្នុង​តំបន់​ម៉ោង​ដូច​គ្នា​ដែល​ម៉ាស៊ីន​មេ​ជ្រើស 0 ម៉ោង ផ្សេង​ទៀត​ជ្រើស​កាល​បរិច្ឆេទ​និង​ម៉ោង​ក្នុង​មូលដ្ឋាន​របស់​អ្នក។
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	km	តើរូបតំណាងប៉ុន្មានគួរត្រូវបានបង្ហាញនៅក្នុងរបាររុករកនៅផ្នែកខាងលើនៃទំព័រ។ រូបតំណាងបន្ថែមចូលទៅក្នុងម៉ឺនុយទាញចុះក្រោម អាចហៅបានដោយរូបតំណាងនៅជ្រុងខាងស្តាំនៃរបាររុករក។
-how many toolbar buttons are available	preferences	km	តើមានប៊ូតុងរបារឧបករណ៍ប៉ុន្មាន
 how should egroupware display dates for you.	preferences	km	ជ្រើសរើសទម្រង់កាលបរិច្ឆេទដែលបង្ហាញ
 how to update lists	preferences	km	របៀបធ្វើបច្ចុប្បន្នភាពបញ្ជី
 icon	preferences	km	រូបតំណាង
@@ -174,7 +169,6 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	km	និមិត្តសញ្ញារូបិយប័ណ្ណ ឬឈ្មោះ។
 you can show the applications as icons only, icons with app-name or both.	preferences	km	អ្នកអាចបង្ហាញកម្មវិធីជារូបតំណាងតែប៉ុណ្ណោះ រូបតំណាងដែលមានឈ្មោះកម្មវិធី ឬទាំងពីរ។
 you can show the linked entries with icons only, icons with app-name or both.	common	km	បង្ហាញកម្មវិធីដែលមានរូបតំណាងតែប៉ុណ្ណោះ រូបតំណាងដែលមានឈ្មោះកម្មវិធី ឬទាំងពីរ។
-you do not have permission to set acl's in this mode!	preferences	km	អ្នកមិនមានសិទ្ធិកំណត់ ACL នៅក្នុងរបៀបនេះទេ!
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	km	អ្នកអាចជ្រើសរើសមុខងារដែលត្រូវបើកនៅក្នុងរបារឧបករណ៍។
 you must enter a password	preferences	km	អ្នកត្រូវតែបញ្ចូលពាក្យសម្ងាត់។
 you need to enter your password to make any security changes!	preferences	km	អ្នកត្រូវបញ្ចូលពាក្យសម្ងាត់របស់អ្នកដើម្បីធ្វើការផ្លាស់ប្តូរសុវត្ថិភាពណាមួយ!

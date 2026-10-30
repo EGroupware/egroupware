@@ -1,9 +1,11 @@
 %1 attachments	mail	no	%1 vedlegg
+%1 attachments downloaded	mail	no	%1 vedlegg lastet ned.
 %1 for all users	mail	no	%1 for alle brukere
 %1 is not writable by you!	mail	no	%1 kan IKKE skrives av deg!
 %1 mails selected	mail	no	%1 e-poster valgt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	no	%1 krever Sieve-utvidelsen %2, prøv kanskje %1 eller et høyere antall dager.
 (no subject)	mail	no	(uten emne)
+account	mail	no	Konto
 account editable by user	mail	no	Kontoen kan redigeres av brukeren
 account not reachable	mail	no	Kontoen er ikke tilgjengelig.
 acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
@@ -11,6 +13,7 @@ activating by date requires a start- and end-date!	mail	no	Aktivering etter dato
 add as new	mail	no	Legg til som ny
 add files as %1	mail	no	Legg til filer som %1
 add this certificate into contact	mail	no	Legg til dette sertifikatet i kontakt
+add this key into contact	mail	no	Legg til denne nøkkelen i kontakten
 add to addressbook	mail	no	Legg til i adressebok
 adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
@@ -34,10 +37,12 @@ attachments, ...	mail	no	vedlegg, ...
 available personal email-accounts/profiles	mail	no	tilgjengelige personlige e-postkontoer/profiler
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus.\nVil du fortsette?
 be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at alle vedlegg vil bli sendt som %1!
+blue	mail	no	Blå
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
 can not resolve the winmail.dat attachment!	mail	no	Kan ikke løse vedlegget winmail.dat!
 certificate details	mail	no	Detaljer om sertifikatet
+certificate does not match the stored private key!	mail	no	Sertifikatet stemmer ikke overens med den lagrede privatnøkkelen!
 certificate imported.	mail	no	Sertifikatet er importert.
 certificate in text	mail	no	Sertifikat i tekst
 certificate info for email %1	mail	no	Sertifikatinfo for e-post %1
@@ -50,6 +55,7 @@ check to save as infolog on send	mail	no	Kryss av for å opprette som InfoLog et
 check to save as tracker entry on send	mail	no	Kryss av for å opprette som sak etter sending
 checking admin credentials failed	mail	no	Kontroll av administratorlegitimasjon mislyktes
 compose	mail	no	Ny melding
+connection could not be established, use the wizard to check why!	mail	no	Det var ikke mulig å opprette forbindelse. Bruk veiviseren for å finne ut hvorfor!
 contact label	mail	no	Kontaktetikett
 contains	mail	no	inneholder
 continue	mail	no	Fortsett
@@ -58,7 +64,10 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
 copied %1 message(s) from %2 to %3	mail	no	Kopierte %1 melding(er) fra %2 til %3.
 copy to	mail	no	Kopier til
+could not decrypt stored private key, wrong passphrase?	mail	no	Kunne ikke dekryptere lagret privat nøkkel – feil passordfrase?
+could not download %1	mail	no	Kunne ikke laste ned %1.
 create new account	mail	no	Opprett ny konto
+create private key and export csr	mail	no	Opprett privatnøkkel og eksporter CSR
 create self-signed certificate	mail	no	Opprett selvsignert sertifikat
 cross account forward attachment is not allowed!	mail	no	Videresending av vedlegg mellom kontoer er ikke tillatt!
 default identity for compose	mail	no	Standardidentitet for ny e-post
@@ -85,6 +94,8 @@ does not match regexp	mail	no	stemmer ikke med regexp
 don't use draft folder	mail	no	Ikke bruk utkast-mappen
 don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
+download all attachments	mail	no	Last ned alle vedlegg
+download attachments	mail	no	Last ned vedlegg
 draft	mail	no	Utkast
 draft folder	mail	no	Utkast-mappe
 drafts	mail	no	Utkast
@@ -131,6 +142,7 @@ from	mail	no	Fra
 general	admin	no	Generell
 get acl rights failed from imap server!	mail	no	Få ACL-rettigheter mislyktes fra IMAP-serveren!
 greater than	mail	no	Større enn
+green	mail	no	Grønn
 ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header	mail	no	Overskrift
@@ -170,6 +182,7 @@ junk	mail	no	Søppelpost
 junk folder	mail	no	søppelpost mappe
 keep a copy	mail	no	Behold en kopi
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
+key fingerprint	mail	no	Nøkkelens fingeravtrykk
 kilobytes	mail	no	kilobytes
 last used signature	mail	no	Sist brukte signatur
 later	mail	no	Senere
@@ -208,7 +221,9 @@ new mail notification	mail	no	Varsel om ny e-post
 new message type	mail	no	Ny meldingstype
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	no	Ingen adresse TO/CC/BCC oppgitt, og ingen mappe å lagre meldingen i er oppgitt.
 no adress, to send this mail to, supplied	mail	no	Det ble ikke oppgitt noen adresse som denne e-posten skal sendes til.
+no private key stored to import a certificate for!	mail	no	Ingen privat nøkkel lagret som sertifikatet kan importeres til!
 no s/mime private key stored for this account.	mail	no	Det er ikke lagret noen privat S/MIME-nøkkel for denne kontoen.
+offer to add sender's s/mime certificate or pgp key to contact	mail	no	Spør om du vil legge til avsenderens S/MIME-sertifikat eller PGP-nøkkel til kontakten
 on	mail	no	på
 once per day	mail	no	En gang per dag
 one address is not valid	mail	no	En av adressene er ikke gyldig
@@ -218,13 +233,17 @@ only one window	mail	no	Bare et vindu
 open in html mode	mail	no	Åpne i HTML-modus
 open in text mode	mail	no	Åpne i tekstmodus
 open with collabora office	mail	no	Åpne med Collabora Online
+orange	mail	no	Oransje
 organisation	admin	no	Organisasjon
 organization	mail	no	organisasjon
 organization | real name email	mail	no	Organisasjon | Ekte navn [E-post]
 original message	mail	no	Opprinnelig melding
 outbox	mail	no	Utboks
+passphrase, if private key is protected	mail	no	Passordfrase, hvis privatnøkkelen er beskyttet
 permission denied	mail	no	Ingen tilgang
 personal signature	mail	no	Personlig signatur
+pgp key info for email %1	mail	no	PGP-nøkkelinformasjon for e-post %1
+pgp/mime signed message, no public key found to verify the signature	mail	no	PGP- / S/MIME-signert melding, ingen offentlig nøkkel funnet for å verifisere signaturen
 please configure access to an existing individual imap account.	mail	no	Vennligst konfigurer tilgang til en eksisterende individuell IMAP-konto.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	no	Konfigurer S/MIME-sertifikatet i kategorien Kryptering i dialogboksen Rediger konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	no	Ta kontakt med administratoren din for å sjekke om serveren din støtter filtersregler på serversiden, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID: %2.
@@ -235,6 +254,9 @@ please supply the message to send with auto-responses	mail	no	Vennligst registre
 predefined addresses for compose	mail	no	Forhåndsdefinerte verdier for komponering
 preview pane	mail	no	Vindusoppsett
 printing	mail	no	Utskrift
+private key created, downloading csr...	mail	no	Privatnøkkel opprettet, laster ned CSR ...
+public key	mail	no	Offentlig nøkkel
+purple	mail	no	Lilla
 push notifications	mail	no	Push-varsler
 quicksearch	mail	no	Hurtigsøk
 quicksearch (with cc)	mail	no	Hurtigsøk (+Kopi)
@@ -242,6 +264,7 @@ read / unread	mail	no	Lest / Ulest
 real name	mail	no	Ekte navn
 real name email	mail	no	Ekte navn [E-post]
 real name organization email	mail	no	Ekte navn Organisasjon [E-post]
+red	mail	no	Rød
 refresh time in minutes	mail	no	Oppdateringstid i minutter
 reloaded account %1	mail	no	Kontoen %1 er lastet inn på nytt.
 reloaded folder %1	mail	no	Lastet inn mappen %1 på nytt
@@ -312,6 +335,7 @@ the %1 's acl removed from the %2	mail	no	ACL-en for %1 fjernet fra %2.
 the %1 's acl, including its subfolders, removed from the %2	mail	no	ACL-en for %1, inkludert undermappene, fjernes fra %2.
 the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
 the rule with priority %1 successfully saved!	mail	no	Regelen med prioritet %1 ble lagret!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	no	S/MIME-sertifikatet som er lagret i adresseboken for %1, stemmer ikke overens med sertifikatet til din egen konto – sjekk om det finnes dupliserte oppføringer i adresseboken for denne adressen.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	no	Den samlede størrelsen på vedleggene overskrider grensen på %1 MB. Det er nå sendt en nedlastingslenke.
 then	mail	no	DA
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	no	Det er ikke plass til å lagre sieve-skriptet, sjekk alternativet sieve_maxscriptsize i konfigurasjonen av e-postserveren.
@@ -333,6 +357,7 @@ validate addresses on submit:	mail	no	Valider adresser ved sending:
 validate selected addresses on submit:	mail	no	Bekreft valgte adresser ved sending:
 view header lines	mail	no	Vis overskriftslinjer
 what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	no	Når en signert melding avslører et sertifikat/en nøkkel som ennå ikke er lagret for den avsenderen, spør om du vil legge den til – en verifisert signatur fra en allerede kjent kontakt legges alltid til automatisk uten å spørre
 when deleting messages	mail	no	Når du sletter meldinger
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	no	Hvilken e-postidentitet (signatur) ønsker du å starte med?\nFor «Personlig signatur» bruker vi alltid den første personlige signaturen.
 write	mail	no	Lagre
@@ -342,6 +367,7 @@ yes, offer copy option	mail	no	Ja, vis kopieringsalternativ
 you can select what info to be displayed on email tag	mail	no	Du kan velge hvilken informasjon som skal vises på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	no	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	no	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.
+you may add this key into your contact, if you trust this signature.	mail	no	Du kan legge denne nøkkelen til i kontakten din, hvis du stoler på denne signaturen.
 you need to enter your s/mime passphrase to send this message.	mail	no	Norėdami išsiųsti šią žinutę, turite įvesti savo S/MIME slaptažodį.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	no	Jums reikia įdiegti "Mailvelope" įskiepį, kurį "Chrome" ir "Firefox" galima įsigyti iš %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	no	Kad galėtumėte išsaugoti pranešimą kaip juodraštį, pirmiausia turite jį išsaugoti VFS

@@ -1,4 +1,5 @@
 %1 attachments	mail	pt	%1 anexos
+%1 attachments downloaded	mail	pt	%1 anexos descarregados.
 %1 for all users	mail	pt	%1 para todos os utilizadores
 %1 is not writable by you!	mail	pt	%1 não é gravável por você!
 %1 mails selected	mail	pt	%1 e-mails selecionados
@@ -7,6 +8,7 @@
 (leave empty for no quota)	mail	pt	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt	(sem assunto)
 (not connected)	mail	pt	(Não conectado)
+account	mail	pt	Conta
 account editable by user	mail	pt	onta editável pelo usuário
 account not reachable	mail	pt	Conta inacessível.
 acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
@@ -19,6 +21,7 @@ add files as %1	mail	pt	Adicionar ficheiros como %1
 add folder	mail	pt	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt	Converter correio em item, adicionar mensagem em bruto (ignorar anexos de correio)
 add this certificate into contact	mail	pt	Adicionar este certificado ao contacto
+add this key into contact	mail	pt	Adicionar esta chave a um contacto
 add to addressbook	mail	pt	Adicionar ao livro de endereços
 adding %1 to blacklisted email addresses failed because of %2	mail	pt	A adição de %1 a endereços de correio eletrónico na lista negra falhou devido a %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pt	A adição de %1 aos endereços de correio eletrónico incluídos na lista negra falhou devido a %2
@@ -59,6 +62,7 @@ authentication	mail	pt	Autenticação
 available personal email-accounts/profiles	mail	pt	EMail-Accounts/Profiles pessoais disponíveis
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt	Tenha em atenção que, ao adicionar todos os ficheiros seleccionados como modo %1, também irá alterar todos os anexos existentes na lista para o modo %2.\nGostaria de continuar?
 be aware that all attachments will be sent as %1!	mail	pt	Tenha em atenção que todos os anexos serão enviados como %1!
+blue	mail	pt	Azul
 but check shared folders	mail	pt	mas verifique as pastas compartilhadas
 by date	mail	pt	Por data
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pt	Por defeito, 'http://' é simplesmente substituído por 'https://'. Pode configurar 'https://proxy.egroupware.org/' para carregar também imagens disponíveis apenas via http.
@@ -66,6 +70,7 @@ caching of flags	mail	pt	Armazenamento em cache de bandeiras
 can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 can not resolve the winmail.dat attachment!	mail	pt	Não é possível resolver o anexo winmail.dat!
 certificate details	mail	pt	Detalhes do certificado
+certificate does not match the stored private key!	mail	pt	O certificado não corresponde à chave privada guardada!
 certificate imported.	mail	pt	Certificado importado.
 certificate in text	mail	pt	Certificado em texto
 certificate info for email %1	mail	pt	Informação de certificado para o correio eletrónico %1
@@ -87,6 +92,7 @@ configured values will be set automatically on compose dialog for respected fiel
 confirm attach message	mail	pt	Confirme anexar mensagem
 confirm move to folder	mail	pt	Confirme Mover para pasta
 connect to profile %1	mail	pt	Conecte-se ao Perfil 1%
+connection could not be established, use the wizard to check why!	mail	pt	Não foi possível estabelecer a ligação. Utilize o assistente para verificar o motivo!
 connection status	mail	pt	Status da conexão
 contact label	mail	pt	Etiqueta de contacto
 contains	mail	pt	Contém
@@ -98,7 +104,10 @@ convert only mail to item (ignore possible attachments)	mail	pt	Converter apenas
 copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem(ns) de %2 a 3%.
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
+could not decrypt stored private key, wrong passphrase?	mail	pt	Não foi possível descodificar a chave privada armazenada. Será que a frase-passe está errada?
+could not download %1	mail	pt	Não foi possível descarregar %1.
 create new account	mail	pt	Criar nova conta
+create private key and export csr	mail	pt	Criar chave privada e exportar CSR
 create self-signed certificate	mail	pt	Criar certificado autoassinado
 cross account forward attachment is not allowed!	mail	pt	Não é permitido o envio de anexos de contas cruzadas!
 current subject	mail	pt	Assunto actual
@@ -155,6 +164,7 @@ don't use draft folder	mail	pt	Não use pasta de rascunhos
 don't use sent	mail	pt	Não utilizar a pasta Enviados
 don't use template folder	mail	pt	Não use pasta de modelo
 don't use trash	mail	pt	Não utilizar a pasta Lixo
+download all attachments	mail	pt	Descarregar todos os anexos
 download attachments	mail	pt	Descarregar anexos
 draft	mail	pt	Rascunho
 draft folder	mail	pt	Pasta de rascunhos
@@ -237,6 +247,7 @@ general	admin	pt	Geral
 general settings	mail	pt	Definições gerais
 get acl rights failed from imap server!	mail	pt	Seja direitos ACL com falha do servidor IMAP!
 greater than	mail	pt	maior que
+green	mail	pt	Verde
 ham folder	mail	pt	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt	Tratamento de imagens http externas / conteúdo misto em mensagens de correio eletrónico
 header	mail	pt	Cabeçalho
@@ -292,6 +303,7 @@ junk	mail	pt	Lixo
 junk folder	mail	pt	Pasta de Lixo
 keep a copy	mail	pt	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem em sua caixa de entrada
+key fingerprint	mail	pt	Impressão digital da chave
 kilobytes	mail	pt	kilobytes
 last used signature	mail	pt	Última assinatura utilizada
 later	mail	pt	Lais tarde
@@ -356,6 +368,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	pt	Não há pastas
 no message body supplied	mail	pt	Nenhum corpo da mensagem fornecido
 no plain text part found	mail	pt	Nenhuma parte de texto simples encontrado
+no private key stored to import a certificate for!	mail	pt	Não existe nenhuma chave privada armazenada para importar um certificado!
 no recipient address given!	mail	pt	No endereço do destinatário dado!
 no s/mime private key stored for this account.	mail	pt	Não existe nenhuma chave privada S/MIME guardada para esta conta.
 no send folder set in preferences	mail	pt	Sem envio de pasta definido nas preferências
@@ -368,6 +381,7 @@ non	mail	pt	Não
 none, create all	mail	pt	nenhum, criar todos
 notify about new mail in this folders	mail	pt	Notificar sobre novas mensagens neste pastas
 notify when new mails arrive in these folders	mail	pt	notifique quando novos e-mails chegam nestas pastas
+offer to add sender's s/mime certificate or pgp key to contact	mail	pt	Sugerir a adição do certificado S/MIME ou da chave PGP do remetente ao contacto
 on	mail	pt	em
 on vacation	mail	pt	Em férias
 once per day	mail	pt	Uma vez por dia
@@ -380,13 +394,17 @@ only one window	mail	pt	Apenas numa janela
 open in html mode	mail	pt	Abrir em modo HTML
 open in text mode	mail	pt	Abrir em modo de texto
 open with collabora office	mail	pt	Abrir com Collabora Online
+orange	mail	pt	Laranja
 organisation	admin	pt	Organização
 organization	mail	pt	Organização
 organization | real name email	mail	pt	Organização | Nome real [Email]
 original message	mail	pt	Mensagem original
 outbox	mail	pt	Caixa de saída
+passphrase, if private key is protected	mail	pt	Frase-passe, caso a chave privada esteja protegida
 permission denied	mail	pt	Permissão negada
 personal signature	mail	pt	Assinatura pessoal
+pgp key info for email %1	mail	pt	Informações da chave PGP para o e-mail %1
+pgp/mime signed message, no public key found to verify the signature	mail	pt	Mensagem assinada com PGP / S/MIME; não foi encontrada nenhuma chave pública para verificar a assinatura
 please configure access to an existing individual imap account.	mail	pt	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt	Configure o seu certificado S/MIME no separador Encriptação localizado na caixa de diálogo Editar conta.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu administrador para verificar se o seu servidor suporta regras de filtragem do lado do servidor e como activá-las no EGroupware para a sua conta ativa (%1) com ID: %2.
@@ -405,8 +423,11 @@ preview pane	mail	pt	Apresentação da janela
 primary profile	mail	pt	Perfil primário
 printing	mail	pt	Impressão
 printview	mail	pt	Visualização de impressão
+private key created, downloading csr...	mail	pt	Chave privada criada, a descarregar CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	pt	Falha no processamento do ficheiro %1. Não cumpriu as restrições básicas.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pt	Fornecer um texto de férias predefinido, (utilizado em novas mensagens de férias quando não existia uma mensagem configurada anteriormente)
+public key	mail	pt	Chave pública
+purple	mail	pt	Roxo
 push notifications	mail	pt	Notificações push
 quicksearch	mail	pt	Pesquisa rápida
 quicksearch (with cc)	mail	pt	Pesquisa rápida (+Cópia)
@@ -422,6 +443,7 @@ real name organization email	mail	pt	Nome real Organização [Email]
 reason!	mail	pt	razão!
 receive notification	mail	pt	Receber notificação
 recursively	mail	pt	Recursively
+red	mail	pt	Vermelho
 refresh time in minutes	mail	pt	Actualizar (em minutos)
 refused to delete folder inbox	mail	pt	Recusou-se a eliminar a pasta INBOX
 refused to delete folder with subfolders	mail	pt	recusou-se a excluir a pasta com subpastas
@@ -567,6 +589,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt	O remetente da mensagem solicitou uma resposta para indicar que leu esta mensagem. Deseja enviar um recibo?
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
 the rule with priority %1 successfully saved!	mail	pt	A regra com prioridade 1% salvo com sucesso!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	pt	O certificado S/MIME guardado na lista de contactos para %1 não corresponde ao certificado da sua conta — verifique se existem entradas duplicadas na lista de contactos para este endereço.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	pt	O tamanho total dos anexos excede o limite de %1 MB. Foi ativado o link para download.
 then	mail	pt	então
 there is no imap server configured.	mail	pt	Não há IMAP servidor configurado.
@@ -606,6 +629,7 @@ what do do with html email	mail	pt	O que fazer com HTML e-mail
 what order the list columns are in	mail	pt	Em que ordem as colunas da lista estão em
 what to do when you delete a message	mail	pt	O que fazer quando você excluir uma mensagem
 what to do when you send a message	mail	pt	O que fazer quando você envia uma mensagem
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	pt	Quando uma mensagem assinada revelar um certificado/chave ainda não guardado para esse remetente, pergunte se o pretende adicionar — uma assinatura verificada de um contacto já conhecido é sempre adicionada automaticamente, sem perguntar
 when deleting messages	mail	pt	Ao eliminar mensagens
 when saving messages as item of a different app	mail	pt	Ao salvar mensagens como um item de um aplicativo diferente
 when sending messages	mail	pt	Ao enviar mensagens
@@ -619,6 +643,7 @@ yes, offer copy option	mail	pt	sim, oferecer opção de cópia
 you can select what info to be displayed on email tag	mail	pt	Pode selecionar as informações a apresentar na etiqueta de correio eletrónico.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt	Pode utilizar $$start$$ para a data de início e $$end$$ para a data de fim.
 you may add this certificate into your contact, if you trust this signature.	mail	pt	Pode adicionar este certificado ao seu contacto, se confiar nesta assinatura.
+you may add this key into your contact, if you trust this signature.	mail	pt	Pode adicionar esta chave ao seu contacto, se confiar nesta assinatura.
 you need to enter your s/mime passphrase to send this message.	mail	pt	Tem de introduzir a sua frase-chave S/MIME para enviar esta mensagem.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	pt	É necessário instalar o plugin Mailvelope disponível para Chrome e Firefox a partir de %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	pt	É necessário guardar a mensagem como rascunho antes de a poder guardar no VFS

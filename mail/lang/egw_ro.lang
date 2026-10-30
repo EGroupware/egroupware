@@ -1,9 +1,11 @@
 %1 attachments	mail	ro	%1 atașamente
+%1 attachments downloaded	mail	ro	S-au descărcat %1 atașamente.
 %1 for all users	mail	ro	%1 pentru toți utilizatorii
 %1 is not writable by you!	mail	ro	%1 NU poate fi scris de dumneavoastră!
 %1 mails selected	mail	ro	%1 e-mailuri selectate
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ro	%1 necesită extensia Sieve %2, poate încercați %1 sau un număr mai mare de zile.
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
+account	mail	ro	Cont
 account editable by user	mail	ro	Cont editabil de către utilizator
 account not reachable	mail	ro	Cont inaccesibil.
 acl rights retrieve failed, seems there are no rights set!	mail	ro	Recuperarea drepturilor ACL a eșuat, se pare că nu există drepturi setate!
@@ -13,6 +15,7 @@ add as new	mail	ro	Adăugați ca nou
 add files as %1	mail	ro	Adăugați fișiere ca %1
 add raw message, ignore mail attachments	mail	ro	Conversia mailului în articol, adăugarea mesajului brut (ignorați atașamentele de mail)
 add this certificate into contact	mail	ro	Adăugați acest certificat în contact
+add this key into contact	mail	ro	Adăugați această cheie la contacte
 adding %1 to blacklisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
@@ -23,6 +26,7 @@ allow users to create further identities	mail	ro	Permiteți utilizatorilor să c
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ro	Permite unui utilizator să citească, să scrie și să creeze foldere și e-mailuri, să posteze în ele, să adauge mesaje la ele și să șteargă mesaje
 always respond / auto-responder	mail	ro	Răspundeți întotdeauna / răspuns automat
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
+an error happend while trying to remove acl rights from the account %1!	mail	ro	A apărut o eroare în timp ce se încerca eliminarea drepturilor ACL din contul %1!
 answered	mail	ro	Răspunsuri
 archive folder	mail	ro	Dosar arhivă
 are you sure you want to delete all selected folders?	mail	ro	Sunteți sigur că doriți să ștergeți toate folderele selectate?
@@ -31,12 +35,15 @@ attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului uti
 attach vcard	mail	ro	Atașați vCard
 attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
 attachments, ...	mail	ro	atașamente, ...
+available personal email-accounts/profiles	mail	ro	Conturi/profiluri personale de e-mail disponibile
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2.\nDoriți să continuați?
 be aware that all attachments will be sent as %1!	mail	ro	Rețineți că toate atașamentele vor fi trimise în modul %1!
+blue	mail	ro	Albastru
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să.
 caching of flags	mail	ro	Memorarea în cache a steagurilor
 can not resolve the winmail.dat attachment!	mail	ro	Nu se poate rezolva atașamentul winmail.dat!
 certificate details	mail	ro	Detalii certificat
+certificate does not match the stored private key!	mail	ro	Certificatul nu corespunde cu cheia privată stocată!
 certificate imported.	mail	ro	Certificat importat.
 certificate in text	mail	ro	Certificat în text
 certificate info for email %1	mail	ro	Informații despre certificat pentru e-mail %1
@@ -48,12 +55,17 @@ check to save as infolog on send	mail	ro	Buton de verificare pentru a crea ca In
 check to save as tracker entry on send	mail	ro	Buton de selectare pentru a crea un bilet după trimitere
 checking admin credentials failed	mail	ro	Verificarea acreditărilor de administrator a eșuat
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
+connection could not be established, use the wizard to check why!	mail	ro	Nu s-a putut stabili conexiunea; folosește asistentul pentru a afla de ce!
 contact label	mail	ro	Etichetă de contact
 continue	mail	ro	Continuare
 convert mail to item and attach its attachments to this item (standard)	mail	ro	Conversia e-mailului în element și atașarea atașamentelor la acest element (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ro	Conversia e-mailului în element, atașarea atașamentelor acestuia și adăugarea mesajului brut (.eml) ca atașament
 convert only mail to item (ignore possible attachments)	mail	ro	Convertește numai e-mailul în element (ignoră eventualele atașamente)
 copied %1 message(s) from %2 to %3	mail	ro	Ați copiat mesajul (mesajele) %1 de la %2 la %3.
+could not decrypt stored private key, wrong passphrase?	mail	ro	Nu s-a putut decripta cheia privată stocată; fraza de acces este incorectă?
+could not download %1	mail	ro	Nu s-a putut descărca %1.
+create new account	mail	ro	Creați un cont nou
+create private key and export csr	mail	ro	Creați o cheie privată și exportați CSR-ul
 create self-signed certificate	mail	ro	Creați un certificat autosemnat
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
 current subject	mail	ro	Subiect curent
@@ -66,16 +78,21 @@ defines what to show as identity label on mail folder header	common	ro	Defineșt
 delete selected folders	mail	ro	Ștergeți folderele selectate
 deleted %1 messages in %2	mail	ro	S-au șters %1 mesaje din %2.
 disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
+do you really want to remove all rights from this account?	mail	ro	Chiar vrei să elimini toate drepturile din acest cont?
 do you really want to toggle flag %1 for all messages in the current view?	mail	ro	Chiar doriți să activați indicatorul %1 pentru TOATE mesajele din vizualizarea curentă?
 do you really want to toggle label %1 for all messages in the current view?	mail	ro	Chiar doriți să comutați eticheta %1 pentru TOATE mesajele din vizualizarea curentă?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ro	Doriți să vi se ceară confirmarea înainte de a atașa mesajele selectate la un nou e-mail?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	ro	Doriți să vi se ceară confirmare înainte de a muta mesajele selectate într-un alt dosar?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	ro	Doriți să împiedicați editarea/configurarea notificării prin e-mail la alte adrese de e-mail în cazul în care sosesc e-mailuri(, chiar dacă Sieve este activat)?
 don't use draft folder	mail	ro	Nu utilizați dosarul Schițe
+download all attachments	mail	ro	Descărcați toate atașamentele
+download attachments	mail	ro	Descărcați atașamentele
 draft	mail	ro	Schiță
 draft folder	mail	ro	Dosar Schițe
 drafts	mail	ro	Schițe
 drafts folder	mail	ro	Dosar Schițe
+edit account	mail	ro	Editează contul
+edit account ...	mail	ro	Editați contul ...
 email address	mail	ro	Adresa de e-mail
 email notification update failed! you need to set an email address!	mail	ro	Actualizarea notificării prin e-mail a eșuat! Trebuie să setați o adresă de e-mail!
 emailaddress	admin	ro	Adresa de e-mail
@@ -105,6 +122,7 @@ folder %1 %2 failed because of %3!	mail	ro	Dosarul %1 %2 a eșuat din cauza lui 
 folder %1 has been created successfully, although the subscription failed because of %2	mail	ro	Dosarul %1 a fost creat cu succes, deși abonarea a eșuat din cauza lui %2
 forward to	mail	ro	Înainte către
 get acl rights failed from imap server!	mail	ro	Obțineți drepturile ACL eșuate de pe serverul IMAP!
+green	mail	ro	Verde
 ham folder	mail	ro	Dosarul Ham
 handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
 header	mail	ro	Antet
@@ -143,6 +161,7 @@ junk	mail	ro	Junk
 junk folder	mail	ro	Dosarul Junk
 keep a copy	mail	ro	Păstrați o copie
 keep a copy of the message in your inbox	mail	ro	Păstrați o copie a mesajului în căsuța de primire
+key fingerprint	mail	ro	Amprenta cheii
 kilobytes	mail	ro	kilobiți
 last used signature	mail	ro	Ultima semnătură utilizată
 later	mail	ro	Mai târziu
@@ -176,6 +195,7 @@ move selected to	mail	ro	Mutați selectat la
 move to	mail	ro	Mutarea la
 move to archive	mail	ro	Mutarea în folderul de arhivă
 moved %1 message(s) from %2 to %3	mail	ro	A mutat %1 mesaj(e) de la %2 la %3.
+moving folders from one mailaccount to another is not supported	mail	ro	Mutarea folderelor dintr-un cont de e-mail în altul nu este acceptată.
 name and domain	mail	ro	Nume și domeniu
 name and email	mail	ro	Nume și e-mail
 name of account	mail	ro	Numele contului
@@ -191,8 +211,11 @@ no access	mail	ro	Nu există acces
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ro	Nu a fost furnizată nicio adresă TO/CC/BCC și nu a fost furnizat niciun folder în care să fie salvat mesajul.
 no adress, to send this mail to, supplied	mail	ro	nu a fost furnizată nicio adresă la care să se trimită acest e-mail
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ro	Nu este furnizată nicio destinație de dosar și nu este furnizat niciun dosar pentru salvarea mesajului sau altă măsură de stocare a corespondenței (salvare în InfoLog/Ticketsystem), dar este necesară.
+no private key stored to import a certificate for!	mail	ro	Nu există nicio cheie privată stocată pentru care să se importe un certificat!
+no s/mime private key stored for this account.	mail	ro	Nu este stocată nicio cheie privată S/MIME pentru acest cont.
 no sneak preview in list	mail	ro	Nu există previzualizare a mesajelor
 non	mail	ro	Non
+offer to add sender's s/mime certificate or pgp key to contact	mail	ro	Se propune adăugarea certificatului S/MIME sau a cheii PGP a expeditorului la contact
 once per day	mail	ro	O dată pe zi
 only email	mail	ro	Doar e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ro	Are sens doar, dacă transportați parola printr-un canal diferit / în afara acestui mail către destinatari!
@@ -201,11 +224,16 @@ only needed for some servers, that do not return all folders on root level queri
 open in html mode	mail	ro	Deschidere în mod HTML
 open in text mode	mail	ro	Deschidere în mod text
 open with collabora office	mail	ro	Deschidere cu Collabora Online
+orange	mail	ro	Portocaliu
 organisation	admin	ro	Organizație
 organization | real name email	mail	ro	Organizație | Nume real [Email]
 original message	mail	ro	Mesaj original
 outbox	mail	ro	Coșul de ieșire
+passphrase, if private key is protected	mail	ro	Frază de acces, dacă cheia privată este protejată
 personal signature	mail	ro	Semnătură personală
+pgp key info for email %1	mail	ro	Informații despre cheia PGP pentru e-mailul %1
+pgp/mime signed message, no public key found to verify the signature	mail	ro	Mesaj semnat PGP / S/MIME, nu s-a găsit nicio cheie publică pentru verificarea semnăturii
+please configure access to an existing individual imap account.	mail	ro	Vă rugăm să configurați accesul la un cont IMAM individual existent.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ro	Vă rugăm să vă configurați certificatul S/MIME în fila Criptare din fereastra de dialog Editare cont.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă reguli de filtrare la nivelul serverului și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă mesaje de vacanță pe server și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID: %2.
@@ -215,8 +243,11 @@ post	mail	ro	trimiteți
 predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
 preview pane	mail	ro	Dispunerea ferestrei
 printing	mail	ro	Imprimarea
+private key created, downloading csr...	mail	ro	Cheia privată a fost creată, se descarcă CSR-ul...
 processing of file %1 failed. failed to meet basic restrictions.	mail	ro	Procesarea fișierului %1 a eșuat. Nu a reușit să îndeplinească restricțiile de bază.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ro	Furnizați un text de vacanță implicit (utilizat pentru mesajele de vacanță noi, atunci când nu a existat un mesaj configurat anterior).
+public key	mail	ro	Cheie publică
+purple	mail	ro	Violet
 push notifications	mail	ro	Notificări push
 quicksearch	mail	ro	Căutare rapidă
 quicksearch (with cc)	mail	ro	Căutare rapidă (+Copiere)
@@ -224,6 +255,8 @@ read / unread	mail	ro	Citit / Necitit
 real name	mail	ro	Numele real
 real name email	mail	ro	Nume real [Email]
 real name organization email	mail	ro	Nume real Organizația [Email]
+red	mail	ro	Roșu
+reloaded account %1	mail	ro	Contul %1 a fost reîncărcat.
 reloaded folder %1	mail	ro	Dosar reîncărcat %1
 remember the password for	mail	ro	Rețineți parola pentru
 remove all	mail	ro	Eliminați toate
@@ -293,6 +326,7 @@ the %1 's acl removed from the %2	mail	ro	ACL-ul lui %1 eliminat din %2.
 the %1 's acl, including its subfolders, removed from the %2	mail	ro	ACL-ul lui %1, inclusiv subfolderele sale, eliminat din %2.
 the imap server need to meet certain requirements and be configured for it:	mail	ro	Serverul IMAP trebuie să îndeplinească anumite cerințe ȘI să fie configurat în acest scop:
 the rule with priority %1 successfully saved!	mail	ro	Regula cu prioritatea %1 a fost salvată cu succes!
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	ro	Certificatul S/MIME stocat în agenda de adrese pentru %1 nu corespunde cu certificatul propriu al contului tău – verifică dacă există intrări duplicate în agenda de adrese pentru această adresă.
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	ro	Dimensiunea totală a atașamentelor depășește limita de %1 MB. S-a trecut la linkul de descărcare.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ro	Nu mai există spațiu pentru a stoca scriptul sieve, vă rugăm să verificați opțiunea sieve_maxscriptsize din configurația serverului de poștă electronică.
 this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	ro	Această acțiune afectează toate mesajele din firul (firele) de discuție selectat(e) – %1 mesaje în total. Continuați?
@@ -304,16 +338,19 @@ toggled on actions	mail	ro	Toggled on actions
 trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
 unconditional	mail	ro	Întotdeauna
+vacation messages with start and end date require an admin account to be set!	mail	ro	Mesajele de vacanță cu dată de început și de sfârșit necesită configurarea unui cont de administrator!
 validate addresses on submit:	mail	ro	Validarea adreselor la trimitere:
 validate selected addresses on submit:	mail	ro	Validează adresele selectate la trimitere:
 view header lines	mail	ro	Vizualizați liniile antetului
 what to do when you delete a message	mail	ro	Ce trebuie să faceți atunci când ștergeți un mesaj.
+when a signed message reveals a certificate/key not yet stored for that sender, ask whether to add it - a verified signature from an already-known contact is always added automatically without asking	mail	ro	Când un mesaj semnat dezvăluie un certificat/o cheie care nu este încă stocată pentru acel expeditor, întreabă dacă dorești să o adaugi – o semnătură verificată de la un contact deja cunoscut este întotdeauna adăugată automat, fără a se cere confirmarea
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	ro	Cu ce identitate de e-mail (semnătură) doriți să începeți.\nPentru „Semnătură personală” se utilizează întotdeauna prima semnătură personală.
 write & delete	mail	ro	scrieți & ștergeți
 yes, offer copy option	mail	ro	Da, oferiți opțiunea de copiere
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ro	Puteți folosi $$start$$ pentru data de început de mai sus și $$end$$$ pentru data de sfârșit.
 you may add this certificate into your contact, if you trust this signature.	mail	ro	Puteți adăuga acest certificat în contactul dumneavoastră, dacă aveți încredere în această semnătură.
+you may add this key into your contact, if you trust this signature.	mail	ro	Poți adăuga această cheie la contactul tău, dacă ai încredere în această semnătură.
 you need to enter your s/mime passphrase to send this message.	mail	ro	Trebuie să introduceți fraza de trecere S/MIME pentru a trimite acest mesaj.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ro	Trebuie să instalezi Mailvelope plugin disponibil pentru Chrome și Firefox de la %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	ro	Trebuie să salvați mai întâi mesajul ca proiect înainte de a-l putea salva în VFS.

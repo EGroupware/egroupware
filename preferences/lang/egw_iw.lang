@@ -57,6 +57,5 @@ use default	preferences	iw	השתמש בברירת המחדל
 users choice	preferences	iw	בחירת המשתמשים
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	iw	.כאשר עונים כאן כן, כפתורי הבית והיציאה מהמערכת מוצגים כצלמיות יישום בפס הניווט הראשי
 you can show the applications as icons only, icons with app-name or both.	preferences	iw	.ניתן להציג את היישומים כצלמיות בלבד, שם היישום או שניהם
-you do not have permission to set acl's in this mode!	preferences	iw	!אין לך הרשאות לקבוע רשימות גישה במצב זה
 you must enter a password	preferences	iw	עליך להקליד סיסמא
 your preferences	preferences	iw	עדיפויות שלך

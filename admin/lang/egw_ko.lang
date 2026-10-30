@@ -23,6 +23,7 @@
 %1 user %2	admin	ko	%1 사용자 %2
 (de)activate mail accounts	admin	ko	메일 계정 (비)활성화
 (no subject)	admin	ko	(제목 없음)
+2-factor-authentication for interactive login	admin	ko	대화형 로그인을 위한 2단계 인증
 access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
 account	admin	ko	계정
 account active	admin	ko	계정 활정화
@@ -68,6 +69,7 @@ all users	admin	ko	모든 사용자
 allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ko	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 allow user to set 'remember me' token	admin	ko	사용자가 ‘나를 기억해’ 토큰을 설정하도록 허용하기
+allowed just as second factor	admin	ko	2단계 인증으로만 허용
 anonymous user	admin	ko	익명 사용자
 anonymous user (not shown in list sessions)	admin	ko	익명 사용자 ( 세션 목록에 나타나지 않음 )
 anonymous user. not shown in list sessions.	admin	ko	익명 사용자. 목록 세션에 표시되지 않음
@@ -107,7 +109,6 @@ category %1 has been saved !	admin	ko	%1 카테고리가 저장되었습니다!
 category list	admin	ko	카테고리 목록
 certificate	admin	ko	인증서
 certificate details	admin	ko	인증서 상세 정보
-certificate validation in days	admin	ko	인증서 유효성 검사 일수
 change account_id	admin	ko	계정 ID 변경
 change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
@@ -169,8 +170,14 @@ deny access to site configuration	admin	ko	거부된 접근을 사이트 구성�
 deny access to user accounts	admin	ko	거부된 접근을 사용자 계정으로
 deny all users access to grant other users access to their entries ?	admin	ko	허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
 description can not exceed 255 characters in length !	admin	ko	설명은 255 글자길이를 초과 할수 없습니다!
+direct login without password or second factor	admin	ko	비밀번호나 2단계 인증 없이 직접 로그인
+disable	admin	ko	비활성화
 disable "auto completion" of the login form	admin	ko	접속시 "자동완성" 기능 비활성화
+disable certificate validation	admin	ko	인증서 유효성 검사 비활성화
+disable pgp encryption (mailvelope)	admin	ko	PGP 암호화(Mailvelope) 비활성화
+disabled	admin	ko	비활성화
 disabled (not recomended)	admin	ko	비활성화 됨 (추천)
+disabled, do not show on login page	admin	ko	비활성화됨, 로그인 페이지에 표시하지 않음
 display	admin	ko	표시
 do not delete the category and return back to the list	admin	ko	카테고리를 삭제하지 않고 목록으로 되돌아 감
 edit account	admin	ko	계정 편집
@@ -351,6 +358,7 @@ saves this entry	admin	ko	이 엔트리를 저장함
 search categories	admin	ko	카테고리 찾기
 search groups	admin	ko	그룹 찾기
 search peer servers	admin	ko	피어 서버 찾기
+secret deleted, two factor authentication disabled.	admin	ko	비밀번호 삭제됨, 2단계 인증 비활성화됨.
 security	admin	ko	보안
 select group managers	admin	ko	그룹 관리자 찾기
 select permissions this group will have	admin	ko	이 그룹이 가질 권한을 선택
@@ -383,7 +391,6 @@ sorry, that group name has already been taken.	admin	ko	죄송합니다, 입력�
 sorry, the above users are still a member of the group %1	admin	ko	죄송합니다 위의 사용자는 아직 %1 그룹의 구성원입니다.
 sorry, the follow users are still a member of the group %1	admin	ko	죄송합니다 다음의 사용자는 아직 %1 그룹의 구성원입니다.
 sort the entries	admin	ko	항목들을 정렬
-ssl	admin	ko	SSL
 standard	admin	ko	기본
 start	admin	ko	시작
 start testjob!	admin	ko	테스트작업(TestJob) 시작
