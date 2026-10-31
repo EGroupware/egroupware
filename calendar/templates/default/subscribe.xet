@@ -8,7 +8,7 @@
 		<et2-url  label="URL" id="url" required="true" span="all"></et2-url>
 		<et2-textbox  label="Username" id="user"></et2-textbox>
 		<et2-password  label="Password" id="password" autocomplete="new-password"></et2-password>
-		<et2-select  label="Calendar" id="calendar" emptyLabel="Select one..." required="true" hidden="!@show_calendar_selection"></et2-select>
+		<et2-select  label="Calendar" id="calendar" emptyLabel="Select one..." required="true" hidden="!@show_calendar_selection" disabled="!@show_calendar_selection"></et2-select>
 		<et2-calendar-owner  label="Additional participants" id="participants" multiple="true" span="all"></et2-calendar-owner>
 		<et2-hbox>
 			<et2-description  value="Modify events" style="width:var(--label-width, 8em); margin-right:var(--sl-spacing-medium)"></et2-description>
