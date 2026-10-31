@@ -7,7 +7,7 @@
 			<et2-textbox  label="Token" class="token et2-label-fixed" id="token" readonly="true" onclick="app.admin.copyClipboard(this)"></et2-textbox>
 			<et2-button  id="copy_token" image="copy" noSubmit="true" statustext="Copy to clipboard" onclick="app.admin.copyClipboard(document.querySelector('#admin-token-edit_token'))"/>
 		</et2-hbox>
-		<et2-password  label="Current password" id="password" required="!@admin" hidden="@admin"></et2-password>
+		<et2-password  label="Current password" id="password" required="true" hidden="@admin" disabled="@admin"></et2-password>
 		<et2-select-account  label="User" id="account_id" accountType="accounts" emptyLabel="All users" hidden="!@admin"></et2-select-account>
 		<et2-select-app  label="Applications" id="token_apps" multiple="true" placeholder="All applications of the user" helpText="Select the applications you want the token to be limited to, or leave the default of all applications."></et2-select-app>
 		<et2-date  label="Expiration" id="token_valid_until" dataFormat="object"></et2-date>
