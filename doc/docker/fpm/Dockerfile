@@ -16,6 +16,8 @@ ENV VERSION=$VERSION
 ENV PHP_VERSION=$PHP_VERSION
 
 RUN set -e \
+	# apk upgrade: security fixes of the Alpine packages since the official php image was built (build.sh checks for upgradable packages, so a rebuild actually removes them)
+	&& apk upgrade --no-cache \
 	# pgsql/pdo_pgsql is NOT in the shared base-fpm image: postgresqlXX-dev pulls in a
 	# surprisingly heavy transitive dependency chain (LLVM/clang, for JIT support
 	# nothing here needs) that most of base-fpm's other consumers (hosting-farm,

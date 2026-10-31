@@ -29,6 +29,8 @@ RUN sed -i 's/^www-data:x:82:82:/www-data:x:33:33:/' /etc/passwd \
 	&& sed -i 's/^www-data:x:82:/www-data:x:33:/' /etc/group
 
 RUN set -e \
+	# apk upgrade: security fixes of the Alpine packages since the official php image was built (build.sh checks for upgradable packages, so a rebuild actually removes them)
+	&& apk upgrade --no-cache \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		zlib-dev \

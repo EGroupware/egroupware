@@ -28,6 +28,8 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer.phar
 RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
 RUN set -e \
+	# apk upgrade: security fixes of the Alpine packages since the official php image was built (build.sh checks for upgradable packages, so a rebuild actually removes them)
+	&& apk upgrade --no-cache \
 	&& apk add --no-cache \
 		bash rsync sudo xz zip curl patch git unzip \
 		# Alpine's "nodejs" package is the LTS line (24.x); "nodejs-current" tracks
