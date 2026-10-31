@@ -67,6 +67,9 @@ RUN set -e \
 	# mv sources to a different directory so entrypoint can rsync them to volume for both nginx and fpm
 	&& mv /usr/share/egroupware /usr/share/egroupware-sources
 
+# sessions directory must exist (and have the right permissions for a new volume, which gets them from the image), else sessions do not work at all
+RUN mkdir -p /var/lib/php/sessions && chmod 1733 /var/lib/php/sessions
+
 VOLUME /usr/share/egroupware
 VOLUME /var/lib/egroupware
 VOLUME /var/lib/php/sessions

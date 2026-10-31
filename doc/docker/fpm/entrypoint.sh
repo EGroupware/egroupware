@@ -55,6 +55,10 @@ test -d /usr/share/egroupware-extra && {
 	chmod 775 /usr/share/egroupware
 }
 
+# sessions directory is a volume (root:root 0755 if created implicitly by a bind mount or older image): without a usable session directory nothing works
+mkdir -p /var/lib/php/sessions
+chmod 1733 /var/lib/php/sessions
+
 # check and if necessary change ownership of /var/lib/egroupware and our header.inc.php
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \
 	chown -R www-data:www-data /var/lib/egroupware

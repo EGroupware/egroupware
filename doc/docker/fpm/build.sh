@@ -45,6 +45,24 @@ BRANCH=$(echo $VERSION|sed 's/\..*$//')
 # add PHP_VERSION to TAG, if not the default PHP version
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
 
+# rebuild the base images (../base/build.sh), if they are outdated: new PHP release (php:$PHP_VERSION-fpm-alpine) or upgradable Alpine packages
+# (NO_BASE_CHECK=1 skips the check, eg. for old PHP versions without up-to-date base images)
+if [ -z "$NO_BASE_CHECK" ]
+then
+  docker pull -q $BASE_REPO:build-$PHP_VERSION >/dev/null
+  docker pull -q php:$PHP_VERSION-fpm-alpine >/dev/null
+  base_php=$(docker run --rm $BASE_REPO:build-$PHP_VERSION php -r 'echo PHP_VERSION;')
+  new_php=$(docker run --rm php:$PHP_VERSION-fpm-alpine php -r 'echo PHP_VERSION;')
+  upgradable=$(docker run --rm --user root --entrypoint sh $BASE_REPO:build-$PHP_VERSION -c 'apk update -q >/dev/null 2>&1; apk list -u 2>/dev/null')
+  if [ "$base_php" != "$new_php" -o -n "$upgradable" ]
+  then
+    echo -e "\nbase image outdated (PHP $base_php, current $new_php), upgradable packages:\n${upgradable:-none}\nrebuilding it with ../base/build.sh $PHP_VERSION\n"
+    ../base/build.sh $PHP_VERSION
+  else
+    echo "base image $BASE_REPO:build-$PHP_VERSION is up to date (PHP $base_php, no upgradable packages)"
+  fi
+fi
+
 docker pull $BASE_REPO:build-$PHP_VERSION
 
 # add further tags for default PHP version only - :latest only for the actual

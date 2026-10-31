@@ -18,6 +18,16 @@ LABEL maintainer="rb@egroupware.org"
 ARG PHP_VERSION
 ENV PHP_VERSION=$PHP_VERSION
 
+# Match Debian/ondrej's long-standing www-data UID/GID (33): every existing on-premise
+# install's bind-mounted /var/lib/egroupware (VFS storage, header.inc.php, backups, ...)
+# has files owned by that UID from years of running the previous Debian-based image -
+# Alpine's own default (82) would make the entrypoint chown -R all of it on upgrade (days
+# on big installs). Done first, before anything else in this image (or anything extending
+# it) creates or chowns a single www-data-owned file. The Linux packages (egroupware-docker)
+# use 33:33 too, a CI check compares both.
+RUN sed -i 's/^www-data:x:82:82:/www-data:x:33:33:/' /etc/passwd \
+	&& sed -i 's/^www-data:x:82:/www-data:x:33:/' /etc/group
+
 RUN set -e \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -59,6 +69,8 @@ RUN set -e \
 	&& mkdir -p /run/php \
 	# send logs to stderr to be viewed by docker logs (php-fpm's own Alpine image
 	# already defaults error_log to stderr, kept here for parity/documentation)
-	&& ln -sf /dev/stderr /var/log/php$PHP_VERSION-fpm.log
+	&& ln -sf /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
+	# the official php image only has php in /usr/local/bin, but hash-bangs, cron jobs and Kubernetes commands use the usual /usr/bin/php
+	&& ln -sf /usr/local/bin/php /usr/bin/php
 
 EXPOSE 9000
