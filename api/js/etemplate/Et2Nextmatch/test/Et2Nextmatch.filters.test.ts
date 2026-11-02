@@ -1307,7 +1307,10 @@ describe("Et2Nextmatch header event handling", () =>
 		const visibility = sinon.spy();
 		el.setColumns([
 			{key: "title", title: "Title"} as any,
-			{key: "customfields", title: "Custom fields", header: {setCustomfieldVisibility: visibility}} as any
+			{
+				key: "customfields", title: "Custom fields",
+				header: {setCustomfieldVisibility: visibility, getCustomfieldVisibility: () => ({Ticket: false, "Big file": true, Label: false})}
+			} as any
 		]);
 		el.setColumns(["title", "#Ticket", "#Big file"]);
 		assert.isTrue(visibility.calledOnce, "the custom fields column should be told which custom fields to show");
@@ -1315,7 +1318,12 @@ describe("Et2Nextmatch header event handling", () =>
 
 		visibility.resetHistory();
 		el.setColumns(["title", "customfields"]);
-		assert.isFalse(visibility.called, "a favorite without custom field names should leave the custom fields alone");
+		assert.isTrue(visibility.calledOnce, "the custom fields column without any custom field names shows all of them");
+		assert.deepEqual(visibility.firstCall.args[0], {"Ticket": true, "Big file": true, Label: true});
+
+		visibility.resetHistory();
+		el.setColumns(["title"]);
+		assert.isFalse(visibility.called, "a favorite without the custom fields column should leave the custom fields alone");
 	});
 
 	/**
