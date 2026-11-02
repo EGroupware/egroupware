@@ -848,14 +848,21 @@ abstract class Ajax extends Api\Framework
 		}
 		$open = implode(',',$tabs);
 
-		if ($open != $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'] ||
-			$active != $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'])
+		// compare against the stored prefs and the session copy, as get_navbar_apps() restores from
+		// the session first: skipping the update because the prefs (possibly changed by another
+		// session) already match would leave a stale session list to be restored on reload
+		$GLOBALS['egw']->preferences->read_repository();
+		$stored = $GLOBALS['egw']->preferences->data['common'] ?? [];
+		$session_open = Api\Cache::getSession(__CLASS__, 'open_tabs');
+		if ($open !== $session_open)
+		{
+			Api\Cache::setSession(__CLASS__, 'open_tabs', $open);
+		}
+		if ($open != ($stored['open_tabs'] ?? '') || ($active ?? '') != ($stored['active_tab'] ?? ''))
 		{
 			//error_log(__METHOD__.'('.array2string($tablist).") storing common prefs: open_tabs='$tabs', active_tab='$active'");
-			Api\Cache::setSession(__CLASS__, 'open_tabs', $open);
-			$GLOBALS['egw']->preferences->read_repository();
 			$GLOBALS['egw']->preferences->add('common', 'open_tabs', $open);
-			$GLOBALS['egw']->preferences->add('common', 'active_tab', $active);
+			$GLOBALS['egw']->preferences->add('common', 'active_tab', $active ?? '');
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
 	}
