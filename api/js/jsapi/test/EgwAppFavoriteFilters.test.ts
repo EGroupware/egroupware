@@ -31,9 +31,22 @@ describe("EgwApp._favoriteFilters()", () =>
 		assert.deepEqual(favoriteFilters({info_type: "task"}, {col_filter: {}}).col_filter, {info_type: ""});
 	});
 
-	it("leaves the column filters alone for a favorite that has none", () =>
+	it("clears the column filters for a favorite that has no column filters key", () =>
 	{
-		const filters = {search: "foo"};
+		const result = favoriteFilters({"#cf": "x", info_type: "task"}, {search: "foo"});
+		assert.deepEqual(result, {search: "foo", col_filter: {"#cf": "", info_type: ""}});
+	});
+
+	it("clears the search, filters and category that are set but not in the favorite", () =>
+	{
+		const nm = {activeFilters: {col_filter: {}, search: "foo", filter: "3", cat_id: "5", path: "/home"}};
+		const result = (<any>EgwApp.prototype)._favoriteFilters.call({}, nm, {filter2: "x"});
+		assert.deepEqual(result, {search: "", filter: "", cat_id: "", filter2: "x", col_filter: {}});
+	});
+
+	it("passes a favorite without any filters on, for applyFilters() to reset everything", () =>
+	{
+		const filters = {};
 		assert.strictEqual(favoriteFilters({info_type: "task"}, filters), filters);
 	});
 
@@ -64,5 +77,35 @@ describe("EgwApp._applyFavoriteColumns()", () =>
 		const columns = [];
 		await (<any>EgwApp.prototype)._applyFavoriteColumns.call({}, {setColumns: c => columns.push(...c)}, ["a"]);
 		assert.deepEqual(columns, ["a"]);
+	});
+});
+
+describe("EgwApp._showFilteredCustomfields()", () =>
+{
+	const show = (colFilter : any, columns : Promise<any> = Promise.resolve()) =>
+	{
+		const shown : string[][] = [];
+		return (<any>EgwApp.prototype)._showFilteredCustomfields.call({}, {showCustomfields: n => shown.push(n)}, colFilter, columns)
+			.then(() => shown);
+	};
+
+	it("shows the custom fields the favorite filters by", async() =>
+	{
+		assert.deepEqual(await show({"#Label": "x", "#Jahr": ["2020"], tid: "n"}), [["Label", "Jahr"]]);
+	});
+
+	it("ignores empty custom field filters and other columns", async() =>
+	{
+		assert.deepEqual(await show({"#Label": "", "#Jahr": [], tid: "n"}), []);
+		assert.deepEqual(await show([]), []);
+		assert.deepEqual(await show(undefined), []);
+	});
+
+	it("waits for the favorite's columns", async() =>
+	{
+		const order : string[] = [];
+		const columns = new Promise(resolve => setTimeout(() => { order.push("columns"); resolve(true); }, 10));
+		await (<any>EgwApp.prototype)._showFilteredCustomfields.call({}, {showCustomfields: () => order.push("shown")}, {"#a": "1"}, columns);
+		assert.deepEqual(order, ["columns", "shown"]);
 	});
 });

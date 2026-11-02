@@ -301,6 +301,31 @@ export function applyLegacyCustomfieldVisibility(
 }
 
 /**
+ * Show every custom field in the customfields column
+ *
+ * What a column list that shows the customfields column without naming any custom field means: not a
+ * selection of them, so the ones shown before are not kept.
+ */
+export function showAllCustomfields(columns : Et2NextmatchResolvedColumn[]) : void
+{
+	for(const column of columns || [])
+	{
+		const header = column.header as any;
+		if(String(column.key) !== "customfields" || typeof header?.setCustomfieldVisibility !== "function")
+		{
+			continue;
+		}
+		const visibility = Object.keys(header.getCustomfieldVisibility() || {}).reduce((result, name) =>
+		{
+			result[name] = true;
+			return result;
+		}, {} as Record<string, boolean>);
+		column.customFields = Object.keys(visibility);
+		header.setCustomfieldVisibility(visibility);
+	}
+}
+
+/**
  * Normalize legacy stored column-size preference into a key/value map.
  */
 export function normalizeLegacyColumnWidthMap(storedSizes : any) : Record<string, any>

@@ -841,11 +841,13 @@ export abstract class EgwApp
 				nm.sortBy(undefined, undefined, false);
 			}
 			nm.applyFilters(this._favoriteFilters(nm, state.state || state.filter || {}));
+			let columnsApplied : Promise<any> = Promise.resolve();
 			if(state.state && state.state.selectcols)
 			{
 				// Make sure it's a real array, not an object, then set cols
-				this._applyFavoriteColumns(nm, jQuery.extend([], state.state.selectcols));
+				columnsApplied = this._applyFavoriteColumns(nm, jQuery.extend([], state.state.selectcols));
 			}
+			this._showFilteredCustomfields(nm, state.state?.col_filter, columnsApplied);
 			nextmatched = true;
 		}
 		for(var i = 0; i < et2.length; i++)
@@ -880,9 +882,13 @@ export abstract class EgwApp
 	/**
 	 * Filters to apply for a favorite
 	 *
-	 * Applying filters only changes the column filters it lists.  A favorite that has column filters, even
-	 * an empty list or empty values, has to leave the list with exactly those: the column filters set before
-	 * are cleared, not kept.
+	 * Applying filters only changes the column filters it lists.  A favorite has to leave the list with exactly
+	 * its column filters: the ones set before are cleared, not kept, whether the favorite lists them empty, as an
+	 * empty list, or not at all (a column filter left at "all" is not saved).  A favorite with no filters at all
+	 * is passed on as is, applyFilters() resets everything for it.
+	 *
+	 * The search, filters, category and letter search are cleared the same way when the favorite doesn't have them.
+	 * Other keys are the app's own, and are left as they are.
 	 *
 	 * @param nm nextmatch the filters are for
 	 * @param filters filters of the favorite
@@ -890,15 +896,49 @@ export abstract class EgwApp
 	 */
 	protected _favoriteFilters(nm : { activeFilters? : Record<string, any> }, filters : Record<string, any>) : Record<string, any>
 	{
-		if(typeof filters?.col_filter === "undefined" || filters.col_filter === null)
+		if(!filters || Object.keys(filters).length === 0)
 		{
 			return filters;
 		}
+		const cleared = {};
+		["search", "filter", "filter2", "cat_id", "searchletter"].forEach(key =>
+		{
+			if(!(key in filters) && nm.activeFilters && key in nm.activeFilters)
+			{
+				cleared[key] = key === "searchletter" ? false : "";
+			}
+		});
+		filters = {...cleared, ...filters};
 		const col_filter = {};
 		Object.keys(nm.activeFilters?.col_filter ?? {}).forEach(column => col_filter[column] = "");
 		// An empty list is how PHP stores no column filters
-		Object.assign(col_filter, Array.isArray(filters.col_filter) ? {} : filters.col_filter);
+		Object.assign(col_filter, Array.isArray(filters.col_filter) || !filters.col_filter ? {} : filters.col_filter);
 		return {...filters, col_filter};
+	}
+
+	/**
+	 * Show the custom fields a favorite filters by
+	 *
+	 * Their visibility is set after the favorite's columns are, so it also holds when the favorite lists
+	 * custom fields to show.  The visibility of the other custom fields is not changed.
+	 *
+	 * @param nm nextmatch the favorite is applied to
+	 * @param colFilter column filters of the favorite
+	 * @param columnsApplied resolves once the favorite's columns are set
+	 */
+	protected _showFilteredCustomfields(nm : { showCustomfields? : Function }, colFilter : any, columnsApplied : Promise<any>) : Promise<void>
+	{
+		const names = Object.keys(Array.isArray(colFilter) || !colFilter ? {} : colFilter)
+			.filter(key => key.startsWith("#") && key.length > 1 && colFilter[key] &&
+				!(Array.isArray(colFilter[key]) && colFilter[key].length === 0))
+			.map(key => key.substring(1));
+		if(!names.length)
+		{
+			return Promise.resolve();
+		}
+		return Promise.resolve(columnsApplied).then(() => (<any>nm).updateComplete)
+			.then(() => (<any>nm)._datagrid?.updateComplete)
+			.then(() => nm.showCustomfields?.(names));
 	}
 
 	/**

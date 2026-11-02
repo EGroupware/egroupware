@@ -36,6 +36,7 @@ import {
 	mapLegacyVisibleKeysToCurrentColumns,
 	legacyVisibleCustomfieldNames,
 	applyLegacyCustomfieldVisibility,
+	showAllCustomfields,
 	visibleCustomfieldKeys
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
@@ -1814,9 +1815,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 		if(hasOnlyStringColumns)
 		{
-			// ... and only the custom fields they listed
-			applyLegacyCustomfieldVisibility(<Et2NextmatchResolvedColumn[]>(this._datagrid?.columns ?? nextColumns),
-				legacyVisibleCustomfieldNames(requestedKeys));
+			// ... and only the custom fields they listed, all of them if the column is shown without any
+			const resolvedColumns = <Et2NextmatchResolvedColumn[]>(this._datagrid?.columns ?? nextColumns);
+			const customfieldNames = legacyVisibleCustomfieldNames(requestedKeys);
+			if(customfieldNames.length)
+			{
+				applyLegacyCustomfieldVisibility(resolvedColumns, customfieldNames);
+			}
+			else if(stringColumns.includes("customfields"))
+			{
+				showAllCustomfields(resolvedColumns);
+			}
 		}
 		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
 			detail: {columns: nextColumns},
@@ -1824,6 +1833,37 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			composed: true
 		}));
 		this.requestUpdate();
+	}
+
+	/**
+	 * Show the given custom fields in the customfields column, leaving the visibility of the others as it is
+	 *
+	 * @param names custom field names, without the `#`
+	 */
+	showCustomfields(names : string[])
+	{
+		const column = <Et2NextmatchResolvedColumn | undefined>(this._datagrid?.columns ?? [])
+			.find((c) => String(c.key) === "customfields");
+		const header = column?.header as any;
+		if(!column || typeof header?.setCustomfieldVisibility !== "function")
+		{
+			return;
+		}
+		const visibility = {...header.getCustomfieldVisibility()};
+		const known = names.filter((name) => name in visibility);
+		if(!known.length || known.every((name) => visibility[name] === true))
+		{
+			return;
+		}
+		known.forEach((name) => visibility[name] = true);
+		header.setCustomfieldVisibility(visibility);
+		column.customFields = Object.keys(visibility).filter((name) => visibility[name] === true);
+		this._datagrid?.requestUpdate();
+		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: this._datagrid?.columns},
+			bubbles: true,
+			composed: true
+		}));
 	}
 
 	/**

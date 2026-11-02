@@ -3,7 +3,8 @@ import {
 	applyLegacyNextmatchColumnPreferences,
 	applyLegacyCustomfieldVisibility,
 	datagridColumnPreferenceValue,
-	legacyVisibleCustomfieldNames
+	legacyVisibleCustomfieldNames,
+	showAllCustomfields
 } from "../Et2NextmatchColumnPreferences.ts";
 
 describe("Et2Nextmatch column preferences", () =>
@@ -38,6 +39,19 @@ describe("Et2Nextmatch column preferences", () =>
 			},
 			"only customfields selected in the legacy CSV should be visible"
 		);
+	});
+
+	it("shows every custom field when the column is shown without naming any", () =>
+	{
+		let applied : any = null;
+		const header = {
+			getCustomfieldVisibility: () => ({a: false, b: true, c: false}),
+			setCustomfieldVisibility: (fields) => applied = fields
+		};
+		const columns : any[] = [{key: "cat_id"}, {key: "customfields", header}];
+		showAllCustomfields(columns);
+		assert.deepEqual(applied, {a: true, b: true, c: true});
+		assert.deepEqual(columns[1].customFields, ["a", "b", "c"]);
 	});
 
 	it("keeps legacy customfield visibility on headers that are not upgraded yet", () =>
