@@ -1540,6 +1540,27 @@ class addressbook_ui extends addressbook_bo
 				lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!', $success, $action_msg, $failed) :
 				lang('%1 contact(s) %2, %3 failed because of %4 !!!', $success, $action_msg, $failed, $error_msg);
 		}
+		// List membership lives in its own table: the contacts are not modified, so no push is sent.
+		// Removing from the list the grid is filtered to must still drop those rows, so delete them
+		// client-side - nothing else a list action does changes what is shown.
+		$removed_rows = [];
+		if (!$all_selected && !$failed && preg_match('/^remove_from_list_(\d+)$/', $action, $m))
+		{
+			$query = Api\Cache::getSession('addressbook', $session_name);
+			if (is_array($query) && (int)($query['filter2'] ?? 0) === (int)$m[1])
+			{
+				$removed_rows = $selected;
+			}
+		}
+		if ($removed_rows)
+		{
+			foreach($removed_rows as $n => $id)
+			{
+				Api\Json\Response::get()->call('egw.refresh', $n ? '' : $msg, 'addressbook', $id, 'delete',
+					'addressbook', null, null, 'success');
+			}
+			return;
+		}
 		// egw.refresh()'s 2nd argument doubles as the "message only, push will do the rest"
 		// sentinel, but its 5th (_targetapp) must always be a real app: egw_appWindow() is
 		// called on it BEFORE the msg-only early-return, and resolving 'msg-only-push-refresh'
