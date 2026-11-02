@@ -754,11 +754,15 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   border-color: gray !important;
 }
 /* MAIL PRINT */
+/* This stylesheet stays loaded in the main window after mail was opened, so every generic selector
+   in the print block (html, pre, textarea, et2-nextmatch, ...) would also apply to the printout of
+   any other app.  Only mail's own views are in scope: the popups (#popupMainDiv, incl. the
+   .tmpPrintDiv copy of a displayed message) and mail.index while mail is the active app. */
 @media print {
-  html {
+  html:has(#popupMainDiv, egw-app[name="mail"][active]) {
     height: auto !important;
   }
-  html *,
+  html:has(#popupMainDiv, egw-app[name="mail"][active]) *,
   .td_display {
     border-right: none !important;
     border-left: none !important;
@@ -817,7 +821,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     height: auto;
   }
   .tmpPrintDiv td,
-  textarea {
+  :is(#popupMainDiv, .tmpPrintDiv, egw-app[name="mail"][active]) textarea {
     font-family: Verdana, Arial, Helvetica, sans-serif;
   }
   .tmpPrintDiv .td_display {
@@ -825,7 +829,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     color: black;
     background-color: #FFFFFF;
   }
-  pre {
+  :is(#popupMainDiv, .tmpPrintDiv, egw-app[name="mail"][active]) pre {
     width: 99% !important;
   }
   .mailDisplayContainer {
@@ -852,7 +856,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     overflow: visible !important;
     position: inherit !important;
   }
-  .et2_button {
+  :is(#popupMainDiv, .tmpPrintDiv, egw-app[name="mail"][active]) .et2_button {
     display: none;
   }
   div.mailDisplay .mailDisplayHeaders .mail_extraEmails {
@@ -875,10 +879,10 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   .mail_extraEmails > a {
     display: inline-block;
   }
-  .et2_email:after {
+  :is(#popupMainDiv, .tmpPrintDiv, egw-app[name="mail"][active]) .et2_email:after {
     content: " | ";
   }
-  .et2_email:last-child:after {
+  :is(#popupMainDiv, .tmpPrintDiv, egw-app[name="mail"][active]) .et2_email:last-child:after {
     content: "";
   }
   /* mail.index (the list+preview view, NOT the dedicated mail.display popup above) has its own
@@ -896,8 +900,8 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
        Hiding the list and folder tree outright under print - showing only the preview pane's own
        message content - matches what printing directly from this view is actually for.
     */
-  et2-nextmatch,
-  et2-tree {
+  egw-app[name="mail"] et2-nextmatch,
+  egw-app[name="mail"] et2-tree {
     display: none !important;
   }
   /* et2-split's own internal resize-divider handle (a shadow-DOM part, Shoelace's sl-split-panel
@@ -909,7 +913,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
        ends up misplaced/oversized once its sibling pane is hidden and print reflows to the page's
        own (narrower) width.
     */
-  et2-split::part(divider) {
+  egw-app[name="mail"] et2-split::part(divider) {
     display: none !important;
   }
   /* et2-split (mailSplitter) is a CSS GRID whose host itself carries an inline
@@ -930,7 +934,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
        the preview pane's own header block entirely. Found live 2026-10-12 (ralf, with Stefan
        Unverricht, immediately after the first version of this rule shipped).
     */
-  et2-split {
+  egw-app[name="mail"] et2-split {
     grid-template-columns: 1fr !important;
   }
 }
@@ -1333,10 +1337,11 @@ sl-alert.mail_externalImagesMsg[variant="danger"]::part(base) {
 }
 sl-alert.mail_externalImagesMsg::part(message) {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: var(--sl-spacing-x-small);
   padding: var(--sl-spacing-3x-small) var(--sl-spacing-small);
+  padding-inline-end: 0;
 }
 sl-alert.mail_externalImagesMsg::part(close-button) {
   padding-inline-end: 0;
