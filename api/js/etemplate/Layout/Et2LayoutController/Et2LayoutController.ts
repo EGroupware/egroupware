@@ -184,12 +184,15 @@ export class Et2LayoutController implements ReactiveController
 	private applyLayout()
 	{
 		const strategy = getLayoutStrategy(this.host.layout);
+		const children = Array.from(this.host.children) as HTMLElement[];
 		if(!strategy)
 		{
+			// The layout was cleared: what the one before it set up goes with it
+			this.activeStrategy?.cleanup?.(this.host, children);
+			this.activeStrategy = undefined;
 			return;
 		}
 
-		const children = Array.from(this.host.children) as HTMLElement[];
 		if(this.activeStrategy && this.activeStrategy !== strategy && this.activeStrategy.cleanup)
 		{
 			this.activeStrategy.cleanup(this.host, children);

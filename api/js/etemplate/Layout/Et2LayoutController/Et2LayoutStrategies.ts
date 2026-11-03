@@ -365,6 +365,7 @@ function cleanupGrowRowObserver(host: HTMLElement): void
 		observers.children.disconnect();
 		host.removeEventListener("sl-tab-show", observers.lookAgain);
 		growRowObservers.delete(host);
+		host.removeAttribute("data-tabs-flow");
 	}
 
 	const pendingRaf = growRowRaf.get(host);

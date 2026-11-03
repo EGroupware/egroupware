@@ -639,3 +639,122 @@ describe("Et2Template getPreferredSize()", () =>
 		assert.equal(element.getAttribute("style"), before, "the measuring left the host's style changed");
 	});
 });
+
+/**
+ * An edit dialog that scrolls sets data-tabs-flow on itself, so the CSS can let the tabbox take the
+ * height its tab needs instead of scrolling inside a dialog that scrolls.  The flag is the JS half
+ * of that: whether the dialog overflows in its normal layout, asked again when a tab is shown.
+ */
+describe("Layout edit dialog tabs flow", () =>
+{
+	let styles : HTMLStyleElement;
+
+	beforeEach(() =>
+	{
+		styles = document.createElement("style");
+		styles.textContent = `
+			et2-template[layout] { display: block; height: 300px; overflow: auto; }
+			et2-template[layout]::part(base) { display: flex; flex-direction: column; }
+			et2-template[layout] > div { height: 100px; flex: none; }
+		`;
+		document.head.append(styles);
+	});
+	afterEach(() => styles?.remove());
+
+	const settle = async() =>
+	{
+		await nextFrame();
+		await nextFrame();
+	};
+	const flowing = (element : Et2Template) => element.hasAttribute("data-tabs-flow");
+
+	it("is set when the dialog's content is taller than the dialog", async() =>
+	{
+		const element = await make(`<et2-template layout="edit">
+			<div></div><div></div><div></div><div></div>
+		</et2-template>`);
+		await settle();
+		assert.isTrue(flowing(element));
+	});
+
+	it("is not set when the content fits", async() =>
+	{
+		const element = await make(`<et2-template layout="edit"><div></div><div></div></et2-template>`);
+		await settle();
+		assert.isFalse(flowing(element));
+	});
+
+	it("is not set by other layouts, even when they overflow", async() =>
+	{
+		for(const layout of ["stack", "2-column"])
+		{
+			const element = await make(`<et2-template layout="${layout}">
+				<div></div><div></div><div></div><div></div>
+			</et2-template>`);
+			await settle();
+			assert.isFalse(flowing(element), layout);
+		}
+	});
+
+	it("is looked at again when a tab is shown", async() =>
+	{
+		const element = await make(`<et2-template layout="edit"><div></div><div id="more"></div></et2-template>`);
+		await settle();
+		assert.isFalse(flowing(element));
+
+		// Growing the content by a style change fires no resize of the host and no child change
+		(<HTMLElement>element.querySelector("#more")).style.height = "400px";
+		element.dispatchEvent(new CustomEvent("sl-tab-show", {bubbles: true}));
+		await settle();
+		assert.isTrue(flowing(element), "a tab that needs more room did not turn the flag on");
+
+		(<HTMLElement>element.querySelector("#more")).style.height = "100px";
+		element.dispatchEvent(new CustomEvent("sl-tab-show", {bubbles: true}));
+		await settle();
+		assert.isFalse(flowing(element), "a tab that fits did not turn the flag off");
+	});
+
+	it("stops listening for tabs once the dialog is removed", async() =>
+	{
+		const element = await make(`<et2-template layout="edit"><div></div><div></div></et2-template>`);
+		await settle();
+		element.remove();
+		await settle();
+
+		// A listener left behind would ask for a new sizing pass, and does so synchronously
+		const raf = sinon.spy(window, "requestAnimationFrame");
+		try
+		{
+			element.dispatchEvent(new CustomEvent("sl-tab-show", {bubbles: true}));
+			assert.equal(raf.callCount, 0, "sl-tab-show still triggers sizing after removal");
+		}
+		finally
+		{
+			raf.restore();
+		}
+	});
+
+	it("lets go of its observers and the flag when the layout is cleared", async() =>
+	{
+		const element = await make(`<et2-template layout="edit">
+			<div></div><div></div><div></div><div></div>
+		</et2-template>`);
+		await settle();
+		assert.isTrue(flowing(element));
+
+		element.layout = <any>"";
+		await elementUpdated(element);
+		assert.isFalse(flowing(element), "the flag stayed after the layout was cleared");
+
+		const raf = sinon.spy(window, "requestAnimationFrame");
+		try
+		{
+			element.dispatchEvent(new CustomEvent("sl-tab-show", {bubbles: true}));
+			assert.equal(raf.callCount, 0, "sl-tab-show still triggers sizing after the layout was cleared");
+		}
+		finally
+		{
+			raf.restore();
+		}
+	});
+});
