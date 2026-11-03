@@ -8,8 +8,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {EgwApp} from '../../api/js/jsapi/egw_app';
 import type {PushData} from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import type {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
@@ -1445,7 +1445,7 @@ export class AdminApp extends EgwApp
 				// .map().filter() is the native equivalent (Object.values() first since
 				// select_options may be a plain object, not an array, same as jQuery.map()
 				// accepts both)
-				const removed_cat_label = Object.values(select_owner.options.select_options).map((val : any) =>
+				const removed_cat_label = Object.values(select_owner.select_options).map((val : any) =>
 				{
 					for (let j=0; j <= diff.length;j++)
 					{
@@ -1603,7 +1603,7 @@ export class AdminApp extends EgwApp
 
 				// Immediately remove the type
 				const types = this.getRoot().getWidgetById('types');
-				const options = types.options.select_options;
+				const options = types.select_options;
 				let key;
 				for(key in options)
 				{
@@ -2455,7 +2455,7 @@ export class AdminApp extends EgwApp
 	 */
 	copyClipboard(_widget : any, _text? : string, _event? : Event)
 	{
-		const value = _text || (typeof _widget.get_value === 'function' ? _widget.get_value() : _widget.options.value);
+		const value = _text || (typeof _widget.get_value === 'function' ? _widget.get_value() : _widget.value);
 		const node = _widget.getDOMNode() !== _widget ? _widget.getDOMNode() : _widget;
 		this.egw.copyTextToClipboard(value, node, _event).then((success) =>
 		{
