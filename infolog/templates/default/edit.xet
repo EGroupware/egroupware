@@ -42,12 +42,12 @@
 	<et2-template  id="infolog.edit.details" template="" lang="" group="0" version="1.10.001" layout="2-column" style="--column-min-width:28em;">
 		<et2-email  id="info_cc" label="CC" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email"></et2-email>
 		<et2-select-cat  label="Category" statustext="select a category for this entry" id="info_cat" emptyLabel="None"></et2-select-cat>
-		<et2-select-account  label="Responsible" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="1" onchange="app.infolog.onchangeResponsible" placeholder="Select users or groups" noLang="1" accountType="both"></et2-select-account>
+        <et2-textbox  label="Location" id="info_location" maxlength="255"></et2-textbox>
 		<et2-link-entry  label="Parent" id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" query="app.infolog.parent_query" onlyApp="infolog"></et2-link-entry>
 		<et2-select  label="Priority" statustext="select a priority for this task" id="info_priority"></et2-select>
 		<et2-date-time  label="Date completed" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog.statusChanged"></et2-date-time>
-		<et2-textbox  label="Location" id="info_location" maxlength="255"></et2-textbox>
-		<et2-checkbox  label="Private" statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" selectedValue="private" unselectedValue="public"></et2-checkbox>
+        <et2-select-account  label="Responsible" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" multiple="1" onchange="app.infolog.onchangeResponsible" placeholder="Select users or groups" noLang="1" accountType="both"></et2-select-account>
+        <et2-checkbox  label="Private" statustext="should this entry only be visible to you and people you grant privat access via the ACL" id="info_access" selectedValue="private" unselectedValue="public"></et2-checkbox>
 	</et2-template>
 	<et2-template  id="infolog.edit" template="" lang="" group="0" version="1.10.001" layout="edit" style="--column-min-width:28em;">
 		<et2-hbox exportparts="base" class="dialogHeader">
