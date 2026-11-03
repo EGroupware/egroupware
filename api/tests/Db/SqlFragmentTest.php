@@ -188,4 +188,34 @@ class SqlFragmentTest extends TestCase
 
 		$this->assertStringContainsString('t_modifier', $where);
 	}
+
+	// -------------------------------------------------------------------
+	// Db::select() - an empty $where must not append a dangling WHERE
+	// -------------------------------------------------------------------
+
+	/**
+	 * column_data_implode() returns a SqlFragment even for an empty array, which is always truthy:
+	 * select() has to check the fragment's SQL, or it appends "WHERE " with nothing after it
+	 */
+	public function testSelectWithEmptyWhereArrayHasNoWhereClause()
+	{
+		// line=false and file=false make select() return the SQL instead of running it
+		$sql = self::$db->select('egw_test', '*', [], false, false);
+
+		$this->assertStringNotContainsString('WHERE', $sql);
+	}
+
+	public function testSelectWithOnlyEmptyRawFragmentHasNoWhereClause()
+	{
+		$sql = self::$db->select('egw_test', '*', [SqlFragment::raw('')], false, false);
+
+		$this->assertStringNotContainsString('WHERE', $sql);
+	}
+
+	public function testSelectWithWhereArrayStillAddsWhereClause()
+	{
+		$sql = self::$db->select('egw_test', '*', ['t_modifier' => 5], false, false);
+
+		$this->assertMatchesRegularExpression('/ WHERE .*t_modifier/', $sql);
+	}
 }
