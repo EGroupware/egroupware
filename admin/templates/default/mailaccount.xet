@@ -94,20 +94,28 @@
 		<et2-url  label="SpamTitan API URL" id="acc_spam_api" maxlength="128" placeholder="@spamtitan_blur"></et2-url>
 		<et2-password  label="API Token" id="acc_spam_password" suggest="24" autocomplete="new-password" placeholder="@spamtitan_blur"></et2-password>
 	</et2-template>
-	<et2-template  id="admin.mailaccount.aliases" template="" lang="" group="0" version="1.9.001" layout="2-column" style="--label-width:13em; --column-min-width:100%">
+	<et2-template  id="admin.mailaccount.aliases" template="" lang="" group="0" version="1.9.002" layout="stack" style="--label-width:13em">
 		<et2-hbox>
-			<et2-url-email  label="EMail address" class="et2-label-fixed" style="flex:1" id="mailLocalAddress" maxlength="128"></et2-url-email>
+			<et2-description  value="EMail address" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-url-email  style="flex:1; min-width:12em" id="mailLocalAddress" maxlength="128"></et2-url-email>
 			<et2-checkbox  label="Email account active" id="accountStatus" selectedValue="active"></et2-checkbox>
 		</et2-hbox>
-		<et2-email  label="Alternate email address" id="mailAlternateAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
-		<et2-email  label="Forward email's to" id="mailForwardingAddress" hidden="@no_forward_available" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
-		<et2-hbox  span="all" hidden="@no_forward_available" style="margin-inline-start:calc(var(--label-width, 13em) + var(--sl-spacing-medium))">
+		<et2-hbox>
+			<et2-description  value="Alternate email address" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-email  style="flex:1" id="mailAlternateAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
+		</et2-hbox>
+		<et2-hbox  hidden="@no_forward_available">
+			<et2-description  value="Forward email's to" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-email  style="flex:1" id="mailForwardingAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
+		</et2-hbox>
+		<et2-hbox  class="emailadmin_wrap_row" hidden="@no_forward_available" style="margin-inline-start:calc(var(--label-width, 13em) + var(--sl-spacing-medium)); margin-block-start:var(--sl-spacing-x-small)">
 			<et2-checkbox  label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) Et2Dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
 			<et2-checkbox  label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
 		</et2-hbox>
-		<et2-hbox>
-			<et2-number  label="Quota (MB)" class="et2-label-fixed" id="quotaLimit" precision="0"></et2-number>
-			<et2-description  value="Leave empty for no quota"></et2-description>
+		<et2-hbox  class="emailadmin_wrap_row">
+			<et2-description  value="Quota (MB)" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
+			<et2-number  id="quotaLimit" precision="0"></et2-number>
+			<et2-description  value="Leave empty for no quota" style="flex:1; margin-inline:var(--sl-spacing-small)"></et2-description>
 			<et2-number  label="Currently:" id="quotaUsed" readonly="true" precision="0"></et2-number>
 		</et2-hbox>
 		<et2-hbox  hidden="!@admin_actions">
@@ -121,28 +129,32 @@
 		</et2-hbox>
 		<et2-hbox>
 			<et2-description  value="Certificate" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
-			<et2-button  id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
-			<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
-			<et2-button  id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
-			<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="Et2Dialog.confirm(widget,'Deleting removes your S/MIME private key entirely - you will no longer be able to read any previously received encrypted messages. If you are renewing your certificate, use Export CSR and Import certificate instead to keep your key.','Delete S/MIME certificate')" image="delete" noSubmit="true"></et2-button>
+			<et2-hbox  class="emailadmin_wrap_row" style="flex:1">
+				<et2-button  id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
+				<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
+				<et2-button  id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
+				<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="Et2Dialog.confirm(widget,'Deleting removes your S/MIME private key entirely - you will no longer be able to read any previously received encrypted messages. If you are renewing your certificate, use Export CSR and Import certificate instead to keep your key.','Delete S/MIME certificate')" image="delete" noSubmit="true"></et2-button>
+			</et2-hbox>
 		</et2-hbox>
 		<et2-hbox>
 			<et2-description  value="Passphrase" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
-			<et2-password  style="flex:1" id="smime_passphrase" maxlength="128" autocomplete="off" placeholder="Only if the private key (new upload, or already stored) is passphrase-protected"></et2-password>
-			<et2-checkbox  id="smime_no_passphrase" label="Do NOT ask passphrase" onchange="app.admin.smime_noPassphraseChanged" statustext="Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again"></et2-checkbox>
+			<et2-hbox  class="emailadmin_wrap_row" style="flex:1">
+				<et2-password  style="flex:1; min-width:12em" id="smime_passphrase" maxlength="128" autocomplete="off" placeholder="Only if the private key (new upload, or already stored) is passphrase-protected"></et2-password>
+				<et2-checkbox  id="smime_no_passphrase" label="Do NOT ask passphrase" onchange="app.admin.smime_noPassphraseChanged" statustext="Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again"></et2-checkbox>
+			</et2-hbox>
 		</et2-hbox>
-		<et2-hbox>
+		<et2-hbox  class="emailadmin_wrap_row">
 			<et2-description  value="Upload your certificate .p12/.pfx file" style="margin-right:var(--sl-spacing-medium)"></et2-description>
-			<et2-file  id="smimeKeyUpload" accept=".p12,.pfx"></et2-file>
+			<et2-file  style="flex:0 0 auto" id="smimeKeyUpload" accept=".p12,.pfx"></et2-file>
 		</et2-hbox>
-		<et2-hbox>
+		<et2-hbox  class="emailadmin_wrap_row">
 			<et2-description  value="Import CA-signed certificate for this key" style="width:24em; margin-right:var(--sl-spacing-medium)"></et2-description>
-			<et2-file  id="smimeCertUpload" accept=".pem,.crt,.cer,.p7b" onchange="app.admin.smime_certFileChanged"></et2-file>
+			<et2-file  style="flex:0 0 auto" id="smimeCertUpload" accept=".pem,.crt,.cer,.p7b" onchange="app.admin.smime_certFileChanged"></et2-file>
 			<et2-button  id="smime_import_cert" label="Import certificate" onclick="app.admin.change_account" image="upload" noSubmit="true"></et2-button>
 		</et2-hbox>
-		<et2-hbox>
+		<et2-hbox  class="emailadmin_wrap_row">
 			<et2-description  value="Intermediate/CA certificate (optional)" style="width:24em; margin-right:var(--sl-spacing-medium)"></et2-description>
-			<et2-file  id="smimeIntermediateUpload" accept=".pem,.crt,.cer,.p7b"></et2-file>
+			<et2-file  style="flex:0 0 auto" id="smimeIntermediateUpload" accept=".pem,.crt,.cer,.p7b"></et2-file>
 		</et2-hbox>
 	</et2-template>
 	<et2-template  id="admin.mailaccount.smimecertgen" template="" lang="" group="0" version="17.1">

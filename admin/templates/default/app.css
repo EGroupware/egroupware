@@ -252,3 +252,9 @@ td.token {
 #admin #admin-index_ajax_target {
     padding-inline: var(--sl-spacing-2x-small);
 }
+/* Rows on the Encryption and Aliases tabs: let buttons and inputs wrap below the label in a narrow dialog */
+.emailadmin_wrap_row::part(base) {
+	flex-wrap: wrap;
+	align-items: center;
+	row-gap: var(--sl-spacing-x-small);
+}
