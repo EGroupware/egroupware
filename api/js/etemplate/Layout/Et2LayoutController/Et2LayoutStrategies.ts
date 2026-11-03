@@ -3,7 +3,7 @@ import type {Et2LayoutStrategy} from "./Et2LayoutController";
 // Scheduled animation frames
 const growRowRaf = new WeakMap<HTMLElement, number>();
 // Per-host observers: what the layout watches to know it has to look again
-const growRowObservers = new WeakMap<HTMLElement, { resize : ResizeObserver, children : MutationObserver }>();
+const growRowObservers = new WeakMap<HTMLElement, { resize : ResizeObserver, children : MutationObserver, lookAgain : () => void }>();
 // Automatic grow tags (grow attribute not needed)
 // A tabbox and a list are the two widgets that are never the thing a layout should leave space
 // around: whatever sits beside them is a header or a footer, and they want the rest.  Saying
@@ -186,10 +186,8 @@ function scheduleGrowRowSizing(host: HTMLElement, children: HTMLElement[]): void
 		cancelAnimationFrame(previous);
 	}
 
-	const raf = requestAnimationFrame(() =>
+	const sizeRows = () =>
 	{
-		growRowRaf.delete(host);
-
 		const base = host.shadowRoot?.querySelector<HTMLElement>('[part="base"]');
 		if(!base)
 		{
@@ -293,6 +291,27 @@ function scheduleGrowRowSizing(host: HTMLElement, children: HTMLElement[]): void
 
 		base.style.gridTemplateRows = trackList.join(" ");
 		base.style.alignContent = "stretch";
+	};
+
+	const raf = requestAnimationFrame(() =>
+	{
+		growRowRaf.delete(host);
+
+		// A dialog that scrolls has no height to hand its tabbox, so there the tabs take the height they
+		// need (edit.less) instead of scrolling inside a dialog that scrolls too.  Whether it scrolls is
+		// asked of the layout without that, or the answer would feed on itself.
+		if(host.getAttribute("layout") === "edit")
+		{
+			host.removeAttribute("data-tabs-flow");
+			sizeRows();
+			if(host.scrollHeight > host.clientHeight + 1)
+			{
+				host.setAttribute("data-tabs-flow", "");
+				sizeRows();
+			}
+			return;
+		}
+		sizeRows();
 	});
 
 	growRowRaf.set(host, raf);
@@ -332,7 +351,9 @@ function ensureGrowRowObserver(host: HTMLElement): void
 	resize.observe(host);
 	const children = new MutationObserver(lookAgain);
 	children.observe(host, {childList: true});
-	growRowObservers.set(host, {resize, children});
+	// Showing another tab can change what a growing tabbox needs without changing any size
+	host.addEventListener("sl-tab-show", lookAgain);
+	growRowObservers.set(host, {resize, children, lookAgain});
 }
 
 function cleanupGrowRowObserver(host: HTMLElement): void
@@ -342,6 +363,7 @@ function cleanupGrowRowObserver(host: HTMLElement): void
 	{
 		observers.resize.disconnect();
 		observers.children.disconnect();
+		host.removeEventListener("sl-tab-show", observers.lookAgain);
 		growRowObservers.delete(host);
 	}
 

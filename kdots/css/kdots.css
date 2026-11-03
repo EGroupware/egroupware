@@ -1044,6 +1044,29 @@ body egw-app,
 [layout="edit"] et2-tabbox {
   min-height: 25em;
 }
+/* A dialog that scrolls gives its tabbox no height of its own, and a tabbox that then scrolls its tab as
+ * well shows two scrollbars.  Et2LayoutStrategies sets data-tabs-flow on a dialog that scrolls: there
+ * the tabbox takes the height its tab needs and the dialog scrolls, with the tab bar staying at the
+ * top of the dialog while its content scrolls past.  A tab with a nextmatch, datagrid or historylog
+ * has no height of its own to take, so while that tab is showing the tabbox keeps its share of the
+ * dialog. */
+[layout="edit"][data-tabs-flow] et2-tabbox:not(:has(et2-tab-panel[active] :is(et2-nextmatch, et2-datagrid, et2-historylog))) {
+  min-height: max-content;
+  overflow: visible;
+}
+[layout="edit"][data-tabs-flow] et2-tabbox:not(:has(et2-tab-panel[active] :is(et2-nextmatch, et2-datagrid, et2-historylog)))::part(base) {
+  min-height: max-content;
+}
+[layout="edit"][data-tabs-flow] et2-tabbox:not(:has(et2-tab-panel[active] :is(et2-nextmatch, et2-datagrid, et2-historylog)))::part(body) {
+  overflow: visible;
+  min-height: 22em;
+}
+[layout="edit"][data-tabs-flow] et2-tabbox:not(:has(et2-tab-panel[active] :is(et2-nextmatch, et2-datagrid, et2-historylog)))::part(nav) {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--sl-panel-background-color);
+}
 /* Read-only facts at the bottom of a dialog - who changed it, when - as a row of their own: a
  * label in the label column, then the name and the date.  The name starts where the inputs above
  * do and the date ends at the cell's edge, so stacked in one column the dates line up whatever
