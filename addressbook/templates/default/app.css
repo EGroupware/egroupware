@@ -74,7 +74,7 @@ div.addressbook_edit_general_picture img {
   border: 2px solid var(--sl-color-neutral-950, black);
   background-color: var(--sl-color-neutral-0);
   padding: 4px;
-  z-index: 1;
+  z-index: 20;
 }
 .typeIcon {
   height: 16px;
@@ -89,7 +89,7 @@ div.addressbook_edit_general_picture img {
   padding: 4px;
   top: 55px;
   left: 102px;
-  z-index: 1;
+  z-index: 20;
   padding-right: 10px;
 }
 /* Labels stay on one line, the inputs take the rest of the popup */
