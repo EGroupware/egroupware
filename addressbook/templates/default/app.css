@@ -92,6 +92,17 @@ div.addressbook_edit_general_picture img {
   z-index: 1;
   padding-right: 10px;
 }
+/* Labels stay on one line, the inputs take the rest of the popup */
+.editname {
+  min-width: 25em;
+}
+.editname td:first-child {
+  width: var(--label-width);
+  white-space: nowrap;
+}
+.editname et2-textbox {
+  width: 100%;
+}
 /* The preferred way of contact radio stays right after its phone number */
 .addressbook_edit input.et2_radiobox {
   flex: none;
