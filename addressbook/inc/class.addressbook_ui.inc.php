@@ -1544,13 +1544,21 @@ class addressbook_ui extends addressbook_bo
 		// Removing from the list the grid is filtered to must still drop those rows, so delete them
 		// client-side - nothing else a list action does changes what is shown.
 		$removed_rows = [];
-		if (!$all_selected && !$failed && preg_match('/^remove_from_list_(\d+)$/', $action, $m))
+		$reload = false;
+		if (!$failed && preg_match('/^remove_from_list_(\d+)$/', $action, $m))
 		{
 			$query = Api\Cache::getSession('addressbook', $session_name);
 			if (is_array($query) && (int)($query['filter2'] ?? 0) === (int)$m[1])
 			{
-				$removed_rows = $selected;
+				// "select all" may cover rows that are not loaded, nothing to delete one by one
+				if ($all_selected) $reload = true; else $removed_rows = $selected;
 			}
+		}
+		if ($reload)
+		{
+			Api\Json\Response::get()->call('egw.refresh', $msg, 'addressbook', null, null,
+				'addressbook', null, null, 'success');
+			return;
 		}
 		if ($removed_rows)
 		{
