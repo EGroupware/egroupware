@@ -101,10 +101,3 @@ input, select, textarea {
 }
 
 } /* @media print */
-
-@media screen {
-	.tmpPrintDiv {
-		display: none;
-		height: auto;
-	}
-}

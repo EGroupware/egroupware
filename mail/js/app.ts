@@ -30,8 +30,11 @@ import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {dropRtfBody, findTnefEntry, isTnefEntry, renumber, spliceUnpacked} from "./tnef";
 import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
 import {adaptMessageForDarkMode, restoreMessageFromDarkMode} from "./darkReader";
+import {addPrintShortcut, imagesLoaded, printBodyWithHeader, printHeaderRows} from "./printBody";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 import {Et2UrlEmail} from "../../api/js/etemplate/Et2Url/Et2UrlEmail";
+import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {defaultFont} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -188,20 +191,11 @@ export class MailApp extends EgwApp
 	 */
 	private externalContentBanners = new WeakMap<HTMLElement, HTMLElement>();
 
-	/**
-	 * Intercepts Ctrl/Cmd+P on mail.index (the main window), see its own installation site in
-	 * et2_ready() for why. Bound at most once (et2_ready('mail.index') can re-run for a client-
-	 * side template reload, see this.tree_wdg's own comment a few lines below that case) - this
-	 * guard mirrors darkmodeObserver's.
-	 */
-	private printKeydownHandler : ((e : KeyboardEvent) => void) | null = null;
 
 	/**
-	 * Resolves once preparePrint()'s latest tmpPrintDiv copy (including waiting out any still-
-	 * decoding inline images) has actually landed - displayPrint() awaits this before calling
-	 * window.print(), see both methods' own docblocks for why.
+	 * Row data of the message renderMessageInto() displayed last, for the header printMessage() prints
 	 */
-	private printContentReady : Promise<void> = Promise.resolve();
+	private printHeaderData: {rowId: string, data: any};
 
 	customLabels: CustomLabels = {};
 
@@ -464,25 +458,13 @@ export class MailApp extends EgwApp
 				this.importMessageInit();
 				break;
 			case 'mail.index':
-				this.installPrintKeydownInterception();
+				// ctrl/cmd+P prints the mail shown in the preview, without one the framework prints the list
+				// (EgwFramework.handleKeydown())
+				this.addPrintShortcut(document);
 				const messageIframeEl = this.et2?.getWidgetById('messageIFRAME')?.iframe as HTMLIFrameElement | undefined;
-				messageIframeEl?.addEventListener('load', () =>
-				{
-					// A keydown fired while the user's focus is INSIDE the iframe (eg. they clicked
-					// or selected text in the message body - a common state while reading mail) never
-					// reaches a listener on the outer document at all - an iframe is a separate
-					// browsing context with its own document, keyboard events there simply do not
-					// bubble out. Found live 2026-10-15 (ralf, re-testing on boulder): Cmd+P still
-					// opened the native dialog over the main window even after installPrintKeydown-
-					// Interception() ran, because focus was inside this very iframe. Re-attached on
-					// every 'load' (not just once) because the iframe gets a brand-new document on
-					// every message selection - the previous document's listener is simply discarded
-					// with it, nothing to remove.
-					if (self.printKeydownHandler)
-					{
-						messageIframeEl.contentDocument?.addEventListener('keydown', self.printKeydownHandler, {capture : true});
-					}
-				});
+				// a key pressed in the mail body does not reach the page's own listener,
+				// and every message is a new document
+				messageIframeEl?.addEventListener('load', () => self.addPrintShortcut(messageIframeEl.contentDocument));
 				const nm = this.et2.getWidgetById(this.nm_index);
 				this.isMainWindow = true;
 
@@ -626,10 +608,11 @@ export class MailApp extends EgwApp
 				if (!already_refreshed) this.callRefreshVacationNotice();
 				break;
 			case 'mail.display':
-				// Prepare display dialog for printing
-				// copies iframe content to a DIV, as iframe causes
-				// trouble for multipage printing
-
+				this.addPrintShortcut(document);
+				// the user's default font for printing the whole popup (app.less), as for the body (MailJmap.wrapDocument())
+				const {fontFamily, fontSize} = defaultFont();
+				document.documentElement.style.setProperty('--mail-default-font-family', fontFamily);
+				document.documentElement.style.setProperty('--mail-default-font-size', fontSize);
 				this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.addEventListener('load', function(e)
 				{
 					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
@@ -639,7 +622,8 @@ export class MailApp extends EgwApp
 					// calling it from both created two separate Mailvelope display containers side
 					// by side for the same message (found live 2026-09-08, ralf: "It showed 3
 					// versions of the message side by side... twice the message with mailvelope").
-					self.preparePrint();
+					// a key pressed in the body does not reach the popup's own listener
+					self.addPrintShortcut((this as HTMLIFrameElement).contentDocument);
 					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
@@ -3134,6 +3118,7 @@ export class MailApp extends EgwApp
 			this._popupMergedContent = {...data, attachmentsBlock: []};
 		}
 		if (!egwIsMobile() && template) template.set_value({content: partID ? this._popupMergedContent : data, sel_options:sel_options});
+		this.printHeaderData = {rowId, data};
 
 		return data;
 	}
@@ -9075,7 +9060,11 @@ export class MailApp extends EgwApp
 		switch (currentTemp)
 		{
 			case 'mail.index':
-				this.prevPrint(_action, _senders);
+				// the mail of the preview prints right here, another one (eg. from a row's context menu) in a popup
+				if (!this.isPreviewMessage(_senders) || !this.printMessage())
+				{
+					this.prevPrint(_action, _senders);
+				}
 				break;
 			case 'mail.display':
 				this.displayPrint();
@@ -9107,148 +9096,80 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Redirect the native Ctrl/Cmd+P shortcut on mail.index (the main window) to the SAME
-	 * isolated-popup print path the toolbar's own "print" button already uses (print() ->
-	 * prevPrint() -> openMessage(..., 'print') -> a fresh mail.display popup, its own separate
-	 * document/window) instead of letting the browser print this, the main window, in place.
+	 * Are the given rows (of a print action) just the message the preview of mail.index shows?
 	 *
-	 * Found live 2026-10-15 (ralf, following up on the Ctrl+P CSS-leak report): preparePrint()'s
-	 * tmpPrintDiv is a plain copy of the preview iframe's body innerHTML, including any <style>
-	 * tag the sanitized mail body itself may now contain (since "style-sheets embeded in mails
-	 * are no longer removed when displaying or replying"). A <style> element applies
-	 * document-wide wherever it sits in the DOM, not scoped to "where its content came from", so
-	 * copied into a div that is a direct child of THIS window's own document.body it leaked into
-	 * the whole EGroupware UI permanently, not just while printing.
-	 *
-	 * A keydown listener - not the 'beforeprint' event, which fires only once the browser has
-	 * already committed to printing the current document, too late, and is not cancelable - is
-	 * the only point this can actually be intercepted and redirected before the browser acts on
-	 * its own built-in shortcut. mail.display (a disposable popup opened for exactly one message)
-	 * keeps printing in place as before - there is no persistent window for it to leak into.
-	 *
-	 * Bound at most once: et2_ready('mail.index') can re-run for a client-side template reload
-	 * (see this.tree_wdg's own comment in et2_ready()), and document-level listeners would
-	 * otherwise pile up, firing the redirect once per past reload on every single keypress.
+	 * @param _senders rows, none for the preview's own toolbar
 	 */
-	private installPrintKeydownInterception()
+	private isPreviewMessage(_senders?: {id: string}[]): boolean
 	{
-		if (this.printKeydownHandler) return;
+		const rowId = this.et2?.getWidgetById('messageIFRAME')?.iframe?.contentDocument?.documentElement?.dataset.rowId;
+		const ids = (_senders || []).map((sender) => sender?.id).filter(Boolean);
+		return !!rowId && (!ids.length || ids.length === 1 && ids[0] === rowId);
+	}
 
-		this.printKeydownHandler = (e : KeyboardEvent) =>
+
+
+	/**
+	 * Print the displayed message: its body iframe on its own, with a header block added
+	 *
+	 * Nothing of the message gets copied into the page this way, see printBody.ts: a copy restyled
+	 * the whole popup with the message's own CSS and loaded content the body's CSP blocked.
+	 * As its own document, the body also prints completely, unlike an iframe within a printed page.
+	 * A body shown in dark mode is printed with the message's own colors.
+	 *
+	 * @return false if there is no body of our own to print (nothing loaded or no mail selected, or
+	 *  Mailvelope shows the decrypted message in its own iframe, hiding ours - see mailvelopeDisplay()),
+	 *  nothing done
+	 */
+	printMessage(): boolean
+	{
+		const displayIframe = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
+		const iframe: HTMLIFrameElement = displayIframe || this.et2?.getWidgetById('messageIFRAME')?.iframe;
+		const doc = iframe?.contentDocument;
+		const rowId = doc?.documentElement?.dataset.rowId;
+		if (!rowId || !doc.body || iframe.style.display === 'none')
 		{
-			if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key?.toLowerCase() === 'p')
-			{
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				const toolbar = egw_getActionManager('toolbar', false) ?? egw_getActionManager('displayToolbar', false);
-				this.print(toolbar?.getActionById('print') ?? {data: {}}, []);
-			}
-		};
-		document.addEventListener('keydown', this.printKeydownHandler, {capture: true});
+			return false;
+		}
+		// mail.index's preview still shows the last mail, after it got deselected (preview())
+		if (!displayIframe && rowId !== this.currentlyFocussed)
+		{
+			return false;
+		}
+		const data = (this.printHeaderData?.rowId === rowId ? this.printHeaderData.data : null) ??
+			egw.dataGetUIDdata(rowId)?.data ?? this.printHeaderData?.data;
+		const darkmode = doc.documentElement.classList.contains('mailDarkmode');
+		if (darkmode)
+		{
+			doc.documentElement.classList.remove('mailDarkmode');
+			restoreMessageFromDarkMode(doc);
+			// or the message's own "@media (prefers-color-scheme: dark)" rules would still apply
+			iframe.style.colorScheme = 'light';
+		}
+		printBodyWithHeader(iframe, data?.subject ?? '',
+			printHeaderRows(data, (phrase) => this.egw.lang(phrase), formatDateTime),
+			darkmode ? () => this.applyBodyDarkmode(doc) : undefined);
+		return true;
 	}
 
 	/**
-	 * Prepare display dialog for printing
-	 * copies iframe content to a DIV, as iframe causes
-	 * trouble for multipage printing
-	 * @param _iframe mail body iframe, can be ommited to use querySelector
+	 * Print the displayed message (printMessage()) on ctrl+P or cmd+P, see printBody.ts's addPrintShortcut()
+	 *
+	 * @param doc document of the page, or of the body iframe
 	 */
-	preparePrint(_iframe?: HTMLIFrameElement)
+	addPrintShortcut(doc: Document)
 	{
-		// Only ever called from mail.display now (a disposable popup opened for exactly one
-		// message, see its own 'load' listener below) - mail.index's preview pane used to call
-		// this too, printing in place via tmpPrintDiv, until installPrintKeydownInterception()
-		// redirected Ctrl/Cmd+P there to this same popup path instead (2026-10-15, see that
-		// method's own docblock for why: a <style> tag the sanitized mail body may contain leaked
-		// document-wide once copied into the MAIN window's own document.body).
-		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
-		const mainIframe = _iframe || iframeWidget?.iframe;
-		// tmpPrintDiv is attached directly to document.body - NOT as a sibling anywhere inside the
-		// template's own widget tree (mailDisplay vbox -> mailDisplayContainer box -> et2-ai, all
-		// three shadow-DOM hosts the mail body iframe/tempPrintDiv would otherwise be slotted
-		// through). Chrome's print/PDF pipeline has known, long-standing limitations paginating
-		// content projected through nested shadow-DOM <slot>s - found live 2026-09-14 (ralf,
-		// relaying a real user's report): a long newsletter's print preview correctly said "page 1
-		// of 3" but pages 2/3 were blank. Moving the print copy fully outside the shadow-DOM/slot
-		// chain entirely - a single, ordinary light-DOM div, direct child of body - sidesteps the
-		// whole class of bug (confirmed live: this alone was sufficient, no ancestor CSS fix or
-		// extra paint-cycle delay needed once the print copy no longer lives inside any shadow root).
-		let tmpPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
-		let notAttached = false;
-
-		if (!tmpPrintDiv)
+		addPrintShortcut(doc, () =>
 		{
-			tmpPrintDiv = document.createElement('div');
-			tmpPrintDiv.id = 'tempPrintDiv';
-			tmpPrintDiv.classList.add('tmpPrintDiv');
-			// api/templates/default/print.css's own `@media screen { .tmpPrintDiv { display: none }
-			// }` is a light-DOM stylesheet - correctly reaches this element (a direct child of
-			// body, see this method's own docblock above), but kept as an inline style too
-			// (belt-and-suspenders, cheap): displayPrint() clears it right before actually printing
-			// and restores it after via the same inline property.
-			tmpPrintDiv.style.display = 'none';
-			notAttached = true;
-		}
-
-		if (mainIframe && tmpPrintDiv)
-		{
-			const copyContent = () =>
+			// app.mail, not this: the shortcut must not use a destroyed instance, if the app got reloaded
+			const mail = (window as any).app?.mail;
+			if (!mail)
 			{
-				// Reassigned SYNCHRONOUSLY, before the setTimeout/image-wait below even starts -
-				// critically, for the "?print=" auto-triggered case (mail.display's own 'load'
-				// listener below calls self.print() right alongside self.preparePrint(), both off
-				// the SAME iframe 'load' event, in the same synchronous tick): displayPrint()
-				// reads this.printContentReady right after preparePrint() returns, so it must
-				// already be the real (still-pending) promise for THIS copy by then, not get
-				// reassigned to it only later from inside the timeout. Found live 2026-10-15
-				// (ralf, re-testing on boulder): without this, displayPrint() captured whatever
-				// stale promise (typically the already-resolved default) was sitting there before
-				// this copy even began.
-				this.printContentReady = new Promise<void>((resolveReady) =>
-				{
-					// Wait a little longer
-					window.setTimeout(() =>
-					{
-						const body = mainIframe.contentDocument.body;
-						// Inline cid: images are already resolved to real blob: urls in the markup
-						// by the time this iframe's own body exists (MailJmap.resolveInlineCid-
-						// Images() runs before the resolved HTML is ever assigned as its srcdoc) -
-						// but the <img> elements themselves still need their own, separate,
-						// genuinely async decode of that blob data, which this fixed 600ms alone
-						// does not wait for. Found live 2026-10-15 (ralf, re-testing on boulder - a
-						// CheckMK mail with several embedded graphs): images were missing from the
-						// print popup only sometimes, not reliably reproducible, because this was
-						// always a race against however long THIS particular print happened to
-						// take to decode - nothing to do with which trigger (Ctrl+P vs the toolbar
-						// button) opened the popup, since both land here identically once it's
-						// open. A pending <img> is waited out (resolved on its own load OR error -
-						// a broken image must not hang printing forever), capped at 5s so one
-						// truly-stuck image can't block printing everything else indefinitely.
-						const pending = Array.from(body.querySelectorAll('img'))
-							.filter((img : HTMLImageElement) => !img.complete);
-						const whenReady = pending.length === 0 ? Promise.resolve() : Promise.race([
-							Promise.all(pending.map((img : HTMLImageElement) => new Promise<void>((resolve) =>
-							{
-								img.addEventListener('load', () => resolve(), {once : true});
-								img.addEventListener('error', () => resolve(), {once : true});
-							}))),
-							new Promise<void>((resolve) => window.setTimeout(resolve, 5000)),
-						]);
-						whenReady.then(() => { tmpPrintDiv.innerHTML = body.innerHTML; resolveReady(); });
-					}, 600);
-				});
+				return false;
 			}
-			copyContent();
-			// Wait if iframe fires load, then copy again
-			mainIframe.contentDocument.body.addEventListener("load", copyContent);
-		}
-
-		// Attach the element to the DOM after maniupulation
-		if (notAttached)
-		{
-			document.body.appendChild(tmpPrintDiv);
-		}
-		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
+			// false without a mail shown: leaves ctrl/cmd+P to the framework, printing the list
+			return mail.printMessage();
+		});
 	}
 
 	/**
@@ -9258,35 +9179,19 @@ export class MailApp extends EgwApp
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
-		// Wait for preparePrint()'s own async tmpPrintDiv copy (which itself waits out any
-		// still-decoding inline images, see its own docblock) before the rest of this - otherwise
-		// this method's own flat, independent 1000ms timer below could win the race and print
-		// whatever tmpPrintDiv happened to hold at that moment instead.
-		this.printContentReady.then(() =>
-		{
-			// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
-			setTimeout(() =>{
-				// preparePrint()'s own inline `display: none` needs an explicit inline override here
-				// too (belt-and-suspenders alongside print.css's own `@media print` rule), restored
-				// afterward via onafterprint (Firefox/IE) or a short timeout (Chrome has no such
-				// event, same fallback printForCompose() already uses), so a cancelled print dialog
-				// doesn't leave the copy visible on screen. Looked up the SAME way preparePrint()
-				// itself anchors it now - a direct child of document.body, entirely outside the
-				// template's own shadow-DOM/slot chain (see that method's own docblock for why).
-				const tmpPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
-				if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
-				const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
-				if ('onafterprint' in window)
+		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
+		setTimeout(() =>{
+			const doc = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.contentDocument;
+			// eg. inline images still decoding, which would be missing from the printout
+			(doc ? imagesLoaded(doc) : Promise.resolve()).then(() =>
+			{
+				// no body of our own to print, as Mailvelope shows the message: print the popup (prepareMailvelopePrint())
+				if (!this.printMessage())
 				{
-					window.addEventListener('afterprint', hideAgain, {once: true});
+					egw(window).window.print();
 				}
-				else
-				{
-					setTimeout(hideAgain, 2000);
-				}
-				egw(window).window.print();
-			},1000);
-		});
+			});
+		},1000);
 	}
 
 	/**
@@ -9367,10 +9272,10 @@ export class MailApp extends EgwApp
 	 */
 	prepareMailvelopePrint()
 	{
-		const tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
+		// mail.display only: the whole popup gets printed for Mailvelope (displayPrint())
 		const originFrame = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
 
-		if (tempPrint)
+		if (originFrame)
 		{
 			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
 			// we add an arbitary plus pixels to make sure it's covering the full content in print view and
@@ -9382,7 +9287,6 @@ export class MailApp extends EgwApp
 				el.classList.add('mailvelopeIframe');
 				el.style.height = height + 'px';
 			});
-			tempPrint.style.display = 'none';
 			document.querySelectorAll('div.mailDisplayContainer').forEach(el => el.classList.add('mailvelopeTopContainer'));
 		}
 	}

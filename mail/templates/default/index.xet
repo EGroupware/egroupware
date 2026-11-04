@@ -44,7 +44,7 @@
                              message from THIS preview pane (not the mail.display popup) showed no header
                              info at all - the avatar-containing interactive block below doesn't print
                              correctly (same class of shadow-DOM-vs-print issue as the message body itself,
-                             see MailApp.preparePrint()'s own docblock), which is exactly why mail.display
+                             which is printed as its own document, see MailApp.printMessage()), which is exactly why mail.display
                              already has this same print-only duplicate instead of relying on the interactive
                              block printing as-is. Found live 2026-10-12 (ralf, following up on Stefan
                              Unverricht's ctrl+P report). -->

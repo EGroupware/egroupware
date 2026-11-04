@@ -222,3 +222,46 @@ img[alt*="[blocked external image:"] {
     color: var(--sl-color-primary-800);
   }
 }
+/* Header of a printed message, only added for printing (MailApp.printMessage()),
+   in the user's default font of .mailDefaultFont */
+.mailPrintHeader {
+  display: none;
+}
+/* The body document gets printed on its own (MailApp.printMessage()) */
+@media print {
+  /* not scrolling in its on-screen height, which printed only the first screenful */
+  body,
+  html,
+  .mailDisplayBody {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  /* Word's HTML puts its content on a named page (@page WordSection1, div.WordSection1 { page: WordSection1 }),
+     forcing a page break before it, which leaves the header alone on the first page */
+  * {
+    page: auto !important;
+  }
+  .mailPrintHeader {
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 0.1em solid #d7d7d7;
+    color: black;
+  }
+  .mailPrintHeader table {
+    border-collapse: collapse;
+  }
+  .mailPrintHeader td {
+    padding: 1px 8px 1px 0;
+    vertical-align: top;
+    font: inherit;
+  }
+  .mailPrintHeader td:first-child {
+    white-space: nowrap;
+  }
+  .mailPrintHeader_subject {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 4px;
+  }
+}

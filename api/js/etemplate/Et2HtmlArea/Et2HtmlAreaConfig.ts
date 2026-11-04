@@ -214,14 +214,24 @@ body {
  */
 export function defaultFontCssRule(className : string = "mailDefaultFont", preference : PreferenceGetter = egw.preference.bind(egw)) : string
 {
-	const styles = paragraphStyles(preference);
-	// no quotes allowed: an unbalanced one in the raw preference value would otherwise swallow the
-	// rest of the CSS text - an unquoted multi-word name (eg. "Segoe UI") is still valid CSS
-	const fontFamily = String(styles["font-family"] || "").replace(/[^a-zA-Z0-9 ,._-]/g, "") || "arial, helvetica, sans-serif";
-	const fontSize = String(styles["font-size"] || "").replace(/[^0-9a-zA-Z%.]/g, "") || "10pt";
+	const {fontFamily, fontSize} = defaultFont(preference);
 	const safeClass = className.replace(/[^a-zA-Z0-9_-]/g, "");
 
 	return `.${safeClass},.${safeClass} pre{font-family:${fontFamily};font-size:${fontSize};}`;
+}
+
+/**
+ * The user's default font (rte_font/rte_font_size/rte_font_unit preferences), safe to use as CSS values
+ */
+export function defaultFont(preference: PreferenceGetter = egw.preference.bind(egw)): {fontFamily: string, fontSize: string}
+{
+	const styles = paragraphStyles(preference);
+	// no quotes allowed: an unbalanced one in the raw preference value would otherwise swallow the
+	// rest of the CSS text - an unquoted multi-word name (eg. "Segoe UI") is still valid CSS
+	return {
+		fontFamily: String(styles["font-family"] || "").replace(/[^a-zA-Z0-9 ,._-]/g, "") || "arial, helvetica, sans-serif",
+		fontSize: String(styles["font-size"] || "").replace(/[^0-9a-zA-Z%.]/g, "") || "10pt",
+	};
 }
 
 export function htmlAreaFormats(preference : PreferenceGetter = egw.preference.bind(egw)) : NonNullable<TinyMceConfig["formats"]>
