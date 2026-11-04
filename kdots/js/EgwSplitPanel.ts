@@ -8,9 +8,13 @@ export class EgwSplitPanel extends SlSplitPanel
 	static styles = [
 		SlSplitPanel.styles,
 		css`
+			/* SlSplitPanel's overflow: hidden does nothing on these display: contents slots, but
+			   @lit-labs/virtualizer counts every non-visible overflow ancestor as clipping: a grid
+			   in a panel, whose virtualizer (re)connects after the first render (eg. after printing),
+			   intersects with the slot's empty box and renders no rows at all */
 			slot.start,
 			slot.end {
-				overflow: var(--egw-split-panel-slot-overflow, hidden);
+				overflow: visible;
 			}
 		`
 	];

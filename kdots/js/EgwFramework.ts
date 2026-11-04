@@ -59,10 +59,6 @@ export class EgwFramework extends LitElement
 
 			// TEMP STUFF
 			css`
-				:host(.print) {
-					--egw-split-panel-slot-overflow: visible;
-				}
-
 				:host .placeholder {
 					display: none;
 				}
