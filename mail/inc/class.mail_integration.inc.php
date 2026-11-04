@@ -393,7 +393,10 @@ class mail_integration
 					'name' => $name,
 					'type'     => $mailcontent['attachments'][$key]['type'],
 					'size'     => $mailcontent['attachments'][$key]['size'],
-					'tmp_name' => $mailcontent['attachments'][$key]['tmp_name']
+					'tmp_name' => $mailcontent['attachments'][$key]['tmp_name'],
+					// kept so consumers (eg. tracker_bo::prepare_import_mail()) can resolve a
+					// plain-text "[cid:...]" placeholder back to this attachment's name
+					'cid'      => $attachment['cid'] ?? null,
 				);
 				if ($uid && !$mailcontent['attachments'][$key]['add_raw'])
 				{
@@ -446,21 +449,42 @@ class mail_integration
 		);
 	}
 
-	public static function fix_inline_images($app, $id, array $links, &$html)
+	/**
+	 * Resolve our own self::INLINE_PREFIX placeholders (left behind by integrate() for inline
+	 * images not yet attached to an app entry) against that entry's final WebDAV location.
+	 *
+	 * Self-sufficient by design: the placeholder already carries both pieces this needs
+	 * (egw_data hash in the "src", attachment name in an accompanying title="[name]"), so unlike
+	 * the old version this does not need the caller's "link_to" array - which for a reply/comment
+	 * added to an *existing* entry is never an array (Api\Link::link() attaches those immediately
+	 * instead of staging them), silently skipping the old implementation. Working off the
+	 * placeholder text itself fixes that and keeps working for brand-new entries.
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 * @param string &$html
+	 * @param string $path_prefix ='' subdirectory of the entry the attachment was filed under,
+	 *	eg. "comments/$reply_id/" for a reply/comment, '' for the entry's own description
+	 * @return bool true if $html was changed
+	 */
+	public static function fix_inline_images($app, $id, &$html, $path_prefix='')
 	{
-		$replace = array();
-		foreach($links as $link)
+		if (empty($html) || strpos($html, self::INLINE_PREFIX) === false)
 		{
-			if (is_array($link) && is_array($link['id']) && !empty($link['id']['egw_data']) && strpos($html, self::INLINE_PREFIX . $link['id']['egw_data']) !== false)
+			return false;
+		}
+		$new_html = preg_replace_callback(
+			'/'.preg_quote(self::INLINE_PREFIX, '/').'[0-9a-f]+" title="\[([^\]]*)\]/',
+			static function($matches) use ($app, $id, $path_prefix)
 			{
-				$replace[self::INLINE_PREFIX. $link['id']['egw_data']] =
-					Api\Egw::link(Api\Vfs::download_url(Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['name']))));
-			}
-		}
-		if ($replace)
-		{
-			$html = strtr($old = $html, $replace);
-		}
-		return isset($old) && $old != $html;
+				return Api\Egw::link(Api\Vfs::download_url(
+					Api\Link::vfs_path($app, $id, $path_prefix.Api\Vfs::basename($matches[1]))
+				));
+			},
+			$html
+		);
+		$changed = $new_html !== $html;
+		$html = $new_html;
+		return $changed;
 	}
 }
