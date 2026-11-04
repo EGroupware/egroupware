@@ -593,6 +593,15 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			console.log(e);
 		}
 
+		// A dialog showing a server-side etemplate without a callback (eg. calendar quick add) is submitted
+		// by the button itself, and the response decides what happens: it either closes the dialog
+		// (window-close) or replaces its content (eg. calendar conflicts).  Hiding it here would throw
+		// away that response.  Buttons that do not submit have nothing to wait for.
+		if(!this.callback && !(<Et2Button>ev.target)?.noSubmit && ev.target?.getInstanceManager?.()?._etemplate_exec_id)
+		{
+			return;
+		}
+
 		// Callback expects (button_id, value)
 		try
 		{
