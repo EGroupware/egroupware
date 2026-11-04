@@ -58,6 +58,8 @@ const LETTERSEARCH_SELECTION_ID = "~search_letter~";
 
 type Et2NextmatchPrintState = {
 	columns : Et2DatagridColumn[];
+	/** Custom field visibility of each customfields header before printing, which setColumns() does not restore */
+	customfields : Array<[any, Record<string, boolean>]>;
 	orientationStyle : HTMLStyleElement;
 };
 
@@ -1583,12 +1585,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		const total = Math.max(0, grid.total ?? grid.rows.length);
 		const app = this._getAppName();
 		const printDefaults = this._resolvePrintPreferenceDefaults(app);
+		// The chooser lists each custom field under its column, so those ids are valid defaults too
+		const offeredIds = new Set(columns.flatMap((column) => [column.id, ...(column.customFields || []).map((field) => field.id)]));
 		const mappedDefaultIds = (printDefaults.columns || [])
 			.map((key) => columnState.encodeSelectionId(key))
-			.filter((id) => columns.some((column) => column.id === id));
+			.filter((id) => offeredIds.has(id));
 		const defaultColumnIds = mappedDefaultIds.length
 			? mappedDefaultIds
-			: columns.filter((column) => column.visibility).map((column) => column.id);
+			: columns.flatMap((column) => [
+				...(column.visibility ? [column.id] : []),
+				...(column.customFields || []).filter((field) => field.visibility).map((field) => field.id)
+			]);
 
 		let selectedColumns : string[];
 		let requestedRows : number;
@@ -1648,11 +1655,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			}
 		}
 		const originalColumns = this._currentColumns.map((column) => ({...column}));
+		// The copies above share their header with the live column, and choosing custom fields changes it
+		const customfields : Array<[any, Record<string, boolean>]> = originalColumns
+			.map((column) => <any>column.header)
+			.filter((header) => typeof header?.getCustomfieldVisibility === "function")
+			.map((header) => [header, {...header.getCustomfieldVisibility()}]);
 
 		try
 		{
 			let printColumns = selectedColumns.length
-				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns)
+				// Custom fields not chosen are not printed, even those the grid shows right now
+				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns, this._parseColumnBooleanExpression, true)
 				: originalColumns.filter((column) => !column.hidden);
 			this.setColumns(printColumns);
 			this.classList.add("print", orientation);
@@ -1660,7 +1673,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			orientationStyle.media = "print";
 			orientationStyle.textContent = `@page { size: ${orientation}; }`;
 			document.head.append(orientationStyle);
-			this._printState = {columns: originalColumns, orientationStyle};
+			this._printState = {columns: originalColumns, customfields, orientationStyle};
 
 			let rowIds = grid.rows.map((row) => row.id);
 			if(requestedRows > rowIds.length)
@@ -1701,6 +1714,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		state.orientationStyle.remove();
 		this._printState = null;
 		this.setColumns(state.columns);
+		state.customfields.forEach(([header, visibility]) => header.setCustomfieldVisibility(visibility));
 	}
 
 	selectSingleRow(rowId : string)

@@ -229,11 +229,16 @@ export class Et2DatagridColumnState
 	 * would overwrite the user's own show/hide choice with `hidden: true` and persist it,
 	 * turning a condition that is meant to override the preference while it holds into a
 	 * permanent change to it.
+	 * @param exactCustomfields A customfields column that is selected without any of its fields
+	 * shows none of them.  By default it keeps the fields it shows now, which is what the column
+	 * chooser wants, as it lists the fields as they are.  Print passes true, its choice is the
+	 * whole of what is printed.
 	 */
 	applySelectionOrder(
 		columns : Et2DatagridColumn[],
 		selectedKeysInOrder : string[],
-		parseExpression? : (expression : string) => boolean
+		parseExpression? : (expression : string) => boolean,
+		exactCustomfields : boolean = false
 	) : Et2DatagridColumn[]
 	{
 		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
@@ -330,7 +335,7 @@ export class Et2DatagridColumnState
 				continue;
 			}
 			const selectedForColumn = selectedCustomfields.get(key);
-			if(!selectedForColumn && selectedKeys.has(key))
+			if(!exactCustomfields && !selectedForColumn && selectedKeys.has(key))
 			{
 				continue;
 			}
