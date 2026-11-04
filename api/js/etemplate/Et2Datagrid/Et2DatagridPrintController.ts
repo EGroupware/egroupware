@@ -9,16 +9,18 @@ export interface Et2DatagridPrintHost extends HTMLElement
 	updateComplete : Promise<boolean>;
 	_syncRowsMinHeight() : void;
 	_scheduleVirtualizerLayoutSync() : void;
-	_sparseVirtualizerLayoutActive : boolean;
 	_waitForRowUpgradesToFinish(maxWaitMs? : number) : Promise<void>;
+	_body : HTMLElement | null;
 }
 
 /**
  * Renders already-fetched rows in full (unvirtualized) for print output, and
  * restores normal virtualized rendering afterwards.
  *
- * Kept separate from the host's normal row storage (`_rowsByIndex`) so paging
- * and virtualization are untouched by a print job.
+ * The print rows go into their own `#print-rows` container beside the virtualized `#rows`,
+ * which keeps its virtualizer (the host feeds it no items meanwhile) and is hidden by the
+ * `print` class.  Kept separate from the host's normal row storage (`_rowsByIndex`) so
+ * paging and virtualization are untouched by a print job.
  */
 export class Et2DatagridPrintController
 {
@@ -28,8 +30,8 @@ export class Et2DatagridPrintController
 	private _rows : Et2DatagridRow[] | null = null;
 	/** Fixed-row-height state to restore after print rows return to virtualization. */
 	private _fixedRowHeight : boolean | null = null;
-	/** The rows container blockVirtualizer() listens on, for clearPrintRows() */
-	private _blockedContainer : HTMLElement | null = null;
+	/** Scroll position of the grid body before printing, to put back afterwards */
+	private _scrollTop : number | null = null;
 
 	constructor(host : Et2DatagridPrintHost)
 	{
@@ -42,6 +44,18 @@ export class Et2DatagridPrintController
 	}
 
 	/**
+	 * Note where the body is scrolled to, to put it back after printing.
+	 *
+	 * Printing lays the body out unscrolled, which resets its scroll position.  An owner that
+	 * styles itself for print before it calls setPrintRows() (Et2Nextmatch) should call this
+	 * first, as the position is lost by then.
+	 */
+	rememberScrollPosition() : void
+	{
+		this._scrollTop = this.host._body?.scrollTop ?? null;
+	}
+
+	/**
 	 * Render already-fetched rows without virtualization for print output.
 	 * The caller owns fetching and must call clearPrintRows() after printing.
 	 */
@@ -51,19 +65,22 @@ export class Et2DatagridPrintController
 		{
 			this._fixedRowHeight = this.host.fixedRowHeight;
 		}
+		if(this._scrollTop === null)
+		{
+			this.rememberScrollPosition();
+		}
 		this.host.fixedRowHeight = false;
 		this._rows = (rowIds || []).map((rowId) => ({
 			id: this.host.dataProvider?.normalizeRowId?.(rowId, true) || String(rowId)
 		}));
 		this.host.classList.add("print");
-		this._blockVirtualizer();
 		this.host.requestUpdate();
 		await this.host.updateComplete;
 		this.host._syncRowsMinHeight();
 		for(let frame = 0; frame < 3; frame++)
 		{
 			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-			if((this.host.shadowRoot?.querySelectorAll("#rows > tr[data-row-id]").length || 0) >= rowIds.length) break;
+			if((this.host.shadowRoot?.querySelectorAll("#print-rows > tr[data-row-id]").length || 0) >= rowIds.length) break;
 		}
 		const updates = Array.from(this.host.shadowRoot?.querySelectorAll("*") || [])
 			.map((element : any) => element.updateComplete)
@@ -77,34 +94,6 @@ export class Et2DatagridPrintController
 		await this._waitForPrintImages();
 		await this._waitForPrintRowsToSettle();
 		this.syncPrintFlowHeight();
-	}
-
-	/**
-	 * Keep the virtualizer from rendering over the print rows
-	 *
-	 * Switching to print rows replaces the virtualize() directive in the rows container, which
-	 * disconnects its virtualizer - but a layout message already on its way (eg. right after a
-	 * load, when printing does not wait for a dialog first) still reaches the virtualizer's
-	 * _updateDOM(), which does not check for being connected.  It announces the range with a
-	 * `rangeChanged` event on the rows container, and the directive's listener renders the
-	 * virtualized range into the container, removing the print rows.  Swallow that event while
-	 * the print rows are there: a capture listener on the container runs before the directive's.
-	 */
-	private _blockVirtualizer() : void
-	{
-		const container = this.host.shadowRoot?.getElementById("rows") ?? null;
-		if(container === this._blockedContainer)
-		{
-			return;
-		}
-		this._blockedContainer?.removeEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
-		container?.addEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
-		this._blockedContainer = container;
-	}
-
-	private static _stopRangeChanged(event : Event) : void
-	{
-		event.stopImmediatePropagation();
 	}
 
 	/**
@@ -127,7 +116,7 @@ export class Et2DatagridPrintController
 	 */
 	private async _waitForPrintImages(maxWaitMs? : number) : Promise<void>
 	{
-		const root = this.host.shadowRoot?.querySelector(".dg-body #rows");
+		const root = this.host.shadowRoot?.querySelector(".dg-body #print-rows");
 		if(!root)
 		{
 			return;
@@ -192,7 +181,7 @@ export class Et2DatagridPrintController
 	 */
 	private async _waitForPrintRowsToSettle(maxWaitMs = 5000, requiredStableChecks = 3, intervalMs = 150) : Promise<void>
 	{
-		const tbody = this.host.shadowRoot?.querySelector<HTMLElement>(".dg-body #rows");
+		const tbody = this.host.shadowRoot?.querySelector<HTMLElement>(".dg-body #print-rows");
 		if(!tbody)
 		{
 			return;
@@ -227,7 +216,7 @@ export class Et2DatagridPrintController
 		{
 			return;
 		}
-		const tbody = this.host.shadowRoot?.querySelector<HTMLTableSectionElement>(".dg-body #rows");
+		const tbody = this.host.shadowRoot?.querySelector<HTMLTableSectionElement>(".dg-body #print-rows");
 		if(!tbody)
 		{
 			return;
@@ -250,31 +239,51 @@ export class Et2DatagridPrintController
 		tbody.style.height = `${height}px`;
 	}
 
+	/**
+	 * Put the body back where it was scrolled to, once the virtualizer has laid out again.
+	 *
+	 * Only while it is still at the top: the user has scrolled somewhere of their own otherwise.
+	 * A scroll event is no sign of that, the layout changes around printing send some of their own.
+	 */
+	private _restoreScrollPosition(scrollTop : number | null) : void
+	{
+		if(scrollTop === null)
+		{
+			return;
+		}
+		requestAnimationFrame(() => requestAnimationFrame(() =>
+		{
+			const body = this.host._body;
+			if(body && body.scrollTop <= 1 && Math.abs(body.scrollTop - scrollTop) > 1)
+			{
+				body.scrollTop = scrollTop;
+			}
+		}));
+	}
+
 	/** Restore normal virtualized row rendering after printing. */
 	clearPrintRows() : void
 	{
 		if(!this._rows)
 		{
+			// Printing was cancelled before there were print rows
+			this._scrollTop = null;
 			return;
 		}
 		this._rows = null;
-		this._blockedContainer?.removeEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
-		this._blockedContainer = null;
 		this.host.fixedRowHeight = this._fixedRowHeight ?? this.host.fixedRowHeight;
 		this._fixedRowHeight = null;
-		const printContainers = this.host.shadowRoot?.querySelectorAll<HTMLElement>(".dg-body, .dg-body table, .dg-body #rows");
+		const printContainers = this.host.shadowRoot?.querySelectorAll<HTMLElement>(".dg-body, .dg-body table");
 		for(const element of Array.from(printContainers || []))
 		{
 			element.style.height = "";
 		}
 
 		this.host.classList.remove("print");
-		// The virtualize() directive is being re-attached to the tbody fresh (it wasn't
-		// present while _rows rendered statically), so this is the same "new
-		// virtualizer, host has no bounds yet" bootstrap case firstUpdated()/
-		// refreshRowHeightFromCss() guard against - reuse that instead of sizing the
-		// virtualizer immediately, which risks the zero-viewport feedback loop.
-		this.host._sparseVirtualizerLayoutActive = false;
+		const scrollTop = this._scrollTop;
+		this._scrollTop = null;
+		// The virtualizer was kept, and gets its items back with this update: have it
+		// measure the restored layout once instead of waiting for a resize
 		this.host.requestUpdate();
 		void this.host.updateComplete.then(() =>
 		{
@@ -282,6 +291,7 @@ export class Et2DatagridPrintController
 			{
 				this.host._syncRowsMinHeight();
 				this.host._scheduleVirtualizerLayoutSync();
+				this._restoreScrollPosition(scrollTop);
 			}
 		});
 	}

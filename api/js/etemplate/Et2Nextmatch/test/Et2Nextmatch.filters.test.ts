@@ -1921,6 +1921,18 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 			assert.sameMembers(shownColumns(), ["name"], "columns were not restored after printing");
 		});
 
+		it("remembers the scroll position before it changes the layout for printing", async() =>
+		{
+			const grid = <any>(<any>el)._datagrid;
+			const remember = sinon.spy(grid, "rememberScrollForPrint");
+			const setColumns = sinon.spy(el, "setColumns");
+			el.printOptions = {columns: "all", rowCount: 100};
+			await el.beforePrint();
+
+			assert.isTrue(remember.calledOnce, "the grid was not told to remember its scroll position");
+			assert.isTrue(remember.calledBefore(setColumns), "the scroll position was remembered after the layout was already changed");
+		});
+
 		it("prints the given columns in portrait by default", async() =>
 		{
 			el.printOptions = {columns: ["email"]};

@@ -1576,6 +1576,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		{
 			return;
 		}
+		grid.rememberScrollForPrint();
 
 		const columnState = new Et2DatagridColumnState();
 		const columns = columnState.toSelectionItems(this._currentColumns, this._parseColumnBooleanExpression);

@@ -307,9 +307,11 @@ export class Et2DatagridRowRenderer
 	 */
 	upgradeRenderedRows()
 	{
+		// While printing the rows are in their own container, the virtualized one is empty
+		const rowsBody = this.host._printRowsBody ?? this.host._rowsBody;
 		const rowElements = this.host._isTileView()
-		                    ? this.host._renderedDataRowElements(this.host._rowsBody)
-		                    : Array.from(this.host._rowsBody?.querySelectorAll("[data-row-id]:not(.dg-row-placeholder)") || []) as HTMLElement[];
+		                    ? this.host._renderedDataRowElements(rowsBody)
+		                    : Array.from(rowsBody?.querySelectorAll("[data-row-id]:not(.dg-row-placeholder)") || []) as HTMLElement[];
 		for(const rowElement of rowElements)
 		{
 			// Skip already-upgraded instances for the same row identity.
