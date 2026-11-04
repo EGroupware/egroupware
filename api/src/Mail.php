@@ -3833,6 +3833,51 @@ class Mail
 	}
 
 	/**
+	 * Create missing standard/special-use folders for a (shared/multi-user) mail account
+	 *
+	 * ticket #127441: new EGroupware users on a shared/multi-user mail account used to get their
+	 * standard folders (Sent/Drafts/Templates/Trash/Junk) auto-created on first use - lost at some
+	 * point. This is the restored, re-added entry point - meant to be called exactly ONCE, right
+	 * when a new user is added to such an account (Api\Mail\Hooks::addaccount() -> Account::
+	 * is_multiple() already filters to exactly that case, skipping personal accounts), NOT on every
+	 * login/request - see check_create_autofolders()'s own cheap count()-based self-throttling for
+	 * why the hot-path case doesn't need this. Deliberately bypasses _getSpecialUseFolder()'s
+	 * JMAP-FALLTHROUGH-GUARD (see that method's own docblock) - the underlying existence-check/
+	 * create calls are actually JMAP-safe, the guard just isn't worth paying on every hot-path call.
+	 *
+	 * Unlike check_create_autofolders(), also covers 'Archive' - NOT auto-created with a guessed
+	 * name when unconfigured (same as _getSpecialUseFolder()'s own 'Archive' branch, which only
+	 * ever verifies/reports an explicitly configured acc_folder_archive) - an empty/unset Archive
+	 * folder is silently skipped here, not an error.
+	 *
+	 * Never throws - a broken mail-server connection must not stall/abort the account-creation (or
+	 * LDAP/UCS sync) transaction this gets called from; Hooks::run_plugin_hooks() already wraps its
+	 * own callers in a try/catch too, this is a second layer so calling this directly is safe too.
+	 *
+	 * @return int number of newly created folders (0 on any failure)
+	 */
+	function createMissingAutoFolders() : int
+	{
+		$num_created = 0;
+		foreach (array_merge(self::$autoFolders, ['Archive']) as $type)
+		{
+			try
+			{
+				$created = false;
+				if ($this->_getSpecialUseFolder($type, true, $created, true) && $created && $type != 'Outbox')
+				{
+					$num_created++;
+				}
+			}
+			catch (\Throwable $e)
+			{
+				error_log(__METHOD__." failed to create '$type' folder for profile {$this->profileID}: ".$e->getMessage());
+			}
+		}
+		return $num_created;
+	}
+
+	/**
 	 * getMailBoxCounters
 	 *
 	 * function to retrieve the counters for a given folder
@@ -3932,9 +3977,15 @@ class Mail
 	 * @param string $_type the type to fetch (Drafts|Template|Trash|Sent)
 	 * @param boolean $_checkexistance trigger check for existance
 	 * @param boolean& $created =null on return true: if folder was just created, false if not
+	 * @param boolean $_bypassJmapGuard =false true: skip the JMAP-FALLTHROUGH-GUARD below and run
+	 *  the real existence-check/auto-create logic for a JMAP/Stalwart account too - safe to do
+	 *  (folderExists()->mailboxExist()->openMailbox() and createFolder()->createMailbox()/
+	 *  subscribeMailbox() are all already JMAP-native overrides on Mail\Imap\Jmap), the guard only
+	 *  exists to skip a now-pointless existence re-check on every hot-path call (ticket #127441's
+	 *  createMissingAutoFolders() is the one caller meant to pass true, exactly once per new user)
 	 * @return mixed string or false
 	 */
-	function _getSpecialUseFolder($_type, $_checkexistance=TRUE, &$created=null)
+	function _getSpecialUseFolder($_type, $_checkexistance=TRUE, &$created=null, $_bypassJmapGuard=false)
 	{
 		static $types = array(
 			'Drafts'   => array('profileKey'=>'acc_folder_draft','autoFolderName'=>'Drafts'),
@@ -3966,18 +4017,20 @@ class Mail
 			$_folderName = false;
 		}
 		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
-		// the existence-check/auto-create logic below calls folderExists()/createFolder(), which
-		// (like openConnection() above) fall through to Horde_Imap_Client_Socket methods neither
-		// Imap\Jmap nor Imap\Stalwart override - for a JMAP account these attempt a REAL raw IMAP
-		// login against acc_imap_host:acc_imap_port, which for Stalwart is configured as the
-		// JMAP(S) endpoint (eg. :443), not the IMAP one (eg. :993) - Stalwart\login() unconditionally
-		// tries a real IMAP XOAUTH2 login there (it's designed for accounts where acc_imap_port
-		// genuinely is the IMAP port, which a pure-JMAP wizard-created account's isn't), hanging or
-		// getting back a "400 Bad Request" from nginx (found live 2026-08-24 via a debug_backtrace()
-		// temporarily patched into Horde_Imap_Client_Socket_Connection_Base::_connect()). Special-use
-		// folders are already resolved JMAP-natively at wizard time (admin_mail::jmapMailboxes()),
-		// so the configured name can just be trusted here instead.
-		if ($this->icServer instanceof Mail\Imap\Jmap)
+		// skips the existence-check/auto-create logic below for a JMAP/Stalwart account on every
+		// hot-path call (compose/send/delete/...) - NOT because it's actually unsafe any more
+		// (folderExists()->mailboxExist()->openMailbox() and createFolder()->createMailbox()/
+		// subscribeMailbox() are all already JMAP-native overrides on Mail\Imap\Jmap, confirmed
+		// 2026-11-04 while fixing ticket #127441 - this guard predates those overrides, back when
+		// they really did fall through to a real raw IMAP login against acc_imap_host:acc_imap_port,
+		// which for Stalwart is the JMAP(S) endpoint, eg. :443, not the IMAP one, eg. :993, hanging
+		// or getting back a "400 Bad Request" from nginx), but because re-verifying on every single
+		// call is pointless once the folder is known-good: special-use folders are already resolved
+		// JMAP-natively at wizard time (admin_mail::jmapMailboxes()), so the configured name can
+		// just be trusted on the hot path. $_bypassJmapGuard=true (createMissingAutoFolders(), run
+		// ONCE per new user via the addaccount hook, not on every login) deliberately runs the real
+		// check+create instead, to actually restore missing folders when they're not there yet.
+		if ($this->icServer instanceof Mail\Imap\Jmap && !$_bypassJmapGuard)
 		{
 			return $_folderName ?: false;
 		}

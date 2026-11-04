@@ -108,7 +108,23 @@ class Dovecot extends Mail\Imap
 	 */
 	function addAccount($_hookValues)
 	{
-		return $this->updateAccount($_hookValues);
+		$ret = $this->updateAccount($_hookValues);
+		// ticket #127441: new users on a shared/multi-user mail account used to get their standard
+		// folders (Sent/Drafts/Templates/Trash/Junk) auto-created on first use - re-added here
+		// specifically (not in updateAccount(), which ALSO runs on every *edit* of an existing user -
+		// that would re-check folder existence on every LDAP/UCS sync edit, the exact "constant
+		// checking" cost this must avoid) - this only runs once, exactly when the user is newly added.
+		try
+		{
+			$profileID = $this->ImapServerId;
+			Mail::getInstance(false, $profileID, false, $this)->createMissingAutoFolders();
+		}
+		catch (\Throwable $e)
+		{
+			// never stall/abort account creation over a broken mail-server connection
+			error_log(__METHOD__.' failed to auto-create standard folders: '.$e->getMessage());
+		}
+		return $ret;
 	}
 
 	/**
