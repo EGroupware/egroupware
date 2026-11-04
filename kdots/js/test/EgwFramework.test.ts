@@ -404,7 +404,6 @@ describe('EgwFramework', () =>
 						alert.hide = sinon.stub();
 						alert.restartAutoHide = sinon.stub();
 						alert.toast = sinon.stub();
-						alert.alert = alert;	// the inner sl-alert, whose connection decides if the alert is still showing
 						created.push(alert);
 						return alert;
 					},
