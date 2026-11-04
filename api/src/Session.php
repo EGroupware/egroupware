@@ -665,7 +665,7 @@ class Session
 			$this->kp3       = Auth::randomstring(24);
 
 			$GLOBALS['egw_info']['user'] = $this->read_repositories();
-			if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
+			if (!$GLOBALS['egw']->accounts->is_active($GLOBALS['egw_info']['user']))
 			{
 				$this->reason = 'account is expired';
 				$this->cd_reason = self::CD_ACCOUNT_EXPIRED;
@@ -1515,9 +1515,9 @@ class Session
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
 
-		if ($GLOBALS['egw']->accounts->is_expired($GLOBALS['egw_info']['user']))
+		if (!$GLOBALS['egw']->accounts->is_active($GLOBALS['egw_info']['user']))
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) accounts is expired");
+			if (self::ERROR_LOG_DEBUG) error_log("*** Session::verify($sessionid) account is expired or disabled");
 			return false;
 		}
 		$this->password_encrypted = $session['session_password'];
@@ -1645,6 +1645,92 @@ class Session
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Destroy all other sessions of a given account
+	 *
+	 * Used after a password change, so a previously issued session can not keep
+	 * using the now invalid credentials.
+	 *
+	 * @param int $account_id
+	 * @param boolean $exclude_current =true keep the current request's own session alive, if it belongs to $account_id
+	 * @return int number of destroyed sessions
+	 */
+	function destroy_all($account_id, $exclude_current=true)
+	{
+		$destroyed = 0;
+		// session_list() already restricts to currently active (not logged-out, not timed-out) sessions
+		foreach(self::session_list(0, 'DESC', 'session_dla', true, array('account_id' => $account_id)) as $sessionid => $data)
+		{
+			if ($exclude_current && $sessionid == $this->sessionid_access_log)
+			{
+				continue;
+			}
+			$this->destroy($sessionid);
+			++$destroyed;
+		}
+		return $destroyed;
+	}
+
+	/**
+	 * Try to recover the (decrypted) password stored in an existing session of a given account
+	 *
+	 * Used ONLY to let Auth::change_password()/Accounts::save() invalidate the correct
+	 * Auth::authenticate() cache entry for the OLD password, when the caller does not know it
+	 * themselves (eg. an admin resetting a users password). If
+	 * there is no active session, there is nothing meaningful to invalidate either, so null is
+	 * a fine "nothing to do" result, not an error.
+	 *
+	 * The returned password must NEVER be passed on as if it were a user-supplied old password
+	 * (eg. to Auth::changepwd()'s "changepassword" hook) - Mail\Hooks::changepassword() relies on
+	 * an empty old_passwd to skip syncing stored IMAP/SMTP credentials to the new password on an
+	 * admin-initiated reset, which must keep working as a safeguard: an admin resetting a users
+	 * login password must not thereby also gain that users mail credentials.
+	 *
+	 * @param int $account_id
+	 * @return ?string decrypted password, or null if no active session exists / could be read
+	 */
+	static function get_password_from_session($account_id)
+	{
+		if (!($sessions = self::session_list(0, 'DESC', 'session_dla', true, array('account_id' => $account_id))))
+		{
+			return null;
+		}
+		$session_php = reset($sessions)['session_php'];
+
+		// detach from our own (eg. the admin's) session before attaching to the other one
+		$orig_sessionid = session_id();
+		$orig_active = session_status() === PHP_SESSION_ACTIVE;
+		if ($orig_active)
+		{
+			session_write_close();
+		}
+
+		$password = null;
+		session_id($session_php);
+		if (session_start())
+		{
+			if (!empty($_SESSION[self::EGW_SESSION_VAR]['session_password']))
+			{
+				$password = Mail\Credentials::decrypt(array(
+					'cred_password' => $_SESSION[self::EGW_SESSION_VAR]['session_password'],
+					'cred_pw_enc'   => Mail\Credentials::SYSTEM_AES,
+				));
+			}
+			session_write_close();	// detach again, without modifying anything
+		}
+
+		// reattach to our own original session, if we had one
+		if ($orig_sessionid)
+		{
+			session_id($orig_sessionid);
+			if ($orig_active)
+			{
+				session_start();
+			}
+		}
+		return $password;
 	}
 
 	/**

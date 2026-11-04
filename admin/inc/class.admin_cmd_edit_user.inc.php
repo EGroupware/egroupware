@@ -168,6 +168,13 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			//_debug_array($data);
 			throw new Api\Db\Exception(lang("Error saving account!"),11);
 		}
+		// if auth_type==account_repository (eg. SQL), the password is saved above already and never goes through
+		// admin_cmd_change_pw::exec() / Auth::change_password() below, so we have to end other sessions here too
+		if ($this->account && !is_null($this->password) &&
+			admin_cmd::$accounts->config['auth_type'] == admin_cmd::$accounts->config['account_repository'])
+		{
+			$GLOBALS['egw']->session->destroy_all($data['account_id'], true);
+		}
 		// make new account_id available to caller
 		$update = (bool)$this->account;
 		if (!$this->account) $this->account = $data['account_id'];
