@@ -37,4 +37,12 @@ export default css`
 		overflow: hidden;
 		overflow-y: auto;
 	}
+
+	/* A printed header cannot be scrolled: show every field */
+	@media print {
+		et2-nextmatch-header-customfields .customfields-header__field-list {
+			max-height: none;
+			overflow: visible;
+		}
+	}
 `;
