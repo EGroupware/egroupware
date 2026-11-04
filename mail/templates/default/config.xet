@@ -139,7 +139,14 @@
 				</row>
 				<row>
 					<et2-description  value="Send attachments greater than given size as download link instead (in MB)"></et2-description>
-					<et2-number  id="newsettings[attachment_limit_mb]"></et2-number>
+					<et2-number  id="newsettings[attachment_limit_mb]" placeholder="26"></et2-number>
+				</row>
+				<row>
+					<et2-vbox>
+						<et2-description  value="Maximum total message size the mail server accepts (in MB)"></et2-description>
+						<et2-description  value="Attachments are always forced to a download link instead, once the (base64-encoded) message as a whole would exceed this - should mirror your actual mail server's/relay's own message-size limit."></et2-description>
+					</et2-vbox>
+					<et2-number  id="newsettings[max_message_size_mb]" placeholder="64"></et2-number>
 				</row>
 			</rows>
 		</grid>

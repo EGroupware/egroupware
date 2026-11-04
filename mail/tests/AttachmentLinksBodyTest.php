@@ -403,6 +403,72 @@ class AttachmentLinksBodyTest extends Api\AppTest
 		$this->assertSame($body."\nSTUBBED-LINKS\n", $result);
 	}
 
+	// --- forcedLink: a plain classic-upload tmp_name, never uploaded to JMAP at all ------------
+
+	/**
+	 * ralf, 2026-11-04, live report: "Failed to read attachment ...pdf" - a 200+MB attachment too
+	 * large for the mail server to accept as a real JMAP-blob-backed attachment at all
+	 * (MailCompose.exceedsHardLimit()) gets routed through Et2File's own classic chunked upload
+	 * instead (uploadStart()'s Tier-3 path) and merged client-side as a bare {tmp_name,...} shape,
+	 * never a {blobId,...} one - uploadAttachmentsViaJmap()'s own forcedLink branch passes that
+	 * shape straight through for an actual send (it can never legitimately become a blobId), so
+	 * resolveJmapAttachmentsToFiles() needs its own branch to resolve it, reading straight from
+	 * temp storage - the same convention Compose::getAttachment() itself uses.
+	 */
+	public function testTmpNameAttachmentResolvesFromTempStorage() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+		$compose->stubbedLinksReturn = '<p>STUBBED-LINKS</p>';
+		$tempName = 'phpunit-forcedlink-'.bin2hex(random_bytes(8)).'.pdf';
+		$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tempName;
+		file_put_contents($path, 'phpunit forcedLink attachment content');
+		$this->addFileCleanup($path);
+
+		$result = $this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'body'        => '<p>original</p>',
+			'attachments' => [['tmp_name' => $tempName, 'name' => 'huge.pdf', 'type' => 'application/pdf', 'size' => 240 * 1024 * 1024]],
+		]));
+
+		$this->assertSame('<p>original</p><p>STUBBED-LINKS</p>', $result);
+		$this->assertCount(1, $compose->capturedGetAttachmentLinksArgs);
+		$this->assertSame($path, $compose->capturedGetAttachmentLinksArgs[0]['attachments'][0]['file']);
+	}
+
+	/** Path traversal must be blocked the same way Compose::getAttachment() itself blocks it - only the basename is ever honoured. */
+	public function testTmpNameAttachmentStripsDirectoryComponents() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+		$compose->stubbedLinksReturn = '<p>STUBBED-LINKS</p>';
+		$tempName = 'phpunit-forcedlink-traversal-'.bin2hex(random_bytes(8)).'.pdf';
+		$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tempName;
+		file_put_contents($path, 'content');
+		$this->addFileCleanup($path);
+
+		$this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'attachments' => [['tmp_name' => '../../../etc/'.$tempName, 'name' => 'huge.pdf', 'type' => 'application/pdf', 'size' => 7]],
+		]));
+
+		$this->assertCount(1, $compose->capturedGetAttachmentLinksArgs);
+		$this->assertSame($path, $compose->capturedGetAttachmentLinksArgs[0]['attachments'][0]['file']);
+	}
+
+	/** A temp file already cleaned up (eg. an orphaned/expired chunked upload) is dropped - "best-effort, skip", same as any other unresolvable attachment. */
+	public function testTmpNameAttachmentDroppedWhenTempFileIsGone() : void
+	{
+		$compose = new AttachmentLinksBodyTestFixtureCompose(self::$fixtureAccId);
+
+		$result = $this->callBuildAttachmentLinksBody($compose, $this->baseParams([
+			'filemode'    => Api\Vfs\Sharing::LINK,
+			'body'        => '<p>unchanged</p>',
+			'attachments' => [['tmp_name' => 'phpunit-never-existed-'.bin2hex(random_bytes(8)).'.pdf', 'name' => 'huge.pdf', 'type' => 'application/pdf', 'size' => 7]],
+		]));
+
+		$this->assertSame('<p>unchanged</p>', $result);
+		$this->assertCount(0, $compose->capturedGetAttachmentLinksArgs);
+	}
+
 	// --- Bug 2: a freshly local-uploaded "upload:<token>" blob must resolve --------------------
 
 	private function writeUploadFixture(string $bytes) : string

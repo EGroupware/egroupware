@@ -167,8 +167,9 @@ describe("MailCompose attachment delete buttons stay clickable after set_value()
 		// doesn't care about so only the attachments-rewiring behaviour is under test here.
 		sinon.stub(Et2Dialog, "alert").resolves([0, {}] as any);
 		const filemodeWidget = {
-			value : 'share_ro', select_options : [],
+			value : 'share_ro', select_options : [], disabled : false,
 			get_value() { return this.value; }, set_value(v : any) { this.value = v; },
+			set_disabled(v : boolean) { this.disabled = v; },
 		};
 		const readonlyStub = {set_readonly() {}, set_suggest() {}};
 		const originalGetWidgetById = et2.getWidgetById;
@@ -202,8 +203,9 @@ describe("MailCompose attachment delete buttons stay clickable after set_value()
 
 		sinon.stub(Et2Dialog, "alert").resolves([0, {}] as any);
 		const filemodeWidget = {
-			value : 'link', select_options : [],
+			value : 'link', select_options : [], disabled : false,
 			get_value() { return this.value; }, set_value(v : any) { this.value = v; },
+			set_disabled(v : boolean) { this.disabled = v; },
 		};
 		const readonlyStub = {set_readonly() {}, set_suggest() {}};
 		const originalGetWidgetById = et2.getWidgetById;

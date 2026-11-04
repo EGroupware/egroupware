@@ -77,4 +77,44 @@ class ImapSessionUrlTest extends Api\LoggedInTest
 		self::assertStringContainsString('{blobId}', $session['downloadUrl']);
 		self::assertStringContainsString('{accountId}', $session['uploadUrl']);
 	}
+
+	/**
+	 * This shim's own session() now advertises a real maxSizeUpload - see Imap::maxUploadSize()'s
+	 * own docblock for why that method takes the ini values as optional params purely for this
+	 * test (post_max_size/upload_max_filesize are PHP_INI_PERDIR, so ini_set() can't vary them at
+	 * runtime the way a test would need to - confirmed live writing this test: doing so silently
+	 * has no effect at all).
+	 */
+	public function testSessionAdvertisesMaxSizeUpload()
+	{
+		$session = Imap::session();
+		self::assertArrayHasKey('maxSizeUpload', $session['capabilities'][Api\Mail\Jmap\Http::JMAP_CORE]);
+		self::assertGreaterThan(0, $session['capabilities'][Api\Mail\Jmap\Http::JMAP_CORE]['maxSizeUpload']);
+	}
+
+	/**
+	 * upload() reads the ENTIRE request body via file_get_contents('php://input') (not $_FILES),
+	 * so the binding PHP-side ceiling is post_max_size, not upload_max_filesize - must report the
+	 * SMALLER of the two regardless of which one that is.
+	 */
+	public function testMaxUploadSizeReportsTheSmallerOfPostMaxSizeAndUploadMaxFilesize()
+	{
+		self::assertSame(8 * 1024 * 1024, Imap::maxUploadSize('8M', '64M'));
+		self::assertSame(8 * 1024 * 1024, Imap::maxUploadSize('64M', '8M'));
+		self::assertSame(2 * 1024 * 1024 * 1024, Imap::maxUploadSize('2G', '3G'));
+		self::assertSame(512 * 1024, Imap::maxUploadSize('512K', '1M'));
+	}
+
+	/**
+	 * PHP's own "0 = unlimited" convention for either ini setting must not report a 0-byte
+	 * maxSizeUpload - the opposite meaning (JMAP's maxSizeUpload has no "unlimited" sentinel of
+	 * its own, so 0 would falsely claim "nothing may ever be uploaded").
+	 */
+	public function testMaxUploadSizeNeverReturnsZeroForPhpsUnlimitedConvention()
+	{
+		self::assertGreaterThan(0, Imap::maxUploadSize('0', '0'));
+		self::assertSame(16 * 1024 * 1024, Imap::maxUploadSize('0', '16M'),
+			'one side at PHP\'s "0 = unlimited" must not win a min() against the other, real limit');
+		self::assertSame(16 * 1024 * 1024, Imap::maxUploadSize('16M', '0'));
+	}
 }

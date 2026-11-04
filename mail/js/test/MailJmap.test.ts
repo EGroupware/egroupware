@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {describeJmapError, describeSetError, isPreferenceOn, MailJmap} from "../jmap";
+import {describeJmapError, describeSetError, isPreferenceOn, isTooLargeProblem, MailJmap} from "../jmap";
 import type {MailApp} from "../app";
 
 const egw = {
@@ -406,6 +406,36 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 
 		assert.equal(requestCount, 1, "exactly 16 items must still fit in one request using the fallback limit");
 		assert.isFalse(mailboxes[0].hasChildren);
+	});
+
+	/**
+	 * maxSizeUploadFromSession() is maxSizeUpload()'s own testable pure half (same split as
+	 * maxCallsInRequest()/resolveHasChildren() above) - compose.ts reads this via the public,
+	 * profileID-keyed maxSizeUpload() to decide, BEFORE ever calling uploadAttachment(), whether a
+	 * file must be routed through the classic chunked-upload+share-link path instead.
+	 */
+	it("reads a real account's own advertised maxSizeUpload", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client = {session: Promise.resolve({capabilities: {"urn:ietf:params:jmap:core": {maxSizeUpload: 50 * 1024 * 1024}}})};
+
+		assert.equal(await (jmap as any).maxSizeUploadFromSession(client), 50 * 1024 * 1024);
+	});
+
+	it("falls back to Infinity (never block on this check alone) when the session can't be read", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client = {session: Promise.reject(new Error("boom"))};
+
+		assert.equal(await (jmap as any).maxSizeUploadFromSession(client), Infinity);
+	});
+
+	it("falls back to Infinity when the capability is absent or not a positive number (eg. the shim before this fix)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		assert.equal(await (jmap as any).maxSizeUploadFromSession({session: Promise.resolve({capabilities: {}})}), Infinity);
+		assert.equal(await (jmap as any).maxSizeUploadFromSession(
+			{session: Promise.resolve({capabilities: {"urn:ietf:params:jmap:core": {maxSizeUpload: 0}}})}), Infinity);
 	});
 });
 
@@ -1645,6 +1675,66 @@ describe("describeJmapError() - classify a caught jmap-jam rejection", () =>
 	it("returns null for an empty array", () =>
 	{
 		assert.isNull(describeJmapError([]));
+	});
+
+	it("formats an RFC 7807 Problem Details object using 'detail' (eg. Stalwart's maxSizeUpload error)", () =>
+	{
+		assert.equal(describeJmapError({
+			type: "urn:ietf:params:jmap:error:limit",
+			status: 400,
+			detail: "The uploaded file is larger than the server is willing to process.",
+			limit: "maxSizeUpload",
+		}), "The uploaded file is larger than the server is willing to process.");
+	});
+
+	it("unwraps jmap-jam's uploadBlob()/downloadBlob() generic Error(..., {cause}) wrapper", () =>
+	{
+		const problem = {type: "urn:ietf:params:jmap:error:limit", detail: "too big"};
+		assert.equal(describeJmapError(Object.assign(new Error("Failed to upload blob"), {cause: problem})), "too big");
+	});
+
+	it("still returns null when the wrapped cause isn't a JMAP problem either", () =>
+	{
+		assert.isNull(describeJmapError(Object.assign(new Error("Failed to upload blob"), {cause: new TypeError("Failed to fetch")})));
+	});
+});
+
+describe("isTooLargeProblem() - detect a 'this won't fit' JMAP error for a translated message", () =>
+{
+	it("detects the blob-upload endpoint's RFC 8620 'limit'/maxSizeUpload shape", () =>
+	{
+		assert.isTrue(isTooLargeProblem({
+			type: "urn:ietf:params:jmap:error:limit", status: 400, detail: "too big", limit: "maxSizeUpload",
+		}));
+	});
+
+	it("does not match a 'limit' type for a DIFFERENT limit (eg. maxCallsInRequest)", () =>
+	{
+		assert.isFalse(isTooLargeProblem({type: "urn:ietf:params:jmap:error:limit", limit: "maxCallsInRequest"}));
+	});
+
+	it("detects EmailSubmission/set's RFC 8621 'tooLarge' SetError type", () =>
+	{
+		assert.isTrue(isTooLargeProblem({type: "tooLarge", description: "message too large"}));
+	});
+
+	it("checks every entry of an array (eg. Object.values(submission.notCreated))", () =>
+	{
+		assert.isTrue(isTooLargeProblem([{type: "invalidProperties"}, {type: "tooLarge"}]));
+		assert.isFalse(isTooLargeProblem([{type: "invalidProperties"}, {type: "forbidden"}]));
+	});
+
+	it("unwraps jmap-jam's uploadBlob() generic Error(..., {cause}) wrapper", () =>
+	{
+		const problem = {type: "urn:ietf:params:jmap:error:limit", limit: "maxSizeUpload"};
+		assert.isTrue(isTooLargeProblem(Object.assign(new Error("Failed to upload blob"), {cause: problem})));
+	});
+
+	it("returns false for an unrelated error", () =>
+	{
+		assert.isFalse(isTooLargeProblem(new TypeError("Failed to fetch")));
+		assert.isFalse(isTooLargeProblem({type: "forbidden"}));
+		assert.isFalse(isTooLargeProblem(undefined));
 	});
 });
 

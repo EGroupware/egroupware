@@ -6,6 +6,8 @@
 %1 has been removed from blacklisted email addresses	mail	en	%1 has been removed from blacklisted email addresses
 %1 has been removed from whiltelisted email addresses	mail	en	%1 has been removed from whiltelisted email addresses
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
+%1 is too large for the mail server to accept as a real attachment - sent as a download link instead	mail	en	%1 is too large for the mail server to accept as a real attachment - sent as a download link instead
+%1 is too large for the mail server to accept as a real attachment - switch it to a download link instead	mail	en	%1 is too large for the mail server to accept as a real attachment - switch it to a download link instead
 %1 mails selected	mail	en	%1 emails selected
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail servers the limit is 4 by default, please contact your mail server administrator for further info.
@@ -85,6 +87,7 @@ attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
 attachment has been saved successfully.	mail	en	Attachment has been saved successfully.
 attachments	mail	en	Attachments
+attachments are always forced to a download link instead, once the (base64-encoded) message as a whole would exceed this - should mirror your actual mail server's/relay's own message-size limit.	mail	en	Attachments are always forced to a download link instead, once the (base64-encoded) message as a whole would exceed this - should mirror your actual mail server's/relay's own message-size limit.
 attachments, ...	mail	en	attachments, ...
 authentication	mail	en	Authentication
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
@@ -428,6 +431,7 @@ match:	mail	en	Match:
 matches	mail	en	matches
 matches regexp	mail	en	matches regexp
 max. width of inline images in a mail body or signature (in px)	mail	en	Max. width of inline images in a mail body or signature (in px)
+maximum total message size the mail server accepts (in mb)	mail	en	Maximum total message size the mail server accepts (in MB)
 mbstring.func_overload=0 is required for correct mail processing!	mail	en	mbstring.func_overload=0 is required for correct email processing!
 message body	mail	en	Message body
 message learned as ham (not spam) and moved back to inbox	mail	en	Message learned as ham (not spam) and moved back to inbox
@@ -762,6 +766,7 @@ this action affects every message in the selected thread(s) - %1 messages in tot
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This email contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message goes to %1 recipients in to and cc, more than the limit of %2. all of them see the addresses of all others. move all of them to bcc?	mail	en	This message goes to %1 recipients in To and Cc, more than the limit of %2. All of them see the addresses of all others. Move all of them to Bcc?
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
+this message is too large for the mail server to accept - switch one or more attachments to a download link and try again	mail	en	This message is too large for the mail server to accept - switch one or more attachments to a download link and try again
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	To do
 toggled on actions	mail	en	Toggled on actions
@@ -781,6 +786,7 @@ unseen messages first	mail	en	Unseen messages first
 unsubscribe folder	mail	en	Unsubscribe folder
 unsubscribe from folder %1	mail	en	Unsubscribe from folder %1
 upload files...	mail	en	Upload files ...
+upload in progress...	mail	en	Upload in progress ...
 use default timeout (20 seconds)	mail	en	Use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	en	Use source as displayed, if applicable
