@@ -396,6 +396,16 @@ class Auth
 		}
 		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)))
 		{
+			// If the caller does not know the real old password (eg. an admin resetting someone
+			// else's), try to recover it from one of their existing sessions, BEFORE destroy_all()
+			// below ends it, so we can still invalidate the right Auth::authenticate() cache entry.
+			// This recovered value is used ONLY for that cache key just below - it must NEVER be
+			// passed to changepwd() (unchanged, still uses the original $old_passwd argument), as
+			// Mail\Hooks::changepassword() deliberately skips syncing stored mail credentials when
+			// old_passwd is empty: an admin resetting a users login password must not thereby also
+			// gain that users mail credentials.
+			$cache_old_passwd = $old_passwd !== '' ? $old_passwd : Session::get_password_from_session($account_id);
+
 			if ($account_id == $GLOBALS['egw']->session->account_id)
 			{
 				// need to change current users password in session
@@ -404,14 +414,20 @@ class Auth
 				// invalidate EGroupware session, as password is stored in egw_info in session
 				Egw::invalidate_session_cache();
 			}
+			// end other sessions of this account, so a stolen one can not keep using the old password
+			$GLOBALS['egw']->session->destroy_all($account_id, true);
+
 			Accounts::cache_invalidate($account_id);
 
 			self::changepwd($old_passwd, $new_passwd, $account_id);
 
 			// unset (possibly) cached authentication
-			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
-							  __CLASS__, sha1(Accounts::id2name($account_id) . ':' . $old_passwd . ':text:' . get_class($this->backend))
-			);
+			if ($cache_old_passwd !== null && $cache_old_passwd !== '')
+			{
+				Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
+								  __CLASS__, sha1(Accounts::id2name($account_id) . ':' . $cache_old_passwd . ':text:' . get_class($this->backend))
+				);
+			}
 			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'],
 							  __CLASS__, sha1(Accounts::id2name($account_id) . ':' . $new_passwd . ':text:' . get_class($this->backend))
 			);

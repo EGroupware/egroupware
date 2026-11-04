@@ -842,6 +842,11 @@ class Accounts
 		$new_lid = $data['account_lid'] ?? null;
 		$new_passwd = !empty($data['account_passwd']) && $data['account_passwd'] !== '*unchanged*' ?
 			$data['account_passwd'] : null;
+		// account_id is only set here for an EXISTING account (new ones only get one from save() below) -
+		// used further down to also invalidate a cached SUCCESSFUL Auth::authenticate() result for the
+		// OLD password, which this method's own password-saving (no "changepassword" hook/Mail\Hooks
+		// involved here) cannot do via Auth::change_password()'s usual $old_passwd parameter
+		$existing_account_id = !empty($data['account_id']) ? $data['account_id'] : null;
 
 		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
 		{
@@ -887,6 +892,19 @@ class Accounts
 		// remainder of Auth::AUTH_CACHE_TIME, same as Auth::change_password() already does for changes
 		if ($id && $new_passwd !== null && ($new_lid ?? ($new_lid = $this->id2name($id))))
 		{
+			// this account's password just changed (not a new account): also invalidate a possibly
+			// cached SUCCESSFUL Auth::authenticate() result for the OLD password - eg. an admin reset
+			// via this direct SQL-backend save path, where the caller does not know the old password
+			// itself - by recovering it from one of the account's still-open sessions, if there is one.
+			// Used ONLY for this cache key: this path never fires the "changepassword" hook/syncs mail
+			// credentials in the first place, so there's nothing else for this recovered value to leak into.
+			if ($existing_account_id &&
+				($old_passwd = Session::get_password_from_session($existing_account_id)) !== null)
+			{
+				Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'], Auth::class,
+					sha1($new_lid.':'.$old_passwd.':text:'.get_class(Auth::backend()))
+				);
+			}
 			Cache::unsetCache($GLOBALS['egw_info']['server']['install_id'], Auth::class,
 				sha1($new_lid.':'.$new_passwd.':text:'.get_class(Auth::backend()))
 			);
