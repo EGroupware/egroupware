@@ -6,6 +6,8 @@
 %1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Blacklist entfernt
 %1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Whitelist entfernt
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie!
+%1 is too large for the mail server to accept as a real attachment - sent as a download link instead	mail	de	%1 ist für den Mailserver zu groß, um als echter Anhang akzeptiert zu werden - stattdessen als Download-Link gesendet
+%1 is too large for the mail server to accept as a real attachment - switch it to a download link instead	mail	de	%1 ist für den Mailserver zu groß, um als echter Anhang akzeptiert zu werden - stattdessen zu einem Download-Link wechseln
 %1 mails selected	mail	de	%1 E-Mail(s) ausgewählt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	de	%1 benötigt die Sieve Erweiterung %2, versuchen Sie statt dessen %3 oder eine höhere Anzahl von Tagen.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*) Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den manchen Mail-Servern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
@@ -81,6 +83,7 @@ attach vcard	mail	de	vCard hinzufügen
 attachment	mail	de	Anhang
 attachment has been saved successfully.	mail	de	Anhang erfolgreich gespeichert.
 attachments	mail	de	Dateien
+attachments are always forced to a download link instead, once the (base64-encoded) message as a whole would exceed this - should mirror your actual mail server's/relay's own message-size limit.	mail	de	Anhänge werden stattdessen immer zu einem Download-Link umgewandelt, sobald die (base64-kodierte) Nachricht insgesamt dieses Limit überschreiten würde - sollte dem tatsächlichen Nachrichtengrößen-Limit Ihres Mailservers/-relays entsprechen.
 attachments, ...	mail	de	Anhänge, ...
 authentication	mail	de	Authentifizierung
 available personal email-accounts/profiles	mail	de	verfügbare persönliche E-Mail Konten bzw. Profile
@@ -418,6 +421,7 @@ matches	mail	de	stimmt überein (*, ? erlaubt)
 matches regexp	mail	de	stimmt überein mit regulärem Ausdruck
 max. width of inline images in a mail body or signature (in px)	mail	de	Max. Breite von eingefügten Bildern im Mailtext oder der Signatur (in px)
 a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	de	Ein eingefügtes (Paste/Drag&Drop oder Datei einfügen) Bild wird ab einer bestimmten Dateigröße auf diese Breite herunterskaliert (Seitenverhältnis bleibt erhalten), um die Mail nicht unnötig zu vergrößern. Leer lassen für den Standardwert von 800px.
+maximum total message size the mail server accepts (in mb)	mail	de	Maximale Gesamtgröße der Nachricht, die der Mailserver akzeptiert (in MB)
 mbstring.func_overload=0 is required for correct mail processing!	mail	de	mbstring.func_overload=0 wird von der Anwendung Mail zwingend benötigt!
 message body	mail	de	Nachricht
 message learned as ham (not spam) and moved back to inbox	mail	de	Nachricht wurde als "gute E-Mail" (kein Spam) gelernt und in den Posteingang verschoben
@@ -747,6 +751,7 @@ this action affects every message in the selected thread(s) - %1 messages in tot
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP-Protokoll ausgeliefert werden. Bitte seien Sie sich bewusst, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 this message goes to %1 recipients in to and cc, more than the limit of %2. all of them see the addresses of all others. move all of them to bcc?	mail	de	Diese Nachricht geht an %1 Empfänger in An und Cc, mehr als das Limit von %2. Alle sehen die Adressen aller anderen. Alle nach Bcc verschieben?
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-verschlüsselt und mit Passwort geschützt.
+this message is too large for the mail server to accept - switch one or more attachments to a download link and try again	mail	de	Diese Nachricht ist für den Mailserver zu groß - wechseln Sie einen oder mehrere Anhänge zu einem Download-Link und versuchen Sie es erneut
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	Zu erledigen
 toggled on actions	mail	de	Folgende Aktionen sind immer eingeschaltet
@@ -766,6 +771,7 @@ unseen messages first	mail	de	Ungelesene Nachrichten zuerst
 unsubscribe folder	mail	de	Ordner abbestellen
 unsubscribe from folder %1	mail	de	Ordner %1 abbestellen
 upload files...	mail	de	Anhang
+upload in progress...	mail	de	Hochladen läuft ...
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige

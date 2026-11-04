@@ -63,6 +63,18 @@ class Compose
 	 **/
 	static int $maxAttachmentSizeDefault = 26;
 
+	/**
+	 * Default ceiling for the TOTAL (base64-encoded) message size - attachments/config.xet's
+	 * "Maximum total message size the mail server accepts" - once the message as a whole would
+	 * exceed this, an attachment can no longer be sent as a real attachment at all (forced to a
+	 * download link, filemode locked client-side), regardless of $maxAttachmentSizeDefault above,
+	 * which is only ever a soft per-attachment-sum UX threshold the user can still override. A
+	 * relay commonly configured around 64MB (eg. Postfix's own message_size_limit) is a reasonable
+	 * default guess if the admin hasn't set one explicitly - see mail_compose::compose()'s own
+	 * docblock for how this and $maxAttachmentSizeDefault are told apart client-side.
+	 */
+	static int $maxMessageSizeDefault = 64;
+
 	// $mail_bo/$mailPreferences/$displayCharset are declared by the ComposeMessageBuilder trait
 	var $attachments;	// Array of attachments
 	var $composeID;
@@ -386,6 +398,7 @@ class Compose
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
 			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
 		$content['attachmentLimitMb'] = Api\Config::read('mail')['attachment_limit_mb'] ?: self::$maxAttachmentSizeDefault;
+		$content['maxMessageSizeMb'] = Api\Config::read('mail')['max_message_size_mb'] ?: self::$maxMessageSizeDefault;
 		// ticket #125961: a pasted/dropped/"insert from VFS" inline body image must never become
 		// a webdav.php URL - give the htmlarea a literal upload target that resizes it to a
 		// data: URI itself instead. MUST be a server-rendered content value (not a JS property set
@@ -696,16 +709,18 @@ class Compose
 	 */
 	/**
 	 * Resolve MailCompose.uploadAttachmentsViaJmap()'s output shape ({blobId,name,type,size} an
-	 * already-uploaded JMAP blob, or {vfsPath,name,type,size} a bare VFS path never downloaded
-	 * client-side) into a REAL local `file` path each - the one thing every classic-style consumer
-	 * below (mail_integration::get_integrate_data(), _getAttachmentLinks()) actually needs, neither
-	 * of which knows anything about JMAP blobs/VFS paths. Shared by ajax_integrateSent() and
-	 * ajax_getAttachmentLinksBody() (2026-09-03).
+	 * already-uploaded JMAP blob, {vfsPath,name,type,size} a bare VFS path never downloaded
+	 * client-side, or {tmp_name,name,type,size} a plain classic-upload temp file that was NEVER
+	 * uploaded to JMAP at all - forcedLink's own too-large-for-a-real-attachment case, see that
+	 * branch's own comment below) into a REAL local `file` path each - the one thing every
+	 * classic-style consumer below (mail_integration::get_integrate_data(), _getAttachmentLinks())
+	 * actually needs, none of which know anything about JMAP blobs/VFS paths. Shared by
+	 * ajax_integrateSent() and ajax_getAttachmentLinksBody() (2026-09-03).
 	 *
-	 * @param array $attachments {blobId?,vfsPath?,name?,type?,size?}[]
+	 * @param array $attachments {blobId?,vfsPath?,tmp_name?,name?,type?,size?}[]
 	 * @param int $profileID acc_id (for resolving a blobId - blobs are per-account)
 	 * @return array same shape, `file` added; entries that couldn't be resolved (eg. an
-	 *  expired/deleted blob) are dropped, best-effort
+	 *  expired/deleted blob, or a temp file already cleaned up) are dropped, best-effort
 	 */
 	private function resolveJmapAttachmentsToFiles(array $attachments, int $profileID) : array
 	{
@@ -725,6 +740,29 @@ class Compose
 			{
 				Vfs::load_wrapper('vfs');
 				$attachment['file'] = Vfs::PREFIX.$attachment['vfsPath'];
+			}
+			elseif (!empty($attachment['tmp_name']))
+			{
+				// MailCompose.uploadAttachmentsViaJmap()'s own forcedLink branch (ticket: a 200+MB
+				// attachment too large for the mail server to accept as a real JMAP-blob-backed
+				// attachment at all) - a plain classic-upload tmp_name, never uploaded to JMAP and
+				// never going to be, so there's no blobId to fetch here. Resolve it straight from
+				// temp storage instead - the exact same convention getAttachment() itself uses
+				// (basename() to block path traversal; a "vfs:" scheme never reaches here in
+				// practice - the chunked-upload path that produces this shape only ever writes to
+				// temp_dir - but is still handled the same way getAttachment() handles it, for
+				// consistency and in case some other future caller feeds this a VFS-staged one).
+				if (parse_url($attachment['tmp_name'], PHP_URL_SCHEME) === 'vfs')
+				{
+					Vfs::load_wrapper('vfs');
+					$file = $attachment['tmp_name'];
+				}
+				else
+				{
+					$file = $GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($attachment['tmp_name']);
+				}
+				if (!file_exists($file)) continue;	// gone/expired - best-effort, skip
+				$attachment['file'] = $file;
 			}
 			else
 			{

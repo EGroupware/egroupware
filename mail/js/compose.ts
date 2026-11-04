@@ -29,6 +29,15 @@ export class MailCompose
 	private static readonly SMIME_TYPE_ENCRYPT = 'smime_encrypt';
 	private static readonly SMIME_TYPE_SIGN_ENCRYPT = 'smime_sign_encrypt';
 
+	/**
+	 * egw.loading_prompt() id for uploadStart()'s own Tier-3 (classic chunked, too-large-for-direct-
+	 * JMAP-upload) path - ralf, 2026-11-04, live: "for the big attachment it looks broken, because
+	 * nothing happens, until the upload is really complete" - Et2File's own per-file progress UI
+	 * isn't visible in this compose layout, and a 240MB chunked upload can take a genuinely long
+	 * time, so without this the popup looks frozen/unresponsive for its whole duration.
+	 */
+	private static readonly CHUNKED_UPLOAD_LOADING_PROMPT_ID = 'mail-compose-chunked-upload';
+
 	protected app : MailApp;
 	private et2 : Et2Template
 	private autosaveInterval : number;
@@ -238,6 +247,81 @@ export class MailCompose
 	private uploadedAttachmentBlobs = new Map<string, JmapAttachment>();
 
 	/**
+	 * This account's own JMAP Core maxSizeUpload (RFC 8620 §2), best-effort prefetched once at
+	 * bootstrap - see bootstrapCompose()'s own call site for why this can't just be awaited where
+	 * it's used. Infinity (never block on this specific check alone) until resolved, or if it
+	 * can't be read at all - exceedsHardLimit()'s own max_message_size_mb total check is the
+	 * authoritative gate regardless; this is only a defense-in-depth per-file one on top of it.
+	 */
+	private cachedMaxSizeUploadBytes = Infinity;
+
+	/** Base64 inflates raw bytes by exactly 4/3 - see exceedsHardLimit()'s own docblock. */
+	private static readonly BASE64_INFLATION = 4 / 3;
+
+	/**
+	 * True if `newFileBytes`, combined with everything already attached, can no longer be sent as
+	 * a real attachment at all - either this ONE file alone already exceeds the account's own
+	 * advertised per-blob maxSizeUpload (cachedMaxSizeUploadBytes), or the TOTAL (converted to its
+	 * base64-encoded-message equivalent size, since that - not the raw attachment bytes - is what
+	 * max_message_size_mb and a real mail relay's own size limit actually measure) would exceed
+	 * the admin's configured max_message_size_mb (attachments/config.xet, mail_compose::compose()'s
+	 * own $content). uploadStart() uses this to decide, BEFORE any upload attempt, whether a file
+	 * must be routed through the classic chunked-upload path instead of a direct JMAP blob upload -
+	 * see that method's own docblock for why attempting the latter here is actively harmful, not
+	 * just doomed (certain failure for Stalwart, a silent-truncation risk for the shim).
+	 *
+	 * Unlike warnAttachmentSizeLimit()'s own attachment_limit_mb soft threshold (a UX default the
+	 * user can always override), exceeding THIS is a hard, genuine impossibility - uploadFinish()
+	 * marks the resulting row `forcedLink` and recomputeFilemodeLock() keeps the filemode selector
+	 * locked to 'link' for as long as it stays attached.
+	 */
+	private exceedsHardLimit(newFileBytes : number) : boolean
+	{
+		if (newFileBytes > this.cachedMaxSizeUploadBytes)
+		{
+			return true;
+		}
+		const content = this.et2.getArrayMgr('content');
+		const maxMessageSizeMb = Number(content.getEntry('maxMessageSizeMb')) || 64;
+		const existingBytes = MailCompose.totalAttachmentSizeMb(content.data.attachments || []) * 1024 * 1024;
+		const encodedTotalBytes = (existingBytes + newFileBytes) * MailCompose.BASE64_INFLATION;
+		return encodedTotalBytes > maxMessageSizeMb * 1024 * 1024;
+	}
+
+	/**
+	 * Keep the (single, message-wide) filemode selector locked to 'link' for as long as ANY
+	 * currently-attached file can never be sent as a real attachment at all (uploadFinish()'s own
+	 * Tier-3 merge, marked `forcedLink` - see exceedsHardLimit()'s own docblock) - switching back
+	 * to 'attach' for such a file is a guaranteed failure at send time, so the control itself is
+	 * disabled rather than merely defaulted, unlike warnAttachmentSizeLimit()'s own soft-threshold
+	 * auto-switch (still freely reversible there). Called after every attachment add/remove, so
+	 * the lock also releases correctly once the oversized attachment itself is deleted.
+	 */
+	private recomputeFilemodeLock() : void
+	{
+		const content = this.et2.getArrayMgr('content');
+		const locked = (content.data.attachments || []).some((a : any) => a?.forcedLink);
+		const filemodeWidget : any = this.et2.getWidgetById('filemode');
+		if (!filemodeWidget) return;
+		if (locked)
+		{
+			if (filemodeWidget.get_value() !== 'link')
+			{
+				filemodeWidget.set_value('link');
+			}
+			// EGroupware's own deliberate, non-reversible auto-switch counts as "explicitly chosen"
+			// too - see explicitShareModeChosen's own docblock
+			this.explicitShareModeChosen = true;
+		}
+		// NOT set_disabled() - Et2Widget's own docblock marks that method @deprecated precisely
+		// because it conflates the two ("legacy had it"): it sets BOTH .disabled AND .hidden,
+		// which made the selector vanish instead of just greying out (confirmed live 2026-11-04,
+		// ralf: "we should ... set is to disabled, so the user still sees it, but cant change
+		// it" - exactly what the modern, direct .disabled property setter alone does).
+		filemodeWidget.disabled = locked;
+	}
+
+	/**
 	 * Count of classic (non-JMAP) attachment uploads currently in flight - incremented per file in
 	 * uploadStart(), reset to 0 once uploadFinish() fires for the batch. Found live 2026-09-03:
 	 * clicking Send/Save-as-Draft while a large attachment was still uploading silently sent/saved
@@ -333,6 +417,17 @@ export class MailCompose
 	 * to wherever it actually needs to end up (Stalwart directly for a real-JMAP account,
 	 * Api\Mail\Jmap\Imap::upload() for the shim - same jam-client uploadBlob() primitive
 	 * resolveOutgoingInlineImages() already uses for inline images).
+	 *
+	 * ralf, 2026-11-04 (a real huge-attachment report: our own upload went straight to Stalwart
+	 * with no chance to intercept, AND the shim hit the exact same symptom for an unrelated reason):
+	 * that single-shot direct-to-blob upload is only safe for a file comfortably under BOTH the
+	 * account's own advertised maxSizeUpload and the admin's configured max_message_size_mb total -
+	 * exceedsHardLimit() decides this SYNCHRONOUSLY (a cancelable event's preventDefault() has no
+	 * effect once called after an await, so this can't be an async decision - see
+	 * cachedMaxSizeUploadBytes's own docblock for why its half of the check is pre-fetched). An
+	 * oversized file is left un-canceled instead, falling through to the classic chunked-upload
+	 * `else` branch below exactly like non-JMAP-mode compose always does - uploadFinish() merges
+	 * the result without ever submitting a postback once it completes, see its own docblock.
 	 */
 	uploadStart(event? : CustomEvent) : void
 	{
@@ -345,16 +440,23 @@ export class MailCompose
 		if (this.isJmapMode && event)
 		{
 			const file : File = (event.detail as any)?.file;
-			event.preventDefault();
+			if (file && !this.exceedsHardLimit(file.size))
+			{
+				event.preventDefault();
+				void this.uploadLocalAttachmentViaJmap(file);
+				return;
+			}
 			if (file)
 			{
-				void this.uploadLocalAttachmentViaJmap(file);
+				// Tier 3: left un-canceled above, falling through to the classic chunked upload
+				// below - see this method's own docblock. Idempotent if several large files are
+				// queued at once (loading_prompt() itself no-ops a repeat show of the same id) -
+				// uploadFinish() hides it once the whole batch completes.
+				this.egw.loading_prompt(MailCompose.CHUNKED_UPLOAD_LOADING_PROMPT_ID, true,
+					this.egw.lang('Upload in progress...'));
 			}
 		}
-		else
-		{
-			this.pendingAttachmentUploads++;
-		}
+		this.pendingAttachmentUploads++;
 	}
 
 	/**
@@ -389,13 +491,53 @@ export class MailCompose
 	{
 		this.pendingAttachmentUploads = 0;
 		this.resolvePendingUploadWaiters();
+		// no-ops if uploadStart() never showed it (a small direct-to-JMAP-blob upload, or classic
+		// non-JMAP compose, neither of which sets this) - see its own docblock
+		this.egw.loading_prompt(MailCompose.CHUNKED_UPLOAD_LOADING_PROMPT_ID, false);
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
 		{
 			//_path = this.get_path();
 		}
-		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
+		const uploaded : Record<string, any> = _event.data.getValue() || {};
+		if (_file_count && Object.keys(uploaded).length > 0)
 		{
+			if (this.isJmapMode)
+			{
+				// uploadStart()'s own Tier-3 fallthrough: these files were too large for a direct
+				// JMAP blob upload (or risked silent truncation on the shim), so they were routed
+				// through Et2File's own normal classic chunked upload instead, straight to the
+				// server's temp storage - same mechanism classic (non-JMAP) compose always uses. A
+				// classic postback (this.et2.getInstanceManager().submit(), the ELSE branch below)
+				// is never safe in JMAP mode though - it resets unsent body/mimeType edits (see
+				// uploadStart()'s own original docblock) - so merge client-side instead, exactly
+				// like every other JMAP-mode attachment path (carryForwardAttachments()/vfsUpload()/
+				// applyPresetFiles()) already does. _getAttachmentLinks() already knows how to share
+				// a plain tmp_name straight from temp storage, same as a genuine classic upload - no
+				// VFS/JMAP-blob detour needed. `info.file` is the ORIGINAL browser File object
+				// (Et2File.ts's own resumableFileComplete() keeps it on the value it builds) - its
+				// `.size` is the only piece the server's own per-chunk response doesn't carry back.
+				// `forcedLink` marks the row so recomputeFilemodeLock() keeps 'link' enforced for as
+				// long as it stays attached - sending it any other way is a guaranteed failure.
+				const names = Object.values(uploaded).map((info : any) => info?.name || info?.file?.name).filter(Boolean);
+				this.mergeAttachmentEntries(Object.entries(uploaded).map(([tempName, info] : [string, any]) => ({
+					tmp_name: tempName,
+					name: info?.name || info?.file?.name || tempName,
+					type: info?.type || info?.file?.type || 'application/octet-stream',
+					size: info?.file?.size ?? 0,
+					filemode_icon: 'link',
+					filemode_title: '',
+					forcedLink: true,
+				})), true);
+				this.recomputeFilemodeLock();
+				if (names.length)
+				{
+					this.egw.message(this.egw.lang(
+						'%1 is too large for the mail server to accept as a real attachment - sent as a download link instead',
+						names.join(', ')), 'warning');
+				}
+				return;
+			}
 			this.addAttachmentPlaceholder();
 			this.et2.getInstanceManager().submit();
 		}
@@ -1803,6 +1945,15 @@ export class MailCompose
 	{
 		if (!this.isJmapMode) return;
 		this.bootstrapping = true;
+		// Fire-and-forget: exceedsHardLimit() needs this SYNCHRONOUSLY (uploadStart() must decide,
+		// before any await, whether to preventDefault() the widget's own chunked upload - see that
+		// method's own docblock), so it's prefetched here rather than awaited where it's used.
+		// Never re-fetched on an identity switch mid-compose - this is a defense-in-depth secondary
+		// check on top of the authoritative, synchronous max_message_size_mb total check, not the
+		// only gate, so a stale value for a different account is an acceptable simplification.
+		void this.app.jmap.maxSizeUpload(this.currentProfileID())
+			.then((max) => { this.cachedMaxSizeUploadBytes = max; })
+			.catch(() => {});
 		let focusBody = false;
 		try
 		{
@@ -2396,8 +2547,16 @@ export class MailCompose
 	 * attachVfsFilesForCompose() (VFS-selected files, 2026-08-31 follow-up) can reuse the identical
 	 * UI-sync logic for its own differently-shaped (`jmapVfsPath` instead of `jmapBlobId`) rows,
 	 * without duplicating any of the widget-visibility fixes below.
+	 *
+	 * @param entries row-shaped attachment entries to append
+	 * @param skipSizeWarning uploadFinish()'s own Tier-3 (forcedLink) merge passes true - its own
+	 *  hard-limit message ("%1 is too large ... sent as a download link instead") already fully
+	 *  explains the outcome, so warnAttachmentSizeLimit()'s generic soft-threshold message would
+	 *  only ever be redundant noise right alongside it (the hard limit is always >= the soft one,
+	 *  so crossing the former always also crosses the latter) - ralf, 2026-11-04: "I think we
+	 *  should only have a single (translated) message, not two".
 	 */
-	private mergeAttachmentEntries(entries : any[]) : void
+	private mergeAttachmentEntries(entries : any[], skipSizeWarning : boolean = false) : void
 	{
 		const content = this.et2.getArrayMgr('content');
 		content.data.attachments = [
@@ -2409,7 +2568,10 @@ export class MailCompose
 		// "Send files as" pick was ignored and the files still went out as attachments
 		content.data.no_griddata = false;
 		this.et2.setArrayMgr('content', content);
-		this.warnAttachmentSizeLimit(content.data.attachments);
+		if (!skipSizeWarning)
+		{
+			this.warnAttachmentSizeLimit(content.data.attachments);
+		}
 		content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
 		const attachmentsWidget = this.et2.getWidgetById('attachments');
 		attachmentsWidget?.set_value({content: content.data.attachments});
@@ -2624,6 +2786,7 @@ export class MailCompose
 			const uploadSectionWidget : any = detailsWidget?.getParent();
 			uploadSectionWidget?.set_disabled(true);
 		}
+		this.recomputeFilemodeLock();
 		return false;
 	}
 
@@ -3156,13 +3319,46 @@ export class MailCompose
 	 * and upload it as a JMAP blob. Reuses the existing upload widget/staging entirely - no new
 	 * upload UI, just a new step between "already staged server-side" and "referenced by blobId
 	 * in the JMAP Email".
+	 *
+	 * @param forSend passed straight through from currentEmailFields() - see its own forSend
+	 *  docblock, and the forcedLink branch below for why THIS method also needs it directly.
 	 */
-	private async uploadAttachmentsViaJmap(profileID : string) : Promise<any[]>
+	private async uploadAttachmentsViaJmap(profileID : string, forSend : boolean) : Promise<any[]>
 	{
 		const attachments : any[] = Object.values(this.et2.getArrayMgr('content').getEntry('attachments') || {});
 		const etemplateExecId = this.et2.getInstanceManager().etemplate_exec_id;
-		return Promise.all(attachments.map(async(attachment) =>
+		const resolved = await Promise.all(attachments.map(async(attachment) =>
 		{
+			// uploadFinish()'s own Tier-3 merge (ralf, 2026-11-04: "Failed to read attachment" -
+			// too large for the mail server to accept as a real attachment, so forcedLink forces
+			// filemode to 'link' for the whole message, locked, un-reversible) - this attachment can
+			// NEVER legitimately become a real JMAP-blob-backed attachment, so don't even try: the
+			// getAttachment() fetch below 404s for it regardless of size anyway, since it reads from
+			// Etemplate\Request::read()'s own preserv['attachments'] - server-side POSTBACK state
+			// this client-side-only merge never establishes (classic compose always postbacks on
+			// every upload; JMAP-mode deliberately never does, see uploadStart()'s own docblock) -
+			// and even if that lookup somehow succeeded, re-uploading a 200+MB file as a JMAP blob
+			// is exactly the failure this whole mechanism exists to avoid.
+			//
+			// A send (forSend) ALWAYS converts every attachment to a link right after this (filemode
+			// is permanently 'link' for the whole message whenever any forcedLink entry exists, see
+			// recomputeFilemodeLock()) - the plain classic shape returned here is exactly what
+			// ajax_getAttachmentLinksBody()'s resolveJmapAttachmentsToFiles() (mail/src/Compose.php)
+			// needs, reading it straight from temp storage, the same convention getAttachment()
+			// itself uses. A draft save, though, never does that conversion (currentEmailFields()'s
+			// own docblock: a draft keeps real attachments as real blobs, only an actual send
+			// resolves links, generated fresh each time) - there is no valid JMAP attachment shape
+			// to give draftEmailProperties() for something that can never legitimately become a
+			// blobId, so exclude it from the saved draft entirely instead of handing it a broken
+			// {blobId: undefined} reference; the attachment reference itself survives untouched in
+			// content.attachments (this method never touches that), so it's still there - and still
+			// handled correctly - the next time the user actually sends.
+			if (attachment.forcedLink)
+			{
+				return forSend
+					? {tmp_name: attachment.tmp_name, name: attachment.name, type: attachment.type, size: attachment.size}
+					: null;
+			}
 			// carryForwardAttachments() (Step 4, attachment carry-forward slice; also
 			// uploadLocalAttachmentViaJmap()'s own direct-upload result) - already a real JMAP blob,
 			// but only ever valid on the account it was uploaded to/read from (jmapProfileID) - the
@@ -3232,6 +3428,8 @@ export class MailCompose
 			this.uploadedAttachmentBlobs.set(attachment.tmp_name, uploaded);
 			return uploaded;
 		}));
+		// filter out forcedLink's own null (draft-save exclusion) - see its own comment above
+		return resolved.filter((a) => a !== null);
 	}
 
 	/**
@@ -3274,9 +3472,20 @@ export class MailCompose
 				body = doc.body.innerHTML;
 			}
 		}
-		let attachments = hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined;
+		let attachments = hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID(), forSend) : undefined;
 
-		const filemode = this.et2.getWidgetById('filemode')?.get_value();
+		// NOT get_value() - Et2InputWidget.getValue() deliberately returns null for a disabled
+		// widget (matching native HTML form semantics: a disabled control submits no value), and
+		// recomputeFilemodeLock() keeps this one disabled for as long as a forcedLink attachment is
+		// present. That's the right behaviour for actual form submission, but wrong here - a
+		// forced, locked 'link' is exactly the one case this whole check exists to catch, so reading
+		// the widget's own true current value (bypassing that disabled-means-no-value convention)
+		// is required, not just a style choice. Confirmed live 2026-11-04 (ralf, a real send attempt
+		// with a forced-link attachment): get_value() read null here, so this condition never
+		// fired, attachments never got converted to links, and the plain {tmp_name,...} shape
+		// reached draftEmailProperties() unconverted - "Expected a partId or blobId field in body
+		// part" (Stalwart's own JMAP validation rejecting the resulting blobId-less body part).
+		const filemode = (this.et2.getWidgetById('filemode') as any)?.value;
 		if (forSend && attachments?.length && filemode && filemode !== 'attach' && this.explicitShareModeChosen)
 		{
 			body = await this.egw.request('mail.EGroupware\\Mail\\Compose.ajax_getAttachmentLinksBody', [{

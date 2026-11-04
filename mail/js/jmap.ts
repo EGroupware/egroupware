@@ -434,8 +434,23 @@ export class JmapUnsupportedOperationError extends Error {}
  */
 function formatProblem(problem : any) : string | null
 {
+	// jmap-jam's uploadBlob()/downloadBlob() (unlike request()/requestMany()) catch their own
+	// thrown problem-details object internally and re-throw it wrapped as a plain
+	// Error("Failed to upload/download blob", {cause: problem}) instead of passing it straight
+	// through - unwrap it so callers get the real reason instead of that generic wrapper message.
+	// A genuine network-level failure (fetch's own TypeError, no JSON body) gets wrapped the same
+	// way; unwrapping still correctly falls through to the null/silent-fallback path below, since
+	// that TypeError itself has no "type" property either.
+	// (as any).cause: this project's "lib" target (es2020) predates the standard Error.cause
+	// (ES2022) - the runtime (and jmap-jam's own compiled dist, which sets it) supports it fine.
+	if (problem instanceof Error && (problem as any).cause) problem = (problem as any).cause;
 	if (!problem || typeof problem !== 'object' || typeof problem.type !== 'string') return null;
-	return problem.description || problem.type;
+	// JMAP per-method "error" results (RFC 8620 §3.6.2) use "description"; HTTP/session-level
+	// errors in RFC 7807 Problem Details format (RFC 8620 §3.2 - used by session loading and by
+	// the upload/download blob endpoints specifically) use "detail" instead - eg. Stalwart's
+	// "urn:ietf:params:jmap:error:limit" maxSizeUpload response only has "detail", never
+	// "description", and was silently falling back to the raw, non-human "type" URN.
+	return problem.description || problem.detail || problem.type;
 }
 
 /**
@@ -458,6 +473,33 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
 {
 	if (!setErrors || !Object.keys(setErrors).length) return null;
 	return Object.values(setErrors).map(formatProblem).filter((m) : m is string => m !== null).join('; ') || null;
+}
+
+/**
+ * True if `problem` (a single raw SetError-like value, a caught-exception shape, or an array of
+ * them) is/contains a "this won't fit" JMAP error - either the blob-upload endpoint's own "limit"
+ * type with limit=maxSizeUpload (RFC 8620 S6.3 - also the shape Api\Mail\Jmap\Imap::upload()'s own
+ * post_max_size/CONTENT_LENGTH mismatch guard reports), or EmailSubmission/set's own "tooLarge"
+ * type (RFC 8621 S7.4 - also the shape Imap::emailSubmissionSet() reclassifies a size-rejecting
+ * SMTP response into). Both mean the same thing to the user at different stages (upload vs send),
+ * just under different JMAP-spec type names - ralf, 2026-11-04: the server's own raw, untranslated
+ * text ("The uploaded file is larger than the server is willing to process.") was shown verbatim;
+ * this lets each call site show its own translated, actionable wording instead. Also unwraps
+ * jmap-jam's uploadBlob()-style Error(..., {cause}) wrapper, same reasoning as formatProblem()
+ * above - uploadAttachment()'s own catch sees that wrapper shape, not the raw problem directly.
+ *
+ * NOTE: master's own version of this function sits right next to isForbiddenProblem()/
+ * describeSharedAccountError() - a DIFFERENT, unrelated feature (Mail JMAP ACL plan, 2026-10-30)
+ * not yet backported to 26 at all - deliberately NOT cherry-picked here too, same "only bring over
+ * what this specific fix needs" discipline as every other backport in this ticket's history.
+ */
+export function isTooLargeProblem(problem : any) : boolean
+{
+	if (Array.isArray(problem)) return problem.some(isTooLargeProblem);
+	if (problem instanceof Error && (problem as any).cause) return isTooLargeProblem((problem as any).cause);
+	if (!problem || typeof problem !== 'object') return false;
+	return problem.type === 'tooLarge' ||
+		(problem.type === 'urn:ietf:params:jmap:error:limit' && problem.limit === 'maxSizeUpload');
 }
 
 /**
@@ -1785,6 +1827,53 @@ export class MailJmap
 		catch (e)
 		{
 			console.error('MailJmap.resolveHasChildren(): failed, leaving hasSubscribedChildren unresolved', e);
+		}
+	}
+
+	/**
+	 * This session's own advertised urn:ietf:params:jmap:core maxSizeUpload (RFC 8620 §2) - the
+	 * hard per-blob ceiling uploadAttachment()'s single-shot POST cannot exceed. A real Stalwart
+	 * account fills this in with its own actual configured limit; the IMAP-shim's own synthesized
+	 * session (Api\Mail\Jmap\Imap::session()/maxUploadSize()) derives a conservative one from
+	 * post_max_size/upload_max_filesize, since there was none at all before 2026-11-04 (ticket:
+	 * a huge attachment's upload failure reached the user as an opaque generic toast on both
+	 * backends, for two entirely different underlying reasons).
+	 *
+	 * compose.ts reads this BEFORE calling uploadAttachment() at all, to route an oversized file
+	 * through the classic chunked-upload+share-link path instead of attempting a doomed direct
+	 * upload (which fails outright for Stalwart, or risks a silently truncated one for the shim -
+	 * see Imap::upload()'s own CONTENT_LENGTH-mismatch guard). Falls back to Infinity (never block
+	 * on this specific check alone) if the session can't be read - compose.ts's own
+	 * attachment_limit_mb/max_message_size_mb admin settings remain the primary gate regardless.
+	 */
+	async maxSizeUpload(profileID : string) : Promise<number>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token || !this.clients[profileID]) return Infinity;
+		return this.maxSizeUploadFromSession(this.clients[profileID]);
+	}
+
+	/**
+	 * Testable pure half of maxSizeUpload() above.
+	 *
+	 * NOTE: master's own version of this function sits right next to maxCallsInRequest()/a
+	 * private chunk<T>() helper - a DIFFERENT, unrelated feature (resolveHasChildren()'s own
+	 * maxCallsInRequest-aware batching, 2026-10-29) not yet backported to 26 at all (this branch's
+	 * own resolveHasChildren() is still the simpler, unchunked implementation) - deliberately NOT
+	 * cherry-picked here too, same "only bring over what this specific fix needs" discipline as
+	 * every other backport in this ticket's history.
+	 */
+	private async maxSizeUploadFromSession(client : { session : Promise<any> }) : Promise<number>
+	{
+		try
+		{
+			const session : any = await client.session;
+			const max = session?.capabilities?.['urn:ietf:params:jmap:core']?.maxSizeUpload;
+			return typeof max === 'number' && max > 0 ? max : Infinity;
+		}
+		catch (e)
+		{
+			return Infinity;
 		}
 	}
 
@@ -6212,6 +6301,19 @@ export class MailJmap
 			}));
 			if (!submission.created?.sub1)
 			{
+				// ralf, 2026-11-04: this specific, structured, well-known case (EmailSubmission/set's
+				// own RFC 8621 S7.4 "tooLarge" type - either Stalwart's native response, or
+				// Imap::emailSubmissionSet()'s own reclassification of a size-rejecting SMTP
+				// response from the shim's outbound relay) deserves its own translated, actionable
+				// wording, not the server's raw text. The client-side size pre-checks should
+				// normally prevent an attachment this large from ever reaching send at all; this is
+				// the safety net for whatever drift between the admin's configured limits and the
+				// real mail server's own ones slips through anyway.
+				if (isTooLargeProblem(Object.values(submission.notCreated ?? {})))
+				{
+					throw new JmapUserError(this.egw.lang(
+						'This message is too large for the mail server to accept - switch one or more attachments to a download link and try again'));
+				}
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
 			}
 			// ticket #125092 (Ingo/Birgit Becker): the classic, now-deleted
@@ -7047,6 +7149,19 @@ export class MailJmap
 		{
 			if (e instanceof JmapUserError) throw e;
 			console.error('MailJmap.uploadAttachment(): failed', e);
+			// ralf, 2026-11-04: this specific, structured, well-known case (Stalwart's real
+			// maxSizeUpload rejection, or Imap::upload()'s own matching CONTENT_LENGTH-mismatch
+			// guard) deserves its own translated, actionable wording - not the server's raw,
+			// always-English "detail" text describeJmapError() would otherwise surface verbatim.
+			// compose.ts's own pre-upload size check (warnAttachmentSizeLimit()/uploadStart())
+			// should normally pre-empt this entirely; this is the safety net for whatever it
+			// doesn't catch (eg. the admin's configured limits not matching the real server ones).
+			if (isTooLargeProblem(e))
+			{
+				throw new JmapUserError(this.egw.lang(
+					'%1 is too large for the mail server to accept as a real attachment - switch it to a download link instead',
+					name));
+			}
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Failed to upload attachment %1', name));
 		}
 	}

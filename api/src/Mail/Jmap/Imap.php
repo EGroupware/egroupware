@@ -161,7 +161,7 @@ class Imap extends Jmap\Base
 
 		return [
 			'capabilities' => [
-				Http::JMAP_CORE => new \stdClass(),
+				Http::JMAP_CORE => ['maxSizeUpload' => self::maxUploadSize()],
 				'urn:ietf:params:jmap:mail' => new \stdClass(),
 				Http::JMAP_QUOTA => new \stdClass(),
 			],
@@ -3305,6 +3305,29 @@ class Imap extends Jmap\Base
 		return $description;
 	}
 
+	/**
+	 * Best-effort: does a raw SMTP rejection response (as describeSendException() above already
+	 * extracts it) look like "message too big"? Enhanced status code 5.3.4 (RFC 3463, "message
+	 * too big for system" - returned verbatim in-band by most MTAs, including Postfix) is checked
+	 * first since it's the one standardised, reliable signal; the free-text fallback below exists
+	 * for MTAs that omit it, but exact wording for this condition isn't standardised at all, so
+	 * that part can never be exhaustive - worst case, an unmatched size rejection still falls
+	 * through to the pre-existing generic 'serverFail' handling in emailSubmissionSet()'s own catch,
+	 * same as before this method existed, just without the nicer translated message.
+	 *
+	 * @param string $description raw SMTP response text, as returned by describeSendException()
+	 */
+	private static function isMessageTooLargeSmtpError(string $description) : bool
+	{
+		if (str_contains($description, '5.3.4'))
+		{
+			return true;
+		}
+		$lower = strtolower($description);
+		return (str_contains($lower, 'size') || str_contains($lower, 'too big') || str_contains($lower, 'too large'))
+			&& (str_contains($lower, 'exceed') || str_contains($lower, 'too big') || str_contains($lower, 'too large'));
+	}
+
 	public static function emailSubmissionSet(string $accountId, array $args) : array
 	{
 		$created = [];
@@ -3556,7 +3579,23 @@ class Imap extends Jmap\Base
 				// site) - logged here too, so a genuine mail-submission failure isn't silently
 				// invisible server-side either. See describeSendException()'s own docblock for why
 				// Horde_Smtp_Exception needs special handling.
-				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => self::describeSendException($e)];
+				$description = self::describeSendException($e);
+				// ralf, 2026-11-04: a message rejected by the OUTBOUND relay (eg. Postfix's own
+				// message_size_limit) for being too large otherwise landed here as an
+				// indistinguishable generic 'serverFail', with the relay's own raw (always-English,
+				// wording-varies-by-MTA) SMTP response text as the only clue - reclassify it the
+				// same way a real Stalwart account's native EmailSubmission/set already reports this
+				// (RFC 8621 S7.4 "tooLarge"), so the client's own isTooLargeProblem() (mail/js/
+				// jmap.ts) can show ONE translated, actionable message for both backends instead of
+				// the server's raw text. Enhanced status code 5.3.4 ("message too big for system",
+				// RFC 3463) is the standardised signal; the free-text fallback covers MTAs that omit
+				// it - best-effort, since exact wording isn't standardised at all.
+				if (self::isMessageTooLargeSmtpError($description))
+				{
+					$notCreated[$creationId] = ['type' => 'tooLarge', 'description' => $description];
+					continue;
+				}
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $description];
 			}
 		}
 
@@ -4213,10 +4252,80 @@ class Imap extends Jmap\Base
 	 *
 	 * @param string $accountId
 	 */
+	/**
+	 * This shim's own JMAP Core "maxSizeUpload" capability (RFC 8620 S2) - upload() below reads the
+	 * ENTIRE request body via `file_get_contents('php://input')` (not `$_FILES`), so the binding
+	 * PHP-side ceiling is `post_max_size`, not `upload_max_filesize` - included too since a raw
+	 * POST obviously still can't exceed it either. A real Stalwart account's own session fills this
+	 * in server-side with its ACTUAL configured limit; this shim had never advertised one at all
+	 * before (confirmed live 2026-11-04: a huge upload reached this far and either hit a webserver-
+	 * level 413 - non-JSON, no useful message - or, had post_max_size/client_max_body_size ever
+	 * drifted apart, silently written a truncated "successful" 0-byte blob, since php://input simply
+	 * reads empty past post_max_size rather than throwing) - the client now reads this the same way
+	 * it already reads a real account's own maxCallsInRequest, to pre-empt the upload attempt
+	 * entirely for an oversized file instead of letting it fail (or worse, silently corrupt).
+	 *
+	 * This can't see any webserver-level cap (eg. nginx's client_max_body_size) at all - it's only
+	 * ever a same-or-smaller number than the TRUE effective ceiling, never larger, so it's always
+	 * safe to trust as a pre-emptive check.
+	 *
+	 * @param ?string $postMaxSize ini_get('post_max_size') value to use - both params exist purely
+	 *  so this is unit-testable: post_max_size/upload_max_filesize are PHP_INI_PERDIR, so ini_set()
+	 *  can NOT vary them at runtime the way a test would need to (confirmed live writing this
+	 *  method's own test: ini_set('post_max_size', ...) silently has no effect at all, unlike most
+	 *  other ini settings). Callers other than the test always rely on the real ini_get() defaults.
+	 * @param ?string $uploadMaxFilesize ini_get('upload_max_filesize') value to use, see above
+	 */
+	public static function maxUploadSize(?string $postMaxSize=null, ?string $uploadMaxFilesize=null) : int
+	{
+		$toBytes = static function(string $ini) : int
+		{
+			$ini = trim($ini);
+			$num = (int)$ini;
+			return match (strtolower(substr($ini, -1))) {
+				'g' => $num * 1024 * 1024 * 1024,
+				'm' => $num * 1024 * 1024,
+				'k' => $num * 1024,
+				default => $num,
+			};
+		};
+		$postMaxSize = $toBytes($postMaxSize ?? (string)ini_get('post_max_size'));
+		$uploadMaxFilesize = $toBytes($uploadMaxFilesize ?? (string)ini_get('upload_max_filesize'));
+		// 0 conventionally means "no limit" for both ini settings - do not let that win a min()
+		// against a real, smaller value, but also don't report a bogus 0 "limit" if BOTH are unset
+		$limits = array_filter([$postMaxSize, $uploadMaxFilesize], static fn($v) => $v > 0);
+		// both ini settings at their own "0 = unlimited" - report a large-but-finite number rather
+		// than 0, which would otherwise falsely claim "nothing may ever be uploaded" (JMAP's
+		// maxSizeUpload has no "unlimited" sentinel of its own)
+		return $limits ? min($limits) : 1024 * 1024 * 1024 * 1024;
+	}
+
 	public static function upload(string $accountId) : void
 	{
 		$type = $_SERVER['CONTENT_TYPE'] ?? 'application/octet-stream';
 		$bytes = file_get_contents('php://input');
+
+		// Defense in depth, in case post_max_size/upload_max_filesize (reported to the client via
+		// the session's own maxSizeUpload, see maxUploadSize() above) ever drifts out of sync with
+		// whatever webserver-level body-size cap sits in front of this (eg. nginx's own
+		// client_max_body_size) - past PHP's own limit, file_get_contents('php://input') silently
+		// reads empty/truncated rather than throwing, which would otherwise make this write and
+		// report a "successful" corrupted blob with no error at all. CONTENT_LENGTH is the client's
+		// own claim, so only usable as a sanity check (it's absent entirely for a chunked-encoded
+		// request) - not authoritative, but catching an outright mismatch here is strictly better
+		// than silently accepting one.
+		$contentLength = $_SERVER['CONTENT_LENGTH'] ?? null;
+		if ($contentLength !== null && ctype_digit((string)$contentLength) && strlen($bytes) !== (int)$contentLength)
+		{
+			http_response_code(400);
+			echo json_encode([
+				'type' => 'urn:ietf:params:jmap:error:limit',
+				'status' => 400,
+				'detail' => 'The uploaded file is larger than the server is willing to process.',
+				'limit' => 'maxSizeUpload',
+			], JSON_UNESCAPED_SLASHES);
+			return;
+		}
 
 		echo json_encode(array_merge(['accountId' => $accountId], self::uploadBytes($bytes, $type)),
 			JSON_UNESCAPED_SLASHES);
