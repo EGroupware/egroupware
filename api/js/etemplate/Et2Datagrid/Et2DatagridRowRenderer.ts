@@ -397,9 +397,14 @@ export class Et2DatagridRowRenderer
 		// Keep upgrade work under roughly half a 60fps frame (~16.7ms) so scrolling,
 		// input, and paint can still run in the same frame on typical hardware.
 		// 8ms is a pragmatic balance between throughput and UI responsiveness.
-		const budgetUntil = performance.now() + this._rowUpgradeFrameBudgetMs;
+		// Print rows are upgraded in one go: nobody scrolls or types while the "please wait"
+		// prompt is up, and every frame the work is spread over restyles the whole print tree
+		// again, which for a large print costs far more than the upgrades themselves.
+		const printing = !!this.host._printRows;
+		const budgetUntil = printing ? Infinity : performance.now() + this._rowUpgradeFrameBudgetMs;
+		const batchSize = printing ? Infinity : this._rowUpgradeBatchSize;
 		let processed = 0;
-		while(this.pendingRowUpgradeCount && processed < this._rowUpgradeBatchSize && performance.now() < budgetUntil)
+		while(this.pendingRowUpgradeCount && processed < batchSize && performance.now() < budgetUntil)
 		{
 			const rowElement = this._rowUpgradeQueue[this._rowUpgradeQueueHead++];
 			if(!rowElement)

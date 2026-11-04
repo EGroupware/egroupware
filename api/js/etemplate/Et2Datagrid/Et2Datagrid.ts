@@ -3083,6 +3083,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	_observeRowHeightStability() : void
 	{
+		// Print rows are not virtualized and their height is not an estimate for anything
+		if(this._printRows)
+		{
+			return;
+		}
 		if(this._rowHeightLocked || this._usesFixedVirtualizerRowHeight())
 		{
 			this._rowHeightResizeObserver?.disconnect();
@@ -6854,6 +6859,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                    ${this._printRows ? html`
 	                        <div
 	                                id="print-rows"
+	                                data-lazy-load-ready
 	                                class="dg-tile-grid"
 	                                part="rows print-rows"
 	                                role="grid"
@@ -6924,7 +6930,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 							${virtualize(tableVirtualizerConfig)}
 						</tbody>
 						${this._printRows ? html`
-							<tbody id="print-rows" part="rows print-rows" role="rowgroup">
+							<tbody id="print-rows" data-lazy-load-ready part="rows print-rows" role="rowgroup">
 								${this._printRows.map((_row, index) => this._renderVirtualRow(index, undefined, false))}
 							</tbody>
 						` : nothing}

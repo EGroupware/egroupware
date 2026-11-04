@@ -118,7 +118,29 @@ export class Et2LazyLoadController implements ReactiveController
 	{
 		// A browser without checkVisibility() gives us nothing to go on, so treat the host as
 		// visible and let whatever wanted to wait go ahead instead
-		return this.host.isConnected && (this.host.checkVisibility?.() ?? true) && this.isExtraReady();
+		return this.host.isConnected && this._isDisplayed() && this.isExtraReady();
+	}
+
+	/**
+	 * Is the host displayed?
+	 *
+	 * An ancestor can vouch for everything below it with a `data-lazy-load-ready` attribute, for
+	 * content that is there to be used whether or not it ever gets looked at - a datagrid's print
+	 * rows are the case in point.  That skips checkVisibility(), which makes the browser bring the
+	 * styles of the whole document up to date: with every one of many hosts asking after the one
+	 * before it changed things, a print took time proportional to the square of its row count.
+	 */
+	private _isDisplayed() : boolean
+	{
+		for(let node : Node | null = this.host; node; node = (<Element>node).assignedSlot ?? node.parentNode ??
+			(<ShadowRoot>node).host ?? null)
+		{
+			if((<Element>node).hasAttribute?.("data-lazy-load-ready"))
+			{
+				return true;
+			}
+		}
+		return this.host.checkVisibility?.() ?? true;
 	}
 
 	/**
