@@ -90,10 +90,22 @@ export class Et2DatagridPrintController
 		// upgraded, an avatar's `image` attribute is still the literal unresolved
 		// `$row_cont[photo]` placeholder, not a real URL - waiting for "images" to
 		// load before that resolves would just be watching the wrong src.
-		await this.host._waitForRowUpgradesToFinish();
+		await this.host._waitForRowUpgradesToFinish(this._upgradeWaitMs(rowIds.length));
 		await this._waitForPrintImages();
 		await this._waitForPrintRowsToSettle();
 		this.syncPrintFlowHeight();
+	}
+
+	/**
+	 * How long to wait for the print rows to be upgraded
+	 *
+	 * Upgrading is spread over the animation frames, so scrolling stays smooth, and takes as long
+	 * as the rows do: a fixed allowance leaves the last rows of a large print unresolved.  Wait for
+	 * all of them, the ceiling only guards against a queue that never drains.
+	 */
+	private _upgradeWaitMs(rowCount : number) : number
+	{
+		return Math.min(1800000, Math.max(15000, rowCount * 500));
 	}
 
 	/**

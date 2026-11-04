@@ -114,7 +114,7 @@ describe("Et2DatagridPrintController", () =>
 			_body: {scrollTop},
 			_syncRowsMinHeight: () => {},
 			_scheduleVirtualizerLayoutSync: () => {},
-			_waitForRowUpgradesToFinish: async() => {}
+			_waitForRowUpgradesToFinish: sinon.spy(async() => {})
 		});
 		document.body.append(host);
 		return host;
@@ -226,6 +226,31 @@ describe("Et2DatagridPrintController", () =>
 			await frames();
 
 			assert.strictEqual(host._body.scrollTop, 120);
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+
+	it("waits for the upgrade of all rows of a large print, not a fixed time", async() =>
+	{
+		const host = createHost();
+		const controller = new Et2DatagridPrintController(host);
+		const ids = (count : number) => Array.from({length: count}, (_value, index) => `row::${index}`);
+
+		try
+		{
+			await controller.setPrintRows(ids(10));
+			controller.clearPrintRows();
+			await controller.setPrintRows(ids(1552));
+			controller.clearPrintRows();
+			await controller.setPrintRows(ids(100000));
+			controller.clearPrintRows();
+
+			const waits = host._waitForRowUpgradesToFinish.args.map((args : any[]) => args[0]);
+			assert.deepEqual(waits, [15000, 776000, 1800000],
+				"a few rows keep the usual allowance, a large print waits in proportion to its rows, up to a ceiling");
 		}
 		finally
 		{
