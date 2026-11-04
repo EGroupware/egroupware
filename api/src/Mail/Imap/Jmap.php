@@ -1699,9 +1699,10 @@ class Jmap extends Mail\Imap
 	 * @param string $folder JMAP Mailbox id, or '' if not present in the row-id
 	 * @param string $uid JMAP Email id (or numeric IMAP UID for classic-fallback rows), or '' if not present
 	 * @return RowIdParts with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap" -
-	 *  "folder"/"msgUID" are only actually resolved (real IMAP EMAILID search via emailId2uid())
-	 *  the first time either is read - many callers only need "emailID"/"folderID" and never touch
-	 *  the numeric UID at all, so they no longer pay for that search
+	 *  "folder" is resolved eagerly (see below for why that's cheap); "msgUID" is still only
+	 *  actually resolved (real IMAP EMAILID search via emailId2uid()) the first time it's read -
+	 *  callers content with the opaque JMAP id (the overwhelming majority, see below) should read
+	 *  "emailID" instead and never pay for that search at all
 	 */
 	public function splitRowID(string $folder, string $uid) : Mail\RowIdParts
 	{
@@ -1709,12 +1710,25 @@ class Jmap extends Mail\Imap
 		{
 			return parent::splitRowID($folder, $uid);
 		}
-		return new Mail\RowIdParts(['folderID' => $folder, 'emailID' => $uid, 'is_jmap' => true], function() use ($folder, $uid)
+		// 'folder' resolves via a single cached JMAP Mailbox/get round-trip
+		// (Jmap\Mailbox::folderId2path(), memoized per folderId for the whole request) - genuinely
+		// cheap, unlike 'msgUID's real raw IMAP EMAILID search below, so it's given eagerly here
+		// (RowIdParts::offsetGet() prefers this eager value, never invoking the lazy resolver for
+		// it). Found live 2026-11-04 (Birgit, ticket #127361/#127441 follow-up): opening a meeting
+		// invite and converting a mail to InfoLog both "take a long time, like running into a
+		// timeout, before doing the right thing" - MessageActionHandler::flagMessages()'s
+		// automatic mark-as-read-on-open and mail_integration::get_integrate_data() each read
+		// 'folder' just to pass it along to an already-JMAP-native call (reopen()/jmapFlagMessages())
+		// that never even uses it, forcing the search's full raw-IMAP-connection timeout against
+		// what is actually a JMAPS(443) endpoint for nothing.
+		return new Mail\RowIdParts(
+			['folderID' => $folder, 'emailID' => $uid, 'is_jmap' => true,
+				'folder' => $this->jmapClient()->folderId2path($folder)],
+			function() use ($folder, $uid)
 		{
 			$realFolder = null;
 			$realUid = $this->emailId2uid($uid, '', $folder, $realFolder);
 			return [
-				'folder' => $realFolder,
 				// live report 2026-09-29 (ralf, copying an NDN from the real-JMAP/Stalwart test
 				// account): a genuine JMAP-only account (eg. Stalwart) has no real IMAP EMAILID
 				// search capability at all, so emailId2uid() always returns null here - every

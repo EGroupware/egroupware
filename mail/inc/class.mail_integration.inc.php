@@ -291,7 +291,14 @@ class mail_integration
 			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
 			// Check the mail app
 			if ($sessionLocation != 'mail') throw new Api\Exception\AssertionFailed(lang('Application mail expected but got: %1',$sessionLocation));
-			$uid = $hA['msgUID'];
+			// a JMAP-only/Stalwart row's 'msgUID' only ever resolves via a real, genuinely
+			// pointless raw IMAP EMAILID search (Imap\Jmap::splitRowID()'s own docblock) -
+			// Mail::get_mailcontent()'s own getMessageHeader()/getMessageBody()/
+			// getMessageAttachments() JMAP-native fast paths all want exactly the opaque JMAP
+			// Email id anyway, so read that directly instead of paying for the search (ticket
+			// #127441 follow-up, 2026-11-04 - Birgit: converting a mail to InfoLog "takes a really
+			// long time" on a JMAP server, "much longer than with IMAP")
+			$uid = $hA['is_jmap'] ? $hA['emailID'] : $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
 

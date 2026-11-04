@@ -75,7 +75,12 @@ class RowIdParts implements \ArrayAccess, \Countable, \IteratorAggregate
 	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
-		if ($this->isLazyKey($offset))
+		// an eager value for a lazy key (Imap\Jmap::splitRowID() can supply "folder"/"msgUID"
+		// itself when resolving them is cheap - see its own docblock) always wins, without ever
+		// invoking the resolver - found live 2026-11-04 (ticket #127361/#127441 follow-up):
+		// nothing before this read the eager array for these two keys at all, so a caller that
+		// could answer them for free still had to pay for the resolver's expensive part.
+		if ($this->isLazyKey($offset) && !array_key_exists($offset, $this->eager))
 		{
 			return $this->resolve()[$offset] ?? null;
 		}

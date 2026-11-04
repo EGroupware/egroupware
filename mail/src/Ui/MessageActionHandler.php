@@ -310,7 +310,13 @@ class MessageActionHandler
 				foreach ($_messageList['msg'] as $rowID)
 				{
 					$hA = Mail::splitRowID($rowID);
-					$messageList[] = $hA['msgUID'];
+					// a JMAP-only/Stalwart row's 'msgUID' only ever resolves via a real, genuinely
+					// pointless raw IMAP EMAILID search (Imap\Jmap::splitRowID()'s own docblock) -
+					// Mail::flagMessages()'s own jmapFlagMessages() fast path wants exactly the
+					// opaque JMAP Email id anyway, so read that directly instead of paying for the
+					// search (ticket #127361/#127441 follow-up, 2026-11-04 - Birgit: marking a
+					// meeting invite "read" on open "ran into a timeout" before showing it)
+					$messageList[] = $hA['is_jmap'] ? $hA['emailID'] : $hA['msgUID'];
 				}
 				$this->ui->mail_bo->flagMessages(
 					$_flag,
