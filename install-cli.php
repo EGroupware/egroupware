@@ -285,7 +285,7 @@ if (run_cmd($cmd, 'composer') === 0 && in_array('--prefer-source', $composer_arg
 }
 
 // update npm dependencies, minify css and run rollup to build javascript
-run_cmd($npm.' install --legacy-peer-deps', 'npm install');
+run_cmd($npm.' ci --legacy-peer-deps', 'npm ci');
 
 run_cmd($npm.' run css', 'npm run css');
 
