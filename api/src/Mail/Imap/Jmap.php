@@ -519,6 +519,48 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP-native meeting-invite (inline text/calendar part) resolution for Stalwart - counterpart
+	 * of the classic path's own $calendar_part handling in
+	 * MessageDisplayHandler::get_load_email_data() (ticket #127361, 2026-11-04: that classic path
+	 * does a raw IMAP FETCH via Mail::getStructure()/getMessageBody()/fetchPartContents(), none of
+	 * which are overridden here, so for a JMAP-only/Stalwart account it tried real IMAP against
+	 * what is actually a JMAPS endpoint on port 443 - "Mail server closed the connection
+	 * unexpectedly"). Downloads just the invite part's own JMAP blob (no full raw-message download
+	 * needed, unlike resolveSmimeJmap()/resolveBareJmap() above - the part's blobId is already in
+	 * Email/get's bodyStructure response).
+	 *
+	 * The VCALENDAR's own METHOD property (REQUEST/REPLY/CANCEL/...) is extracted from the ICS text
+	 * itself rather than read as a MIME Content-Type parameter - RFC 8621's EmailBodyPart shape has
+	 * no generic Content-Type-parameter field to read "method=..." from directly (only charset/
+	 * name/disposition/cid/language/location are exposed, see RFC 8621 §4.1.4), while RFC 5546
+	 * requires a scheduling message's top-level METHOD: property to match it, so the two are
+	 * interchangeable in practice.
+	 *
+	 * @param string $emailId JMAP Email id
+	 * @param string $partId the invite's own JMAP partId (JmapImap::findInlineCalendarPart())
+	 * @return array{charset: string, attachment: string, method: ?string} same shape
+	 *  MessageDisplayHandler's classic path caches to the 'calendar'/'ical' session slot for
+	 *  calendar_uiforms::meeting() to consume
+	 * @throws Api\Exception part not found
+	 */
+	public function resolveCalendarJmap(string $emailId, string $partId) : array
+	{
+		$client = $this->jmapClient();
+		$email = $client->emailGet($emailId, ['bodyStructure']);
+		$part = JmapImap::findInlineCalendarPart($email['bodyStructure'] ?? []);
+		if (!$part || ($part['partId'] ?? null) !== $partId)
+		{
+			throw new Api\Exception("Calendar part '$partId' not found on Email '$emailId'");
+		}
+		$raw = $client->downloadBlob($part['blobId'], 'invite.ics', 'text/calendar');
+		return [
+			'charset' => $part['charset'] ?: 'utf-8',
+			'attachment' => $raw,
+			'method' => preg_match('/^METHOD:(.+)$/mi', $raw, $matches) ? trim($matches[1]) : null,
+		];
+	}
+
+	/**
 	 * MailboxRights (RFC 8621 §2 "myRights", writable per-principal via the mail:share
 	 * extension's "shareWith") mapped to RFC 4314 IMAP ACL letters, so the existing ACL UI
 	 * (mail_acl.inc.php/acl.xet) keeps working unchanged against JMAP-native (Stalwart)

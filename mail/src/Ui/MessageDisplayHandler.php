@@ -497,6 +497,27 @@ class MessageDisplayHandler
 				return null;
 			}
 
+			if ($type === 'calendar')
+			{
+				// classic IMAP already handles meeting invites correctly via get_load_email_data()'s
+				// own $calendar_part path below - nothing to gain by special-casing it here too, only
+				// a genuine JMAP-only/Stalwart account needs the dedicated resolver (ticket #127361)
+				if (!$isStalwart || !isset($GLOBALS['egw_info']['user']['apps']['calendar']) ||
+					!($calendarPart = JmapImap::findInlineCalendarPart($bodyStructure)))
+				{
+					return null;
+				}
+				$ical = $icServer->resolveCalendarJmap($emailID, $calendarPart['partId']);
+				Api\Cache::setSession('calendar', 'ical', [
+					'charset' => $ical['charset'],
+					'attachment' => $ical['attachment'],
+					'method' => $ical['method'],
+					'sender' => $from ? strtolower($from) : null,
+				]);
+				Api\Translation::add_app('calendar');
+				return ExecMethod('calendar.calendar_uiforms.meeting', ['event'=>null,'msg'=>'','useSession'=>true]);
+			}
+
 			if ($type === 'smime')
 			{
 				$result = $isStalwart ?
@@ -655,6 +676,16 @@ class MessageDisplayHandler
 				return null;
 			}
 
+			if ($type === 'calendar')
+			{
+				// meeting invites get their own full-page UI (calendar_uiforms::meeting(), manual
+				// handling only - see tryJmapNativeSpecialCase()), not an inline preview body - same
+				// as the classic path's own $calendar_part branch, which never returns body HTML
+				// either. Preview rendering itself (not this ajax body-fetch path) already works
+				// fine either way - pure client-side JMAP textBody/htmlBody fetch, no IMAP involved.
+				return null;
+			}
+
 			if ($type === 'smime')
 			{
 				$result = $isStalwart ?
@@ -778,8 +809,9 @@ class MessageDisplayHandler
 		$bufferHtmlOptions = $this->ui->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->ui->mail_bo->htmlOptions;
 
-		// JMAP-native S/MIME/TNEF (see plan) - returns null for anything else (meeting invites,
-		// no usable JMAP access, ...) to fall through to the classic IMAP-based path unchanged.
+		// JMAP-native S/MIME/TNEF/calendar (see plan; calendar added for ticket #127361) - returns
+		// null for anything else (classic-IMAP meeting invites, no usable JMAP access, ...) to fall
+		// through to the classic IMAP-based path unchanged.
 		// Deliberately called BEFORE reopen()/resolving $uid/$mailbox below (2026-09-01 follow-up) -
 		// its own Stalwart branch needs neither at all, and reopen() itself is real IMAP-connection
 		// work a Stalwart account has no business paying for either.

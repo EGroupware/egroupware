@@ -16,9 +16,15 @@ use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
  * JmapShim::specialCaseType()'s `multipart/signed` branch returned 'smime' the instant it found an
  * S/MIME (pkcs7) detached-signature sub-part, without ever checking whether the signed content
  * itself was (or contained) an inline text/calendar part - so a signed meeting invite got routed
- * through resolveSmime()/structureToHtml() (zero text/calendar awareness) instead of falling
- * through to the classic, calendar-aware path that builds the Accept/Decline/Tentative UI
- * (calendar.calendar_uiforms::meeting(), via MessageDisplayHandler's own $calendar_part detection).
+ * through resolveSmime()/structureToHtml() (zero text/calendar awareness) instead of being
+ * recognized as a meeting invite at all.
+ *
+ * ticket #127361 (2026-11-04) then found that falling through to null here meant EVERY meeting
+ * invite - S/MIME-wrapped or not - silently reached the classic, raw-IMAP-based calendar path
+ * (MessageDisplayHandler's own $calendar_part detection), which crashes for a JMAP-only/Stalwart
+ * account. specialCaseType() now returns 'calendar' (checked ahead of the smime/tnef/bare checks)
+ * for ANY inline text/calendar part, S/MIME- or PGP-wrapped or plain, so
+ * Imap\Jmap::resolveCalendarJmap() handles it JMAP-natively instead of falling through.
  *
  * Deliberately pure, no Horde_Imap_Client connection needed - same style as
  * BareContentSpecialCaseTest.php, specialCaseType() only inspects the plain array shape
@@ -39,7 +45,7 @@ class SmimeSignedCalendarInviteSpecialCaseTest extends \PHPUnit\Framework\TestCa
 		];
 	}
 
-	public function testSignedMeetingInviteFallsThroughToClassicCalendarAwarePath() : void
+	public function testSignedMeetingInviteUsesJmapNativeCalendarResolver() : void
 	{
 		$bodyStructure = [
 			'type' => 'multipart/signed',
@@ -48,7 +54,7 @@ class SmimeSignedCalendarInviteSpecialCaseTest extends \PHPUnit\Framework\TestCa
 				['type' => 'application/pkcs7-signature'],
 			],
 		];
-		$this->assertNull(JmapShim::specialCaseType($bodyStructure));
+		$this->assertSame('calendar', JmapShim::specialCaseType($bodyStructure));
 	}
 
 	public function testSignedNonCalendarMessageIsStillDetectedAsSmime() : void
@@ -99,10 +105,11 @@ class SmimeSignedCalendarInviteSpecialCaseTest extends \PHPUnit\Framework\TestCa
 		$this->assertSame('smime', JmapShim::specialCaseType($bodyStructure));
 	}
 
-	public function testPgpSignedMeetingInviteUnaffectedByThisFix() : void
+	public function testPgpSignedMeetingInviteAlsoUsesJmapNativeCalendarResolver() : void
 	{
-		// not S/MIME at all (no pkcs7 sub-part) - specialCaseType() already correctly returns null
-		// for this regardless of the calendar content, unrelated to and unchanged by this fix
+		// not S/MIME at all (no pkcs7 sub-part) - the calendar check (ticket #127361) runs ahead of
+		// and independently from the S/MIME-specific multipart/signed branch, so this is unaffected
+		// by which signature scheme wraps it
 		$bodyStructure = [
 			'type' => 'multipart/signed',
 			'subParts' => [
@@ -110,6 +117,6 @@ class SmimeSignedCalendarInviteSpecialCaseTest extends \PHPUnit\Framework\TestCa
 				['type' => 'application/pgp-signature'],
 			],
 		];
-		$this->assertNull(JmapShim::specialCaseType($bodyStructure));
+		$this->assertSame('calendar', JmapShim::specialCaseType($bodyStructure));
 	}
 }

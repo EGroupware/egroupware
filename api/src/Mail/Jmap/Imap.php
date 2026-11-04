@@ -4592,19 +4592,37 @@ class Imap extends Jmap\Base
 	];
 
 	/**
-	 * Decide whether a message's *top-level* bodyStructure needs the JMAP-native S/MIME or TNEF
-	 * resolver - top-level only (not a recursive walk), matching both Mail::getStructure()'s own
-	 * original S/MIME check (top-level type/protocol only) and this plan's TNEF scoping (only the
-	 * whole-message-is-TNEF case, not TNEF-as-a-regular-attachment - see JmapShim::resolveTnef()'s
+	 * Decide whether a message's bodyStructure needs the JMAP-native S/MIME, TNEF or calendar
+	 * resolver - the calendar check is a recursive walk (an inline text/calendar part can be
+	 * anywhere, eg. nested two levels down inside multipart/signed/multipart/alternative), the
+	 * S/MIME/TNEF checks stay top-level only, matching both Mail::getStructure()'s own original
+	 * S/MIME check (top-level type/protocol only) and this plan's TNEF scoping (only the whole-
+	 * message-is-TNEF case, not TNEF-as-a-regular-attachment - see JmapShim::resolveTnef()'s
 	 * docblock).
 	 *
 	 * @param array $bodyStructure RFC 8621 EmailBodyPart shape (bodyPartToJmap()/Email/get), or a
-	 *  plain {type: string, ...} - only the top-level "type" is inspected
-	 * @return string|null 'smime', 'tnef', 'bare', or null (not a special case, fall through to
-	 *  the classic path - meeting invites and anything else)
+	 *  plain {type: string, ...} - only the top-level "type" is inspected (except for the calendar
+	 *  check, which recurses)
+	 * @return string|null 'calendar', 'smime', 'tnef', 'bare', or null (not a special case, fall
+	 *  through to the classic path)
 	 */
 	public static function specialCaseType(array $bodyStructure) : ?string
 	{
+		// a meeting invite (inline text/calendar part, anywhere in the structure - plain, or
+		// wrapped in multipart/signed per ticket #127061 below) needs the JMAP-native calendar
+		// resolver - checked FIRST, ahead of the bare/smime/tnef checks below (ticket #127361,
+		// 2026-11-04: previously hasInlineCalendarPart() was only checked NEGATIVELY inside the
+		// multipart/signed branch, to avoid misrouting an S/MIME-wrapped invite to the generic
+		// S/MIME resolver - every OTHER meeting invite (the common case, not S/MIME-wrapped)
+		// silently returned null here and fell all the way through to the classic, raw-IMAP-FETCH
+		// path, which crashes for a JMAP-only/Stalwart account - "Mail server closed the connection
+		// unexpectedly", a real Horde_Imap_Client socket attempt against what is actually a JMAPS
+		// endpoint on port 443, not an IMAP server. Same bug class as the JMAP-FALLTHROUGH-GUARD
+		// sites elsewhere in this codebase.
+		if (self::hasInlineCalendarPart($bodyStructure))
+		{
+			return 'calendar';
+		}
 		$type = strtolower($bodyStructure['type'] ?? '');
 		// a message whose ENTIRE content is one bare application/pdf or image part - no
 		// multipart wrapper, no separate text/plain or text/html body anywhere (ticket #125171:
@@ -4640,17 +4658,13 @@ class Imap extends Jmap\Base
 				{
 					// ticket #127061 (Birgit, 2026-10-28): an S/MIME-signed meeting invite
 					// (multipart/signed wrapping eg. multipart/alternative with an inline
-					// text/calendar part) must still fall through to the classic, calendar-aware
-					// path (MessageDisplayHandler::get_load_email_data()'s own $calendar_part
-					// detection, further down) instead of being claimed here as a generic "smime"
-					// body - resolveSmime()/structureToHtml() have zero text/calendar awareness,
-					// which is exactly why these showed up as a plain-text invitation instead of
-					// the usual Accept/Decline/Tentative buttons. Mirrors
-					// Mail::jmapHasCalendarPart()'s own "is this an inline, non-attachment,
-					// non-empty text/calendar part" check - missed here originally even though the
-					// SMIME_TYPES flat check just below doesn't have this problem (text/calendar is
-					// never one of those types to begin with).
-					return self::hasInlineCalendarPart($bodyStructure) ? null : 'smime';
+					// text/calendar part) must not be claimed here as a generic "smime" body -
+					// resolveSmime()/structureToHtml() have zero text/calendar awareness, which is
+					// exactly why these showed up as a plain-text invitation instead of the usual
+					// Accept/Decline/Tentative buttons. Already handled by the hasInlineCalendarPart()
+					// check at the top of this method (returns 'calendar' before we ever get here),
+					// so reaching this point means it's a genuine (non-calendar) S/MIME signature.
+					return 'smime';
 				}
 			}
 			return null;
@@ -4674,20 +4688,31 @@ class Imap extends Jmap\Base
 	 */
 	private static function hasInlineCalendarPart(array $structure) : bool
 	{
+		return self::findInlineCalendarPart($structure) !== null;
+	}
+
+	/**
+	 * Recursively find the first INLINE text/calendar body part (a meeting invite) in a JMAP
+	 * bodyStructure - same shape/distinction as hasInlineCalendarPart() above, just returning the
+	 * matching sub-part itself (its 'partId'/'blobId'/'charset') instead of a bool, for
+	 * Imap\Jmap::resolveCalendarJmap() (ticket #127361) to download.
+	 */
+	public static function findInlineCalendarPart(array $structure) : ?array
+	{
 		if (strtolower($structure['type'] ?? '') === 'text/calendar' &&
 			strtolower($structure['disposition'] ?? '') !== 'attachment' &&
 			($structure['size'] ?? 0) > 0)
 		{
-			return true;
+			return $structure;
 		}
 		foreach ($structure['subParts'] ?? [] as $sub)
 		{
-			if (self::hasInlineCalendarPart($sub))
+			if (($found = self::findInlineCalendarPart($sub)))
 			{
-				return true;
+				return $found;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	/**
