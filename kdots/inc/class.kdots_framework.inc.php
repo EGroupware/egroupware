@@ -19,6 +19,16 @@ class kdots_framework extends Api\Framework\Ajax
 	const JS_INCLUDE_APP = 'kdots';
 
 	/**
+	 * Apps whose index template is rendered by egw-app before the server answered (experiment),
+	 * app name => template id.  Set cookie fast_index=0 (or ?fast_index=0) to turn it off for comparing.
+	 */
+	const FAST_INDEX = [
+		'addressbook' => 'addressbook.index',
+		'infolog'     => 'infolog.index',
+		'timesheet'   => 'timesheet.index',
+	];
+
+	/**
 	 * Enable to use this template sets login.tpl for login page
 	 */
 	const LOGIN_TEMPLATE_SET = true;
@@ -126,6 +136,16 @@ class kdots_framework extends Api\Framework\Ajax
 				{
 					$item['icon'] = Image::find('api', 'navbar');
 				}
+				// Apps rendering their index template before the server answers
+				if(isset(static::FAST_INDEX[$item['name']]) && ($_GET['fast_index'] ?? $_COOKIE['fast_index'] ?? '1') !== '0')
+				{
+					$etpl = new Api\Etemplate(static::FAST_INDEX[$item['name']]);
+					if($etpl->rel_path)
+					{
+						$item['index_template'] = static::FAST_INDEX[$item['name']];
+						$item['index_url'] = Api\Etemplate::rel2url($etpl->rel_path);
+					}
+				}
 				// Enable preferences etc. for app
 				foreach($hooks as $feature_name => $hookname)
 				{
@@ -156,6 +176,11 @@ class kdots_framework extends Api\Framework\Ajax
 				// On mobile always open app with original URL, not the one from the "openOnce" parameter
 				$url = !empty(Api\Header\UserAgent::mobile()) && $_GET['cd'] == 'yes' ? $open_app['url'] : ($open_app['openOnce'] ?? $open_app['url']);
 				$data['open_app'] = "<egw-app id=\"{$open_app['name']}\" name=\"{$open_app['name']}\" url=\"{$url}\" title=\"{$open_app['title']}\" active";
+				if(!empty($open_app['index_template']))
+				{
+					$data['open_app'] .= " index-template=\"" . htmlspecialchars($open_app['index_template']) . "\"" .
+						" index-url=\"" . htmlspecialchars($open_app['index_url']) . "\"";
+				}
 				if(!empty(Api\Header\UserAgent::mobile()) && !empty($open_app['openOnce']))
 				{
 					$once = str_replace('no_popup=1', '', $open_app['openOnce']);

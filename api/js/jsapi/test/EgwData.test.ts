@@ -328,6 +328,22 @@ describe('egw_data.js (data / data_storage)', () =>
 			assert.deepEqual(env.egw().dataGetUIDdata('appA::2').data, {name: 'two'});
 		});
 
+		/**
+		 * Contract: without an etemplate_exec_id there is no server request to ask for rows, and the server
+		 * answers an unknown id with a global framework redirect (a reload loop for a preview rendered before
+		 * the server was asked).  Setup: dataFetch() with an empty exec id.  Pass: no ajax_get_rows is sent,
+		 * _callback never fires (the caller stays loading), and the returned promise resolves.
+		 */
+		it('sends no ajax_get_rows and leaves the caller loading when there is no etemplate_exec_id', async() =>
+		{
+			const received : any[] = [];
+			await env.egw('appA').dataFetch('', {start: 0, num_rows: 2}, {}, 'widget1',
+				(result : any) => received.push(result), {prefix: 'appA'});
+
+			assert.equal(env.jsonCalls.length, 0, 'asked the server for rows without an etemplate_exec_id');
+			assert.equal(received.length, 0, '_callback fired for a request that was never made');
+		});
+
 		it('returns a promise that rejects, and never calls _callback, when the request fails', async() =>
 		{
 			const received : any[] = [];

@@ -208,6 +208,16 @@ export default css`
         }
     }
 
+	/* Real content of a fast-index app, loading in the same box as the preview that is still shown */
+	.egw_fw_app__main_content {
+		position: relative;
+	}
+	::slotted([data-fast-index-pending]) {
+		position: absolute;
+		inset: 0;
+		visibility: hidden;
+	}
+
 	.egw_fw_app__aside_content, .egw_fw_app__main_content {
 		overflow-x: hidden;
 		overflow-y: auto;

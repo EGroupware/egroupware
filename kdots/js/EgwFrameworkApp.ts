@@ -78,6 +78,17 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	url = "";
 
+	/**
+	 * Template id of the application's index (eg. addressbook.index), set by the server for apps that opted in
+	 * to fast index rendering.  It is rendered as a read-only preview while the real index is requested from `url`.
+	 */
+	@property({attribute: 'index-template'})
+	indexTemplate = "";
+
+	/** Server computed (cache-busted) url of indexTemplate's .xet, so we can fetch it without waiting for `url` */
+	@property({attribute: 'index-url'})
+	indexUrl = "";
+
 	private _allow= "";
 	/** allow property of iframe, if an iframe is used */
 	@property()
@@ -123,7 +134,7 @@ export class EgwFrameworkApp extends LitElement
 	{
 		let nm = null;
 		// Find the widget
-		nm = this.querySelector("et2-nextmatch");
+		nm = this.querySelector("et2-nextmatch:not([data-fast-index] *)");
 		if(nm)
 		{
 			return nm;
@@ -205,6 +216,10 @@ export class EgwFrameworkApp extends LitElement
 	private resizeTimeout : number;
 
 	protected loadingPromise = Promise.resolve();
+
+	/** Preview of the index template, shown until the real one is loaded.  See _showFastIndex() */
+	private _fastIndex : etemplate2 | null = null;
+	private _fastIndexSlotter : MutationObserver | null = null;
 
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
@@ -362,6 +377,7 @@ export class EgwFrameworkApp extends LitElement
 
 	public load(url)
 	{
+		window.performance.mark("egw-app-load-start:" + this.name);
 		if(this.egw.debug_level() >= 4)
 		{
 			window.performance.mark("mark_egw_app_start_load_" + this.name);
@@ -382,6 +398,7 @@ export class EgwFrameworkApp extends LitElement
 		this._offUrl = (this.url != url);
 
 		// Clear everything
+		this._fastIndex = null;
 		Array.from(this.children).forEach(n =>
 		{
 			etemplate2.getById(n.id)?.clear();
@@ -410,6 +427,10 @@ export class EgwFrameworkApp extends LitElement
 		{
 			window.performance.mark("mark_egw_app_fetch_start_" + this.name);
 		}
+		if(!this.useIframe && this.indexTemplate && this.indexUrl && url === this.url)
+		{
+			this._showFastIndex();
+		}
 		if(!this.useIframe)
 		{
 			this.loadingPromise = this.egw.request(
@@ -429,14 +450,26 @@ export class EgwFrameworkApp extends LitElement
 				}
 
 				// Load request returns HTML.  Shove it in.
-				this.innerHTML = (<string[]>data).join("");
+				if(this._fastIndex)
+				{
+					// Keep the preview in place, the real content waits (hidden) until it has loaded
+					const content = document.createElement("template");
+					content.innerHTML = (<string[]>data).join("");
+					Array.from(content.content.children).forEach(n => n.setAttribute("data-fast-index-pending", ""));
+					this.append(content.content);
+				}
+				else
+				{
+					this.innerHTML = (<string[]>data).join("");
+				}
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
 				this.requestUpdate();
 
 				// Wait for children to load
-				return this.waitForLoad(Array.from(this.querySelectorAll("[id]")));
+				return this.waitForLoad(Array.from(this.querySelectorAll<HTMLElement>("[id]"))
+					.filter(n => !n.closest("[data-fast-index]")));
 			})
 		}
 		else
@@ -464,6 +497,7 @@ export class EgwFrameworkApp extends LitElement
 		this.loadingPromise
 			.then(() =>
 			{
+				this._removeFastIndex();
 				if(this.egw.debug_level() >= 4)
 				{
 					window.performance.mark("mark_egw_app_contents_end_" + this.name);
@@ -483,6 +517,7 @@ export class EgwFrameworkApp extends LitElement
 			})
 			.catch((e) =>
 			{
+				this._removeFastIndex();
 				debugger;
 				console.log(e)
 			})
@@ -500,12 +535,87 @@ export class EgwFrameworkApp extends LitElement
 	}
 
 	/**
+	 * Render the index template without waiting for the server
+	 *
+	 * The template's widgets are shown without any content (no rows, empty selects) while load() asks the
+	 * server for the real thing.  The preview is inert, and removed by _removeFastIndex() once the real
+	 * template has loaded, so there is no empty app while we wait.
+	 */
+	protected _showFastIndex()
+	{
+		const id = this.indexTemplate.replace(/\./g, '-') + "-preview";
+		const container = document.createElement("form");
+		container.id = id;
+		container.className = "et2_container";
+		container.setAttribute("data-fast-index", "");
+		container.inert = true;
+		this.append(container);
+
+		const preview = new etemplate2(container, "", id);
+		this._fastIndex = preview;
+
+		// Slotted (header) widgets need to be our children, like etemplate2 does for the real ones.  Do it as
+		// soon as they are in the DOM, the template's own updateComplete waits for widgets that need the real data.
+		let slottedDone = false;
+		const slotter = new MutationObserver(() =>
+		{
+			if(this._fastIndex !== preview)
+			{
+				return;
+			}
+			const slotted = slottedDone ? [] : container.querySelectorAll(":scope > et2-template > [slot]");
+			if(!slotted.length)
+			{
+				return;
+			}
+			slottedDone = true;
+			slotted.forEach((node : HTMLElement) =>
+			{
+				node.setAttribute("data-fast-index", "");
+				node.inert = true;
+				this.appendChild(node);
+			});
+			window.performance.mark("egw-app-preview-shown:" + this.name);
+			this.requestUpdate();
+		});
+		slotter.observe(container, {childList: true, subtree: true});
+		this._fastIndexSlotter = slotter;
+		new Promise<void>(resolve => this.egw.langRequireApp(window, this.name, resolve))
+			.then(() => preview.loadPreview(this.indexTemplate, this.indexUrl))
+			.catch(e => this.egw.debug("warn", "Fast index preview failed", e))
+			.finally(() => slotter.disconnect());
+	}
+
+	/**
+	 * Remove the preview made by _showFastIndex() and show the real content
+	 */
+	protected _removeFastIndex()
+	{
+		window.performance.mark("egw-app-real-loaded:" + this.name);
+		this._fastIndexSlotter?.disconnect();
+		this._fastIndexSlotter = null;
+		const preview = this._fastIndex;
+		this._fastIndex = null;
+		if(!preview)
+		{
+			return;
+		}
+		preview.clear();
+		this.querySelectorAll(":scope > [data-fast-index]").forEach(n => n.remove());
+		this.querySelectorAll(":scope > [data-fast-index-pending]").forEach(n => n.removeAttribute("data-fast-index-pending"));
+		this.requestUpdate();
+		// The real content was laid out hidden, give it a frame to be visible before measuring again
+		this._resizeChildren();
+		requestAnimationFrame(() => this._resizeChildren());
+	}
+
+	/**
 	 * Resize direct child etemplates (nextmatches that were hidden need this to pick up
 	 * their real dimensions - admin, other apps seem to be fine without it).
 	 */
 	private _resizeChildren() : void
 	{
-		this.querySelectorAll(":scope > [id]").forEach((node) =>
+		this.querySelectorAll(":scope > [id]:not([data-fast-index])").forEach((node) =>
 		{
 			etemplate2.getById(node.id)?.resize(undefined);
 		});
@@ -975,6 +1085,10 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected handleEtemplateClear(event)
 	{
+		if(event.target?.hasAttribute?.("data-fast-index"))
+		{
+			return;
+		}
 		if(this.nextmatch && this.nextmatch.getInstanceManager().DOMContainer === event.target)
 		{
 			this.filters.nextmatch = null;
@@ -1253,8 +1367,8 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected _loadingTemplate(slot = null)
 	{
-		// Don't show loader for iframe, it will not resolve
-		if(this.useIframe)
+		// Don't show loader for iframe, it will not resolve, or when we have a preview to look at
+		if(this.useIframe || this._fastIndex)
 		{
 			return nothing;
 		}
