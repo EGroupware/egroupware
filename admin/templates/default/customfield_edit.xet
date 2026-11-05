@@ -3,7 +3,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<et2-template  id="admin.customfield_edit.settings" template="" lang="" group="0" version="1.9.001" layout="2-column" style="--label-width:8em">
-		<et2-select  label="Type" span="all" id="cf_type2" rows="5" multiple="true" placeholder="All" noLang="1" hidden="@no_types"></et2-select>
+		<et2-select  label="Type" span="all" id="cf_type2" rows="5" multiple="true" placeholder="All" noLang="1" hidden="@no_types" disabled="@no_types"></et2-select>
 		<et2-textbox  label="Label" statustext="the text displayed to the user" id="cf_label" maxlength="128" span="all"></et2-textbox>
 		<et2-select  label="Type of field" statustext="Type of customfield" id="cf_type" onchange="app.admin.cf_type_change"></et2-select>
 		<et2-checkbox  id="cf_needed" label="Required"></et2-checkbox>

@@ -80,7 +80,7 @@
 				<et2-description  for="adr_one_region" value="State" disabled="!@addr_format=city_state_postcode" style="flex:none; width:calc(var(--label-width, 8em) + 0.75em); min-width:calc(var(--label-width, 8em) + 0.75em)"></et2-description>
 				<et2-select-state  statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" class="city_state_postcode" style="flex:1" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
 			</et2-hbox>
-			<et2-select  class="et2-label-fixed" label="Type" id="tid" onchange="1" hidden="@no_tid" noLang="1"></et2-select>
+			<et2-select  class="et2-label-fixed" label="Type" id="tid" onchange="1" hidden="@no_tid" disabled="@no_tid" noLang="1"></et2-select>
 		</et2-vbox>
 		<et2-select-account  class="et2-label-fixed" label="Shared with" id="shared_values" multiple="true" span="all" hidden="@shared_disabled" onchange="app.addressbook.shared_changed" accountType="both"></et2-select-account>
 		<et2-checkbox  id="shared_writable" label="writable" statustext="Create new shares writable" span="all" hidden="@shared_disabled"></et2-checkbox>

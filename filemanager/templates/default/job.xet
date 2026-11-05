@@ -7,7 +7,7 @@
 		<et2-select-account label="Owner" hidden="!@app=infolog"  id="info_owner" accountType="both" emptyLabel="Select one..."></et2-select-account>
 		<et2-select-account label="Responsible" hidden="!@app=infolog"  id="info_responsible" accountType="both" multiple="true"></et2-select-account>
 		<et2-select-cat label="Category" hidden="!@app=infolog"  id="info_cat" application="infolog"></et2-select-cat>
-		<et2-select hidden="@no_cfs" label="Creationdate of file"  id="file_created" emptyLabel="Startdate"></et2-select>
+		<et2-select hidden="@no_cfs" disabled="@no_cfs" label="Creationdate of file"  id="file_created" emptyLabel="Startdate"></et2-select>
 		<et2-vfs-path label="Move file to"  id="target_dir" statustext="leave empty to delete the file after attaching"></et2-vfs-path>
 	</et2-template>
 	<et2-template  id="filemanager.job.custom" template="" lang="" group="0" version="1.9.001">
