@@ -4,7 +4,7 @@ import "./MailAppImportStub";
 // way the other mail app.ts tests do, before app.ts pulls it in transitively
 import "../../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {MailApp} from "../app";
-import {addPrintShortcut, imagesLoaded, printHeaderRows} from "../printBody";
+import {addPrintShortcut, fitToPrintWidth, imagesLoaded, printHeaderRows} from "../printBody";
 
 const APP_SOURCE = '/mail/js/app.ts';
 
@@ -289,6 +289,52 @@ describe('printHeaderRows()', () =>
 	{
 		assert.deepEqual(printHeaderRows(undefined, lang, formatDate), []);
 		assert.deepEqual(printHeaderRows({date: 'no date'}, lang, formatDate), []);
+	});
+});
+
+/**
+ * Content wider than the page got cut off on the right, eg. a 1600px wide table (print test 5)
+ */
+describe('fitToPrintWidth()', () =>
+{
+	let iframe: HTMLIFrameElement;
+
+	afterEach(() => iframe?.remove());
+
+	function bodyDocument(content: string): Document
+	{
+		iframe = document.createElement('iframe');
+		iframe.style.width = '1200px';
+		document.body.append(iframe);
+		const doc = iframe.contentDocument;
+		doc.body.style.margin = '0';
+		doc.body.innerHTML = '<div class="mailDisplayBody">' + content + '</div>';
+		return doc;
+	}
+
+	it('scales down content wider than the printable width, and resets it again', () =>
+	{
+		const doc = bodyDocument('<table style="width:1600px"><tr><td>wide</td></tr></table>');
+		const content = doc.querySelector<HTMLElement>('.mailDisplayBody');
+
+		const reset = fitToPrintWidth(doc, 690);
+
+		const zoom = parseFloat(content.style.getPropertyValue('zoom'));
+		assert.isBelow(zoom, 0.45);
+		assert.isAbove(zoom, 0.4);
+		assert.equal(doc.documentElement.style.width, '', 'measured with the printable width only temporarily');
+		assert.isFalse(doc.documentElement.classList.contains('mailPrintMeasure'));
+		reset();
+		assert.equal(content.style.getPropertyValue('zoom'), '');
+	});
+
+	it('leaves content fitting the printable width alone, also when it is wider on screen', () =>
+	{
+		const doc = bodyDocument('<p>' + 'some text '.repeat(200) + '</p>');
+
+		fitToPrintWidth(doc, 690);
+
+		assert.equal(doc.querySelector<HTMLElement>('.mailDisplayBody').style.getPropertyValue('zoom'), '');
 	});
 });
 

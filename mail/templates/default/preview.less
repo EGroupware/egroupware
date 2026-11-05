@@ -263,8 +263,28 @@ img[alt*="[blocked external image:"] {
   display: none;
 }
 
+/* Content wider than the page: images and long words or lines fit the page width when printing,
+   what still does not (eg. a wide table) gets scaled down by printBody.ts's fitToPrintWidth(),
+   which measures with these rules applied via html.mailPrintMeasure */
+.mailPrintFit() {
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  body {
+    overflow-wrap: anywhere;
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+}
+html.mailPrintMeasure {
+  .mailPrintFit();
+}
+
 /* The body document gets printed on its own (MailApp.printMessage()) */
 @media print {
+  .mailPrintFit();
   /* not scrolling in its on-screen height, which printed only the first screenful */
   body, html, .mailDisplayBody {
     height: auto !important;

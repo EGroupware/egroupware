@@ -99,14 +99,54 @@ export function printBodyWithHeader(iframe: HTMLIFrameElement, subject: string, 
 	}
 	header.append(table);
 	doc.body.prepend(header);
+	const resetZoom = fitToPrintWidth(doc);
 
 	// print() returns before the dialog closes in some browsers
 	win.addEventListener('afterprint', () =>
 	{
 		header.remove();
+		resetZoom();
 		afterPrint?.();
 	}, {once: true});
 	win.print();
+}
+
+/**
+ * Printable width in CSS px the mail gets fitted into: A4 is 794px wide, minus Firefox's default
+ * margins of 12.7mm (Chrome's are 10mm, Letter is wider) that leaves 698px
+ */
+export const PRINT_WIDTH_PX = 690;
+
+/**
+ * Scale the mail down to the printable width, if its content is wider, eg. a 1600px wide table
+ *
+ * Measured with the print rules for wide content (preview.less's .mailPrintFit()), which make
+ * images, long words and lines fit already. Only the mail's own content is scaled, not the
+ * header block. Measuring happens synchronously, so the screen never shows the measuring width.
+ *
+ * @param doc body document
+ * @param width printable width in CSS px
+ * @return callback to reset the zoom again
+ */
+export function fitToPrintWidth(doc: Document, width: number = PRINT_WIDTH_PX): () => void
+{
+	const content = doc.querySelector<HTMLElement>('.mailDisplayBody') ?? doc.body;
+	const html = doc.documentElement;
+	const htmlWidth = html.style.width;
+	html.classList.add('mailPrintMeasure');
+	html.style.width = width+'px';
+	const needed = content.scrollWidth;
+	const available = content.clientWidth;
+	html.classList.remove('mailPrintMeasure');
+	html.style.width = htmlWidth;
+
+	if (!(available > 0) || needed <= available + 1)
+	{
+		return () => {};
+	}
+	const zoom = content.style.getPropertyValue('zoom');
+	content.style.setProperty('zoom', String(available / needed));
+	return () => { content.style.setProperty('zoom', zoom); };
 }
 
 /** documents addPrintShortcut() already added its listener to */
