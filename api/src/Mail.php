@@ -4150,6 +4150,33 @@ class Mail
 	}
 
 	/**
+	 * Is $_folder marked by the IMAP server itself with the SPECIAL-USE \Trash attribute
+	 *
+	 * Ticket #126811 (2026-11-05, Gerald Franck / Birgit): an account can end up with two
+	 * trash-like folders when the configured acc_folder_trash (checked by isTrashFolder())
+	 * doesn't match the server's own \Trash-flagged mailbox (eg. a leftover provider-default
+	 * "INBOX.Trash" next to a localized "INBOX.Papierkorb" actually used/displayed) -
+	 * deleting from whichever one the user is actually looking at must still really delete
+	 * the message, not silently re-file it into the other one, so callers deciding whether
+	 * to force a real delete should check this in addition to isTrashFolder().
+	 *
+	 * @param string $_folder
+	 * @return bool
+	 */
+	function isSpecialUseTrashFolder($_folder)
+	{
+		try
+		{
+			$attributes = $this->getFolderStatus($_folder, false, true)['attributes'] ?? [];
+		}
+		catch (\Exception $e)
+		{
+			return false;
+		}
+		return in_array('\\trash', array_map('strtolower', (array)$attributes));
+	}
+
+	/**
 	 * getSentFolder wrapper for _getSpecialUseFolder Type Sent
 	 * @param boolean $_checkexistance trigger check for existance
 	 * @return mixed string or false
@@ -4424,11 +4451,10 @@ class Mail
 	{
 		$folderName	= $_folderName ?: $this->sessionData['mailbox'];
 		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
-		$trashFolder	= $this->getTrashFolder();
 
 		$this->icServer->openMailbox($folderName);
 
-		if(strtolower($folderName) == strtolower($trashFolder) && $deleteOptions == "move_to_trash") {
+		if(($this->isTrashFolder($folderName, false, true) || $this->isSpecialUseTrashFolder($folderName)) && $deleteOptions == "move_to_trash") {
 			$this->deleteMessages('all',$folderName,'remove_immediately');
 		} else {
 			$this->icServer->expunge($folderName);
@@ -4475,7 +4501,7 @@ class Mail
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
 		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['templateFolder'];
-		if((strtolower($_folder) == strtolower($trashFolder) && $deleteOptions == "move_to_trash")) {
+		if(($this->isTrashFolder($_folder, false, true) || $this->isSpecialUseTrashFolder($_folder)) && $deleteOptions == "move_to_trash") {
 			$deleteOptions = "remove_immediately";
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {
