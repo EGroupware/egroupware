@@ -38,13 +38,15 @@ class TransportSplitBodyAndAttachmentsTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * Same structure Api\Mailer::send() builds for a meeting invite: multipart/alternative of
-	 * [text/plain, text/calendar;charset=utf-8;method=REQUEST] - see Mailer::setAlternativBody().
+	 * [text/plain, text/calendar;charset=utf-8;method=REQUEST;name=cal.ics] - see
+	 * Mailer::setAlternativBody() / MailerAlternativBodyNameTest for how the "name=" parameter
+	 * (deliberately NOT a Content-Disposition filename) gets there.
 	 */
 	private function inviteMime() : \Horde_Mime_Part
 	{
 		$raw = "MIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary=\"b\"\r\n\r\n".
 			"--b\r\nContent-Type: text/plain; charset=utf-8\r\n\r\nbody\r\n".
-			"--b\r\nContent-Type: text/calendar; charset=utf-8; method=REQUEST\r\n\r\n".
+			"--b\r\nContent-Type: text/calendar; charset=utf-8; method=REQUEST; name=cal.ics\r\n\r\n".
 			"BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n--b--\r\n";
 		return \Horde_Mime_Part::parseMessage($raw);
 	}
@@ -56,6 +58,18 @@ class TransportSplitBodyAndAttachmentsTest extends \PHPUnit\Framework\TestCase
 		$this->assertCount(1, $attachments);
 		$this->assertSame('text/calendar; method=REQUEST', $attachments[0]['type']);
 		$this->assertNull($attachments[0]['disposition'], 'an iTip part must not be flagged as a generic attachment');
+	}
+
+	/**
+	 * Ralf, 2026-11-05: the invite arrived with the correct type/disposition but no filename, so
+	 * JMAP clients showed "Unbekannter Part"/"Unknown part" instead of the real "cal.ics" - see
+	 * MailerAlternativBodyNameTest for where the Content-Type "name=" parameter itself comes from.
+	 */
+	public function testCalendarInviteKeepsItsName()
+	{
+		[, , , $attachments] = $this->split($this->inviteMime());
+
+		$this->assertSame('cal.ics', $attachments[0]['name']);
 	}
 
 	public function testPlainAndCalendarBodyValuesAreExtracted()
