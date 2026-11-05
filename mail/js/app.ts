@@ -9188,7 +9188,8 @@ export class MailApp extends EgwApp
 		{
 			// app.mail, not this: the shortcut must not use a destroyed instance, if the app got reloaded
 			const mail = (window as any).app?.mail;
-			if (!mail)
+			// another application is active: leave it to the framework, printing that application
+			if (!mail || framework.activeApp.appName !== mail.appname)
 			{
 				return false;
 			}
