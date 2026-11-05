@@ -262,6 +262,30 @@ describe('MailApp printing in mail.index', () =>
 		assert.isFalse(press(), 'no mail shown: left to the framework');
 		assert.deepEqual(calls, ['printMessage', 'printMessage']);
 	});
+
+	it('leaves ctrl+P to the framework, while another application is active', () =>
+	{
+		const {app, list, calls} = mailIndex();
+		app.printMessage = () => { calls.push('printMessage'); return true; };
+		(window as any).app = {mail: app};
+		(app as any).addPrintShortcut(document);
+		const appElement = document.createElement('egw-app');
+		appElement.setAttribute('name', 'mail');
+		document.body.append(appElement);
+		elements.push(appElement);
+		const press = () =>
+		{
+			const event = new KeyboardEvent('keydown', {key: 'p', ctrlKey: true, cancelable: true, bubbles: true, composed: true});
+			list.dispatchEvent(event);
+			return event.defaultPrevented;
+		};
+
+		assert.isFalse(press(), 'mail not the active app, eg. calendar: left to the framework, printing that app');
+		assert.deepEqual(calls, [], 'the mail selected before is not printed');
+		appElement.setAttribute('active', '');
+		assert.isTrue(press(), 'mail active again: prints its mail');
+		assert.deepEqual(calls, ['printMessage']);
+	});
 });
 
 describe('printHeaderRows()', () =>
