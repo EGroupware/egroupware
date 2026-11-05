@@ -201,6 +201,7 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  * @event et2-selection-changed - Fired when row selection changes.
  * @event et2-active-row-changed - Fired when keyboard or pointer navigation changes the active row.
  * @event et2-columns-changed - Fired when column order, width, or visibility changes.
+ * @event et2-datagrid-filters - Fired when "Filters" is chosen from the header's column action (see `filterAction`).
  *
  * @slot header - Header content used when no column definitions are available.
  * @slot noResults - Optional empty-state content shown when there are no rows.
@@ -222,6 +223,7 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  * @csspart expanded-row - Cell containing consumer-provided expanded row content.
  * @csspart column - A visible header column wrapper.
  * @csspart column-selection - Column selection action container in the header.
+ * @csspart column-selection-indicator - Dot on the column selection action while `filterActive` is set.
  *
  * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
  * @cssproperty [--row-cell-max-height=20lh] - Maximum height for individual row cells; taller content is clipped. Set to `none` for unlimited. Warning: large values, or `none`, let one row be many screens tall, which makes the list slow and can make it request far more pages than it shows.
@@ -469,6 +471,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	@property({type: Boolean})
 	noColumnSelection : boolean = false;
+
+	/**
+	 * Turn the header's column action into a ⋮ menu offering "Filters" next to "Select columns".
+	 *
+	 * For an owner that keeps its filters out of sight and has nowhere else to put a button for
+	 * them, eg. Et2Nextmatch in a popup or Et2Historylog (see Et2FilterDrawerController).  Choosing
+	 * it fires `et2-datagrid-filters`; the datagrid itself knows nothing about filters.  With
+	 * `noColumnSelection` the menu offers only "Filters".
+	 */
+	@property({type: Boolean})
+	filterAction : boolean = false;
+
+	/**
+	 * Mark the header's column action while the owner's filters are set, so a filtered list can be
+	 * told apart without opening the menu.  Only shown together with `filterAction`.
+	 */
+	@property({type: Boolean})
+	filterActive : boolean = false;
 
 	/**
 	 * Disable loading and saving column preferences. Useful for child grids whose
@@ -5520,6 +5540,74 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Handle a choice from the header's column action menu (only rendered with `filterAction`).
+	 */
+	private _handleColumnActionSelect(event : CustomEvent) : void
+	{
+		// Ours alone - nothing above the datagrid should mistake it for one of its own menus.  Stopped
+		// on the dropdown, not the menu: the dropdown closes itself on the same event.
+		event.stopPropagation();
+		switch(event.detail?.item?.value)
+		{
+			case "columns":
+				void this.openColumnSelection();
+				break;
+			case "filters":
+				this.dispatchEvent(new CustomEvent("et2-datagrid-filters"));
+				break;
+		}
+	}
+
+	/**
+	 * The header's column action: a button opening the column selection, or - with
+	 * `filterAction` - a menu offering both that and the owner's filters.
+	 */
+	private _columnSelectionTemplate() : TemplateResult | typeof nothing
+	{
+		if(this.noColumnSelection && !this.filterAction)
+		{
+			return nothing;
+		}
+		const columnsLabel = this.egw().lang("select columns");
+		if(!this.filterAction)
+		{
+			return html`
+                <div class="dg-colselection" part="column-selection">
+                    <et2-button-icon image="list-task" label=${columnsLabel}
+                                     @click=${this._handleColumnSelectionClick}
+                                     noSubmit
+                    ></et2-button-icon>
+                </div>
+			`;
+		}
+		const filtersLabel = this.egw().lang("Filters");
+		return html`
+            <div class="dg-colselection" part="column-selection">
+                <sl-dropdown placement="bottom-end" hoist @sl-select=${this._handleColumnActionSelect}>
+                    <et2-button-icon slot="trigger" image="three-dots-vertical" noSubmit
+                                     label=${this.noColumnSelection ? filtersLabel : this.egw().lang("Columns and filters")}
+                    ></et2-button-icon>
+                    <sl-menu>
+                        ${this.noColumnSelection ? nothing : html`
+                            <sl-menu-item value="columns">
+                                <sl-icon slot="prefix" name="list-task"></sl-icon>
+                                ${columnsLabel}
+                            </sl-menu-item>
+                        `}
+                        <sl-menu-item value="filters">
+                            <sl-icon slot="prefix" name=${this.filterActive ? "filter-circle-fill" : "filter-circle"}></sl-icon>
+                            ${filtersLabel}
+                        </sl-menu-item>
+                    </sl-menu>
+                </sl-dropdown>
+                ${this.filterActive ? html`
+                    <span class="dg-colselection__indicator" part="column-selection-indicator"></span>
+                ` : nothing}
+            </div>
+		`;
+	}
+
+	/**
 	 * Ask the owner widget to open its normal context menu from the empty row.
 	 */
 	private _handleEmptyStateActionMenuClick(event : MouseEvent)
@@ -6639,14 +6727,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                     </div>
                 `
             })}
-			${this.noColumnSelection ? nothing : html`
-                <div class="dg-colselection" part="column-selection">
-                    <et2-button-icon image="list-task" label=${this.egw().lang("select columns")}
-                                     @click=${this._handleColumnSelectionClick}
-									 noSubmit
-					></et2-button-icon>
-				</div>
-			`}
+			${this._columnSelectionTemplate()}
 		`;
 		return html`
             <div class="dg-header" part="header" role="rowgroup">

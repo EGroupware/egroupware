@@ -274,51 +274,60 @@ describe("Et2Historylog", () =>
 	});
 
 	/**
-	 * Pass criteria: the filter button reflects whether anything is filtered, and does not count
-	 * the record scoping as a filter - it is always set.
+	 * There is no filter button: the filters open from the grid's ⋮ menu, which drives the
+	 * drawer through `et2-datagrid-filters`.
+	 *
+	 * Pass criteria: the grid offers the filters (and not the column selection), and its event
+	 * toggles the drawer.
 	 */
-	it("shows the filter button as filled only when something is filtered", async() =>
+	it("opens its filters from the grid's menu", async() =>
 	{
 		const el = track(await historylog());
+		const grid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		// Opening creates the filterbox, which would fetch api.historylog.filters - not what this is about
+		const ensureFilterbox = sinon.stub(<any>el, "_ensureFilterbox").returns(null);
 
-		assert.equal((<any>el)._filterInfo().icon, "filter-circle",
-			"record_id/appname are always set and are not filters");
+		assert.isTrue(grid.filterAction, "the grid's menu must offer the filters");
+		assert.isTrue(grid.noColumnSelection, "a history log has no column selection to offer");
+		assert.isFalse(el.filtersDrawer.open);
 
-		el.applyFilters({search: "needle"});
-		assert.equal((<any>el)._filterInfo().icon, "filter-circle-fill");
+		grid.dispatchEvent(new CustomEvent("et2-datagrid-filters"));
+		await el.updateComplete;
+		assert.isTrue(el.filtersDrawer.open, "Filters must open the drawer");
+		assert.isTrue(ensureFilterbox.calledOnce, "opening must create the filterbox");
 
-		el.applyFilters({search: ""});
-		assert.equal((<any>el)._filterInfo().icon, "filter-circle",
-			"clearing the filter must un-fill the icon");
+		grid.dispatchEvent(new CustomEvent("et2-datagrid-filters"));
+		await el.updateComplete;
+		assert.isFalse(el.filtersDrawer.open, "Filters again must close it");
 	});
 
 	/**
-	 * The header renders from `_filterInfo()`, which reads `_filters` - a plain field, not a
-	 * reactive property.  So `applyFilters()` has to ask for a render itself; without that the
-	 * funnel icon never fills and the drawer's "Clear filters" action never appears, even though
-	 * the filter is applied and the rows do change.  Found live.
+	 * The mark and the drawer's "Clear filters" action render from `_filters` - a plain field, not
+	 * a reactive property.  So `applyFilters()` has to ask for a render itself; without that the
+	 * mark never shows and "Clear filters" never appears, even though the filter is applied and
+	 * the rows do change.  Found live.
 	 *
-	 * Pass criteria: the rendered header reflects the filter state after applying, not just
-	 * `_filterInfo()` in isolation.
+	 * Pass criteria: the rendered grid mark and drawer action follow the filter state, and the
+	 * record scoping (record_id/appname, always set) does not count as a filter.
 	 */
-	it("re-renders the header when filters are applied", async() =>
+	it("marks the grid's menu and offers Clear while something is filtered", async() =>
 	{
 		const el = track(await historylog());
 
 		const clearActions = () => el.shadowRoot!.querySelectorAll('sl-drawer [slot="header-actions"]').length;
-		const iconName = () => el.shadowRoot!.querySelector('[part="header"] et2-button-icon')?.getAttribute("name");
+		const marked = () => (el.shadowRoot!.querySelector("et2-datagrid") as any).filterActive;
 
-		assert.equal(iconName(), "filter-circle", "no filters: the funnel is empty");
+		assert.isFalse(marked(), "record_id/appname are always set and are not filters");
 		assert.equal(clearActions(), 0, "no filters: nothing to clear");
 
 		el.applyFilters({search: "needle"});
 		await el.updateComplete;
-		assert.equal(iconName(), "filter-circle-fill", "a filter must fill the funnel in the rendered header");
+		assert.isTrue(marked(), "a filter must mark the grid's menu");
 		assert.equal(clearActions(), 1, "a filter must offer 'Clear filters' in the drawer header");
 
 		el.applyFilters({search: ""});
 		await el.updateComplete;
-		assert.equal(iconName(), "filter-circle", "clearing must empty the funnel again");
+		assert.isFalse(marked(), "clearing must remove the mark again");
 		assert.equal(clearActions(), 0);
 	});
 
@@ -329,8 +338,9 @@ describe("Et2Historylog", () =>
 	{
 		const el = track(await historylog());
 		el.applyFilters({col_filter: {}});
+		await el.updateComplete;
 
-		assert.equal((<any>el)._filterInfo().icon, "filter-circle");
+		assert.isFalse((el.shadowRoot!.querySelector("et2-datagrid") as any).filterActive);
 	});
 
 	/**

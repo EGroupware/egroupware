@@ -109,8 +109,10 @@ diff reports itself `overflowing`; otherwise the click is left alone and et2-dif
 
 ## Filtering
 
-Filters live in a drawer, opened by the funnel button above the grid. The button fills in while
-anything is filtered, so it is visible at a glance that the list is not showing everything.
+Filters live in a drawer that slides over the history log, opened from "Filters" in the ⋮ menu at
+the end of the grid's header. The ⋮ carries a dot while anything is filtered, so it is visible at a
+glance that the list is not showing everything. The drawer is `Et2FilterDrawerController`, the same
+one a nextmatch in a popup uses.
 
 | Filter | Wire | Notes |
 |---|---|---|

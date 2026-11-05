@@ -17,43 +17,9 @@ export default css`
 		overflow: visible;
 	}
 
-	.historylog__header {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		gap: var(--sl-spacing-2x-small);
-		flex: 0 0 auto;
-		min-height: var(--sl-input-height-small);
-	}
-
-
 	et2-datagrid {
 		flex: 1 1 auto;
 		min-height: 0;
-	}
-
-	/* The filter drawer is 'contained', so it slides over the history log rather than the window */
-	sl-drawer::part(panel) {
-		--size: min(28em, 90%);
-	}
-
-	sl-drawer::part(body) {
-		padding: var(--sl-spacing-medium);
-	}
-
-	/* Same fix egw-app needs: without it the header-action buttons sit off-centre */
-	sl-drawer [slot="header-actions"] {
-		display: flex;
-	}
-
-	/*
-	 * One label column for every filter, so they line up instead of each label sizing itself.
-	 * The filterbox's own default is a percentage (min(20rem, 30%)), which in a drawer this narrow
-	 * leaves the controls ragged - a fixed em width is what makes it read like egw-app's.
-	 */
-	et2-filterbox {
-		--label-width: 7em;
-		--gap-width: var(--sl-spacing-small);
 	}
 
 	/*

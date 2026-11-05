@@ -191,6 +191,24 @@ export default css`
 		background-color: var(--sl-color-neutral-100);
 	}
 
+	/* The button is wider than the column it sits in; centre the ⋮ over it the way the plain button is */
+	.dg-colselection sl-dropdown {
+		display: flex;
+		justify-content: center;
+	}
+
+	/* "Filters are set" mark on the column action, see filterActive */
+	.dg-colselection__indicator {
+		position: absolute;
+		top: var(--sl-spacing-3x-small);
+		right: var(--sl-spacing-3x-small);
+		width: 0.5em;
+		height: 0.5em;
+		border-radius: 50%;
+		background-color: var(--sl-color-primary-600);
+		pointer-events: none;
+	}
+
 	.dg-body {
 		flex: 1 1 auto;
 		overflow-y: auto;

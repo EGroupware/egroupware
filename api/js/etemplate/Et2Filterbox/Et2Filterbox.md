@@ -33,6 +33,17 @@ directly. The framework will create a filterbox with our desired attributes.
 </overlay>
 ```
 
+## Outside an egw-app
+
+A popup or an edit dialog has no `egw-app` filter drawer. A nextmatch there whose template sets `filterTemplate`
+puts its filterbox in a drawer of its own, which slides over the list and opens from "Filters" in the ⋮ menu at
+the end of the grid's header. The ⋮ carries a dot while anything is filtered. `et2-historylog` works the same way.
+
+Other widgets built on `et2-datagrid` can get the same drawer from `Et2FilterDrawerController`
+(`Et2Filterbox/Et2FilterDrawerController.ts`): render its drawer, include `filterDrawerStyles`, and set
+`filterAction`, `filterActive` and `@et2-datagrid-filters` on the datagrid. The controller's docblock has the
+details.
+
 ## Examples
 
 ### Filter groups

@@ -6,6 +6,8 @@ export default css`
 		height: 100%;
 		min-height: 0;
 		flex-direction: column;
+		/* Holds the contained filter drawer, when we have our own (see _ensureFilterbox()) */
+		position: relative;
 	}
 
 	et2-datagrid {
@@ -29,7 +31,8 @@ export default css`
 
 	:host(.print) [part="header"],
 	:host(.print) .nextmatch_lettersearch,
-	:host(.print) [part="footer"] {
+	:host(.print) [part="footer"],
+	:host(.print) .et2-filter-drawer {
 		display: none;
 	}
 

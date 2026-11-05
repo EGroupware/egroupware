@@ -1,4 +1,4 @@
-import {html, LitElement, PropertyValues} from "lit";
+import {html, LitElement, nothing, PropertyValues} from "lit";
 import type {NextmatchInterface} from "./NextmatchInterfaces";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
@@ -22,6 +22,8 @@ import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
 import type {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
+import {Et2FilterDrawerController, filterDrawerStyles} from "../Et2Filterbox/Et2FilterDrawerController";
+import {et2_readonlysArrayMgr} from "../et2_core_arrayMgr";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
@@ -115,6 +117,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	{
 		return [
 			super.styles,
+			filterDrawerStyles,
 			styles
 		];
 	}
@@ -547,6 +550,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	private _filterbox : Et2Filterbox | null = null;
 
 	/**
+	 * The filterbox found no filter slot above us (eg. we are in a popup, not in an egw-app), so it
+	 * lives in our own drawer, opened from the datagrid's column action.
+	 */
+	@state()
+	private _ownFilterDrawer : boolean = false;
+
+	private _filterDrawer = new Et2FilterDrawerController(this, {
+		ignore: ["sort", "view"],
+		part: "filter",
+		clear: () => this.applyFilters(this._filterDrawer.blank(this._filters))
+	});
+
+	/**
 	 * Bridges selection, context actions, and drag/drop into the egw_action system.
 	 */
 	private _actionController : Et2NextmatchActionController;
@@ -886,6 +902,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		this._slotObserver = null;
 		this._filterbox?.remove();
 		this._filterbox = null;
+		this._ownFilterDrawer = false;
 		this.removeEventListener(ET2_NEXTMATCH_SORT_EVENT, this._handleHeaderSortEvent as EventListener);
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
@@ -2284,6 +2301,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 
 	/**
 	 * Create/attach filterbox once and return it.
+	 *
+	 * It goes into the nearest ancestor offering a filter slot - egw-app's filter drawer.  Without
+	 * one, eg. in a popup, it goes into our own drawer instead, and the datagrid's column action
+	 * gets a "Filters" entry to open it, since a popup has no header to put a filter button in.
 	 */
 	private _ensureFilterbox() : Et2Filterbox
 	{
@@ -2310,8 +2331,44 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			}
 			filterParent = filterParent.parentElement;
 		}
-		(filterParent || host?.closest("egw-app") || this.parentElement || this).append(this._filterbox);
+		filterParent = filterParent || <HTMLElement>host?.closest("egw-app") || null;
+		if(filterParent)
+		{
+			filterParent.append(this._filterbox);
+			return this._filterbox;
+		}
+		// Filters are a view control, not form data: they stay usable in a read-only popup.  The
+		// popup's readonlys (eg. `__ALL__`) would otherwise reach the filter template, as an empty
+		// perspective falls back to its parent's data, and turn the filters into labels.  An
+		// unparented, empty manager answers "editable" for them.
+		this._filterbox.readonly = false;
+		const readonlys = new et2_readonlysArrayMgr({});
+		readonlys.perspectiveData.owner = <any>this._filterbox;
+		this._filterbox.setArrayMgr("readonlys", readonlys);
+		this.append(this._filterbox);
+		this._ownFilterDrawer = true;
 		return this._filterbox;
+	}
+
+	/**
+	 * Our own filter drawer, when the filterbox could not go into an egw-app's (see
+	 * _ensureFilterbox()).  Same name as egw-app's.
+	 */
+	public get filtersDrawer() : any
+	{
+		return this._ownFilterDrawer ? this._filterDrawer.drawer : null;
+	}
+
+	/**
+	 * Are any filters set, for the mark on the datagrid's column action?
+	 *
+	 * Deliberately simple: an app tab asks the app's getFilterInfo(), which knows which of its
+	 * filters always carry a default, but a popup has no app tab to ask.  Sort and view are not
+	 * filters; anything else that holds a value is.
+	 */
+	private _hasActiveFilters() : boolean
+	{
+		return this._filterDrawer.isActive(this._filters);
 	}
 
 	/**
@@ -2560,6 +2617,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			this.egw().debug("info", "Changed nm filters", this._filters);
 
 			this._updateSortHeaderState();
+			// _filters is not reactive, but the "filters are set" mark on our drawer's menu entry
+			// is rendered from it
+			if(this._ownFilterDrawer)
+			{
+				this.requestUpdate();
+			}
 			if(options?.clearActions !== false)
 			{
 				this._actionController.clearRowActionObjects();
@@ -4314,6 +4377,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
                         .configurationLoading=${this._templateLoading}
                         .emptyStateText=${this.placeholder}
                         .emptyStateActionMenu=${this._hasPlaceholderActions}
+                        .filterAction=${this._ownFilterDrawer}
+                        .filterActive=${this._ownFilterDrawer && this._hasActiveFilters()}
+                        @et2-datagrid-filters=${this._filterDrawer.toggle}
                         selection-mode="multiple"
                         style=${styleMap({"--meta-column-width": metaColumnWidth})}
                 >
@@ -4325,6 +4391,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
                 <div part="footer">
                     <slot name="footer"></slot>
                 </div>
+                ${this._ownFilterDrawer ? this._filterDrawer.render(html`<slot name="filter"></slot>`, this._hasActiveFilters()) : nothing}
 		`;
 	}
 }

@@ -18,6 +18,7 @@ import {Et2Datagrid} from "../Et2Datagrid/Et2Datagrid";
 import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "../Et2Nextmatch/Et2NextmatchDataProvider";
 import type {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
+import {Et2FilterDrawerController, filterDrawerStyles} from "../Et2Filterbox/Et2FilterDrawerController";
 import type {
 	Et2DatagridColumn,
 	Et2DatagridRowCustomizeContext,
@@ -61,8 +62,7 @@ import "../Et2Diff/Et2Diff";
  * @category display
  *
  * @csspart grid - the datagrid
- * @csspart filters - the filter drawer's panel
- * @csspart header - the bar above the grid, holding the filter button
+ * @csspart filters - the filter drawer, opened from the "Filters" entry of the grid's ⋮ menu
  */
 @customElement("et2-historylog")
 export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInterface
@@ -71,6 +71,7 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	{
 		return [
 			...(super.styles || []),
+			filterDrawerStyles,
 			styles
 		];
 	}
@@ -135,8 +136,12 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	@state()
 	private _templateLoading : boolean = true;
 
-	@state()
-	private _filtersOpen : boolean = false;
+	/** Opens from the grid's ⋮ menu; record_id/appname are always set and are not filters */
+	private _filterDrawer = new Et2FilterDrawerController(this, {
+		ignore: ["record_id", "appname"],
+		onOpen: () => this._ensureFilterbox(),
+		clear: () => this._clearFilters()
+	});
 
 	/**
 	 * Which widget renders which field's value, built once from the app's `status-widgets` plus
@@ -167,7 +172,7 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	/** The filter drawer, by the name Et2Filterbox looks for when closing on Escape */
 	public get filtersDrawer() : any
 	{
-		return this.shadowRoot?.querySelector("sl-drawer");
+		return this._filterDrawer.drawer;
 	}
 
 	constructor()
@@ -337,9 +342,8 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 		{
 			this._applyingFilters = false;
 		}
-		// The header renders from _filterInfo(), which reads _filters - a plain field, not a
-		// reactive property - so nothing re-renders on its own when filters change.  Without this
-		// the funnel icon never fills and the drawer's "Clear filters" action never appears.
+		// The ⋮ menu's mark and the drawer's "Clear filters" action render from _filters - a plain
+		// field, not a reactive property - so nothing re-renders on its own when filters change.
 		this.requestUpdate();
 		if(options?.reload !== false)
 		{
@@ -548,8 +552,8 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	/**
 	 * Create the filterbox that lives in our drawer.
 	 *
-	 * Ours rather than the shared one Et2Nextmatch attaches to the app shell: a history log sits
-	 * in an edit dialog, which has no `egw-app` and no `slot="filter"` to attach to.
+	 * Always ours, never egw-app's: a history log sits in an edit dialog, which has no `egw-app`
+	 * and no `slot="filter"` to attach to.  Created the first time the drawer is opened.
 	 */
 	private _ensureFilterbox() : Et2Filterbox | null
 	{
@@ -588,70 +592,30 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 		return this._filterbox;
 	}
 
-	private _toggleFilters()
-	{
-		this._filtersOpen = !this._filtersOpen;
-		if(this._filtersOpen)
-		{
-			this._ensureFilterbox();
-		}
-	}
-
 	/**
-	 * Icon + tooltip for the filter button: filled while something is filtered, so it is visible
-	 * at a glance that the list is not showing everything.
+	 * Is anything filtered?  Marks the grid's ⋮ menu, so it is visible at a glance that the list
+	 * is not showing everything.
 	 */
-	private _filterInfo() : { active : boolean, icon : string, tooltip : string }
+	private _hasActiveFilters() : boolean
 	{
-		const values = {...(this._filters || {})};
-		delete values.record_id;
-		delete values.appname;
-		const nonEmpty = (value : any) : boolean =>
-		{
-			if(value === "" || value === null || typeof value === "undefined")
-			{
-				return false;
-			}
-			if(Array.isArray(value))
-			{
-				return value.length > 0;
-			}
-			if(typeof value === "object")
-			{
-				return Object.values(value).some(nonEmpty);
-			}
-			return true;
-		};
-		const active = Object.values(values).some(nonEmpty);
-		return {
-			active: active,
-			icon: active ? "filter-circle-fill" : "filter-circle",
-			tooltip: this.egw().lang("Filters")
-		};
+		return this._filterDrawer.isActive(this._filters);
 	}
 
 	/**
-	 * Empty every filter, from the drawer header - same action egw-app offers.
-	 *
-	 * Clears the filterbox's widgets and applies, rather than calling applyFilters({}) here: the
-	 * widgets have to end up empty too, or the next change would re-send whatever they still hold.
+	 * Empty every filter, from the drawer header - same action egw-app offers.  The record scoping
+	 * stays, and the filterbox's widgets follow the applied filters (see
+	 * Et2FilterDrawerController.blank()).
 	 */
 	private _clearFilters = () =>
 	{
-		if(!this._filterbox)
-		{
-			this.applyFilters({});
-			return;
-		}
-		this._filterbox.value = {};
-		this._filterbox.applyFilters();
+		this.applyFilters(this._filterDrawer.blank(this._filters));
 	};
 
 	/**
-	 * Re-render the filter button when a filter changes.
+	 * Re-render the filter mark when a filter changes.
 	 *
 	 * The filterbox's value is neither a reactive property nor reachable by Lit, so without this
-	 * the button's icon keeps showing "filtered" after the filters are cleared.
+	 * the grid's ⋮ menu keeps showing "filtered" after the filters are cleared.
 	 */
 	private _handleFilterboxChange(event : Event)
 	{
@@ -689,36 +653,12 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 
 	render()
 	{
-		const info = this._filterInfo();
+		const filtered = this._hasActiveFilters();
 		return html`
-            <div part="header" class="historylog__header">
-                <et2-button-icon
-                        nosubmit
-                        name=${info.icon}
-                        label=${info.tooltip}
-                        statustext=${info.tooltip}
-                        @click=${this._toggleFilters}
-                ></et2-button-icon>
-            </div>
-            <sl-drawer
-                    part="filters"
-                    exportparts="panel:filters__panel"
-                    label=${info.tooltip}
-                    contained
-                    ?open=${this._filtersOpen}
-                    @sl-after-hide=${() => { this._filtersOpen = false; }}
-            >
-                ${info.active ? html`
-                    <et2-button-icon
-                            nosubmit
-                            slot="header-actions"
-                            name="x-circle-fill"
-                            label=${this.egw().lang("Clear filters")}
-                            statustext=${this.egw().lang("Clear filters")}
-                            @click=${this._clearFilters}
-                    ></et2-button-icon>` : nothing}
-                <div class="historylog__filters" @change=${this._handleFilterboxChange}></div>
-            </sl-drawer>
+            ${this._filterDrawer.render(
+                    html`<div class="historylog__filters" @change=${this._handleFilterboxChange}></div>`,
+                    filtered
+            )}
             <et2-datagrid
                     part="grid"
                     exportparts="rows, row, header"
@@ -731,6 +671,9 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
                     .configurationLoading=${this._templateLoading}
                     .autoHeight=${this.autoHeight}
                     .noColumnSelection=${true}
+                    .filterAction=${true}
+                    .filterActive=${filtered}
+                    @et2-datagrid-filters=${this._filterDrawer.toggle}
                     .noColumnPersistence=${true}
                     row-id-field="id"
                     selection-mode="none"

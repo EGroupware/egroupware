@@ -138,6 +138,15 @@ egw-app {
 
 }
 
+/* Same spacing for a filterbox outside egw-app, eg. a nextmatch's own filter drawer in a popup */
+et2-filterbox > et2-template {
+  &::part(base) {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-width);
+  }
+}
+
 /* non-default application colors, are set server-side by Api\Framework::app_colors() in a style-tag in the header */
 body, :root {
   // Color code for application without an individual color

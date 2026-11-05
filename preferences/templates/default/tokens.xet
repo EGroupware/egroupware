@@ -62,12 +62,19 @@
 	<et2-template  id="preferences.tokens.add" template="" lang="" group="0" version="1.9.001">
 		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.preferences.addToken" noSubmit="true"></et2-button-icon>
 	</et2-template>
+	<et2-template  id="preferences.tokens.filter">
+		<et2-select-account  id="col_filter[account_id]" label="User" emptyLabel="All" accountType="accounts" class="et2-label-fixed">
+			<option value="0">All users</option>
+		</et2-select-account>
+		<et2-select-account  id="col_filter[token_revoked_by]" label="Revoked" emptyLabel="All" class="et2-label-fixed"></et2-select-account>
+		<et2-select-account  id="col_filter[token_created_by]" label="Created" emptyLabel="All" class="et2-label-fixed"></et2-select-account>
+		<et2-select-account  id="col_filter[token_updated_by]" label="Updated" emptyLabel="All" class="et2-label-fixed"></et2-select-account>
+	</et2-template>
 	<et2-template  id="preferences.tokens" template="" lang="" group="0" version="1.9.001">
 		<!-- Shown as a tab of the "Security &amp; Password" popup, which has no app header, so the Add
 		     button stays in the nextmatch's own header, as header_left did: it is in the nextmatch's
 		     namespace, which Token::security() relies on for $readonlys['token[add]']. -->
-		<!-- replaceFilters="false": a popup gets no filterbox, so the "By" filters stay in the column headers -->
-		<et2-nextmatch  id="token" template="preferences.tokens.rows" replaceFilters="false">
+		<et2-nextmatch  id="token" template="preferences.tokens.rows" filterTemplate="preferences.tokens.filter">
 			<et2-template  id="preferences.tokens.add" slot="header"></et2-template>
 		</et2-nextmatch>
 	</et2-template>
