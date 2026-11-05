@@ -6,6 +6,10 @@ export default css`
 	cursor: pointer;
 	}
 
+	:host(.waiting-for-mime), :host(.waiting-for-mime) * {
+	cursor: progress;
+	}
+
 	.link {
 	display: flex;
 	}

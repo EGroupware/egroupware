@@ -257,6 +257,18 @@ class Link extends Etemplate\Widget
 		$response->data(is_array($id) ? $id : $result !== false);
 	}
 
+	/**
+	 * Get the mime type of an attachment, for links listed without it (see Api\Link::list_attached())
+	 *
+	 * @param string $app app of the entry the file is attached to
+	 * @param string|int $id id of the entry
+	 * @param string $file name of the attachment
+	 */
+	public static function ajax_attachment_mime($app, $id, $file)
+	{
+		Api\Json\Response::get()->data(Api\Link::attachment_mime($app, $id, $file));
+	}
+
 	public static function ajax_link_list($value)
 	{
 		$app = $value['to_app'];

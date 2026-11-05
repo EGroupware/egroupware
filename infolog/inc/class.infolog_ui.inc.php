@@ -251,7 +251,7 @@ class infolog_ui
 		}
 		if((!in_array($show_links, ['none', 'no_describtion', '']) ||
 				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']))))
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'], true))))
 		{
 			$info['filelinks']['total'] = $show_links == 'attach' ? count($info['links']) : Link::$row_count;
 			foreach($info['links'] as $link)

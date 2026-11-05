@@ -552,9 +552,10 @@ class Link extends Link\Storage
 	 * 	This option also removes links not viewable by current user from the result!
 	 * @param boolean $deleted =false Include links that have been flagged as deleted, waiting for purge of linked record.
 	 * @param int $limit =null number of entries to return, only affects links, attachments are allways reported!
+	 * @param boolean $lazy_mime =false true: do not resolve the mime type of attachments which are symlinks, see list_attached()
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links($app, $id, $only_app = '', $order = 'link_lastmod DESC, link_id DESC', $cache_titles = false, $deleted = false, $limit = null)
+	static function get_links($app, $id, $only_app = '', $order = 'link_lastmod DESC, link_id DESC', $cache_titles = false, $deleted = false, $limit = null, $lazy_mime = false)
 	{
 		if (self::DEBUG) echo "<p>Link::get_links(app='$app',id='$id',only_app='$only_app',order='$order',deleted='$deleted')</p>\n";
 
@@ -586,7 +587,7 @@ class Link extends Link\Storage
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
-			if (($vfs_ids = self::list_attached($app,$id)))
+			if (($vfs_ids = self::list_attached($app, $id, '', $lazy_mime)))
 			{
 				$ids += $vfs_ids;
 				self::$row_count += count($vfs_ids);
@@ -1572,11 +1573,18 @@ class Link extends Link\Storage
 	/**
 	 * lists all attachments to $app/$id
 	 *
+	 * Finding the mime type of an attachment which is a symlink needs a stat of the symlink's target, which for a
+	 * target on a remote mount (SMB, WebDAV, ...) is a request over the network, for every single attachment.
+	 * With $lazy_mime these attachments are reported with a NULL type instead, so the list does not have to wait
+	 * for the remote server.  The client asks for the mime type of such an attachment with attachment_mime().
+	 *
 	 * @param string $app appname
 	 * @param string $id id in app
+	 * @param string $file ='' optional file or directory name inside the attachments
+	 * @param boolean $lazy_mime =false true: leave out the mime type (NULL) of attachments which are symlinks
 	 * @return array with link_id => 'kind' of link-array pairs
 	 */
-	static function list_attached($app, $id, $file = '')
+	static function list_attached($app, $id, $file = '', $lazy_mime = false)
 	{
 		$path = self::vfs_path($app, $id, $file);
 		//error_log(__METHOD__."($app,$id) url=$url");
@@ -1586,12 +1594,20 @@ class Link extends Link\Storage
 		// always use regular links stream wrapper here: extended one is unnecessary (slow) for just listing attachments
 		if ($app !== 'invoices' && substr($path,0,13) == 'stylite.links') $path = substr($path,8);
 
+		// a filter or an order on the mime type needs it for every file
+		$lazy_mime = $lazy_mime && !isset($extra['mime']) && !isset($extra['order']);
+
 		$attached = array();
-		if (($url2stats = Vfs::find($path,array('need_mime'=>true,'type'=>'F','url'=>true)+$extra,true)))
+		if (($url2stats = Vfs::find($path,array('need_mime'=>!$lazy_mime,'type'=>'F','url'=>true)+$extra,true)))
 		{
 			$props = Vfs::propfind(array_keys($url2stats));	// get the comments
 			foreach($url2stats as $url => &$fileinfo)
 			{
+				if ($lazy_mime)
+				{
+					// symlinks are left to attachment_mime(), everything else is a local stat
+					$fileinfo['mime'] = ($fileinfo['mode'] & Vfs::MODE_LINK) === Vfs::MODE_LINK ? null : Vfs::mime_content_type($url);
+				}
 				$link = self::fileinfo2link($fileinfo,$url);
 				if ($props && isset($props[$url]))
 				{
@@ -1607,6 +1623,46 @@ class Link extends Link\Storage
 			}
 		}
 		return $attached;
+	}
+
+	/**
+	 * Get the mime type of one attachment of $app/$id, which list_attached() left out because of $lazy_mime
+	 *
+	 * @param string $app appname
+	 * @param string $id id in app
+	 * @param string $file name of the attachment, relative to the attachments of $app/$id
+	 * @return string|false mime type (Vfs::DIR_MIME_TYPE for a directory), false if there is no such attachment or its
+	 *	mime type could not be determined
+	 * @throws Exception\NoPermission if the parameters do not name an attachment path inside $app/$id, or the
+	 *	current user is not allowed to read $app/$id (the same exception for an entry which does not exist)
+	 */
+	static function attachment_mime($app, $id, $file)
+	{
+		// app and id end up as path components, so they must not be able to leave their directory: with an id of
+		// "5/../7" file_access() would check entry 5 and the path would be the attachments of entry 7
+		if (!is_string($app) || !$app || !is_scalar($id) || !(string)$id || !is_string($file) ||
+			strpbrk($app.$id, "/\0") !== false)
+		{
+			throw new Exception\NoPermission();
+		}
+		foreach(explode('/', $file) as $segment)
+		{
+			if ($segment === '' || $segment === '.' || $segment === '..' || strpos($segment, "\0") !== false)
+			{
+				throw new Exception\NoPermission();
+			}
+		}
+		if (!self::file_access($app, $id))
+		{
+			throw new Exception\NoPermission();
+		}
+		$path = self::vfs_path($app, $id, $file);
+		// same stream wrapper as list_attached() uses
+		if ($app !== 'invoices' && substr($path,0,13) == 'stylite.links') $path = substr($path,8);
+
+		// only for what exists, mime_content_type() would answer from the extension for a file which does not
+		// (lstat does not follow a symlink, so this is no request to a remote mount)
+		return Vfs::lstat(self::vfs_path($app, $id, $file, true)) ? Vfs::mime_content_type($path) : false;
 	}
 
 	/**

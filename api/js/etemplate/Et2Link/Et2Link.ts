@@ -105,6 +105,11 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	// Title is read-only inside
 	private _title : string;
 	private _titlePromise : Promise<string> | null;
+	/**
+	 * Waiting for the mime type of an attachment the server listed without one, null when not waiting
+	 */
+	private _mimePromise : Promise<void> | null = null;
+	private _mimeKey = "";
 
 	constructor()
 	{
@@ -182,7 +187,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				.replace(/-/g, '‑');
 		}
 		return html`
-            <div part="base" class="link et2_link" draggable="${this.app == 'file'}" @dragstart=${this._handleDragStart.bind(this, this.dataset)}>
+            <div part="base" class="link et2_link" draggable="${this.app == 'file'}" @pointerdown=${this._handleMouseDown} @dragstart=${this._handleDragStart.bind(this, this.dataset)}>
                 ${this._thumbnailTemplate({id: this.entryId, app: this.app, ...this.dataset})}
                 <span part="title" class="link__title">${title}</span>
                 <span part="remark" class="link__remark">${this.dataset.remark}</span>
@@ -271,9 +276,67 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 				}
 			})
 		}
+		// a new link might need its own mime type
+		this._mimePromise = null;
+		this._mimeKey = "";
 		this.requestUpdate("value");
 	}
 
+	/**
+	 * Attachments which are symlinks to a remote mount come without a mime type, as finding it takes a request to
+	 * the remote server.  We only ask for it when the user starts to use the link (mousedown / touch), so a list full
+	 * of them does not send a request for each.  _handleClick() waits for the answer, a drag started before it
+	 * arrived does nothing, as it does for any file without a type.
+	 *
+	 * @returns Promise|null waiting for the answer, null if there is nothing to ask (or it was asked already)
+	 */
+	protected _fetchMissingMime() : Promise<void> | null
+	{
+		const app2 = this.dataset.app2, id2 = this.dataset.id2, file = this.entryId;
+		if(this.app !== "file" || this.dataset.type || !app2 || !id2 || typeof file !== "string" || !file)
+		{
+			return null;
+		}
+		const key = [app2, id2, file].join("/");
+		if(this._mimeKey === key)
+		{
+			// Asked already: still waiting for the answer (promise) or got it, and it did not have a type
+			return this._mimePromise;
+		}
+		this._mimeKey = key;
+		const promise : Promise<void> = this.egw().jsonq("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_attachment_mime", [app2, id2, file])
+			.then((mime : string | false) =>
+			{
+				// This widget might have been re-used for another link while we were waiting
+				if(this._mimePromise === promise)
+				{
+					this._mimePromise = null;
+					if(mime && typeof mime === "string")
+					{
+						this.dataset.type = mime;
+						this.requestUpdate();
+					}
+				}
+			}, () =>
+			{
+				if(this._mimePromise === promise)
+				{
+					this._mimePromise = null;
+					// Failed, not "has no type": a later click or drag may ask again
+					this._mimeKey = "";
+				}
+			});
+		this._mimePromise = promise;
+		return promise;
+	}
+
+	/**
+	 * The user starts to use the link: it might get clicked or dragged, so get the mime type now
+	 */
+	protected _handleMouseDown()
+	{
+		this._fetchMissingMime();
+	}
 
 	set_value(_value : LinkInfo | string)
 	{
@@ -411,11 +474,25 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		}
 	}
 
-	_handleClick(_ev : MouseEvent) : boolean
+	_handleClick(_ev : MouseEvent, _mimeAsked = false) : boolean
 	{
 		// If we don't have app & entryId, nothing we can do
 		if(!this.app || !this.entryId || typeof this.entryId !== "string")
 		{
+			return false;
+		}
+		// The mime type decides how the file is opened, so it has to be known before we open it
+		const waiting = _mimeAsked ? null : this._fetchMissingMime();
+		if(waiting)
+		{
+			// the remote server can take seconds, show that something is happening
+			this.classList.add("waiting-for-mime");
+			waiting.then(() =>
+			{
+				this.classList.remove("waiting-for-mime");
+				this._handleClick(_ev, true);
+			});
+			_ev.stopImmediatePropagation();
 			return false;
 		}
 		// No real app is registered for a url link, so egw().open() has nothing to look up -
