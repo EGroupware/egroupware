@@ -112,7 +112,8 @@
   display: none;
 }
 #calendar-sidebox_owner {
-  padding-top: var(--sl-spacing-2x-small);
+  padding-top: var(--sl-spacing-small);
+  padding-inline: var(--sl-spacing-2x-small);
 }
 /* Conflict display */
 .calendar_conflicts {
@@ -510,16 +511,15 @@ Hide subsequent headers in week view with non-consolidated owners
   opacity: 0.7;
 }
 .calendar_calDayCol.calendar_past {
-  background-color: rgba(200,200,200,0.1);
+  background-color: rgba(200, 200, 200, 0.1);
 }
 /* Past days in a different month: stay darker than either alone, so the month break remains visible */
 .calendar_calDayCol.calendar_past.calendar_differentMonth {
-  background-color: rgba(200,200,200,0.18);
+  background-color: rgba(200, 200, 200, 0.18);
 }
 .calendar_calDayCol.calendar_past .calendar_calEvent {
   opacity: 0.7;
 }
-
 /* Daily sortable */
 .calendar_calDayColHeader .ui-sortable-handle {
   cursor: ew-resize;
@@ -1619,6 +1619,32 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   flex: 7 1 70%;
   margin-bottom: 2em;
 }
+/* The edit dialog's checkboxes (whole day, private, ...) wrap onto another line instead of overflowing their cell */
+/* The add-alarm controls wrap rather than run out of the tab, and the alarm table scrolls sideways instead of overflowing it */
+.calendar-edit-alarm::part(base) {
+  flex-wrap: wrap;
+  gap: var(--sl-spacing-small);
+}
+.calendar-edit-alarms {
+  overflow-x: auto;
+}
+.calendar-edit-options {
+  min-width: 0;
+}
+/* The checkboxes line up with the inputs above and below them, not with the labels (until the labels stack above their fields) */
+.calendar-edit-options::part(base) {
+  padding-inline-start: calc(var(--label-width, 8em) + var(--sl-spacing-medium));
+}
+@container (max-width: 36em) {
+  .calendar-edit-options::part(base) {
+    padding-inline-start: 0;
+  }
+}
+.calendar-edit-options::part(base) {
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: var(--sl-spacing-large);
+}
 et2-button#calendar-toolbar_toolbar-today::part(label) {
   font-weight: bold;
   color: dimgrey;
@@ -1686,9 +1712,6 @@ egw-app {
   left: initial ;
   right: initial ;
   bottom: initial ;
-}
-#calendar-add_calendar-add {
-  width: min-content;
 }
 [slot="filter"]::part(base) {
   display: flex;

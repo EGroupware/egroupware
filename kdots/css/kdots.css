@@ -717,7 +717,7 @@ egw-app et2-favorites-menu::part(menu) {
 egw-app::part(details-header) {
   background-color: var(--template-custom-color, var(--application-color, var(--sl-color-primary-800, lightblue)));
   padding-block: var(--sl-spacing-3x-small);
-  margin: 0;
+  margin: var(--sl-spacing-small) var(--sl-spacing-2x-small) 0;
   color: var(--application-header-text-color);
 }
 egw-app::part(details-base) {
@@ -842,11 +842,6 @@ body egw-app,
   [layout="2-column"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
-  /* A fixed-label widget that does not grow (flex:none) in a box sizes to its content, which counts
-	 * label and input side by side even though they now stack; min-content is the wider of the two, so
-	 * the box shrinks to its field.  Widgets that grow keep their basis: shrinking it would hand their
-	 * room to the siblings.
-	 */
   [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex:none"],
   [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex: none"],
   [layout="2-column"] et2-hbox > *.et2-label-fixed[style*="flex: 0 0 auto"] {
@@ -864,7 +859,6 @@ body egw-app,
     left: 0;
     margin-left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="2-column"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -959,11 +953,6 @@ body egw-app,
   [layout="edit"] *.et2-label-fixed::part(form-control) {
     flex-wrap: wrap;
   }
-  /* A fixed-label widget that does not grow (flex:none) in a box sizes to its content, which counts
-	 * label and input side by side even though they now stack; min-content is the wider of the two, so
-	 * the box shrinks to its field.  Widgets that grow keep their basis: shrinking it would hand their
-	 * room to the siblings.
-	 */
   [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex:none"],
   [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex: none"],
   [layout="edit"] et2-hbox > *.et2-label-fixed[style*="flex: 0 0 auto"] {
@@ -981,7 +970,6 @@ body egw-app,
     left: 0;
     margin-left: 0;
   }
-  /* When titles break, we want to align widgets at the bottom of the hbox */
   [layout="edit"] et2-hbox::part(base) {
     align-items: flex-end;
   }
@@ -1114,7 +1102,6 @@ body egw-app,
  * Written out in full, not nested in the block above: less hoists a nested @container and drops
  * the parent selector, which would shrink every icon button in the app. */
 @container (max-width: 36em) {
-  /* The name and the date drop under their label like an input does */
   [layout="edit"] .dialogMeta:has(> et2-hbox)::part(base) {
     flex-wrap: wrap;
   }
@@ -1125,9 +1112,6 @@ body egw-app,
     flex-basis: 100%;
     margin-left: 0;
   }
-  /* Buttons with an icon give up their label and keep just the icon.  Above this width there is
-   * room for both, so both stay.  The label is only clipped, not removed, so it is still the
-   * button's accessible name. */
   [layout="edit"] et2-button:has(> et2-image) {
     flex: none;
     min-width: 0;
