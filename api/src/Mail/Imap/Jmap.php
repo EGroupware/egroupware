@@ -1384,6 +1384,15 @@ class Jmap extends Mail\Imap
 				// flag change: Email, Mailbox
 				// change is an object with possible attributes: EMail, EmailDelivery, Mailbox, Thread, ...
 				$new_states = $old_states;
+				$push_payload = [];
+				// Stalwart can bundle changes for MULTIPLE accountIds into a single StateChange push -
+				// eg. the subscriber's own account plus a mail:share-shared account like birgit's
+				// "user/birgit" - so $changes/$push_payload/$push used to be overwritten on every
+				// iteration of this loop, meaning only the LAST account in the map ever actually got
+				// pushed to the client; every other account's changes were fetched (silently advancing
+				// its diff baseline, so they'd never be retried either) but never turned into a push at
+				// all. Found live 2026-11-05: shared-account folders never got push updates, or only
+				// sometimes, depending on how Stalwart happened to bundle the StateChange.
 				foreach($data['changed'] as $accountId => $states)
 				{
 					$changes = $jmap->getChanges($accountId, array_combine(array_keys($states), array_map(static function($state, $name) use($old_states, $accountId)
@@ -1406,66 +1415,66 @@ class Jmap extends Mail\Imap
 							$new_states[$accountId][$name] = $changes[$changesKey]['newState'];
 						}
 					}
-				}
-				Api\Cache::setSession(__CLASS__, 'states:'.$mail_account->acc_id, $new_states);
-				// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
-				// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
-				// true, so this never actually short-circuited anything; fixed to check the real
-				// "destroyed" id lists too, now that they can produce a push on their own.
-				if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-changes']['destroyed']) &&
-					empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-changes']['destroyed']))
-				{
-					break;  // no change or nothing we're interested in
-				}
-				$push_payload = [];
-				foreach($changes as $type => $change)
-				{
-					if (empty($change['list'])) continue;
-					[$what, $type] = explode('-', $type);   // "mailbox-created", "email-updated", ...
-					foreach($change['list'] ?? [] as $i => $item)
+					// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
+					// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
+					// true, so this never actually short-circuited anything; fixed to check the real
+					// "destroyed" id lists too, now that they can produce a push on their own.
+					if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-changes']['destroyed']) &&
+						empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-changes']['destroyed']))
 					{
-						if ($what !== 'email' && $what !== 'mailbox')
+						continue;  // no change for THIS account, or nothing we're interested in
+					}
+					unset($push);
+					foreach($changes as $type => $change)
+					{
+						if (empty($change['list'])) continue;
+						[$what, $type] = explode('-', $type);   // "mailbox-created", "email-updated", ...
+						foreach($change['list'] ?? [] as $i => $item)
 						{
-							continue;
-						}
-						$folderId = $what === 'email' ? key($item['mailboxIds']) : $item['id'];
-						try
-						{
-							// only needed for acl.folder (badge/special-folder use, see below) - the
-							// row id itself uses $folderId directly, see $id below
-							$folder = $jmap->folderId2path($folderId);
-						}
-						catch (\Horde_Imap_Client_Exception $e)
-						{
-							// the mailbox behind this push item's mailboxId/folderId is not (or no longer)
-							// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
-							// or a genuine delete/rename race) - skip just this item, not the whole batch
-							error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
-								", folderId=$folderId: ".$e->getMessage());
-							continue;
-						}
-						// native JMAP row-id shape (mail_ui::generateJmapRowID()): account::acc_id::
-						// folderId::emailId - NOT the classic account::acc_id::base64(folder)::uid shape
-						// - this is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
-						// are cached client-side under the native JMAP shape (see
-						// mail-jmap-modernization.md's "Row-id scheme"; mirrors MailJmap.
-						// buildWsPushPayload()'s client-side equivalent of this same code)
-						$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId;
-						// check if we can combine with the last change into a single push
-						if (!isset($push) || !str_starts_with($push['id'], $id))
-						{
-							if (isset($push))
+							if ($what !== 'email' && $what !== 'mailbox')
 							{
-								$push_payload[] = $push;
+								continue;
 							}
-							$push = [
-								'app' => 'mail',
-								'id' => $id,
-								'acl' => [
-									'folder' => $folder,
-								]
-							];
-						}
+							$folderId = $what === 'email' ? key($item['mailboxIds']) : $item['id'];
+							try
+							{
+								// only needed for acl.folder (badge/special-folder use, see below) - the
+								// row id itself uses $folderId directly, see $id below. $accountId: this
+								// folderId may belong to a mail:share-shared account, not the subscriber's
+								// own default one (see Mailbox::folderId2path()'s own docblock)
+								$folder = $jmap->folderId2path($folderId, $accountId);
+							}
+							catch (\Horde_Imap_Client_Exception $e)
+							{
+								// the mailbox behind this push item's mailboxId/folderId is not (or no longer)
+								// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
+								// or a genuine delete/rename race) - skip just this item, not the whole batch
+								error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
+									", folderId=$folderId: ".$e->getMessage());
+								continue;
+							}
+							// native JMAP row-id shape (mail_ui::generateJmapRowID()): account::acc_id::
+							// folderId::emailId - NOT the classic account::acc_id::base64(folder)::uid shape
+							// - this is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
+							// are cached client-side under the native JMAP shape (see
+							// mail-jmap-modernization.md's "Row-id scheme"; mirrors MailJmap.
+							// buildWsPushPayload()'s client-side equivalent of this same code)
+							$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId;
+							// check if we can combine with the last change into a single push
+							if (!isset($push) || !str_starts_with($push['id'], $id))
+							{
+								if (isset($push))
+								{
+									$push_payload[] = $push;
+								}
+								$push = [
+									'app' => 'mail',
+									'id' => $id,
+									'acl' => [
+										'folder' => $folder,
+									]
+								];
+							}
 						if ($what === 'email')
 						{
 							$push['id'] = $id.'::'.$item['id'];
@@ -1541,7 +1550,7 @@ class Jmap extends Mail\Imap
 				{
 					try
 					{
-						$folder = $jmap->folderId2path($folderId);
+						$folder = $jmap->folderId2path($folderId, $accountId);
 					}
 					catch (\Horde_Imap_Client_Exception $e)
 					{
@@ -1554,9 +1563,14 @@ class Jmap extends Mail\Imap
 						'acl' => ['folder' => $folder],
 					];
 				}
+			}	// end foreach($data['changed'] as $accountId => $states)
+			Api\Cache::setSession(__CLASS__, 'states:'.$mail_account->acc_id, $new_states);
+			if ($push_payload)
+			{
 				$push = new Api\Json\Push($client_data['account_id']);
 				$push->call('egw.push', $push_payload);
-				break;
+			}
+			break;
 			case 'EmailDelivery':   // extension is not supported
 			default:
 				error_log(__METHOD__.' Unknown push type: '.json_encode($data));

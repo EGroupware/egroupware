@@ -63,13 +63,19 @@ class Mailbox extends Type
 	 * Convert a folderId to the full path e.g. INBOX/folder/subfolder
 	 *
 	 * @param string $folderId
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for a folderId belonging to a mail:share-shared account, as Mailbox ids are
+	 *  namespaced per JMAP account on the server: looking one up under the wrong accountId
+	 *  resolves nothing (empty path), not an error (found live 2026-11-05: push updates for a
+	 *  shared account's folders silently got an empty/wrong folder name this way)
 	 * @return string
 	 */
-	public function folderId2path(string $folderId)
+	public function folderId2path(string $folderId, ?string $accountId=null)
 	{
 		static $folderPaths = [];
 
-		if (!isset($folderPaths[$folderId]))
+		$cacheKey = ($accountId ?: $this->jmap->accountId).':'.$folderId;
+		if (!isset($folderPaths[$cacheKey]))
 		{
 			$id = $folderId;
 			$parts = [];
@@ -77,12 +83,12 @@ class Mailbox extends Type
 			{
 				$response = $this->jmap->jmapCall([
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'ids' => [$folderId],
 						'properties' => ['parentId', 'name'],
 					], 'f0'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -91,7 +97,7 @@ class Mailbox extends Type
 						'properties' => ['parentId', 'name'],
 					], 'f1'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -100,7 +106,7 @@ class Mailbox extends Type
 						'properties' => ['parentId', 'name'],
 					], 'f2'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -129,9 +135,9 @@ class Mailbox extends Type
 				}
 				$id = $methodResponse[1]['list'][0]['parentId'] ?? null;
 			}
-			$folderPaths[$folderId] = implode('/', array_reverse($parts));
+			$folderPaths[$cacheKey] = implode('/', array_reverse($parts));
 		}
-		return $folderPaths[$folderId] ?? null;
+		return $folderPaths[$cacheKey] ?? null;
 	}
 
 	/**
