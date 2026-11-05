@@ -3053,6 +3053,13 @@ class Imap extends Jmap\Base
 		{
 			Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
 		}
+		else
+		{
+			// nothing typed this time: use the one remembered from an earlier send/view, so the
+			// private-key checks below get a real passphrase instead of '' (which fails them and
+			// then unwinds the remembered value in the catch)
+			$passphrase = (string)(Api\Cache::getSession('mail', 'smime_passphrase') ?? '');
+		}
 		try
 		{
 			$acc_smime = Api\Mail\Smime::get_acc_smime($accountId, $passphrase);
