@@ -86,6 +86,15 @@ function primeToken(jmap : MailJmap, profileID : string, client : any) : void
 	(jmap as any).clients[profileID] = client;
 }
 
+/** popupCheckCert()'s pending recheck for profileID (if any) - cancelled, so it never fires after the test */
+function takePendingCheckCert(jmap : MailJmap, profileID : string) : any
+{
+	const pending = (jmap as any).checkCertPending[profileID];
+	if (pending) window.clearTimeout(pending.timer);
+	delete (jmap as any).checkCertPending[profileID];
+	return pending;
+}
+
 describe("MailJmap.handleFetchRowsError() - suppresses popupCheckCert() right after the tab regains visibility", () =>
 {
 	it("opens the account wizard for a generic network failure with no recent visibility change", async() =>
@@ -103,20 +112,12 @@ describe("MailJmap.handleFetchRowsError() - suppresses popupCheckCert() right af
 		// pin it explicitly instead of relying on document.hidden's ambient state
 		(jmap as any).recentlyResumedVisibilityAt = 0;
 
-		let threw = false;
-		try
-		{
-			await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {selectedFolder: profileID + "::INBOX"}, "widget", [], 0);
-		}
-		catch (_e)
-		{
-			// the fake open_link() throws to prove popupCheckCert() actually tried to open it -
-			// which also means the error toast right after it in handleFetchRowsError() never
-			// runs in this fake, unlike a real open_link() call that returns normally
-			threw = true;
-		}
+		await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {selectedFolder: profileID + "::INBOX"}, "widget", [], 0);
 
-		assert.isTrue(threw, "must attempt to open the account wizard when there was no recent visibility change");
+		// popupCheckCert() never opens the wizard right away (the fake open_link() would throw),
+		// it schedules the recheck deciding that - see MailJmapCheckCertConfirmGate.test.ts
+		assert.isOk(takePendingCheckCert(jmap, profileID),
+			"must schedule the account wizard's recheck when there was no recent visibility change");
 	});
 
 	it("stays quiet (no wizard, no toast) for the same failure right after the tab regained visibility", async() =>
@@ -137,6 +138,7 @@ describe("MailJmap.handleFetchRowsError() - suppresses popupCheckCert() right af
 		assert.isOk(result, "fetchRows() must still resolve a real (empty) result, never reject");
 		assert.deepEqual(result.order, []);
 		assert.equal(messages.length, 0, "must not surface a disruptive error toast for this transient case");
+		assert.isNotOk(takePendingCheckCert(jmap, profileID), "must not even schedule the account wizard's recheck");
 	});
 
 	it("opens the account wizard again once the visibility-resume grace period has passed", async() =>
@@ -149,16 +151,8 @@ describe("MailJmap.handleFetchRowsError() - suppresses popupCheckCert() right af
 		// simulate the grace period having elapsed, without a real sleep
 		(jmap as any).recentlyResumedVisibilityAt = Date.now() - 6000;
 
-		let threw = false;
-		try
-		{
-			await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {selectedFolder: profileID + "::INBOX"}, "widget", [], 0);
-		}
-		catch (_e)
-		{
-			threw = true;
-		}
+		await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {selectedFolder: profileID + "::INBOX"}, "widget", [], 0);
 
-		assert.isTrue(threw, "a failure well outside the grace period is a real failure again");
+		assert.isOk(takePendingCheckCert(jmap, profileID), "a failure well outside the grace period is a real failure again");
 	});
 });

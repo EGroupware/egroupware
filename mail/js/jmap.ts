@@ -771,6 +771,16 @@ export class MailJmap
 	private static readonly CHECK_CERT_POPUP_KEY_PREFIX = 'mail_checkCert_popup_';
 	private static readonly CHECK_CERT_POPUP_DEBOUNCE_MS = 5 * 60 * 1000;
 
+	// popupCheckCert()'s confirmation gate (see its docblock):
+	// how long a failure has to persist before the recheck that decides whether the wizard opens,
+	// and the per-account state while such a recheck is pending
+	private static readonly CHECK_CERT_CONFIRM_DELAY_MS = 20 * 1000;
+	private checkCertPending: Record<string, {
+		type: 'imap' | 'jmap' | 'smtp' | 'sieve',
+		originalError?: unknown,
+		timer: number,
+	}> = {};
+
 	// help.egroupware.org "Rückmeldung zu 26.9.20260928" (Jürgen): a genuine "couldn't even talk
 	// to the server" failure right after this tab regained visibility (eg. switching back from
 	// another window) is very likely just the browser resuming a connection it throttled/
@@ -891,17 +901,139 @@ export class MailJmap
 	 *  doesn't reproduce), and used to then show nothing at all - passed through as the
 	 *  'checkCertError' URL param, ridden along for admin_mail::edit() to fall back to when its
 	 *  own diagnosis comes back clean, rather than leaving the user with no explanation at all.
+	 *
+	 * Never opens the wizard on the first failure: an internet connection that drops for a few
+	 * seconds (or a mail server briefly not answering) used to pop it up for nothing,
+	 * as the very next request worked again.
+	 * Instead, the failure has to survive CHECK_CERT_CONFIRM_DELAY_MS and a fresh recheck
+	 * (see confirmCheckCert()) - any further failures for the same account meanwhile are absorbed.
+	 * While the browser itself reports being offline, the wizard never opens at all:
+	 * no network is never something the account settings could fix.
 	 */
-	private popupCheckCert(profileID : string, type : 'imap' | 'jmap' | 'smtp' | 'sieve' = 'imap',
-		originalError? : unknown) : void
+	private popupCheckCert(profileID: string, type: 'imap' | 'jmap' | 'smtp' | 'sieve' = 'imap',
+		originalError?: unknown): void
 	{
-		const key = MailJmap.CHECK_CERT_POPUP_KEY_PREFIX + profileID;
-		const last = Number(sessionStorage.getItem(key) || 0);
-		if (Date.now() - last < MailJmap.CHECK_CERT_POPUP_DEBOUNCE_MS)
+		if (navigator.onLine === false)
 		{
 			return;
 		}
-		sessionStorage.setItem(key, String(Date.now()));
+		const pending = this.checkCertPending[profileID];
+		if (pending)
+		{
+			// keep the most recent real error for the wizard's fallback message
+			if (originalError) pending.originalError = originalError;
+			return;
+		}
+		// wizard was already opened recently - no point rechecking just to then not open it
+		if (this.checkCertPopupDebounced(profileID))
+		{
+			return;
+		}
+		this.checkCertPending[profileID] = {
+			type,
+			originalError,
+			timer: window.setTimeout(() => this.confirmCheckCert(profileID), MailJmap.CHECK_CERT_CONFIRM_DELAY_MS),
+		};
+	}
+
+	/** popupCheckCert()'s 5min-per-account debounce, see CHECK_CERT_POPUP_KEY_PREFIX */
+	private checkCertPopupDebounced(profileID: string): boolean
+	{
+		const last = Number(sessionStorage.getItem(MailJmap.CHECK_CERT_POPUP_KEY_PREFIX + profileID) || 0);
+		return Date.now() - last < MailJmap.CHECK_CERT_POPUP_DEBOUNCE_MS;
+	}
+
+	/**
+	 * Second half of popupCheckCert()'s confirmation gate:
+	 * recheck the account once, and only open the wizard if it still can't be reached.
+	 *
+	 * A recheck that succeeds, or gets any real answer from the server (a JMAP-level error
+	 * means it IS reachable), counts as recovered - the message list is reloaded then,
+	 * as it was left empty with an error by the failed request.
+	 */
+	private async confirmCheckCert(profileID: string): Promise<void>
+	{
+		const pending = this.checkCertPending[profileID];
+		if (!pending || !this.app) return;
+
+		// browser went offline meanwhile - not an account problem, see popupCheckCert()
+		if (navigator.onLine === false)
+		{
+			delete this.checkCertPending[profileID];
+			return;
+		}
+		let failure: unknown = null;
+		try
+		{
+			await this.probeConnection(profileID);
+		}
+		catch (e)
+		{
+			failure = e;
+		}
+		// only cleared after the probe: its own ensureToken() can call popupCheckCert() again,
+		// which must be absorbed instead of scheduling another recheck
+		delete this.checkCertPending[profileID];
+		if (!this.app) return;	// destroyed meanwhile
+
+		if (failure === null || (!(failure instanceof JmapUserError) && describeJmapError(failure)))
+		{
+			console.info(`MailJmap: account ${profileID} is reachable again, not opening the account wizard`);
+			this.onConnectionRecovered(profileID);
+			return;
+		}
+		console.error(`MailJmap: account ${profileID} still not reachable, opening the account wizard`, failure);
+		this.openCheckCertWizard(profileID, pending.type, pending.originalError ?? failure);
+	}
+
+	/**
+	 * confirmCheckCert()'s recheck: the same path every real request takes -
+	 * a token (re-bootstrapped, if the last bootstrap failed) and one cheap real JMAP request,
+	 * so the EGroupware server's connection to the mail server is checked as well as the
+	 * browser's own one to the JMAP endpoint.
+	 *
+	 * @throws Error if the account is (still) not reachable
+	 */
+	private async probeConnection(profileID: string): Promise<void>
+	{
+		// a failed bootstrap locks the account out for INELIGIBLE_RECHECK_INTERVAL -
+		// lift it, as that's exactly what is rechecked here
+		delete this.ineligibleUntil[profileID];
+		const token = await this.ensureToken(profileID);
+		const client = this.clients[profileID];
+		if (!token || !client)
+		{
+			throw new Error('JMAP bootstrap failed');
+		}
+		await client.requestMany((t) => ({
+			ids: t.Mailbox.query({accountId: token.accountId, filter: {}}),
+		}), {retryIdempotentOnClose: true});
+	}
+
+	/** Reload the message list, if it shows the recovered account - see confirmCheckCert() */
+	private onConnectionRecovered(profileID: string): void
+	{
+		const activeProfileID = (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
+		if (activeProfileID !== profileID) return;
+		try
+		{
+			this.app.refreshMessageGrid?.();
+		}
+		catch (e)
+		{
+			console.warn('MailJmap.onConnectionRecovered(): refreshing the message list failed', e);
+		}
+	}
+
+	/** Actually open the account wizard - only ever via popupCheckCert()'s confirmation gate */
+	private openCheckCertWizard(profileID: string, type: 'imap' | 'jmap' | 'smtp' | 'sieve',
+		originalError?: unknown): void
+	{
+		if (this.checkCertPopupDebounced(profileID))
+		{
+			return;
+		}
+		sessionStorage.setItem(MailJmap.CHECK_CERT_POPUP_KEY_PREFIX + profileID, String(Date.now()));
 		const params : Record<string, string> = {
 			menuaction: 'mail.mail_wizard.edit',
 			acc_id: profileID,
@@ -945,6 +1077,8 @@ export class MailJmap
 	{
 		Object.values(this.refreshTimers).forEach(timer => window.clearTimeout(timer));
 		this.refreshTimers = {};
+		Object.values(this.checkCertPending).forEach(pending => window.clearTimeout(pending.timer));
+		this.checkCertPending = {};
 		// Same reasoning as the token-refresh path's own close() a bit further down this file
 		// (search "close the outgoing client's WebSocket"): a real window/popup closing gets its
 		// sockets torn down by the browser on navigation anyway, but MailApp can also destroy()
@@ -6024,12 +6158,13 @@ export class MailJmap
 
 					if (!data || !data.access_token)
 					{
+						// type from the previous token (if any), before it's dropped below -
+						// otherwise a failing token-refresh of a real JMAP account got labelled 'imap'
+						const type = this.checkCertTypeFor(profileID);
 						delete this.tokens[profileID];
 						delete this.clients[profileID];
 						this.ineligibleUntil[profileID] = Date.now() + MailJmap.INELIGIBLE_RECHECK_INTERVAL;
-						// bootstrap itself just failed - no token, so no known isLocal yet either;
-						// default 'imap' (see popupCheckCert()'s own @param type docblock)
-						this.popupCheckCert(profileID);
+						this.popupCheckCert(profileID, type);
 						return null;
 					}
 					const token : JmapToken = {
