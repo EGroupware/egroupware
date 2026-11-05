@@ -455,7 +455,15 @@ class Mailer extends Horde_Mime_Mail
 		$matches = null;
 		if (preg_match('|^text/calendar; method=([^;]+)|i', $type, $matches))
 		{
-			$this->setAlternativBody($resource, $type, array('method' => $matches[1]), 'utf-8');
+			// NOT setName() here: it also sets Content-Disposition's filename, which implicitly
+			// flips an unset disposition to "attachment" (Horde_Mime_Part::setDispositionParameter())
+			// - exactly what setAlternativBody() exists to avoid, so a meeting invite keeps showing
+			// Accept/Decline instead of a generic file attachment. A plain Content-Type "name="
+			// parameter still gives mail clients (and our own JMAP attachment-name lookup,
+			// Mail\Jmap\Transport::splitBodyAndAttachments()) a real filename instead of "Unbekannter
+			// Part"/"Unknown part" (found live 2026-11-05, ticket #127361 follow-up).
+			$name = $name ?: (!is_resource($data) ? Vfs::basename($data) : null);
+			$this->setAlternativBody($resource, $type, array_filter(['method' => $matches[1], 'name' => $name]), 'utf-8');
 			return;
 		}
 
@@ -533,7 +541,10 @@ class Mailer extends Horde_Mime_Mail
 		$matches = null;
 		if (preg_match('|^text/calendar; method=([^;]+)|i', $type, $matches))
 		{
-			$this->setAlternativBody($content, $type, array('method' => $matches[1]), 'utf-8');
+			// see addAttachment()'s own comment: only a Content-Type "name=" param, never setName()
+			// (would also set Content-Disposition's filename, implicitly flipping the part to a
+			// generic "attachment")
+			$this->setAlternativBody($content, $type, array_filter(['method' => $matches[1], 'name' => $filename]), 'utf-8');
 			return;
 		}
 
@@ -563,7 +574,10 @@ class Mailer extends Horde_Mime_Mail
 	 *
 	 * @param string|resource $content
 	 * @param string $type eg. "text/calendar"
-	 * @param array $parameters =array() eg. array('method' => 'REQUEST')
+	 * @param array $parameters =array() eg. array('method' => 'REQUEST'); a 'name' entry becomes
+	 *  the part's Content-Type "name=" parameter (NOT Content-Disposition's filename, which would
+	 *  implicitly flip the part to an "attachment" - see addAttachment()/addStringAttachment()'s
+	 *  own comments)
 	 * @param string $charset =null default to $this->_charset="utf-8"
 	 */
 	function setAlternativBody($content, $type, $parameters=array(), $charset=null)
