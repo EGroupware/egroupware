@@ -627,6 +627,14 @@ class Jmap extends Mail\Imap
 					'properties' => ['email'],
 				], '0'],
 			], [JmapHttp::JMAP_CORE, JmapHttp::JMAP_PRINCIPALS]);
+			if (($response['methodResponses'][0][0] ?? null) === 'error')
+			{
+				// a real JMAP protocol error (eg. "forbidden") is NOT the same as "no such
+				// principal" - surfacing it as a plain null here previously made it
+				// indistinguishable from a genuine not-found, hiding the actual cause
+				throw new \Horde_Imap_Client_Exception('Principal/get failed: '.
+					json_encode($response['methodResponses'][0][1]));
+			}
 			$cache[$principalId] = $response['methodResponses'][0][1]['list'][0]['email'] ?? null;
 		}
 		return $cache[$principalId];
@@ -651,6 +659,15 @@ class Jmap extends Mail\Imap
 					'filter' => ['email' => $email],
 				], '0'],
 			], [JmapHttp::JMAP_CORE, JmapHttp::JMAP_PRINCIPALS]);
+			if (($response['methodResponses'][0][0] ?? null) === 'error')
+			{
+				// a real JMAP protocol error (eg. "forbidden") is NOT the same as "no such
+				// principal" - surfacing it as a plain null here previously made it
+				// indistinguishable from a genuine not-found, hiding the actual cause (eg.
+				// Stalwart's "The administrator has disabled directory queries")
+				throw new \Horde_Imap_Client_Exception('Principal/query failed: '.
+					json_encode($response['methodResponses'][0][1]));
+			}
 			$cache[$email] = $response['methodResponses'][0][1]['ids'][0] ?? null;
 		}
 		return $cache[$email];
@@ -1035,6 +1052,18 @@ class Jmap extends Mail\Imap
 									// as we can't figure out the old flags, we send a new event "Flags" with the currently set flags
 									$push['acl']['event'] = 'Flags';
 									$push['acl']['flags'] = array_keys($item['keywords'] ?? []);
+									// Email/changes has no per-folder scope (mailboxIds is just a property of
+									// the one Email object) - a plain "delete" in the UI is a MOVE to Trash,
+									// not an Email/destroy, so JMAP reports it as this very "updated" case, not
+									// "destroyed" below. $folderId/$folder above already point at the email's
+									// CURRENT (post-move) mailbox only - a view still showing the folder it was
+									// moved OUT OF never gets anything for it at all otherwise (found live,
+									// 2026-11-05: folder unseen-count push updated fine, but the row itself
+									// never disappeared from the source folder's open view). Send every mailbox
+									// this email currently belongs to, so MailApp.push() (mail/js/app.ts) can
+									// drop any OTHER cached copy of this row via the same wildcard egw.data
+									// search buildEmailDeletePush()/the "destroyed" case below already use.
+									$push['acl']['mailboxIds'] = array_keys($item['mailboxIds'] ?? []);
 									break;
 							}
 						}
