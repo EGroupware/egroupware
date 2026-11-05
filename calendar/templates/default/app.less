@@ -722,6 +722,11 @@ Hide subsequent headers in week view with non-consolidated owners
   color: black;
   filter: brightness(0.8);
 }
+// the tooltip keeps its light category background in dark-mode,
+// so the participant status icons must not get the dark theme's bootstrap-icon inversion
+:is(html[data-darkmode='1'],.sl-theme-dark,.kdots-dark) .calendar_calEventTooltip img[src*='/node_modules/bootstrap-icons/icons/'] {
+  filter: none;
+}
 
 .calendar_calEvent:not(.rowNoView):hover{
   cursor: pointer;
