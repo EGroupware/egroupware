@@ -175,38 +175,15 @@ class Transport extends \Horde_Mail_Transport
 		$rawBody = is_resource($body) ? stream_get_contents($body) : (string)$body;
 		$mime = \Horde_Mime_Part::parseMessage($textHeaders."\r\n\r\n".$rawBody);
 
-		$bodyValues = [];
-		$textBody = $htmlBody = null;
-		$plainId = $mime->findBody('plain');
-		$htmlId = $mime->findBody('html');
-		if ($plainId !== null)
-		{
-			$part = $mime->getPart($plainId);
-			$bodyValues['plain'] = ['value' => $part->getContents(), 'charset' => $part->getCharset() ?: 'utf-8'];
-			$textBody = [['partId' => 'plain', 'type' => 'text/plain']];
-		}
-		if ($htmlId !== null)
-		{
-			$part = $mime->getPart($htmlId);
-			$bodyValues['html'] = ['value' => $part->getContents(), 'charset' => $part->getCharset() ?: 'utf-8'];
-			$htmlBody = [['partId' => 'html', 'type' => 'text/html']];
-		}
-		$skip = array_filter([$plainId, $htmlId], static fn($id) => $id !== null);
+		[$bodyValues, $textBody, $htmlBody, $attachmentParts] = self::splitBodyAndAttachments($mime);
+
 		$attachments = [];
-		foreach ($mime->partIterator() as $part)
+		foreach ($attachmentParts as $spec)
 		{
-			$id = $part->getMimeId();
-			if (in_array($id, $skip, true) || $part->getPrimaryType() === 'multipart')
-			{
-				continue;
-			}
-			$attachments[] = array_filter([
-				'blobId' => $jmap->uploadBlob($part->getContents(), $part->getType()),
-				'type' => $part->getType(),
-				'name' => $part->getName() ?: null,
-				'disposition' => $part->getDisposition() ?: 'attachment',
-				'cid' => $part->getContentId() ?: null,
-			], static fn($v) => $v !== null && $v !== '');
+			$part = $spec['part'];
+			unset($spec['part']);
+			$spec['blobId'] = $jmap->uploadBlob($part->getContents(), $part->getType());
+			$attachments[] = array_filter($spec, static fn($v) => $v !== null && $v !== '');
 		}
 
 		[$drafts_id, $sent_id, $identities] = $this->resolveMailboxesAndIdentities($jmap);
@@ -250,6 +227,68 @@ class Transport extends \Horde_Mail_Transport
 		{
 			throw new \Horde_Mail_Exception('EmailSubmission/set failed: '.json_encode($result['notCreated']));
 		}
+	}
+
+	/**
+	 * Split an already-rendered MIME message into JMAP bodyValues/textBody/htmlBody plus
+	 * attachment specs - pulled out of sendJmap() to make it independently unit-testable without
+	 * a live JMAP connection (uploadBlob() needs one, this part doesn't).
+	 *
+	 * Mailer::setAlternativBody() (the calendar-invite "text/calendar; method=REQUEST/CANCEL/
+	 * REPLY" case, RFC 5546) adds its part as a THIRD multipart/alternative sibling of plain/
+	 * html, never calling setDisposition() on it - Horde_Mime_Part::getType() alone drops
+	 * Content-Type parameters entirely, so without re-attaching "method=" here, a meeting invite
+	 * reached JMAP submission as a bare "text/calendar" file ATTACHMENT (the disposition fallback
+	 * below), losing both the method= parameter mail clients need to show Accept/Decline buttons
+	 * and its inline-alternative (not attachment) semantics. Found live: a customer report that
+	 * meeting requests arrived unusable.
+	 *
+	 * @param \Horde_Mime_Part $mime
+	 * @return array{0: array, 1: ?array, 2: ?array, 3: array[]} bodyValues, textBody, htmlBody,
+	 *  attachment specs (each with a 'part' key the caller must uploadBlob() and unset itself)
+	 */
+	protected static function splitBodyAndAttachments(\Horde_Mime_Part $mime) : array
+	{
+		$bodyValues = [];
+		$textBody = $htmlBody = null;
+		$plainId = $mime->findBody('plain');
+		$htmlId = $mime->findBody('html');
+		if ($plainId !== null)
+		{
+			$part = $mime->getPart($plainId);
+			$bodyValues['plain'] = ['value' => $part->getContents(), 'charset' => $part->getCharset() ?: 'utf-8'];
+			$textBody = [['partId' => 'plain', 'type' => 'text/plain']];
+		}
+		if ($htmlId !== null)
+		{
+			$part = $mime->getPart($htmlId);
+			$bodyValues['html'] = ['value' => $part->getContents(), 'charset' => $part->getCharset() ?: 'utf-8'];
+			$htmlBody = [['partId' => 'html', 'type' => 'text/html']];
+		}
+		$skip = array_filter([$plainId, $htmlId], static fn($id) => $id !== null);
+		$attachments = [];
+		foreach ($mime->partIterator() as $part)
+		{
+			$id = $part->getMimeId();
+			if (in_array($id, $skip, true) || $part->getPrimaryType() === 'multipart')
+			{
+				continue;
+			}
+			$type = $part->getType();
+			$method = $part->getContentTypeParameter('method');
+			if ($method !== null)
+			{
+				$type .= '; method='.$method;
+			}
+			$attachments[] = [
+				'part' => $part,
+				'type' => $type,
+				'name' => $part->getName() ?: null,
+				'disposition' => $part->getDisposition() ?: ($method !== null ? null : 'attachment'),
+				'cid' => $part->getContentId() ?: null,
+			];
+		}
+		return [$bodyValues, $textBody, $htmlBody, $attachments];
 	}
 
 	/**
