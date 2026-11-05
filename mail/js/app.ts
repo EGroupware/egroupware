@@ -1019,6 +1019,31 @@ export class MailApp extends EgwApp
 			this.setFolderStatus(folder_id);
 		}
 
+		// Email/changes has no per-folder scope (mailboxIds is just a property of the Email
+		// object) - a plain "delete" in the UI moves the message to Trash rather than destroying
+		// it, so JMAP reports that as an "updated" change, not "destroyed" (see the wildcard
+		// "*"-folderId case below). pushData.id/acl.folder above only ever reflect the email's
+		// CURRENT (post-move) mailbox, so a still-open view of the folder it was moved OUT OF
+		// otherwise never hears about it at all - confirmed live 2026-11-05: the folder-tree
+		// unseen counter above updates fine, but the row itself never disappeared from the
+		// source folder's grid. Api\Mail\Imap\Jmap::pushCallback() sends every mailbox this email
+		// CURRENTLY belongs to as acl.mailboxIds; drop any OTHER cached copy of the row the same
+		// way the "*"-wildcard delete case below does, before handling the actual update.
+		if (pushData.type === 'update' && Array.isArray(pushData.acl.mailboxIds))
+		{
+			const parts = id0.split('::');
+			const escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+			const regexp = new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::(.*)::${escaped[2]}$`);
+			Object.entries(this.egw.dataSearchUIDs(regexp)).forEach(([fullUid]) =>
+			{
+				const match = fullUid.match(regexp);
+				if (match && !pushData.acl.mailboxIds.includes(match[1]))
+				{
+					super.push({...pushData, id: fullUid.replace(new RegExp(`^${this.appname}::`), ''), type: 'delete'});
+				}
+			});
+		}
+
 		// only handle delete by default, for simple case of uid === "$app::$id"
 		if (pushData.type === 'delete')
 		{

@@ -3117,6 +3117,15 @@ export class MailJmap
 				// as with the classic path, we can't know the old flags - send the currently-set ones
 				acl.event = 'Flags';
 				acl.flags = Object.keys(email.keywords || {});
+				// Email/changes has no per-folder scope - a plain "delete" in the UI moves the
+				// message to Trash rather than destroying it, so this "update" case (not
+				// buildEmailDeletePush()'s "destroyed" one) is what fires for it. folderId/folder
+				// above only ever reflect the CURRENT (post-move) mailbox; send every mailbox this
+				// email CURRENTLY belongs to so MailApp.push() (mail/js/app.ts) can drop any OTHER
+				// cached copy of the row - mirrors Api\Mail\Imap\Jmap::pushCallback()'s
+				// acl.mailboxIds (found live 2026-11-05: moving/deleting a single mail updated the
+				// folder's unseen counter but left the row behind in the source folder's grid).
+				acl.mailboxIds = Object.keys(email.mailboxIds || {});
 				break;
 			case 'delete':
 				acl.event = 'MessageDeleted';

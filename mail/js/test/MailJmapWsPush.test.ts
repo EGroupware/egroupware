@@ -295,6 +295,44 @@ describe("MailJmap.processWsPushStates()", () =>
 		assert.deepEqual((jmap as any).wsPushStates["1"]["acc1"], {Email : "new-state"}, "the baseline must advance to the new state");
 	});
 
+	it("includes mailboxIds on an updated email - a plain UI \"delete\" moves to Trash (reported as 'updated'), not a real Email/destroy", async() =>
+	{
+		const pushed : any[] = [];
+		const jmap = new MailJmap(createFakeApp(pushed));
+		const email = {id : "email1", mailboxIds : {"trash-id" : true}, keywords : {"$seen" : true}};
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Email : {
+						changes: (_args : any) => ({$ref : (_p : string) => []}),
+						get: (args : any) => ({$ref : (_p : string) => []})
+					}
+				};
+				buildFn(t);
+				return [{
+					emailChanges: {},
+					emailCreated: {list : []},
+					emailUpdated: {list : [email]}
+				}];
+			}
+		};
+		sinon.stub(jmap as any, "folderId2path").resolves("INBOX/Trash");
+
+		primeWsPushToken(jmap, "1", client);
+		(jmap as any).wsPushStates = {"1" : {acc1 : {Email : "old-state"}}};
+
+		await (jmap as any).processWsPushStates("1", "acc1", {Email : "new-state"});
+
+		assert.equal(pushed.length, 1);
+		assert.deepEqual(pushed[0], {
+			app: "mail",
+			id: "1::1::trash-id::email1",
+			type: "update",
+			acl: {folder : "INBOX/Trash", event : "Flags", flags : ["$seen"], mailboxIds : ["trash-id"]}
+		});
+	});
+
 	it("pushes a wildcard delete for a destroyed email - folder can never be resolved via JMAP after the fact", async() =>
 	{
 		const pushed : any[] = [];
