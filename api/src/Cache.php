@@ -689,7 +689,10 @@ class Cache
 		// the returned reference could be used to mutate the value without calling setSession() -
 		// only relevant if the session is (or becomes) closed, so only guard against that case:
 		// snapshot the current value and register a closure re-checking it at flush time.
-		if (session_status() !== PHP_SESSION_ACTIVE)
+		// not if a write/unset for this slot is already pending: replacing it with the closure would
+		// compare against a snapshot that already includes that write and so silently drop it
+		// (eg. setSession() followed by a getSession() of the same slot in one request)
+		if (session_status() !== PHP_SESSION_ACTIVE && !array_key_exists($location, self::$closed_session_writes[$app] ?? []))
 		{
 			$snapshot = $_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] ?? null;
 			self::recordClosedSessionWrite($app, $location, static function() use ($app, $location, $snapshot)
