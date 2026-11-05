@@ -28,6 +28,7 @@ import type {NextmatchActiveFilters, NextmatchInterface} from "../Et2Nextmatch/N
 import {ET2_NEXTMATCH_FILTER_EVENT} from "../Et2Nextmatch/Headers/events";
 import {Et2HistorylogWidgetRegistry} from "./Et2HistorylogWidgetRegistry";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {et2_readonlysArrayMgr} from "../et2_core_arrayMgr";
 import styles from "./Et2Historylog.styles";
 import rowStyles from "./Et2Historylog.row.styles";
 import {adoptDiffStyles} from "./Et2Historylog.diff.styles";
@@ -51,7 +52,7 @@ import "../Et2Diff/Et2Diff";
  * with `$content['history'] = ['id' => 123, 'app' => 'infolog', 'status-widgets' => [...]]`.
  *
  * It renders through `et2-datagrid`, but is not a nextmatch: there is nothing to select, no
- * actions, no favourites, no column preferences, and the sort order is fixed (newest first).  What
+ * actions, no favourites, no column chooser, and the sort order is fixed (newest first).  What
  * it does share with a nextmatch is the row-fetching plumbing - `Et2NextmatchDataProvider`, whose
  * host contract it implements - and `Et2Filterbox`, which drives it through `NextmatchInterface`.
  *
@@ -512,12 +513,33 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 	}
 
 	/**
+	 * Keys of the columns the `columns` attribute lists, empty for all of them
+	 */
+	private _visibleColumns() : string[]
+	{
+		const wanted = typeof this.columns === "string" ? this.columns.split(",") : (this.columns || []);
+		return wanted.map(c => String(c).trim()).filter(c => c !== "");
+	}
+
+	/**
+	 * Preference the datagrid keeps column widths in, per app as it is saved under the dialog's app.
+	 *
+	 * Keyed by the `columns` attribute too: the datagrid stores each column's hidden state next to
+	 * its width and restores both, so a history log showing only some columns must not share a
+	 * key with one showing all of them in the same app.  There is no column chooser, so the stored
+	 * hidden state always matches what the key's `columns` asks for and only the widths vary.
+	 */
+	private _columnPreferenceName() : string
+	{
+		return `historylog-${this._visibleColumns().join(",") || "all"}-prefs`;
+	}
+
+	/**
 	 * Hide the columns the `columns` attribute leaves out, without making them unavailable.
 	 */
 	private _applyColumnVisibility(columns : Et2DatagridColumn[]) : Et2DatagridColumn[]
 	{
-		const wanted = typeof this.columns === "string" ? this.columns.split(",") : (this.columns || []);
-		const visible = wanted.map(c => String(c).trim()).filter(c => c !== "");
+		const visible = this._visibleColumns();
 		if(!visible.length)
 		{
 			return columns;
@@ -572,8 +594,16 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
 			autoapply: true,
 			// No footer Clear button: the drawer header carries the clear action, the way
 			// egw-app's does, and two of them in one drawer is just confusing.
-			clearable: false
+			clearable: false,
+			// Filters are a view control, not form data: they stay usable in a read-only dialog
+			readonly: false
 		}, this);
+		// The dialog's readonlys (eg. `__ALL__` for an entry the user can't edit) would otherwise
+		// reach the filter template, as an empty perspective falls back to its parent's data, and
+		// turn the selects into labels.  An unparented, empty manager answers "editable" for them.
+		const readonlys = new et2_readonlysArrayMgr({});
+		readonlys.perspectiveData.owner = <any>this._filterbox;
+		this._filterbox.setArrayMgr("readonlys", readonlys);
 		this._filterbox.nextmatch = <any>this;
 		body.appendChild(this._filterbox);
 		// The status filter offers exactly the "Changed" column's own option list, so a value the
@@ -674,7 +704,7 @@ export class Et2Historylog extends Et2Widget(LitElement) implements NextmatchInt
                     .filterAction=${true}
                     .filterActive=${filtered}
                     @et2-datagrid-filters=${this._filterDrawer.toggle}
-                    .noColumnPersistence=${true}
+                    .columnPreferenceName=${this._columnPreferenceName()}
                     row-id-field="id"
                     selection-mode="none"
                     auto-activate-first-row="false"

@@ -151,8 +151,9 @@ Worth knowing, because each of these is a nextmatch feature someone may expect:
 - **No sorting.** Newest first, always. The server does not accept a client-supplied sort order.
 - **No row selection.** There are no actions on a history row. Arrow keys still move a visible
   cursor for keyboard users, but nothing is ever selected.
-- **No column selection and no column preferences.** Columns come from the `columns` attribute every
-  time; the datagrid's column chooser is switched off.
+- **No column selection.** Columns come from the `columns` attribute every time; the datagrid's
+  column chooser is switched off.  Column *widths* are remembered per user and app, separately for
+  each `columns` list.
 - **No favourites, no print dialog, no letter search, no auto-refresh, no expandable rows.**
 
 ## Attributes

@@ -17,6 +17,7 @@ import "../../Et2Datagrid/Et2Datagrid";
  * - Filter plumbing: header/filterbox filter events merge into activeFilters and reload.
  * - Every request is scoped to the record, and nothing else is sorted or selected.
  * - The `columns` attribute hides columns without making them unavailable.
+ * - Column widths are saved per app and `columns` list.
  * - The widget returns no value.
  * - The filter drawer is reachable by the name Et2Filterbox closes on Escape.
  *
@@ -256,6 +257,36 @@ describe("Et2Historylog", () =>
 		const applied = (<any>el)._applyColumnVisibility([{key: "user_ts", title: "Date"}]);
 
 		assert.isNotTrue(applied[0].hidden);
+	});
+
+	/**
+	 * Column widths are saved by the datagrid, under the dialog's app.  The datagrid saves and
+	 * restores each column's hidden state with its width, so history logs with different `columns`
+	 * lists must not share a preference, or one would hide the other's columns.
+	 *
+	 * Pass criteria: persistence is on, the key differs per `columns` list, and a resized width is
+	 * saved under that key for the app.
+	 */
+	it("saves column widths per app and columns list", async() =>
+	{
+		const el = track(await historylog());
+		const grid = <any>el.shadowRoot!.querySelector("et2-datagrid")!;
+		assert.isFalse(grid.noColumnPersistence, "column widths must be saved");
+		const fullKey = grid.columnPreferenceName;
+
+		el.columns = "status,new_value,old_value";
+		await el.updateComplete;
+		assert.notEqual(grid.columnPreferenceName, fullKey, "a different columns list needs its own preference");
+
+		const setPreference = sinon.spy(<any>window.egw, "set_preference");
+		grid.columns = [{key: "status", title: "Changed", width: "250px"}];
+		grid._persistColumnPreferences();
+
+		assert.isTrue(setPreference.calledOnce, "a resize must be saved");
+		const [app, key, value] = setPreference.firstCall.args;
+		assert.equal(app, "infolog");
+		assert.equal(key, grid.columnPreferenceName);
+		assert.equal(value.find(c => c.key === "status").width, "250px");
 	});
 
 	/**
