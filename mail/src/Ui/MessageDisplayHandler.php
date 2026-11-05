@@ -789,6 +789,23 @@ class MessageDisplayHandler
 			return $jmapHtml;
 		}
 
+		// Every type tryJmapNativeSpecialCase() can special-case for a Stalwart account (calendar/
+		// smime/bare/tnef) already has its own JMAP-native resolver in there - reaching this point
+		// for a Stalwart-only account therefore only ever means one of those JMAP calls itself just
+		// failed (network blip, a stale/already-expired blobId, ...), already logged by its own
+		// catch block. The classic code below needs a real IMAP connection, which simply doesn't
+		// exist for this account (its "host" is a JMAPS/HTTPS endpoint, not an IMAP server) -
+		// letting it try anyway wastes ~15-20s on a doomed raw socket read before failing anyway
+		// (found live 2026-11-05, ticket #127361/#127441 follow-up: "clicking a meeting invite
+		// takes an awful long time, like running into a timeout"). Same JMAP-FALLTHROUGH-GUARD
+		// class as Imap\Jmap's other overrides - fail fast with a clear message instead.
+		if ($this->ui->mail_bo->icServer instanceof Mail\Imap\Jmap)
+		{
+			$this->ui->mail_bo->htmlOptions = $bufferHtmlOptions;
+			$body = lang('Could not load this message.');
+			return $this->get_email_header().$this->showBody($body, false);
+		}
+
 		// only reached once the JMAP-native attempt above has already had its (lazy-key-free, for
 		// a Stalwart row) chance - genuinely classic code from here on, which really does need a
 		// real IMAP UID/mailbox, so resolving them now is not a regression
