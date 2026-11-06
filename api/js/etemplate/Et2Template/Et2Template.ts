@@ -89,16 +89,6 @@ export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 	layout : Et2LayoutName;
 
 	/**
-	 * Load the template automatically when it is connected or when template / id / url / content
-	 * is set.  Turn it off if you only want the element as a handle for reading the template's
-	 * XML, not its widgets - building a full widget tree just to throw it away is expensive, and
-	 * any webComponent inside a legacy <grid> warns while it is built.  Calling load() yourself
-	 * still works, this only suppresses the automatic calls.
-	 */
-	@property({type: Boolean})
-	autoLoad = true;
-
-	/**
 	 * Cache of known templates
 	 * @type {{[name : string] : Element}}
 	 */
