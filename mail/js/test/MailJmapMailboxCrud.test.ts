@@ -454,3 +454,101 @@ describe("MailJmap.getAllMailboxes()", () =>
 		assert.isNull(result, "a generic failure must resolve null so callers keep falling back silently, not throw");
 	});
 });
+
+/**
+ * Ticket #127461's related finding: Stalwart doesn't treat Inbox as implicitly subscribed the way
+ * most IMAP servers do, so the isSubscribed filter above silently dropped it from every
+ * getAllMailboxes() caller's folder search. Inbox is a fixed UI anchor every account has and users
+ * always need to reach, so it's force-included regardless of subscription state. Trash is
+ * deliberately NOT special-cased the same way (ralf, 2026-11-06): an unsubscribed Trash on a
+ * migrated account is a migration/provisioning bug to fix AT the migration, not something the
+ * folder picker should paper over.
+ */
+describe("MailJmap.getAllMailboxes() - Inbox is always included, even if Stalwart reports it unsubscribed", () =>
+{
+	function createInboxFallbackFakeClient(filteredList : any[], allList : any[]) : {client : any}
+	{
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Mailbox : {
+						query : (_args : any) => ({$ref : (_path : string) => ({})}),
+						get : (args : any) => (args.ids === undefined ? {list : allList} : {list : filteredList}),
+					},
+				};
+				return [buildFn(t)];
+			},
+		};
+		return {client};
+	}
+
+	it("prepends Inbox when the subscribed-only filter excluded it", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const {client} = createInboxFallbackFakeClient(
+			[{id : "drafts", role : "drafts"}],
+			[{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}, {id : "trash", role : "trash"}],
+		);
+		primeToken(jmap, "1", client);
+
+		const result = await jmap.getAllMailboxes("1", true);
+
+		assert.deepEqual(result, [{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}]);
+	});
+
+	it("does not duplicate Inbox when it's already in the subscribed-only result", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const {client} = createInboxFallbackFakeClient(
+			[{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}],
+			[{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}],
+		);
+		primeToken(jmap, "1", client);
+
+		const result = await jmap.getAllMailboxes("1", true);
+
+		assert.deepEqual(result, [{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}]);
+	});
+
+	it("does NOT also force-include an unsubscribed Trash - that's a migration/provisioning concern, not the folder picker's", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const {client} = createInboxFallbackFakeClient(
+			[{id : "drafts", role : "drafts"}],
+			[{id : "inbox", role : "inbox"}, {id : "drafts", role : "drafts"}, {id : "trash", role : "trash"}],
+		);
+		primeToken(jmap, "1", client);
+
+		const result = await jmap.getAllMailboxes("1", true);
+
+		assert.isFalse(result.some((m : any) => m.role === "trash"), "an unsubscribed Trash must stay excluded");
+	});
+
+	it("does not issue the all-mailboxes fallback fetch at all when not filtering by subscription", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let allMailboxesGetCalls = 0;
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Mailbox : {
+						query : (_args : any) => ({$ref : (_path : string) => ({})}),
+						get : (args : any) =>
+						{
+							if (args.ids === undefined) allMailboxesGetCalls++;
+							return {list : [{id : "a"}]};
+						},
+					},
+				};
+				return [buildFn(t)];
+			},
+		};
+		primeToken(jmap, "1", client);
+
+		await jmap.getAllMailboxes("1", false);
+
+		assert.equal(allMailboxesGetCalls, 0, "fetching every mailbox unfiltered is only needed to backfill Inbox when the subscribed-only filter is active");
+	});
+});

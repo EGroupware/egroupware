@@ -2173,19 +2173,45 @@ export class MailJmap
 			// request, the largest/slowest of this class of call (see getRootFolders()'s own
 			// comment for the full risk/evidence) - at least as exposed to the heartbeat race as
 			// any per-level fetch, likely more so for an account with many folders.
-			const [{mailboxes}] = await client.requestMany((t) =>
+			const [{mailboxes, allMailboxes}] = await client.requestMany((t) =>
 			{
 				const ids = t.Mailbox.query({
 					accountId: token.accountId,
 					filter,
 				});
-				const mailboxes = t.Mailbox.get({
-					accountId: token.accountId,
-					ids: ids.$ref('/ids'),
-				});
-				return {ids, mailboxes};
+				const result : Record<string, any> = {
+					mailboxes: t.Mailbox.get({
+						accountId: token.accountId,
+						ids: ids.$ref('/ids'),
+					}),
+				};
+				if (effectiveSubscribedOnly)
+				{
+					// Stalwart doesn't treat Inbox as implicitly subscribed the way most IMAP
+					// servers do (ticket #127461's own related finding: "Inbox and Trash can't be
+					// found in the import dialog's folder search") - the isSubscribed filter above
+					// would otherwise silently drop it from every getAllMailboxes() caller's folder
+					// search. Omitting "ids" fetches every mailbox regardless of that filter (RFC
+					// 8620 S5.1) in the SAME batched request/response as everything else here (no
+					// extra round trip), just to find Inbox if the filtered list excluded it -
+					// merged back in below. Inbox is a fixed UI anchor every account has and users
+					// always need to reach, so it's always included regardless of subscription
+					// state. Trash is deliberately NOT special-cased the same way (ralf,
+					// 2026-11-06): an unsubscribed Trash on a migrated account is a migration/
+					// provisioning bug to fix AT the migration, not something the folder picker
+					// should paper over.
+					result.allMailboxes = t.Mailbox.get({accountId: token.accountId});
+				}
+				return result;
 			}, {retryIdempotentOnClose: true});
-			return mailboxes.list || [];
+
+			const list = mailboxes.list || [];
+			if (effectiveSubscribedOnly && !list.some((m : any) => m.role === 'inbox'))
+			{
+				const inbox = allMailboxes?.list?.find((m : any) => m.role === 'inbox');
+				if (inbox) list.unshift(inbox);
+			}
+			return list;
 		}
 		catch (e)
 		{
