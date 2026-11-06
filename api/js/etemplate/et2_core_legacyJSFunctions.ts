@@ -116,6 +116,9 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 		// use app object from etemplate2, which might be private and not just window.app
 		_code = _code.replace(/(window\.)?app\./, 'widget.getInstanceManager().app_obj.');
 
+		// let close() know where it was called from, so it can close an enclosing et2-dialog
+		_code = _code.replace(/(?:egw\(window\)|window)\.close\(\)/g, 'egw(window).close(widget)');
+
 		var func = new Function('ev', 'widget', trustedScript(_code));
 	} catch(e) {
 		_widget.egw().debug('error', 'Error while compiling JS code ', _code);

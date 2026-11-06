@@ -134,7 +134,7 @@ export interface OpenModule
 	/**
 	 * Close current window / popup
 	 */
-	close() : void;
+	close(_source? : Element | { getDOMNode?() : Element }) : void;
 
 	/**
 	 * Check if browser pop-up blocker is on/off
@@ -954,9 +954,20 @@ class Open implements OpenModule
 
 	/**
 	 * Close current window / popup
+	 *
+	 * @param _source optional element / widget the close was triggered from. If it sits inside an
+	 *	<et2-dialog> (popup opened in the same window, "open_popups_in: same_window"), that dialog is
+	 *	closed, as window.close() of the main window would be a no-op.
 	 */
-	close = () : void =>
+	close = (_source? : Element | { getDOMNode?() : Element }) : void =>
 	{
+		const node = _source instanceof Element ? _source : _source?.getDOMNode?.();
+		const dialog = node?.closest?.('et2-dialog');
+		if(dialog && (<any>this.#wnd).framework?.popups)
+		{
+			(<any>this.#wnd).framework.popups.close(dialog);
+			return;
+		}
 		if ((<any>this.#wnd).framework && typeof (<any>this.#wnd).framework.popup_close == "function")
 		{
 			(<any>this.#wnd).framework.popup_close(this.#wnd);
