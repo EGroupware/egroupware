@@ -8,6 +8,7 @@
 (leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt-br	(sem assunto)
 (not connected)	mail	pt-br	(não conectado)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	pt-br	Uma imagem colada, arrastada ou inserida que exceda um determinado tamanho de arquivo será redimensionada para essa largura (mantendo a proporção), a fim de evitar que a mensagem fique muito pesada. Deixe em branco para usar o padrão de 800 px.
 account	mail	pt-br	Conta
 account editable by user	mail	pt-br	conta editável pelo usuário
 account not reachable	mail	pt-br	Não foi possível acessar a conta.
@@ -35,7 +36,7 @@ all of	mail	pt-br	Todos
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pt-br	Todas as subpastas também serão excluídas, e todas as mensagens em todas as pastas afetadas serão perdidas
 allow external images	mail	pt-br	Permitir imagens externas
 allow external images from listed domains	mail	pt-br	Permitir imagens externas de domínios listados
-allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	pt-br	Permitir imagens de origem externa em e-mails em HTML. "Pedir permissão" mostra um aviso para carregá-las apenas desta vez ("Exibir") ou sempre de seu domínio ("Permitir"). "Pedir permissão, permitir apenas domínios listados" oferece apenas "Exibir", de modo que somente os domínios listados são sempre permitidos, p.ex. conforme definido pelo administrador para todos.
 allow images from listed domains in html emails	mail	pt-br	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt-br	Permitir aos usuários criar novas identidades
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt-br	Permite que um usuário leia, escreva e crie pastas e e-mails, publique neles, anexe mensagens a eles e exclua mensagens.
@@ -51,6 +52,7 @@ append	mail	pt-br	anexar
 archive folder	mail	pt-br	Pasta de arquivo
 are you sure you want to delete all selected folders?	mail	pt-br	Tem certeza de que deseja excluir todas as pastas selecionadas?
 are you sure you want to move folder %1 to folder %2?	mail	pt-br	Tem certeza de que deseja mover a pasta %1 para a pasta %2?
+ask for permission, only allow listed domains	mail	pt-br	Pedir permissão, permitir apenas domínios listados
 attach files	mail	pt-br	Anexar arquivos
 attach users vcard at compose to every new mail	mail	pt-br	Anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt-br	Anexar vCard
@@ -174,8 +176,6 @@ draft folder	mail	pt-br	Pasta Rascunho
 drafts	mail	pt-br	Rascunhos
 drafts folder	mail	pt-br	Pasta Rascunhos
 edit account	mail	pt-br	Editar Conta
-edit account ...	mail	pt-br	Editar conta ...
-edit folder acl ...	mail	pt-br	Pasta Editar ACL
 edit vacation settings	mail	pt-br	Editar configurações de férias
 effective only if server supports acl at all	admin	pt-br	Efetiva apenas se o servidor suporta ACL em tudo
 email address	mail	pt-br	Endereço de e-mail
@@ -247,6 +247,7 @@ hide from	mail	pt-br	Ocultar De
 high	mail	pt-br	Alto
 high priority	mail	pt-br	Alta prioridade
 hostname or ip	mail	pt-br	Nome do host ou IP
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	pt-br	Por quanto tempo uma mensagem deve permanecer aberta no painel de visualização ou em uma janela pop-up antes de ser marcada como lida — isso permite que você dê uma olhada rápida em uma mensagem sem marcá-la como lida. “Imediatamente” é o comportamento anterior, padrão.
 how often to check with the server for new mail	mail	pt-br	Com que frequência verificar se há novos e-mails no servidor
 how to forward messages	mail	pt-br	Como encaminhar mensagens
 html	mail	pt-br	HTML
@@ -264,6 +265,8 @@ if you want to see a preview of a mail by single clicking onto the subject, enab
 imap	mail	pt-br	IMAP
 imap server	mail	pt-br	Servidor IMAP
 import ca-signed certificate for this key	mail	pt-br	Importar certificado assinado por CA para esta chave
+import certificate	mail	pt-br	Importar certificado
+import message	mail	pt-br	Importar mensagem
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt-br	A importação da mensagem %1 falhou. Não foi possível salvar a mensagem na pasta %2 devido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	pt-br	Falha na importação da mensagem %1. A pasta de destino %2 não existe.
 import of message %1 failed. destination folder not set.	mail	pt-br	Falha na importação da mensagem %1. Pasta de destino não definida.
@@ -308,8 +311,10 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	pt-br	Marcar tudo como lido
 mark all messages in folder as read	mail	pt-br	Marcar todas as mensagens em pasta como lidas
 mark as deleted	mail	pt-br	Marcar como excluído
+mark message as read after	mail	pt-br	Marcar mensagem como lida após
 matches	mail	pt-br	coincidentes
 matches regexp	mail	pt-br	coincidentes com a expressão
+max. width of inline images in a mail body or signature (in px)	mail	pt-br	Largura máxima das imagens embutidas no corpo da mensagem ou na assinatura (em px)
 message learned as spam and moved to spam folder	mail	pt-br	Mensagem identificada como spam e movida para a pasta de spam
 modify subject	mail	pt-br	Modificar o assunto
 modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
@@ -328,6 +333,7 @@ never show	mail	pt-br	Nunca mostrar
 never show notification	mail	pt-br	Nunca mostrar notificação
 new mail from %1	mail	pt-br	Novo e-mail de %1
 new mail notification	mail	pt-br	Notificação de novo e-mail
+new mail to sender	mail	pt-br	Nova mensagem para o remetente
 new message type	mail	pt-br	Novo tipo de mensagem
 new subject	mail	pt-br	Novo tema
 no access	mail	pt-br	Sem acesso
@@ -438,6 +444,7 @@ see attachments for content of the orignial mail	mail	pt-br	Ver anexos para o co
 select all	mail	pt-br	Selecionar tudo
 select an existing entry in order to append mail content to it	mail	pt-br	Selecionar uma entrada existente para anexar o conteúdo do e-mail a ela
 select an item to read	mail	pt-br	Selecione um item para ler
+select file to import into folder	mail	pt-br	Selecionar arquivo para importar para a pasta
 select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de Arquivos do EGroupware
 select mail addresses from addressbook	mail	pt-br	Selecione o(s) endereço(s) de e-mail do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
@@ -452,7 +459,6 @@ server supports special-use folders	mail	pt-br	O servidor oferece suporte a past
 set / remove flags	mail	pt-br	Colocar / Remover Bandeiras
 set / remove labels	mail	pt-br	Ajustar / Remover Etiquetas
 set flags	mail	pt-br	Bandeiras de bandeira
-set predefined values for compose...	mail	pt-br	Definir valores pré-definidos para compor ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt-br	A assinatura deve ser inserida após (padrão) ou antes de uma resposta ou encaminhamento, e a assinatura deve ser visível e alterável durante a composição.
 show all addresses	mail	pt-br	Mostrar todos os endereços
 show all attachments	mail	pt-br	Mostrar todos os anexos

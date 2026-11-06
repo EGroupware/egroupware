@@ -111,4 +111,70 @@ html[data-darkmode="1"], .sl-theme-dark {
   img[src*='/node_modules/bootstrap-icons/icons/']{
 	filter: invert(1);
   }
+
+  /**
+  * html notifications of Api\Storage\Tracking in the notifications popup, overriding their inline light styles
+  * Same colors as Tracking::HTML_DARK_RULES, which mails get instead, keep both in sync!
+  **/
+  .egwpopup_message {
+	table.egwNotification {
+	  background-color: #22252b !important;
+	  color: #e3e6eb !important;
+	  border-color: #383d45 !important;
+	}
+	.egwNotificationHeader {
+	  background-color: #2b323c !important;
+	  border-color: #383d45 !important;
+
+	  hr {
+		border-color: #4a525d !important;
+	  }
+	}
+	.egwNotificationSection, .egwNotificationValue {
+	  border-color: #383d45 !important;
+	}
+	.egwNotificationLabel {
+	  color: #a4abb7 !important;
+	  border-color: #383d45 !important;
+	}
+	.egwNotificationHeading {
+	  color: #a4abb7 !important;
+	}
+	tr.egwNotificationModified {
+	  > * {
+		background-color: #3b3018 !important;
+	  }
+	  > th {
+		color: #ffd27a !important;
+		border-left-color: #b8892a !important;
+	  }
+	}
+	.egwNotificationBadge {
+	  color: #ffd27a !important;
+	  border-color: #b8892a !important;
+
+	  &.egwNotificationNew {
+		color: #93dbab !important;
+		background-color: #173322 !important;
+		border-color: #173322 !important;
+	  }
+	}
+	.egwNotificationComment {
+	  background-color: #2a2e35 !important;
+
+	  h3 {
+		color: #a4abb7 !important;
+	  }
+	}
+	td.egwNotificationNew {
+	  border-left-color: #93dbab !important;
+
+	  h3 {
+		color: #e3e6eb !important;
+	  }
+	}
+	table.egwNotification a {
+	  color: #8cbcff !important;
+	}
+  }
 }

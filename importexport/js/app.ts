@@ -11,6 +11,7 @@
 
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 // egw is an ambient global (declare global {} in egw_global.d.ts, unconditionally included via
 // tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -21,6 +22,11 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
  */
 class ImportExportApp extends EgwApp
 {
+	/**
+	 * Last value of each allowed users select, see allowed_users_change()
+	 */
+	private allowed_users_previous = new WeakMap<object, string[]>();
+
 	/**
 	 * Constructor
 	 *
@@ -84,6 +90,28 @@ class ImportExportApp extends EgwApp
 			// Using _name only allows one import (at a time) to be updated
 			this.egw.window.name = _name;
 			this.egw.window.opener.egw.storeWindow(this.appname, this.egw.window);
+		}
+		else if(_name == "importexport.definition_index")
+		{
+			// app.admin is typed generically as EgwApp; enableAppToolbar() is AdminApp-specific
+			const admin = <any>app.admin;
+			if(_et2.DOMContainer?.closest("egw-app#admin") && typeof admin?.enableAppToolbar === "function")
+			{
+				// Shown inside Admin: put the Add button into Admin's app header, as its own lists do
+				admin.enableAppToolbar(_et2, _name);
+			}
+			else
+			{
+				// Preferences (users without admin rights) has nothing to move it into the app
+				// header, so show it in the nextmatch's own header instead
+				const header = <HTMLElement><unknown>_et2.widgetContainer.getWidgetById(_name + ".header");
+				const nm = _et2.DOMContainer?.querySelector("et2-nextmatch");
+				if(header && nm)
+				{
+					header.slot = "header";
+					nm.append(header);
+				}
+			}
 		}
 	}
 
@@ -267,65 +295,92 @@ class ImportExportApp extends EgwApp
 	/**
 	 * Allowed users widget has been changed, if 'All users' or 'Just me'
 	 * was selected, turn off any other options.
+	 *
+	 * The select's value comes in option order, not in the order the user picked, and 'Just me' /
+	 * 'All users' are the last options - so the option just picked is found by comparing with the
+	 * value before this change, not by its position.
 	 */
 	allowed_users_change(event, widget)
 	{
-		let value = widget.getValue();
+		const value : string[] = [...(widget.getValue() || [])];
+		const specials = ['', 'all'];
+		// Before the first change, the previous value is what the server sent
+		const previous : string[] = this.allowed_users_previous.get(widget) ??
+			[].concat(widget.getArrayMgr("content")?.getEntry(widget.id) ?? []).map(v => v === null ? '' : String(v));
+		const added = value.filter(v => !previous.includes(v));
 
-		// Only 1 selected, no checking needed
-		if(value == null || value.length <= 1)
+		let changed = value;
+		const special = added.find(v => specials.includes(v));
+		if(typeof special !== "undefined")
 		{
-			return;
+			// Just picked all/private, clear the others
+			changed = [special];
 		}
-
-		// Don't jump it to the top, it's weird
-		widget.selected_first = false;
-
-		let index = null;
-		const specials = ['', 'all']
-		for(let i = 0; i < specials.length; i++)
+		else if(added.length)
 		{
-			const special = specials[i];
-			if((index = value.indexOf(special)) >= 0)
-			{
-				if(value.indexOf(special) == value.length - 1)
-				{
-					// Just clicked all/private (it's at the end), clear the others
-					value = [special];
-				}
-				else
-				{
-					// Just added another, clear special
-					value.splice(index, 1);
-				}
-				break;
-			}
+			// Just picked a group, clear the specials
+			changed = value.filter(v => !specials.includes(v));
 		}
-		if(index >= 0)
+		this.allowed_users_previous.set(widget, changed);
+
+		if(changed.length != value.length)
 		{
-			widget.set_value(value);
+			// Don't jump it to the top, it's weird
+			widget.selected_first = false;
+			widget.set_value(changed);
 		}
 	}
 
 	/**
 	 * Open a specific import/export definition dialog by clicking on the icon from the list
-	 * @param widget
+	 *
+	 * Row widgets share the nextmatch's content manager rather than a per-row perspective, so the
+	 * row is found from the DOM: its data-row-id is the same uid the "Execute" action gets.
+	 *
+	 * @param event
+	 * @param widget the clicked icon
 	 */
 	open_definition(event, widget)
 	{
-		const mgr = widget.getArrayMgr("content");
-		const data = mgr.getEntry("" + mgr.perspectiveData.row) || {};
-		const type = data.type || "";
-		const application = data.application || "";
-		const definition_id = data.definition_id || "";
-		this.egw.openPopup(
-			this.egw.link("/index.php", {
-				menuaction: "importexport.importexport_" + type + "_ui." + type + "_dialog",
-				appname: application,
-				definition: definition_id
-			}),
-			850, 440
-		)
+		const id = (<HTMLElement>widget).closest?.('[data-row-id]')?.getAttribute('data-row-id');
+		if(id)
+		{
+			this.run_definition(null, [{id}]);
+		}
+	}
+
+	/**
+	 * Submit one of the definition list's "Change" popups (owner, allowed users)
+	 *
+	 * The popups are real <et2-dialog>s, so Et2NextmatchActionController.openActionPopup() just sets
+	 * their .selectedIds and shows them; the window.nm_popup_action/nm_popup_ids globals the legacy
+	 * nm_submit_popup() relied on are never set.  executeAction() triggers the normal whole-template
+	 * submit, so the dialog's fields arrive as $content['owner_popup'] / $content['allowed_popup'],
+	 * with the nextmatch's action, selection and "select all" merged in.
+	 *
+	 * @param _event
+	 * @param _widget the clicked button
+	 * @param _action_id the nm action the popup was opened for, "owner" or "allowed"
+	 * @return false to stop the button's own submit
+	 */
+	submit_popup(_event : Event, _widget, _action_id : string) : boolean
+	{
+		const dialog = <any>_widget.closest('et2-dialog');
+		const nm = <Et2Nextmatch>_widget.getInstanceManager()?.widgetContainer?.getWidgetById('nm');
+		if(!nm)
+		{
+			return false;
+		}
+		// Prefer the live selection - it still carries "select all", which the dialog's
+		// .selectedIds (a plain array of ids) does not
+		const selection = nm.getSelection();
+		if(!selection.all && dialog?.selectedIds?.length)
+		{
+			selection.ids = dialog.selectedIds;
+		}
+		nm.executeAction(_action_id, selection, {nmAction: "submit"});
+		dialog?.close();
+		return false;
 	}
 }
 

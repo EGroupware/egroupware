@@ -23,6 +23,12 @@ It supplements `AGENTS.md` and avoids restating baseline repo policy.
 * Are error paths, null/empty inputs, and type assumptions handled safely?
 * Are there hidden behavioural changes for existing callers?
 * For bug fixes, is there a regression test or clear reason why not?
+* For any line the change DELETES or weakens, find the commit that added it (`git log -L
+  <start>,<end>:<file>`) before accepting that it was dead weight. A green suite is not
+  evidence: a fix that removed an "obviously redundant" `requestUpdate()` from
+  `Et2Datagrid._markRowHeightUnstable()` passed all 2631 api tests while re-introducing the
+  stranded-rows bug `f822c00d3f` had fixed - the guard that depended on it said so only in a
+  comment.
 
 ## 3) Check compatibility risks
 
@@ -70,6 +76,33 @@ It supplements `AGENTS.md` and avoids restating baseline repo policy.
 * Verify accessibility basics: labels, focus behaviour, keyboard usage, and readable states.
 * Ensure no layout breakage from long text, localization, or responsive constraints.
 * Confirm no unnecessary visual churn outside requested scope.
+
+### Widgets that can appear in a nextmatch/datagrid row
+
+`Et2Datagrid` renders a row by handing `rowElement.outerHTML` to lit's `unsafeHTML()`, which
+replaces the whole row node whenever that string changes - re-running every widget constructor
+in the row.
+
+* A widget usable in a row template must not change its OWN attributes after first render.
+  In particular, do not `reflect: true` a property whose value is resolved asynchronously: the
+  late write lands in the row's serialized HTML and tears the row down.
+* Do not write `async willUpdate()` or `async updated()`. Lit does not await them, so everything
+  after the first `await` runs once the update has already committed; assigning a reactive
+  property there schedules a further update cycle per instance.
+* A `requestUpdate()` inside a timer or observer callback must be conditional on something having
+  actually changed. An unconditional one re-renders, which re-observes, which fires the observer
+  again - a settled grid then re-renders forever with no user input.
+
+### Tests that assert an ABSENCE of work
+
+* Et2Nextmatch measures row height and the virtualizer range from `ResizeObserver` and `rAF`. A
+  BACKGROUNDED tab stops both, so the grid does nothing - and "the grid did no work" is exactly
+  what such a test asserts. It would pass while the defect is present, and checking that rows
+  rendered does not catch it (with both APIs stubbed, 24 rows still render).
+* Headless is NOT the problem and needs no special handling: this runner's headless tabs report
+  `visibilityState: "visible"` with both APIs firing. The protection is `concurrency: 1` on the
+  Playwright launchers in `web-test-runner.config.mjs` - read the comment there before changing
+  it.
 
 ## 10) Review output format
 

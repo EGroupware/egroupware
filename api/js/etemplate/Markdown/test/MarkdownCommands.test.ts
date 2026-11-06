@@ -14,7 +14,7 @@
  * environment problem - nothing external is involved.
  */
 import {assert} from '@open-wc/testing';
-import {applyCommand, minimalEdit, offsetOfLine, sourceOffsetForRendered} from "../MarkdownCommands";
+import {applyCommand, insertLink, minimalEdit, offsetOfLine, sourceOffsetForRendered} from "../MarkdownCommands";
 
 /**
  * Run a command over the selection marked by | ... | in `marked`, and return the result.
@@ -254,5 +254,66 @@ describe("sourceOffsetForRendered()", () =>
 		assert.equal(sourceOffsetForRendered("abc", 0, "abc", -5), 0);
 		assert.equal(sourceOffsetForRendered("", 0, "", 3), 0);
 		assert.equal(sourceOffsetForRendered("abc", 99, "abc", 1), 3);
+	});
+});
+
+describe("insertLink()", () =>
+{
+	const file = {name: "report.pdf", url: "/webdav.php/apps/tracker/42/report.pdf"};
+
+	it("makes the selection the link text", () =>
+	{
+		const result = insertLink("see the report here", 8, 14, file);
+		assert.equal(result.value, "see the [report](/webdav.php/apps/tracker/42/report.pdf) here");
+	});
+
+	it("falls back to the file name when nothing is selected", () =>
+	{
+		const result = insertLink("see ", 4, 4, file);
+		assert.equal(result.value, "see [report.pdf](/webdav.php/apps/tracker/42/report.pdf)");
+	});
+
+	it("renders an image inline", () =>
+	{
+		const result = insertLink("", 0, 0, {...file, name: "shot.png", image: true});
+		assert.equal(result.value, "![shot.png](/webdav.php/apps/tracker/42/report.pdf)");
+	});
+
+	it("leaves the caret after the insert, with nothing to type over", () =>
+	{
+		const result = insertLink("see ", 4, 4, file);
+		assert.equal(result.start, result.value.length);
+		assert.equal(result.start, result.end, "collapsed, unlike the link command's placeholder");
+	});
+
+	it("works at offset 0 and at the end of the value", () =>
+	{
+		assert.equal(insertLink("tail", 0, 0, file).value,
+			"[report.pdf](/webdav.php/apps/tracker/42/report.pdf)tail");
+		assert.equal(insertLink("head ", 5, 5, file).value,
+			"head [report.pdf](/webdav.php/apps/tracker/42/report.pdf)");
+	});
+
+	it("escapes what would end the link early", () =>
+	{
+		// a bracket in the label would close it, a space or paren in the url would end the target
+		const result = insertLink("", 0, 0,
+			{name: "Rechnung [final]", url: "/webdav.php/home/x/Rechnung (final).pdf"});
+		assert.equal(result.value,
+			"[Rechnung \\[final\\]](/webdav.php/home/x/Rechnung%20\\(final\\).pdf)");
+	});
+
+	it("flattens a multi-line selection, which markdown could not hold", () =>
+	{
+		const result = insertLink("over\ntwo lines", 0, 13, file);
+		assert.equal(result.value, "[over two line](/webdav.php/apps/tracker/42/report.pdf)s");
+	});
+
+	it("clamps hostile offsets rather than throwing", () =>
+	{
+		assert.equal(insertLink("abc", 99, 99, file).value,
+			"abc[report.pdf](/webdav.php/apps/tracker/42/report.pdf)");
+		assert.equal(insertLink("abc", -5, -5, file).value,
+			"[report.pdf](/webdav.php/apps/tracker/42/report.pdf)abc");
 	});
 });

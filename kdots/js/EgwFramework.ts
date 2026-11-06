@@ -59,10 +59,6 @@ export class EgwFramework extends LitElement
 
 			// TEMP STUFF
 			css`
-				:host(.print) {
-					--egw-split-panel-slot-overflow: visible;
-				}
-
 				:host .placeholder {
 					display: none;
 				}
@@ -155,7 +151,7 @@ export class EgwFramework extends LitElement
 	{
 		super();
 
-		this._tabApps = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+		// _tabApps is restored from the session in restoreTabApps(), which has to wait for egw
 
 		this.print = this.print.bind(this);
 		this.message = this.message.bind(this);
@@ -243,8 +239,6 @@ export class EgwFramework extends LitElement
 					this.loadApp(app.name);
 				}
 			});
-			// Load additional tabs
-			Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
 		}
 
 		// Init timer
@@ -254,6 +248,9 @@ export class EgwFramework extends LitElement
 		this.getEgwComplete().then(async() =>
 		{
 			// EGW is loaded now, but framework is not guaranteed to be rendered yet
+
+			// Restore & load the additional tabs of this session, needs the user egw only has now
+			this.restoreTabApps();
 
 			// Register the "message" plugin
 			this.egw.registerJSONPlugin((type, res, req) =>
@@ -820,8 +817,10 @@ export class EgwFramework extends LitElement
 			let applicationInfo = this.applicationList.find(a => a.name == appName);
 			if(applicationInfo)
 			{
-				// If they passed in nothing, reset to application name
-				applicationInfo.title = applicationHeader || this.egw.lang("" + (this.egw.link_get_registry(appName, "name") || applicationInfo.name));
+				// If they passed in nothing, reset to application name,
+				// preferring the server-translated title, as lang() may not have the "common" translations yet on initial load
+				applicationInfo.title = applicationHeader || this.egw.app(appName, "title") ||
+					this.egw.lang("" + (this.egw.link_get_registry(appName, "name") || applicationInfo.name));
 				siteTitle += ": " + applicationInfo.title;
 				const appElement = (<EgwFrameworkApp>this.querySelector("egw-app[name='" + appName + "'][active]"))
 				if (appElement) appElement.title = applicationInfo.title;
@@ -1103,10 +1102,19 @@ export class EgwFramework extends LitElement
 			_window = this.egw.window;
 		}
 
-		const hash = await this.egw.hashString(message);
+		// Keyed by the text itself, NOT an (async) hash of it: the lookup and the registration
+		// below must happen in the same tick, otherwise several calls in quick succession - eg.
+		// an apply in a popup reporting the same message via refresh_opener() and message() -
+		// all pass the check before the first one registered, and stack identical toasts.
+		// Firefox's crypto.subtle.digest() resolves late enough to make that the rule.
+		const hash = message;
 
 		// Do not add a same message twice if it's still not dismissed
-		if(typeof this._messages[hash] !== "undefined" && !this._messages[hash].isConnected)
+		// Ask the inner sl-alert too: toast() moves it into the toast stack and removes its host,
+		// so the host of every visible toast is disconnected - while a just created alert has
+		// no rendered sl-alert yet, only its host is connected
+		const shown = this._messages[hash];
+		if(typeof shown !== "undefined" && !shown.isConnected && !shown.alert?.isConnected)
 		{
 			// belongs to a window that has been closed meanwhile
 			delete this._messages[hash];
@@ -1147,9 +1155,13 @@ export class EgwFramework extends LitElement
 		}
 
 		const alert : EgwFrameworkMessage = <EgwFrameworkMessage>Object.assign(_window.document.createElement("egw-message"), attributes);
-		alert.addEventListener("sl-hide", (e) =>
+		alert.addEventListener("sl-hide", () =>
 		{
-			delete this._messages[(<HTMLElement>e.target).dataset.hash ?? ""];
+			// a newer alert of a different type may have taken over the key meanwhile
+			if(this._messages[hash] === alert)
+			{
+				delete this._messages[hash];
+			}
 		});
 		_window.document.body.append(alert);
 		let returnPromise = alert.updateComplete.then(() => alert);
@@ -1172,7 +1184,19 @@ export class EgwFramework extends LitElement
 		}
 
 		this._messages[hash] = alert;
-		alert.dataset.hash = hash;
+
+		// An alert of a popup is only removed above by its own "sl-hide", which never comes if the popup is
+		// closed first: the entry would keep the whole closed popup alive in this (main) window.
+		if(_window !== window)
+		{
+			_window.addEventListener("pagehide", () =>
+			{
+				if(this._messages[hash] === alert)
+				{
+					delete this._messages[hash];
+				}
+			}, {once: true});
+		}
 
 		// An alert of a popup is only removed above by its own "sl-hide", which never comes if the popup is
 		// closed first: the entry would keep the whole closed popup alive in this (main) window.
@@ -1582,6 +1606,53 @@ export class EgwFramework extends LitElement
 	private _setTabAppsSession()
 	{
 		egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(this._tabApps));
+	}
+
+	/**
+	 * Restore the entry-tabs stored for this session and load the active ones
+	 *
+	 * Unlike applicationList these never went through the server's run-rights filter, they are
+	 * whatever the client wrote to the session storage - which outlives a logout and login in
+	 * the same browser tab. So everything the current user has no run-rights for is dropped
+	 * here, otherwise loadApp() would happily open a previous user's tab: it falls back to
+	 * _tabApps for apps it can not find in applicationList.
+	 *
+	 * Must not run before egw is loaded, there is no user to check against before that.
+	 *
+	 * @private
+	 */
+	private restoreTabApps()
+	{
+		const stored = JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+		const apps = this.egw.user('apps') || {};
+
+		const allowed = {};
+		Object.keys(stored).forEach(tabName =>
+		{
+			// tab names are "<appname>-<base64 of the entry id>", internalName is the actual app
+			const appname = stored[tabName].internalName || tabName.split('-')[0];
+			// own properties only: the stored names come from the browser, and "constructor", "toString"
+			// or "__proto__" would otherwise pass as an app of every user
+			if(Object.prototype.hasOwnProperty.call(apps, appname))
+			{
+				allowed[tabName] = stored[tabName];
+			}
+		});
+		// keep anything opened in the meantime, restoring must not lose a tab opened while we waited
+		this._tabApps = {...allowed, ...this._tabApps};
+
+		// Write back right away, so what we refused can not come back on the next load
+		if(Object.keys(allowed).length !== Object.keys(stored).length)
+		{
+			this._setTabAppsSession();
+		}
+
+		// Do NOT load tabs on mobile
+		if(!this.getRootNode()?.querySelector('html')?.classList.contains('mobile'))
+		{
+			Object.values(this._tabApps).filter(app => app.active).forEach(app => this.loadApp(app.name));
+		}
+		this.requestUpdate("applicationList");
 	}
 
 	/**

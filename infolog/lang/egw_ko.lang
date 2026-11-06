@@ -309,7 +309,6 @@ re:	infolog	ko	회신:
 receive notifications about items of type owned by groups you are part of	infolog	ko	내가 속한 그룹이 소유한 유형의 항목에 대한 알림을 받습니다.
 regular expression	infolog	ko	정규식
 removed	infolog	ko	제거됨
-removed category	infolog	ko	제거된 카테고리
 replacement	infolog	ko	대체
 replacements for inserting entries into documents	infolog	ko	문서에 항목 삽입을 위한 대체 기능
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ko	편집 사용자에게 해당 연락처에 대한 쓰기 권한이 있어야 담당 사용자와 공유할 수 있습니다.

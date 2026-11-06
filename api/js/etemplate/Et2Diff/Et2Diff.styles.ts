@@ -14,13 +14,16 @@ export default css`
 		z-index: 1;
 	}
 
-	:host(:hover) {
-		.expand-icon {
-			display: initial;
-		}
+	/*
+	 * On hover, and only for a diff that is actually cut off - offering it for one the reader can
+	 * already see in full would say there is more when there is not.
+	 * Et2Diff._checkOverflow() sets the attribute.
+	 */
+	:host([overflowing]:hover) .expand-icon {
+		display: initial;
 	}
 
-	:host(:not([open])) {
+	:host([overflowing]:not([open])) {
 		cursor: pointer;
 	}
 

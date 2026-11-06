@@ -10,6 +10,7 @@
  */
 
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
+import type {NextmatchActiveFilters, NextmatchInterface} from "./Et2Nextmatch/NextmatchInterfaces";
 import {
 	et2_IInput,
 	et2_implements_registry,
@@ -52,7 +53,21 @@ import {Et2Filterbox} from "./Et2Filterbox/Et2Filterbox";
 let keep_import : Et2AccountFilterHeader
 
 /**
+ * What a nextmatch looks like to the widgets around it now lives next to the webComponent, so a
+ * header or filter widget can name it without importing this file.  Re-exported here because
+ * code still imports it from the nextmatch module - the definition moved, the path need not.
+ */
+// `export type` because both are types: Babel strips them out of NextmatchInterfaces.ts, so a
+// plain re-export names a runtime export that does not exist and rollup fails the build.
+export type {NextmatchInterface, NextmatchActiveFilters} from "./Et2Nextmatch/NextmatchInterfaces";
+
+/**
  * Interface all special nextmatch header elements have to implement.
+ *
+ * This and et2_INextmatchSortable below are THIS widget's contracts with its headers, and are
+ * deliberately left here to be deleted along with it - see "Legacy-only interfaces" in
+ * doc/ai/projects/et2-nextmatch-conversion.md.  `Et2Nextmatch` drives neither: it never calls
+ * setNextmatch(), and it finds its sort headers by tag name and duck-types setSortmode().
  */
 export interface et2_INextmatchHeader
 {
@@ -62,9 +77,9 @@ export interface et2_INextmatchHeader
 	 * and tells the nextmatch header widgets which widget they should direct
 	 * their 'sort', 'search' or 'filter' calls to.
 	 *
-	 * @param {et2_nextmatch} _nextmatch
+	 * @param {NextmatchInterface} _nextmatch
 	 */
-	setNextmatch(nextmatch : et2_nextmatch) : void
+	setNextmatch(nextmatch : NextmatchInterface) : void
 }
 
 export const et2_INextmatchHeader = "et2_INextmatchHeader";
@@ -92,16 +107,6 @@ interface PrintSettings
 	orientation_style : HTMLStyleElement
 }
 
-interface ActiveFilters
-{
-	search? : string,
-	filter? : any,
-	filter2? : any,
-	col_filter : { [key : string] : any },
-	selectcols? : string[],
-	searchletter? : string,
-	selected? : string[]
-}
 
 /**
  * Class which implements the "nextmatch" XET-Tag
@@ -127,7 +132,7 @@ interface ActiveFilters
  *
  * @augments et2_DOMWidget
  */
-export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2_IInput, et2_IPrint
+export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2_IInput, et2_IPrint, NextmatchInterface
 {
 	static readonly _attributes = {
 		// These normally set in settings, but broken out into attributes to allow run-time changes
@@ -235,7 +240,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	};
 
 	// Currently active filters
-	activeFilters : ActiveFilters;
+	activeFilters : NextmatchActiveFilters;
 
 	/**
 	 * Update types
@@ -3149,7 +3154,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	/**
 	 * Get the current 'value' for the nextmatch
 	 */
-	getValue() : ActiveFilters
+	getValue() : NextmatchActiveFilters
 	{
 		const _ids = this.getSelection();
 
@@ -3159,7 +3164,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			idsArr[i] = idsArr[i].split("::").pop();
 		}
-		const value : ActiveFilters = {
+		const value : NextmatchActiveFilters = {
 			selected: idsArr,
 			col_filter: {}
 		};

@@ -83,6 +83,13 @@ class Storage extends Api\Storage
 		// (passing 'infolog' explicitly) for exactly that reason - no need to clone.
 		parent::__construct('infolog', 'egw_infolog', 'egw_infolog_extra', '',
 			'info_extra_name', 'info_extra_value', 'info_id', $db);
+
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects infolog's own queries - every raw
+		// SQL fragment infolog builds itself (here and in infolog_bo, via this->db being public)
+		// now uses Api\Db\SqlFragment. Once requireSqlFragmentObjects() becomes the default
+		// (opt-out) for Api\Db generally, remove this clone again.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
 	}
 
 	/**
@@ -266,6 +273,65 @@ class Storage extends Api\Storage
 	}
 
 	/**
+	 * Read the rows of many entries in one go - the bulk twin of read()
+	 *
+	 * Reimplemented, as read() here does its own raw select rather than going through
+	 * Api\Storage::read(), and hydrates info_responsible/info_cc from the users table and the
+	 * unregistered "#" custom fields on top. Each of those is done once for the whole list here,
+	 * so a caller asking about N entries costs a handful of queries instead of four per entry.
+	 *
+	 * The one thing these rows do not get is read()'s side effect of generating and saving an
+	 * info_uid for an entry whose uid is missing or too short - listing a lot of entries is no
+	 * reason to write to all of them. info_uid is the only field that can therefore differ, and
+	 * only for such an entry.
+	 *
+	 * @param array $ids info_ids
+	 * @return array info_id => entry array pairs, ids without an entry are left out
+	 */
+	function readRows(array $ids)
+	{
+		$rows = array();
+		if (!$ids) return $rows;
+
+		foreach($this->db->select($this->table_name, $this->table_name.'.*',
+			$this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => array_values($ids))),
+			__LINE__, __FILE__, false, '', 'infolog') as $row)
+		{
+			$row['info_id_parent'] = (int)$row['info_id_parent'];
+			$rows[$row['info_id']] = $row;
+		}
+		if (!$rows) return $rows;
+
+		$responsible = $this->read_responsible(array_keys($rows));
+		foreach($rows as $info_id => &$row)
+		{
+			// read_responsible() only returns entries that have any, the rest still need the keys
+			// read() gives them, as is_responsible() reads info_responsible unconditionally
+			$row['info_responsible'] = $responsible[$info_id]['info_responsible'] ?? array();
+			$row['info_cc'] = $responsible[$info_id]['info_cc'] ?? '';
+		}
+		unset($row);
+
+		foreach($this->read_customfields(array_keys($rows)) as $info_id => $cfs)
+		{
+			if (isset($rows[$info_id])) $rows[$info_id] = array_merge($rows[$info_id], $cfs);
+		}
+		// unregistered "#"-prefixed rows (infolog_ical.inc.php's X-property storage), same as read()
+		$unregistered_where = array('info_id' => array_keys($rows));
+		if ($this->customfields)
+		{
+			$unregistered_where[] = Api\Db\SqlFragment::raw('info_extra_name NOT IN ('.
+				implode(',', array_map(array($this->db, 'quote'), array_keys($this->customfields))).')');
+		}
+		foreach($this->db->select($this->extra_table, 'info_id,info_extra_name,info_extra_value',
+			$unregistered_where, __LINE__, __FILE__, false, '', 'infolog') as $row)
+		{
+			$rows[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+		}
+		return $rows;
+	}
+
+	/**
 	 * read InfoLog entry $info_id
 	 *
 	 * some caching is done to prevent multiple reads of the same entry
@@ -288,7 +354,7 @@ class Storage extends Api\Storage
 		}
 		if (isset($where['info_id']))
 		{
-			$where[] = $this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => $where['info_id']));
+			$where[] = Api\Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name.'.', array('info_id' => $where['info_id'])));
 			unset($where['info_id']);
 		}
 
@@ -329,8 +395,8 @@ class Storage extends Api\Storage
 		$unregistered_where = array('info_id' => $this->data['info_id']);
 		if ($this->customfields)
 		{
-			$unregistered_where[] = 'info_extra_name NOT IN ('.
-				implode(',', array_map(array($this->db,'quote'), array_keys($this->customfields))).')';
+			$unregistered_where[] = Api\Db\SqlFragment::raw('info_extra_name NOT IN ('.
+				implode(',', array_map(array($this->db,'quote'), array_keys($this->customfields))).')');
 		}
 		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',$unregistered_where,__LINE__,__FILE__,false,'','infolog') as $row)
 		{
@@ -498,7 +564,7 @@ class Storage extends Api\Storage
 				}
 				unset($to_write['info_etag']);
 				// and increment it
-				$to_write[] = 'info_etag=info_etag+1';
+				$to_write[] = Api\Db\SqlFragment::raw('info_etag=info_etag+1');
 			}
 			if (!$this->db->update($this->table_name,$to_write,$where,__LINE__,__FILE__,'infolog'))
 			{
@@ -543,7 +609,7 @@ class Storage extends Api\Storage
 		if ($purge_cfs)
 		{
 			$where = array('info_id' => $info_id);
-			if ($purge_cfs == 'ical') $where[] = "info_extra_name LIKE '#%'";
+			if ($purge_cfs == 'ical') $where[] = Api\Db\SqlFragment::raw("info_extra_name LIKE '#%'");
 			$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,'infolog');
 		}
 		$cf_data = array('info_id' => $info_id);
@@ -616,9 +682,9 @@ class Storage extends Api\Storage
 				'info_res_modifier' => $this->user,
 			), array(
 				'info_id' => $this->data['info_id'],
-				'info_res_deleted IS NULL',
+				Api\Db\SqlFragment::raw('info_res_deleted IS NULL'),
 			)+(!$values['info_responsible'] ? array() :
-				array(1=>'account_id NOT IN ('.implode(',', array_map(array($this->db, 'quote'), array_keys($users))).')')),
+				array(1=>Api\Db\SqlFragment::raw('account_id NOT IN ('.implode(',', array_map(array($this->db, 'quote'), array_keys($users))).')'))),
 				__LINE__, __FILE__, 'infolog');
 
 			// add newly added attendees
@@ -627,7 +693,7 @@ class Storage extends Api\Storage
 				$old_users = array();
 				foreach($this->db->select($this->users_table,'account_id,info_res_attendee',array(
 					'info_id' => $this->data['info_id'],
-					'info_res_deleted IS NULL',
+					Api\Db\SqlFragment::raw('info_res_deleted IS NULL'),
 				), __LINE__, __FILE__, false, '', 'infolog') as $row)
 				{
 					$old_users[] = $row['account_id'];
@@ -667,7 +733,7 @@ class Storage extends Api\Storage
 		$counts = array();
 		foreach($this->db->select($this->table_name,'info_id_parent,COUNT(*) AS info_anz_subs',array(
 			'info_id_parent' => $info_id,
-			"info_status != 'deleted'",	// dont count deleted subs as subs, as they are not shown by default
+			Api\Db\SqlFragment::raw("info_status != 'deleted'"),	// dont count deleted subs as subs, as they are not shown by default
 		),__LINE__,__FILE__,
 			false,'GROUP BY info_id_parent','infolog') as $row)
 		{
@@ -689,9 +755,9 @@ class Storage extends Api\Storage
 		$users = array();
 
 		foreach($this->db->select($this->table_name,'DISTINCT info_owner',array(
-			str_replace(' AND ','',$this->statusFilter('open')),
-			'(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
-			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')',		// end_day within 4 days
+			Api\Db\SqlFragment::raw(str_replace(' AND ','',$this->statusFilter('open'))),
+			Api\Db\SqlFragment::raw('(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
+			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')'),		// end_day within 4 days
 		),__LINE__,__FILE__,false,'','infolog') as $row)
 		{
 			$users[] = $row['info_owner'];

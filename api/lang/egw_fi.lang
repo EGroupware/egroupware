@@ -250,8 +250,10 @@ centered	common	fi	Keskitetty
 central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
 chad	common	fi	TSAD
 change	common	fi	Muuta
+change category	common	fi	Muuta kategoriaa
 change owner	common	fi	Vaihda omistaja
 changed	common	fi	Muokattu
+changed category to %1	common	fi	Kategoria muutettu: %1
 changes that you made may not be saved.	common	fi	Tehdyt muutokset eivät ehkä tallennu.
 charset	common	fi	Merkistö
 check all	common	fi	Tarkista kaikki
@@ -1089,6 +1091,7 @@ remove row (can not be undone!!!)	common	fi	Siirrä rivi
 remove selected accounts	common	fi	Poista valitut käyttäjättilit
 remove shortcut	common	fi	Poista pikakuvake
 remove this link (not the entry itself)	common	fi	Poista tämä linkki (ei poista itse merkintää)
+removed category	common	fi	Poistettu luokka
 rename	common	fi	Nimeä uudelleen
 repeat password	common	fi	Toista salasana
 replace	common	fi	Korvaa

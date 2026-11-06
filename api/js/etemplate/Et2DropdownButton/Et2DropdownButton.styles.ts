@@ -37,10 +37,10 @@ export default css`
 	}
 
 	::slotted(et2-image[slot="prefix"]), ::slotted(et2-image[slot="suffix"]) {
-	    width: 20px;
-	    height: 20px;
+	    width: var(--sl-font-size-large);
+	    height: var(--sl-font-size-large);
 	    display: flex;
-	    font-size: 20px !important;
+	    font-size: var(--sl-font-size-large) !important;
 	}
 
 	sl-menu-item::part(label) {

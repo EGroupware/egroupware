@@ -9,7 +9,7 @@
  */
 
 
-import {html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing, PropertyValues} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
@@ -356,6 +356,21 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		this.requestUpdate();
 	}
 
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		// Shoelace ignores aria-label on <sl-select> and points its combobox at an empty label part,
+		// so the unit selector needs naming on its combobox input
+		const select = this.shadowRoot?.querySelector("sl-select");
+		select?.updateComplete.then(() =>
+		{
+			const input = select.shadowRoot?.querySelector(".select__display-input");
+			input?.removeAttribute("aria-labelledby");
+			input?.setAttribute("aria-label", this.egw().lang("Unit"));
+		});
+	}
+
 	render()
 	{
 
@@ -567,7 +582,10 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 								max=${typeof input.max === "number" ? input.max : nothing}
                                 step=${this.step}
 								precision=${typeof input.precision === "number" ? input.precision : nothing} 
-								title=${input.title || nothing}
+								statustext=${input.title || this.label || this.egw().lang("Duration")}
+								.ariaDescription=${this.helpText}
+								?disabled=${this.disabled}
+								?required=${this.required && count == 1}
                                 value=${live(input.value)}
                                 @sl-change=${this.handleInputChange}
                     ></et2-number>`
@@ -599,7 +617,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		// It would be nice to use an et2-select here, but something goes weird with the styling
 		const current = this._display.unit || this.displayFormat[0];
 		return html`
-            <sl-select exportparts="combobox" value="${current}">
+            <sl-select exportparts="combobox" value="${current}" ?disabled=${this.disabled}>
                 ${[...this.displayFormat].map((format : string) =>
                         html`
                             <sl-option

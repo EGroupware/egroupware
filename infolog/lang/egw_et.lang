@@ -312,7 +312,6 @@ project settings: price, times	infolog	et	Projekti seaded: hind, ajad
 receive notifications about due entries you are responsible for	infolog	et	Saate teateid selliste objektide kohta, mille omanikuks on rühmad, kuhu te kuulute
 regular expression	infolog	et	Regulaaravaldis
 removed	infolog	et	Eemaldatud.
-removed category	infolog	et	eemaldatud kategooria
 replacement	infolog	et	Asendamine
 replacements for inserting entries into documents	infolog	et	Asendused kirjete sisestamiseks dokumentidesse
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	et	Nõuab, et redigeerival kasutajal oleks kirjutamisõigus nendele kontaktidele, et jagada neid vastutava kasutajaga.

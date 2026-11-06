@@ -8,7 +8,7 @@
  */
 
 
-import {css, html, LitElement, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
@@ -49,6 +49,18 @@ ul {
     margin: 0px;
     padding: 0px;
     display: inline-block;
+}
+
+/* A fixed label width needs a box of its own to apply to */
+:host(.et2-label-fixed) label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: var(--sl-input-height-medium);
+}
+
+:host(.et2-label-fixed) .form-control-label {
+    margin-right: var(--sl-spacing-medium);
 }
 
 li {
@@ -263,7 +275,7 @@ li {
 	{
 		const value = this.getValueAsArray();
 		return html`
-            <label part="label">${this.label}
+            <label part="label">${this.label ? html`<span class="form-control-label" part="form-control-label">${this.label}</span>` : nothing}
             <ul>
                 ${repeat(
                         this.getValueAsArray(),

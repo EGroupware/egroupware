@@ -87,10 +87,30 @@ class Store implements StoreModule
 	/**
 	 * Since the storage is shared across at least all applications, make
 	 * the key include some extra info.
+	 *
+	 * The storage is shared by everyone using the browser too: sessionStorage survives a
+	 * logout and login in the same tab, localStorage outlives the session entirely. So the
+	 * key also has to identify the user and the instance (domain) he is logged into,
+	 * otherwise the next user reads (and the framework happily restores) whatever the
+	 * previous one left behind.
 	 */
 	private mapKey(application : string, key : string) : string
 	{
-		return application + '-' + key;
+		return application + '-' + key + this.userSuffix();
+	}
+
+	/**
+	 * Suffix identifying current user and instance, empty as long as no user is known
+	 *
+	 * There is no user before /api/user.php has been imported (eg. on the login page, or in
+	 * a very early call racing that import), in which case we must not silently share the
+	 * unsuffixed key with everyone: callers reading too early just get nothing.
+	 */
+	private userSuffix() : string
+	{
+		const account_id = typeof egw.user === 'function' ? egw.user('account_id') : undefined;
+
+		return account_id ? '-' + account_id + '@' + (egw.user('domain') || '') : '';
 	}
 
 	/**

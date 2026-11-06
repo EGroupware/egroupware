@@ -12,7 +12,16 @@ export default css`
 		display: flex;
 		align-items: stretch;
 		flex-direction: column;
-		flex-wrap: nowrap;
+		/*
+		 * This control stacks its label over the editor, so it is a column flex - and wrapping a
+		 * column flex makes a second column, not a second row.  A layout's one-column collapse
+		 * turns wrapping on to get a label onto its own line, which is right for the row-direction
+		 * controls it is written for but here puts the editor beside its label, off the side of the
+		 * screen.  !important because a rule reaching in through ::part() from the light DOM wins
+		 * over this one at any specificity, and this is the control's own structure rather than a
+		 * style choice.
+		 */
+		flex-wrap: nowrap !important;
 		flex: 1 1 auto;
 	}
 
@@ -20,7 +29,12 @@ export default css`
 		display: flex;
 		flex-direction: column;
 		flex: 1 1 auto;
-		min-width: 40em;
+		/*
+		 * An editor wants 40em, but never more than it has been given: a plain minimum makes it
+		 * overflow its container on a phone, or in any layout that puts it in a narrow column, and
+		 * the toolbar then sits off the side of the screen where it cannot be reached.
+		 */
+		min-width: min(40em, 100%);
 		min-height: 10em;
 	}
 

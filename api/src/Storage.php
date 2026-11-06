@@ -339,6 +339,27 @@ class Storage extends Storage\Base
 	}
 
 	/**
+	 * Read the rows of many ids in one query
+	 *
+	 * Reimplemented to also read the custom fields, so these rows stay what read() returns.
+	 *
+	 * @param array $ids values of the (single-column) primary key
+	 * @return array id => row pairs
+	 */
+	function readRows(array $ids)
+	{
+		if (!($rows = parent::readRows($ids)) || !$this->customfields)
+		{
+			return $rows;
+		}
+		foreach($this->read_customfields(array_keys($rows)) as $id => $cfs)
+		{
+			if (isset($rows[$id])) $rows[$id] = array_merge($rows[$id], $cfs);
+		}
+		return $rows;
+	}
+
+	/**
 	 * saves the content of data to the db
 	 *
 	 * reimplented to also save the custom fields
@@ -605,9 +626,9 @@ class Storage extends Storage\Base
 				{
 					$criteria[$this->extra_value] = substr($criteria[$this->extra_value],1);
 				}
-				$criteria[] = $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+				$criteria[] = Db\SqlFragment::raw($this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
 					$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
-					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard);
+					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard));
 				unset($criteria[$this->extra_value]);
 			}
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
@@ -615,8 +636,8 @@ class Storage extends Storage\Base
 			{
 				if ($criteria[$this->autoinc_id])
 				{
-					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',
-						array($this->autoinc_id => $criteria[$this->autoinc_id]));
+					$criteria[] = Db\SqlFragment::raw($this->db->expression($this->table_name,$this->table_name.'.',
+						array($this->autoinc_id => $criteria[$this->autoinc_id])));
 				}
 				unset($criteria[$this->autoinc_id]);
 			}
@@ -635,9 +656,9 @@ class Storage extends Storage\Base
 				$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 				if(is_string($name) && !empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 				{
-					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+					$criteria[] = Db\SqlFragment::raw($this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,
-					));
+					)));
 					unset($criteria[$name]);
 				}
 				elseif (is_string($name) && $this->is_cf($name))
@@ -664,7 +685,7 @@ class Storage extends Storage\Base
 					}
 				}
 			}
-			if (!empty($cfcriteria) && $op === 'OR') $criteria[] = implode(' OR ', $cfcriteria);
+			if (!empty($cfcriteria) && $op === 'OR') $criteria[] = Db\SqlFragment::raw(implode(' OR ', $cfcriteria));
 		}
 		if($only_keys === true)
 		{
@@ -719,7 +740,7 @@ class Storage extends Storage\Base
 	 * @param string $field
 	 * @return boolean true if $name is a custom field, false otherwise
 	 */
-	function is_cf($field)
+	function is_cf(string $field)
 	{
 		return !empty($field) && $field[0] == self::CF_PREFIX;
 	}
@@ -850,9 +871,9 @@ class Storage extends Storage\Base
 				{
 					if ((int)$filter[$this->autoinc_id])
 					{
-						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+						$filter[] = Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name . '.', array(
 							$this->autoinc_id => $filter[$this->autoinc_id],
-						));
+						)));
 					}
 					unset($filter[$this->autoinc_id]);
 				}
@@ -862,9 +883,9 @@ class Storage extends Storage\Base
 					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 					if (!empty($extra_columns['fd'][array_search($name, $this->db_cols)]))
 					{
-						$filter[] = $this->db->expression($this->table_name, $this->table_name . '.', array(
+						$filter[] = Db\SqlFragment::raw($this->db->expression($this->table_name, $this->table_name . '.', array(
 							array_search($name, $this->db_cols) => $val,
-						));
+						)));
 						unset($filter[$name]);
 					}
 				}
@@ -897,7 +918,7 @@ class Storage extends Storage\Base
 							{
 								$sql_filter = str_replace($this->extra_value, 'extra_filter.' . $this->extra_value,
 									$this->db->expression($this->extra_table, array(
-										$this->extra_value . ' ' . $this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote($wildcard . $val . $wildcard)
+										Db\SqlFragment::raw($this->extra_value . ' ' . $this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE] . ' ' . $this->db->quote($wildcard . $val . $wildcard))
 									))
 								);
 							}

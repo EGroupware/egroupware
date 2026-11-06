@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Vfs;
 
 require_once __DIR__ . '/../LoggedInTest.php';
+require_once __DIR__ . '/FilesystemFixtureTrait.php';
 
 use EGroupware\Api;
 use EGroupware\Api\LoggedInTest as LoggedInTest;
@@ -24,6 +25,8 @@ use EGroupware\Stylite\Vfs\Versioning;
 
 class SharingBase extends LoggedInTest
 {
+	use FilesystemFixtureTrait;
+
 	/**
 	 * How much should be logged to the console (stdout)
 	 *
@@ -32,6 +35,80 @@ class SharingBase extends LoggedInTest
 	 * 2 = debug
 	 */
 	const LOG_LEVEL = 0;
+
+	/**
+	 * Environment variable saying that nothing is expected to answer the share link.
+	 *
+	 * These tests fetch the share over real HTTP, because that is the only way to check the
+	 * thing that actually matters: that someone we sent a link to gets the files.  Where no
+	 * webserver is running at all - a bare checkout, a container with nothing on the port in
+	 * EGW_URL - that is an environment problem and skipping is honest.  Set this there.
+	 *
+	 * Everywhere else a share request that goes unanswered, redirects away, comes back empty
+	 * or comes back as the wrong page IS the bug these tests exist to catch, and is reported
+	 * as a failure.  Inferring "no webserver" from those symptoms instead, as this class used
+	 * to, meant a broken share reported as "skipped" and the suite still exited 0.
+	 */
+	const NO_WEBSERVER_ENV = 'EGW_TEST_NO_WEBSERVER';
+
+	/**
+	 * host[:port] to build share links against.
+	 *
+	 * EGW_URL wins, the way every other test that needs a webserver resolves it (WebDAVTest,
+	 * CalDAVTest, LogoutRedirectXssTest).  This used to consult EGW_URL only when the
+	 * webserver_url config was *empty* - but that config is normally a bare path ("/egroupware"),
+	 * which is non-empty and carries no host, so the fallback never ran and every share link was
+	 * pinned to localhost:80.  Where something happens to listen there it silently worked; in CI
+	 * nothing does, and the resulting connection failure was reported as a skipped test.
+	 *
+	 * @return string
+	 */
+	protected static function webserverHost() : string
+	{
+		foreach([
+			getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null),
+			$GLOBALS['egw_info']['server']['webserver_url'] ?? null,
+		] as $url)
+		{
+			if(empty($url) || empty($parts = parse_url($url)) || empty($parts['host']))
+			{
+				continue;
+			}
+			return $parts['host'].(!empty($parts['port']) ? ':'.$parts['port'] : '');
+		}
+		return 'localhost';
+	}
+
+	/**
+	 * Hand our session over before asking the webserver to use it.
+	 *
+	 * The keep-session paths send this process's own session cookie.  PHP locks a session file
+	 * exclusively, so while we still hold it open the webserver blocks in session_start() until
+	 * the request times out - fatal against a single-threaded `php -S`, which is what CI runs.
+	 */
+	protected function releaseSessionForWebserver() : void
+	{
+		if(isset($GLOBALS['egw']->session) && session_status() === PHP_SESSION_ACTIVE)
+		{
+			$GLOBALS['egw']->session->commit_session();
+		}
+	}
+
+	/**
+	 * Nothing answered the share request at all (no HTTP status).
+	 *
+	 * Skipped only where the caller has declared there is no webserver, otherwise a failure.
+	 *
+	 * @param string $message
+	 */
+	protected function noWebserverResponse(string $message) : void
+	{
+		if((string)getenv(self::NO_WEBSERVER_ENV) !== '')
+		{
+			$this->markTestSkipped($message);
+		}
+		$this->fail($message . "\nIf this environment has no webserver, set " . self::NO_WEBSERVER_ENV . "=1 to skip instead.");
+	}
 
 	/**
 	 * Keep track of shares to remove after
@@ -103,10 +180,18 @@ class SharingBase extends LoggedInTest
 			error_log(implode("\n",$this->shares));
 		}
 
-		// Remove any added files (as root to limit versioning issues)
-		if(in_array('/',$this->files))
+		// Remove any added files (as root to limit versioning issues).
+		// Strict comparison: loose in_array('/') also matches a bare true, which any
+		// "Vfs::touch($p) ?: $p" in a test quietly puts here, so a working test reported
+		// "Tried to remove root".  Non-strings are rejected on their own terms instead,
+		// since passing one on to Vfs::is_dir() is no better.
+		if(in_array('/', $this->files, true))
 		{
 			$this->fail('Tried to remove root');
+		}
+		foreach($this->files as $file)
+		{
+			$this->assertIsString($file, 'Non-path ' . gettype($file) . ' in the cleanup list - a test pushed a return value instead of a path');
 		}
 		foreach($this->files as $file)
 		{
@@ -144,6 +229,8 @@ class SharingBase extends LoggedInTest
 
 
 		Vfs::$is_root = $backup;
+
+		$this->removeFilesystemFixtureCopies();
 	}
 
 
@@ -340,11 +427,8 @@ class SharingBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$fs_path = realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
-		if(!file_exists($fs_path))
-		{
-			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
-		}
+		// a copy, never the tracked fixture itself - see FilesystemFixtureTrait
+		$fs_path = $this->filesystemFixtureCopy();
 		$url = Filesystem\StreamWrapper::SCHEME.'://default'. $fs_path.
 			'?user=' . $GLOBALS['egw_info']['user']['account_id'] . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");
@@ -354,6 +438,27 @@ class SharingBase extends LoggedInTest
 		Vfs::clearstatcache();
 		Vfs::init_static();
 		Vfs\StreamWrapper::init_static();
+		$this->invalidateWebserverCache();
+	}
+
+	/**
+	 * Tell the webserver to drop its instance cache, so it sees a mount we just made
+	 *
+	 * Vfs::mount() persists the mount through Api\Config, which caches it in the instance cache.
+	 * The webserver serving a share of that mount has its own instance cache and no reason to ever
+	 * re-read the configuration, so without this it resolves the share against a vfs_fstab from
+	 * whenever it first looked - which, for a mount created during the test run, does not contain
+	 * the mount at all, and the share 404s.
+	 *
+	 * Every process reads the key naming its instance cache out of the *tree* cache on each
+	 * request, so generating a new one is how one process invalidates every other's.  That only
+	 * carries across processes when they share a tree cache: cache_provider_tree defaults to the
+	 * instance provider, and a CLI process (file cache) and a webserver (APCu) do not share that.
+	 * Where it is not shared this is simply a no-op for the webserver.
+	 */
+	protected function invalidateWebserverCache() : void
+	{
+		Api\Cache::generate_instance_key();
 	}
 
 	/**
@@ -463,6 +568,12 @@ class SharingBase extends LoggedInTest
 	 */
 	public function createShare($path, $mode, $extra = array())
 	{
+		// Every test turns its share into a link, and share2link() resolves the host through
+		// Http::host(true), which prefers a configured hostname over HTTP_HOST - so on any
+		// install that has one the link points at that install instead of the webserver the
+		// test was told to use, and the test quietly checks the wrong server.
+		$_SERVER['HTTP_HOST'] = $GLOBALS['egw_info']['server']['hostname'] = static::webserverHost();
+
 		// Make sure the path is there
 		if(!Vfs::is_readable($path))
 		{
@@ -520,22 +631,10 @@ class SharingBase extends LoggedInTest
 		{
 			echo __METHOD__ . "('$path',$mode)\n";
 		}
-		// Setup - create path and share
-		$host = 'localhost';
-		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'] ?? null;
-		if (empty($webserver_url))
-		{
-			$webserver_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null);
-		}
-		if (!empty($webserver_url))
-		{
-			$parts = parse_url($webserver_url);
-			if (!empty($parts['host']))
-			{
-				$host = $parts['host'].(!empty($parts['port']) ? ':'.$parts['port'] : '');
-			}
-		}
-		$_SERVER['HTTP_HOST'] = $host;
+		// Setup - create path and share.  createShare() points the host at the test webserver
+		// too, but a subclass may override it (SharingACLTest does, for hidden-upload shares),
+		// so the link built below gets the same treatment either way.
+		$_SERVER['HTTP_HOST'] = $GLOBALS['egw_info']['server']['hostname'] = static::webserverHost();
 		$share = $this->createShare($path, $mode, $extra);
 		$link = Vfs\Sharing::share2link($share);
 
@@ -597,13 +696,37 @@ class SharingBase extends LoggedInTest
 	}
 
 	/**
+	 * Extra explanation for a share link that answered with no content
+	 *
+	 * A 404 from the WebDAV layer means the share session did not resolve the share's path.  When
+	 * the share is of a mount the test itself created, that is most often the webserver answering
+	 * from a cached configuration rather than anything wrong with the share: Vfs mounts are
+	 * persisted through Api\Config, which caches in APCu for a webserver but in files for the CLI,
+	 * so the two only agree if they share an instance cache.
+	 *
+	 * @param int $http_code
+	 * @param string[] $response_headers
+	 * @return string appended to the failure message, empty if it does not apply
+	 */
+	protected function noContentHint(int $http_code, array $response_headers) : string
+	{
+		if($http_code !== 404 || !preg_grep('/^X-WebDAV-Status: 404/i', $response_headers))
+		{
+			return '';
+		}
+		return "\nThe WebDAV layer answered 404, so the share session did not resolve the path." .
+			"\nIf the share is of a mount this test created, check the webserver is not serving a" .
+			"\ncached vfs_fstab - it needs to share an instance cache with the test process.";
+	}
+
+	/**
 	 * Test to make sure that a directory link leads to a limited filemanager
 	 * interface (not a file or 404).
 	 *
 	 * @param type $link
 	 * @param type $share
 	 */
-	public function checkDirectoryLink($link, $share)
+	public function checkDirectoryLink($link, $share, $expect_rows = true)
 	{
 		// Set up curl
 		$curl = curl_init($link);
@@ -617,15 +740,37 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME."={$session_id}";
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+
+		// Keep the headers: when this fails the body is empty, and they are the only thing saying
+		// whether EGroupware refused the share - it reports that through X-WebDAV-Status - or the
+		// request died before answering at all
+		$response_headers = [];
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$response_headers)
+		{
+			if(trim($header) !== '') $response_headers[] = trim($header);
+			return strlen($header);
+		});
+
+		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$curl_errno = curl_errno($curl);
+		$curl_error = curl_error($curl);
+		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		curl_close($curl);
+		$header_dump = $response_headers ? "\nResponse headers:\n  " . implode("\n  ", $response_headers) : '';
 
 		if(!$html)
 		{
-			// No response - could mean something is terribly wrong, or it could
-			// mean we're running on Travis with no webserver to answer the
-			// request
-			return;
+			// This used to return quietly, which passed the test: the whole web-facing half of
+			// the check disappeared without a word in the report while the VFS-level checks in
+			// checkDirectory() carried on and went green.
+			if($http_code === 0)
+			{
+				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			}
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch
@@ -650,6 +795,18 @@ class SharingBase extends LoggedInTest
 		// as a sub-directory
 		$expected_path = '/' . Vfs::basename(trim($share['share_path'], '/'));
 		$this->assertEquals($expected_path, $data->data->content->nm->path, "Share was not mounted at $expected_path");
+
+		// The recipient has to actually see the files.  Nothing here checked that, so a share
+		// that rendered the filemanager UI over an empty list - the most common way this breaks
+		// for a client - passed.  Every caller shares a directory with files in it; a test that
+		// deliberately shares an empty directory should pass $expect_rows = false.
+		if($expect_rows)
+		{
+			$this->assertNotEmpty(
+				(array)($data->data->content->nm->rows ?? []),
+				"Share link '$link' rendered the filemanager but listed no files"
+			);
+		}
 
 		unset($data->data->content->nm->actions);
 		//var_dump($data->data->content->nm);
@@ -679,6 +836,7 @@ class SharingBase extends LoggedInTest
 			$cookie .= ';'.Api\Session::EGW_SESSION_NAME.'='.$session_id;
 		}
 		curl_setopt($curl, CURLOPT_COOKIE, $cookie);
+		$this->releaseSessionForWebserver();
 		curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$content_type = (string)curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
@@ -703,12 +861,9 @@ class SharingBase extends LoggedInTest
 
 		if($http_code === 0)
 		{
-			$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+			$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 		}
-		if($http_code >= 300 && $http_code < 400)
-		{
-			$this->markTestSkipped("Share link '$link' ended in HTTP $http_code at '$effective_url' (redirect/auth flow differs in this environment)");
-		}
+		$this->assertLessThan(300, $http_code, "Share link '$link' ended in HTTP $http_code at '$effective_url' - a recipient following this link does not reach the file");
 		$this->assertEquals(200, $http_code, "Did not find the file, got HTTP status $http_code at '$effective_url'");
 		$this->assertStringContainsString($mimetype, $content_type, 'Wrong file type');
 
@@ -736,7 +891,7 @@ class SharingBase extends LoggedInTest
 	 * @param $data Data passed to the etemplate
 	 * @param $keep_session = true Keep the current session, or access with new session as anonymous
 	 */
-	public function getShare($link, &$data, $keep_session = true, &$_curl = null)
+	public function getShare($link, &$data, $keep_session = true, &$_curl = null, $expect_nextmatch = true)
 	{
 		// Set up curl
 		if($_curl == null)
@@ -762,11 +917,29 @@ class SharingBase extends LoggedInTest
 			$cookies['kp3'] = $GLOBALS['egw']->session->kp3;
 		}
 		$this->addCookies($curl, $cookies);
+
+		// Keep the response headers: when this fails the body is usually empty, and the headers
+		// are then the only thing that says why - EGroupware reports a refused share through
+		// them (X-WebDAV-Status, or the exception message as a basic-auth realm), and they are
+		// in hand here whether or not anything reached the server log.
+		$response_headers = [];
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$response_headers)
+		{
+			if(trim($header) !== '')
+			{
+				$response_headers[] = trim($header);
+			}
+			return strlen($header);
+		});
+
+		$this->releaseSessionForWebserver();
 		$html = curl_exec($curl);
 		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$effective_url = (string)curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
 		$curl_errno = curl_errno($curl);
 		$curl_error = curl_error($curl);
+		curl_setopt($curl, CURLOPT_HEADERFUNCTION, null);
+		$header_dump = $response_headers ? "\nResponse headers:\n  " . implode("\n  ", $response_headers) : '';
 		if($_curl == null)
 		{
 			curl_close($curl);
@@ -774,14 +947,13 @@ class SharingBase extends LoggedInTest
 
 		if(!$html)
 		{
-			// No response - could mean something is terribly wrong, or it could
-			// mean we're running on Travis with no webserver to answer the
-			// request
 			if($http_code === 0)
 			{
-				$this->markTestSkipped("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
+				$this->noWebserverResponse("No webserver response for share link '$link' (curl errno $curl_errno: $curl_error)");
 			}
-			$this->markTestSkipped("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')");
+			// An empty body with a real HTTP status is the blank-page the recipient sees
+			$this->fail("Share link '$link' returned no content (HTTP $http_code, effective URL '$effective_url')" .
+				$header_dump . $this->noContentHint($http_code, $response_headers));
 		}
 
 		// Parse & check for nextmatch
@@ -797,18 +969,21 @@ class SharingBase extends LoggedInTest
 				echo "Got this instead:\n".($form?$form:$html)."\n\n";
 			}
 		}
-		if(!$form)
-		{
-			$this->markTestSkipped("Share link '$link' did not return expected template (HTTP $http_code, effective URL '$effective_url')");
-		}
-		$this->assertNotNull($form, "Didn't find template in response");
+		$this->assertNotNull($form, "Share link '$link' did not return the expected template (HTTP $http_code, effective URL '$effective_url')"
+			. $header_dump . "\nFirst 500 bytes of the body:\n" . substr($html, 0, 500));
 		$data = json_decode($form->getAttribute('data-etemplate'), true);
 
-		$rows = $data['data']['content']['nm']['rows'];
-		if(count($rows) == 0)
+		// Not asserted non-empty here: a caller sharing an empty directory legitimately gets no
+		// rows, and the callers that know which files to expect check them via checkNextmatch().
+		// The structure itself must be there though - without it every such check silently
+		// compares against nothing.  Not every share response is a listing: a share opened by a
+		// logged-in user answers the mount dialog instead, so that caller passes false.
+		if($expect_nextmatch)
 		{
-			// NM did not send initial rows
+			$this->assertArrayHasKey('nm', $data['data']['content'] ?? [], "Share response carried no nextmatch at all (HTTP $http_code, '$effective_url')");
+			$this->assertIsArray($data['data']['content']['nm']['rows'] ?? null, "Share response's nextmatch had no rows array (HTTP $http_code, '$effective_url')");
 		}
+
 		return $form;
 	}
 

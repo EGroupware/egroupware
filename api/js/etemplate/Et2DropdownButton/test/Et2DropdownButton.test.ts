@@ -12,6 +12,7 @@ import "@shoelace-style/shoelace/dist/components/menu/menu.js";
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import "@shoelace-style/shoelace/dist/components/button-group/button-group.js";
 import "@shoelace-style/shoelace/dist/components/dropdown/dropdown.js";
+import {assertNoElement} from "../../test/assertDom";
 
 window.egwIsMobile = () => false;
 // @ts-ignore
@@ -53,13 +54,14 @@ describe("Dropdown button widget", () =>
 		element.readonly = true;
 		await elementUpdated(element);
 
-		assert.notExists(element.shadowRoot.querySelector("sl-button-group"));
+		assertNoElement(element.shadowRoot.querySelector("sl-button-group"));
 	});
 });
 
 // value is a plain string (this._value), not derived from rendered DOM state - a direct property,
 // simple round trip. No label/help-text rendering exists at all (it's a button).
 inputBasicTests(before, "one", "sl-menu-item", {
-	skip: ["label", "help-text"],
+	// conformance: a split button has nothing to require, and no help text to link a description to
+	skip: ["label", "help-text", "required-aria", "help-text-aria"],
 	checkEmptyDisplay: () => {}
 });

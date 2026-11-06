@@ -140,8 +140,10 @@ export default css`
 			display: block;
 		}
 
+        /* A scroll container (overflow: auto) in the way makes the browser lose the last rows of a long
+           printed list, every container around the content has to be visible */
         .egw_fw__main {
-            overflow: auto;
+            overflow: visible;
         }
 
         ::slotted(egw-app[active]) {

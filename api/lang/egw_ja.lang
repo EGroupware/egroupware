@@ -249,8 +249,10 @@ centered	common	ja	中央揃え
 central african republic	common	ja	中央アフリカ
 chad	common	ja	チャド
 change	common	ja	変更
+change category	common	ja	カテゴリを変更
 change owner	common	ja	所有者を変更
 changed	common	ja	変更済み
+changed category to %1	common	ja	カテゴリを %1 に変更しました。
 changes that you made may not be saved.	common	ja	行った変更が保存されない可能性があります。
 charset	common	ja	utf-8
 check all	common	ja	全て選択
@@ -1110,6 +1112,7 @@ remove selected accounts	common	ja	選択されたアカウントを削除
 remove shortcut	common	ja	ショートカットを削除
 remove this link (not the entry itself)	common	ja	リンクを削除
 removed (now) empty directory fs_id=%1	admin	ja	Removed (now) empty directory fs_id=%1
+removed category	common	ja	削除済みカテゴリ
 rename	common	ja	名前の変更
 repeat password	common	ja	パスワードを繰り返す
 replace	common	ja	置換

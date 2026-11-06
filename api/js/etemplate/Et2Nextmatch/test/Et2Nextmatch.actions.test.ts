@@ -5,6 +5,7 @@ import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionIm
 import {egw_getActionManager, egw_getObjectManager} from "../../../egw_action/egw_action";
 import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
 import * as sinon from "sinon";
+import {assertNoElement} from "../../test/assertDom";
 
 const egwStub = {
 	lang: (label : string) => label,
@@ -2526,7 +2527,7 @@ describe("Et2Nextmatch action setup", () =>
 
 		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement | null;
 		assert.isFalse(getInlinePlaceholderActions.called, "render should not resolve placeholder actions for inline buttons");
-		assert.isNull(datagrid?.querySelector("[slot='noResults']"), "Nextmatch should leave default no-results rendering to Datagrid");
+		assertNoElement(datagrid?.querySelector("[slot='noResults']"), "Nextmatch should leave default no-results rendering to Datagrid");
 
 		getInlinePlaceholderActions.restore();
 		el.remove();

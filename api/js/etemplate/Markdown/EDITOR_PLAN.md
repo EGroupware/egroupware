@@ -133,7 +133,8 @@ It supplies:
   inherited `_markdownTemplate(this.value)`, so parsing, sanitizing and the parse cache are all
   reused unchanged.
 - **`_markdownFormatPopupTemplate()`** — the on-selection format popup, below.
-- **preference persistence** — reads `markdown_view` on first render, writes it on toggle.
+- **preference persistence** — reads `markdown_view` on first render.  Nothing writes it: the
+  switcher moves one field, the preference is set in the preferences app.
 
 Crucially, when `markdown` is false the mixin contributes nothing to the render path — see the
 guard in each widget below. That is the regression contract.
@@ -212,12 +213,11 @@ New `markdown_view` in the existing **"Text editor settings"** section of
 `preferences/inc/class.preferences_hooks.inc.php` (`:446-521`, alongside `rte_font`, `rte_toolbar`,
 `rte_menubar`). Values `edit` / `split` / `view`, default `view`.
 
-Read `this.egw().preference('markdown_view', 'common')`, write
-`this.egw().set_preference('common', 'markdown_view', value)` — the signature at
-`api/js/jsapi/egw_preferences.ts:58`, used the same way throughout egroupware.
+Read `this.egw().preference('markdown_view', 'common')`.  Read only — the switcher deliberately
+does not write it back, so one field opened in split does not change what every field opens as.
 
 The preference seeds the initial value only; an explicit `markdown-mode` attribute in a template
-wins, and toggling within a session updates both the widget and the preference.
+wins, and toggling afterwards moves that one widget and nothing else.
 
 ### `api/js/etemplate/Et2Textarea/Et2Textarea.ts`
 
@@ -375,7 +375,7 @@ Browser, on the dev instance:
    line, and after scrolling the textarea. Bold it, then bold it again → it unwraps. Ctrl+Z once
    → the formatting is undone, the typing is not. Then select text and use the AI button → it
    still sees the selection, not the whole field.
-3. Toggle to split, reload another record → the preference persisted.
+3. Toggle to split, reload another record → it opens as the preference says, not split.
 4. A tracker queue with `htmledit` on → TinyMCE, no toggle, no popup, `markdown` inert.
 5. Type `<user@example.com>` and `<TODO>` into an ascii comment, save, reopen → both survive
    (this is what commit 1 fixes; verify it fails before that commit and passes after).

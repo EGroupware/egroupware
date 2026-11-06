@@ -191,7 +191,9 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			this._searchTimeout = null;
 			this._unbindListeners();
 
-			while(this.lastChild) this.lastChild.remove();
+			// Drop the options, but only the elements: a parent that renders children into us (Et2LinkEntry's <option>)
+			// keeps its Lit marker comments there, and rendering again after a reconnect fails without them
+			Array.from<Element>(this.children).forEach(child => child.remove());
 			this._selected_remote = [];
 		}
 
@@ -347,7 +349,7 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
                              clearable
                              autocomplete="off"
                              tabindex="-1"
-                             placeholder="${this.egw().lang("search")}"
+                             placeholder="${this._searchPlaceholder}"
                              style="flex: 1 1 auto;"
                              @mousedown=${this._handleSearchMouseDown}
                              @keydown=${this._handleSearchKeyDown}
@@ -430,6 +432,25 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 		protected get _needsSearchControls() : boolean
 		{
 			return !this.readonly && (this.searchEnabled || this.allowFreeEntries);
+		}
+
+		/**
+		 * Hint shown in the empty search box.  With free entries the box also accepts new values,
+		 * so say so, since nothing else tells the user they can type their own.
+		 */
+		protected get _searchPlaceholder() : string
+		{
+			if(!this.allowFreeEntries)
+			{
+				return this.egw().lang("search");
+			}
+			if(this.searchEnabled)
+			{
+				return this.egw().lang("search or type to add...");
+			}
+			// emptyLabel is rendered as a selectable option, but is not part of select_options
+			const hasChoices = this.select_options.length > 0 || !!this.emptyLabel;
+			return this.egw().lang(hasChoices ? "select or type to add..." : "type to add...");
 		}
 
 		public get searchEnabled() : boolean
@@ -1113,6 +1134,18 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 				// the ones actually rendered, so they need the flag too, or they render as no-match.
 				this._markMatch(entry);
 
+				// An option group has an array value, its children are the actual options
+				const children = Array.isArray(entry.value) ? entry.value : entry.children;
+				if(Array.isArray(children))
+				{
+					normalised.total -= this._dropKnownChildren(children);
+					if(children.length == 0)
+					{
+						normalised.results.splice(i, 1);
+					}
+					continue;
+				}
+
 				const existing = this.select_options.find(o => o.value == entry.value);
 				if(existing)
 				{
@@ -1123,6 +1156,42 @@ export const SelectSearchMixin = dedupeMixin(<T extends Constructor<LitElement &
 			}
 
 			return <any>super.processRemoteResults(<any>normalised);
+		}
+
+		/**
+		 * Remove the children of a result option group that we already have as options, flagging
+		 * the option we have as a match.  Search results come back grouped (eg. CalendarOwner's
+		 * accounts / addressbook / resources), and the selected values are kept as plain options,
+		 * so without this every search lists the selected values a second time inside the group.
+		 *
+		 * @param {SelectOption[]} children the group's options, modified in place
+		 * @returns {number} how many children were removed
+		 */
+		private _dropKnownChildren(children : SelectOption[]) : number
+		{
+			let removed = 0;
+			for(let c = children.length - 1; c >= 0; c--)
+			{
+				const child = children[c];
+				const grandchildren = Array.isArray(child.value) ? child.value : child.children;
+				if(Array.isArray(grandchildren))
+				{
+					removed += this._dropKnownChildren(grandchildren);
+					if(grandchildren.length == 0)
+					{
+						children.splice(c, 1);
+					}
+					continue;
+				}
+				const existing = this.select_options.find(o => !Array.isArray(o.value) && o.value == child.value);
+				if(existing)
+				{
+					existing.isMatch = true;
+					children.splice(c, 1);
+					removed++;
+				}
+			}
+			return removed;
 		}
 
 		/**

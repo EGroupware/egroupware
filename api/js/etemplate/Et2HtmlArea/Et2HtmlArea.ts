@@ -23,6 +23,8 @@ import type {Editor as TinyMceEditor, RawEditorOptions, TinyMCE} from "tinymce";
 import {
 	BLOCK_FORMATS,
 	editorContentStyle,
+	fontSizeFormats,
+	fontSizeUnit,
 	htmlAreaFormats,
 	type HtmlAreaMode,
 	LANGUAGE_CODE as HTMLAREA_LANGUAGE_CODE,
@@ -120,6 +122,8 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  *
  * @slot label - The editor's label. Alternatively, use the `label` attribute.
  * @slot help-text - Text that describes how to use the editor. Alternatively, use the `statustext` attribute.
+ * @slot field-controls - Controls shown over the top-right corner of the field (et2-ai's button,
+ *     in ascii mode - in TinyMCE mode it goes into the toolbar instead).
  *
  * @event input - Emitted when user input changes the editor value.
  * @event change - Emitted when the user commits an editor value change.
@@ -130,7 +134,9 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  * @csspart form-control-input - The editor wrapper.
  * @csspart readonly-content - The readonly value container when `readonly` is set.
  * @csspart markdown-shell - Wraps source and preview, only when `markdown` is on in ascii mode.
- * @csspart markdown-view - The edit / split / preview switcher.
+ * @csspart markdown-view - The edit / split / preview switcher, one of the field controls.
+ * @csspart field-controls - The strip over the top-right corner holding the view switcher and
+ *     anything slotted into field-controls.  Rendered in every mode.
  * @csspart markdown-preview - The rendered markdown pane.
  * @csspart markdown-popup - The format popup shown over a selection.
  */
@@ -179,13 +185,6 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 	 */
 	@property({type: String})
 	width = "";
-
-	/**
-	 * URL to upload dragged or pasted images, or the id of a link_to-style
-	 * widget whose VFS path should receive the upload.
-	 */
-	@property({type: String, attribute: "image-upload"})
-	imageUpload = "";
 
 	/**
 	 * Callback function to get called when file picker is clicked.
@@ -838,6 +837,9 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 			forced_root_block: this._defaultFormatBlock === 'div' ? 'div' : 'p',
 			newline_behavior: this._newlineBehavior,
 			content_style: editorContentStyle(api.preference.bind(api)),
+			// same sizes and unit as the rte_font_size/rte_font_unit preferences, eg. to allow 11pt
+			font_size_formats: fontSizeFormats(api.preference.bind(api)),
+			font_size_input_default_unit: fontSizeUnit(api.preference.bind(api)),
 			convert_urls: false,
 			// setting p (and below also the preferred formatblock) to the user's font and -size preference
 			formats: htmlAreaFormats(api.preference.bind(api)),
@@ -1144,6 +1146,12 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
 
 	protected _applyDefaultFormatBlock(editor : TinyMceEditor)
 	{
+		// only for new content: the format's remove: "all" would replace
+		// the first block's own saved font and size with the preferred ones
+		if(!editor.dom.isEmpty(editor.getBody()))
+		{
+			return;
+		}
 		editor.formatter.apply(this._defaultFormatBlock);
 		editor.nodeChanged();
 	}
@@ -1382,6 +1390,7 @@ export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement)
                 </div>
                 ${helpTextTemplate}
             </div>
+			${this._fieldControlsTemplate(this.markdown && this._isAsciiMode && !this.readonly)}
 		`;
 	}
 }

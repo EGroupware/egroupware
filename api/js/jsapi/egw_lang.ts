@@ -11,6 +11,39 @@
 
 import './egw_core';
 
+/**
+ * Language code the server rendered into the document itself
+ *
+ * langRequire() uses this for any entry handed to it without a language of its own, because
+ * the user preference is not reliably readable at that point: egw.preference('lang') only
+ * answers once /api/user.php has been imported, which races every other module import in
+ * egw.js's bootstrap, and it answers `undefined` rather than loading anything while that is
+ * still outstanding (egw_preferences.ts pre-seeds its "common" slot, so the "not loaded ->
+ * query the server" path it has for every other app can never trigger for "common").
+ *
+ * api/lang.php only accepts a syntactically valid language, so an url built from that
+ * `undefined` is answered with a plain-text error instead of a module, and importing it
+ * throws. The language itself is in the markup from the first byte though -
+ * Api\Framework::_get_header() renders it as both the <html lang=""> attribute
+ * (kdots/head.tpl) and a <meta name="language"> (api/templates/default/head.tpl).
+ *
+ * @param _window window whose document to read, defaults to the one this code runs in
+ * @return two-letter (or "xx-yy") language code, 'en' if the document names no valid one
+ */
+function documentLang(_window? : Window) : string
+{
+	let lang;
+	try {
+		const doc = _window?.document || document;
+		lang = doc?.documentElement?.lang ||
+			doc?.querySelector('meta[name="language"]')?.getAttribute('content');
+	}
+	catch (e) {
+		// ignore a closed or cross-origin window, fall back to 'en' below
+	}
+	return lang && /^[a-z]{2}(-[a-z]{2})?$/i.test(lang) ? lang : 'en';
+}
+
 export interface LangModule
 {
 	/**
@@ -52,13 +85,13 @@ export interface LangModule
 	 * 	data is needed as objects of the following form:
 	 * 		{
 	 * 			app: <APPLICATION NAME>,
-	 * 			lang: <LANGUAGE CODE>
+	 * 			lang: <LANGUAGE CODE>	// optional, defaults to the document's own language
 	 * 		}
 	 * @param _callback called after loading, if not given ready event will be postponed instead
 	 * @param _context for callback
 	 * @return Promise
 	 */
-	langRequire(_window : Window, _apps : {app : string, lang : string}[], _callback? : Function, _context? : object) : any;
+	langRequire(_window : Window, _apps : {app : string, lang? : string}[], _callback? : Function, _context? : object) : any;
 }
 
 declare global
@@ -172,7 +205,7 @@ class Lang implements LangModule
 	 * this.webserverUrl, this.config(...), this.module(...), this.lang_order,
 	 * and explicitly compares `this !== egw`), same reasoning as lang() above.
 	 */
-	langRequire = ((self : Lang) => function(this : any, _window : Window, _apps : {app : string, lang : string, etag? : string}[], _callback? : Function, _context? : object)
+	langRequire = ((self : Lang) => function(this : any, _window : Window, _apps : {app : string, lang? : string, etag? : string}[], _callback? : Function, _context? : object)
 	{
 		// Get the ready and the files module for the given window
 		var ready = this.module("ready", _window);
@@ -188,7 +221,7 @@ class Lang implements LangModule
 			{
 				jss.push(this.webserverUrl +
 					'/api/lang.php?app=' + _apps[i].app +
-					'&lang=' + _apps[i].lang +
+					'&lang=' + (_apps[i].lang || documentLang(_window)) +
 					'&etag=' + (_apps[i].etag || this.config('max_lang_time')));
 			}
 			apps.push(_apps[i].app);

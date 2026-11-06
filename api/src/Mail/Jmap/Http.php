@@ -150,9 +150,9 @@ class Http extends Jmap
 	}
 
 	/** @see Mailbox::folderId2path() */
-	public function folderId2path(string $folderId)
+	public function folderId2path(string $folderId, ?string $accountId=null)
 	{
-		return $this->mailbox->folderId2path($folderId);
+		return $this->mailbox->folderId2path($folderId, $accountId);
 	}
 
 	/** @see Email::getStates() */

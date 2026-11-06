@@ -16,6 +16,7 @@ import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
 import type {etemplate2} from "../etemplate2";
+import type {Et2Template} from "../Et2Template/Et2Template";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -405,8 +406,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	handleKeyUp(event : KeyboardEvent)
 	{
-		// Ignore keypresses from some elements that might normally see Enter
-		if(["textarea"].includes(event.target.localName))
+		// Ignore keypresses from some elements that might normally see Enter.  event.target is retargeted to
+		// the shadow host (et2-textarea, et2-textbox), so look at the composed path for the real element.
+		// Shift+Enter is a line break, never "press the default button".
+		if(event.shiftKey || event.composedPath().some((node : any) => node.localName === "textarea" || node.isContentEditable))
 		{
 			return;
 		}
@@ -414,6 +417,21 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			return;
 		}
+		if(event.key !== 'Enter')
+		{
+			return;
+		}
+
+		// Only act on an Enter that nothing else wanted.  A widget that deals with Enter itself
+		// either stops the keydown before it reaches us (a select's search field, a searchbox) or
+		// cancels it further along (Shoelace picks the highlighted option from a listener on the
+		// document).  Either way keyup is a separate event it cannot stop, it arrives here looking
+		// exactly like the user pressing Enter on the dialog, and acting on it fires the default
+		// button - so searching for a contact or picking one from the list closes the dialog.
+		// Checking the keydown at keyup time catches both: by now we know whether it was cancelled.
+		const keydown = this._enterKeyDown;
+		this._enterKeyDown = null;
+		const from_dialog = keydown && !keydown.defaultPrevented;
 
 		// Only act on an Enter that nothing else wanted.  A widget that deals with Enter itself
 		// either stops the keydown before it reaches us (a select's search field, a searchbox) or
@@ -495,9 +513,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.dispatchEvent(new Event('open', {bubbles: true}));
 
 		Promise.all([this._template_promise, this.updateComplete])
-			.then(() =>
+			.then(async() =>
 			{
-				this._setInitialSize();
+				await this._setInitialSize();
 				this._setupMoveResize();
 			});
 	}
@@ -588,6 +606,15 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		catch(e)
 		{
 			console.log(e);
+		}
+
+		// A dialog showing a server-side etemplate without a callback (eg. calendar quick add) is submitted
+		// by the button itself, and the response decides what happens: it either closes the dialog
+		// (window-close) or replaces its content (eg. calendar conflicts).  Hiding it here would throw
+		// away that response.  Buttons that do not submit have nothing to wait for.
+		if(!this.callback && !(<Et2Button>ev.target)?.noSubmit && ev.target?.getInstanceManager?.()?._etemplate_exec_id)
+		{
+			return;
 		}
 
 		// Callback expects (button_id, value)
@@ -1035,7 +1062,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * the dialog would keep a size its content never fit into.  Only the first call does anything,
 	 * so a re-render (or the user resizing) does not reset the dialog to its content's size.
 	 */
-	_setInitialSize()
+	async _setInitialSize()
 	{
 		const panel = <HTMLElement>this.shadowRoot?.querySelector(".dialog__panel");
 		if(!panel || this._sizeIsSet)
@@ -1046,9 +1073,74 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 		panel.style.width = "";
 		panel.style.height = "";
+		if(this._fitToLayout(panel))
+		{
+			// A layout works its rows out a frame after its width changes (and again as its widgets finish
+			// rendering), so wait until its height stops moving before reading the one we are about to freeze
+			const template = this._contentNode?.querySelector("et2-template[layout]");
+			let last = -1, stable = 0;
+			for(let frames = 0; frames < 30 && stable < 4; frames++)
+			{
+				await new Promise(resolve => requestAnimationFrame(resolve));
+				const height = template?.scrollHeight ?? 0;
+				stable = height === last ? stable + 1 : 0;
+				last = height;
+			}
+			panel.style.height = "";
+		}
 		const style = getComputedStyle(panel);
 		panel.style.width = style.width;
 		panel.style.height = style.height;
+
+		// A layout that still scrolls inside the room it was given is short by exactly that much (its margins,
+		// the sliver the dialog's body keeps), so give it that, up to the window
+		const layout = this._contentNode?.querySelector("et2-template[layout]");
+		const short = layout ? layout.scrollHeight - layout.clientHeight : 0;
+		if(short > 0)
+		{
+			panel.style.height = Math.min(panel.getBoundingClientRect().height + short, Math.floor(window.innerHeight * 0.95)) + "px";
+		}
+	}
+
+	/**
+	 * Start a dialog whose template has a layout at the width that layout prefers.
+	 *
+	 * A layout fills whatever width it is given, so inside a dialog that sizes to its content the template
+	 * comes out as wide as nothing at all and the dialog stays at its minimum width, with the fields squeezed
+	 * (or nothing visible).  The template knows the width it would like - its columns at their minimum width -
+	 * so we start there.  A width the caller set (the `width` property) or a layout that already has room is
+	 * left alone, and the dialog never opens wider than the window.
+	 *
+	 * @param {HTMLElement} panel the dialog's panel, with no inline size
+	 * @return {boolean} whether the width was changed
+	 */
+	protected _fitToLayout(panel : HTMLElement) : boolean
+	{
+		if(this.width)
+		{
+			return false;
+		}
+		const template = <Et2Template | null>this._contentNode?.querySelector("et2-template[layout]");
+		const preferred = template?.getPreferredSize?.();
+		if(!preferred || !preferred.width)
+		{
+			return false;
+		}
+		const have = template.getBoundingClientRect().width;
+		if(have >= preferred.width)
+		{
+			return false;
+		}
+		// What the panel adds around the content: its padding and border
+		const panelWidth = panel.getBoundingClientRect().width;
+		const chrome = Math.max(0, panelWidth - this._contentNode.getBoundingClientRect().width);
+		const wanted = Math.min(preferred.width + chrome, Math.floor(window.innerWidth * 0.95));
+		if(wanted > panelWidth)
+		{
+			panel.style.width = wanted + "px";
+		}
+
+		return wanted > panelWidth;
 	}
 
 	/**

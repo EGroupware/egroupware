@@ -158,10 +158,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                     ${this.label}
                     <slot name="suffix" slot="suffix"></slot>
                 </sl-button>
-                <sl-dropdown placement=${this.placement} hoist part="dropdown">
+                <sl-dropdown placement=${this.placement} hoist part="dropdown" ?disabled=${this.disabled}>
                     <slot name="trigger" slot="trigger">
                         <sl-button exportparts="base, base:trigger__base" part="trigger" size="${egwIsMobile() ? "large" : "medium"}"
-                                   slot="trigger" caret
+                                   slot="trigger" caret title=${this.egw().lang("Options")}
                                ?disabled=${this.disabled}></sl-button>
                     </slot>
                     <sl-menu @sl-select=${this._handleSelect} part="menu">
@@ -243,12 +243,12 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
 	blur()
 	{
-		this.shadowRoot.querySelector("sl-button-group")?.dispatchEvent(new Event('blur'));
+		(<HTMLElement>this.buttonNode)?.blur();
 	}
 
-	focus()
+	focus(options? : FocusOptions)
 	{
-		this.shadowRoot.querySelector("sl-button-group")?.dispatchEvent(new Event('focus'));
+		(<HTMLElement>this.buttonNode)?.focus(options);
 	}
 }
 

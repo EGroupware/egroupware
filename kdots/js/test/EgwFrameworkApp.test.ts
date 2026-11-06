@@ -265,4 +265,13 @@ describe("EgwFrameworkApp filter indicator", () =>
 			"caller's values untouched");
 		assert.equal(info.icon, "filter-circle", "sort & search type alone are not filters");
 	});
+
+	it("treats empty col_filter values, including a cleared link entry, as no filter", () =>
+	{
+		const empty = {col_filter: {cat_id: "", pm_id: {app: "projectmanager", id: ""}, owner: [], x: null}};
+		assert.equal(element.filterInfo(empty).icon, "filter-circle");
+
+		const set = {col_filter: {cat_id: "", pm_id: {app: "projectmanager", id: "5"}}};
+		assert.equal(element.filterInfo(set).icon, "filter-circle-fill");
+	});
 });

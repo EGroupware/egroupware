@@ -15,8 +15,8 @@ import {SearchResultsInterface} from "../Et2Widget/SearchMixin";
  * Most of ours do not, and predate that contract.  Select::ajax_search echoes a bare JSON array,
  * with "total" spliced in among the numeric keys when it has one; other endpoints return a plain
  * object keyed by value.  We cannot simply fix them all and move on either: custom fields let any
- * installation point searchUrl at their own method (see et2_extension_customfields.ts and
- * Et2CustomfieldWidgetMapper.ts, which both take field.values["@"]), and EPL/third-party apps do
+ * installation point searchUrl at their own method (see Et2CustomfieldWidgetMapper.ts, which
+ * takes field.values["@"]), and EPL/third-party apps do
  * the same, so the old shapes have to keep working indefinitely.
  *
  * What we can do is stop shipping new ones, and say so when we meet an old one - hence the

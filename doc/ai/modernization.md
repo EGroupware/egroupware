@@ -17,6 +17,19 @@ found them, and prefer the modern form for anything new.
   `doc/ai/projects/jsapi-modernization.md`'s jQuery-removal table for the common swaps and the few
   cases (jQuery UI dialogs, arbitrary-method-by-name dispatch) that need a real rewrite rather than a
   mechanical one.
+- **No new `.innerHTML =`/`.outerHTML =`/`document.write()`/`insertAdjacentHTML()` writes, beyond
+  purely static, developer-controlled markup.** This repo is working toward enabling Trusted Types
+  enforcement (`require-trusted-types-for 'script'`) to retire `script-src`'s `'unsafe-eval'` for
+  good - see `doc/ai/projects/remove-unsafe-eval-jquery.md`. That directive gates every one of these
+  sinks app-wide, not just `eval()`, so each new raw-string sink write adds to the audit debt blocking
+  it. For genuinely static markup (fixed strings, formatted numbers/dates - nothing attacker-reachable),
+  build the DOM directly (`createElement()`/`textContent`) instead of a sink write - this removes the
+  site from the audit entirely, no policy needed. When content is interpolated from anything a user or
+  another party could influence (filenames, messages, AI/tool output, server data), never assign it
+  raw - sanitize it through DOMPurify first (see `Et2Image`/`et2-html-area`'s existing usage) or build
+  it piece-by-piece via `createElement()`+`textContent` instead of one HTML string. When you're already
+  touching a function with an existing sink write, convert it the same way, same as the jQuery removal
+  rule above - don't leave it as-is just because it predates this rule.
 - **`jQuery(target).append(htmlString)` -> `insertAdjacentHTML('beforeend', htmlString)` is only a safe
   swap when either the markup being inserted can't contain a `<form>`, or `target` is known not to live
   inside an ancestor `<form>` already.** Unlike jQuery, which parses the HTML in a detached, context-free

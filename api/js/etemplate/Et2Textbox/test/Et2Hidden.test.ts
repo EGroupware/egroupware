@@ -46,5 +46,7 @@ describe("Hidden widget", () =>
 // visible" (the whole point of which is distinguishing disabled from hidden) doesn't apply here:
 // it's never visible regardless of disabled state. Also has no label/help-text chrome at all.
 inputBasicTests(before, "a hidden value", "input", {
-	skip: ["disabled", "label", "help-text"]
+	// conformance: an <input type="hidden"> has no control to disable / require / focus, and is
+	// never visible, so "unhide" and the re-add visibility check cannot apply
+	skip: ["disabled", "label", "help-text", "disabled-controls", "required-aria", "help-text-aria", "focus", "unhide", "lifecycle"]
 });

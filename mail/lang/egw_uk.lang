@@ -246,6 +246,7 @@ please enter password	mail	uk	Будь ласка, введіть пароль
 please select a address	mail	uk	Будь ласка, виберіть адресу
 post	mail	uk	відправити
 predefined addresses for compose	mail	uk	Заздалегідь визначені адреси для компонування
+prevent managing filters	mail	uk	Заблокувати управління фільтрами
 preview pane	mail	uk	Макет вікна
 printing	mail	uk	Друк
 private key created, downloading csr...	mail	uk	Приватний ключ створено, завантаження CSR...
@@ -300,7 +301,6 @@ send attachments greater than given size as download link instead (in mb)	mail	u
 send message and move to send folder (if configured)	mail	uk	Надіслати повідомлення та перемістити до папки відправки (якщо налаштовано)
 send message pgp encrypted: requires keys from all recipients!	mail	uk	Надіслати повідомлення зашифроване PGP: потрібні ключі від усіх одержувачів!
 server supports special-use folders	mail	uk	Сервер підтримує папки спеціального призначення
-set predefined values for compose...	mail	uk	Встановити заздалегідь визначені значення для складання ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	uk	Чи потрібно вставляти підпис після (стандартний) або перед відповіддю або пересиланням, а також чи повинен підпис бути видимим і змінюваним під час створення повідомлення.
 show all addresses	mail	uk	Показати всі адреси
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	uk	показувати всі папки (підписані і не підписані) в панелі папок на головному екрані.

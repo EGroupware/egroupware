@@ -20,6 +20,7 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -39,6 +40,7 @@
 					<nextmatch-header-filter id="header_filter" empty_label="Dashed"/>
 					<et2-nextmatch-header-account id="et2_account" emptyLabel="Owner"></et2-nextmatch-header-account>
 					<et2-nextmatch-header-custom id="et2_custom" emptyLabel="App" widgetType="select-app"></et2-nextmatch-header-custom>
+					<nextmatch-customfields id="customfields"/>
 				</row>
 				<row>
 					<description id="${row}[header_closed]"/>

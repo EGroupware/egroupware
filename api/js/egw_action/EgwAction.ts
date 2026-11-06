@@ -586,15 +586,24 @@ export class EgwAction {
             //no longer needed because of '=>' notation
             //var self = this;
             if (msg.trim().length > 0) {
-                if (this.data.policy_confirmation && window.egw.app('policy')) {
-                    import(window.egw.link('/policy/js/app.min.js')).then(() => {
-                            if (typeof window.app.policy === 'undefined' || typeof window.app.policy.confirm === 'undefined') {
-                                window.app.policy = new window.app.classes.policy();
-                            }
-                            window.app.policy.confirm(this, _senders, _target);
-                        }
-                    );
-                    return;
+                // An action can hand its confirmation to another app, which collects whatever
+                // extra information it needs and runs onExecute itself once the user confirms -
+                // eg. the policy app's 'app.policy.confirm', which asks for "requested by" and a
+                // comment and merges them into action.data before executing.
+                const handler = this.data.confirm_handler ||
+                    // the key confirm_handler replaced, still understood: a producer outside this
+                    // tree would otherwise fall through to the plain dialog below without warning,
+                    // losing the extra information its handler exists to collect
+                    (this.data.policy_confirmation ? 'app.policy.confirm' : null);
+                // An 'app.<app>.<method>' handler only runs when the user actually has that app.
+                // Not every producer gates on it server-side, and egw.applyFunc() answers a handler
+                // whose app is missing by logging that it has no rollup entry and returning, which
+                // would drop the action - where falling through to the plain confirm still runs it.
+                const handler_app = handler && handler.startsWith('app.') ? handler.split('.')[1] : null;
+                if (handler && (!handler_app || window.egw.app(handler_app))) {
+                    // applyFunc() resolves the dotted path, loading the app's module through the
+                    // build manifest and instantiating its class if nothing else has yet
+                    return window.egw.applyFunc(handler, [this, _senders, _target]);
                 }
                 window.Et2Dialog.show_dialog((_button) => {
                     if (_button == window.Et2Dialog.YES_BUTTON) {
@@ -643,6 +652,21 @@ export class EgwAction {
             _addChildren = true;
         }
 
+        // A container marked nm_action="select_children" (Nextmatch::selectChildrenIfTooLong())
+        // has too many children to be usable as a sub-menu, and is offered as a picker dialog
+        // instead. Its descendants stay in the action manager and stay executable - they are
+        // just not drawn, so the menu shows one plain entry rather than a sub-menu.
+        //
+        // This has to be checked on the way UP, not only when recursing down: every action is in
+        // the object's links (all 418 of them in an addressbook row), so each child is handed to
+        // appendToTree() in its own right and attaches ITSELF to its parent's node below.
+        // Guarding only the downward recursion left the sub-menu fully populated.
+        for (let ancestor = this.parent; ancestor; ancestor = ancestor.parent) {
+            if (ancestor.data?.nm_action === "select_children") {
+                return {"action": this, "children": []};   // detached: never reaches the menu
+            }
+        }
+
         // Preset some variables
         const root: Tree = _tree.root;
         let parentNode: TreeElem = null;
@@ -688,7 +712,13 @@ export class EgwAction {
             }
         }
 
-        if (_addChildren) {
+        // A container marked nm_action="select_children" (Nextmatch::selectChildrenIfTooLong())
+        // has too many children to be usable as a sub-menu, and is offered as a picker dialog
+        // instead. Its children stay in the action manager and stay executable - they are just
+        // not drawn, so the menu shows one plain entry rather than a sub-menu. This is the only
+        // thing that decides whether a sub-menu appears at all: action_links only ever holds
+        // first-level ids, so children reach the menu solely through this recursion.
+        if (_addChildren && this.data?.nm_action !== "select_children") {
             for (const child of this.children) {
                 child.appendToTree(_tree, true);
             }

@@ -25,7 +25,6 @@ aliases+forwards	mail	hu	Aliasok+Továbbítás
 all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	hu	Az összes almappa is törlődik, és az összes érintett mappában lévő összes üzenet elveszik.
-allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	hu	Lehetővé teszi a felhasználó számára, hogy mappákat és leveleket olvasson, írjon és hozzon létre, hozzászóljon, üzeneteket csatoljon hozzájuk és üzeneteket töröljön.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
@@ -304,6 +303,7 @@ please select a address	mail	hu	Kérlek válassz címet
 please select the number of days to wait between responses	mail	hu	Kérlek add hány napot várjon a válaszok között
 please supply the message to send with auto-responses	mail	hu	Kérlek add meg az automatikus válaszüzenetet
 predefined addresses for compose	mail	hu	Előre definiált címek az összeállításhoz
+prevent managing filters	mail	hu	A szűrők szerkesztésének letiltása
 preview pane	mail	hu	Ablak elrendezés
 printing	mail	hu	Nyomtatás
 printview	mail	hu	Nyomtatási kép
@@ -373,7 +373,6 @@ sent	mail	hu	Elköldött üzenetek
 sent folder	mail	hu	'Elküldött' mappa
 server supports special-use folders	mail	hu	A kiszolgáló támogatja a speciális felhasználású mappákat
 set flags	mail	hu	Jelölje meg az e-mailt
-set predefined values for compose...	mail	hu	Előre meghatározott értékek beállítása az összeállításhoz ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	hu	Az aláírás a válasz vagy a továbbítás után (standard) vagy előtt legyen-e beillesztve, és az aláírás látható és módosítható legyen-e az összeállítás során.
 show all addresses	mail	hu	Összes cím megjelenítése
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	hu	Az összes mappa (feliratkozott és leiratkozott) megjelenítése a fő képernyő mappatábláján.

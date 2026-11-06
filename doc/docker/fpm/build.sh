@@ -3,9 +3,14 @@
 
 cd $(dirname $0)
 
+BASE_REPO=quay.io/egroupware/php
+REPO=quay.io/egroupware
+IMAGE=egroupware
+# keep Docker Hub in sync too - stylite/docker/Dockerfile and doc/docker/docker-compose.yml
+# still pull the bare (docker.io) name, not quay.io
+DOCKERHUB_IMAGE=egroupware/egroupware
 DEFAULT_PHP_VERSION=8.5
 PHP_VERSION=$DEFAULT_PHP_VERSION
-BASE=ubuntu:24.04
 # which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
 #PLATFORMS=linux/amd64,linux/ppc64le,linux/arm/v7,linux/arm64/v8
 PLATFORMS=linux/amd64,linux/arm/v7,linux/arm64/v8
@@ -16,15 +21,15 @@ then
   shift
 fi
 
+# the one branch that should ever receive the floating ":latest" tag - never an
+# older/EOL-ish branch like 23.1, even though it's built and tagged the same way
+LATEST_BRANCH=26
+
 DEFAULT=$(git branch|grep ^*|cut -c3-)
 TAG=${1:-$DEFAULT}
 VERSION=${2:-$TAG}
 BRANCH=$(echo $VERSION|sed 's/\..*$//')
-[ $BRANCH = "23" ] && {
-  BRANCH=23.1
-  DEFAULT_PHP_VERSION=8.4
-  PHP_VERSION=$DEFAULT_PHP_VERSION
-}
+[ $BRANCH = "23" ] && BRANCH=23.1
 [ $VERSION = $BRANCH ] && VERSION="dev-$BRANCH"
 
 [ $VERSION = "dev-$DEFAULT" ] && (
@@ -40,27 +45,78 @@ BRANCH=$(echo $VERSION|sed 's/\..*$//')
 # add PHP_VERSION to TAG, if not the default PHP version
 [ $PHP_VERSION != $DEFAULT_PHP_VERSION ] && TAG=$TAG-$PHP_VERSION
 
-docker pull $BASE
+# rebuild the base images (../base/build.sh), if they are outdated: new PHP release (php:$PHP_VERSION-fpm-alpine) or upgradable Alpine packages
+# (NO_BASE_CHECK=1 skips the check, eg. for old PHP versions without up-to-date base images)
+if [ -z "$NO_BASE_CHECK" ]
+then
+  docker pull -q $BASE_REPO:build-$PHP_VERSION >/dev/null
+  docker pull -q php:$PHP_VERSION-fpm-alpine >/dev/null
+  base_php=$(docker run --rm $BASE_REPO:build-$PHP_VERSION php -r 'echo PHP_VERSION;')
+  new_php=$(docker run --rm php:$PHP_VERSION-fpm-alpine php -r 'echo PHP_VERSION;')
+  upgradable=$(docker run --rm --user root --entrypoint sh $BASE_REPO:build-$PHP_VERSION -c 'apk update -q >/dev/null 2>&1; apk list -u 2>/dev/null')
+  if [ "$base_php" != "$new_php" -o -n "$upgradable" ]
+  then
+    echo -e "\nbase image outdated (PHP $base_php, current $new_php), upgradable packages:\n${upgradable:-none}\nrebuilding it with ../base/build.sh $PHP_VERSION\n"
+    ../base/build.sh $PHP_VERSION
+  else
+    echo "base image $BASE_REPO:build-$PHP_VERSION is up to date (PHP $base_php, no upgradable packages)"
+  fi
+fi
 
-# add further tags for default PHP version only
+docker pull $BASE_REPO:build-$PHP_VERSION
+
+# add further tags for default PHP version only - :latest only for the actual
+# current/default branch, :BRANCH (eg. :23.1) for any real (non-dev-snapshot) release
 [ $PHP_VERSION = $DEFAULT_PHP_VERSION -a "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
-  extra_tags="--tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
+  extra_tags="--tag $REPO/$IMAGE:$BRANCH"
+  [ "$BRANCH" = "$LATEST_BRANCH" ] && extra_tags="$extra_tags --tag $REPO/$IMAGE:latest"
 }
 
 if docker buildx 2>&1 >/dev/null
 then
   # buildx available --> build a multi-platform image and push it for all tags
-  docker buildx build --no-cache --push --platform $PLATFORMS --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG $extra_tags .
+  docker buildx build --push --platform $PLATFORMS \
+    --build-arg "BASE_IMAGE=$BASE_REPO:build-$PHP_VERSION" \
+    --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" \
+    --tag $REPO/$IMAGE:$TAG $extra_tags .
 else
   # no buildx, eg. on dev only builds amd64!
-  docker build --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" --tag egroupware/egroupware:$TAG . && {
-    docker push egroupware/egroupware:$TAG
+  docker build \
+    --build-arg "BASE_IMAGE=$BASE_REPO:build-$PHP_VERSION" \
+    --build-arg "VERSION=$VERSION" --build-arg "PHP_VERSION=$PHP_VERSION" \
+    --tag $REPO/$IMAGE:$TAG . && {
+    docker push $REPO/$IMAGE:$TAG
     for tag in $extra_tags
     do
       [ -z "$tag" -o "$tag" = "--tags" ] || {
-        docker tag egroupware/egroupware:$TAG $tag
+        docker tag $REPO/$IMAGE:$TAG $tag
         docker push $tag
       }
     done
   }
 fi
+
+# mirror the same tags to Docker Hub (egroupware/egroupware) - stylite/docker/Dockerfile and
+# doc/docker/docker-compose.yml still pull the bare (docker.io) name. This is a registry-to-
+# registry copy (imagetools, no rebuild), but still re-uploads every layer from wherever it
+# runs, so run it on dev.egroupware.org (better upload bandwidth than here) and in the
+# background - it does not block the EPL image build that layers on top of the quay.io tag
+hub_tags=$(echo "$extra_tags" | sed "s#$REPO/$IMAGE#$DOCKERHUB_IMAGE#g")
+ssh dev "nohup docker buildx imagetools create --tag $DOCKERHUB_IMAGE:$TAG $hub_tags $REPO/$IMAGE:$TAG > /tmp/dockerhub-sync-$TAG.log 2>&1 &" \
+  && echo "Docker Hub sync for $TAG started in the background on dev (log: dev:/tmp/dockerhub-sync-$TAG.log)" \
+  || echo "WARNING: could not start the Docker Hub sync on dev" >&2
+
+# a new release of the current branch (what :26 and :latest point to) is tested by the install tests of the packages in EGroupware/build.opensuse.org:
+# they install the just published image with the egroupware-docker package on the supported distros, a failure is visible in the Actions tab there.
+# Image-only releases do not touch that repository, so the (manual) workflow is triggered here, never fails the build, set NO_TESTS=1 to skip it
+[ -z "$NO_TESTS" -a -n "$extra_tags" -a "$BRANCH" = "$LATEST_BRANCH" ] && {
+  if command -v gh >/dev/null
+  then
+    gh workflow run package-tests.yml --repo EGroupware/build.opensuse.org --ref master -f distro=default -f test=all \
+      && echo "Started the package install tests: https://github.com/EGroupware/build.opensuse.org/actions/workflows/package-tests.yml" \
+      || echo "WARNING: could not start the package install tests (gh auth login?)" >&2
+  else
+    echo "WARNING: gh not found, package install tests NOT started" >&2
+  fi
+}
+true

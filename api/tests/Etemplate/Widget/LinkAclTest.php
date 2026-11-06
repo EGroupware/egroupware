@@ -79,12 +79,7 @@ class LinkAclTest extends LoggedInTest
 		$ref->setAccessible(true);
 		$ref->setValue(null, null);
 
-		$bo = new \infolog_bo();
-		foreach($this->entries as $info_id)
-		{
-			$bo->delete($info_id, false, true);
-		}
-		$this->entries = [];
+		$leaked = $this->purgeEntries();
 
 		if ($this->resource_id)
 		{
@@ -114,6 +109,57 @@ class LinkAclTest extends LoggedInTest
 		}
 
 		parent::tearDown();
+
+		// last, so everything above still runs: a leaked fixture must not also derail the tests
+		// after this one. PHPUnit reports this against a test that passed, and leaves a test that
+		// failed on its own reported by its own failure.
+		if ($leaked)
+		{
+			throw new \RuntimeException(implode('; ', $leaked));
+		}
+	}
+
+	/**
+	 * Purge the entries makeInfolog() created, and say which ones survive.
+	 *
+	 * infolog_bo::delete() soft-deletes: the first call sets info_status to 'deleted', unlinks
+	 * everything but file attachments and keeps the row, and only purges once the entry already
+	 * reads 'deleted'. One call therefore returns true with the row still in egw_infolog, which
+	 * on a shared instance means a growing pile of 'LinkAclTest ...' fixtures. Hence two calls
+	 * per entry, and a read of egw_infolog afterwards rather than trusting either return value -
+	 * a delete refused on rights also only returns false, and these entries outlive a switchUser.
+	 *
+	 * @return string[] one description per entry that is still there, empty when all are gone
+	 */
+	protected function purgeEntries() : array
+	{
+		$entries = $this->entries;
+		$this->entries = [];
+
+		$bo = new \infolog_bo();
+		$leaked = [];
+		foreach($entries as $info_id)
+		{
+			$problem = '';
+			try
+			{
+				$bo->delete($info_id, false, true);	// -> info_status 'deleted'
+				$bo->delete($info_id, false, true);	// -> row gone
+			}
+			catch (\Exception $e)
+			{
+				$problem = ': ' . get_class($e) . ': ' . $e->getMessage();
+			}
+			$left = $GLOBALS['egw']->db->select('egw_infolog', 'info_status', array('info_id' => $info_id),
+				__LINE__, __FILE__, false, '', 'infolog')->fetchColumn();
+			if ($left === false && !$problem)
+			{
+				continue;
+			}
+			$leaked[] = sprintf('could not clean up the fixture infolog #%d, it is still in egw_infolog as "%s"%s',
+				$info_id, (string)$left, $problem);
+		}
+		return $leaked;
 	}
 
 	/**

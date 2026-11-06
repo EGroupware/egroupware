@@ -21,7 +21,9 @@ After editing code, follow this order:
 3. If blocked (environment, missing service, permissions, etc.), record the exact blocker and command.
 4. If there is no direct automated coverage for the changed area, state that explicitly and run the closest relevant
    tests available.
-5. Report results in the final response using the format below (`Tests run` / `Not run`).
+5. For user-facing changes (UI, templates, CSS, client-side behaviour), verify the change in a browser too - see
+   "Verify user-facing changes in the browser" below.
+6. Report results in the final response using the format below (`Tests run` / `Verified in browser` / `Not run`).
 
 When no direct tests exist, avoid claiming full verification; call out residual risk and suggest the most relevant
 manual check or follow-up test.
@@ -70,7 +72,14 @@ cannot resolve, and the host's copy of the source tree is not guaranteed to be t
 uses. Running `vendor/bin/phpunit` natively on the host hangs instead of failing cleanly - always run it inside the
 already-installed, already-running app container instead:
 
-`docker exec egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+`docker exec -u www-data egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+
+**Do not drop the `-u www-data`.** `docker exec` defaults to uid 0, and anything the suite then writes to the
+VFS lands in the shared `files_dir` owned by root instead of by the webserver - including the
+`sqlfs/<nn>/<nn>/` hash directories, which are created once and then reused by every later file whose `fs_id`
+falls in that range. One root-owned hash-dir the webserver cannot write to breaks every subsequent upload on
+the whole instance, surfacing only as "Error copying uploaded file to VFS!" with nothing in the logs. The
+tests pass either way, so this stays invisible until someone tries to upload a file.
 
 (container name may differ per install - check `docker ps`). This works because that container already has a fully
 configured, installed EGroupware instance with a working DB connection; `doc/phpunit_bootstrap.php` just connects
@@ -92,7 +101,7 @@ default domain by reading `header.inc.php` directly (`grep "\$GLOBALS\['egw_doma
 entry is conventionally the default one), then pass it via the `EGW_POST_INSTALL` environment variable, which
 `post_install.php` parses as extra CLI args:
 
-`docker exec -e EGW_POST_INSTALL="--domain your.real.domain" egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+`docker exec -u www-data -e EGW_POST_INSTALL="--domain your.real.domain" egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
 
 This is a per-dev-box environment detail (not committed anywhere), so it is worth asking the developer once and
 remembering it for the rest of the session rather than rediscovering it every time.
@@ -126,12 +135,36 @@ install already creates during setup, not a separate test-only account:
 ```
 
 `sysop`'s password is generated fresh per install (in Docker installs, written to
-`/var/lib/egroupware/egroupware-docker.install.log`), so it can't be committed to `phpunit.xml`.
+`/var/lib/egroupware/egroupware-docker-install.log`), so it can't be committed to `phpunit.xml`.
 It must be supplied via environment instead: `EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c
 doc/phpunit.xml`. `doc/phpunit_bootstrap.php` normalizes `getenv('EGW_ADMIN_PASSWORD')`/`$_ENV` into
 `$GLOBALS['EGW_ADMIN_PASSWORD']`, so test code keeps reading it like any other `phpunit.xml` `<var>`.
 CI extracts `sysop`'s password from the install log (as `SYSOP_PASS`, already used elsewhere in the
 workflow to provision `EGW_TEST_USER`) and passes it straight through as `EGW_ADMIN_PASSWORD`.
+
+Locally, prefer a git-ignored `doc/phpunit.local.php` over an environment variable - an IDE
+regenerates a temporary run configuration on every run, so per-configuration environment variables
+do not survive:
+
+```php
+<?php
+return ['EGW_ADMIN_PASSWORD' => '...'];  // add any other per-install setting the same way
+```
+
+`doc/phpunit_bootstrap.php` reads it early, and only for names the real environment does not already
+provide - so it applies however the suite is started (IDE, CLI, `docker exec`), while CI's explicit
+environment still wins. Write it without the password passing through your shell history with:
+
+```bash
+printf "<?php\nreturn ['EGW_ADMIN_PASSWORD' => '%s'];\n" "$(docker exec egroupware awk \
+  '/EGroupware username: sysop/{f=1;next} f&&/password:/{sub(/^[^:]*:[[:space:]]*/,"");print;exit}' \
+  /var/lib/egroupware/egroupware-docker-install.log)" > doc/phpunit.local.php
+```
+
+Leaving it unset is not harmless: every admin test then logs in as `sysop` with an empty password,
+and once `num_unsuccessful_id` failures land inside `block_time` minutes the account blocks itself.
+Later tests fail with "blocked, too many attempts", and a blocked `setUpBeforeClass()` aborts its
+whole class, so tests silently stop running rather than failing individually.
 
 **A previous version of this used a dedicated `demoadmin` test account instead of `sysop`.** That
 collided with `demo` in several apps' generous name-matching lookups - eg.
@@ -209,6 +242,15 @@ Run the relevant web component tests with the project’s npm script when availa
 * every group: `npm run jstest`
 * one app: `npm run jstest -- --group api`
 * one file or glob: `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`
+* one browser: `JSTEST_BROWSERS=chromium npm run jstest` (default is `firefox,chromium`)
+* one shard: `JSTEST_SHARD=1/2 npm run jstest` - every 2nd test file, ignored when explicit
+  files/globs are given
+
+CI runs one job per browser per shard, because the suite's time is per test *file* (each is its own
+browser page) rather than per test: only ~105s of a ~334s full run is test code. Splitting across
+runners therefore works, while raising `web-test-runner`'s own `concurrency` does not - it just
+starves the real-timer tests. The measurements are in the launcher comment in
+`web-test-runner.config.mjs`; read it before changing either.
 
 Note the `--group`. A **bare app name is not a group selector** - `@web/test-runner` declares its own
 `files` option as the CLI's default (positional) option and merges CLI args over the config file, so
@@ -248,6 +290,14 @@ Without `vendor` the failure is loud but misleading: ~336 tests fail with
 `Failed to load /vendor/bower-asset/jquery/dist/jquery.min.js`, which looks like a code regression
 rather than a missing directory.
 
+The `node_modules` symlink only works when the worktree's branch has the same `package.json` as the
+main checkout. A worktree of a release branch such as `26` needs its own install instead:
+`npm ci --ignore-scripts` (a few seconds). Otherwise anything the branches pin differently fails to
+resolve. For example, 26 still imports `@bundled-es-modules/pdfjs-dist`, which master replaced with
+`pdfjs-dist`, so every app's tests die with `Failed to fetch dynamically imported module: .../app.ts`
+while the api suites still pass. The missing package is named only in the test runner's own output
+(`Error while transforming ...: Could not resolve import`), not in the browser error.
+
 Both symlinks then show up as untracked, because `.gitignore` lists them with a trailing slash
 (`/node_modules/`) which matches a directory but not a symlink. Add them to `info/exclude` - note
 that git reads this from the **common** git dir, not the per-worktree one, so it goes in
@@ -264,6 +314,22 @@ For writing/reviewing timing-sensitive tests around `Et2Datagrid`/`Et2Nextmatch`
 `api/js/etemplate/Et2Datagrid/test/TestTimingNotes.md`.
 
 ## Browser / manual verification
+
+### Verify user-facing changes in the browser
+
+Passing unit tests, a clean type-check, or reading the code does not show that a user-facing change works. Before
+claiming success on a change a user can see or click, exercise it in a real browser when one is available:
+
+* Load the affected page on the dev instance, perform the user action the change is about, and check the visible
+  result - not just that no error was thrown. Check the browser console for new errors.
+* For a bug fix, first reproduce the symptom, then confirm it is gone. If it cannot be reproduced, say so rather than
+  presenting the change as a fix.
+* After changing JS/CSS/templates, hard-reload so a stale cached chunk or template is not what you are testing.
+* Make sure the automation tab is visible and use a real mobile emulation where relevant (both described below).
+* If no browser can be used (no dev instance, login needed, hidden tab you cannot focus), do not claim the change
+  works. Say it was not verified in a browser, give the reason, and name the manual check the user should run.
+
+### Mobile viewport
 
 When a checklist or task calls for verifying UI behavior "at mobile viewport" or "on mobile":
 
@@ -333,8 +399,11 @@ When reporting test results, include:
 Tests run:
 - <command or summary>
 
+Verified in browser:
+- <what was exercised and what was observed> (omit for changes with no user-facing effect)
+
 Not run:
-- <reason>
+- <reason, including any browser check that could not be done>
 ```
 
 Examples:

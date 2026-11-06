@@ -221,8 +221,10 @@ centered	common	sv	Centrerat
 central african republic	common	sv	CENTRAL AFRIKANSKA REPUBLIKEN
 chad	common	sv	TCHAD
 change	common	sv	Ändra
+change category	common	sv	Ändra kategori
 change owner	common	sv	Byt ägare
 changed	common	sv	Ändrad
+changed category to %1	common	sv	Ändrade kategori till %1
 changes that you made may not be saved.	common	sv	Ändringar som du har gjort kanske inte sparas.
 charset	common	sv	Charset
 check all	common	sv	Markera alla
@@ -971,6 +973,7 @@ remove selected accounts	common	sv	Radera valda konton
 remove shortcut	common	sv	Radera genväg
 remove this link (not the entry itself)	common	sv	Radera länk (inte posten i sig)
 removed (now) empty directory fs_id=%1	admin	sv	Borttagen (nu) tom mapp fs_id=%1
+removed category	common	sv	borttagen kategori
 rename	common	sv	Byt namn
 repeat password	common	sv	Upprepa lösenordet
 replace	common	sv	Ersätt

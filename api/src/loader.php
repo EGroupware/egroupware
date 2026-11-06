@@ -58,8 +58,12 @@ if (Session::init_handler())
 			// marking the context as restored from the session, used by session->verify to not read the data from the db again
 			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
 
-			// restoring the egw_info-array
+			// restoring the egw_info-array, but keep the versions header.inc.php just read from the code,
+			// as the session copy still has the ones from login, if the code got updated since
+			$versions = $GLOBALS['egw_info']['server']['versions'];
 			$GLOBALS['egw_info'] = array_merge($_SESSION[Session::EGW_INFO_CACHE],array('flags' => $GLOBALS['egw_info']['flags']));
+			$GLOBALS['egw_info']['server']['versions'] = $versions;
+			unset($versions);
 
 			// check if we have a DB-password in cache, if not restore the session via the header (happens when kill -s USR2 1 is used to restart FPM)
 			if (Api\Cache::getInstance(Api\Db::class, 'Password'))

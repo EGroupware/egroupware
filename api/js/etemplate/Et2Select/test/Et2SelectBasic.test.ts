@@ -5,6 +5,7 @@ import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Select} from "../Et2Select";
 import {waitForEvent} from "../../Et2Widget/event";
 import {tagNodes, tagsReady, tagValues, visibleOptionValues} from "./helpers";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Test file for Etemplate webComponent Select
@@ -59,7 +60,7 @@ describe("Select widget basics", () =>
 
 	it("starts empty", () =>
 	{
-		assert.notExists(element.querySelector("option"), "Static option not found in DOM");
+		assertNoElement(element.querySelector("option"), "Static option not found in DOM");
 		assert.deepEqual(element.select_options, [], "Unexpected option(s)");
 	})
 

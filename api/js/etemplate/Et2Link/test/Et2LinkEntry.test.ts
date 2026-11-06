@@ -5,12 +5,24 @@ import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2LinkEntry} from "../Et2LinkEntry";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import * as sinon from "sinon";
+// What the widget renders: not registered unless imported, and an unregistered element has no controls
+import "../Et2LinkAppSelect";
+import "../Et2LinkSearch";
+import "../../Et2Url/Et2Url";
 
 // @ts-ignore
 window.egw = {
 	lang: i => i + "*",
 	tooltipUnbind: () => {},
-	image: () => ""
+	tooltipBind: () => {},
+	image: () => "",
+	link_app_list: () => ({}),
+	decodePath: p => p,
+	link_get_registry: () => undefined,
+	app_name: () => "api",
+	preference: () => undefined,
+	set_preference: () => {},
+	link_title: () => Promise.resolve("")
 };
 // Reference to component under test
 let element : Et2LinkEntry;
@@ -50,7 +62,8 @@ describe("Link entry widget", () =>
 // LinkInfo is always a structured {app, id: ""} object (never null/'' itself), so a plain-object
 // .valueOf() never matches - the same class of gap as Et2Diff/Et2DateDuration's required checks.
 inputBasicTests(before, {app: "infolog", id: "123"}, "input", {
-	emptyValue: {app: undefined, id: ""},
+	// The app select is the real et2-link-apps, which always offers (and so defaults to) the built-in "url" app
+	emptyValue: {app: "url", id: ""},
 	skip: ["required"],
 	checkEmptyDisplay: (element : Et2LinkEntry) =>
 		assert.notOk(element._searchNode?.value, "Displaying something when there is no value")

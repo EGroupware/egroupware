@@ -24,6 +24,21 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+// Per-install settings that must not be committed, above all EGW_ADMIN_PASSWORD (see below).
+// A git-ignored doc/phpunit.local.php returning ['NAME' => 'value', ...] is read here so those
+// settings apply to every way the suite gets started - IDE, CLI, docker exec - instead of having
+// to be re-entered as an environment variable per run configuration. The real environment always
+// wins, so CI, which passes them in explicitly, is unaffected.
+if (file_exists($local_settings = __DIR__.'/phpunit.local.php'))
+{
+	foreach((array)include $local_settings as $name => $value)
+	{
+		if (getenv($name) === false && !isset($_ENV[$name]))
+		{
+			$GLOBALS[$name] = $value;
+		}
+	}
+}
 // In CI/testing, align server webserver_url with EGW_URL when provided.
 if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null)))
 {
@@ -31,12 +46,20 @@ if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EG
 	$GLOBALS['egw_info']['server']['webserver_url'] = $path ?: $egw_url;
 }
 // EGW_ADMIN_PASSWORD (for the "sysop" account, see doc/phpunit.xml) is generated fresh per
-// install and supplied via environment, not committed - normalize into $GLOBALS so test code
-// can keep reading $GLOBALS['EGW_ADMIN_PASSWORD'] like the other phpunit.xml <var> entries.
+// install and supplied via environment or phpunit.local.php above, not committed - normalize
+// into $GLOBALS so test code can keep reading $GLOBALS['EGW_ADMIN_PASSWORD'] like the other
+// phpunit.xml <var> entries.
 if (($egw_admin_password = getenv('EGW_ADMIN_PASSWORD') ?: ($_ENV['EGW_ADMIN_PASSWORD'] ?? null)))
 {
 	$GLOBALS['EGW_ADMIN_PASSWORD'] = $egw_admin_password;
 }
+// EGW_NONADMIN_USER/EGW_NONADMIN_PASSWORD (see doc/phpunit.xml) default to "demo"/"guest" for
+// a fresh install, but are overridable via environment on installs where "demo" has a real
+// mailbox and its login password doubles as its live mail password (see doc/phpunit.xml
+// comment) - normalize into $GLOBALS['EGW_USER']/['EGW_PASSWORD'], the names the rest of the
+// test suite (organizerLid(), LoggedInTest, etc.) already reads.
+$GLOBALS['EGW_USER'] = getenv('EGW_NONADMIN_USER') ?: ($_ENV['EGW_NONADMIN_USER'] ?? null) ?: 'demo';
+$GLOBALS['EGW_PASSWORD'] = getenv('EGW_NONADMIN_PASSWORD') ?: ($_ENV['EGW_NONADMIN_PASSWORD'] ?? null) ?: 'guest';
 // Optional CI-only switch to disable custom push backends (eg. swoolepush)
 // during PHPUnit runs to avoid network retries/backoff impacting runtime.
 if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')

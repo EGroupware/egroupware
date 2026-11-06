@@ -108,7 +108,6 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
                         "label": true,
                         "on": this.checked,
                     })}
-                    aria-label="${this.label}"
             >
 				<slot name="on">
 					<et2-image class="image on" src=${this.onIcon} title="${this.toggleOn}"></et2-image>

@@ -112,6 +112,57 @@ class CacheSessionWriteTrackingTest extends LoggedInTest
 	}
 
 	/**
+	 * A getSession() of a slot that setSession() just wrote must not replace the buffered write:
+	 * the by-reference snapshot it records already includes the new value, so it would resolve to
+	 * "unchanged" at flush time and the write would be silently dropped, although the same request
+	 * still read it back fine. Real-world case: Mail\Smime's S/MIME passphrase, written after a
+	 * successful sign and re-read by Mailer/get_acc_smime(), was gone on the next request.
+	 */
+	public function testReadAfterWriteDoesNotDropBufferedWrite()
+	{
+		$app = __CLASS__;
+
+		$GLOBALS['egw']->session->commit_session();
+		$this->assertNotSame(PHP_SESSION_ACTIVE, session_status());
+
+		Cache::setSession($app, 'passphrase', 'secret-value', 600);
+		$this->assertSame('secret-value', Cache::getSession($app, 'passphrase'));
+
+		Cache::flush_session_writes();
+
+		$this->assertSame('secret-value', $_SESSION[Session::EGW_APPSESSION_VAR][$app]['passphrase'] ?? null,
+			'setSession() followed by getSession() of the same slot lost the write on flush');
+		$this->assertGreaterThan(time(),
+			$_SESSION[Session::EGW_APPSESSION_VAR][Cache::SESSION_EXPIRATION_PREFIX.$app]['passphrase'] ?? 0,
+			'the expiration written with the value was lost on flush');
+
+		Cache::unsetSession($app, 'passphrase');
+		$GLOBALS['egw']->session->commit_session();
+	}
+
+	/**
+	 * Same for a pending unset: a later getSession() of the slot must not turn it into a no-op.
+	 */
+	public function testReadAfterUnsetDoesNotDropBufferedUnset()
+	{
+		$app = __CLASS__;
+		Cache::setSession($app, 'passphrase', 'stale-value');
+
+		$GLOBALS['egw']->session->commit_session();
+		$this->assertNotSame(PHP_SESSION_ACTIVE, session_status());
+
+		Cache::unsetSession($app, 'passphrase');
+		$this->assertNull(Cache::getSession($app, 'passphrase'));
+
+		Cache::flush_session_writes();
+
+		$this->assertArrayNotHasKey('passphrase', $_SESSION[Session::EGW_APPSESSION_VAR][$app] ?? [],
+			'unsetSession() followed by getSession() of the same slot lost the unset on flush');
+
+		$GLOBALS['egw']->session->commit_session();
+	}
+
+	/**
 	 * The deprecated by-reference getSession() pattern (mutate the returned reference instead
 	 * of calling setSession() explicitly) must still work across a close/flush cycle, via the
 	 * snapshot-and-compare closure recorded at getSession() call time.

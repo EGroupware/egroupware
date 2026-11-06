@@ -256,8 +256,10 @@ centered	common	fr	Centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
+change category	common	fr	Changer la catégorie
 change owner	common	fr	Changer le propriétaire
 changed	common	fr	Modifié
+changed category to %1	common	fr	Changer la catégorie en %1
 changes that you made may not be saved.	common	fr	Il se peut que les modifications que vous avez apportées ne soient pas sauvegardées.
 charset	common	fr	Jeu de caractères
 check all	common	fr	Tout cocher
@@ -708,6 +710,7 @@ import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
 import xml	common	fr	Importer XML
+in %1	common	fr	dans %1
 include access to any linked files (links tab)	common	fr	Ajout de l'accès à tous liens de fichiers (onglet Liens)
 increment version to not overwrite the existing template	common	fr	Incrémente la version pour ne pas écraser le modèle existant
 indent	common	fr	Indenter
@@ -1137,6 +1140,7 @@ remove selected accounts	common	fr	Supprimer les comptes sélectionnés
 remove shortcut	common	fr	Supprimer le raccourci
 remove this link (not the entry itself)	common	fr	Enlever ce lien (pas l'entrée elle-même)
 removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
+removed category	common	fr	catégorie supprimée
 removeformat	common	fr	Format de suppression
 rename	common	fr	Renommer
 repeat password	common	fr	Répéter le mot de passe

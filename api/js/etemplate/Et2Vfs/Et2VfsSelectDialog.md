@@ -1,14 +1,23 @@
-```html:preview
-<et2-vfs-select-dialog class="file-select"></et2-vfs-select-dialog>
-<et2-button noSubmit>Open dialog</et2-button>
-// TODO: This doesn't work because of Dialog / keymanager issues
-<script>
-  const dialog = document.querySelector('.file-select');
-  const openButton = dialog.nextElementSibling;
+## Opening the dialog
 
-  openButton.addEventListener('click', () => {dialog.show()});
-</script>
+Put the dialog in your template and call `show()` on it:
+
+```html
+<et2-vfs-select-dialog id="files"></et2-vfs-select-dialog>
+<et2-button id="pick" noSubmit label="Open dialog"></et2-button>
 ```
+
+```js
+const dialog = this.et2.getWidgetById("files");
+this.et2.getWidgetById("pick").onclick = () => dialog.show();
+```
+
+:::warning
+This one example is deliberately not live. `show()` waits on the directory listing before it
+opens the dialog, and this documentation site has no server to list a directory from - so the
+dialog would never appear no matter what you clicked. Everything below describes the real
+behaviour against a running EGroupware.
+:::
 
 ## Selected files
 

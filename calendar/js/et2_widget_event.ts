@@ -523,7 +523,11 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 					}
 				});
 				cat_label = cat_label.join(", ");
-				cat_icons = `<div class="calendar_calEventCategoryIcons">${icons.join("\n")}</div>`;
+				// no empty (padded) container, it would show as space before the time
+				if(icons.length)
+				{
+					cat_icons = `<div class="calendar_calEventCategoryIcons">${icons.join("\n")}</div>`;
+				}
 			}
 
 				// Activate links in description
@@ -554,7 +558,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 									'" data-title="' + this.options.value['title'] +
 									'" data-start="' + this.options.value['start'].toJSON() + '" data-end="' + this.options.value['end'].toJSON() + '">' +
 									this.egw().lang('Video conference') +
-										'<et2-image src="' + this.egw().image('videoconference', 'calendar') + '"/></span>';
+										'<et2-image src="' + this.egw().image('videoconference', 'calendar') + '" label="' + this.egw().lang('Join') + '"/></span>';
 								this._bind_videoconference();
 						}
 						location += '</p>';
@@ -636,7 +640,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				if (this.options.value.is_private)
 				{
 						// Hide everything
-						icons.push('<et2-image src="' + this.egw().image('private', 'calendar') + '" title="' + this.egw().lang('private event') + '"/>');
+						icons.push('<et2-image src="' + this.egw().image('private', 'calendar') + '" label="' + this.egw().lang('private event') + '"/>');
 				}
 				else
 				{
@@ -647,24 +651,24 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						else if (this.options.value.app !== 'calendar')
 						{
 								let app_icon = "" + (egw.link_get_registry(this.options.value.app, 'icon') || (this.options.value.app + '/navbar'));
-								icons.push('<et2-image src="' + this.egw().image(app_icon) + '" title="' + this.egw().lang(this.options.value.app) + '"/>');
+								icons.push('<et2-image src="' + this.egw().image(app_icon) + '" label="' + this.egw().lang(this.options.value.app) + '"/>');
 						}
 						if (this.options.value.priority == 3)
 						{
-								icons.push('<et2-image src="' + this.egw().image('prio_high', 'calendar') + '" title="' + this.egw().lang('high priority') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('prio_high', 'calendar') + '" label="' + this.egw().lang('high priority') + '"/>');
 						}
 						if (this.options.value.public == '0')
 						{
 								// Show private flag
-								icons.push('<et2-image src="' + this.egw().image('private', 'calendar') + '" title="' + this.egw().lang('private event') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('private', 'calendar') + '" label="' + this.egw().lang('private event') + '"/>');
 						}
 						if (this.options.value['recur_type'])
 						{
-								icons.push('<et2-image src="' + this.egw().image('recur', 'calendar') + '" title="' + this.egw().lang('recurring event') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('recur', 'calendar') + '" label="' + this.egw().lang('recurring event') + '"/>');
 						}
 						// icons for single user, multiple users or group(s) and resources
-						const single = '<et2-image src="' + this.egw().image('single', 'calendar') + '" title="' + this.egw().lang("single participant") + '"/>';
-						const multiple = '<et2-image src="' + this.egw().image('users', 'calendar') + '" title="' + this.egw().lang("multiple participants") + '"/>';
+						const single = '<et2-image src="' + this.egw().image('single', 'calendar') + '" label="' + this.egw().lang("single participant") + '"/>';
+						const multiple = '<et2-image src="' + this.egw().image('users', 'calendar') + '" label="' + this.egw().lang("multiple participants") + '"/>';
 						for (const uid in this.options.value['participants'])
 						{
 								// @ts-ignore
@@ -692,22 +696,22 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 
 						if (this.options.value.alarm && !jQuery.isEmptyObject(this.options.value.alarm) && !this.options.value.is_private)
 						{
-								icons.push('<et2-image src="' + this.egw().image('notification_message') + '" title="' + this.egw().lang('alarm') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('notification_message') + '" label="' + this.egw().lang('alarm') + '"/>');
 						}
 						if (this.options.value.participants[egw.user('account_id')] && this.options.value.participants[egw.user('account_id')][0] == 'U')
 						{
-								icons.push('<et2-image src="' + this.egw().image('needs-action', 'calendar') + '" title="' + this.egw().lang('Needs action') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('needs-action', 'calendar') + '" label="' + this.egw().lang('Needs action') + '"/>');
 						}
 						if (this.options.value["##videoconference"])
 						{
-								icons.push('<et2-image src="' + this.egw().image('videoconference', 'calendar') + '" title="' + this.egw().lang('video conference') + '"/>');
+								icons.push('<et2-image src="' + this.egw().image('videoconference', 'calendar') + '" label="' + this.egw().lang('video conference') + '"/>');
 						}
 				}
 
 				// Always include non-blocking, regardless of privacy
 				if (this.options.value.non_blocking)
 				{
-						icons.push('<et2-image src="' + this.egw().image('nonblocking', 'calendar') + '" title="' + this.egw().lang('non blocking') + '"/>');
+						icons.push('<et2-image src="' + this.egw().image('nonblocking', 'calendar') + '" label="' + this.egw().lang('non blocking') + '"/>');
 				}
 				return icons;
 		}

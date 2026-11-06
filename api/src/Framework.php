@@ -1764,14 +1764,29 @@ abstract class Framework extends Framework\Extra
 	/**
 	 * Set a preference via ajax
 	 *
+	 * Only ever sets a preference of the user who is logged in, in the user's own preferences: nothing sent can
+	 * reach another account, or the default, group or forced preferences, and a forced preference stays in force
+	 * over what is set here.  The worst a call can do is change the caller's own preferences.
+	 *
+	 * What can not be a preference is not stored, instead of being left to fail in the database or in PHP: the
+	 * application has to be a name of the kind of an application, which fits the column it is stored in, and the
+	 * name of the preference a string.  That is not an error shown to the user, as it would be for something the
+	 * client does by mistake (eg. when it does not know the application), only logged.
+	 *
 	 * @param string $app
 	 * @param string $name
-	 * @param string $value
+	 * @param string|array $value an empty string unsets the preference
 	 */
 	public static function ajax_set_preference($app, $name, $value)
 	{
+		if (!is_string($app) || !preg_match('/^[a-z0-9_-]{1,16}$/i', $app) ||
+			!is_string($name) || $name === '' || strlen($name) > 255)
+		{
+			error_log(__METHOD__.'('.substr(json_encode([$app, $name]), 0, 200).', ...) is not a preference, ignored');
+			return;
+		}
 		$GLOBALS['egw']->preferences->read_repository();
-		if ((string)$value === '')
+		if (!is_array($value) && (string)$value === '')
 		{
 			$GLOBALS['egw']->preferences->delete($app, $name);
 		}
@@ -1820,11 +1835,12 @@ abstract class Framework extends Framework\Extra
 	 * @param string $action "add" or "delete"
 	 * @param boolean|int|string $group ID of the group to create the favorite for, or 'all' for all users
 	 * @param array $filters =array() key => value pairs for the filter
+	 * @param string|null $folder =null name of the folder to list the favorite in
 	 * @return boolean Success
 	 */
-	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
+	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array(), $folder = null)
 	{
-		return Framework\Favorites::set_favorite($app, $name, $action, $group, $filters);
+		return Framework\Favorites::set_favorite($app, $name, $action, $group, $filters, $folder);
 	}
 
 	/**

@@ -568,10 +568,36 @@ export class Et2DatagridSelectionController
 	}
 
 	/**
+	 * Focus is on a control that is neither the grid nor the page background.
+	 *
+	 * Looks through shadow roots, as document.activeElement only reports the outermost host.
+	 */
+	protected focusIsOutsideGrid() : boolean
+	{
+		let active : Element | null = document.activeElement;
+		while(active?.shadowRoot?.activeElement)
+		{
+			active = active.shadowRoot.activeElement;
+		}
+		if(!active || active === document.body || active.tagName.toLowerCase() === "egw-app")
+		{
+			return false;
+		}
+		return active !== this.host && !this.host.shadowRoot?.contains(active) && !this.host.contains(active);
+	}
+
+	/**
 	 * Focus row by absolute index, optionally scrolling it into view.
 	 */
 	focusRowByIndex(index : number, retries : number = 0, allowScroll : boolean = true)
 	{
+		if(this.focusIsOutsideGrid())
+		{
+			// The user moved on to another control (eg. the search box) while a render or a
+			// retry was still pending - pulling focus back would swallow what they type next.
+			this.host._restoreFocusAfterRender = false;
+			return;
+		}
 		const rowElement = (Array.from(this.host._rowsBody?.querySelectorAll("[data-row-index]") || []) as HTMLElement[])
 			.find((row) => parseInt(row.getAttribute("data-row-index") || "-1", 10) === index) || null;
 		if(rowElement)

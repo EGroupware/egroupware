@@ -81,7 +81,6 @@ change	infolog	hu	Változás
 change history	infolog	hu	Történet módosítása
 change responsible	infolog	hu	Változás felelős
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
-changed category to %1	infolog	hu	A kategória %1-re változott
 check to set startday	infolog	hu	Kezdőnap beállításhoz ikszelje be
 check to specify custom contact	infolog	hu	Kapcsolja be az egyéni kapcsolat megadásához
 choose owner of imported data	infolog	hu	Válassza ki az importált adatok tulajdonosát
@@ -386,7 +385,6 @@ regular expression	infolog	hu	Szabályos kifejezés
 remark	infolog	hu	Megjegyzés
 remove this link (not the entry itself)	infolog	hu	Hivatkozás eltávolítása (nem a bejegyzést magát).
 removed	infolog	hu	Eltávolítva.
-removed category	infolog	hu	eltávolított kategória
 replacement	infolog	hu	Csere
 replacements for inserting entries into documents	infolog	hu	Pótlások a bejegyzések dokumentumba való beillesztéséhez
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	hu	A szerkesztő felhasználónak írási hozzáféréssel kell rendelkeznie ezekhez a kapcsolatokhoz, hogy megoszthassa azokat a felelős felhasználóval.

@@ -206,7 +206,7 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar EGroupware
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	es-es	Vista en la que se abren los campos de texto compatibles con Markdown. Al cambiar la vista en un campo, esto se actualiza.
+which view markdown-enabled text fields open in by default	preferences	es-es	¿En qué vista se abren por defecto los campos de texto compatibles con Markdown?
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
 you can show the linked entries with icons only, icons with app-name or both.	common	es-es	Puede mostrar las entradas vinculadas sólo con iconos, iconos con el nombre de la aplicación, o ambos.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	es-es	Puede seleccionar las funciones que desea activar en la barra de herramientas.

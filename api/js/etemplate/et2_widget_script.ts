@@ -10,6 +10,7 @@
 
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_widget} from "./et2_core_widget";
+import {trustedScript} from "../jsapi/egw_trusted_types";
 
 /**
  * Function which executes the encapsulated script data.
@@ -46,7 +47,7 @@ export class et2_script extends et2_widget
 	{
 		try
 		{
-			var func = new Function(_content);
+			var func = new Function(trustedScript(_content));
 			func.call(window);
 		}
 		catch (e)

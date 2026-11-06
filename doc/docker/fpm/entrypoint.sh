@@ -55,6 +55,10 @@ test -d /usr/share/egroupware-extra && {
 	chmod 775 /usr/share/egroupware
 }
 
+# sessions directory is a volume (root:root 0755 if created implicitly by a bind mount or older image): without a usable session directory nothing works
+mkdir -p /var/lib/php/sessions
+chmod 1733 /var/lib/php/sessions
+
 # check and if necessary change ownership of /var/lib/egroupware and our header.inc.php
 test $(stat -c '%U' /var/lib/egroupware) = "www-data" || \
 	chown -R www-data:www-data /var/lib/egroupware
@@ -110,7 +114,9 @@ done 2>&1 | tee -a $LOG
 # fix cron entries in case docker uses "overlay" storage driver (eg. Univention 4.4)
 # cron does NOT executing scripts with "NUMBER OF HARD LINKS > 1"
 for f in /etc/crontab /etc/cron.*/*; do
-  [ $(ls -l $f | cut -d' ' -f2) -gt 1 ] && {
+  # awk, not cut: busybox's ls -l (Alpine) pads columns with multiple spaces, which cut -d' '
+  # (one delimiter per space) turns into empty fields; awk collapses runs of whitespace
+  [ $(ls -l $f | awk '{print $2}') -gt 1 ] && {
     mv $f /tmp
     cat /tmp/$(basename $f) > $f
   }

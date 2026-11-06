@@ -7,6 +7,7 @@ import * as sinon from 'sinon';
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 import flatpickr from "flatpickr";
+import {deepQueryPart} from "../../Et2Widget/test/WidgetSlotTests";
 
 let element : Et2Date;
 let egw_stub;
@@ -316,4 +317,100 @@ describe("Date widget", () =>
 		});
 	}
 });
+/**
+ * A required date is yellow while it is empty, like any other required widget (we mark required with the yellow
+ * input, not with an asterisk).  etemplate2.css does that for the others through their exported parts, which cannot
+ * reach the textbox inside this widget, so the widget does it itself.
+ */
+describe("Date widget required styling", () =>
+{
+	const YELLOW = "rgb(255, 255, 208)";
+	const inputBackground = () => getComputedStyle(deepQueryPart(element.shadowRoot, "base")).backgroundColor;
+
+	beforeEach(before);
+
+	afterEach(() =>
+	{
+		egw_stub.restore();
+	});
+
+	it("is yellow when required and empty", async() =>
+	{
+		element.required = true;
+		element.value = "";
+		await element.updateComplete;
+
+		assert.equal(inputBackground(), YELLOW);
+	});
+
+	it("is not yellow once it has a value", async() =>
+	{
+		element.required = true;
+		element.value = "";
+		await element.updateComplete;
+		element.value = "2026-10-08";
+		await element.updateComplete;
+
+		assert.notEqual(inputBackground(), YELLOW);
+	});
+
+	it("is yellow again when the value is cleared", async() =>
+	{
+		element.required = true;
+		element.value = "2026-10-08";
+		await element.updateComplete;
+		element.value = "";
+		await element.updateComplete;
+
+		assert.equal(inputBackground(), YELLOW);
+	});
+
+	it("is not yellow when it is not required", async() =>
+	{
+		element.value = "";
+		await element.updateComplete;
+
+		assert.notEqual(inputBackground(), YELLOW);
+	});
+});
+
+/**
+ * The label of a date widget behaves like any other form label.
+ *
+ * Contract under test: the pointer is not a hand over the label (LitFlatpickr's own host style makes the whole widget
+ * one), and clicking the label focuses the widget.
+ */
+describe("Date widget label", () =>
+{
+	const label = () => element.shadowRoot.querySelector<HTMLElement>("label.form-control__label");
+
+	beforeEach(before);
+
+	afterEach(() =>
+	{
+		egw_stub.restore();
+	});
+
+	it("does not show a hand cursor over the label", () =>
+	{
+		assert.notEqual(getComputedStyle(label()).cursor, "pointer");
+		assert.notEqual(getComputedStyle(element).cursor, "pointer");
+		// The label text is slotted in, and LitFlatpickr styles whatever is slotted as a hand too
+		const text = element.querySelector<HTMLElement>("[slot=label]");
+		assert.exists(text, "No slotted label text to check");
+		assert.notEqual(getComputedStyle(text).cursor, "pointer");
+	});
+
+	it("focuses the input when the label is clicked", async() =>
+	{
+		(<HTMLElement>document.activeElement)?.blur?.();
+
+		label().click();
+		await element.updateComplete;
+
+		assert.isTrue(element._instance.isOpen || element.matches(":focus-within"),
+			"Clicking the label neither focused the widget nor opened the calendar");
+	});
+});
+
 inputBasicTests(before, "2008-09-22T00:00:00Z", "et2-textbox");

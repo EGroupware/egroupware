@@ -44,6 +44,8 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 	private title: JQuery;
 	private rows: JQuery;
 	private _cached_rows: any[];
+	// Cache ids registerUID() registered our _data_callback for, released again in destroy()
+	private _registered_uids: string[] = [];
 	private _row_height = 20;
 	private _actionObject: egwActionObject;
 
@@ -89,7 +91,23 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 
 	destroy( )
 	{
+		// The planner registers us once per day, for as many rows as it draws on every redraw -
+		// a registration nobody releases keeps this row, and all its DOM, alive
+		this._registered_uids.forEach(uid => egw.dataUnregisterUID(uid, null, this));
+		this._registered_uids = [];
+
 		super.destroy();
+	}
+
+	/**
+	 * Get told about changes to a cache entry (one day of one user's events)
+	 *
+	 * @param {string} uid cache id, see CalendarApp._daywise_cache_id()
+	 */
+	registerUID(uid : string)
+	{
+		egw.dataRegisterUID(uid, this._data_callback, this);
+		this._registered_uids.push(uid);
 	}
 
 	getDOMNode(_sender)

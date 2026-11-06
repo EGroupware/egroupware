@@ -1,7 +1,8 @@
 import {Et2WidgetWithSelectMixin} from "./Et2WidgetWithSelectMixin";
 import {RowLimitedMixin} from "../Layout/RowLimitedMixin";
 import shoelace from "../Styles/shoelace";
-import {html, LitElement, TemplateResult} from "lit";
+import {html, LitElement, nothing, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {SelectOption} from "./FindSelectOptions";
 import {repeat} from "lit/directives/repeat.js";
 import {property} from "lit/decorators/property.js";
@@ -43,6 +44,11 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		super.connectedCallback();
 
 		this.addEventListener("sl-select", this.handleSelect);
+		// Which input was used last decides if the focused item gets the primary highlight, see the styles.
+		// Focus alone cannot: the menu focuses whatever the pointer passes over, and that focus stays when it leaves.
+		this.addEventListener("keydown", this._markKeyboard, true);
+		this.addEventListener("pointermove", this._markPointer, true);
+		this.addEventListener("pointerdown", this._markPointer, true);
 
 		this.updateComplete.then(() =>
 		{
@@ -50,7 +56,18 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		});
 	}
 
-	private getAllItems() : SlMenuItem[]
+	private _markKeyboard = () => this.setAttribute("keyboard", "");
+	private _markPointer = () => this.removeAttribute("keyboard");
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.removeEventListener("keydown", this._markKeyboard, true);
+		this.removeEventListener("pointermove", this._markPointer, true);
+		this.removeEventListener("pointerdown", this._markPointer, true);
+	}
+
+	private getAllItems(): SlMenuItem[]
 	{
 		return <SlMenuItem[]>Array.from(this.shadowRoot?.querySelectorAll('sl-menu-item')) ?? [];
 	}
@@ -122,6 +139,7 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
                     class="${option.class}" .option=${option}
                     type="checkbox"
                     ?checked=${checked}
+                    ?disabled=${this.disabled}
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
@@ -130,10 +148,29 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 
 	render()
 	{
+		const label = this._labelTemplate();
+		const help = this._helpTextTemplate();
+
 		return html`
-            <sl-menu class="menu">
-                ${repeat(this.select_options, (o) => o.value, (option : SelectOption) => this._optionTemplate(option))}
-            </sl-menu>
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        "form-control": true,
+                        "form-control--medium": true,
+                        "form-control--has-label": label !== nothing,
+                        "form-control--has-help-text": help !== nothing
+                    })}
+            >
+                ${label}
+                <div part="form-control-input" class="form-control-input">
+                    <sl-menu class="menu"
+                             aria-labelledby=${label !== nothing ? "label" : nothing}
+                             aria-describedby=${help !== nothing ? "help-text" : nothing}>
+                        ${repeat(this.select_options, (o) => o.value, (option : SelectOption) => this._optionTemplate(option))}
+                    </sl-menu>
+                </div>
+                ${help}
+            </div>
 		`
 	}
 }

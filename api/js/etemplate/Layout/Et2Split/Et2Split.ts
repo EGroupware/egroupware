@@ -31,6 +31,13 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 				height: 100%;
 				width: 100%;
 			}
+			/* SlSplitPanel's overflow: hidden does nothing on these display: contents slots, but
+			   @lit-labs/virtualizer counts every non-visible overflow ancestor as clipping: a grid
+			   in a panel, whose virtualizer (re)connects after the first render (eg. after printing),
+			   intersects with the slot's empty box and renders no rows at all */
+			.start, .end {
+				overflow: visible;
+			}
 			.divider {
 				background-color: var(--gray_10)
 			}

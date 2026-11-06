@@ -319,4 +319,42 @@ describe("Et2DatagridColumnState", () =>
 			"selected customfield children should be remembered when the parent column is omitted"
 		);
 	});
+	describe("customfields column selected without any of its fields", () =>
+	{
+		const setup = () =>
+		{
+			const state = new Et2DatagridColumnState();
+			const headerState : { visibility : Record<string, boolean> } = {visibility: {cf_text: true, cf_private: false}};
+			const header = {
+				getCustomfieldSelectionItems: () => [
+					{name: "cf_text", label: "Text", visible: headerState.visibility.cf_text},
+					{name: "cf_private", label: "Private", visible: headerState.visibility.cf_private}
+				],
+				setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
+				{
+					headerState.visibility = {...visibility};
+				}
+			};
+			const columns : Et2DatagridColumn[] = [
+				{key: "subject", title: "Subject"},
+				{key: "customfields", title: "Custom fields", header: header as any}
+			];
+			return {state, headerState, columns};
+		};
+
+		it("keeps the fields it shows by default", () =>
+		{
+			const {state, headerState, columns} = setup();
+			state.applySelectionOrder(columns, ["subject", "customfields"]);
+			assert.deepEqual(headerState.visibility, {cf_text: true, cf_private: false});
+		});
+
+		it("shows none of them when exactCustomfields is set", () =>
+		{
+			const {state, headerState, columns} = setup();
+			const next = state.applySelectionOrder(columns, ["subject", "customfields"], undefined, true);
+			assert.deepEqual(headerState.visibility, {cf_text: false, cf_private: false});
+			assert.isFalse(next.find((column) => column.key === "customfields")?.hidden);
+		});
+	});
 });

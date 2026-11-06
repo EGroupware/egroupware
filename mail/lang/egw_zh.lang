@@ -25,7 +25,6 @@ aliases+forwards	mail	zh	别名+转发
 all my email addresses	mail	zh	我所有的电子邮件地址
 all of	mail	zh	所有的
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	zh	所有子文件夹也将被删除，所有受影响文件夹中的所有信息都将丢失
-allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
 allow users to create further identities	mail	zh	允许用户创建更多身份
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	zh	允许用户读取、写入和创建文件夹和邮件，向其发送邮件，向其添加邮件和删除邮件
 always respond / auto-responder	mail	zh	始终回复/自动回复
@@ -291,6 +290,7 @@ please select the number of days to wait between responses	mail	zh	请选择回�
 please supply the message to send with auto-responses	mail	zh	请提供要自动回复的内容
 post	mail	zh	发送
 predefined addresses for compose	mail	zh	撰写的预定义地址
+prevent managing filters	mail	zh	禁止管理筛选条件
 preview pane	mail	zh	窗口布局
 printing	mail	zh	打印
 private key created, downloading csr...	mail	zh	私钥已创建，正在下载 CSR ...
@@ -357,7 +357,6 @@ send message and move to send folder (if configured)	mail	zh	发送信息并移�
 send message pgp encrypted: requires keys from all recipients!	mail	zh	发送 PGP 加密邮件：需要所有收件人提供密钥！
 sent folder	mail	zh	发件夹
 server supports special-use folders	mail	zh	服务器支持特殊用途文件夹
-set predefined values for compose...	mail	zh	设置用于撰写的预定义值...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	zh	是否应在回复或转发之后（标准）或之前插入签名，以及是否应在撰写过程中显示和更改签名。
 show all addresses	mail	zh	显示所有地址
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	zh	在主屏幕文件夹窗格中显示所有文件夹（已订阅和未订阅文件夹

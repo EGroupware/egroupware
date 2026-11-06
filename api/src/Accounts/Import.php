@@ -272,7 +272,7 @@ class Import
 			];
 			if (!$initial_import)
 			{
-				$filter[] = 'modified>='.$GLOBALS['egw_info']['server']['account_import_lastrun'];
+				$filter[] = Api\Db\SqlFragment::raw('modified>='.$GLOBALS['egw_info']['server']['account_import_lastrun']);
 			}
 			$num = 0;
 			$last_modified = null;

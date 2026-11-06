@@ -1272,6 +1272,19 @@ export class Et2NextmatchActionController implements ReactiveController
 		action.data.nextmatch = this.host;
 		if(typeof action.data.nm_action === "undefined" && (action as any).type === "popup")
 		{
+			// An action that declares no onExecute, url, egw_open or nm_action lands here, and
+			// "submit" posts the whole template back and re-renders it - a brand new nextmatch,
+			// losing scroll position, selection and row state.  That is almost never what the
+			// action author intended, and nothing in the action definition says it will happen,
+			// so say so.  Silence it by declaring the behaviour: an app handler
+			// ('onExecute' => 'javaScript:app.<app>.ajax_action'), or an explicit
+			// 'nm_action' => 'submit' for the few that really do want a full redraw.
+			et2_warnOnce(this.host, "nm-action-submit-fallthrough:" + action.id,
+				`Action '${action.id}' falls through to nm_action="submit", which rebuilds the ` +
+				"whole template and loses the list's scroll position and selection. Give it an " +
+				"onExecute (see EgwApp.ajax_action) or declare nm_action explicitly.",
+				action
+			);
 			action.data.nm_action = "submit";
 		}
 
@@ -1303,6 +1316,25 @@ export class Et2NextmatchActionController implements ReactiveController
 				this.executeEgwOpenAction(action, ids.providerIds, actionTarget);
 				break;
 
+			case "select_children":
+				this.executeSelectChildrenAction(action, senders);
+				break;
+
+			case "categories":
+				// dynamic import for the same reason as select_children below
+				import("./CategoryAction").then(({CategoryAction}) =>
+				{
+					CategoryAction.open(this.host.egw(), action, senders);
+				});
+				break;
+
+			case "distribution_lists":
+				import("./DistributionListAction").then(({DistributionListAction}) =>
+				{
+					DistributionListAction.open(this.host.egw(), action, senders);
+				});
+				break;
+
 			case "open_popup":
 				if(this.openActionPopup(action, ids.rawIds))
 				{
@@ -1313,6 +1345,34 @@ export class Et2NextmatchActionController implements ReactiveController
 				this.executeSubmitAction(action, ids, senders);
 				break;
 		}
+	}
+
+	/**
+	 * Offer an over-long sub-menu's children as a picker dialog instead of a sub-menu.
+	 *
+	 * Set by Nextmatch::selectChildrenIfTooLong() past DEFAULT_MAX_MENU_SELECT children, and
+	 * overridable per action through data['maxMenuLength'] / data['selectDialog'].
+	 *
+	 * Dynamic import, not static: this module is loaded early enough that pulling the whole
+	 * Et2Dialog widget graph in at its top level risks the et2_core_widget circular-import TDZ
+	 * bug (see EgwPopupActionImplementation._addLinkAction(), which defers for the same reason).
+	 * It also keeps the dialog code out of the bundle for anyone who never opens one.
+	 */
+	private executeSelectChildrenAction(action : EgwAction, senders : EgwActionObject[])
+	{
+		const options = action.data?.selectDialog || {};
+		// level 4 of the override ladder: the app supplies its own handler and gets the
+		// collapsed container, children and all. Not expressible as onExecute, which
+		// egw_actions() would inherit down to the children and strip off the parent.
+		if(options.onExecute)
+		{
+			this.host.egw().applyFunc(String(options.onExecute).replace(/^javaScript:/, ""), [action, senders]);
+			return;
+		}
+		import("./SelectChildrenAction").then(({SelectChildrenAction}) =>
+		{
+			SelectChildrenAction.open(this.host.egw(), action, senders, options);
+		});
 	}
 
 	/**

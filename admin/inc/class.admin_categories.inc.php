@@ -434,6 +434,14 @@ class admin_categories
 		$GLOBALS['egw']->categories = $cats = new Categories($filter['owner'],$query['appname']);
 		// ignore Acl only for admins, unless caller explicitly asked to exclude global categories
 		$globals = isset($GLOBALS['egw_info']['user']['apps']['admin']) && $globalcat ? 'all_no_acl' : $globalcat;
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) && !$globalcat && $query['appname'] &&
+			$query['appname'] !== Categories::GLOBAL_APPNAME)
+		{
+			// Admins see all public categories of the app, not only those of their own groups,
+			// but without the global categories (they are excluded by the appname filter)
+			$globals = 'all_no_acl';
+			if (empty($filter['appname'])) $filter['appname'] = $query['appname'];
+		}
 		$parent = $query['search'] ? false : 0;
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globals,$parent,true,$filter);
 		$count = $cats->total_records;
@@ -649,6 +657,10 @@ class admin_categories
 		if($appname == Categories::GLOBAL_APPNAME) {
 			$sel_options['app'] = array(''=>'');
 			$readonlys['nm']['rows']['app'] = true;
+			// readonlys do not reach the generated filter-template, so the "Application" column
+			// filter would be offered with the empty option list set just above.  The row
+			// template's header reads this flag via disabled="@no_app_filter".
+			$content['nm']['no_app_filter'] = true;
 		}
 
 		$tmpl = new Etemplate('admin.categories.index');

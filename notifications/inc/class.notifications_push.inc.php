@@ -37,12 +37,17 @@ class notifications_push implements Json\PushBackend
 	 */
 	public static $db;
 
-	public static function get()
+	/**
+	 * @return bool true if at least one queued message was delivered (replayed into
+	 *  Json\Response::get()) this call, false if there was nothing new to deliver
+	 */
+	public static function get() : bool
 	{
 		if (session_status() === PHP_SESSION_NONE)
 		{
 			$session_reopened = session_start();
 		}
+		$delivered = false;
 		$already_send = Api\Cache::getSession(__CLASS__, 'already_send');
 		$max_id = Api\Cache::getInstance(__CLASS__, 'max_id');
 
@@ -65,7 +70,7 @@ class notifications_push implements Json\PushBackend
 			foreach(self::$db->select(self::TABLE, '*', array(
 				'account_id' => array(0, $GLOBALS['egw_info']['user']['account_id']),
 				'notify_type' => self::TYPE,
-				'notify_id > '.(int)$already_send,
+				Api\Db\SqlFragment::raw('notify_id > '.(int)$already_send),
 			), __LINE__, __FILE__, false, 'ORDER BY notify_id ASC', self::APP) as $row)
 			{
 				$message = json_decode($row['notify_message'], true);
@@ -75,6 +80,7 @@ class notifications_push implements Json\PushBackend
 					call_user_func_array(array($response, $message['method']), array_values((array)$message['data']));
 				}
 				$already_send = $row['notify_id'];
+				$delivered = true;
 			}
 			Api\Cache::setSession(__CLASS__, 'already_send', $already_send);
 		}
@@ -82,7 +88,37 @@ class notifications_push implements Json\PushBackend
 		{
 			session_write_close();
 		}
-		//error_log(__METHOD__."() max_id=$max_id, already_sent=$already_send");
+		//error_log(__METHOD__."() max_id=$max_id, already_sent=$already_send, delivered=".array2string($delivered));
+		return $delivered;
+	}
+
+	/**
+	 * Peek at this session's been-delivered-up-to notify_id, without touching the (possibly
+	 * already closed) session - unlike get(), which reopens it briefly if needed.
+	 *
+	 * Used by Api\Json\Push::ajax_poll()'s bounded long-poll loop together with maxId() to check
+	 * "is there anything new" on every tick without paying a session_start()/write_close()
+	 * round-trip each time - get() is still what actually delivers/advances it.
+	 *
+	 * @return int|null null if get() has never run at all yet this session
+	 */
+	public static function alreadySend() : ?int
+	{
+		$already_send = Api\Cache::getSession(__CLASS__, 'already_send');
+		return isset($already_send) ? (int)$already_send : null;
+	}
+
+	/**
+	 * Peek at the instance-wide (cross-session, shared via the configured cache backend -
+	 * typically APCu on a single host) highest queued notify_id, without touching the session or
+	 * database - see alreadySend()'s docs for why this matters.
+	 *
+	 * @return int|null null if get() has never run at all yet on this instance
+	 */
+	public static function maxId() : ?int
+	{
+		$max_id = Api\Cache::getInstance(__CLASS__, 'max_id');
+		return isset($max_id) ? (int)$max_id : null;
 	}
 
 	/**
@@ -149,7 +185,7 @@ class notifications_push implements Json\PushBackend
 			do {
 				self::$db->delete(self::TABLE, array(
 					'notify_type' => self::TYPE,
-					'notify_created < '.$ts,
+					Api\Db\SqlFragment::raw('notify_created < '.$ts),
 				), __LINE__, __FILE__, self::APP, null, self::DELETE_CHUNK_SIZE);
 			}
 			while($n++ < 100 && self::$db->affected_rows() == self::DELETE_CHUNK_SIZE);
@@ -172,7 +208,7 @@ class notifications_push implements Json\PushBackend
 	public function online()
 	{
 		$online = [];
-		foreach($GLOBALS['egw']->session->session_list(0, 'DESC', 'session_dla', true, ['notification_heartbeat IS NOT NULL']) as $row)
+		foreach($GLOBALS['egw']->session->session_list(0, 'DESC', 'session_dla', true, [Api\Db\SqlFragment::raw('notification_heartbeat IS NOT NULL')]) as $row)
 		{
 			$online[] = (int)$row['account_id'];
 		}

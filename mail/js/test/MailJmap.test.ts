@@ -274,16 +274,145 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 	});
 
 	/**
-	 * maxSizeUploadFromSession() is maxSizeUpload()'s own testable pure half - compose.ts reads
-	 * this via the public, profileID-keyed maxSizeUpload() to decide, BEFORE ever calling
-	 * uploadAttachment(), whether a file must be routed through the classic chunked-upload+
-	 * share-link path instead.
-	 *
-	 * NOTE: master's own version of this test block sits right next to coverage for
-	 * resolveHasChildren()'s own maxCallsInRequest-aware batching - a DIFFERENT, unrelated feature
-	 * (2026-10-29) not yet backported to 26 at all - deliberately not cherry-picked here too, same
-	 * "only bring over what this specific fix needs" discipline as every other backport in this
-	 * ticket's history.
+	 * Found live (2026-10-29, pole.egroupware.org, an account with 30 top-level mailboxes, reported
+	 * "randomly, some users have it, others don't" - a missing INBOX and bogus expand carets on
+	 * genuinely-childless folders): this batch's size scales with the number of mailboxes needing
+	 * resolution, large enough to plausibly outlast the WebSocket's own ping/heartbeat window (the
+	 * exact race getRows()'s own main fetch already guards against). Without retryIdempotentOnClose,
+	 * a heartbeat-triggered reconnect mid-request orphans the pending promise forever - confirmed
+	 * live via the console's own "JamWebSocketClient: received a WebSocket frame with no matching
+	 * pending request" warning - hanging the whole caller (eg. getRootFolders()) indefinitely.
+	 */
+	it("passes retryIdempotentOnClose so a heartbeat-triggered reconnect mid-batch doesn't hang forever", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capturedOptions : any[] = [];
+		let call = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any, options? : any) =>
+			{
+				capturedOptions.push(options);
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [[
+					{mailboxes: {list: [{id: "a", name: "Leaf"}]}},
+					{c0: {ids: []}},
+				][call++]];
+			}
+		};
+		primeToken(jmap, "1", client);
+
+		await jmap.getMailboxChildren("1", null, true);
+
+		assert.deepEqual(capturedOptions[0], {retryIdempotentOnClose: true},
+			"the level's own main Mailbox/query+get fetch (call index 0) must retry on close too - " +
+			"found live this was the MORE likely place to actually lose the heartbeat race first, " +
+			"since it runs before resolveHasChildren() even gets a chance");
+		assert.deepEqual(capturedOptions[1], {retryIdempotentOnClose: true},
+			"the hasChildren batch itself (call index 1, after the top-level fetch) must retry on close");
+	});
+
+	it("getRootFolders()'s own main fetch also passes retryIdempotentOnClose", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capturedOptions : any[] = [];
+		let call = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any, options? : any) =>
+			{
+				capturedOptions.push(options);
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [[
+					{topMailboxes: {list: [{id: "a", name: "Leaf", role: "inbox"}]}, inboxIds: {ids: ["a"]}},
+					{c0: {ids: []}},
+					{mailboxes: {list: []}},
+				][call++]];
+			},
+			session: Promise.resolve({accounts: {}}),
+		};
+		primeToken(jmap, "1", client);
+
+		await jmap.getRootFolders("1");
+
+		assert.deepEqual(capturedOptions[0], {retryIdempotentOnClose: true},
+			"the root-level Mailbox/get-for-every-top-level-mailbox fetch (call index 0) is the " +
+			"primary fetch behind the live 'info@egroupware.org, 30 top-level mailboxes' report - " +
+			"must retry on close");
+	});
+
+	/**
+	 * The ACTUAL root cause of the live "info@egroupware.org, 30 top-level mailboxes" report, found
+	 * by bisecting live against Stalwart (2026-10-29): not a WebSocket heartbeat race at all - the
+	 * session's own advertised urn:ietf:params:jmap:core maxCallsInRequest (16 on that account) is a
+	 * hard per-request ceiling that a real server doesn't enforce by erroring cleanly, it just never
+	 * answers a request with more method calls than that at all. resolveHasChildren() builds one
+	 * Mailbox/query call PER mailbox needing resolution - deterministic, not random: any level with
+	 * MORE mailboxes than the limit hangs on literally every attempt, any level with fewer never does
+	 * (confirmed live: exactly 16 calls in one request resolved in 35ms, 17 never resolved at all).
+	 * retryIdempotentOnClose alone can't fix this - retrying resubmits the identical over-limit
+	 * request. Must split into multiple requests of at most that many calls each instead.
+	 */
+	it("chunks the hasChildren batch to respect the session's own advertised maxCallsInRequest", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const requestSizes : number[] = [];
+		const client = {
+			session: Promise.resolve({capabilities: {"urn:ietf:params:jmap:core": {maxCallsInRequest: 2}}}),
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const parentIdByKey : Record<string, string> = {};
+				const invocation = (args : any, key : string) => { parentIdByKey[key] = args.filter.parentId; return {$ref: (_path : string) => ({})}; };
+				let nextKey = 0;
+				const t = {Mailbox: {query: (args : any) => invocation(args, `k${nextKey++}`)}};
+				const returned = buildFn(t);
+				requestSizes.push(Object.keys(returned).length);
+				// every mailbox "has children" except the very first one overall ("m0")
+				const result : Record<string, any> = {};
+				Object.keys(returned).forEach((key, i) => { result[key] = {ids: parentIdByKey[`k${i}`] === "m0" ? [] : ["child"]}; });
+				return [result];
+			},
+		};
+		const mailboxes : any[] = Array.from({length: 5}, (_, i) => ({id: `m${i}`, name: `Folder${i}`}));
+
+		await (jmap as any).resolveHasChildren(client, "acc1", mailboxes, false);
+
+		assert.deepEqual(requestSizes, [2, 2, 1],
+			"5 mailboxes with maxCallsInRequest=2 must become 3 separate requests (2+2+1), never one request with 5 calls");
+		assert.isFalse(mailboxes[0].hasChildren);
+		assert.isTrue(mailboxes[1].hasChildren);
+		assert.isTrue(mailboxes[4].hasChildren, "the last chunk (a single leftover item) must still resolve correctly");
+	});
+
+	it("falls back to the RFC 8620 minimum (16) when the session can't be read", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let requestCount = 0;
+		const client = {
+			session: Promise.reject(new Error("boom")),
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				requestCount++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				const returned = buildFn({Mailbox: {query: (_args : any) => invocation()}});
+				const result : Record<string, any> = {};
+				Object.keys(returned).forEach((key) => { result[key] = {ids: []}; });
+				return [result];
+			},
+		};
+		const mailboxes : any[] = Array.from({length: 16}, (_, i) => ({id: `m${i}`, name: `Folder${i}`}));
+
+		await (jmap as any).resolveHasChildren(client, "acc1", mailboxes, false);
+
+		assert.equal(requestCount, 1, "exactly 16 items must still fit in one request using the fallback limit");
+		assert.isFalse(mailboxes[0].hasChildren);
+	});
+
+	/**
+	 * maxSizeUploadFromSession() is maxSizeUpload()'s own testable pure half (same split as
+	 * maxCallsInRequest()/resolveHasChildren() above) - compose.ts reads this via the public,
+	 * profileID-keyed maxSizeUpload() to decide, BEFORE ever calling uploadAttachment(), whether a
+	 * file must be routed through the classic chunked-upload+share-link path instead.
 	 */
 	it("reads a real account's own advertised maxSizeUpload", async() =>
 	{

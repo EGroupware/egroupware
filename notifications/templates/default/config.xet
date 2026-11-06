@@ -32,6 +32,13 @@
 					</et2-select>
 				</row>
 				<row>
+					<et2-vbox>
+						<et2-description  value="Maximum concurrent long-polls"></et2-description>
+						<et2-description  value="Once this many browsers are already waiting, further ones get an instant check instead"></et2-description>
+					</et2-vbox>
+					<et2-number  id="newsettings[ajax_poll_max_concurrent]" placeholder="20"></et2-number>
+				</row>
+				<row>
 					<et2-description  value="Windows-Popup backend" span="all" class="subHeader"></et2-description>
 				</row>
 				<row>

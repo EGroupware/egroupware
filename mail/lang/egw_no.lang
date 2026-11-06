@@ -252,6 +252,7 @@ please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
 please supply the message to send with auto-responses	mail	no	Vennligst registrer meldingen som skal sendes som automatisk tilbakemelding
 predefined addresses for compose	mail	no	Forhåndsdefinerte verdier for komponering
+prevent managing filters	mail	no	Deaktiver redigering av filtre
 preview pane	mail	no	Vindusoppsett
 printing	mail	no	Utskrift
 private key created, downloading csr...	mail	no	Privatnøkkel opprettet, laster ned CSR ...

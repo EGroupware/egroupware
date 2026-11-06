@@ -45,7 +45,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	el	Να επιτρέπεται
 allow external images	mail	el	Να επιτρέπονται εικόνες από εξωτερικές πηγές
 allow external images from listed domains	mail	el	Να επιτρέπονται εικόνες από εξωτερικές πηγές εφόσον ανοίκουν στα αναφερόμενα domains.
-allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails.
 allow images from listed domains in html emails	mail	el	Να επιτρέπονται οι εικόνες από τα αναφερόμενα domains σε μηνύματα τύπου HTML.
 allow users to create further identities	mail	el	να επιτρέπεται στους χρήστες να δημιουργούν πρόσθετες ταυτότητες
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	el	Επιτρέπει σε έναν χρήστη να διαβάζει, να γράφει και να δημιουργεί φακέλους και μηνύματα, να δημοσιεύει σε αυτούς, να προσθέτει μηνύματα σε αυτούς και να διαγράφει μηνύματα
@@ -196,8 +195,6 @@ draft folder	mail	el	Φάκελος για προσχέδια
 drafts	mail	el	Προσχέδια
 drafts folder	mail	el	φάκελος για προσχέδια
 edit account	mail	el	Επεξεργασία λογαριασμού
-edit account ...	mail	el	Επεξεργασία λογαριασμού ...
-edit folder acl ...	mail	el	Επεξεργασία δικαιωμάτων φακέλου ...
 edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
 effective only if server supports acl at all	admin	el	Αποτελεσματικό μόνο αν ο διακομιστής υποστηρίζει δικαιώματα πρόσβασης στο email
 email address	mail	el	Διεύθυνση e-mail
@@ -259,7 +256,6 @@ folder %1 %2 failed!	mail	el	Αποτυχία φακέλου %1 %2!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	el	Ο φάκελος %1 δημιουργήθηκε επιτυχώς, παρόλο που η συνδρομή απέτυχε λόγω %2
 folder %1 is moving to folder %2	mail	el	Ο φάκελος %1 μεταφέρεται στον φάκελο %2
 folder management	mail	el	Διαχείριση φακέλων
-folder management ...	mail	el	Διαχείριση φακέλων...
 folder settings	mail	el	Ρυθμίσεις φακέλου
 force html	mail	el	Εξαναγκασμός HTML
 force plain text	mail	el	Εξαναγκασμός απλού κειμένου (plain text)
@@ -569,7 +565,6 @@ server supports special-use folders	mail	el	Ο διακομιστής υποστ
 serverside filterrules (sieve) are not activated	mail	el	Οι κανόνες φίλτρου (Sieve) από την πλευρά του διακομιστή δεν είναι ενεργοποιημένοι
 set flags	mail	el	Σημειώστε το e-mail ως
 set it as default:	mail	el	ορίστε το ως προεπιλογή:
-set predefined values for compose...	mail	el	Ορισμός προκαθορισμένων τιμών για τη σύνταξη ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	el	Πρέπει η υπογραφή να εισάγεται μετά (τυπικά) ή πριν από μια απάντηση ή προώθηση, και πρέπει η υπογραφή να είναι ορατή και να μπορεί να αλλάξει κατά τη σύνταξη.
 show	mail	el	εμφάνιση
 show all addresses	mail	el	Εμφάνιση όλων των διευθύνσεων
@@ -612,7 +607,6 @@ step 3: sieve - server side mail filtering	mail	el	Βήμα 3: Sieve
 step 4: smtp - outgoing mail	mail	el	Βήμα 4: SMTP - εξερχόμενα μηνύματα
 store to folder	mail	el	Αποθήκευση στον φάκελο
 subscribe folder	mail	el	Συνδρομή στον φάκελο
-subscribe folder ...	mail	el	Συνδρομή στον φάκελο ...
 subscribe to folder %1	mail	el	Συνδρομή στον φάκελο %1
 subscription folders	mail	el	Συνδρομές σε φακέλους
 subscription successfully saved.	mail	el	Η συνδρομή αποθηκεύθηκε επιτυχώς.

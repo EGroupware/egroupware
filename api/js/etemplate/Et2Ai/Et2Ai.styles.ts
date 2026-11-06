@@ -1,5 +1,19 @@
 import {css} from 'lit';
 
+/**
+ * The AI button itself - wherever it ends up, in our own corner or in the target's field controls
+ * (see Et2Ai._adoptFieldControls()), so it is the same size in both.
+ */
+export const triggerStyles = css`
+	.et2-ai-trigger {
+		font-size: calc(var(--sl-font-size-large) * 1.5);
+
+		&::part(base) {
+			padding: 1px;
+		}
+	}
+`;
+
 export default css`
 	:host {
 		--aitools-color: var(--sl-color-blue-500);
@@ -33,15 +47,8 @@ export default css`
 	.et2-ai-dropdown {
 		visibility: hidden;
 		position: absolute;
-		top: 0px;
-		right: 0px;
-
-		et2-button-icon {
-			font-size: calc(var(--sl-font-size-large) * 1.5);
-			&::part(base) {
-				padding: 1px;
-            }
-		}
+		top: var(--sl-spacing-2x-small);
+		right: var(--sl-spacing-2x-small);
 	}
 
 

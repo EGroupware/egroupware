@@ -1,4 +1,5 @@
 import {html, LitElement, PropertyValues} from "lit";
+import type {NextmatchInterface} from "./NextmatchInterfaces";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -25,13 +26,18 @@ import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import {Et2NextmatchAutoRefresh} from "./Et2NextmatchAutoRefresh";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
 	datagridColumnPreferenceValue,
 	type Et2NextmatchResolvedColumn,
 	legacyColumnSelectionCsv,
-	mapLegacyVisibleKeysToCurrentColumns
+	mapLegacyVisibleKeysToCurrentColumns,
+	legacyVisibleCustomfieldNames,
+	applyLegacyCustomfieldVisibility,
+	showAllCustomfields,
+	visibleCustomfieldKeys
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
@@ -52,7 +58,18 @@ const LETTERSEARCH_SELECTION_ID = "~search_letter~";
 
 type Et2NextmatchPrintState = {
 	columns : Et2DatagridColumn[];
+	/** Custom field visibility of each customfields header before printing, which setColumns() does not restore */
+	customfields : Array<[any, Record<string, boolean>]>;
 	orientationStyle : HTMLStyleElement;
+};
+
+/** Print options to use instead of asking, see Et2Nextmatch.printOptions */
+export type Et2NextmatchPrintOptions = {
+	/** "all" for every column the column selection offers, or the column keys to print in that order */
+	columns? : "all" | string[];
+	/** Maximum number of rows to print */
+	rowCount? : number;
+	orientation? : "portrait" | "landscape";
 };
 
 /**
@@ -89,7 +106,7 @@ type Et2NextmatchPrintState = {
  * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")
-export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
+export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, NextmatchInterface
 {
 	/**
 	 * Compose Nextmatch host styles from shared Et2Widget styles and local layout styles.
@@ -239,6 +256,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	columnPreferenceName : string = "";
 
 	/**
+	 * Print with these options instead of showing the print dialog, eg. to always print a list the same way
+	 *
+	 * Options left out default to the dialog's defaults: the saved print columns (or the visible ones),
+	 * up to 100 rows, portrait.  Nothing is saved as print preference.
+	 */
+	@property({type: Object, attribute: false})
+	printOptions : Et2NextmatchPrintOptions | null = null;
+
+	/**
 	 * Optional name for the autorefresh interval preference (`nextmatch-<name>-autorefresh`),
 	 * default the row template's. For a nextmatch that switches row templates, and with
 	 * them its column preference, but should keep one interval - Mail's vertical and
@@ -298,11 +324,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _lettersearchVisible : boolean = true;
 
 	/**
-	 * Defer the initial row fetch until this nextmatch's tab panel (an ancestor
-	 * `<et2-tab-panel>`) is actually shown, instead of loading immediately on connect.
+	 * Defer the initial row fetch until this nextmatch is actually being displayed,
+	 * instead of loading immediately on connect.  "Displayed" means nothing up the tree
+	 * hides it - an inactive `<et2-tab-panel>` (which is `display: none`), an app view
+	 * toggled off, a widget still carrying `disabled`/`hidden` - so an app that ships an
+	 * empty list and shows it on demand never asks the server for rows nobody looks at.
+	 *
 	 * Only affects the client-side `reload()` fallback in firstUpdated() - template/column
 	 * parsing and any server-preloaded rows/total are unaffected, so headers still render.
-	 * Has no effect when there's no ancestor tab panel, or it's already the active one.
+	 * That means an app using this must also stop its own server side from shipping rows
+	 * (`'num_rows' => 0`), or the preloaded-rows branch runs and there is nothing left to
+	 * defer.  Has no effect on a nextmatch that is displayed straight away.
 	 */
 	@property({type: Boolean})
 	lazy : boolean = false;
@@ -524,6 +556,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * rationale (interval source, why a tick is a full reload, visibility pausing).
 	 */
 	private _autoRefresh : Et2NextmatchAutoRefresh;
+
+	/**
+	 * Tells us when this nextmatch is actually being displayed, for `lazy` - see
+	 * `_whenLazyVisible()`.  Constructed unconditionally (it is one IntersectionObserver
+	 * either way), since `lazy` can be set after construction.
+	 */
+	private _lazyVisible : Et2LazyLoadController;
 
 	/**
 	 * Row element currently highlighted as a native file drop target, so we can
@@ -797,6 +836,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
 		this._autoRefresh = new Et2NextmatchAutoRefresh(this);
+		this._lazyVisible = new Et2LazyLoadController(this);
 	}
 
 	/**
@@ -1209,11 +1249,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Resolve immediately unless `lazy` is set and this nextmatch is sitting inside an
-	 * inactive `<et2-tab-panel>` - in that case, wait for the enclosing `<et2-tabbox>`'s
-	 * `sl-tab-show` for this panel before resolving. Mirrors the legacy pattern in
-	 * et2_widget_historylog.ts's doLoadingFinished(), adapted for a web component ancestor
-	 * instead of the legacy get_tab_info() API.
+	 * Resolve immediately unless `lazy` is set and this nextmatch is not currently being
+	 * displayed - in that case, resolve once it is.  Deferring like this is what keeps an
+	 * unopened list free: a nextmatch nobody has looked at never asks the server for rows.
+	 *
+	 * The "is it displayed" question is `Et2LazyLoadController`'s, not ours: it answers it
+	 * from the element itself (`checkVisibility()`), which covers `display: none` anywhere
+	 * up the tree without this widget having to know what put it there.  An inactive
+	 * `<et2-tab-panel>` is exactly that case (Shoelace gives it `display: none` unless
+	 * `[active]`), so a tab panel needs no special handling here - an earlier version
+	 * listened for the enclosing `<et2-tabbox>`'s `sl-tab-show` and so covered only tabs.
+	 * Being scrolled out of view deliberately does NOT count as hidden, same as it doesn't
+	 * for `Et2NextmatchAutoRefresh`: that is a viewport question, not a rendering one.
 	 */
 	private async _whenLazyVisible() : Promise<void>
 	{
@@ -1221,30 +1268,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return;
 		}
-		const panel = this.closest("et2-tab-panel");
-		const panelName = panel?.getAttribute("name");
-		if(!panel || !panelName || panel.hasAttribute("active"))
-		{
-			return;
-		}
-		const group = panel.closest("et2-tabbox");
-		if(!group)
-		{
-			return;
-		}
-		return new Promise<void>(resolve =>
-		{
-			const handler = (e : CustomEvent) =>
-			{
-				if(e.detail?.name !== panelName)
-				{
-					return;
-				}
-				group.removeEventListener("sl-tab-show", handler);
-				resolve();
-			};
-			group.addEventListener("sl-tab-show", handler);
-		});
+		return this._lazyVisible.whenReady;
 	}
 
 	/**
@@ -1536,7 +1560,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Prepare the current nextmatch for browser printing.
 	 *
 	 * The existing XET dialog supplies print-only columns, row count, and page
-	 * orientation.  Column/orientation choices default from `_printPreferenceKey`
+	 * orientation, unless `printOptions` presets them.  Column/orientation choices
+	 * default from `_printPreferenceKey`
 	 * (falling back to legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation`
 	 * preferences if that's all that exists), and are saved back only to
 	 * `_printPreferenceKey` - see that getter for why the legacy keys are never written.
@@ -1553,67 +1578,94 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return;
 		}
+		grid.rememberScrollForPrint();
 
 		const columnState = new Et2DatagridColumnState();
 		const columns = columnState.toSelectionItems(this._currentColumns, this._parseColumnBooleanExpression);
 		const total = Math.max(0, grid.total ?? grid.rows.length);
 		const app = this._getAppName();
 		const printDefaults = this._resolvePrintPreferenceDefaults(app);
+		// The chooser lists each custom field under its column, so those ids are valid defaults too
+		const offeredIds = new Set(columns.flatMap((column) => [column.id, ...(column.customFields || []).map((field) => field.id)]));
 		const mappedDefaultIds = (printDefaults.columns || [])
 			.map((key) => columnState.encodeSelectionId(key))
-			.filter((id) => columns.some((column) => column.id === id));
+			.filter((id) => offeredIds.has(id));
 		const defaultColumnIds = mappedDefaultIds.length
 			? mappedDefaultIds
-			: columns.filter((column) => column.visibility).map((column) => column.id);
+			: columns.flatMap((column) => [
+				...(column.visibility ? [column.id] : []),
+				...(column.customFields || []).filter((field) => field.visibility).map((field) => field.id)
+			]);
 
-		const dialog = new Et2Dialog(this.egw());
-		dialog.transformAttributes({
-			title: this.egw().lang("Print"),
-			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			isModal: true,
-			value: {
-				content: {
-					row_count: Math.min(100, total),
-					columns: defaultColumnIds,
-					orientation: printDefaults.orientation ?? false
-				},
-				modifications: {columns: {columns}}
-			}
-		});
-		document.body.append(dialog);
-		const [button, value] = await dialog.getComplete();
-		if(button !== Et2Dialog.OK_BUTTON)
+		let selectedColumns : string[];
+		let requestedRows : number;
+		let orientation : "portrait" | "landscape";
+		if(this.printOptions)
 		{
-			// EgwFrameworkApp treats an undefined rejection as an aborted print.
-			// Defined errors are handled there and would still open browser print.
-			return Promise.reject();
+			const options = this.printOptions;
+			selectedColumns = (options.columns === "all" ? columns.map((column) => column.id) :
+				options.columns?.length ? options.columns : defaultColumnIds)
+				.map((column) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, options.rowCount ?? 100));
+			orientation = options.orientation === "landscape" ? "landscape" : "portrait";
 		}
+		else
+		{
+			const dialog = new Et2Dialog(this.egw());
+			dialog.transformAttributes({
+				title: this.egw().lang("Print"),
+				template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
+				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+				isModal: true,
+				value: {
+					content: {
+						row_count: Math.min(100, total),
+						columns: defaultColumnIds,
+						orientation: printDefaults.orientation ?? false
+					},
+					modifications: {columns: {columns}}
+				}
+			});
+			document.body.append(dialog);
+			const [button, value] = await dialog.getComplete();
+			if(button !== Et2Dialog.OK_BUTTON)
+			{
+				// EgwFrameworkApp treats an undefined rejection as an aborted print.
+				// Defined errors are handled there and would still open browser print.
+				return Promise.reject();
+			}
 
-		const selectedColumns = ((value as any)?.columns || [])
-			.map((column : unknown) => String(column).split("___").join(" "))
-			.filter(Boolean);
+			selectedColumns = ((value as any)?.columns || [])
+				.map((column : unknown) => String(column).split("___").join(" "))
+				.filter(Boolean);
+			requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
+			orientation = (value as any)?.orientation ? "landscape" : "portrait";
 
-		const requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
-		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
+			const printKey = this._printPreferenceKey;
+			if(printKey)
+			{
+				try
+				{
+					this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
+				}
+				catch(e)
+				{
+				}
+			}
+		}
 		const originalColumns = this._currentColumns.map((column) => ({...column}));
-
-		const printKey = this._printPreferenceKey;
-		if(printKey)
-		{
-			try
-			{
-				this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
-			}
-			catch(e)
-			{
-			}
-		}
+		// The copies above share their header with the live column, and choosing custom fields changes it
+		const customfields : Array<[any, Record<string, boolean>]> = originalColumns
+			.map((column) => <any>column.header)
+			.filter((header) => typeof header?.getCustomfieldVisibility === "function")
+			.map((header) => [header, {...header.getCustomfieldVisibility()}]);
 
 		try
 		{
 			let printColumns = selectedColumns.length
-				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns)
+				// Custom fields not chosen are not printed, even those the grid shows right now
+				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns, this._parseColumnBooleanExpression, true)
 				: originalColumns.filter((column) => !column.hidden);
 			this.setColumns(printColumns);
 			this.classList.add("print", orientation);
@@ -1621,7 +1673,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			orientationStyle.media = "print";
 			orientationStyle.textContent = `@page { size: ${orientation}; }`;
 			document.head.append(orientationStyle);
-			this._printState = {columns: originalColumns, orientationStyle};
+			this._printState = {columns: originalColumns, customfields, orientationStyle};
 
 			let rowIds = grid.rows.map((row) => row.id);
 			if(requestedRows > rowIds.length)
@@ -1662,6 +1714,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		state.orientationStyle.remove();
 		this._printState = null;
 		this.setColumns(state.columns);
+		state.customfields.forEach(([header, visibility]) => header.setCustomfieldVisibility(visibility));
 	}
 
 	selectSingleRow(rowId : string)
@@ -1730,8 +1783,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	setColumns(columns : Array<string | Et2DatagridColumn>)
 	{
 		const currentColumns = this._currentColumns.length ? this._currentColumns : this._datagrid?.columns || [];
-		const stringColumns = (columns || []).filter((column) => typeof column === "string") as string[];
-		const hasOnlyStringColumns = stringColumns.length === (columns || []).length;
+		const requestedKeys = (columns || []).filter((column) => typeof column === "string") as string[];
+		const hasOnlyStringColumns = requestedKeys.length === (columns || []).length;
+		// Favorites and app states from before the columns were converted name columns that no longer exist,
+		// eg. each custom field on its own.  Show the column that took their place.
+		const mappedKeys = hasOnlyStringColumns && currentColumns.length
+			? mapLegacyVisibleKeysToCurrentColumns(requestedKeys, currentColumns) : [];
+		if(hasOnlyStringColumns && requestedKeys.length && currentColumns.length && !mappedKeys.length)
+		{
+			// None of them is a column here, showing none at all is never what was meant
+			return;
+		}
+		const stringColumns = mappedKeys.length ? mappedKeys : requestedKeys;
 		if(hasOnlyStringColumns)
 		{
 			this._pendingVisibleColumnKeys = stringColumns.map((column) => String(column));
@@ -1765,12 +1828,57 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			this._datagrid.applyExternalColumns(nextColumns.map((column) => ({...column})));
 			this._datagrid.requestUpdate();
 		}
+		if(hasOnlyStringColumns)
+		{
+			// ... and only the custom fields they listed, all of them if the column is shown without any
+			const resolvedColumns = <Et2NextmatchResolvedColumn[]>(this._datagrid?.columns ?? nextColumns);
+			const customfieldNames = legacyVisibleCustomfieldNames(requestedKeys);
+			if(customfieldNames.length)
+			{
+				applyLegacyCustomfieldVisibility(resolvedColumns, customfieldNames);
+			}
+			else if(stringColumns.includes("customfields"))
+			{
+				showAllCustomfields(resolvedColumns);
+			}
+		}
 		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
 			detail: {columns: nextColumns},
 			bubbles: true,
 			composed: true
 		}));
 		this.requestUpdate();
+	}
+
+	/**
+	 * Show the given custom fields in the customfields column, leaving the visibility of the others as it is
+	 *
+	 * @param names custom field names, without the `#`
+	 */
+	showCustomfields(names : string[])
+	{
+		const column = <Et2NextmatchResolvedColumn | undefined>(this._datagrid?.columns ?? [])
+			.find((c) => String(c.key) === "customfields");
+		const header = column?.header as any;
+		if(!column || typeof header?.setCustomfieldVisibility !== "function")
+		{
+			return;
+		}
+		const visibility = {...header.getCustomfieldVisibility()};
+		const known = names.filter((name) => name in visibility);
+		if(!known.length || known.every((name) => visibility[name] === true))
+		{
+			return;
+		}
+		known.forEach((name) => visibility[name] = true);
+		header.setCustomfieldVisibility(visibility);
+		column.customFields = Object.keys(visibility).filter((name) => visibility[name] === true);
+		this._datagrid?.requestUpdate();
+		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: this._datagrid?.columns},
+			bubbles: true,
+			composed: true
+		}));
 	}
 
 	/**
@@ -1823,7 +1931,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// state as a visible column.
 		const selectcols = new Et2DatagridColumnState()
 			.visibleColumns(this._currentColumns, this._parseColumnBooleanExpression)
-			.map((column) => String(column.key || ""))
+			.flatMap((column) => [String(column.key || ""), ...visibleCustomfieldKeys(column)])
 			.filter(Boolean);
 		if(this.lettersearch && this._lettersearchVisible)
 		{
@@ -2407,7 +2515,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 					}
 					continue;
 				}
-				if(!this._filterValuesEqual(activeFilters[key], set[key]))
+				// An explicit "" for a key we hold no value for is not "no change": the server keeps its own
+				// session copy of the filters (eg. an organisation view it opened itself) and only an
+				// explicitly sent empty value clears that.  Once stored here, the same "" compares equal.
+				const explicitClear = set[key] === "" && !(key in activeFilters);
+				if(explicitClear || !this._filterValuesEqual(activeFilters[key], set[key]))
 				{
 					activeFilters[key] = set[key];
 					changed = true;

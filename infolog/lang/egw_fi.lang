@@ -78,14 +78,12 @@ cancelled	infolog	fi	Peruutettu
 categories	infolog	fi	Kategoriat
 category	infolog	fi	Kategoria
 change	infolog	fi	Muuta
-change category	infolog	fi	Muuta kategoriaa
 change completed	infolog	fi	Muuta valmistumista.
 change completion	infolog	fi	Muuta valmisprosenttia
 change history	infolog	fi	Muuta historiaa
 change owner when updating	infolog	fi	Muuta omistaja päivitettäessä
 change responsible	infolog	fi	Muutos vastuussa
 change the status of an entry, eg. close it	infolog	fi	Vaihda merkinnän tilaa, esim. "Valmis"
-changed category to %1	infolog	fi	Kategoria muutettu: %1
 changed completion to %1%	infolog	fi	Valmisprosentti muutettu: %1%
 changed status to %1	infolog	fi	Tila vaihdettu: %1
 changed type	infolog	fi	Tyyppi vaihdettu
@@ -398,7 +396,6 @@ regular expression	infolog	fi	Yleisilmaisu
 remark	infolog	fi	Merkitse uudelleen
 remove this link (not the entry itself)	infolog	fi	Poista tämä linkki (ei poista itse merkintää).
 removed	infolog	fi	Poistettu.
-removed category	infolog	fi	Poistettu luokka
 replacement	infolog	fi	Sijaismerkintä
 replacements for inserting entries into documents	infolog	fi	Asiakirjoihin syötettävät sijaismerkinnät
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	fi	Edellyttää, että muokkaavalla käyttäjällä on kirjoitusoikeus näihin yhteystietoihin, jotta hän voi jakaa ne vastuukäyttäjän kanssa.

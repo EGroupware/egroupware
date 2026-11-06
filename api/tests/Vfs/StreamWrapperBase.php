@@ -13,6 +13,8 @@
 
 namespace EGroupware\Api\Vfs;
 
+require_once __DIR__ . '/FilesystemFixtureTrait.php';
+
 require_once __DIR__ . '/../LoggedInTest.php';
 
 use EGroupware\Api;
@@ -23,6 +25,8 @@ use EGroupware\Stylite\Vfs\Versioning;
 
 abstract class StreamWrapperBase extends LoggedInTest
 {
+	use FilesystemFixtureTrait;
+
 	/**
 	 * How much should be logged to the console (stdout)
 	 *
@@ -155,6 +159,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 		}
 
 		Vfs::$is_root = $backup;
+
+		$this->removeFilesystemFixtureCopies();
 	}
 
 	/////
@@ -642,11 +648,8 @@ abstract class StreamWrapperBase extends LoggedInTest
 
 		$backup = Vfs::$is_root;
 		Vfs::$is_root = true;
-		$fs_path = realpath(__DIR__ . '/../fixtures/Vfs/filesystem_mount');
-		if(!file_exists($fs_path))
-		{
-			$this->fail("Missing filesystem test directory 'api/tests/fixtures/Vfs/filesystem_mount'");
-		}
+		// a copy, never the tracked fixture itself - see FilesystemFixtureTrait
+		$fs_path = $this->filesystemFixtureCopy();
 		$url = Filesystem\StreamWrapper::SCHEME . '://default' . $fs_path .
 			'?user=' . Api\Accounts::id2name($GLOBALS['EGW_USER'], 'account_id') . '&group=Default&mode=770';
 		$this->assertTrue(Vfs::mount($url,$path), "Unable to mount $url to $path");

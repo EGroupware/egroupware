@@ -57,6 +57,7 @@
 								<et2-description  value="SMB: mount Samba or Windows fileserver shares"></et2-description>
 								<et2-description  label="{Versioning}: {Versioning requires EGroupware EPL}" href="https://www.egroupware.org/EPL" extraLinkTarget="_blank"></et2-description>
 								<et2-description  value="Filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem" href="https://github.com/EGroupware/egroupware/blob/master/api/src/Vfs/Filesystem/StreamWrapper.php#L20" extraLinkTarget="_blank"></et2-description>
+								<et2-description  value="Links: add ?page-size=1000 to the path, to break a directory of more entries up into subdirectories"></et2-description>
 							</et2-vbox>
 						</et2-groupbox>
 						<et2-hbox  width="100%">

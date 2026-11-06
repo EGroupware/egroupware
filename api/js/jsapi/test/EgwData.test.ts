@@ -486,18 +486,34 @@ describe('egw_data.js (data / data_storage)', () =>
 
 	describe('dataFetch(): knownUids', () =>
 	{
-		it('KNOWN QUIRK: the 200-item known-uid limit never actually truncates anything', () =>
+		it('limits the known uids sent to 200, starting at the requested range', () =>
 		{
-			// `if (knownUids > KNOWN_UID_LIMIT)` compares an ARRAY to a number,
-			// which is always false for any realistic uid list (array-to-number
-			// coercion of a multi-element array is NaN) - and even if it were
-			// true, `knownUids.slice(...)`'s result is never assigned back
-			// anywhere. So a huge known-uid list is always sent in full.
+			// A list scrolled through from the top has its uids in row order, so the ones around the
+			// requested start are the ones the server can use to skip unchanged rows. Every request
+			// used to carry all of them, however far the list had been scrolled.
 			const hugeList = Array.from({length: 300}, (_, i) => String(i));
 
 			env.egw('appA').dataFetch('exec1', {}, {}, 'w1', () => {}, {prefix: 'appA'}, hugeList);
+			env.egw('appA').dataFetch('exec1', {start: 50, num_rows: 50}, {}, 'w1', () => {}, {prefix: 'appA'}, hugeList);
+			env.egw('appA').dataFetch('exec1', {start: 280, num_rows: 20}, {}, 'w1', () => {}, {prefix: 'appA'}, hugeList);
 
-			assert.equal(env.jsonCalls[0].parameters[4].length, 300, 'all 300 are sent - the 200-item cap is dead code');
+			const sent = env.jsonCalls.map(call => call.parameters[4]);
+			assert.equal(sent[0].length, 200);
+			assert.equal(sent[0][0], '0', 'no start: the first 200');
+			assert.equal(sent[1].length, 200);
+			assert.equal(sent[1][0], '50', 'the window follows the requested start');
+			assert.equal(sent[2].length, 200);
+			assert.equal(sent[2][0], '100', 'and is clamped so it never runs off the end of the list');
+			assert.equal(sent[2][199], '299');
+		});
+
+		it('sends a known-uid list at or under the limit unchanged', () =>
+		{
+			const list = Array.from({length: 200}, (_, i) => String(i));
+
+			env.egw('appA').dataFetch('exec1', {start: 120}, {}, 'w1', () => {}, {prefix: 'appA'}, list);
+
+			assert.deepEqual(env.jsonCalls[0].parameters[4], list);
 		});
 
 		it('falls back to egw.dataKnownUIDs(prefix) when _knownUids is not given', () =>

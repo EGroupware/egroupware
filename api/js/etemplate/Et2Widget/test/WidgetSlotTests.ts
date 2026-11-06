@@ -31,8 +31,9 @@
  *    that's genuinely missing a slot (eg. Et2Description has no help-text) is not a failure, but
  *    only the caller knows which is which.
  * @param options.skipLabelFixed Widget's label part legitimately can't respect
- *    `.et2-label-fixed` - eg. Et2Description's label lives on a `display: contents` `<slot>`,
- *    which `width` has no effect on. Expect more of these as they're found; every one needs a
+ *    `.et2-label-fixed` - eg. Et2Filterbox, which sets its own --label-width. A label on a
+ *    `display: contents` `<slot>` is not a reason: `width` has no effect on it, so the widget has to
+ *    give the label a box under `.et2-label-fixed` (as Et2Description does). Every opt-out needs a
  *    real, documented reason at the call site.
  */
 
@@ -76,7 +77,7 @@ const PROPERTY_NAME : Partial<Record<WidgetSlotName, string>> = {
  * see it. Searching every nested shadow root is the only way to find it from test code, and is
  * correct regardless of how many `exportparts` hops away the real element is.
  */
-function deepQueryPart(root : Element | ShadowRoot, part : string) : HTMLElement | null
+export function deepQueryPart(root : Element | ShadowRoot, part : string) : HTMLElement | null
 {
 	const direct = root.querySelector(`[part~="${part}"]`) as HTMLElement | null;
 	if(direct)

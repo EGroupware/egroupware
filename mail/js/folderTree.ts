@@ -58,6 +58,15 @@ export interface JmapMailboxNode
 	 * in both cases.
 	 */
 	isNamespaceRoot? : boolean;
+	/**
+	 * Explicitly non-selectable regardless of isNamespaceRoot - unlike that field, setting this
+	 * does NOT opt into isVisibleNamespaceRoot()'s "must not be a dead end" visibility rule, so a
+	 * synthetic placeholder node (eg. one entry per JMAP account shared with us, see
+	 * MailJmap.getMailboxChildren()'s shared-accounts handling) can be shown with hasChildren:false
+	 * without being filtered out the way an empty namespace root deliberately is. Undefined
+	 * (falsy) for every ordinary mailbox.
+	 */
+	noSelect? : boolean;
 }
 
 export interface BuildFolderLevelOptions
@@ -304,7 +313,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// top-level INBOX, gated on isTopLevel same as `open` above (a shared/other-user
 		// mailbox's own nested INBOX is never what aclEnabled() looks up)
 		...(role === 'inbox' && isTopLevel ? {data: {acl: !!mailbox.aclCapable}} : {}),
-		...(isNamespaceRoot ? {data: {noSelect: true}} : {}),
+		...(isNamespaceRoot || mailbox.noSelect ? {data: {noSelect: true}} : {}),
 		...icons(role, isNamespaceRoot, egw),
 	};
 }
@@ -383,9 +392,24 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
 	// pattern and would have silently stopped working for Stalwart too).
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
+	// Every IMAP/JMAP account has exactly one INBOX, which must always be shown regardless of its
+	// own subscription state (ralf, 2026-10-29: "IMAP spec says Inbox should always be shown,
+	// independent if it's really subscribed or not" - some real-world accounts never report INBOX
+	// itself as \Subscribed, only its special-use siblings). MailJmap.getRootFolders() already
+	// fetches and injects an unsubscribed INBOX into `top` for exactly this reason (see its own
+	// docblock) - but without this check it was being filtered straight back out here: its
+	// isSubscribed is false (that's the whole point) and hasSubscribedChildren is never computed
+	// for it (injected after resolveHasChildren() already ran over the rest of `top`), so
+	// isVisiblePassthrough() never waves it through either. Same "a direct fetch looked correct,
+	// the UI-level re-filter was the real remaining culprit" pattern as the shared-mailbox
+	// isSubscribed fixes documented above - gated on isTopLevel to match every other role==='inbox'
+	// special-case in this file (the `open`/`data` handling above), since that's the only depth a
+	// real INBOX can ever appear at.
+	const isAlwaysVisibleInbox = (mailbox : JmapMailboxNode) => options.isTopLevel && mailbox.role === 'inbox';
 	const filtered = (mailboxes || [])
 		.filter((mailbox) => isNamespaceRootMailbox(mailbox) ? isVisibleNamespaceRoot(mailbox) :
-			(!options.subscribedOnly || mailbox.isSubscribed || isVisiblePassthrough(mailbox)));
+			(isAlwaysVisibleInbox(mailbox) || !options.subscribedOnly || mailbox.isSubscribed ||
+				isVisiblePassthrough(mailbox)));
 	// Found live 2026-09-14 (ralf, relaying a real user's report): autoloaded subfolders showed
 	// in the server's own arbitrary order, not alphabetical-with-special-folders-first. sortTopLevel()
 	// (see its own docblock - "not scoped to any particular depth") was extracted specifically so

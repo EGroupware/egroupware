@@ -14,6 +14,7 @@ import {et2_arrayMgrs_expand} from "./et2_core_arrayMgr";
 import {et2_dataview_grid} from "./et2_dataview_view_grid";
 import {egw} from "../jsapi/egw_global";
 import {et2_IDetachedDOM, et2_IDOMNode} from "./et2_core_interfaces";
+import {trustedScript} from "../jsapi/egw_trusted_types";
 
 /**
  * The row provider contains prototypes (full clonable dom-trees)
@@ -615,7 +616,7 @@ export class et2_nextmatch_rowProvider
 			}
 		}
 
-		return new Function("_node", recordPath.call(this, _root, _target));
+		return new Function("_node", trustedScript(recordPath.call(this, _root, _target)));
 	}
 
 	/**

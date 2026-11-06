@@ -845,7 +845,7 @@ class Acl
 		$locations = array();
 		foreach($this->db->select(self::TABLE,'acl_location,acl_account,acl_rights',array(
 			'acl_appname'  => $app,
-			'acl_location LIKE '.$this->db->quote($location),
+			Db\SqlFragment::raw('acl_location LIKE '.$this->db->quote($location)),
 		),__LINE__,__FILE__) as $row)
 		{
 			if (($location = $row['acl_location']) != 'run')

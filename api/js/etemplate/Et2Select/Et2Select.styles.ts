@@ -22,6 +22,13 @@ export default css`
 	}
 
 
+	/* The label wraps the input below it when the two don't fit.  An open search box is wider than the
+	   display value it replaces, so without this the input drops below the label as soon as it opens. */
+	:host([search]) sl-select[open]::part(form-control-input), :host([allowfreeentries]) sl-select[open]::part(form-control-input) {
+		flex: 1 1 8em;
+		min-width: 0;
+	}
+
 	  :host([search]) sl-select[open]::part(prefix), :host([allowfreeentries]) sl-select[open]::part(prefix) {
 		flex: 2 1 auto;
 		flex-wrap: wrap;
@@ -62,7 +69,8 @@ export default css`
 		flex: 1 1 auto;
 		order: 2;
 		margin-left: 0px;
-		height: var(--sl-input-height-medium);
+		/* Inside the combobox's own border, so showing the search does not make the select taller */
+		height: calc(var(--sl-input-height-medium) - 2 * var(--sl-input-border-width));
 		width: 100%;
 		  background-color: var(--input-background-color);
 		z-index: var(--sl-z-index-dropdown);
@@ -264,7 +272,7 @@ export default css`
 		z-index: 1;
 		background: var(--sl-input-background-color);
 		padding: var(--sl-input-spacing-small);
-		padding-left: 2px;
+		padding-left: var(--sl-spacing-3x-small);
 
 		box-shadow: var(--sl-shadow-large);
 		min-width: fit-content;

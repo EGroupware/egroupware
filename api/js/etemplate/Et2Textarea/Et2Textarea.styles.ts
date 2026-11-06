@@ -17,8 +17,28 @@ export default css`
 		align-items: stretch !important;
 	}
 
-	:host::part(form-control-input), :host::part(textarea) {
+	/*
+	 * The input takes whatever height the control has left rather than all of it.  A narrow layout
+	 * wraps the label onto its own line above the box, and "100%" is still the whole control, so the
+	 * box hung past the bottom of the widget and over the field below it.  Flex already hands it the
+	 * remaining space, which is the full height anyway whenever the label sits beside it.
+	 */
+	:host::part(form-control-input) {
+		flex: 1 1 auto;
+		min-height: 0;
+	}
+
+	:host::part(textarea) {
 		height: 100%;
+	}
+
+	/*
+	 * Fixed-width label (a layout puts .et2-label-fixed on its children): Shoelace's own label, in this
+	 * shadow root, is out of reach of the shared rule, which only sees labels it can name from outside.
+	 */
+	:host(.et2-label-fixed) .form-control__label {
+		flex: 0 0 auto;
+		width: var(--label-width, 8em);
 	}
 
 	.form-control-input .textarea--standard.textarea--focused:not(.textarea--disabled){

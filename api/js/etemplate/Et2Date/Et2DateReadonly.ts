@@ -8,12 +8,13 @@
  */
 
 
-import {html, LitElement} from "lit";
+import {html, LitElement, nothing} from "lit";
 import {property} from "lit/decorators/property.js";
 import {formatDate, parseDate} from "./Et2Date";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {dateStyles} from "./DateStyles";
+import {readonlyFixedLabelStyles} from "../Et2Widget/Et2Widget.styles";
 
 /**
  * This is a stripped-down read-only widget used in nextmatch
@@ -27,7 +28,8 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 	{
 		return [
 			...super.styles,
-			dateStyles
+			dateStyles,
+			readonlyFixedLabelStyles
 		];
 	}
 
@@ -57,7 +59,7 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 		let parsed : Date | Boolean = this.value ? this.parser(this.value.date ?? this.value, this.dataFormat) : false
 
 		return html`
-            <span slot="label">${this.label}</span>
+            ${this.label ? html`<span class="form-control-label" part="form-control-label">${this.label}</span>` : nothing}
             <time ${this.id ? html`id="${this._dom_id}"` : ''}
                   datetime="${parsed ? this.formatter(<Date>parsed, {dateFormat: "Y-m-d", timeFormat: "H:i:s"}) : ""}">
                 ${this.value ? this.formatter(<Date>parsed) : ''}

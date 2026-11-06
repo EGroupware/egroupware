@@ -78,14 +78,12 @@ cancelled	infolog	sl	Preklicano
 categories	infolog	sl	Kategorije
 category	infolog	sl	Kategorija
 change	infolog	sl	Spremeni
-change category	infolog	sl	Spremeni kategorijo
 change completed	infolog	sl	Sprememba je končana.
 change completion	infolog	sl	Spremeni zaključeno
 change history	infolog	sl	Spremembe
 change owner when updating	infolog	sl	Spremenite lastnika ob posodabljanju
 change responsible	infolog	sl	Odgovoren za spremembo
 change the status of an entry, eg. close it	infolog	sl	Sprememba statusa vnosa, npr. zapiranje
-changed category to %1	infolog	sl	Spremenjena kategorija v %1
 changed completion to %1%	infolog	sl	Sprememba končanja na %1%
 changed status to %1	infolog	sl	Spremenjen status na %1
 changed type	infolog	sl	Spremenjen tip
@@ -398,7 +396,6 @@ regular expression	infolog	sl	Vsakdanje izražanje
 remark	infolog	sl	Opazka
 remove this link (not the entry itself)	infolog	sl	Odstrani povezavo (ne pa tudi zapisa).
 removed	infolog	sl	Odstranjeno.
-removed category	infolog	sl	odstranjena kategorija
 replacement	infolog	sl	Zamenjava
 replacements for inserting entries into documents	infolog	sl	Zamenjava za vstavljanje vnose v dokumente
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	sl	Zahteva, da ima uporabnik za urejanje dostop za pisanje do teh stikov, da jih lahko deli z odgovornim uporabnikom.

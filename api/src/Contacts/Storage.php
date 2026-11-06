@@ -620,6 +620,59 @@ class Storage
 	}
 
 	/**
+	 * Read many contacts in one go - the bulk twin of read()
+	 *
+	 * Anything asking about a whole list of contacts at once - a directory listing of
+	 * /apps/addressbook checking access to every entry in it, say - otherwise reads them one at a
+	 * time, which costs four queries per contact and does not scale.
+	 *
+	 * Rows come back as read() returns them, so they can be used wherever a contact read one at a
+	 * time would be - above all Api\Contacts::check_perms(), which takes either an id or a contact.
+	 *
+	 * Only backends able to read in bulk are asked; ids belonging to one that cannot (LDAP, ADS)
+	 * are simply absent from the result, for the caller to fall back on read() for. So are ids
+	 * that do not exist, as read() returns false for those.
+	 *
+	 * @param array $ids contact_ids
+	 * @return array contact_id => contact pairs
+	 */
+	function readRows(array $ids)
+	{
+		$rows = array();
+		if (!$ids) return $rows;
+
+		// which backend holds a contact depends on the id and on how accounts are stored, exactly
+		// as in read() - so let get_backend() decide, per id, and ask each one for its own
+		$by_backend = array();
+		foreach($ids as $id)
+		{
+			if (empty($id) || !is_numeric($id)) continue;	// read() does not take these either
+
+			$backend = $this->get_backend($id);
+			$by_backend[spl_object_id($backend)]['backend'] = $backend;
+			$by_backend[spl_object_id($backend)]['ids'][] = $id;
+		}
+		foreach($by_backend as $group)
+		{
+			if (!method_exists($group['backend'], 'readRows')) continue;
+
+			$rows += $group['backend']->readRows($group['ids']);
+		}
+		if (!$rows) return $rows;
+
+		// read() adds the distribution lists a contact is on, and only if it is on any
+		$dl_lists = $this->read_distributionlist(array_keys($rows));
+		foreach($rows as $id => &$row)
+		{
+			if (isset($dl_lists[$id])) $row['distrib_lists'] = implode("\n", $dl_lists[$id]);
+			$row = $this->db2data($row);
+		}
+		unset($row);
+
+		return $rows;
+	}
+
+	/**
 	 * @param array $ids
 	 * @param ?boolean $deleted false: no deleted, true: only deleted, null: both
 	 * @return array contact_id => array of array with sharing info
@@ -671,7 +724,7 @@ class Storage
 		// Handle 'None' country option
 		if(is_array($filter) && isset($filter['adr_one_countrycode']) && $filter['adr_one_countrycode'] === '-custom-')
 		{
-			$filter[] = 'adr_one_countrycode IS NULL';
+			$filter[] = Api\Db\SqlFragment::raw('adr_one_countrycode IS NULL');
 			unset($filter['adr_one_countrycode']);
 		}
 		// Hide deleted items unless type is specifically deleted
@@ -688,11 +741,11 @@ class Storage
 		{
 			if ($join && strpos($join,'RIGHT JOIN') !== false)	// used eg. to search for groups
 			{
-				$filter[] = '(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)';
+				$filter[] = Api\Db\SqlFragment::raw('(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)');
 			}
 			else
 			{
-				$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+				$filter[] = Api\Db\SqlFragment::raw('contact_tid != \'' . self::DELETED_TYPE . '\'');
 			}
 		}
 		elseif(is_null($filter['tid']))
@@ -841,7 +894,7 @@ class Storage
 		}
 		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
 		{
-			$param['col_filter'][] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+			$param['col_filter'][] = Api\Db\SqlFragment::raw('contact_tid != \'' . self::DELETED_TYPE . '\'');
 		}
 		elseif(is_null($param['col_filter']['tid']))
 		{
@@ -921,7 +974,7 @@ class Storage
 		}
 		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
 		{
-			$param['col_filter'][] = $this->somain->table_name.'.contact_tid != \'' . self::DELETED_TYPE . '\'';
+			$param['col_filter'][] = Api\Db\SqlFragment::raw($this->somain->table_name.'.contact_tid != \'' . self::DELETED_TYPE . '\'');
 		}
 		elseif(is_null($param['col_filter']['tid']))
 		{

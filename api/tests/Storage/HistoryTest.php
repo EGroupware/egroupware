@@ -351,7 +351,6 @@ class HistoryTest extends LoggedInTest
 		$query = array(
 			'appname' => self::APP,
 			'record_id' => $record_id,
-			'colfilter' => array(),
 			'start' => 0,
 			'num_rows' => 10,
 			'order' => 'history_id',
@@ -392,7 +391,6 @@ class HistoryTest extends LoggedInTest
 		$query = array(
 			'appname' => self::APP,
 			'record_id' => $record_id,
-			'colfilter' => array(),
 			'start' => 0,
 			'num_rows' => 10,
 			'order' => 'history_id',
@@ -405,5 +403,533 @@ class HistoryTest extends LoggedInTest
 		$this->assertNotContains('#some_cf', $statuses,
 			"get_rows() must exclude '#'-prefixed (private/undefined custom field) history entries for app '".self::APP."'");
 		$this->assertContains('E', $statuses, 'the plain, non-CF entry must still be present');
+	}
+
+	// --- get_rows() filtering (col_filter / search) ---
+
+	/**
+	 * Build the $query array get_rows() expects, with the filter bits under test merged in.
+	 */
+	protected function rowsQuery($record_id, array $extra = array()) : array
+	{
+		return array(
+			'appname'   => self::APP,
+			'record_id' => $record_id,
+			'start'     => 0,
+			'num_rows'  => 50,
+		) + $extra;
+	}
+
+	/**
+	 * col_filter[status] must restrict results to the named field(s).  This is the filter key
+	 * eTemplate actually sends - get_rows() historically only read 'colfilter', which nothing set.
+	 */
+	public function testGetRowsColFilterStatus()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+		$this->history->add('C', $record_id, 'created', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('status' => 'E'))), $rows);
+
+		$this->assertNotEmpty($rows, 'filtering by a status that exists must return rows');
+		$this->assertSame(array('E'), array_unique(array_column($rows, 'status')),
+			'col_filter[status] must restrict the result to that status only');
+	}
+
+	/**
+	 * A multi-valued status filter (what a multi-select sends) must return all of the named
+	 * fields and nothing else.
+	 */
+	public function testGetRowsColFilterStatusMultiple()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+		$this->history->add('C', $record_id, 'created', '');
+		$this->history->add('D', $record_id, 'deleted', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('status' => array('E', 'D')))), $rows);
+
+		$statuses = array_unique(array_column($rows, 'status'));
+		sort($statuses);
+		$this->assertSame(array('D', 'E'), $statuses);
+	}
+
+	/**
+	 * 'colfilter' (no underscore) is NOT honoured.
+	 *
+	 * get_rows() read that key from 2010 until this conversion, but nothing in EGroupware ever
+	 * wrote it - eTemplate speaks 'col_filter' everywhere - so the filtering behind it was
+	 * unreachable for its whole life.  It was dropped rather than kept as an alias; this pins that
+	 * decision so nobody re-adds a second spelling.
+	 */
+	public function testGetRowsIgnoresTheOldColfilterSpelling()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+		$this->history->add('C', $record_id, 'created', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('colfilter' => array('status' => 'C'))), $rows);
+
+		$statuses = array_unique(array_column($rows, 'status'));
+		sort($statuses);
+		$this->assertSame(array('C', 'E'), $statuses,
+			"'colfilter' must be ignored - 'col_filter' is the only spelling");
+	}
+
+	/**
+	 * col_filter[owner] must restrict to changes made by that account.
+	 */
+	public function testGetRowsColFilterOwner()
+	{
+		$record_id = $this->newRecordId();
+		$me = (int)$GLOBALS['egw_info']['user']['account_id'];
+		$other = $me + 1;
+		$this->history->add('E', $record_id, 'mine', '');
+		// A second instance writes as a different user, without touching the shared one
+		(new History(self::APP, $other))->add('E', $record_id, 'theirs', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('owner' => $me))), $rows);
+
+		$this->assertNotEmpty($rows);
+		$this->assertSame(array((string)$me), array_unique(array_map('strval', array_column($rows, 'owner'))),
+			'col_filter[owner] must restrict the result to that account');
+		$this->assertSame(array('mine'), array_column($rows, 'new_value'));
+	}
+
+	/**
+	 * An unknown col_filter key must be dropped, not turned into a WHERE clause - otherwise a
+	 * client could name any column (or worse) and at best get a fatal.
+	 */
+	public function testGetRowsDropsUnknownColFilter()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+
+		$rows = array();
+		$total = History::get_rows($this->rowsQuery($record_id, array('col_filter' => array(
+			'no_such_column' => 'whatever',
+		))), $rows);
+
+		$this->assertGreaterThanOrEqual(1, $total, 'an unknown filter key must be ignored, not applied');
+		$this->assertNotEmpty($rows);
+	}
+
+	/**
+	 * A numerically-keyed col_filter entry is a raw SQL fragment in eTemplate's convention, and
+	 * must never be accepted from a filter - only fragments get_rows() builds itself are trusted.
+	 */
+	public function testGetRowsIgnoresRawSqlColFilterFragment()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+
+		$rows = array();
+		$total = History::get_rows($this->rowsQuery($record_id, array('col_filter' => array(
+			'1=2',                     // numeric key => would be raw SQL
+		))), $rows);
+
+		$this->assertGreaterThanOrEqual(1, $total,
+			'a raw SQL fragment passed as a filter must be ignored, not executed');
+		$this->assertNotEmpty($rows);
+	}
+
+	/**
+	 * A '#cf' column filter is only honoured for a custom field that currently exists for the
+	 * app - self::APP has none, so it must be dropped rather than applied.
+	 */
+	public function testGetRowsIgnoresUndefinedCustomFieldColFilter()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+
+		$rows = array();
+		$total = History::get_rows($this->rowsQuery($record_id, array('col_filter' => array(
+			'#not_a_real_cf' => 'x',
+		))), $rows);
+
+		$this->assertGreaterThanOrEqual(1, $total,
+			'a filter naming a non-existent custom field must be ignored');
+	}
+
+	/**
+	 * search must match either the new or the old value, case-insensitively where the DB supports
+	 * it, and must not match a row that contains the term in neither.
+	 */
+	public function testGetRowsSearch()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'findable haystack', '');
+		$this->history->add('C', $record_id, '', 'other needle here');
+		$this->history->add('D', $record_id, 'nothing relevant', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('search' => 'findable')), $rows);
+		$this->assertSame(array('findable haystack'), array_column($rows, 'new_value'),
+			'search must match the new value');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('search' => 'needle')), $rows);
+		$this->assertCount(1, $rows, 'search must match the old value too');
+		$this->assertSame('other needle here', $rows[0]['old_value']);
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('search' => 'definitely-absent-term')), $rows);
+		$this->assertEmpty($rows, 'search must not match rows containing the term in neither value');
+	}
+
+	/**
+	 * A '%' or '_' the user typed is a literal to search for, not a wildcard - otherwise
+	 * searching for "50%" would match every row.
+	 */
+	public function testGetRowsSearchEscapesWildcards()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'discount 50% off', '');
+		$this->history->add('C', $record_id, 'no percentage here', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('search' => '50%')), $rows);
+		$this->assertSame(array('discount 50% off'), array_column($rows, 'new_value'),
+			"'%' in a search term must be escaped, not treated as a wildcard");
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('search' => 'a%h')), $rows);
+		$this->assertEmpty($rows, "'%' must not act as a wildcard between two literals");
+	}
+
+	/**
+	 * An empty / whitespace-only search must be a no-op rather than a LIKE '%%' that happens to
+	 * match everything (same result, but it would also drop the attachments leg).
+	 */
+	public function testGetRowsBlankSearchIsNoop()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+
+		foreach(array('', '   ', null) as $search)
+		{
+			$rows = array();
+			$total = History::get_rows($this->rowsQuery($record_id, array('search' => $search)), $rows);
+			$this->assertGreaterThanOrEqual(1, $total,
+				'a blank search must not filter anything out');
+		}
+	}
+
+	/**
+	 * A from/to date range must include a row written now, and exclude one outside the range.
+	 * The filter value is user-time and the column is server-time, so this also covers the
+	 * conversion - on an instance where the two differ, comparing them raw would be off by the
+	 * user's tz offset.
+	 */
+	public function testGetRowsColFilterDateRange()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'today', '');
+
+		$today = new Api\DateTime('now');
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('user_ts' => array(
+			'from' => $today->format('Y-m-d'),
+			'to'   => $today->format('Y-m-d'),
+		)))), $rows);
+		$this->assertNotEmpty($rows, "a range covering today must include a row written now");
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('user_ts' => array(
+			'from' => '2000-01-01',
+			'to'   => '2000-01-31',
+		)))), $rows);
+		$this->assertEmpty($rows, 'a range in the far past must exclude a row written now');
+	}
+
+	/**
+	 * The date range as the *client actually sends it*: Et2DateRange hands back W3C strings with a
+	 * midnight time component ("2026-09-16T00:00:00Z"), not bare Y-m-d.
+	 *
+	 * That distinction is the whole bug this pins. An end-of-day extension keyed on "does the
+	 * string contain a time?" never fires for these, so `to` stays at midnight and the user's last
+	 * day is excluded entirely - filtering 16th..18th returned nothing at all for rows written on
+	 * the 18th.
+	 *
+	 * Pass criteria: a range whose `to` is the row's own day includes that row.
+	 */
+	public function testGetRowsDateRangeIncludesTheToDayForW3CValues()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'written now', '');
+
+		$today = new Api\DateTime('now');
+		$from = (clone $today)->modify('-2 days');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('user_ts' => array(
+			'from' => $from->format('Y-m-d').'T00:00:00Z',
+			'to'   => $today->format('Y-m-d').'T00:00:00Z',
+		)))), $rows);
+
+		$this->assertNotEmpty($rows,
+			"a range ending on today, sent as the client sends it (midnight W3C), must still include ".
+			"a row written today - otherwise the user's last chosen day is silently dropped");
+	}
+
+	/**
+	 * Both edges of the range, pinned with rows at known times rather than "whatever time the test
+	 * happens to run".
+	 *
+	 * A range of 16th..18th must include everything on the 18th - right up to 23:59:59 - and
+	 * nothing from the 19th. The rows are written through the normal add() path and then given
+	 * explicit timestamps; they live under this test's own fake record id and tearDown() removes
+	 * them with the rest.
+	 *
+	 * Pass criteria: late-on-the-to-day is in, just-after-midnight-next-day is out, and the
+	 * from day's very first second is in.
+	 */
+	public function testGetRowsDateRangeIsInclusiveOfBothDays()
+	{
+		$record_id = $this->newRecordId();
+		$db = $GLOBALS['egw']->db;
+
+		$day = static function($offset_days, $h, $i, $sec = 0)
+		{
+			$d = new Api\DateTime('today');
+			$d->modify($offset_days.' days');
+			$d->setTime($h, $i, $sec);
+			return $d;
+		};
+		// from = 2 days ago, to = today
+		$cases = array(
+			'start of from day'  => array($day(-2, 0, 0, 0), true),
+			'end of to day'      => array($day(0, 23, 59, 59), true),
+			'just after to day'  => array($day(1, 0, 0, 1), false),
+			'just before from'   => array($day(-3, 23, 59, 59), false),
+		);
+		$expected = array();
+		foreach($cases as $label => list($when, $in_range))
+		{
+			$this->history->add('E', $record_id, $label, '');
+			// re-stamp the row we just wrote
+			$db->update(History::TABLE, array('history_timestamp' => $when->format('ts')),
+				array('history_appname' => self::APP, 'history_record_id' => $record_id,
+					  'history_new_value' => $label), __LINE__, __FILE__);
+			if($in_range) $expected[] = $label;
+		}
+		sort($expected);
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('user_ts' => array(
+			'from' => (new Api\DateTime('today'))->modify('-2 days')->format('Y-m-d').'T00:00:00Z',
+			'to'   => (new Api\DateTime('today'))->format('Y-m-d').'T00:00:00Z',
+		)))), $rows);
+
+		$got = array_column($rows, 'new_value');
+		sort($got);
+		$this->assertSame($expected, $got,
+			'the range must cover whole days: both chosen days entirely in, neighbours out');
+	}
+
+	/**
+	 * A 'to' date the user picked is a day they want included, so the range must run to the end
+	 * of it - a naive comparison against midnight would silently drop everything from that day.
+	 */
+	public function testGetRowsDateRangeToIsInclusive()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'today', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('col_filter' => array('user_ts' => array(
+			'to' => (new Api\DateTime('now'))->format('Y-m-d'),
+		)))), $rows);
+
+		$this->assertNotEmpty($rows,
+			"a 'to' date of today must include rows written earlier today, not just before midnight");
+	}
+
+	// --- attachment (VFS) leg gating ---
+
+	/**
+	 * wantsFiles() decides whether the attachments UNION leg can be part of the query at all.
+	 * None of the history columns exist on a VFS row, so any filter naming one has to exclude
+	 * them - except a status filter that explicitly lists '~file~'.
+	 *
+	 * Tested directly: whether attachments actually appear also depends on the filemanager app
+	 * being installed and the entry having a VFS directory, neither of which this fixture has.
+	 */
+	public function testWantsFiles()
+	{
+		$wantsFiles = new \ReflectionMethod(History::class, 'wantsFiles');
+		$wantsFiles->setAccessible(true);
+		$call = fn(array $col_filter, $search = null) => $wantsFiles->invoke(null, $col_filter, $search);
+
+		$this->assertTrue($call(array()), 'no filter at all => attachments included');
+		$this->assertTrue($call(array('status' => '')), 'an empty filter value is not a filter');
+		$this->assertTrue($call(array('status' => History::FILE_STATUS)),
+			"a status filter of just '~file~' => only attachments");
+		$this->assertTrue($call(array('status' => array('E', History::FILE_STATUS))),
+			"a status filter listing '~file~' alongside others => attachments included");
+		$this->assertFalse($call(array('status' => 'E')),
+			"a status filter not listing '~file~' => attachments excluded");
+		$this->assertFalse($call(array('status' => array('E', 'C'))),
+			'same for a multi-valued status filter');
+		$this->assertFalse($call(array('owner' => 1)),
+			'an owner filter cannot be answered for a VFS row => excluded');
+		$this->assertFalse($call(array('user_ts' => array('from' => '2020-01-01'))),
+			'a date filter maps to a different column on a VFS row => excluded');
+		$this->assertFalse($call(array('#some_cf' => 'x')),
+			'a custom-field filter cannot be answered for a VFS row => excluded');
+		$this->assertFalse($call(array(), 'needle'),
+			'a free-text search cannot be answered for a VFS row => excluded');
+		$this->assertTrue($call(array(), '   '),
+			'a blank search is not a search');
+		$this->assertTrue($call(array('no_such_column' => 'x')),
+			'an unknown (dropped) filter key must not exclude attachments either');
+	}
+
+	// --- missing appname ---
+
+	/**
+	 * What happens when the history log has no `app` in its content.
+	 *
+	 * Apps are expected to set it (Api\Storage\Tracking documents
+	 * `$content['history'] = ['id' => ..., 'app' => ...]`), and every in-tree caller does - but
+	 * nothing enforces it, and HistoryLog::validate() now takes the value from the server's own
+	 * content, so a caller that omits it yields null rather than whatever the client happened to
+	 * send.
+	 *
+	 * Pass criteria: it must not fatal or warn, and it must not leak another app's history.
+	 */
+	public function testGetRowsWithoutAppname()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'visible to its own app', '');
+
+		foreach([null, ''] as $appname)
+		{
+			$rows = array();
+			$query = array(
+				'appname'   => $appname,
+				'record_id' => $record_id,
+				'start'     => 0,
+				'num_rows'  => 10,
+			);
+			$total = History::get_rows($query, $rows);
+
+			$this->assertSame(0, (int)$total,
+				'without an appname nothing may be returned - a history query is only ever meaningful '.
+				'scoped to one app, and returning everything for this record id across apps would leak');
+			$this->assertEmpty($rows);
+		}
+	}
+
+	/**
+	 * The row loop reads $cfs, which is only assigned inside the `if($filter['history_appname'])`
+	 * branch - so a query that returned rows without an appname would hit an undefined variable.
+	 *
+	 * Pass criteria: no *undefined-variable* warning.  Deliberately narrow: get_rows() fires the
+	 * `etemplate2_history_get_rows` hook, which runs other apps' code and raises a steady stream of
+	 * unrelated deprecations (json_decode(null), dynamic properties, cache-dir permissions) that
+	 * have nothing to do with this.
+	 */
+	public function testGetRowsWithoutAppnameRaisesNoWarning()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('#some_cf', $record_id, 'x', '');
+		$this->history->add('E', $record_id, 'y', '');
+
+		$seen = array();
+		set_error_handler(static function($errno, $errstr) use (&$seen)
+		{
+			$seen[] = $errstr;
+			return true;
+		});
+		try
+		{
+			$rows = array();
+			$query = array(
+				'appname'   => null,
+				'record_id' => $record_id,
+				'start'     => 0,
+				'num_rows'  => 10,
+			);
+			History::get_rows($query, $rows);
+		}
+		finally
+		{
+			restore_error_handler();
+		}
+
+		$undefined = array_values(array_filter($seen, static function($message)
+		{
+			return stripos($message, 'undefined variable') !== false ||
+				stripos($message, 'undefined array key') !== false && stripos($message, 'cfs') !== false;
+		}));
+		$this->assertSame(array(), $undefined,
+			'a history query without an appname must not read an undefined variable ($cfs)');
+	}
+
+	// --- server-side raw SQL 'filter' ---
+
+	/**
+	 * An app may add a raw SQL fragment server-side via `$content[<widget id>]['filter']`.
+	 * Calendar is the real user: viewing one occurrence of a recurring event, it restricts
+	 * `participants*` rows to the ones whose value ends with that recurrence, while leaving every
+	 * other field's history alone.
+	 *
+	 * Pass criteria: the fragment is applied, matching calendar's actual shape.
+	 */
+	public function testGetRowsAppliesServerSideFilterFragment()
+	{
+		$record_id = $this->newRecordId();
+		$sep = Tracking::ONE2N_SEPERATOR;
+		// two participant changes for different recurrences, plus an unrelated field
+		$this->history->add('participants', $record_id, 'someone'.$sep.'1500000000', '');
+		$this->history->add('participants', $record_id, 'someone'.$sep.'1600000000', '');
+		$this->history->add('title', $record_id, 'new title', 'old title');
+
+		$query = $this->rowsQuery($record_id, array('filter' => array(
+			"(history_status NOT LIKE 'participants%' OR (history_status LIKE 'participants%' AND (".
+			"history_new_value LIKE '%".$sep."1600000000' OR history_old_value LIKE '%".$sep."1600000000')))"
+		)));
+		$rows = array();
+		History::get_rows($query, $rows);
+
+		// get_rows() explodes a value containing ONE2N_SEPERATOR into its parts, so compare on a
+		// flattened form rather than the stored string
+		$values = array_map(static function($value)
+		{
+			return is_array($value) ? implode(Tracking::ONE2N_SEPERATOR, $value) : $value;
+		}, array_column($rows, 'new_value'));
+		sort($values);
+		$this->assertSame(array('new title', 'someone'.$sep.'1600000000'), $values,
+			'the other recurrence\'s participant row must be filtered out, and the non-participant row kept');
+	}
+
+	/**
+	 * Pass criteria: a string fragment works as well as calendar's one-element array, and an empty
+	 * or non-string entry is ignored rather than producing broken SQL.
+	 */
+	public function testGetRowsServerSideFilterAcceptsStringAndIgnoresJunk()
+	{
+		$record_id = $this->newRecordId();
+		$this->history->add('E', $record_id, 'edited', '');
+		$this->history->add('C', $record_id, 'created', '');
+
+		$rows = array();
+		History::get_rows($this->rowsQuery($record_id, array('filter' => "history_status = 'E'")), $rows);
+		$this->assertSame(array('E'), array_unique(array_column($rows, 'status')),
+			'a plain string fragment must be applied');
+
+		foreach([array(), array(''), array('   '), array(null), array(array('nested')), ''] as $junk)
+		{
+			$rows = array();
+			$total = History::get_rows($this->rowsQuery($record_id, array('filter' => $junk)), $rows);
+			$this->assertGreaterThanOrEqual(2, $total,
+				'an empty or non-string filter entry must be ignored, not turned into SQL: '.json_encode($junk));
+		}
 	}
 }

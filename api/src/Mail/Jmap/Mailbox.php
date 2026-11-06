@@ -63,13 +63,19 @@ class Mailbox extends Type
 	 * Convert a folderId to the full path e.g. INBOX/folder/subfolder
 	 *
 	 * @param string $folderId
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for a folderId belonging to a mail:share-shared account, as Mailbox ids are
+	 *  namespaced per JMAP account on the server: looking one up under the wrong accountId
+	 *  resolves nothing (empty path), not an error (found live 2026-11-05: push updates for a
+	 *  shared account's folders silently got an empty/wrong folder name this way)
 	 * @return string
 	 */
-	public function folderId2path(string $folderId)
+	public function folderId2path(string $folderId, ?string $accountId=null)
 	{
 		static $folderPaths = [];
 
-		if (!isset($folderPaths[$folderId]))
+		$cacheKey = ($accountId ?: $this->jmap->accountId).':'.$folderId;
+		if (!isset($folderPaths[$cacheKey]))
 		{
 			$id = $folderId;
 			$parts = [];
@@ -77,12 +83,12 @@ class Mailbox extends Type
 			{
 				$response = $this->jmap->jmapCall([
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'ids' => [$folderId],
 						'properties' => ['parentId', 'name'],
 					], 'f0'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -91,7 +97,7 @@ class Mailbox extends Type
 						'properties' => ['parentId', 'name'],
 					], 'f1'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -100,7 +106,7 @@ class Mailbox extends Type
 						'properties' => ['parentId', 'name'],
 					], 'f2'],
 					['Mailbox/get', [
-						'accountId' => $this->jmap->accountId,
+						'accountId' => $accountId ?: $this->jmap->accountId,
 						'#ids' => [
 							"name" => "Mailbox/get",
 							"path" => "/parentId",
@@ -129,8 +135,95 @@ class Mailbox extends Type
 				}
 				$id = $methodResponse[1]['list'][0]['parentId'] ?? null;
 			}
-			$folderPaths[$folderId] = implode('/', array_reverse($parts));
+			$folderPaths[$cacheKey] = implode('/', array_reverse($parts));
 		}
-		return $folderPaths[$folderId] ?? null;
+		return $folderPaths[$cacheKey] ?? null;
+	}
+
+	/**
+	 * List every mailbox in this account as flat "path => translated label" pairs, eg.
+	 * "INBOX/Trash" => "INBOX/Papierkorb" - one batched Mailbox/query (no filter, everything)
+	 * + Mailbox/get call, mirroring mail/js/folderTree.ts's buildMailboxPaths() (same role ->
+	 * lang() key map, same path-joining), for server-side folder search/enumeration where
+	 * client-side JMAP isn't an option (mail_acl.inc.php - see Imap\Jmap::listMailboxPaths(),
+	 * the thin per-account wrapper around this that real callers use).
+	 *
+	 * @param ?string $accountId defaults to the session's own accountId
+	 * @param bool $subscribedOnly true: only mailboxes with isSubscribed=true (ancestors are
+	 *  still resolved from the full, unfiltered set, so a subscribed child's path never breaks
+	 *  just because an unsubscribed parent was filtered out)
+	 * @return array path => translated label
+	 */
+	public function listAllPaths(?string $accountId=null, bool $subscribedOnly=false) : array
+	{
+		$paths = [];
+		foreach ($this->listAll($accountId) as $path => $mailbox)
+		{
+			if ($subscribedOnly && empty($mailbox['isSubscribed']))
+			{
+				continue;
+			}
+			$paths[$path] = $mailbox['_label'];
+		}
+		return $paths;
+	}
+
+	/**
+	 * List every mailbox in this account as flat "path => full Mailbox object" pairs - same
+	 * path-resolution as listAllPaths(), but keeping every JMAP property (id, parentId, name,
+	 * isSubscribed, totalEmails, unreadEmails, myRights, ...) instead of just the translated
+	 * label, plus a synthetic '_label' entry (what listAllPaths() returns). Used by
+	 * Imap\Jmap's listMailboxes()/openMailbox()/createMailbox()/renameMailbox()/deleteMailbox()
+	 * overrides, which all need the real mailboxId behind a canonical IMAP-style path.
+	 *
+	 * @param ?string $accountId defaults to the session's own accountId
+	 * @return array path => Mailbox object (+ '_label')
+	 */
+	public function listAll(?string $accountId=null) : array
+	{
+		static $roleLabelKeys = [
+			'inbox' => 'INBOX', 'trash' => 'Trash', 'sent' => 'Sent', 'drafts' => 'Drafts',
+			'junk' => 'Junk', 'templates' => 'Templates', 'outbox' => 'Outbox', 'archive' => 'Archive',
+		];
+		$accountId = $accountId ?: $this->jmap->accountId;
+		$response = $this->jmap->jmapCall([
+			['Mailbox/query', ['accountId' => $accountId], '0'],
+			['Mailbox/get', [
+				'accountId' => $accountId,
+				'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => '0'],
+			], '1'],
+		]);
+		$mailboxes = $response['methodResponses'][1][1]['list'] ?? [];
+		$byId = [];
+		foreach ($mailboxes as $mailbox)
+		{
+			$byId[$mailbox['id']] = $mailbox;
+		}
+
+		$resolved = [];
+		$resolve = function(array $mailbox) use (&$resolve, &$resolved, $byId, $roleLabelKeys)
+		{
+			if (isset($resolved[$mailbox['id']]))
+			{
+				return $resolved[$mailbox['id']];
+			}
+			$parent = !empty($mailbox['parentId']) ? ($byId[$mailbox['parentId']] ?? null) : null;
+			$parentResolved = $parent ? $resolve($parent) : null;
+			$pathSegment = ($mailbox['role'] ?? null) === 'inbox' ? 'INBOX' : $mailbox['name'];
+			$roleLabelKey = !empty($mailbox['role']) ? ($roleLabelKeys[$mailbox['role']] ?? null) : null;
+			$labelSegment = $roleLabelKey ? lang($roleLabelKey) : $mailbox['name'];
+			$result = [
+				'path'  => $parentResolved ? $parentResolved['path'].'/'.$pathSegment : $pathSegment,
+				'label' => $parentResolved ? $parentResolved['label'].'/'.$labelSegment : $labelSegment,
+			];
+			return $resolved[$mailbox['id']] = $result;
+		};
+		$byPath = [];
+		foreach ($mailboxes as $mailbox)
+		{
+			$r = $resolve($mailbox);
+			$byPath[$r['path']] = $mailbox + ['_label' => $r['label']];
+		}
+		return $byPath;
 	}
 }

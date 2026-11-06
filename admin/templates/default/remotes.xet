@@ -56,9 +56,9 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Name" id="remote_name"/>
-					<nextmatch-sortheader label="URL" id="remote_url"/>
-					<nextmatch-sortheader label="Instance" id="remote_domain"/>
+					<et2-nextmatch-sortheader  label="Name" id="remote_name"/>
+					<et2-nextmatch-sortheader  label="URL" id="remote_url"/>
+					<et2-nextmatch-sortheader  label="Instance" id="remote_domain"/>
 				</row>
 				<row class="row">
 					<et2-description  id="${row}[remote_name]"></et2-description>
@@ -67,24 +67,21 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.remotes.header_left" template="" lang="" group="0" version="1.5.001">
 		<et2-button  id="add" label="Add" statustext="Add a new remote instance"></et2-button>
 	</et2-template>
-	<et2-template  id="admin.remotes" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@remote">
-					<et2-template  content="remote" span="all" class="border" id="admin.remotes.edit"></et2-template>
-				</row>
-				<row>
-					<nextmatch id="nm" options="admin.remotes.rows" header_left="admin.remotes.header_left"/>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="admin.remotes" template="" lang="" group="0" version="1.5.001" layout="stack">
+		<!-- The edit form and the nextmatch are direct children, not rows of a wrapping <grid>: a grid
+		     is a real <table> and a table cell can not constrain its child's height, so et2-datagrid
+		     would grow to fit every row instead of scrolling.  The row's disabled= moves onto the
+		     widget that carried it, and the Add button that used to be the nextmatch's header_left
+		     template goes in its own header slot - et2-nextmatch has no header_left property. -->
+		<et2-template  content="remote" class="border" id="admin.remotes.edit" disabled="!@remote"></et2-template>
+		<et2-nextmatch  id="nm" template="admin.remotes.rows" grow="1">
+			<et2-template  id="admin.remotes.header_left" slot="header"></et2-template>
+		</et2-nextmatch>
 		<et2-styles>
 			.border { border: black solid 2px; }
 		</et2-styles>

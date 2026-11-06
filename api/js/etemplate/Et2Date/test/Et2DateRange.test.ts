@@ -7,6 +7,9 @@ import * as sinon from "sinon";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 // The internal <et2-date> from/to fields never upgrade without this
 import "../Et2Date";
+// What the widget renders: not registered unless imported, and an unregistered element has no controls
+import "../../Et2Button/Et2ButtonIcon";
+import "../../Et2Select/Et2Select";
 import "@shoelace-style/shoelace/dist/components/select/select.js";
 import "@shoelace-style/shoelace/dist/components/option/option.js";
 
@@ -19,6 +22,7 @@ window.egwIsMobile = () => false;
 window.egw = {
 	lang: i => i,
 	tooltipUnbind: () => {},
+	tooltipBind: () => {},
 	preference: (pref) => pref == "lang" ? Promise.resolve("en") : null,
 	image: i => "",
 	holidays: (y) => Promise.resolve({})
@@ -67,6 +71,89 @@ describe("Date range widget", () =>
 	// (a real, standalone <et2-date> fixture - see Et2Date.test.ts - initializes fine), so a
 	// "from"-field round-trip isn't reliably testable here. The shared inputBasicTests() below
 	// uses relative mode instead, which doesn't depend on flatpickr at all.
+
+	/**
+	 * The two halves are independent <et2-date> widgets, so without wiring them the picker happily
+	 * accepts a "to" earlier than its "from" - which is not a range, and downstream builds a query
+	 * that can never match anything.
+	 *
+	 * Tested against stubbed halves rather than the real ones: the constraint reads their value and
+	 * writes minDate/maxDate, and flatpickr does not initialize for the nested <et2-date> children
+	 * in this environment (see the note above), so their real value getter is not dependable here.
+	 */
+	describe("keeps the two halves a range", () =>
+	{
+		let from, to;
+
+		const stubHalves = (fromValue = "", toValue = "") =>
+		{
+			from = {value: fromValue, minDate: "", maxDate: ""};
+			to = {value: toValue, minDate: "", maxDate: ""};
+			Object.defineProperty(element, "fromElement", {get: () => from, configurable: true});
+			Object.defineProperty(element, "toElement", {get: () => to, configurable: true});
+		};
+
+		it("stops To being set before From", () =>
+		{
+			stubHalves("2026-09-16", "2026-09-18");
+
+			element["_constrainToRange"]();
+
+			assert.equal(to.minDate, "2026-09-16", "To must not be allowed before From");
+			assert.equal(from.maxDate, "2026-09-18", "From must not be allowed after To");
+		});
+
+		it("leaves the other half unconstrained while one is empty", () =>
+		{
+			stubHalves("", "2026-09-18");
+			element["_constrainToRange"]();
+			assert.equal(to.minDate, "", "no From yet, so To has no lower bound");
+			assert.equal(from.maxDate, "2026-09-18");
+
+			stubHalves("2026-09-16", "");
+			element["_constrainToRange"]();
+			assert.equal(to.minDate, "2026-09-16");
+			assert.equal(from.maxDate, "", "no To yet, so From has no upper bound");
+		});
+
+		it("clears a constraint when its half is emptied again", () =>
+		{
+			stubHalves("2026-09-16", "2026-09-18");
+			element["_constrainToRange"]();
+			assert.equal(to.minDate, "2026-09-16");
+
+			from.value = "";
+			element["_constrainToRange"]();
+			assert.equal(to.minDate, "", "clearing From must release To's lower bound, not keep it");
+		});
+
+		it("does not constrain a relative range", async() =>
+		{
+			element.relative = true;
+			await element.updateComplete;
+			stubHalves("2026-09-16", "2026-09-18");
+
+			element["_constrainToRange"]();
+
+			assert.equal(to.minDate, "", "a relative range is one select, there is nothing to pair");
+			assert.equal(from.maxDate, "");
+		});
+
+		/**
+		 * A value set programmatically - restoring a favourite, or a filter seeded by the server -
+		 * never goes through the pickers' change event, so the constraint has to be applied there
+		 * too or it only ever holds for ranges the user typed by hand.
+		 */
+		it("applies the constraint to a programmatically set value", () =>
+		{
+			stubHalves();
+			element.value = {from: "2026-09-16", to: "2026-09-18"};
+
+			assert.equal(to.minDate, "2026-09-16",
+				"setting the value must constrain the halves, not just a user edit");
+			assert.equal(from.maxDate, "2026-09-18");
+		});
+	});
 
 	it("uses a relative range string when relative=true", async() =>
 	{

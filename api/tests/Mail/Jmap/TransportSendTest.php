@@ -165,6 +165,34 @@ class TransportSendTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('sent-id', $sent_id);
 	}
 
+	/**
+	 * Regression test (help forum/Ingo - acc_id shared with ralf, "sent mail does NOT end up in
+	 * HIS Sent folder", worked for ralf on the SAME account config): a plain name-match is
+	 * ambiguous whenever the user ALSO has some other, personal folder that happens to share the
+	 * configured override's bare name (Ingo's own "privat/Sent", unrelated to the account's real
+	 * top-level, role=sent "Sent" mailbox) - this used to just overwrite $sent_id with whichever
+	 * one the foreach happened to reach LAST (list order, deliberately the nested/wrong one here),
+	 * silently filing the Sent-copy into a completely wrong, user-owned folder.
+	 */
+	public function testResolveMailboxesAndIdentitiesPrefersTopLevelMatchOverNestedWhenNameIsAmbiguous()
+	{
+		$jmap = $this->fakeHttp($this->happyPathResponder([
+			'Mailbox/get' => ['list' => [
+				['id' => 'drafts-id', 'role' => 'drafts'],
+				['id' => 'privat-id', 'role' => null, 'name' => 'privat', 'parentId' => null],
+				// nested, unrelated personal folder sharing the configured override's bare name -
+				// listed BEFORE the real one, so a naive last-match-wins foreach would pick it
+				['id' => 'privat-sent-id', 'role' => null, 'name' => 'Sent', 'parentId' => 'privat-id'],
+				['id' => 'real-sent-id', 'role' => 'sent', 'name' => 'Sent', 'parentId' => null],
+			]],
+		]));
+		$transport = $this->transport($jmap, ['acc_folder_sent' => 'Sent']);
+
+		[, $sent_id] = $this->invokeResolveMailboxesAndIdentities($transport, $jmap);
+
+		$this->assertSame('real-sent-id', $sent_id);
+	}
+
 	public function testResolveMailboxesAndIdentitiesThrowsWhenDraftsRoleIsMissing()
 	{
 		$jmap = $this->fakeHttp($this->happyPathResponder([

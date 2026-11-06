@@ -36,6 +36,8 @@
                                          .disabled, which per Et2Widget's own docblock stays visible (just greyed
                                          out) -->
                                     <et2-image  id="pgp_signature" src="envelope-at-fill" inline="true" hidden="true" align="right" width="24"></et2-image>
+                                    <!-- only shown while EGroupware itself is in dark mode, see app.less -->
+                                    <et2-button-toggle  id="mail_darkmode" class="mailDarkmodeToggle" onIcon="moon" offIcon="sun" statustext="Dark mode for mails" noSubmit="true" onchange="app.mail.toggleMailDarkmode"></et2-button-toggle>
                                 </et2-hbox>
                             </et2-hbox>
                             <!-- onlyPrint: simpler, non-interactive layout (no avatar/toolbar/dropdown actions), shown only for print media via CSS -->

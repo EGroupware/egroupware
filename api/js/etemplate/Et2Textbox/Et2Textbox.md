@@ -1,17 +1,17 @@
 ## Examples
 
-### Label ###
+### Label
 
 Use the `label` attribute to give the input an accessible label.
 
 Add the `et2-label-fixed` class to force the label to have a fixed width. This helps line up labels and widgets into
-columns without having to use a grid. See [/getting-started/styling/#fixed-width-labels](styling)
+columns without having to use a grid. See [styling](/getting-started/styling#fixed-width-labels)
 
 ```html:preview
 <et2-textbox label="Name"></et2-textbox>
 ```
 
-### Prefix & Suffix ###
+### Prefix & Suffix
 
 Use `prefix` and `suffix` slots to add content before or after the text
 
@@ -22,7 +22,7 @@ Use `prefix` and `suffix` slots to add content before or after the text
 </et2-textbox>
 ```
 
-### Mask ###
+### Mask
 
 Setting a mask limits what the user can enter into the field.
 

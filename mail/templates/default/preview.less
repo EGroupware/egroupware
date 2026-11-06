@@ -14,7 +14,8 @@
 // THIS PART IS TAKEN FROM @SHOELACE-STYLES
 // only copied parts here because this gets requested everytime user previews a mail
 //
-.sl-theme-dark {
+// html.mailDarkmode: dark mode of the message body, see below
+.sl-theme-dark, html.mailDarkmode {
   color-scheme: dark;
 
   --sl-color-gray-50: hsl(240 5.1% 15%);
@@ -30,7 +31,7 @@
   --sl-color-gray-950: hsl(0 0% 95%);
 }
 
-.sl-theme-light {
+.sl-theme-light, html:not(.mailDarkmode){
   color-scheme: light;
 
   --sl-color-gray-50: hsl(0 0% 97.5%);
@@ -60,10 +61,6 @@
   --sl-color-neutral-950: var(--sl-color-gray-950);
 }
 
-body, td, textarea {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-}
-
 body, html {
   height: 100%;
   width: 100%;
@@ -78,7 +75,6 @@ body, html {
   }
 }
 .td_display {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black;
   background-color: #FFFFFF;
 }
@@ -137,88 +133,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 /* placeholder of a blocked external image keeps the image's box, but is never stretched to it */
 img[alt*="[blocked external image:"] {
   object-fit: scale-down;
-}
-
-.mail_externalImagesMsg {
-  display: block;
-  position: fixed;
-  height: auto;
-  width: 100%;
-  bottom: 0px;
-  left: 0px;
-  background: rgb(255, 229, 165);
-  border-top: 1px solid rgb(143, 139, 139);
-  box-shadow: rgb(143, 139, 139) 0px 1px 13px 2px;
-}
-
-// ticket #126971 (Ingo, 2026-10-30, "getestet auf pole" - reproduced live via the ticket's own
-// attached test .eml): this banner is appended as a sibling of .mailDisplayBody inside the mail
-// body iframe (MailApp.resolveExternalImages(), mail/js/app.ts - appends straight to `_node.body`),
-// so it ends up copied into tmpPrintDiv right along with it, still carrying this "position: fixed"
-// (fixed to the VIEWPORT, not even scoped to a container) with no @media print override at all -
-// confirmed live (my.egroupware.org, this exact ticket's own attachment) via
-// getComputedStyle(...).position === 'fixed' on the actual rendered element. A live "click to
-// load external images" nag has no business in a printed page to begin with (same principle as
-// master's own newer et2-ai/sl-alert replacement for this banner, which no longer ships this file
-// at all - see mail/templates/default/app.less's own .mail_externalImagesMsgHost print rule there);
-// hiding it outright sidesteps whatever Chrome's print pagination does with a lingering
-// position:fixed element entirely, rather than trying to characterize that quirk precisely.
-@media print {
-  .mail_externalImagesMsg {
-    display: none !important;
-  }
-}
-
-.mail_externalImagesMsg.red {
-  background: rgba(204, 0, 51, 0.8) !important;
-}
-
-.mail_externalImagesMsg.red * {
-  color: white !important;
-}
-
-.mail_externalImagesMsg button {
-  float: right;
-  margin: 7px;
-  display: inline-block;
-  background-color: transparent;
-  border: none;
-  font-weight: bold;
-  color: rgb(48, 85, 140);
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.mail_externalImagesMsg button:hover {
-  color: rgb(20, 48, 88);
-}
-
-.mail_externalImagesMsg p {
-  display: inline-block;
-  width: 70%;
-  font-size: 9pt;
-  margin: 7px 7px 7px 10px;
-  color: rgb(31, 31, 31);
-}
-
-.mail_externalImagesMsg button.closeBtn {
-  float: right;
-  background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
-  height: 30px;
-  width: 50px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 22px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  margin: 0;
-  opacity: 0.6;
-}
-
-.mail_externalImagesMsg button.closeBtn:hover {
-  opacity: 1;
 }
 
 #smimePasswordRequest {
@@ -306,5 +220,102 @@ img[alt*="[blocked external image:"] {
   img {
     width: 64px;
     height: 64px;
+  }
+}
+// dark mode of the message body (MailApp.applyBodyDarkmode()), a port of Thunderbird's "Dark Reader"
+// (mail/themes/shared/mail/messageBody.css): colors of EGroupware's own dark mode (kdots.css html[data-darkmode="1"]),
+// mail/js/darkReader.ts removes the colors the message sets itself, which are not readable on that
+@media screen {
+  // a message shown light, eg. with dark mode switched off for mails (MailApp.setBodyFrameColorScheme()):
+  // its iframe is then transparent, so it needs its own (light) background, and no color-scheme dark of .sl-theme-dark
+  html:not(.mailDarkmode) {
+    color-scheme: light;
+    background-color: var(--sl-color-gray-50);
+  }
+  html.mailDarkmode {
+    // primary colors used below, from EGroupware's dark mode, the gray ones see .sl-theme-dark above
+    --sl-color-primary-700: hsl(210, 36%, 63%);
+    --sl-color-primary-800: hsl(210, 33%, 73%);
+
+    background-color: var(--sl-color-neutral-50);
+    color: var(--sl-color-neutral-700);
+
+    // our own colors for a light background from above
+    .td_display, .td_display:has(pre), blockquote {
+      color: inherit;
+      background-color: transparent;
+    }
+    blockquote[type=cite] {
+      color: var(--sl-color-primary-700);
+    }
+    a:link {
+      color: var(--sl-color-primary-700);
+    }
+    a:visited {
+      color: var(--sl-color-primary-800);
+    }
+  }
+}
+
+/* Header of a printed message, only added for printing (MailApp.printMessage()),
+   in the user's default font of .mailDefaultFont */
+.mailPrintHeader {
+  display: none;
+}
+
+/* Content wider than the page: images and long words or lines fit the page width when printing,
+   what still does not (eg. a wide table) gets scaled down by printBody.ts's fitToPrintWidth(),
+   which measures with these rules applied via html.mailPrintMeasure */
+.mailPrintFit() {
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  body {
+    overflow-wrap: anywhere;
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+}
+html.mailPrintMeasure {
+  .mailPrintFit();
+}
+
+/* The body document gets printed on its own (MailApp.printMessage()) */
+@media print {
+  .mailPrintFit();
+  /* not scrolling in its on-screen height, which printed only the first screenful */
+  body, html, .mailDisplayBody {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  /* Word's HTML puts its content on a named page (@page WordSection1, div.WordSection1 { page: WordSection1 }),
+     forcing a page break before it, which leaves the header alone on the first page */
+  * {
+    page: auto !important;
+  }
+  .mailPrintHeader {
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 0.1em solid #d7d7d7;
+    color: black;
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      padding: 1px 8px 1px 0;
+      vertical-align: top;
+      font: inherit;
+    }
+    td:first-child {
+      white-space: nowrap;
+    }
+  }
+  .mailPrintHeader_subject {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 4px;
   }
 }

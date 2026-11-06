@@ -9,6 +9,7 @@
  */
 
 
+import {html} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
@@ -128,14 +129,15 @@ export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea)
 	/**
 	 * Wrap Shoelace's textarea in the markdown editor when markdown is enabled.
 	 *
-	 * The early return matters more than the wrapping: with markdown off this has to be exactly
-	 * what Shoelace renders today, so no existing textarea changes in any way.
+	 * With markdown off the textarea itself is exactly what Shoelace renders today.  The field
+	 * controls come either way, but they are positioned out of the flow and empty unless
+	 * something (eg. et2-ai) puts a control into them.
 	 */
 	render()
 	{
 		const source = super.render();
 
-		return this.markdown ? this._markdownShellTemplate(source) : source;
+		return html`${this.markdown ? this._markdownShellTemplate(source) : source}${this._fieldControlsTemplate()}`;
 	}
 }
 

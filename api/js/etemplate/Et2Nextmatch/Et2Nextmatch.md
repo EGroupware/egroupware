@@ -73,6 +73,27 @@ guard.
 - If both a `template` attribute and slotted templates are provided, `template` wins.
 - `setRows()` can preload initial rows; otherwise rows are fetched through the bound Nextmatch data provider.
 
+## Printing
+
+When its page is printed, `et2-nextmatch` asks which columns, how many rows (up to 100 by default)
+and which page orientation to print, remembers the columns and orientation as the user's print
+preference, and prints exactly those rows.
+
+To always print a list the same way without asking, set `printOptions` from the app's JS, eg. in
+`et2_ready()`:
+
+```ts
+nm.printOptions = {columns: "all", rowCount: 100, orientation: "portrait"};
+```
+
+- `columns`: `"all"` for every column the column selection offers (also ones the user has hidden),
+  or the column keys to print, in that order.
+- `rowCount`: the maximum number of rows to print.
+- `orientation`: `"portrait"` or `"landscape"`.
+
+Options left out use the dialog's defaults: the saved print columns (or the visible ones), up to
+100 rows, portrait. Nothing is saved as print preference.
+
 ## Row value bindings
 
 Row templates bind in two ways, and the distinction is worth keeping straight:
@@ -202,6 +223,27 @@ nextmatch.addRowStylesheet(style);
 ```
 
 The stylesheet is adopted after the static row styles and is retained if the row template is reloaded.
+
+### Greying Out Inactive Entries
+
+For an entry that is still listed but no longer in effect - a revoked application password, a deleted
+calendar event, a disabled policy - add the class `rowInactive` to the row. The framework row styles show
+it in a muted, italic font, the same in every app, so the app needs no CSS of its own for it.
+
+```php
+if ($row['token_revoked'])
+{
+	// "revoked" stays for the actions' enableClass/disableClass, "rowInactive" greys the row out
+	$row['class'] = 'revoked rowInactive';
+}
+```
+
+```xml
+<row class="$row_cont[class]">
+```
+
+Add `rowInactive` next to the app's own class rather than replacing it, since actions and app code
+usually key on the app's class.
 
 ### Highlighting an Overdue Entry
 

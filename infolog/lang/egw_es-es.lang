@@ -78,14 +78,12 @@ cancelled	infolog	es-es	Cancelado
 categories	infolog	es-es	Categorías
 category	infolog	es-es	Categoría
 change	infolog	es-es	Cambiar
-change category	infolog	es-es	Cambiar categoría
 change completed	infolog	es-es	Cambio completado
 change completion	infolog	es-es	Completado del cambio
 change history	infolog	es-es	Cambiar historial
 change owner when updating	infolog	es-es	Cambiar el propietario al actualizar
 change responsible	infolog	es-es	Modificar responsable
 change the status of an entry, eg. close it	infolog	es-es	Cambiar el estado de una entrada, p. ej. cerrarlo
-changed category to %1	infolog	es-es	La categoría se ha cambiado a %1
 changed completion to %1%	infolog	es-es	Se ha completado el cambio al %1%
 changed status to %1	infolog	es-es	Se ha cambiado el estado a %1
 changed type	infolog	es-es	Se ha cambiado el tipo
@@ -398,7 +396,6 @@ regular expression	infolog	es-es	Expresión regular
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí).
 removed	infolog	es-es	Eliminado.
-removed category	infolog	es-es	categoría eliminada
 replacement	infolog	es-es	Sustitución
 replacements for inserting entries into documents	infolog	es-es	Sustituciones para insertar entradas en los documentos
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	es-es	Requiere que el usuario editor tenga acceso de escritura a estos contactos, para compartirlos con el usuario responsable.

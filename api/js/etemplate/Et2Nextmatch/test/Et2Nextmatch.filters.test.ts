@@ -6,6 +6,7 @@ import type {Et2Datagrid} from "../../Et2Datagrid/Et2Datagrid";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Contract under test:
@@ -250,6 +251,27 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.isFalse(reentrantResult, "reentrant call should be ignored");
 		assert.equal(el.activeFilters.col_filter.owner, "42");
 		assert.isUndefined(el.activeFilters.col_filter.reentrant, "reentrant filter must not be applied");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Explicitly applying "" for a filter key the client holds no value for is a change that is sent
+	 *   to the server, while applying it again afterwards is not.
+	 *
+	 * Why this matters:
+	 * - The server merges received filters into its own session copy, so a key missing from the request
+	 *   keeps its old value there (eg. the addressbook organisation view behind "No filters").
+	 *
+	 * Pass criteria:
+	 * - First applyFilters({grouped_view: ""}) returns true and stores "", the repeat returns false.
+	 */
+	it("sends an explicit empty top-level filter the client never held", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		assert.isTrue(el.applyFilters({grouped_view: ""}, {reload: false}));
+		assert.equal(el.activeFilters.grouped_view, "");
+		assert.isFalse(el.applyFilters({grouped_view: ""}, {reload: false}), "repeat is not a change");
 	});
 
 	it("can update filter state without reloading or clearing row actions", async() =>
@@ -743,7 +765,7 @@ describe("Et2Nextmatch header event handling", () =>
 		await el.updateComplete;
 
 		const letterSearch = el.shadowRoot?.querySelector(".nextmatch_lettersearch");
-		assert.isNull(letterSearch, "lettersearch should not render by default");
+		assertNoElement(letterSearch, "lettersearch should not render by default");
 		el.remove();
 	});
 
@@ -826,7 +848,7 @@ describe("Et2Nextmatch header event handling", () =>
 		await el.updateComplete;
 
 		assert.isFalse(el.activeFilters.searchletter, "hiding lettersearch should clear the active search letter");
-		assert.isNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
+		assertNoElement(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
 		el.remove();
 	});
 
@@ -1246,6 +1268,64 @@ describe("Et2Nextmatch header event handling", () =>
 		warn.restore();
 	});
 
+	it("shows the custom fields column for a favorite that listed the custom fields as columns", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "owner", title: "Owner"} as any,
+			{key: "customfields", title: "Custom fields"} as any
+		]);
+		el.setColumns(["title", "#Ticket", "#select"]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields"], "legacy custom field keys should show the custom fields column");
+		el.setColumns(["gone", "also_gone"]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields"], "keys that match no column should leave the columns alone");
+	});
+
+	it("reports the custom fields shown, so a favorite can keep them", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{
+				key: "customfields", title: "Custom fields",
+				header: {getCustomfieldVisibility: () => ({Ticket: true, hidden_one: false, "Big file": true})}
+			} as any
+		]);
+		assert.deepEqual(el.value.selectcols, ["title", "customfields", "#Ticket", "#Big file"]);
+
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "customfields", title: "Custom fields", hidden: true, header: {getCustomfieldVisibility: () => ({Ticket: true})}} as any
+		]);
+		assert.deepEqual(el.value.selectcols, ["title"], "custom fields of a column that is not shown are not reported");
+	});
+
+	it("shows only the custom fields a favorite listed", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const visibility = sinon.spy();
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{
+				key: "customfields", title: "Custom fields",
+				header: {setCustomfieldVisibility: visibility, getCustomfieldVisibility: () => ({Ticket: false, "Big file": true, Label: false})}
+			} as any
+		]);
+		el.setColumns(["title", "#Ticket", "#Big file"]);
+		assert.isTrue(visibility.calledOnce, "the custom fields column should be told which custom fields to show");
+		assert.deepEqual(visibility.firstCall.args[0], {"Ticket": true, "Big file": true});
+
+		visibility.resetHistory();
+		el.setColumns(["title", "customfields"]);
+		assert.isTrue(visibility.calledOnce, "the custom fields column without any custom field names shows all of them");
+		assert.deepEqual(visibility.firstCall.args[0], {"Ticket": true, "Big file": true, Label: true});
+
+		visibility.resetHistory();
+		el.setColumns(["title"]);
+		assert.isFalse(visibility.called, "a favorite without the custom fields column should leave the custom fields alone");
+	});
+
 	/**
 	 * Contract under test:
 	 * - `setColumns()` updates the live root datagrid, not only Nextmatch's
@@ -1517,7 +1597,7 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 		assert.isFalse(childGrid.hasAttribute("auto-height"), "child grid should not use simple auto-height for large child result sets");
 		assert.isFalse(childGrid.noColumnPersistence, "child grid should rely on hidden headers for preference suppression");
 		assert.isFalse(childGrid.noColumnResize, "child grid should rely on hidden headers for resize suppression");
-		assert.isNull(
+		assertNoElement(
 			childGrid.shadowRoot?.querySelector(".dg-col-resize-handle"),
 			"child grid should not expose independent column resizing when its header is hidden"
 		);
@@ -1786,5 +1866,81 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 			document.querySelectorAll("et2-dialog").forEach((dialog) => dialog.remove());
 			el.remove();
 		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - `printOptions` prints without asking: no print dialog, the preset columns,
+	 *   orientation and row count, and nothing saved as print preference.
+	 * - `columns: "all"` includes columns the user has hidden.
+	 */
+	describe("printOptions", () =>
+	{
+		let el : Et2Nextmatch;
+		let complete : sinon.SinonStub;
+		let setPreference : sinon.SinonSpy;
+
+		beforeEach(async() =>
+		{
+			complete = sinon.stub(Et2Dialog.prototype, "getComplete").resolves([Et2Dialog.CANCEL_BUTTON, {}]);
+			// Et2Widget.egw() can hand out window.egw itself rather than what calling it returns
+			setPreference = sinon.spy();
+			sinon.replace(egwStub, "set_preference", setPreference);
+			sinon.replace(<any>window.egw, "set_preference", setPreference);
+			(egwStub as any).loading_prompt = (<any>window.egw).loading_prompt = () => {};
+			el = new Et2Nextmatch();
+			el.setColumns([{key: "name", title: "Name"}, {key: "email", title: "Email", hidden: true}]);
+			document.body.append(el);
+			await el.updateComplete;
+		});
+
+		afterEach(() =>
+		{
+			el.afterPrint();
+			complete.restore();
+			sinon.restore();
+			delete (egwStub as any).loading_prompt;
+			delete (<any>window.egw).loading_prompt;
+			document.querySelectorAll("et2-dialog").forEach((dialog) => dialog.remove());
+			el.remove();
+		});
+
+		const shownColumns = () => (<any>el)._currentColumns.filter((column) => !column.hidden).map((column) => column.key);
+
+		it("prints all columns, without a dialog and without saving preferences", async() =>
+		{
+			el.printOptions = {columns: "all", rowCount: 100, orientation: "landscape"};
+			await el.beforePrint();
+
+			assert.isTrue(complete.notCalled, "the print dialog was shown although printOptions were set");
+			assert.isTrue(setPreference.notCalled, "preset print options were saved as print preference");
+			assert.sameMembers(shownColumns(), ["name", "email"], "hidden column was not printed");
+			assert.isTrue(el.classList.contains("landscape"), "preset orientation was not used");
+
+			el.afterPrint();
+			assert.sameMembers(shownColumns(), ["name"], "columns were not restored after printing");
+		});
+
+		it("remembers the scroll position before it changes the layout for printing", async() =>
+		{
+			const grid = <any>(<any>el)._datagrid;
+			const remember = sinon.spy(grid, "rememberScrollForPrint");
+			const setColumns = sinon.spy(el, "setColumns");
+			el.printOptions = {columns: "all", rowCount: 100};
+			await el.beforePrint();
+
+			assert.isTrue(remember.calledOnce, "the grid was not told to remember its scroll position");
+			assert.isTrue(remember.calledBefore(setColumns), "the scroll position was remembered after the layout was already changed");
+		});
+
+		it("prints the given columns in portrait by default", async() =>
+		{
+			el.printOptions = {columns: ["email"]};
+			await el.beforePrint();
+
+			assert.isTrue(complete.notCalled, "the print dialog was shown although printOptions were set");
+			assert.sameMembers(shownColumns(), ["email"], "preset columns were not used");
+			assert.isTrue(el.classList.contains("portrait"), "default orientation is not portrait");
+		});
 	});
 });

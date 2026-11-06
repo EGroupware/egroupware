@@ -23,7 +23,8 @@ export class Et2LinkSearch extends Et2Select
 			:host {
 				display: block;
 				flex: 1 1 auto;
-				min-width: 200px;
+				/* 200px is plenty to search in, but never wider than the room there is */
+				min-width: min(200px, 100%);
 			}
 			::part(icon), .select__icon {
 				display: none;

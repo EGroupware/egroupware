@@ -8,6 +8,7 @@
 (leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
 (no subject)	mail	cs	(žádný předmět)
 (not connected)	mail	cs	(nepřipojeno)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	cs	Obrázek vložený, přetažený nebo přidaný, jehož velikost přesahuje určitou mez, se zmenší na tuto šířku (při zachování poměru stran), aby se zabránilo nadměrnému zvětšení zprávy. Nechte pole prázdné pro výchozí hodnotu 800 px.
 account	mail	cs	Účet
 account editable by user	mail	cs	Účet může být upraven uživatelem
 account not reachable	mail	cs	Účet není dostupný.
@@ -38,7 +39,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	cs	Povolit
 allow external images	mail	cs	Umožnit náhled z externích zdrojů
 allow external images from listed domains	mail	cs	Povolit externí obrázky z uvedených domén
-allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech. "Požádat o povolení" zobrazí lištu, kterou je lze načíst jen tentokrát ("Ukázat") nebo vždy z jejich domény ("Povolit"). "Požádat o povolení, povolit pouze uvedené domény" nabízí pouze "Ukázat", takže vždy povoleny jsou jen uvedené domény, např. nastavené administrátorem pro všechny.
 allow images from listed domains in html emails	mail	cs	Povolit obrázky z uvedených domén v e-mailech HTML.
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	cs	Umožňuje uživateli číst, zapisovat a vytvářet složky a poštu, odesílat do nich příspěvky, připojovat k nim zprávy a mazat je.
@@ -60,6 +61,7 @@ are you sure you want to delete all selected folders?	mail	cs	Opravdu chcete sma
 are you sure you want to move folder %1 to folder %2?	mail	cs	Opravdu chcete přesunout složku %1 do složky %2?
 arrival	mail	cs	Přijato
 ask for permission	mail	cs	Požádat o povolení
+ask for permission, only allow listed domains	mail	cs	Požádat o povolení, povolit pouze uvedené domény
 attach files	mail	cs	Připojit soubory
 attach users vcard at compose to every new mail	mail	cs	Ke každému novému e-mailu přiložit vizitky vCard uživatelů.
 attach vcard	mail	cs	Přidat vCard
@@ -191,8 +193,6 @@ draft folder	mail	cs	Rozepsané
 drafts	mail	cs	Rozepsané
 drafts folder	mail	cs	Složka pro koncepty
 edit account	mail	cs	Upravit účet
-edit account ...	mail	cs	Upravit účet ...
-edit folder acl ...	mail	cs	Upravit oprávnění ...
 edit vacation settings	mail	cs	Editovat nastavení odpovědi v nepřítomnosti
 effective only if server supports acl at all	admin	cs	platí pouze pokud server podporuje ACL
 email address	mail	cs	E-mailová adresa
@@ -256,7 +256,6 @@ folder %1 %2 failed!	mail	cs	Složka %1 %2 selhalo!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	cs	Složka %1 byla úspěšně vytvořena, přestože se odběr nezdařil kvůli %2
 folder %1 is moving to folder %2	mail	cs	Složka %1 se přesouvá do složky %2
 folder management	mail	cs	Správa složek
-folder management ...	mail	cs	Správa složek ...
 folder settings	mail	cs	Nastavení složky
 force html	mail	cs	Vynutit HTML
 force plain text	mail	cs	Vynutit čistý text
@@ -285,6 +284,7 @@ high priority	mail	cs	Vysoká priorita
 hold %1 to drag files to your computer	mail	cs	Stiskněte a držte %1 pro přetažení souborů do vašeho počítače
 home page folders	mail	cs	Složky domovské stránky
 hostname or ip	mail	cs	Jméno nebo IP adresa serveru
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	cs	Jak dlouho musí zpráva zůstat otevřená v panelu náhledu nebo ve vyskakovacím okně, než bude označena jako přečtená – to vám umožní zprávu jen zběžně prolistovat, aniž by byla označena jako přečtená. „Okamžitě“ je předchozí, výchozí chování.
 how often to check with the server for new mail	mail	cs	Jak často se má kontrolovat na serveru nová pošta
 how should the available information on identities be displayed	admin	cs	Jak mají být zobrazeny dostupné informace o identitách
 how to forward messages	mail	cs	Jak přeposílat zprávy
@@ -314,6 +314,7 @@ imap administration	mail	cs	Správa IMAP
 imap server	mail	cs	IMAP Server
 imap timeout	mail	cs	IMAP - vypšel časový limit
 import ca-signed certificate for this key	mail	cs	Importovat certifikát podepsaný certifikační autoritou pro tento klíč
+import certificate	mail	cs	Importovat certifikát
 import message	mail	cs	Importovat zprávu
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	cs	Import zprávy %1 nebyl úspěšný. Není možné uložit zprávu do složky %2 z důvodu: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	cs	Import zprávy %1 nebyl úspěšný. Cílová složka %2 neexistuje.
@@ -359,9 +360,11 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	cs	Označit jako přečtené
 mark all messages in folder as read	mail	cs	Označit všechny zprávy ve složce jako přečtené
 mark as deleted	mail	cs	Označit jako smazané
+mark message as read after	mail	cs	Označit zprávu jako přečtenou po
 match:	mail	cs	Shoda:
 matches	mail	cs	shoduje se s
 matches regexp	mail	cs	shoduje se s regulárním výrazem
+max. width of inline images in a mail body or signature (in px)	mail	cs	Max. šířka obrázků vložených přímo do těla zprávy nebo podpisu (v px)
 mbstring.func_overload=0 is required for correct mail processing!	mail	cs	Pro správné zpracování e-mailu je nutné nastavit proměnou mbstring.func_overload=0!
 message body	mail	cs	Zpráva
 message learned as ham (not spam) and moved back to inbox	mail	cs	Zpráva se naučila jako ham (ne spam) a byla přesunuta zpět do složky doručené pošty
@@ -394,6 +397,7 @@ never show	mail	cs	Nikdy nezobrazovat
 never show notification	mail	cs	Nikdy nezobrazovat oznámení
 new mail from %1	mail	cs	Nová pošta z %1
 new mail notification	mail	cs	Oznámení o novém e-mailu
+new mail to sender	mail	cs	Nová zpráva odesílateli
 new message type	mail	cs	Typ nového e-mailu
 new subject	mail	cs	Nový předmět
 no (valid) send folder set in preferences	mail	cs	V parametrech není nastavena správná složka pro odeslanou poštu
@@ -588,7 +592,6 @@ set / remove flags	mail	cs	Označit / Odznačit
 set / remove labels	mail	cs	Přidat / odebrat štítek
 set flags	mail	cs	Označit e-mail jako
 set it as default:	mail	cs	Nastavit jako výchozí:
-set predefined values for compose...	mail	cs	Nastavení předdefinovaných hodnot pro sestavení ...
 should new messages show up on the home page	mail	cs	Mají se nové zprávy zobrazit na Hlavní stránce
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	cs	Má se podpis vložit za (výchozí), nebo před odpověď při odpovědi nebo přeposílání zprávy a má být podpis viditelný a upravitelný během vytváření odpovědi.
 show	mail	cs	Ukázat
@@ -635,7 +638,6 @@ step 3: sieve - server side mail filtering	mail	cs	Krok 3: Sieve - filtrovací p
 step 4: smtp - outgoing mail	mail	cs	Krok 4: SMTP - odchozí e-mail
 store to folder	mail	cs	Uložit do složky
 subscribe folder	mail	cs	Přihlásit složku k odběru
-subscribe folder ...	mail	cs	Odebírání nebo přidávání složek ...
 subscribe to folder %1	mail	cs	Přihlásit složku %1 k odběru
 subscription folders	mail	cs	Složky přihlášené k odběru
 subscription successfully saved.	mail	cs	Nastavení odběru složek bylo úspěšně uloženo

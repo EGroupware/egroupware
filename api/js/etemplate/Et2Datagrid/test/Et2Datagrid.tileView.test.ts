@@ -126,3 +126,47 @@ describe("Et2Datagrid tile view virtualizer connection recovery", () =>
 		host.remove();
 	});
 });
+
+describe("Et2Datagrid tile view printing", () =>
+{
+	/**
+	 * Behaviour under test: the tile view prints like the row view - the print rows go in their
+	 * own container beside the virtualized tiles, which keep their virtualizer, and the
+	 * container goes away again afterwards.
+	 */
+	it("renders print rows beside the virtualized tiles and keeps the virtualizer", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.cssText = "height:400px;width:600px;";
+		document.body.appendChild(host);
+
+		const el = createTileDatagrid();
+		el.setInitialRows(makeItems(15));
+		el.total = 15;
+		host.appendChild(el);
+
+		try
+		{
+			await el.updateComplete;
+			assert.isNotNull(await waitForTileRow(el, "row-0"), "precondition: tiles should render");
+			const rowsBody = el.shadowRoot!.querySelector("#rows") as any;
+			const virtualizer = rowsBody[virtualizerRef];
+
+			await el.setPrintRows(["print-0", "print-1"]);
+			const printRows = el.shadowRoot!.querySelector("#print-rows");
+			assert.isNotNull(printRows, "the print rows should be in their own container");
+			assert.strictEqual(printRows!.querySelectorAll("[data-row-id]").length, 2, "both print rows should be rendered");
+			assert.strictEqual(el.shadowRoot!.querySelector("#rows"), rowsBody, "the virtualized tiles container should stay");
+			assert.strictEqual(rowsBody[virtualizerRef], virtualizer, "the virtualizer should stay");
+
+			el.clearPrintRows();
+			await el.updateComplete;
+			assert.isNull(el.shadowRoot!.querySelector("#print-rows"), "the print container should be gone after printing");
+			assert.strictEqual(rowsBody[virtualizerRef], virtualizer, "the virtualizer should be the same after printing");
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+});

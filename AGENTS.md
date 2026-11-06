@@ -121,93 +121,114 @@ Larger, multi-session efforts get a dedicated doc under `doc/ai/projects/` inste
 session notes - check there before starting related work, and add one when starting a project of
 similar scope.
 
-- `doc/ai/projects/mail-jmap-modernization.md` - mail app's move to JMAP (client-side row-fetch/body
-  rendering, server-side `Api\Mail` JMAP-native dispatch for Stalwart, local JMAP shim for plain
-  IMAP accounts). Covers architecture, current status, deliberately-out-of-scope areas, and known
-  gotchas.
-- `doc/ai/projects/jsapi-modernization.md` - `api/js/jsapi`'s TS-typing port and follow-on
-  factory-closure-to-class conversion (`egw.extend()`'s ~20 modules). Covers the enumerable-merge
-  constraint that shapes every conversion, the `#private`-vs-TS-`private` field bug class, the
-  dynamic-`this`/self-capture patterns, deliberately-out-of-scope files, postponed jQuery removal,
-  and every preserved-not-fixed `KNOWN BUG`/`KNOWN QUIRK`.
+The list below is capped at the 10 most recently updated projects, most-recent first. After any
+update to a project's own doc, move its bullet to the top of this list (creating one if it's new),
+and drop the 11th entry if that pushes the list over 10 - dropping it here does not touch the doc
+file itself. The full set of project docs, including everything trimmed off this list, always
+lives in `doc/ai/projects/` - check there directly for anything not shown here.
+
+- `doc/ai/projects/mail-zpush-jmap-folders.md` - **DONE**: closed the real gap behind ActiveSync
+  (`mail_zpush.inc.php`) breaking on any Stalwart-migrated account - it implements no JMAP-specific
+  methods at all, so `Api\Mail`'s folder-management methods it calls (`getFolderStatus()`,
+  `folderExists()`, `createFolder()`/`renameFolder()`/`deleteFolder()`, `getFolderObjects()`,
+  `reopen()`) fell through to raw `Horde_Imap_Client_Socket` calls neither `Imap\Jmap` nor
+  `Imap\Stalwart` overrode - found live via egroupware.org's own Stalwart migration breaking
+  ActiveSync's "Ping" mechanism entirely. Full method-by-method map of all 33 `Api\Mail` methods
+  `mail_zpush` calls showed every message-level operation was already properly JMAP-native
+  (dispatches to a private `jmap<Method>()` helper or an inline guard) - the gap was narrowly
+  confined to 9 folder-management methods. All 9 now have JMAP-native `Imap\Jmap` overrides
+  (`Mailbox/get`/`Mailbox/set`, same template `getACL()`/`setACL()` established) - 2
+  (`subscribeMailbox`/`listSubscribedMailboxes`) shipped same-day by a separate session
+  (`adc28974b4`, hit independently via the **regular Mail UI**'s subscription popup, confirming this
+  wasn't ActiveSync-only), the remaining 7 (`listMailboxes`/`status`/`openMailbox`/`createMailbox`/
+  `renameMailbox`/`deleteMailbox` - `mailboxExist()` needed no override of its own) in `e90b7c8793`.
+  17 new mock-based tests plus the full related suite green; **live-verified** against
+  boulder.egroupware.org's own local Stalwart (real account, real authenticated session) - every
+  read path incl. the exact `Api\Mail::getFolderStatus()` call `AlterPingChanges()` makes returns
+  correct live data end-to-end (mutating ops not live-tested, see the doc's own "Verification"
+  section). The account-specific `mail_zpush::_mailInstance()` stop-gap (`96c1f784ae`) was then
+  **removed** (`2b0d16b9df`) so ActiveSync actually exercises the new overrides via real traffic,
+  instead of silently continuing through the old classic-IMAP fallback.
+  **Master only, no 26 backport for any of this** (ralf, 2026-10-29) - 26 is missing much more of
+  this JMAP-compatibility surface and will be rebased onto master soon.
+- `doc/ai/projects/mail-jmap-imap-inversion.md` - corrected (2026-10-29) a wrong 2026-08-26 Phase-2-
+  scoping claim that `mail_zpush.inc.php` was "not a real consumer" of unguarded raw-IMAP calls - that
+  screening only checked its own direct `icServer->` references, missing that it's a heavy consumer
+  of `Api\Mail` methods that call `icServer->` two or three layers down (see
+  [[mail-zpush-jmap-folders]], found via the same live outage). Phase 1 (restructuring already-JMAP-
+  native code into the new `Api\Jmap`/`Mail\Jmap` object model) stays committed+pushed from
+  2026-08-26; Phase 2 (making `Api\Mail` itself JMAP-shaped) stays scoped-but-not-started - still no
+  easy slice found among its own obvious candidates, independent of today's correction.
+- `doc/ai/projects/sql-fragment-type-safety.md` - closing GHSA-vx89-j2x7-5wp2's vulnerability
+  *class* (not just its two entry points, already patched separately): `Api\Db` let a caller splice
+  raw SQL into a `$where`/`$cols`/`$data` array via an integer array key, indistinguishable from an
+  attacker-influenced array that merely happens to contain one. New `Api\Db\SqlFragment` makes "this
+  is deliberately raw SQL" an explicit value type; `Api\Db::requireSqlFragmentObjects()` is a
+  per-instance opt-in that then throws `Db\Exception\InvalidArgument` for a non-`SqlFragment` value
+  at an integer key. Infrastructure done (commit `a46f539449`); calendar fully converted as the pilot
+  (commit `196de24beb`, 61+11+2 sites across `calendar_so`/`calendar_boupdate`/`calendar_uilist`,
+  `requireSqlFragmentObjects(true)` enabled on calendar's own cloned `Db` instance) - also fixed one
+  core-framework instance of the same bug found along the way (`Db::replaceAsUpdate()`). The
+  per-instance *clone* (vs. the shared global connection) is a **temporary** stopgap for the
+  transition period - the doc keeps a list of every clone site to revert once
+  `requireSqlFragmentObjects()` becomes the default (opt-out) for `Api\Db` generally. Master only, no
+  26 backport (the actual vulnerability is already closed on both branches via the entry-point
+  patches). Next: `Api\Storage`/`Api\Storage\Base` (in progress) - the shared SO-layer base class many
+  apps extend; a plain grep for the append idiom was already proven insufficient on calendar (raw
+  fragments also show up as bare inline array-literal elements and under other variable names), so
+  this needs the same per-call-site reading, not just a pattern search.
+- `doc/ai/projects/smallpart-s3-videos.md` - design for adding S3 storage to smallPART/ViDoTeach
+  videos (ticket #89091 item 4), currently plain files served directly by nginx with zero PHP in the
+  serving path - a requirement that rules out a literal copy of `Stylite\Vfs\S3\StreamWrapper`
+  (every VFS read goes through its stream wrapper for a cache-miss download, incompatible with
+  nginx's static `alias`). Reuses `stylite/src/Vfs/S3/StorageTrait.php` as-is (same storage config,
+  multi-storage redundancy, automatic >64MB multipart upload) with a `smallpart-video/<video_hash>`
+  key prefix in the same bucket as VFS/backups. New columns on `egw_smallpart_videos`
+  (`video_s3_flags`, `video_aes_key`, `video_s3_lru`, `video_s3_lock_started`) drive an async
+  migrate-to-S3 job and a daily local-cache-eviction job. The "is this video's file still local"
+  check moves into the student UI's pre-playback path (two call sites: server-side in
+  `videoSrc()`/`readVideo()` for a normal page load, a new ajax method for the client-side
+  already-loaded-metadata video-switch path found in `app.ts`'s `ltiVideoSelection()`) instead of an
+  nginx `error_page`/`X-Accel-Redirect` fallback, so zero nginx config changes are needed anywhere.
+  Concurrent cold-miss downloads are guarded by a DB compare-and-swap claim (`DOWNLOADING` bit +
+  stale-lock timeout) rather than filesystem locking, since Hosting's `$files_dir` is NFS shared
+  across pods/k8s nodes where `O_EXCL`/`flock()` have known reliability gaps; the actual download is
+  staged to a temp path and `rename()`d into place atomically so nginx never serves a partial file.
+  Design/discussion phase only, no code written yet - see the doc's "Open questions" for what's still
+  undecided (an LRU-fallback column vs. `filemtime()`, re-upload orphaned-key cleanup, a possible
+  new-upload eviction grace period).
 - `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
   `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
   (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
   replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
-  `columnPreferenceName` audit/fix for apps already converted.
-- `doc/ai/projects/mail-bo-decoupling.md` - breaking `Api\Mail`/`mail_ui` apart into smaller,
-  independently-testable components, to fix the "large heavily-coupled legacy class with no test
-  coverage" problem shared by those two and `MailApp` (client-side). Phase 1 (4 low-risk `Api\Mail`
-  groups) done; covers the full method inventory, per-group coupling/risk assessment, and the
-  extraction discipline that emerged (no wrapper unless a separate-repo consumer needs it; delete
-  confirmed-dead code; re-check "no callers" case-insensitively for PHP method names).
-- `doc/ai/projects/mail-folder-tree-jmap.md` - planned migration of the mail folder-tree
-  (listing/autoloading/CRUD) from server-side PHP to client-side + JMAP, plus persisting tree
-  expand/collapse state per user. Covers why this must happen before decoupling the overlapping
-  `Api\Mail`/`mail_ui` folder groups, and the hard constraint that admin-impersonation of another
-  user's mailbox (`mail_acl.inc.php`) can never move client-side.
-- `doc/ai/projects/mail-wizard-jmap-oauth.md` - Mail Wizard (`admin_mail`/`mail_wizard`)
-  test harness (Phase 1, done) plus a feature roadmap (Phase 2, not started): DNS SRV
-  discovery for JMAP/IMAP/SMTP, broader OAuth support, JMAP-only account creation without
-  touching IMAP, a Stalwart-integrated-login OAuth workaround, and splitting general-JMAP
-  vs. Stalwart-specific support. Covers the wizard's step-chaining architecture, the
-  DNS/HTTP testability seam added to `admin_mail`, and a known pre-existing environment
-  blocker for the REST test (a malformed JMAP/Stalwart endpoint URL on the dev box used).
-- `doc/ai/projects/infolog-storage-migration.md` - planned replacement of InfoLog's hand-rolled
-  `infolog_so` SQL backend with the generic `Api\Storage` class, to get automatic `Api\DateTime`/
-  timezone handling and built-in custom-field support instead of InfoLog's parallel
-  implementations of both. Covers the full `infolog_so`/`infolog_bo` method inventory, the
-  non-UI consumer map (CalDAV/REST, ActiveSync/z-push, cross-app callers), the all-day-across-
-  timezones semantic gap that needs a product decision, and the phased plan (test harness first,
-  then swap only what's behind `$this->so`, external contract unchanged until a later phase).
-- `doc/ai/projects/accounts-import-test-coverage.md` - test coverage for `Api\Accounts\Import`
-  (LDAP/ADS/Univention account sync) across its 3 run modes and full config-option space, without a
-  live LDAP/AD server. Covers the code map, config-option interaction matrix, why LDAP-protocol mocking
-  is the wrong boundary (mock the backend-object contract instead), the testability obstacles found
-  (no DI seam, `self::`-bound factories, process-static caches, the `hookEditAccount` feedback loop),
-  why deletion tests are dry-run-only (the real query is unscoped against the whole shared accounts
-  table - Ralf's call: verify candidate-detection, not execution), and `run()`'s `$save_state=false`
-  testability parameter (non-test `run()` calls otherwise persist `account_import_lastrun` to real
-  config on every call, even under `dry_run`, and drifted this shared box's real value before the
-  parameter existed). ALL 5 PHASES DONE and green in `api/tests/Accounts/` (40 tests covering config
-  validation, users+groups create/update/rerun incl. primary-group remap and the Ads `getMembers()`
-  path, local-groups membership preservation, dry-run deletion-candidate detection incl. the
-  `anonymous` carve-out, incremental sync, the `dn_regexp` sharp edge, `installAsyncJob()`'s
-  frequency->cron-shape mapping, alias sync incl. LDIF export, and the full
-  `account_import_update_source` write-back path via `hookEditAccount()` incl.
-  `editaccountcontact`'s GUID-validation-failure recovery sub-branch - the write-back tests use a
-  plain `Import` subclass overriding its 2 factory methods (no reflection needed for `Import`
-  itself, since `hookEditAccount()` is a static method), plus 2 *more* reflection-based seams found
-  along the way: `Api\Config` reads its own separate private static cache (distinct from `run()`'s
-  `$GLOBALS['egw_info']['server']` path), and `Api\Contacts`'s constructor needed the same
-  `newInstanceWithoutConstructor()` bypass as `Api\Accounts` did. Found+fixed **four real production
-  bugs** along the way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious
-  behaviors as intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()`
-  never reading `account_import_time`) - and, while chasing a 3rd suspected limitation
-  (`editaccountcontact`'s recovery branch, initially believed structurally untestable), found and
-  documented a `self::`/`static::`-and-late-static-binding misunderstanding worth knowing generally:
-  `self::` calls ARE forwarding for late static binding (unlike a literal `ClassName::` call) -
-  only method *resolution* differs between `self::` (always the literal defining class's own
-  declaration) and `static::` (the possibly-overridden, late-static-bound one).
-- `doc/ai/projects/hashed-entries-build-pinning.md` - giving rollup's entry files (`app.min.js`,
-  `egw.min.js`, `etemplate2.js`) content hashes and pinning a document to one build's file graph, so
-  opening a not-yet-opened app after a rebuild stops forcing the user into a reload the build-epoch
-  design deliberately set out to spare them. Covers why the already-caught "Illegal constructor"
-  crash is not the motivation, why hashing without pinning fixes nothing, the confirmed-dead
-  `getImportMap()` trio and why an import map is probably unnecessary, the way hashing would silently
-  disable the existing `egw_import` dedup defence, the app-disclosure problem a verbatim manifest
-  would create, and why the pin must NOT live in the session (it would survive a reload and make the
-  "reload at your convenience" prompt a lie). Implemented and live (`a77de36152` +co-commits); the doc
-  now also tracks ticket #124112's follow-up findings and a running commit list. Two residual bugs
-  from that ticket still open - see the doc's "Status" section.
-- `doc/ai/projects/app-ts-modernization.md` - per-app modernization pass over each app's
-  `$app/js/app.ts`: legacy `et2_*` widget imports -> web-component imports (`import type` when the
-  widget is only ever used as a TS type), `var` -> `const`/`let`, fixing the file's own TS errors, and
-  removing jQuery in favor of native DOM APIs. One app at a time; covers the workflow used to isolate a
-  file's real TS errors from the ~5000 pre-existing repo-wide ones, and the specific fixes found so far
-  (the `Et2WidgetClass#_inst` private-field break with its `getInstanceManager()` replacement, the
-  `EgwApp.nm : Et2Nextmatch | et2_nextmatch` union needing a per-method cast, and the `app.stylite`-is-
-  untyped-EPL problem). infolog done; other apps not started.
+  `columnPreferenceName` audit/fix for apps already converted. Admin is now converted (all nine of
+  its lists, desktop + mobile), which added: a nextmatch in a *popup* gets no filterbox at all
+  (`Nextmatch::beforeSendToClient()` returns early for `output_mode === 2`), `num_rows => 0` no
+  longer defers the initial fetch, `class="hide"` no longer survives `set_disabled(false)`, a `<row
+  class="$field">` direct binding fails where `$row_cont[field]` works, and a list sharing its page
+  with another widget needs `layout="stack"` - whose `grow="1"` companion does not survive `.xet`
+  parsing, because `transformAttributes()` only reflects attributes a widget declares. Unconverted
+  templates now fall back to `Et2Nextmatch` automatically (`api/etemplate.php`, opt out with
+  `legacy="true"`) - a stopgap, not a conversion.
+- `doc/ai/projects/nextmatch-action-ajax-conversion.md` - moving nextmatch context-menu actions off
+  the full eTemplate submit they silently fall through to (no `onExecute`/`url`/`egw_open` ->
+  `nm_action: "submit"` -> `index()` re-runs -> a brand new nextmatch, losing scroll, selection and
+  row state), plus picker dialogs replacing the actions that render one sub-menu entry per row of
+  user data (categories, distribution lists, addressbooks, share targets). Phases 0-6 DONE
+  (addressbook, infolog, tracker, calendar, timesheet, filemanager, projectmanager; the generic
+  overflow dialog and its `…` affordance; the category and distribution-list dialogs; the
+  `open_popup` bucket). Phase 7 is empty and the rest is blocked on `et2-nextmatch-conversion.md`,
+  because the legacy `nm_action()` dispatcher is deliberately NOT touched - an app is only
+  reachable once its list template uses `<et2-nextmatch>`. Master only, no 26 backport; spans 4
+  repos (tracker, projectmanager and records are separate). Read it for the measured per-app
+  inventory (three passes, because a source scan alone gives both false positives and negatives),
+  the `onExecute`-inheritance lever that converts a whole dynamic submenu in one line, the
+  submenu-vs-dialog rule and per-app category cardinality, and the 2026-09-23 in-browser
+  verification run - which found three bugs no code-reading pass would have: `csv_export` sticking
+  in the stored nextmatch value and silently freezing the session's cached query (so "select all"
+  and `delete_list` used page-load-time filters), popup inputs resolved against the whole template
+  instead of their own popup (infolog's Start date shares an id with a filter, so setting it
+  cleared it), and calendar's endpoint living on `calendar_uilist` with no `menuaction` declared.
 - `doc/ai/projects/knowledgebase-app.md` - design of a brand-new `knowledgebase` app to supersede
   the deprecated `phpbrain` (Knowledge Base) and `wiki` apps, built on `Api\Storage`/
   `Api\Storage\Tracking`/`Api\Categories`/`Api\Acl` rather than either legacy app's bespoke
@@ -219,31 +240,56 @@ similar scope.
   of wiki's full-copy-per-revision storage, and migration mappings from both legacy apps. Design
   phase, no code written yet - deferred for later phases: multi-category-per-document, public/
   anonymous access, and phpbrain's FAQ-style question-intake pipeline.
-- `doc/ai/projects/link-url-support.md` - `Api\Link`/`egw_links` enhancement letting any app's
-  entry hold arbitrary external URLs, via a new `Link::URL_APPNAME = 'url'` pseudo-app (mirrors
-  the existing `VFS_APPNAME` special case) rather than a per-app URL table. Covers the schema
-  change (`link_id2` widened to `varchar(1024)`, prefix-indexed to 64 chars via the schema DSL's
-  `'colname(64)'` length-suffix syntax, `link_lastmod` split out into its own standalone index),
-  the `Link::title()`/`Link\Storage::_add2links()` fixes a pseudo-app needs (both silently drop
-  such links otherwise - the ACL/access-checking code's assumption that every "other side" of a
-  link is a real installed app), the `et2-link*` widget UI (an "URL" option in the existing link-
-  app picker swaps the search combo for a plain URL input, then the existing (Link) button/ajax
-  path - already fully generic - just works, no new widgets or endpoints needed), and a small
-  inline-SVG icon (no new asset file). Done and tested.
-- `doc/ai/projects/calendar-rrule-standards-gap.md` - maps how far `calendar_rrule` (the whole
-  recurrence engine, shared by the UI, DB storage, iCal import/export, and the JSCalendar REST read
-  path) falls short of RFC 5545 - single-implicit-BYDAY/BYMONTHDAY only, no BYMONTH/BYYEARDAY/
-  BYWEEKNO/BYSETPOS/BYHOUR-MINUTE-SECOND, COUNT irreversibly collapsed to UNTIL, RRULE+RDATE
-  mutually exclusive, WKST read from the viewing user's live preference instead of stored per
-  event - ahead of two future features (a real stored RRULE + library-based interpretation, and
-  REST support for creating/updating recurring events). Covers the full gap table plus several
-  concrete bugs found while building the harness (a crash importing RRULE+RDATE together with
-  UNTIL, order-dependent semantic loss for RRULE+RDATE without UNTIL, a `monthly_byday_num`
-  int/float docblock mismatch, YEARLY leap-day drift, JSCalendar's `byDay` not being a JSON array
-  as RFC 8984 requires). Mapping + test harness (`calendar/tests/RruleTest.php`,
-  `IcalRruleRoundtripTest.php`, `JsCalendarRecurrenceTest.php`) done; schema redesign and REST
-  write support are future phases, not started.
-
+- `doc/ai/projects/push-fallback-longpoll.md` - giving the swoole-less push
+  fallback (shared hosting / tarball-in-docroot installs with no `swoolepush`
+  daemon) a low-latency, PHP-FPM-friendly delivery path (bounded long-poll +
+  SSE) and real client-side auto-detection, instead of the old static
+  server-config flag. Phases 1-4, 6 and 7 done (Phase 5, the importexport
+  progress-bar fix, not started); several live regressions found and fixed
+  post-rollout. See the doc for full architecture, phase-by-phase detail, and
+  the regression write-ups.
+- `doc/ai/projects/pdf-player-pdfjs-update.md` - updated
+  `api/js/etemplate/CustomHtmlElements/pdf-player.ts` (used by smallpart/ViDoTeach to page through a
+  PDF like a video) from the abandoned `@bundled-es-modules/pdfjs-dist@2.5.207-rc1` wrapper to
+  Mozilla's real `pdfjs-dist`, pinned `~5.4.624` (native ESM, zero `eval()`) - **not** the newest
+  `6.3.289`: that version (and `5.5.207`+) crashes every render with
+  `TypeError: ...getOrInsertComputed is not a function`, a JS `Map` method not yet implemented by
+  *any* shipping browser (checked directly against Playwright's bundled Chromium 141/Firefox 142) -
+  found immediately by the test harness built first (same "test harness before the bump" approach
+  as the celtic/lti update), which is exactly why that harness existed. Also required adding
+  `"skipLibCheck": true` to the repo's `tsconfig.json` (pdfjs-dist's own `.d.ts` files need
+  TypeScript 5.7+ lib definitions; this repo pins TS `^4.9.5` repo-wide - `skipLibCheck` only skips
+  checking `.d.ts` files, not this repo's own source). Fixed a real dead-code bug in `pdf-player.ts`'s
+  own `src` property getter/setter along the way (infinite recursion / TypeError, never reached in
+  production since `et2_video.ts` only ever uses the `src` attribute). All 7 harness tests + the
+  full `api` jstest group (2502 tests) green on both browsers - but the harness did NOT catch a
+  real live bug: a red error toast on boulder.egroupware.org right after deploy
+  ("Setting up fake worker failed"), root-caused to (1) `workerSrc` being a bare/page-relative path
+  instead of an `egw.webserverUrl`-based absolute one, and (2) many web servers (confirmed:
+  boulder's nginx) not mapping `.mjs` to a JS content-type, which no server-config fix is viable
+  for across self-hosted installs we don't control. Fixed deployment-agnostically by having
+  `pdf-player.ts` `fetch()` the worker as text and re-serve it to pdf.js as an explicitly-typed
+  `Blob` URL (`ensureWorkerSrc()`), plus adding `blob:` to smallpart's own CSP `script-src`
+  (`smallpart/src/Hooks.php`'s `csp_frame_src` hook) since executing a Blob as a module falls back
+  to `script-src` when no `worker-src` is set. Verified live with nginx's `.mjs` bug deliberately
+  left in its broken state, to prove the fix carries no server-config dependency. See the doc's
+  "Live bug found post-deployment" section for the full trace. Also documents (not fixed) a
+  pre-existing render-cancellation gap that can throw pdf.js's own "Cannot use the same canvas"
+  error on fast repeated page turns, and a small/larger effort estimate for optionally also
+  modernizing `pdf-player.ts` into this repo's Lit/`Et2Widget` web-component conventions (which it
+  does not follow at all, same as its sibling `multi-video.ts`) - separate from and not required for
+  the pdfjs-dist bump, not attempted.
+- `doc/ai/projects/et2-historylog-conversion.md` - replacing the legacy `historylog` widget
+  (`<historylog>`) with an `et2-historylog` web component built on `Et2Datagrid`, plus the filtering
+  the legacy widget never had. DONE - the legacy widget is deleted. Covers why composition beats subclassing
+  `Et2Nextmatch`, the per-row polymorphic value cell (the one thing `Et2Datagrid`'s fixed row
+  template does not do natively), the deliberately narrow scope (sort locked, no selection, no
+  actions, no values returned), the filter drawer echoing `Et2AppBox`, the zero-template-edit
+  migration via `api/etemplate.php`'s `ADD_ET2_PREFIX_LEGACY_REGEXP` and why the server-side tag
+  still needs dual registration, and four pre-existing `History::get_rows()` gaps found while
+  reading (dead `colfilter`, ignored `search`, calendar's apparently-dead `filter` SQL fragment, and
+  the pass-through `validate()` that must be allowlisted before any of it is honoured), plus what a
+  diff needs that a virtualized shadow-DOM row takes away from it.
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.

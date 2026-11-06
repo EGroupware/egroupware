@@ -15,6 +15,7 @@ and connect them to the data supplied by application code.
 If you are editing or customising a `.xet` file, start with:
 
 - [Widgets](/getting-started/widgets) for template syntax and common widget behaviour.
+- [Layout](/getting-started/layout) for arranging the widgets on the screen.
 - [Styling](/getting-started/styling) for shared CSS variables, utility classes, parts, and custom properties.
 - [Component reference](/components/sandbox) to find the attributes, properties, events, methods, slots, and styling
   hooks
@@ -26,14 +27,15 @@ Templates are normally stored in `<app>/templates/default/*.xet`. A minimal temp
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <template id="myapp.edit">
-        <et2-vbox>
-            <et2-textbox id="name" label="Name" class="et2-label-fixed"></et2-textbox>
-            <et2-button id="save" label="Save"></et2-button>
-        </et2-vbox>
-    </template>
+    <et2-template id="myapp.edit" layout="stack">
+        <et2-textbox id="name" label="Name" class="et2-label-fixed"></et2-textbox>
+        <et2-button id="save" label="Save"></et2-button>
+    </et2-template>
 </overlay>
 ```
+
+`layout="stack"` puts the widgets one per line - no wrapper needed. See [Layout](/getting-started/layout)
+for the other ways to arrange them.
 
 ## Developing widgets
 

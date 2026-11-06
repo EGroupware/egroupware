@@ -608,16 +608,6 @@ class calendar_ui
 			// ignore failed discovery
 			unset($e);
 		}
-		if($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
-		{
-			$sel_options['merge'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'], '', null, 'calendar');
-
-		}
-		else
-		{
-			$readonlys['merge'] = true;
-		}
-
 		// Add integration UI into sidemenu
 		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
 		foreach($integration_data as $app => $app_hooks)
@@ -810,7 +800,7 @@ class calendar_ui
 		// mark deleted events
 		if ($event['deleted'])
 		{
-			$event['class'] .= 'rowDeleted ';
+			$event['class'] .= 'rowDeleted rowInactive ';
 		}
 
 		// v-- this should not be necessary

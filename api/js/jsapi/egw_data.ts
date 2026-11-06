@@ -650,9 +650,15 @@ class Data implements DataModule
 
 		// Limit the amount of UIDs we say we know about to a sensible number, in case user is enjoying auto-pagination
 		var knownUids : any = _knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : this.#app);
-		if(knownUids > KNOWN_UID_LIMIT)
+		if(knownUids.length > KNOWN_UID_LIMIT)
 		{
-			knownUids.slice(typeof _queriedRange.start != "undefined" ? _queriedRange.start:0,KNOWN_UID_LIMIT);
+			// The server only uses these to skip re-sending rows of the requested range that did not
+			// change, so any subset is correct - the rest just arrive in full.  They are in the order
+			// they were first loaded, which for a list scrolled down from the top is row order, so take
+			// the ones around the requested start.  Every request used to carry all of them, however
+			// far the list had been scrolled.
+			const start = Math.min(Math.max(Number(_queriedRange.start) || 0, 0), knownUids.length - KNOWN_UID_LIMIT);
+			knownUids = knownUids.slice(start, start + KNOWN_UID_LIMIT);
 		}
 
 		// Regular request to ajax_get_rows, incl. the long-term query cache check.

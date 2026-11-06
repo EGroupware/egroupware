@@ -84,4 +84,48 @@ class SecurityHardeningTest extends LoggedInTest
 		$rows = $readonlys = [];
 		(new \admin_accesslog())->get_rows(['session_list' => false], $rows, $readonlys);
 	}
+
+	/**
+	 * A fresh, real etemplate_exec_id, forced to persist regardless of whether anything was
+	 * actually recorded on it (Request::__destruct() otherwise only saves a request whose
+	 * data_modified flag some setter - eg. allowLinkEdit()/allowPasswordDecrypt() - has set).
+	 * Grants no permission of its own - just makes csrfCheck() find a genuine request instead
+	 * of die()ing on a CSRF rejection before the code under test is ever reached.
+	 */
+	private function freshExecId() : string
+	{
+		$request = Api\Etemplate\Request::read();
+		$modified = new \ReflectionProperty($request, 'data_modified');
+		$modified->setAccessible(true);
+		$modified->setValue($request, true);
+		$exec_id = $request->id();
+		unset($request);	// force __destruct() to persist now that data_modified is true
+		return $exec_id;
+	}
+
+	/**
+	 * admin_customfields::ajax_delete_type() had a csrfCheck() but no site_config_acce check of
+	 * its own before commit 7351a456d5 - despite this file's own docblock above (written for an
+	 * earlier, unrelated fix) assuming it already had one.
+	 */
+	public function testCustomfieldsAjaxDeleteTypeBlocksNonAdmin()
+	{
+		$exec_id = $this->freshExecId();
+
+		$this->expectException(Api\Exception\NoPermission::class);
+
+		(new \admin_customfields('addressbook'))->ajax_delete_type(
+			['appname' => 'addressbook', 'name' => 'test'], $exec_id);
+	}
+
+	/**
+	 * admin_config::ajax_upload_anon_images() used a bare die() with no app-membership OR
+	 * site_config_acce deny-bit check at all before commit 7351a456d5.
+	 */
+	public function testConfigAjaxUploadAnonImagesBlocksNonAdmin()
+	{
+		$this->expectException(Api\Exception\NoPermission::class);
+
+		(new \admin_config())->ajax_upload_anon_images(['tmp_upload_key' => ['name' => 'x.png']], null);
+	}
 }

@@ -202,6 +202,91 @@ abstract class Tracking
 	const CUSTOM_NOTIFICATION = 'custom_notification';
 
 	/**
+	 * Inline (light) styles of the html notification, see get_html_body()
+	 *
+	 * Mail clients without <style> support only get these, html_dark_style() overrides them by class in dark mode.
+	 */
+	const HTML_STYLES = [
+		'card'           => "max-width:640px;background-color:#ffffff;color:#1d2430;border:1px solid #dde2e8;border-radius:8px;border-collapse:separate;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;",
+		'header'         => 'background-color:#e9eef4;padding:14px 20px;border-bottom:1px solid #dde2e8;border-radius:8px 8px 0 0;',
+		'h1'             => 'margin:0;font-size:17px;font-weight:600;line-height:1.35;',
+		'header_line'    => 'margin:0 0 6px;',
+		'hr'             => 'border:0;border-top:1px solid #c5ced9;margin:10px 0;',
+		'section'        => 'padding:16px 20px;',
+		'section_border' => 'border-top:1px solid #dde2e8;',
+		'heading'        => 'margin:0 0 10px;font-size:15px;font-weight:600;line-height:1.3;color:#1d2430;',
+		'details'        => 'border-collapse:collapse;width:100%;font-size:15px;',
+		'label'          => 'text-align:left;vertical-align:top;font-weight:normal;color:#5a6473;width:30%;padding:6px 12px 6px 0;border-bottom:1px solid #dde2e8;',
+		'value'          => 'text-align:left;vertical-align:top;padding:6px 0;border-bottom:1px solid #dde2e8;',
+		'label_modified' => 'background-color:#fdf3d8;color:#6b4500;border-left:4px solid #d9a521;padding-left:10px;',
+		'value_modified' => 'background-color:#fdf3d8;padding-right:8px;',
+		'summary_h2'     => 'margin:0;font-size:15px;font-weight:normal;line-height:1.5;color:inherit;',
+		'summary_value'  => 'font-size:17px;font-weight:600;',
+		'badge'          => 'float:right;margin-left:8px;padding:0 6px;border:1px solid #d9a521;border-radius:3px;color:#6b4500;font-size:11px;font-weight:bold;line-height:1.6;letter-spacing:0.04em;text-transform:uppercase;',
+		'badge_new'      => 'float:right;margin-left:8px;padding:0 6px;border:1px solid #e3f4e8;border-radius:3px;background-color:#e3f4e8;color:#1d6b3a;font-size:11px;font-weight:bold;line-height:1.6;letter-spacing:0.04em;text-transform:uppercase;',
+		'text'           => 'padding:6px 0;',
+		'description'    => 'margin:4px 0;padding:12px 16px;font-size:16px;line-height:1.6;background-color:#f6f8fa;border:1px solid #dde2e8;border-left:4px solid #0b5cad;border-radius:6px;',
+		'button_table'   => 'margin-top:14px;border-collapse:separate;',
+		'button'         => 'background-color:#0b5cad;border-radius:6px;',
+		'button_link'    => 'display:inline-block;padding:10px 18px;color:#ffffff;font-weight:600;text-decoration:none;',
+		'comment_table'  => 'margin-top:8px;border-collapse:separate;',
+		'comment'        => 'background-color:#f6f8fa;border-radius:6px;padding:8px 14px 10px;',
+		'comment_new'    => 'border-left:4px solid #1d6b3a;',
+		'comment_h3'     => 'margin:0 0 2px;font-size:13px;font-weight:normal;line-height:1.5;color:#5a6473;',
+		'comment_h3_new' => 'font-weight:600;color:#1d2430;',
+	];
+
+	/**
+	 * Dark skin of the html notification: CSS selector => declarations, overriding HTML_STYLES with "!important"
+	 *
+	 * Colors are literal values, as mail clients don't have our CSS variables, see html_dark_style().
+	 * EGroupware's popup notifications get the same rules from kdots/css/themes/dark.less, keep both in sync!
+	 */
+	const HTML_DARK_RULES = [
+		'table.egwNotification'           => 'background-color:#22252b;color:#e3e6eb;border-color:#383d45',
+		'.egwNotificationHeader'          => 'background-color:#2b323c;border-color:#383d45',
+		'.egwNotificationHeader hr'       => 'border-color:#4a525d',
+		'.egwNotificationSection'         => 'border-color:#383d45',
+		'.egwNotificationLabel'           => 'color:#a4abb7;border-color:#383d45',
+		'.egwNotificationValue'           => 'border-color:#383d45',
+		'.egwNotificationHeading'         => 'color:#e3e6eb',
+		'.egwNotificationText'            => 'background-color:#2a2e35;border-color:#383d45;border-left-color:#8cbcff',
+		'tr.egwNotificationModified > *'  => 'background-color:#3b3018',
+		'tr.egwNotificationModified > th' => 'color:#ffd27a;border-left-color:#b8892a',
+		'.egwNotificationBadge'           => 'color:#ffd27a;border-color:#b8892a',
+		'.egwNotificationComment'         => 'background-color:#2a2e35',
+		'.egwNotificationComment h3'      => 'color:#a4abb7',
+		'td.egwNotificationNew'           => 'border-left-color:#93dbab',
+		'td.egwNotificationNew h3'        => 'color:#e3e6eb',
+		'.egwNotificationBadge.egwNotificationNew' => 'color:#93dbab;background-color:#173322;border-color:#173322',
+		'table.egwNotification a'         => 'color:#8cbcff',
+		'td.egwNotificationButton'        => 'background-color:#8cbcff',
+		'td.egwNotificationButton a'      => 'color:#0e1a2b',
+	];
+
+	/**
+	 * <style> with the dark skin of the html notification
+	 *
+	 * Rules apply for "@media (prefers-color-scheme: dark)", which eg. the EGroupware mail app
+	 * (whose darkReader.ts then leaves the mail alone), Apple Mail and Thunderbird support.
+	 *
+	 * The same html is shown in EGroupware's own popup notifications, where prefers-color-scheme follows the
+	 * operating system, not EGroupware's dark mode: notifications/js/app.ts removes this <style> there,
+	 * and kdots/css/themes/dark.less applies the rules for EGroupware being dark.
+	 *
+	 * @return string
+	 */
+	public static function html_dark_style() : string
+	{
+		$rules = '';
+		foreach(self::HTML_DARK_RULES as $selector => $declarations)
+		{
+			$rules .= "\t$selector { ".str_replace(';', ' !important; ', $declarations)." !important; }\n";
+		}
+		return "<style>\n@media (prefers-color-scheme: dark) {\n$rules}\n</style>\n";
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $cf_app = null if set, custom field names get added to $field2history
@@ -1134,22 +1219,22 @@ abstract class Tracking
 			}
 			return $body;
 		}
-		if ($html_email)
-		{
-			$body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
-		}
+		// lines of the notification: values for keys 'type', 'modified', 'label', 'value' and 'name' (key of the detail)
+		$lines = [];
 		// new or modified message
 		if (($message = $this->get_message($data,$old,$receiver)))
 		{
 			foreach ((array)$message as $_message)
 			{
-				$body .= $this->format_line($html_email,'message',false,($_message=='---'?($html_email?'<hr/>':$_message):$_message));
+				$lines[] = ['type' => 'message', 'modified' => false, 'label' => $_message, 'value' => null, 'name' => null];
 			}
 		}
 		if ($integrate_link && ($link = $this->get_link($data,$old,false,$receiver)))
 		{
-			$body .= $this->format_line($html_email,'link',false,$integrate_link === true ? lang('You can respond by visiting:') : $integrate_link,$link);
+			$lines[] = ['type' => 'link', 'modified' => false, 'label' => $integrate_link === true ? lang('You can respond by visiting:') : $integrate_link,
+				'value' => $link, 'name' => null];
 		}
+		$header_lines = count($lines);
 		foreach($this->get_details($data,$receiver) as $name => $detail)
 		{
 			// if there's no old entry, the entry is not modified by definition
@@ -1158,12 +1243,20 @@ abstract class Tracking
 			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 
-			$body .= $this->format_line($html_email, $detail['type'] ?? null, $modified,
-				$detail['label'] ?? '', $detail['value']);
+			$lines[] = ['type' => $detail['type'] ?? null, 'modified' => $modified, 'label' => $detail['label'] ?? '',
+				'value' => $detail['value'] ?? null, 'name' => $name];
 		}
 		if ($html_email)
 		{
-			$body .= "</table>\n";
+			$body = $this->get_html_body(array_slice($lines, 0, $header_lines), array_slice($lines, $header_lines),
+				$this->get_link($data,$old,false,$receiver));
+		}
+		else
+		{
+			foreach($lines as $line)
+			{
+				$body .= $this->format_line(false, $line['type'], $line['modified'], $line['label'], $line['value']);
+			}
 		}
 		if (($sig = $this->get_signature($data,$old,$receiver)))
 		{
@@ -1198,9 +1291,12 @@ abstract class Tracking
 			$data = implode(', ', $data);
 		}
 
+		// local copy: escaping a multiline value below must not switch off escaping for the following lines
+		$html_content_allow = $this->html_content_allow;
+
 		if ($html_mail)
 		{
-			if (!$this->html_content_allow) $line = Api\Html::htmlspecialchars($line);	// XSS
+			if (!$html_content_allow) $line = Api\Html::htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
 			$size  = '110%';
@@ -1223,8 +1319,8 @@ abstract class Tracking
 					// Only Convert nl2br on non-html content
 					if (strpos($data, '<br') === false)
 					{
-						$data = nl2br($this->html_content_allow ? $data : Api\Html::htmlspecialchars($data));
-						$this->html_content_allow = true;	// to NOT do htmlspecialchars again
+						$data = nl2br($html_content_allow ? $data : Api\Html::htmlspecialchars($data));
+						$html_content_allow = true;	// to NOT do htmlspecialchars again
 					}
 					break;
 				case 'reply':
@@ -1240,8 +1336,6 @@ abstract class Tracking
 		else	// text-mail
 		{
 			if ($type == 'reply') $content = str_repeat('-',64)."\n";
-
-			if ($modified) $content .= '> ';
 		}
 		$content .= $line;
 
@@ -1253,7 +1347,7 @@ abstract class Tracking
 				// the link is often too long for html boxes chunk-split allows to break lines if needed
 				$content .= Api\Html::a_href(chunk_split(rawurldecode($data),40,'&#8203;'),$data,'','target="_blank"');
 			}
-			elseif ($this->html_content_allow)
+			elseif ($html_content_allow)
 			{
 				$content .= Api\Html::activate_links($data);
 			}
@@ -1265,12 +1359,228 @@ abstract class Tracking
 		else
 		{
 			$content .= ($content&&$data?': ':'').$data;
+
+			// mark modified fields and new comments in words, like the html notification does
+			if ($modified) $content .= ' ('.lang($type === 'reply' ? 'new' : 'changed').')';
 		}
 		if ($html_mail) $content .= '</td></tr>';
 
 		$content .= "\n";
 
 		return $content;
+	}
+
+	/**
+	 * Html body of the notification: a card with the message as header and the details in sections
+	 *
+	 * Below the header a "What changed" section repeats the modified details and new comments,
+	 * followed by a button to open the entry, before the whole entry follows.
+	 *
+	 * The details' types control the layout:
+	 * - label and value: row of the details table, modified ones are marked with a "Changed" badge
+	 * - 'summary' with label: row with the label as heading, eg. the title of the entry
+	 * - 'summary' without label: heading starting a new section, eg. "Description"
+	 * - 'reply' without label: header of a comment, or the comment itself, if it follows a header without comment,
+	 *   modified comments are marked with a "New" badge, our own "custom" detail starts the custom fields section
+	 * - 'message' in details: header of a comment, its value is ignored
+	 * - 'multiline' without label: comment, if it follows a header without comment, or framed text, eg. the description
+	 *
+	 * @param array $header_lines lines of message and link
+	 * @param array $lines detail lines with values for keys 'type', 'modified', 'label', 'value' and 'name'
+	 * @param ?string $link link to open the entry, or null for no button
+	 * @return string
+	 */
+	protected function get_html_body(array $header_lines, array $lines, ?string $link=null) : string
+	{
+		$s = self::HTML_STYLES;
+
+		$header = '';
+		$messages = array_filter($header_lines, static fn($line) => $line['type'] === 'message' && $line['label'] !== '---');
+		$h1 = array_key_last($messages);
+		foreach($header_lines as $n => $line)
+		{
+			if ($line['type'] === 'message' && $line['label'] === '---')
+			{
+				$header .= '<hr style="'.$s['hr'].'"/>';
+			}
+			elseif ($line['type'] === 'link')
+			{
+				$header .= '<p style="'.$s['header_line'].'">'.$this->html_label($line['label']).' '.$this->html_value('link', $line['value']).'</p>';
+			}
+			elseif ($n === $h1)
+			{
+				$header .= '<h1 style="'.$s['h1'].'">'.$this->html_label($line['label']).'</h1>';
+			}
+			else
+			{
+				$header .= '<p style="'.$s['header_line'].'">'.$this->html_label($line['label']).'</p>';
+			}
+		}
+
+		$sections = [];
+		$section = $rows = '';
+		$comment = null;	// open comment: values for keys 'header', 'modified' and 'body'
+		$news_rows = $news_comments = '';	// modified rows and new comments for the "What changed" section
+		$close_rows = static function() use (&$section, &$rows, $s)
+		{
+			if ($rows !== '')
+			{
+				$section .= '<table class="egwNotificationDetails" width="100%" cellspacing="0" cellpadding="0" border="0" style="'.$s['details'].'">'.$rows."</table>\n";
+				$rows = '';
+			}
+		};
+		$close_comment = function() use (&$section, &$comment, &$news_comments, $s)
+		{
+			if ($comment)
+			{
+				$html = '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="'.$s['comment_table'].'"><tr>'.
+					'<td class="egwNotificationComment'.($comment['modified'] ? ' egwNotificationNew' : '').'" style="'.$s['comment'].($comment['modified'] ? $s['comment_new'] : '').'">'.
+					'<h3 style="'.$s['comment_h3'].($comment['modified'] ? $s['comment_h3_new'] : '').'">'.
+					($comment['modified'] ? $this->html_badge(true) : '').$comment['header'].'</h3>'.
+					$comment['body']."</td></tr></table>\n";
+				$section .= $html;
+				if ($comment['modified']) $news_comments .= $html;
+				$comment = null;
+			}
+		};
+		$new_section = static function($heading) use (&$sections, &$section, $close_rows, $close_comment, $s)
+		{
+			$close_rows();
+			$close_comment();
+			if ($section !== '') $sections[] = $section;
+			$section = $heading === null ? '' : '<h2 class="egwNotificationHeading" style="'.$s['heading'].'">'.$heading."</h2>\n";
+		};
+		foreach($lines as $line)
+		{
+			$type = $line['type'];
+			$label = (string)$line['label'];
+			$value = $line['value'];
+
+			// section headings
+			if ($type === 'summary' && $label === '' || $type === 'reply' && $line['name'] === 'custom')
+			{
+				$new_section($this->html_label(rtrim(trim($value), ':')));
+			}
+			// comment, if it follows a header without one
+			elseif (in_array($type, ['reply', 'multiline']) && $label === '' && $comment && $comment['body'] === '')
+			{
+				$comment['body'] = '<div>'.$this->html_value($type, $value).'</div>';
+			}
+			// header of a comment
+			elseif ($type === 'reply' && $label === '' || $type === 'message')
+			{
+				$close_rows();
+				$close_comment();
+				$comment = ['header' => $this->html_label($type === 'message' ? $label : $value), 'modified' => $line['modified'], 'body' => ''];
+			}
+			// free text
+			elseif ($label === '')
+			{
+				$close_rows();
+				$close_comment();
+				$section .= ($type === 'multiline' ? '<div class="egwNotificationText" style="'.$s['description'].'">' : '<div style="'.$s['text'].'">').
+					$this->html_value($type, $value)."</div>\n";
+			}
+			// row of the details table
+			else
+			{
+				$close_comment();
+				$modified = $line['modified'];
+				$label = $this->html_label($label);
+				if ($type === 'summary')
+				{
+					$label = '<h2 style="'.$s['summary_h2'].'">'.$label.'</h2>';
+				}
+				$row = '<tr class="egwNotificationRow'.($modified ? ' egwNotificationModified' : '').'">'.
+					'<th scope="row" class="egwNotificationLabel" style="'.$s['label'].($modified ? $s['label_modified'] : '').'">'.$label.'</th>'.
+					'<td class="egwNotificationValue" style="'.$s['value'].($modified ? $s['value_modified'] : '').($type === 'summary' ? $s['summary_value'] : '').'">'.
+					$this->html_value($type, $value).($modified ? $this->html_badge(false) : '')."</td></tr>\n";
+				$rows .= $row;
+				if ($modified) $news_rows .= $row;
+			}
+		}
+		$new_section(null);
+
+		// "What changed" section and button to open the entry, before the whole entry
+		$news = '';
+		if ($news_rows !== '' || $news_comments !== '')
+		{
+			$news = '<h2 class="egwNotificationHeading" style="'.$s['heading'].'">'.Api\Html::htmlspecialchars(lang('What changed'))."</h2>\n".
+				($news_rows !== '' ? '<table class="egwNotificationDetails" width="100%" cellspacing="0" cellpadding="0" border="0" style="'.$s['details'].'">'.$news_rows."</table>\n" : '').
+				$news_comments;
+		}
+		if ($link)
+		{
+			$entry = Api\Link::get_registry($this->app, 'entry');
+			$news .= '<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="'.$s['button_table'].'"><tr>'.
+				'<td class="egwNotificationButton" style="'.$s['button'].'">'.
+				'<a href="'.Api\Html::htmlspecialchars($link).'" target="_blank" style="'.$s['button_link'].'">'.
+				Api\Html::htmlspecialchars($entry ? lang('Open %1', lang($entry)) : lang('Open'))."</a></td></tr></table>\n";
+		}
+		if ($news !== '') array_unshift($sections, $news);
+
+		$body = self::html_dark_style().
+			'<table class="egwNotification" role="presentation" lang="'.Api\Html::htmlspecialchars(Api\Translation::$userlang).'" width="100%" cellspacing="0" cellpadding="0" border="0" style="'.$s['card'].'">'."\n";
+		if ($header !== '')
+		{
+			$body .= '<tr><td class="egwNotificationHeader" style="'.$s['header'].'">'.$header."</td></tr>\n";
+		}
+		foreach($sections as $n => $section)
+		{
+			$body .= '<tr><td class="egwNotificationSection" style="'.$s['section'].($n ? $s['section_border'] : '').'">'."\n".$section."</td></tr>\n";
+		}
+		return $body."</table>\n";
+	}
+
+	/**
+	 * Escape a label or heading of the html notification, unless html content is allowed
+	 *
+	 * @param string $label
+	 * @return string
+	 */
+	protected function html_label($label) : string
+	{
+		return $this->html_content_allow ? (string)$label : Api\Html::htmlspecialchars($label);
+	}
+
+	/**
+	 * Value of the html notification
+	 *
+	 * @param ?string $type
+	 * @param string|array $value
+	 * @return string
+	 */
+	protected function html_value($type, $value) : string
+	{
+		if (is_array($value))
+		{
+			error_log(__METHOD__."(".json_encode(func_get_args()).") value should be a string, no array!");
+			$value = implode(', ', $value);
+		}
+		if ($type === 'link')
+		{
+			// the link is often too long for html boxes chunk-split allows to break lines if needed
+			return Api\Html::a_href(chunk_split(rawurldecode($value),40,'&#8203;'),$value,'','target="_blank"');
+		}
+		// Only Convert nl2br on non-html content
+		if ($type === 'multiline' && strpos((string)$value, '<br') === false)
+		{
+			// already escaped, must NOT do htmlspecialchars again, but only for this value
+			return Api\Html::activate_links(nl2br($this->html_content_allow ? (string)$value : Api\Html::htmlspecialchars($value)));
+		}
+		return $this->html_content_allow ? Api\Html::activate_links((string)$value) : Api\Html::htmlspecialchars($value);
+	}
+
+	/**
+	 * Badge marking a modified field as "Changed" or a modified comment as "New", in words for screen readers
+	 *
+	 * @param bool $new
+	 * @return string
+	 */
+	protected function html_badge(bool $new) : string
+	{
+		return '<span class="egwNotificationBadge'.($new ? ' egwNotificationNew' : '').'" style="'.
+			self::HTML_STYLES[$new ? 'badge_new' : 'badge'].'">'.Api\Html::htmlspecialchars(lang($new ? 'new' : 'changed')).'</span>';
 	}
 
 	/**

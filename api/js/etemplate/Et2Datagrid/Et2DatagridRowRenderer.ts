@@ -307,9 +307,11 @@ export class Et2DatagridRowRenderer
 	 */
 	upgradeRenderedRows()
 	{
+		// While printing the rows are in their own container, the virtualized one is empty
+		const rowsBody = this.host._printRowsBody ?? this.host._rowsBody;
 		const rowElements = this.host._isTileView()
-		                    ? this.host._renderedDataRowElements(this.host._rowsBody)
-		                    : Array.from(this.host._rowsBody?.querySelectorAll("[data-row-id]:not(.dg-row-placeholder)") || []) as HTMLElement[];
+		                    ? this.host._renderedDataRowElements(rowsBody)
+		                    : Array.from(rowsBody?.querySelectorAll("[data-row-id]:not(.dg-row-placeholder)") || []) as HTMLElement[];
 		for(const rowElement of rowElements)
 		{
 			// Skip already-upgraded instances for the same row identity.
@@ -395,9 +397,14 @@ export class Et2DatagridRowRenderer
 		// Keep upgrade work under roughly half a 60fps frame (~16.7ms) so scrolling,
 		// input, and paint can still run in the same frame on typical hardware.
 		// 8ms is a pragmatic balance between throughput and UI responsiveness.
-		const budgetUntil = performance.now() + this._rowUpgradeFrameBudgetMs;
+		// Print rows are upgraded in one go: nobody scrolls or types while the "please wait"
+		// prompt is up, and every frame the work is spread over restyles the whole print tree
+		// again, which for a large print costs far more than the upgrades themselves.
+		const printing = !!this.host._printRows;
+		const budgetUntil = printing ? Infinity : performance.now() + this._rowUpgradeFrameBudgetMs;
+		const batchSize = printing ? Infinity : this._rowUpgradeBatchSize;
 		let processed = 0;
-		while(this.pendingRowUpgradeCount && processed < this._rowUpgradeBatchSize && performance.now() < budgetUntil)
+		while(this.pendingRowUpgradeCount && processed < batchSize && performance.now() < budgetUntil)
 		{
 			const rowElement = this._rowUpgradeQueue[this._rowUpgradeQueueHead++];
 			if(!rowElement)

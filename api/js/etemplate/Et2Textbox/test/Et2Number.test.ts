@@ -167,4 +167,31 @@ describe("'.' as thousands separator", () =>
 		});
 	});
 });
+/**
+ * hasValue is what turns a required widget's yellow off (etemplate2.css), so it has to follow the value.
+ * Et2Number has its own willUpdate(), which has to call the base's to keep that going.
+ */
+describe("Number widget hasValue", () =>
+{
+	beforeEach(before);
+
+	it("is set once there is a value", async() =>
+	{
+		element.value = "5";
+		await element.updateComplete;
+
+		assert.isTrue(element.classList.contains("hasValue"));
+	});
+
+	it("is cleared when the value is emptied", async() =>
+	{
+		element.value = "5";
+		await element.updateComplete;
+		element.value = "";
+		await element.updateComplete;
+
+		assert.isFalse(element.classList.contains("hasValue"));
+	});
+});
+
 inputBasicTests(before, "42", "input");

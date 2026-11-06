@@ -166,6 +166,8 @@ centered	common	bg	центриран
 central african republic	common	bg	Централноафриканска Републикя
 chad	common	bg	Чад
 change	common	bg	Промяна
+change category	common	bg	Промяна на категорията
+changed category to %1	common	bg	Променена категория на %1
 changes that you made may not be saved.	common	bg	Направените промени може да не бъдат запазени.
 charset	common	bg	Charset
 check all	common	bg	Маркира всички
@@ -730,6 +732,7 @@ remove	api	bg	Премахване
 remove selected accounts	common	bg	премахване на избраните акаунти
 remove shortcut	common	bg	Премахване на Shortcut-и
 remove this link (not the entry itself)	common	bg	Премахване на връзката (не и на записа)
+removed category	common	bg	Отстранена категория
 rename	common	bg	Преименуване
 repeat password	common	bg	Повтаряне на паролата
 replace	common	bg	Замяна

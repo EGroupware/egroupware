@@ -172,6 +172,13 @@ class timesheet_bo extends Api\Storage
 	{
 		parent::__construct(TIMESHEET_APP,self::TABLE,self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
 
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects timesheet's own queries - every raw
+		// SQL fragment timesheet builds itself now uses Api\Db\SqlFragment. Once
+		// requireSqlFragmentObjects() becomes the default (opt-out) for Api\Db generally, remove
+		// this clone again - Api\Storage::__construct() already defaults $no_clone=true.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
+
 		$this->convert_all_timestamps();
 
 		$this->config_data = Api\Config::read(TIMESHEET_APP);
@@ -547,15 +554,15 @@ class timesheet_bo extends Api\Storage
 		{
 			if ($filter['ts_status'] == self::BILLABLE)
 			{
-				$filter[] = '(ts_status IS NULL OR ts_status IN ('.
+				$filter[] = Api\Db\SqlFragment::raw('(ts_status IS NULL OR ts_status IN ('.
 					implode(',',array_keys(array_filter($this->status_labels_config,
-						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))';
+						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))');
 				unset($filter['ts_status']); // no status set
 			}
 			elseif ($filter['ts_status'] == self::ALL_STATUS)
 			{
 				// all timesheets with a status set, excluding timesheets without a status and deleted ones
-				$filter[] = '(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')';
+				$filter[] = Api\Db\SqlFragment::raw('(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')');
 				unset($filter['ts_status']);
 			}
 			elseif ($filter['ts_status'] !== 'all')
@@ -569,8 +576,8 @@ class timesheet_bo extends Api\Storage
 		}
 		else
 		{
-			$filter[] = '(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=' : '!= ') . self::DELETED_STATUS .
-				($filter['ts_status'] == self::DELETED_STATUS ? '' : ' OR ts_status IS NULL') . ')';
+			$filter[] = Api\Db\SqlFragment::raw('(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=' : '!= ') . self::DELETED_STATUS .
+				($filter['ts_status'] == self::DELETED_STATUS ? '' : ' OR ts_status IS NULL') . ')');
 		}
 		if(is_array($filter['ts_owner']) && !count($filter['ts_owner']))
 		{
@@ -699,8 +706,8 @@ class timesheet_bo extends Api\Storage
 
 		$last_end = $this->db->select(self::TABLE, 'MAX(ts_start + ts_duration * 60)', array(
 			'ts_owner' => $user,
-			'ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
-				' AND '.$this->db->quote($day_end->format('ts'), 'int'),
+			Api\Db\SqlFragment::raw('ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
+				' AND '.$this->db->quote($day_end->format('ts'), 'int')),
 		), __LINE__, __FILE__, false, '', TIMESHEET_APP)->fetchColumn();
 
 		return is_null($last_end) ? null : new Api\DateTime($last_end);
@@ -739,14 +746,14 @@ class timesheet_bo extends Api\Storage
 
 		$where = array(
 			'ts_owner' => $ts['ts_owner'],
-			'(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)',
-			'(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)',
-			'ts_start < '.$this->db->quote($end->format('ts'), 'int'),
-			'ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int'),
+			Api\Db\SqlFragment::raw('(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)'),
+			Api\Db\SqlFragment::raw('(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)'),
+			Api\Db\SqlFragment::raw('ts_start < '.$this->db->quote($end->format('ts'), 'int')),
+			Api\Db\SqlFragment::raw('ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int')),
 		);
 		if (!empty($ts['ts_id']))
 		{
-			$where[] = 'ts_id != '.(int)$ts['ts_id'];
+			$where[] = Api\Db\SqlFragment::raw('ts_id != '.(int)$ts['ts_id']);
 		}
 		$conflicts = array();
 		foreach($this->db->select(self::TABLE, 'ts_id,ts_title,ts_start,ts_duration', $where,
@@ -1099,6 +1106,42 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
+	 * Read what file_access() needs for several entries at once
+	 *
+	 * Registered as 'file_access_rows', so Api\Link::file_access_multiple() can answer a whole
+	 * directory listing's worth of access checks without reading one entry per query. It returns
+	 * rows only - every verdict still comes from file_access()/check_acl() above, which takes such
+	 * a row in place of an id.
+	 *
+	 * These are the plain entry rows, deliberately NOT taken through readRows()/db2data():
+	 * db2data() resolves pm_id from the entry's links, which costs a query per entry - exactly
+	 * what this exists to avoid - for a field the access check never looks at. check_acl() reads
+	 * ts_owner, ts_readable and ts_status, all of them columns of the row itself. Do not use these
+	 * rows for anything but that check: pm_id, ts_project_blur and the timestamp conversion
+	 * db2data() would have done are all missing from them.
+	 *
+	 * @param int[] $ids
+	 * @return array ts_id => entry pairs, entries that do not exist are left out
+	 */
+	function file_access_rows(array $ids)
+	{
+		$rows = array();
+		if (!$ids) return $rows;
+
+		foreach($this->db->select($this->table_name, '*', array('ts_id' => array_values($ids)),
+			__LINE__, __FILE__, false, '', TIMESHEET_APP) as $row)
+		{
+			$data = array();
+			foreach($this->db_cols as $db_col => $col)
+			{
+				$data[$col] = $row[$db_col] ?? null;
+			}
+			$rows[$data['ts_id']] = $data;
+		}
+		return $rows;
+	}
+
+	/**
 	 * updates the project titles in the timesheet application (called whenever a project name is changed in the project manager)
 	 *
 	 * Todo: implement via notification
@@ -1297,7 +1340,7 @@ class timesheet_bo extends Api\Storage
 		foreach($this->search('', false, 'ts_id DESC', '', '', false, 'AND', [0, 1], [
 			'cat_id' => Events::workingTimeCat(),
 			'ts_owner' => $this->user,
-			'ts_start BETWEEN '.$this->db->quote($start, 'int').' AND '.$this->db->quote($end, 'int'),
+			Api\Db\SqlFragment::raw('ts_start BETWEEN '.$this->db->quote($start, 'int').' AND '.$this->db->quote($end, 'int')),
 		]) ?? [] as $row)
 		{
 			return $row;

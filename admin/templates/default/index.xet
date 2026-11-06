@@ -19,19 +19,19 @@
 				<column width="120"/>
 			</columns>
 			<rows>
-				<row>
-					<nextmatch-sortheader label="Login-ID" id="account_lid"/>
-					<nextmatch-sortheader label="ID" id="account_id"/>
-					<nextmatch-sortheader label="Firstname" id="account_firstname"/>
-					<nextmatch-sortheader label="Lastname" id="account_lastname"/>
-					<nextmatch-sortheader label="EMail" id="account_email"/>
-					<nextmatch-sortheader label="Primary group" id="account_primary_group"/>
-					<nextmatch-sortheader label="Expires" id="account_expires"/>
-					<nextmatch-sortheader label="Created" id="created"/>
-					<nextmatch-sortheader label="Last modified" id="modified"/>
-					<nextmatch-sortheader label="Last login" id="account_lastlogin"/>
-					<nextmatch-sortheader label="Last IP" id="account_lastloginfrom"/>
-					<nextmatch-sortheader label="Last password change" id="account_lastpwd_change"/>
+				<row class="th">
+					<et2-nextmatch-sortheader  label="Login-ID" id="account_lid"/>
+					<et2-nextmatch-sortheader  label="ID" id="account_id"/>
+					<et2-nextmatch-sortheader  label="Firstname" id="account_firstname"/>
+					<et2-nextmatch-sortheader  label="Lastname" id="account_lastname"/>
+					<et2-nextmatch-sortheader  label="EMail" id="account_email"/>
+					<et2-nextmatch-sortheader  label="Primary group" id="account_primary_group"/>
+					<et2-nextmatch-sortheader  label="Expires" id="account_expires"/>
+					<et2-nextmatch-sortheader  label="Created" id="created"/>
+					<et2-nextmatch-sortheader  label="Last modified" id="modified"/>
+					<et2-nextmatch-sortheader  label="Last login" id="account_lastlogin"/>
+					<et2-nextmatch-sortheader  label="Last IP" id="account_lastloginfrom"/>
+					<et2-nextmatch-sortheader  label="Last password change" id="account_lastpwd_change"/>
 				</row>
 				<row class="$row_cont[status_class]">
 					<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
@@ -49,6 +49,7 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.index.group" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -59,13 +60,13 @@
 				<column width="25%"/>
 			</columns>
 			<rows>
-				<row>
+				<row class="th">
 					<et2-vbox>
-						<nextmatch-sortheader label="Group name" id="account_lid"/>
-						<nextmatch-sortheader label="Description" id="account_description"/>
-						<nextmatch-sortheader label="{Container} &amp; {Group name}" id="account_dn"/>
+						<et2-nextmatch-sortheader  label="Group name" id="account_lid"/>
+						<et2-nextmatch-sortheader  label="Description" id="account_description"/>
+						<et2-nextmatch-sortheader  label="{Container} &amp; {Group name}" id="account_dn"/>
 					</et2-vbox>
-					<nextmatch-sortheader label="EMail" id="email"/>
+					<et2-nextmatch-sortheader  label="EMail" id="email"/>
 					<et2-nextmatch-header  label="Members" id="account_members"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Applications" id="apps"></et2-nextmatch-header>
 				</row>
@@ -76,11 +77,12 @@
 						<et2-description  id="${row}[container]" statustext="$row_cont[account_dn]" noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis" noLang="1"></et2-url-email>
-					<et2-select-account  id="${row}[members]" readonly="true" noLang="1"></et2-select-account>
+					<et2-select-account  id="${row}[members]" readonly="true" noLang="1" class="adminGroupMembers"></et2-select-account>
 					<et2-select-app  id="${row}[apps]" readonly="true" multiple="true"></et2-select-app>
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.index.header" template="" lang="" group="0" version="1.9.001">
 		<et2-toolbar  id="account-toolbar">
@@ -99,9 +101,14 @@
 	<et2-template  id="admin.index" template="" lang="" group="0" version="1.9.001">
 		<et2-template  template="admin.index.header" slot="main-header"></et2-template>
         <et2-tree  slot="left" autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" parentId="admin_tree_target" stdImages="bullet"></et2-tree>
-		<nextmatch id="nm" template="admin.index.rows"/>
+		<et2-nextmatch  id="nm" template="admin.index.rows"></et2-nextmatch>
 		<et2-template  template="admin.index.group.header" slot="main-header" hidden="true"></et2-template>
-		<nextmatch id="groups" template="admin.index.group" class="hide"/>
+		<!-- The group list is only fetched once the user actually asks for it (tree > Groups):
+		     admin_ui::index() sends it num_rows=0 so the page carries no rows, and lazy="true"
+		     holds the client's own fetch back until this stops being hidden - without that it
+		     would spend an ajax_get_rows on every admin page load regardless.  app.ts'
+		     group_list() re-fetches on later visits only; the first one IS that initial fetch. -->
+		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true" lazy="true"></et2-nextmatch>
 		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" disabled="true"></et2-box>
 	</et2-template>

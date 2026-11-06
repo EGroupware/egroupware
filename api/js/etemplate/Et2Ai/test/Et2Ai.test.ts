@@ -1,6 +1,8 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import * as sinon from "sinon";
 import {Et2Ai} from "../Et2Ai";
+import {assertNoElement} from "../../test/assertDom";
+import "../../Et2Textarea/Et2Textarea";
 
 window.egw = {
 	ajaxUrl: () => "",
@@ -8,7 +10,10 @@ window.egw = {
 	lang: (label : string) => label,
 	preference: () => "en",
 	request: async() => ({success: true, result: ""}),
-	prompts: () => []
+	prompts: () => [],
+	image: () => "",
+	webserverUrl: "/egroupware",
+	tooltipUnbind: () => {}
 } as any;
 
 describe("Et2AI widget basics", () =>
@@ -40,9 +45,9 @@ describe("Et2AI widget basics", () =>
 
 		const slot = el.shadowRoot!.querySelector("slot:not([name])");
 		assert.exists(slot);
-		assert.notExists(el.shadowRoot!.querySelector("sl-dropdown"));
-		assert.notExists(el.shadowRoot!.querySelector("sl-card"));
-		assert.notExists(el.shadowRoot!.querySelector("sl-alert"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-dropdown"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-card"));
+		assertNoElement(el.shadowRoot!.querySelector("sl-alert"));
 	});
 
 	it("selecting a prompt triggers AI run", async() =>
@@ -267,5 +272,36 @@ describe("Et2AI applying results", () =>
 
 			assert.isFalse((el as any)._canApplyResult(wrapper));
 		});
+	});
+});
+
+describe("Et2AI in the target's field controls", () =>
+{
+	it("moves its dropdown into a target that has field controls", async() =>
+	{
+		const el = await fixture<Et2Ai>(html`
+            <et2-ai endpoint="test-endpoint">
+                <et2-textarea></et2-textarea>
+            </et2-ai>
+		`);
+		const textarea = el.querySelector("et2-textarea") as HTMLElement;
+		await el.updateComplete;
+
+		const control = textarea.querySelector(":scope > [slot='field-controls']") as HTMLElement;
+		assert.exists(control, "container in the textarea's field-controls slot");
+		assert.exists(control.shadowRoot.querySelector("sl-dropdown .et2-ai-trigger"), "dropdown rendered into it");
+		assertNoElement(el.shadowRoot.querySelector(".et2-ai-dropdown"), "no overlay of our own any more");
+	});
+
+	it("keeps overlaying a target without field controls", async() =>
+	{
+		const el = await fixture<Et2Ai>(html`
+            <et2-ai endpoint="test-endpoint">
+                <textarea>Original text</textarea>
+            </et2-ai>
+		`);
+		await el.updateComplete;
+
+		assert.exists(el.shadowRoot.querySelector(".et2-ai-dropdown sl-dropdown"));
 	});
 });

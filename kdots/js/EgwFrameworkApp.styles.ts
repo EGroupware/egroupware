@@ -277,9 +277,10 @@ export default css`
         }
 	}
     @media print {
-		scrollbar-width: none;
+        /* Both axes: overflow-y visible next to overflow-x hidden is a scroll container, which makes the
+           browser lose the last rows of a long printed list */
         .content {
-            overflow-y: visible !important;
+            overflow: visible !important;
         }
 
 		.egw_fw_app__header {
@@ -291,11 +292,11 @@ export default css`
             grid-template-columns: 0px 0px auto !important;
         }
 
-        /* Show all content */
+        /* Show all content.  Not a scroll container (overflow: auto), which makes the browser lose the
+           last rows of a long printed list */
         .egw_fw_app__main {
-            overflow: auto !important;
+            overflow: visible !important;
 			height: auto !important;
-			scrollbar-width: none;
 
             /* Hide spitter icons */
 
@@ -322,7 +323,7 @@ export default css`
 	et2-image {
 		filter: var(--image-filter);
 	}
-    sl-details.favorites {
+    et2-details.favorites {
 		&::part(content) {
 			padding: 0;
 		}

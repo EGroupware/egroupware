@@ -1,7 +1,8 @@
 import {css, html, LitElement} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
-import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
+import {et2_INextmatchHeader} from "../../et2_extension_nextmatch";
+import type {NextmatchInterface} from "../NextmatchInterfaces";
 import {customElement} from "lit/decorators/custom-element.js";
 
 /**
@@ -47,12 +48,12 @@ export class Et2NextmatchHeader extends Et2Widget(LitElement) implements et2_INe
 	 * The owning nextmatch instance.
 	 * Set by the parent header bar via the `et2_INextmatchHeader` contract.
 	 */
-	protected nextmatch : et2_nextmatch | null = null;
+	protected nextmatch : NextmatchInterface | null = null;
 
 	/**
 	 * Store owning nextmatch for later interactions (sorting/filtering hooks).
 	 */
-	setNextmatch(nextmatch : et2_nextmatch)
+	setNextmatch(nextmatch : NextmatchInterface)
 	{
 		this.nextmatch = nextmatch;
 	}

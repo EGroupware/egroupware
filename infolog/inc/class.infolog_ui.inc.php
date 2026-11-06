@@ -1378,6 +1378,7 @@ class infolog_ui
 						'prefix' => 'type_',
 						'children' => $types,
 						'group' => $group,
+						'onExecute' => 'javaScript:app.infolog.ajax_action',
 						'icon' => 'task',
 					),
 					'status' => array(
@@ -1385,6 +1386,7 @@ class infolog_ui
 						'prefix' => 'status_',
 						'children' => $statis,
 						'group' => $group,
+						'onExecute' => 'javaScript:app.infolog.ajax_action',
 						'icon' => 'ongoing',
 					),
 					'completion' => array(
@@ -1392,10 +1394,14 @@ class infolog_ui
 						'prefix' => 'completion_',
 						'children' => $percent,
 						'group' => $group,
+						'onExecute' => 'javaScript:app.infolog.ajax_action',
 						'icon' => 'completed',
 					),
+					// info_cat holds exactly ONE category (action() assigns it), so the dialog
+					// offers Set/Remove rather than Add/Remove/Replace
 					'cat' =>  Etemplate\Widget\Nextmatch::category_action(
-						'infolog',$group,'Change category','cat_'
+						'infolog',$group,'Change category','cat_',
+						true, 0, Etemplate\Widget\Nextmatch::DEFAULT_MAX_MENU_LENGTH, false
 					),
 					'startdate' => array(
 						'caption' => 'Start date',
@@ -1423,6 +1429,7 @@ class infolog_ui
 				'group' => $group,
 				'disableClass' => 'rowNoClose',
 				'confirm_mass_selection' => true,
+				'onExecute' => 'javaScript:app.infolog.ajax_action',
 			),
 			'close_all' => array(
 				'caption' => 'Close all',
@@ -1432,6 +1439,7 @@ class infolog_ui
 				'allowOnMultiple' => false,
 				'disableClass' => 'rowNoCloseAll',
 				'confirm_mass_selection' => true,
+				'onExecute' => 'javaScript:app.infolog.ajax_action',
 			),
 			'print' => array(
 				'caption' => 'Print',
@@ -1541,6 +1549,7 @@ class infolog_ui
 				'icon' => 'revert',
 				'disableClass' => 'rowNoUndelete',
 				'confirm_mass_selection' => true,
+				'onExecute' => 'javaScript:app.infolog.ajax_action',
 			);
 		}
 		$actions['info_drop_mail'] = array(
@@ -1555,20 +1564,47 @@ class infolog_ui
 	}
 
 	/**
-	 * Apply an action to multiple events, but called via AJAX instead of submit
+	 * Apply an action to multiple entries, but called via AJAX instead of submit
+	 *
+	 * Unlike a submit this leaves the list standing, so it keeps its scroll position, selection
+	 * and row state - egw.refresh() below updates only the rows that changed.
 	 *
 	 * @param string $action
 	 * @param string[] $selected
-	 * @param bool $all_selected All events are selected, not just what's in $selected
+	 * @param bool $all_selected All entries matching the current filters are selected, not just $selected
+	 * @param array $checkboxes values of the checkbox actions in the same menu, eg. no_notifications
 	 */
-	public function ajax_action($action, $selected, $all_selected)
+	public function ajax_action($exec_id, $action, $selected, $all_selected, array $checkboxes = [])
 	{
+		// The context menu calls this directly, so the eTemplate's exec id is the only thing
+		// saying the caller had one of our pages open - see Nextmatch::validateExecId()
+		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
+		{
+			return;
+		}
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
-		$session_name = 'calendar_list';
 
-		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, [], $msg))
+		// "select all" means every entry matching the CURRENT filters, so action() has to re-run
+		// get_rows() with them - it is handed the query get_rows() itself cached, the same one
+		// index() restores on a submit. Passing an empty query here made get_rows() fall back to
+		// no filter at all, ie. EVERY InfoLog the user can see - so with no cached query to say
+		// what "all" meant, refuse rather than guess. Found by its own test.
+		$query = [];
+		if ($all_selected)
+		{
+			$query = (array)Api\Cache::getSession('infolog', $this->called_by.'session_data');
+			if (empty($query['get_rows']) && empty($query['col_filter']) && empty($query['filter']))
+			{
+				Api\Json\Response::get()->call('egw.message',
+					lang('Could not determine the current selection, please try again.'), 'error');
+				return;
+			}
+		}
+
+		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $query, $msg,
+			!empty($checkboxes['no_notifications'])))
 		{
 			$msg = lang('%1 entries %2',$success,$action_msg);
 		}
@@ -1576,9 +1612,13 @@ class infolog_ui
 		{
 			$msg = lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 		}
-		$app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
-		Api\Json\Response::get()->call('egw.refresh', $msg, $app, $selected[0], $all_selected || count($selected) > 1 ? null :
-			($action === 'delete' ? 'delete' : 'edit'), $app, null, null, $failed ? 'error' : 'success');
+		// egw.refresh()'s 2nd argument doubles as the "message only, push will do the rest"
+		// sentinel, but its 5th (_targetapp) must always be a real app: egw_appWindow() is
+		// called on it BEFORE the msg-only early-return, and resolving 'msg-only-push-refresh'
+		// throws in the kdots framework - which aborts refresh() before it ever shows $msg.
+		$push_app = Api\Json\Push::onlyFallback() || $all_selected ? 'infolog' : 'msg-only-push-refresh';
+		Api\Json\Response::get()->call('egw.refresh', $msg, $push_app, $selected[0], $all_selected || count($selected) > 1 ? null :
+			($action === 'delete' ? 'delete' : 'edit'), 'infolog', null, null, $failed ? 'error' : 'success');
 	}
 
 	/**

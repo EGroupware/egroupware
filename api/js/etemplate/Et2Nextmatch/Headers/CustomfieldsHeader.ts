@@ -8,6 +8,9 @@ import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import "./SortableHeader";
+import {lightDomStylesTemplate} from "../../Et2Customfields/Et2CustomfieldsBase";
+
+import styles from "./CustomfieldsHeader.styles";
 
 /**
  * @summary Renders visible custom fields as sortable Nextmatch headers.
@@ -66,6 +69,8 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	/**
 	 * Render nested sortheaders into light DOM so the owning Nextmatch/datagrid
 	 * can reflect single-column sort state without piercing another shadow root.
+	 * Lit only adopts `static styles` into a shadow root, so our CSS is rendered as a
+	 * <style> of our own instead.
 	 */
 	protected createRenderRoot()
 	{
@@ -193,7 +198,11 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			customfields: this.customfields || {},
 			fields: this.fields || {},
 			exclude: this.exclude,
-			typeFilter: this.typeFilter
+			typeFilter: this.typeFilter,
+			// A column header has no tabs.  Without this every customfield assigned to one would
+			// resolve as not visible, which also takes it out of the column-selection dialog this
+			// header supplies - so it could not even be switched back on.
+			honourTabs: false
 		});
 	}
 
@@ -218,17 +227,28 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		};
 		const changed = mergeCustomfieldSettingsFromSources(attrs, localData, globalData);
 		attrs.fields = this._normalizeFieldsAttribute(attrs.fields);
-		if(changed)
+		if(!changed)
 		{
-			this.customfields = attrs.customfields || {};
-			this.fields = preserveVisibility ? {...previousFields} : (attrs.fields || {});
-			this._hasExplicitFields = preserveVisibility;
-			this.exclude = attrs.exclude || this.exclude;
-			this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
-			this._recomputeVisibility();
-			this._hydrationAttempts = 0;
+			return false;
 		}
-		return changed;
+		const before = [this.customfields, this.fields, this.exclude, this.typeFilter];
+		this.customfields = attrs.customfields || {};
+		this.fields = preserveVisibility ? previousFields : (attrs.fields || {});
+		this._hasExplicitFields = preserveVisibility;
+		this.exclude = attrs.exclude || this.exclude;
+		this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
+		// The merge also reports keys this header never stores (eg. "app" from ~custom_fields~),
+		// so it can report changed on every call.
+		// Only a change to what the header uses counts,
+		// otherwise resetting the attempts would keep the hydration retry running forever.
+		const after = [this.customfields, this.fields, this.exclude, this.typeFilter];
+		if(after.every((value, index) => value === before[index]))
+		{
+			return false;
+		}
+		this._recomputeVisibility();
+		this._hydrationAttempts = 0;
+		return true;
 	}
 
 	private _needsHydrationRetry() : boolean
@@ -303,50 +323,6 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * This component renders into light DOM so the owning Datagrid can discover
-	 * nested sort headers. Lit static styles are shadow-root scoped, so these
-	 * local styles need to render with the light-DOM template.
-	 */
-	private _lightDomStylesTemplate()
-	{
-		return html`
-			<style>
-				et2-nextmatch-header-customfields {
-					display: block;
-				}
-				et2-nextmatch-header-customfields .label.et2_label_empty {
-					min-width: var(--sl-spacing-small);
-				}
-
-                et2-nextmatch-header-customfields .customfields-header {
-                    position: relative;
-                }
-
-                et2-nextmatch-header-customfields .customfields-header__fields {
-					width: 100%;
-					border-collapse: collapse;
-				}
-
-                et2-nextmatch-header-customfields .customfields-header__fields td {
-					padding: 0;
-					vertical-align: top;
-				}
-
-                et2-nextmatch-header-customfields .customfields-header__field-header {
-					display: block;
-					width: 100%;
-				}
-
-                et2-nextmatch-header-customfields .customfields-header__field-list {
-					max-height: 5em;
-					overflow: hidden;
-                    overflow-y: auto;
-				}
-			</style>
-		`;
-	}
-
-	/**
 	 * Get custom fields in the shape expected by Nextmatch column selection.
 	 */
 	getCustomfieldSelectionItems() : Et2CustomfieldSelectionItem[]
@@ -385,7 +361,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		if(fields.length)
 		{
 			return html`
-				${this._lightDomStylesTemplate()}
+                ${lightDomStylesTemplate(styles)}
                 <div class="customfields-header" part="base">
                     <div class="customfields-header__field-list" part="field-list">
                         ${this._fieldsTableTemplate(fields)}
@@ -394,7 +370,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			`;
 		}
 		return html`
-			${this._lightDomStylesTemplate()}
+            ${lightDomStylesTemplate(styles)}
             <div class="customfields-header" part="base">
 				<span
                         class="customfields-header__label label ${this._overflowCaption() ? "" : "et2_label_empty"}"

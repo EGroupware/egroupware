@@ -122,20 +122,10 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		// otherwise it only gives an error on server-side
 		let method = null;
 		let method_id = null;
-		let pasteEnabled = false;
-		let pasteTooltip = ""
 		if(this.value && this.value.to_id && typeof this.value.to_id != 'object')
 		{
 			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			method_id = this.value.to_app + ':' + this.value.to_id;
-
-			getClipboardFiles().then((files) =>
-			{
-				if(files.length > 0 && !this.disabled && !this.readonly)
-				{
-					this.pasteButton.removeAttribute("disabled");
-				}
-			});
 		}
 
 		return html`
@@ -173,24 +163,26 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     part="vfs button clipboard"
                     exportparts="base:button_base"
                     id="paste"
-                    image="clipboard-data" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
+                    image="clipboard-data" noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}
                     ?readonly=${this.readonly}
-                    disabled
+                    ?disabled=${this.disabled || !method_id}
                     multiple
                     @click=${async(e) =>
                             {
-                                // Pre-select all files
-                                let files = [];
-                                let cbFiles = await getClipboardFiles();
-                                cbFiles.forEach(f => files.push(f.path));
-                                e.target.firstElementChild.value = files;
-                                e.target.firstElementChild.requestUpdate();
-
-                                waitForEvent(e.target._dialog, "sl-after-show").then(async() =>
+                                // Before the first await: the event is dispatched by then, e.target no longer
+                                // the select, and the dialog may already be shown (reading the clipboard
+                                // fetches the titles of linked entries)
+                                const select = e.currentTarget;
+                                waitForEvent(select._dialog, "sl-after-show").then(async() =>
                                 {
                                     this.handleFilePaste(await this.pasteDialog.getComplete());
                                 });
+
+                                // Pre-select all files
+                                const cbFiles = await getClipboardFiles();
+                                select.firstElementChild.value = cbFiles.map(f => f.path);
+                                select.firstElementChild.requestUpdate();
                             }}
             >
                 <et2-link-paste-dialog open

@@ -54,7 +54,11 @@ git config --global user.email || git config --global user.email "you@example.co
 	&& mkdir chunks \
 	&& ./install-cli.php \
 	&& ln -sf /var/lib/egroupware/header.inc.php \
-	&& sed -e 's/apache/www-data/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/cron.d/egroupware
+	# egroupware.cron is system-crontab format (needs a USER field for /etc/cron.d/); Alpine's
+	# busybox crond uses PER-USER crontabs (/etc/crontabs/<user>) which must NOT have one - a
+	# leftover "apache"/"www-data" token here becomes the command name crond execs, failing
+	# silently with "www-data: command not found" (exit 127) on every run
+	&& sed -e 's/\tapache\t/\t/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/crontabs/www-data
 }
 
 # check if we have further apps to install (EPL or old ones ...)
@@ -125,4 +129,4 @@ done 2>&1 | tee -a $LOG
 # to run async jobs
 service cron start
 
-exec php-fpm$PHP_VERSION --nodaemonize
+exec php-fpm --nodaemonize

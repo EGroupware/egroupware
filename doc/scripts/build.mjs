@@ -77,10 +77,20 @@ async function buildTheDocs(watch = false)
 		}
 
 		// To debug use this in terminal: DEBUG=Eleventy* npx @11ty/eleventy
+		// Raise the heap for eleventy. Every page is parsed into a JSDOM document by the
+		// html-transform pipeline, and the site is now large enough (130+ widget pages, most of
+		// them carrying live examples) that a full rebuild hits node's default old-space limit
+		// and dies with "Ineffective mark-compacts near heap limit". The watcher just disappears
+		// when that happens - no error in the page, the port simply stops answering - so it reads
+		// as a hang rather than a crash.
 		const child = spawn('npx', args, {
-			timeout: 120000,
+			// 120s was fine on a dev workstation but too tight on a CPU-constrained host (eg.
+			// our dev/deployment box) once the site grew past ~130 widget pages - a full,
+			// non-incremental build there can easily take several minutes.
+			timeout: 600000,
 			stdio: watch ? 'inherit' : 'pipe',
-			cwd: 'doc/etemplate2'
+			cwd: 'doc/etemplate2',
+			env: {...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS || ''} --max-old-space-size=4096`.trim()}
 		});
 
 		if (!watch)
@@ -121,7 +131,10 @@ async function buildTheDocs(watch = false)
 				}
 				catch (e)
 				{
-					if (Date.now() - started > 120000)
+					// matches the spawn() timeout above - search.json is itself written near the
+					// end of a full build, so this is really the same "did the build finish in
+					// time" budget, not an independent server-startup check
+					if (Date.now() - started > 600000)
 					{
 						settled = true;
 						clearInterval(readyInterval);

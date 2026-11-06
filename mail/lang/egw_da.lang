@@ -6,6 +6,7 @@
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	da	%1 kræver Sieve-udvidelsen %2, prøv måske %1 eller et højere antal dage.
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	da	Et indsat, trukket eller indsat billede, der overstiger en bestemt filstørrelse, skaleres ned til denne bredde (med bevarelse af billedformatet) for at undgå, at e-mailen bliver for stor. Lad feltet være tomt for at bruge standardværdien på 800 px.
 account	mail	da	Konto
 account editable by user	mail	da	Kontoen kan redigeres af brugeren
 account not reachable	mail	da	Der kan ikke oprettes forbindelse til kontoen.
@@ -29,7 +30,6 @@ all my email addresses	mail	da	alle mine e-mailadresser
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	da	Alle undermapper vil også blive slettet, og alle beskeder i alle berørte mapper vil gå tabt.
 allow external images	mail	da	Tillad eksterne billeder
 allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
-allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
 allow images from listed domains in html emails	mail	da	Tillad billeder fra listede domæner i HTML-e-mails.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	da	Giver en bruger mulighed for at læse, skrive og oprette mapper og mails, sende til den, tilføje beskeder til den og slette beskeder.
 always allow external sources from %1	mail	da	Tillad altid eksterne kilder fra %1
@@ -161,6 +161,7 @@ header	mail	da	Overskrift
 header lines	mail	da	Overskriftslinjer
 hide from	mail	da	Skjul Fra
 high priority	mail	da	Høj prioritet
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	da	Hvor længe en besked skal forblive åben i forhåndsvisningspanelet eller et pop op-vindue, før den markeres som læst – dette giver dig mulighed for at skimme en besked uden at markere den som læst. »Straks« er den tidligere standardindstilling.
 html	mail	da	HTML
 ident name	mail	da	Ident navn
 ident name email	mail	da	Ident navn [E-mail]
@@ -173,6 +174,8 @@ if you want to see a preview of a mail by single clicking onto the subject, enab
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
 import ca-signed certificate for this key	mail	da	Importer et CA-signeret certifikat til denne nøgle
+import certificate	mail	da	Importer certifikat
+import message	mail	da	Importer besked
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	da	Import af besked %1 mislykkedes. Kunne ikke gemme beskeden i mappen %2 pga: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	da	Import af besked %1 mislykkedes. Destinationsmappen %2 findes ikke.
 import of message %1 failed. destination folder not set.	mail	da	Import af meddelelse %1 mislykkedes. Destinationsmappe ikke indstillet.
@@ -216,8 +219,10 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	da	Markér alle som læst
 mark all messages in folder as read	mail	da	Markér alle meddelelser i mappen som læste
 mark as deleted	mail	da	Marker som slettet
+mark message as read after	mail	da	Marker besked som læst efter
 matches	mail	da	resultater
 matches regexp	mail	da	resultater regexp
+max. width of inline images in a mail body or signature (in px)	mail	da	Maks. bredde for indlejrede billeder i e-mailteksten eller signaturen (i px)
 message learned as spam and moved to spam folder	mail	da	Besked opdaget som spam og flyttet til spam-mappen
 message verified successfully but the signer’s certificate could not be verified.	mail	da	Meddelelsen er bekræftet, men underskriverens certifikat kunne ikke verificeres.
 message verified successfully.	mail	da	Besked bekræftet med succes.
@@ -238,6 +243,7 @@ never show	mail	da	Vis aldrig
 never show notification	mail	da	Vis aldrig meddelelse
 new mail from %1	mail	da	Ny mail fra %1
 new mail notification	mail	da	Meddelelse om ny e-mail
+new mail to sender	mail	da	Ny e-mail til afsenderen
 new message type	mail	da	Ny meddelelsestype
 new subject	mail	da	Nyt emne
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	da	Ingen adresse TO/CC/BCC angivet, og ingen mappe til at gemme beskeden i angivet.
@@ -273,6 +279,7 @@ please enter password	mail	da	Indtast venligst adgangskode
 please select a address	mail	da	Vælg venligst en adresse
 post	mail	da	Send
 predefined addresses for compose	mail	da	Foruddefinerede adresser til sammensætning
+prevent managing filters	mail	da	Forhindre redigering af filtre
 preview pane	mail	da	Vindueslayout
 printing	mail	da	Udskrivning
 private key created, downloading csr...	mail	da	Privat nøgle oprettet, henter CSR ...
@@ -325,6 +332,7 @@ see attachments for content of the orignial mail	mail	da	Se vedhæftede filer fo
 select all	mail	da	Vælg alle
 select an existing entry in order to append mail content to it	mail	da	Vælg en eksisterende post for at tilføje mailindhold til den
 select an item to read	mail	da	Vælg et element at læse
+select file to import into folder	mail	da	Vælg fil, der skal importeres til mappen
 select mail addresses from addressbook	mail	da	Vælg e-mail-adresse(r) fra adressebog
 select or insert email address	mail	da	Vælg eller indsæt e-mail-adresse
 selected date range (with quicksearch)	mail	da	Valgt datointerval (med hurtigsøgning)
@@ -333,7 +341,6 @@ send message pgp encrypted: requires keys from all recipients!	mail	da	Send besk
 sent folder	mail	da	Sendt Mappe
 server supports special-use folders	mail	da	Serveren understøtter mapper til særlig brug
 set flags	mail	da	Markér e-mail som
-set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	da	Skal signaturen indsættes efter (standard) eller før et svar eller en videresendelse, og skal signaturen være synlig og kunne ændres under udarbejdelsen.
 show all addresses	mail	da	Vis alle adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude.

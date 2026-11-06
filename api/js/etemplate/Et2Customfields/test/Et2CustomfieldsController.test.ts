@@ -14,7 +14,6 @@ import {legacyVisibility, sampleCustomfields} from "./legacyVisibilityHelper";
  *
  * Pass criteria:
  * - Controller visible-map equals legacy baseline maps for each scenario.
- * - `isAllowedFilterField()` allows select/app fields and blocks filemanager.
  *
  * Environment note:
  * - These tests intentionally target deterministic controller behavior only.
@@ -86,14 +85,30 @@ describe("Et2CustomfieldsController", () =>
 		assert.deepEqual(itemMap, controller.getVisibleMap(), "selection items should mirror visibility state");
 	});
 
-	it("applies legacy filter field type allowance rules", () =>
+	/**
+	 * Contract: a type filter narrows whatever else selected the field.  The server sends every
+	 * customfield as selected and leaves the filtering to us, so a field restricted to other entry
+	 * types must stay hidden even though it arrived as selected.
+	 * Setup: select every field explicitly, with a type filter that only one of them matches.
+	 * Pass: only the matching field and the ones with no type restriction are visible.
+	 */
+	it("applies the type filter even when every field was selected", () =>
 	{
 		const controller = new Et2CustomfieldsController({
-			customfields: sampleCustomfields
+			customfields: {
+				cf_task: {name: "cf_task", label: "Task", type: "text", type2: ["task"]},
+				cf_other: {name: "cf_other", label: "Other", type: "text", type2: ["Dienstreise"]},
+				cf_any: {name: "cf_any", label: "Any", type: "text", type2: []}
+			},
+			// what the server sends: everything selected
+			fields: {cf_task: true, cf_other: true, cf_any: true},
+			typeFilter: "task"
 		});
-		assert.isTrue(controller.isAllowedFilterField(sampleCustomfields.cf_project, {project: true}), "app-backed fields should be allowed as filters");
-		assert.isTrue(controller.isAllowedFilterField({type: "select"}, {}), "select fields should be allowed as filters");
-		assert.isFalse(controller.isAllowedFilterField(sampleCustomfields.cf_file, {filemanager: true}), "filemanager should not be allowed as a filter");
+		assert.deepEqual(
+			controller.getVisibleFieldNames(),
+			["cf_task", "cf_any"],
+			"a customfield restricted to other entry types should not show"
+		);
 	});
 
 	it("applies tab limits to default visibility", () =>
@@ -108,6 +123,43 @@ describe("Et2CustomfieldsController", () =>
 			cf_private: true,
 			cf_file: true
 		}, "tab-specific customfields should be hidden when their tab does not match");
+	});
+
+	it("ignores a customfield's tab where there are no tabs", () =>
+	{
+		// A list, a row and a nextmatch column header all render outside any tab, so they have no
+		// tab for a customfield to match.  Honouring `tab` there hides every customfield assigned
+		// to one - and in the column header that also drops it from the column-selection dialog,
+		// so it cannot be switched back on either.
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				honourTabs: false
+			}).getVisibleMap(),
+			{cf_text: true, cf_project: true, cf_private: true, cf_file: true},
+			"a customfield on a tab still belongs in a list"
+		);
+
+		// The same with an explicit selection, which is the shape a saved column preference has
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				fields: {cf_project: true},
+				honourTabs: false
+			}).getVisibleFieldNames(),
+			["cf_project"],
+			"selecting a tab's customfield in a list has to be enough to show it"
+		);
+
+		// ... and a dialog, which does have tabs, is unaffected
+		assert.deepEqual(
+			new Et2CustomfieldsController({
+				customfields: sampleCustomfields,
+				tab: "missing"
+			}).getVisibleFieldNames(),
+			["cf_text", "cf_private", "cf_file"],
+			"a tab still shows only its own customfields"
+		);
 	});
 
 	it("normalizes array-shaped customfields by field name for chooser labels", () =>

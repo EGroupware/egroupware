@@ -21,24 +21,24 @@
 			<rows>
 				<row class="th">
 					<et2-vbox>
-						<nextmatch-sortheader label="Start" id="cal_start"/>
-						<nextmatch-sortheader id="cal_end" label="End"/>
+						<et2-nextmatch-sortheader  label="Start" id="cal_start"/>
+						<et2-nextmatch-sortheader  id="cal_end" label="End"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Title" id="cal_title"/>
-						<nextmatch-sortheader label="Description" id="cal_description"/>
+						<et2-nextmatch-sortheader  label="Title" id="cal_title"/>
+						<et2-nextmatch-sortheader  label="Description" id="cal_description"/>
 					</et2-vbox>
-					<nextmatch-sortheader label="Title" id="cal_title"/>
-					<nextmatch-sortheader label="Description" id="cal_description"/>
-					<nextmatch-sortheader label="Recurrence" id="recure"/>
+					<et2-nextmatch-sortheader  label="Title" id="cal_title"/>
+					<et2-nextmatch-sortheader  label="Description" id="cal_description"/>
+					<et2-nextmatch-sortheader  label="Recurrence" id="recure"/>
 					<et2-nextmatch-header  label="Project" id="pm_id"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Category" id="cat_id"></et2-nextmatch-header>
 					<et2-vbox>
-						<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
-						<nextmatch-sortheader id="cal_location" label="Location"/>
+						<et2-nextmatch-sortheader  id="cal_owner" label="Owner" readonly="true"/>
+						<et2-nextmatch-sortheader  id="cal_location" label="Location"/>
 					</et2-vbox>
-					<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
-					<nextmatch-sortheader id="cal_location" label="Location"/>
+					<et2-nextmatch-sortheader  id="cal_owner" label="Owner" readonly="true"/>
+					<et2-nextmatch-sortheader  id="cal_location" label="Location"/>
 					<et2-nextmatch-header-account  id="participant" label="Participants" emptyLabel="All"></et2-nextmatch-header-account>
 				</row>
 				<row class="row" valign="top">

@@ -52,11 +52,61 @@ describe("Link to widget", () =>
 	{
 		assert.instanceOf(element, Et2LinkTo);
 	});
+
+	// The clipboard can be filled after the dialog was opened (other tab, context menu of a link),
+	// so the button must not depend on what was in it when the widget rendered
+	it('offers the clipboard button of a stored entry even while the clipboard is empty', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: "25412"};
+		await elementUpdated(element);
+
+		const paste = element.shadowRoot.querySelector("#paste");
+		assert.isOk(paste, "No clipboard button");
+		assert.isFalse(paste.hasAttribute("disabled"), "Clipboard button is disabled");
+	});
+
+	// Pasting is only implemented for stored entries, a new one would keep broken links on save
+	it('disables the clipboard button of an entry not yet stored', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: {}};
+		await elementUpdated(element);
+
+		assert.isTrue(element.shadowRoot.querySelector("#paste").hasAttribute("disabled"));
+	});
+
+	// Reading the clipboard waits for the titles of linked entries, the click is long dispatched by then
+	it('pre-selects the clipboard contents when it holds a linked entry', async() =>
+	{
+		element.value = {to_app: "calendar", to_id: "25412"};
+		await elementUpdated(element);
+		const clipboard = {type: ["link"], selected: [{id: "acilog::202883", data: {}}]};
+		const egw = Object.assign({}, window.egw, {
+			getSessionItem: () => JSON.stringify(clipboard),
+			link_title: () => new Promise(resolve => setTimeout(() => resolve("A todo"), 50))
+		});
+		const egwStub = sinon.stub(window, "egw").value(Object.assign(() => egw, egw));
+		try
+		{
+			const paste = <HTMLElement>element.shadowRoot.querySelector("#paste");
+			const dialog = <any>paste.firstElementChild;
+			paste.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+			await new Promise(resolve => setTimeout(resolve, 150));
+
+			assert.deepEqual(dialog.value, ["acilog::202883"]);
+		}
+		finally
+		{
+			egwStub.restore();
+		}
+	});
 });
 
 // value is a plain string | LinkInfo, unmodified by any getter/setter override - a plain string
 // round-trips exactly, unlike the LinkInfo-object shape its sibling widgets normalize to.
 inputBasicTests(before, "infolog:123", "input", {
+	// conformance: the controls are the buttons (add / paste / ...) and the list of links, none of which can be
+	// required or carry the widget's help text - it has none to show
+	skip: ["required-aria", "help-text-aria"],
 	checkEmptyDisplay: (element : Et2LinkTo) =>
 		assert.notOk(element.shadowRoot.querySelector("et2-link-entry")?.["value"]?.id, "Displaying something when there is no value")
 });

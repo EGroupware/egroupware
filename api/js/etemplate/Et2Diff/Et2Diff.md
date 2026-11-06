@@ -15,6 +15,11 @@ Diff widget shows changes
 Shows a snippet of a [diff](https://www.gnu.org/software/diffutils/manual/html_node/Unified-Format.html), and if you
 click on it shows a dialog with the whole diff.
 
+A diff that is taller than the height it is capped to is clipped, and hovering it brings up a
+button in its bottom right corner that opens the dialog. A diff that already fits gets no button
+and is not clickable at all - the dialog would show nothing the reader cannot already see. Read
+`overflowing` to ask whether any of it is currently cut off.
+
 ## Examples
 
 ### noDialog

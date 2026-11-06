@@ -9,14 +9,16 @@
 				<column width="130"/>
 			</columns>
 			<rows>
-				<row>
-
+				<!-- Deliberately empty: the mobile skin shows no column headers.  It still needs
+				     class="th" so Et2RowProvider finds the header row by class rather than by
+				     position, which resolves to the wrong element for a <grid> structure. -->
+				<row class="th">
 				</row>
 				<row class="$row_cont[status_class]">
 					<et2-vbox>
-						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-description  id="${row}[account_lid]" class="adminLoginId" noLang="1"></et2-description>
 						<et2-hbox>
-							<et2-description  id="${row}[account_lastname]" noLang="1"></et2-description>
+							<et2-description  id="${row}[account_lastname]" class="adminLastname" noLang="1"></et2-description>
 							<et2-description  id="${row}[account_firstname]" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"></et2-url-email>
@@ -35,6 +37,7 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.index.group" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -43,12 +46,11 @@
 				<column width="130"/>
 			</columns>
 			<rows>
-				<row>
-
+				<row class="th">
 				</row>
 				<row class="$row_cont[status_class]">
 					<et2-vbox>
-						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
+						<et2-description  id="${row}[account_lid]" class="adminLoginId" noLang="1"></et2-description>
 						<et2-hbox>
 							<et2-description  id="${row}[account_description]" noLang="1"></et2-description>
 						</et2-hbox>
@@ -61,13 +63,15 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="admin.index" template="" lang="" group="0" version="1.9.001">
         <et2-tree  autoloading="admin_ui::ajax_tree" id="tree" onclick="app.admin.run" slot="left" parentId="admin_tree_target" stdImages="bullet"></et2-tree>
 		<et2-description  id="plus_button_container"></et2-description>
 		<et2-button-icon  class="plus_button" id="add" onclick="app.admin.account({id:&quot;add&quot;})" noSubmit="true" image="plus-lg"></et2-button-icon>
-		<nextmatch id="nm" template="admin.index.rows"/>
-		<nextmatch id="groups" template="admin.index.group"/>
+		<et2-nextmatch  id="nm" template="admin.index.rows"></et2-nextmatch>
+		<!-- Only fetched once the user asks for it (tree > Groups) - see the desktop index.xet -->
+		<et2-nextmatch  id="groups" template="admin.index.group" disabled="true" lazy="true"></et2-nextmatch>
 		<et2-iframe  frameborder="1" height="100%" id="iframe" scrolling="auto" width="100%" disabled="true"></et2-iframe>
 		<et2-box  id="ajax_target" height="99%" disabled="true"></et2-box>
 	</et2-template>

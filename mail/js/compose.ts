@@ -2447,6 +2447,7 @@ export class MailCompose
 		this.isReplyCompose = true;
 		const subject = '[FWD] ' + messages[0].subject;
 		this.et2.getWidgetById('subject')?.set_value(subject);
+		await this.applyPreferredIdentityForNewCompose();
 
 		// no quoted body - still apply the normal new-message signature (classic getForwardData()
 		// never suppresses it for this mode either, $suppressSigOnTop stays false)

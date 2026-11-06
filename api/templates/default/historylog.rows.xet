@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<overlay>
+	<!--
+		Row structure for <et2-historylog>.
+
+		The legacy `historylog` widget hard-coded these five columns in TypeScript and wrote its
+		headers with jQuery; they live here instead so Et2RowProvider can read them like any other
+		datagrid row template.
+
+		Column ids are the row-data keys Api\Storage\History::get_rows() returns (it strips the
+		`history_` prefix), except `user_ts`, which get_rows() adds as the user-time timestamp.
+
+		Headers are plain labels on purpose: the history log's sort is fixed (newest first) and its
+		filters live in a drawer (historylog.filters.xet), not in the header row.
+	-->
+	<template id="api.historylog.rows" template="" lang="" group="0" version="">
+		<grid width="100%">
+			<columns>
+				<column width="120"/>
+				<column width="100"/>
+				<column width="160"/>
+				<column width="50%"/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<et2-nextmatch-header id="user_ts" label="Date"></et2-nextmatch-header>
+					<et2-nextmatch-header id="owner" label="User"></et2-nextmatch-header>
+					<et2-nextmatch-header id="status" label="Changed"></et2-nextmatch-header>
+					<et2-nextmatch-header id="new_value" label="New value"></et2-nextmatch-header>
+					<et2-nextmatch-header id="old_value" label="Old value"></et2-nextmatch-header>
+				</row>
+				<row valign="top">
+					<et2-date-time id="user_ts" readonly="true"></et2-date-time>
+					<!--
+						An entry reached through a share records who the share was made out to
+						instead of an account, so there is no account to show for those rows.  Both
+						widgets sit in the cell and each renders its own field; the account hides
+						itself when share_email is set, and the address hides itself when it is not.
+
+						They need the box: a <row>'s direct children ARE the cells, so two bare
+						widgets would be two cells - a sixth one in a five-column grid, which
+						_buildRowElement() silently drops.
+					-->
+					<et2-hbox>
+						<et2-select-account id="owner" readonly="true" hidden="$row_cont[share_email]"></et2-select-account>
+						<et2-description id="share_email" hidden="!$row_cont[share_email]"></et2-description>
+					</et2-hbox>
+					<!-- id="$row": the label comes from the widget's own registry, not sel_options -->
+					<et2-historylog-status id="$row"></et2-historylog-status>
+					<!-- id="$row": which widget renders the value depends on the row's status -->
+					<et2-historylog-value id="$row" field="new_value"></et2-historylog-value>
+					<et2-historylog-value id="$row" field="old_value"></et2-historylog-value>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

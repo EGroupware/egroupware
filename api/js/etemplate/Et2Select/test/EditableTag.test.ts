@@ -3,6 +3,7 @@ import {Et2Select} from "../Et2Select";
 import {Et2Tag} from "../Tag/Et2Tag";
 import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 import {ensureSearchInputHasSelect, tagNodes} from "./helpers";
+import {assertNoElement} from "../../test/assertDom";
 
 // Stub global egw for cssImage & widget.egw() to find
 // @ts-ignore
@@ -186,7 +187,7 @@ describe("Editable tag", () =>
 		tag.forEach((t : Et2Tag) => wait.push(t.updateComplete))
 		await Promise.all(wait);
 
-		assert.isNull(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
+		assertNoElement(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
 	});
 });
 describe("Select is not editable", () =>
@@ -199,7 +200,7 @@ describe("Select is not editable", () =>
 		let tag = tagNodes(element);
 		assert.isAbove(tag.length, 0, "No tags found");
 
-		assert.isNull(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
+		assertNoElement(tag[0].shadowRoot.querySelector("et2-button-icon[label='edit*']"), "Unexpected edit button");
 	});
 
 });

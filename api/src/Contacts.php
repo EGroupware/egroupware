@@ -1384,6 +1384,25 @@ class Contacts extends Contacts\Storage
 	}
 
 	/**
+	 * Read what file_access() needs for several contacts at once
+	 *
+	 * Registered as 'file_access_rows', so Api\Link::file_access_multiple() can answer a whole
+	 * directory listing's worth of access checks without reading one contact per query. It returns
+	 * contacts only - every verdict still comes from file_access()/check_perms() above, which
+	 * takes such a contact in place of an id.
+	 *
+	 * readRows() is Contacts\Storage's, deliberately not this class's read(): check_perms() reads
+	 * a contact with parent::read(), without the access check and extras this class adds on top.
+	 *
+	 * @param int[] $ids
+	 * @return array contact_id => contact pairs, contacts that do not exist are left out
+	 */
+	function file_access_rows(array $ids)
+	{
+		return parent::readRows($ids);
+	}
+
+	/**
 	 * Read (virtual) org-entry (values "common" for most contacts in the given org)
 	 *
 	 * @param string $org_id org_name:oooooo|||org_unit:uuuuuuuuu|||adr_one_locality:lllllll (org_unit and adr_one_locality are optional)

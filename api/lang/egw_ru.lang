@@ -243,8 +243,10 @@ centered	common	ru	по центру
 central african republic	common	ru	Центральноафриканская Республика
 chad	common	ru	Чад
 change	common	ru	Изменить
+change category	common	ru	Изменить категорию
 change owner	common	ru	Сменить владельца
 changed	common	ru	Изменилось
+changed category to %1	common	ru	Изменена категория на %1
 changes that you made may not be saved.	common	ru	Внесенные вами изменения могут не сохраниться.
 charset	common	ru	Charset
 check all	common	ru	Проверить все
@@ -1063,6 +1065,7 @@ remove selected accounts	common	ru	Удалить выбранные учетн�
 remove shortcut	common	ru	Удалить ярлычок
 remove this link (not the entry itself)	common	ru	Убрать эту ссылку (не запись по ней)
 removed (now) empty directory fs_id=%1	admin	ru	Удалить (теперь) пустой каталог fs_id=%1
+removed category	common	ru	Удаленная категория
 rename	common	ru	Переименовать
 repeat password	common	ru	Повторить пароль
 replace	common	ru	Замена

@@ -120,6 +120,21 @@ export class Et2Switch extends Et2InputWidget(SlSwitch)
 		}
 	}
 
+	/**
+	 * Our label sits outside the <label> Shoelace wraps around the input, so it never reaches the switch.  Clicking
+	 * it does what the label of any checkbox does: focuses the switch and toggles it.
+	 */
+	protected handleLabelClick()
+	{
+		const input = this.getInputNode();
+		if(!input || this.disabled)
+		{
+			return;
+		}
+		input.focus();
+		input.click();
+	}
+
 	set value(new_value : string | boolean)
 	{
 		this.requestUpdate("checked");

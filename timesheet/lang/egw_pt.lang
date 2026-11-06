@@ -7,9 +7,7 @@ apply the action on the whole query, not only the shown timesheets!!!	timesheet	
 ask to start and stop working time with session	timesheet	pt	Pedir para iniciar e parar o tempo de trabalho com a sessão
 by	timesheet	pt	por
 category for 'working time'	admin	pt	Categoria para 'Tempo de trabalho'
-change category	timesheet	pt	Alterar categoria
 change owner when updating	timesheet	pt	Alterar o proprietário ao atualizar
-changed category to %1	timesheet	pt	Categoria alterada para 1%
 create a single 'working time' timesheet per	timesheet	pt	Criar uma única folha de tempos “Tempo de trabalho” por
 create new links	timesheet	pt	Criar novas ligações
 creates a new field	timesheet	pt	cria um novo campo

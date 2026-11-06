@@ -44,6 +44,30 @@ class TestTracking extends Tracking
 	}
 
 	/**
+	 * Injectable message and details, returned by get_message() and get_details()
+	 *
+	 * @var string|array
+	 */
+	public $message = '';
+	public $details = array();
+
+	/**
+	 * Test double for get_message(): returns $this->message
+	 */
+	protected function get_message($data, $old, $receiver = null)
+	{
+		return $this->message;
+	}
+
+	/**
+	 * Test double for get_details(): returns $this->details
+	 */
+	function get_details($data, $receiver = null)
+	{
+		return $this->details;
+	}
+
+	/**
 	 * Expose protected parent method so it can be tested directly (bypassing track())
 	 *
 	 * @param array $data

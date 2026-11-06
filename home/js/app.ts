@@ -135,6 +135,14 @@ export class HomeApp extends EgwApp
 				portlet.style.gridArea = settings.row + "/" + settings.col + "/ span " + (settings.height || 1) + "/ span " + (settings.width || 1);
 			}
 
+			// Favorite portlets can bring an app-provided header template (eg. Filemanager's path
+			// navigation).  Here is the first point where both the portlet's content and its
+			// nextmatch exist, so it's where that template gets slotted in.
+			if(typeof portlet.applyHeaderTemplate == "function")
+			{
+				portlet.applyHeaderTemplate();
+			}
+
 			// Ordering of portlets
 			// Only needs to be done once, but its hard to tell when everything is loaded
 			this._do_ordering();

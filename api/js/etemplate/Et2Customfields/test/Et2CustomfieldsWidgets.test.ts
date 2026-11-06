@@ -1,5 +1,6 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import type {Et2CustomfieldsBase} from "../Et2CustomfieldsBase";
+import {assertNoElement} from "../../test/assertDom";
 
 let openedLink : string | null = null;
 const egwStub = {
@@ -9,7 +10,14 @@ const egwStub = {
 	open_link: (link : string) =>
 	{
 		openedLink = link;
-	}
+	},
+	// a widget with statustext binds a tooltip as soon as it connects
+	tooltipBind: () => {},
+	tooltipUnbind: () => {},
+	// Et2Date polls for the lang preference for 2.5s when it gets none, inside a 3s test timeout
+	preference: (name : string) => name == "lang" ? "en" : null,
+	ajaxUrl: (url : string) => url,
+	holidays: () => Promise.resolve({})
 };
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
@@ -40,6 +48,7 @@ describe("Et2Customfields webcomponents", () =>
 		await import("../Et2Customfields");
 		await import("../Et2CustomfieldsList");
 		await import("../Et2CustomfieldsFilters");
+		await import("../../Et2Link/Et2LinkEntry");
 		await import("../../Et2Select/Et2Select");
 		await import("../../Et2Select/SelectTypes");
 		await import("../../Et2Textbox/Et2Textbox");
@@ -64,6 +73,30 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
+	 * Contract: a list shows a customfield that belongs to a tab.  A nextmatch row renders
+	 * outside any tab, so there is no tab for such a field to match - and matching it there
+	 * hid every tabbed customfield from every row, with nothing said about why.
+	 * Setup: render a list holding one untabbed and one tabbed customfield.
+	 * Pass: both are visible.
+	 */
+	it("shows a tabbed customfield in a list, which has no tabs", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-list></et2-customfields-list>
+		`);
+		element.customfields = {
+			cf_here: {label: "Here", type: "text", tab: null},
+			cf_on_a_tab: {label: "On a tab", type: "text", tab: "Files"}
+		};
+		await element.updateComplete;
+		assert.deepEqual(
+			element.getVisibleFieldNames(),
+			["cf_here", "cf_on_a_tab"],
+			"a customfield assigned to a tab still has a value worth showing in a row"
+		);
+	});
+
+	/**
 	 * Contract: the full list widget renders child field widgets in light DOM and
 	 * keeps child widget instances stable when only row values change.
 	 * Setup: render one visible text customfield, then replace value.
@@ -82,7 +115,7 @@ describe("Et2Customfields webcomponents", () =>
 
 		const firstWidget = element.querySelector("[data-field='cf_text'] > *") as HTMLElement | null;
 		await (firstWidget as any)?.updateComplete;
-		assert.isNull(element.shadowRoot, "customfields list should render into light DOM");
+		assertNoElement(element.shadowRoot, "customfields list should render into light DOM");
 		assert.isNotNull(firstWidget, "customfields list should create field widgets in its light DOM");
 		assert.equal(firstWidget?.localName, "et2-textbox_ro", "list text customfields should use readonly textboxes");
 		assert.include(firstWidget?.textContent || "", "First row", "field widget should display the current row value");
@@ -124,38 +157,506 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
-	 * Contract: normal customfields lists keep labels supplied by widget mapping,
-	 * while no-label list rendering suppresses those child widget labels.
-	 * Setup: render the same fallback description customfield in normal and
-	 * no-label list widgets.
-	 * Pass: the normal widget receives the customfield label, and the no-label
-	 * widget does not.
+	 * Contract: a list shows values, not field names - the name goes on the surrounding row
+	 * as a tooltip.  A URL is the documented exception, because a bare address says nothing
+	 * on its own, and no-label row rendering drops even that.
+	 * Setup: render a plain customfield and a URL customfield in normal and no-label lists.
+	 * Pass: the plain field gets no label either way, the URL field gets the customfield
+	 * label only in the normal list.
 	 */
-	it("can suppress child widget labels for row-style list rendering", async() =>
+	it("shows values without field names, and suppresses even the URL label for rows", async() =>
 	{
+		await import("../../Et2Url/Et2Url");
+		await import("../../Et2Url/Et2UrlReadonly");
+		const customfields = {
+			cf_unknown: {label: "Visible label", type: "not-registered"},
+			cf_url: {label: "Homepage", type: "url"}
+		};
 		const normal = await fixture<Et2CustomfieldsBase>(html`
 			<et2-customfields-list></et2-customfields-list>
 		`);
-		normal.customfields = {
-			cf_unknown: {label: "Visible label", type: "not-registered"}
-		};
-		normal.fields = {cf_unknown: true};
-		normal.value = {"#cf_unknown": "Value"};
+		normal.customfields = customfields;
+		normal.fields = {cf_unknown: true, cf_url: true};
+		normal.value = {"#cf_unknown": "Value", "#cf_url": "https://example.org"};
 		await normal.updateComplete;
 
-		const normalWidget = normal.querySelector("[data-field='cf_unknown'] > *") as any;
-		assert.equal(normalWidget?.label, "Visible label", "normal customfields lists should keep child labels");
+		assert.notOk(
+			(normal.querySelector("[data-field='cf_unknown'] > *") as any)?.label,
+			"a list field should be shown without its name"
+		);
+		assert.equal(
+			(normal.querySelector("[data-field='cf_url'] > *") as any)?.label,
+			"Homepage",
+			"a URL in a list should be shown by name rather than by address"
+		);
+		assertNoElement(normal.querySelector("label"), "the list itself should not render labels");
 
 		const rowStyle = await fixture<Et2CustomfieldsBase & {noLabel : boolean}>(html`
 			<et2-customfields-list no-label></et2-customfields-list>
 		`);
-		rowStyle.customfields = normal.customfields;
-		rowStyle.fields = {cf_unknown: true};
-		rowStyle.value = {"#cf_unknown": "Value"};
+		rowStyle.customfields = customfields;
+		rowStyle.fields = {cf_unknown: true, cf_url: true};
+		rowStyle.value = {"#cf_unknown": "Value", "#cf_url": "https://example.org"};
 		await rowStyle.updateComplete;
 
-		const rowWidget = rowStyle.querySelector("[data-field='cf_unknown'] > *") as any;
-		assert.equal(rowWidget?.label, "", "row-style customfields lists should suppress child labels");
+		assert.equal(
+			(rowStyle.querySelector("[data-field='cf_url'] > *") as any)?.label,
+			"",
+			"row-style customfields lists should suppress child labels"
+		);
+	});
+
+	/**
+	 * Contract: the visibility map survives transformAttributes().  That only passes a property
+	 * through untouched when it is declared `type: Object`; an untyped one goes through
+	 * `"" + value` and arrives as the string "[object Object]", which selects nothing.  A
+	 * template giving a comma-separated list of names as a string still has to work.
+	 * Setup: send a fields map and a fields string the way a template's modifications do.
+	 * Pass: the map stays a map, the string still selects its named fields.
+	 */
+	it("keeps the visibility map an object through transformAttributes", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields-list></et2-customfields-list>
+		`);
+		element.transformAttributes({
+			customfields: {cf_one: {label: "One", type: "text"}, cf_two: {label: "Two", type: "text"}},
+			fields: {cf_one: true}
+		});
+		await element.updateComplete;
+		assert.isObject(element.fields, "a visibility map must not be stringified into an attribute");
+		assert.deepEqual(element.getVisibleFieldNames(), ["cf_one"], "only the selected field should show");
+
+		const fromString = await fixture<any>(html`
+			<et2-customfields-list></et2-customfields-list>
+		`);
+		fromString.transformAttributes({
+			customfields: {cf_one: {label: "One", type: "text"}, cf_two: {label: "Two", type: "text"}},
+			fields: "cf_two"
+		});
+		await fromString.updateComplete;
+		assert.deepEqual(fromString.getVisibleFieldNames(), ["cf_two"], "a comma-separated list should still work");
+	});
+
+	/**
+	 * Contract: templates place a single customfield as `<customfields id="#Name" label="..."/>`,
+	 * and that label names the field rather than the customfield's own name.  With more than one
+	 * field showing there is nothing for it to name, so the fields keep their own labels.
+	 * Setup: render one field with a label, then two fields with the same label set.
+	 * Pass: the single field takes the given label; the two keep their own.
+	 */
+	it("lets a single-field placement rename the field", async() =>
+	{
+		const single = await fixture<any>(html`
+			<et2-customfields label="Membership type"></et2-customfields>
+		`);
+		single.customfields = {cf_one: {label: "Mitgliedsart", type: "text", rows: 1}};
+		single.fields = {cf_one: true};
+		await single.updateComplete;
+		assert.equal(
+			single.querySelector("[data-field='cf_one'] > *")?.label,
+			"Membership type",
+			"a single placed customfield should take the label the template gave it"
+		);
+
+		const many = await fixture<any>(html`
+			<et2-customfields label="Membership type"></et2-customfields>
+		`);
+		many.customfields = {
+			cf_one: {label: "Mitgliedsart", type: "text", rows: 1},
+			cf_two: {label: "Jahr", type: "text", rows: 1}
+		};
+		many.fields = {cf_one: true, cf_two: true};
+		await many.updateComplete;
+		assert.equal(
+			many.querySelector("[data-field='cf_one'] > *")?.label,
+			"Mitgliedsart",
+			"with several fields showing, each keeps its own label"
+		);
+	});
+
+	/**
+	 * Contract: a customfields widget's onchange belongs to the field it renders.  Templates
+	 * written against the legacy widget read `widget.value` and `widget.select_options` in the
+	 * handler, so `widget` has to be the generated input, not the container.
+	 * Setup: render a select customfield with an onchange.
+	 * Pass: the generated widget carries the handler, and the container does not swallow it.
+	 */
+	it("puts onchange on the generated widget, not on itself", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		let sawValue = null;
+		element.onchange = function() { sawValue = this.value; };
+		element.customfields = {cf_select: {label: "Select", type: "select", values: {a: "A", b: "B"}}};
+		element.fields = {cf_select: true};
+		await element.updateComplete;
+
+		const widget = element.querySelector("[data-field='cf_select'] > *") as any;
+		assert.isFunction(widget?.onchange, "the generated widget should carry the handler");
+		widget.value = "b";
+		widget.onchange.call(widget);
+		assert.equal(sawValue, "b", "the handler should see the generated widget, with its value");
+	});
+
+	/**
+	 * Contract: a multi-line text customfield gets the AI assistant offered around it, the way the
+	 * legacy widget wrapped one - et2-ai works on whatever is slotted into it, so the textarea has
+	 * to be its child.  A single-line one, and an editor that carries its own tools, do not.
+	 * Setup: render a multi-row text, a single-row text and an htmlarea customfield.
+	 * Pass: only the multi-row text sits inside an et2-ai.
+	 */
+	it("offers the AI assistant only when the customfield asks for it", async() =>
+	{
+		await import("../../Et2Ai/Et2Ai");
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_area: {label: "Notes", type: "text", rows: 4},
+			cf_ai: {label: "Draft", type: "text", rows: 4, values: {noAiTools: false}},
+			cf_html: {label: "Body", type: "htmlarea", values: {noAiTools: false}}
+		};
+		element.fields = {cf_area: true, cf_ai: true, cf_html: true};
+		await element.updateComplete;
+
+		assert.equal(
+			element.querySelector("[data-field='cf_area'] > *")?.localName,
+			"et2-textarea",
+			"customfields do not get AI tools by default - the server turns them off for these types"
+		);
+
+		const wrapped = element.querySelector("[data-field='cf_ai'] > *");
+		assert.equal(wrapped?.localName, "et2-ai", "a customfield that asks for them should be wrapped");
+		assert.equal(wrapped?.firstElementChild?.localName, "et2-textarea", "the textarea has to be slotted into it");
+
+		assert.notEqual(
+			element.querySelector("[data-field='cf_html'] > *")?.localName,
+			"et2-ai",
+			"an editor with its own tools is never wrapped, even when asked"
+		);
+	});
+
+	/**
+	 * Contract: `<et2-customfields field="Name"/>` places one customfield.  The server builds an id
+	 * of "#Name" from the same attribute and reads the value back from it, so the widget has to
+	 * arrive at the same id, or what it submits lands nowhere.
+	 * Setup: transform attributes with a field name, and without one.
+	 * Pass: the id is the prefixed field name, or the server's default key when no field is named.
+	 */
+	it("takes its id from the field it was asked to place", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.transformAttributes({field: "Mitgliedsart"});
+		assert.equal(element.id, "#Mitgliedsart", "the server reads the value back from this id");
+
+		const all = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		all.transformAttributes({});
+		assert.equal(all.id, "custom_fields", "without a field named, it is the whole set");
+	});
+
+	/**
+	 * Contract: templates whose onchange handlers were written against the legacy widget call
+	 * get_value() on it.
+	 * Setup: render a customfield and read it back both ways.
+	 * Pass: the legacy name returns what getValue() does.
+	 */
+	it("keeps the legacy get_value() name working", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", rows: 1}};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": "kept"};
+		await element.updateComplete;
+		assert.deepEqual(element.get_value(), element.getValue());
+		assert.equal(element.get_value()["#cf_text"], "kept");
+	});
+
+	/**
+	 * Contract: rendering must not hand a field back the value it started with.  lit re-runs the
+	 * ref callback for the same element on every render, and by then the field holds what the user
+	 * typed - re-applying would silently discard their input.  A genuinely new value, eg. the entry
+	 * being reloaded, still has to reach the field.
+	 * Setup: type into a field, force a re-render, then change the widget's own value.
+	 * Pass: the typed value survives the re-render; the reload replaces it.
+	 */
+	it("keeps what the user typed across a re-render", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", rows: 1}};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": "from the server"};
+		await element.updateComplete;
+
+		const field = element.querySelector("[data-field='cf_text'] > *") as any;
+		field.value = "typed by the user";
+
+		element.requestUpdate();
+		await element.updateComplete;
+		assert.equal(
+			element.getValue()["#cf_text"],
+			"typed by the user",
+			"a re-render must not throw away what the user typed"
+		);
+		assert.equal(element.querySelector("[data-field='cf_text'] > *"), field, "the same field is still there");
+
+		element.value = {"#cf_text": "reloaded"};
+		await element.updateComplete;
+		assert.equal(
+			element.getValue()["#cf_text"],
+			"reloaded",
+			"a new value from the server should still reach the field"
+		);
+	});
+
+	/**
+	 * Contract: a filemanager customfield renders its name, an upload and a button to link an
+	 * existing file, and still submits exactly one value - neither the caption nor the button may
+	 * appear as a value of its own, or the server sees a customfield name that does not exist.
+	 * The caption is there because an upload renders its label inside its own button, which puts
+	 * the name somewhere different from every other customfield and loses it entirely when
+	 * noUpload hides that button.
+	 * Setup: render a filemanager customfield.
+	 * Pass: all three are in the DOM, and getValue() reports only the customfield itself.
+	 */
+	it("renders a field's extra widgets without submitting them", async() =>
+	{
+		await import("../../Et2Vfs/Et2VfsUpload");
+		await import("../../Et2Vfs/Et2VfsSelectButton");
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_file: {label: "Attachment", type: "filemanager"}};
+		element.fields = {cf_file: true};
+		await element.updateComplete;
+
+		const rendered = [...element.querySelectorAll("[data-field='cf_file'] > *")].map((w : any) => w.localName);
+		assert.deepEqual(
+			rendered,
+			["et2-label", "et2-vfs-upload", "et2-vfs-select", "div"],
+			"a filemanager customfield needs its name, the upload, the button to link an existing file, and somewhere to list the files"
+		);
+		// The upload lists its files directly after its own button unless told otherwise, which
+		// would put a file it holds between the two buttons.  The container has to come after both.
+		const upload = element.querySelector("[data-field='cf_file'] > et2-vfs-upload");
+		const fileList = element.querySelector("[data-field='cf_file'] > div.customfields__file-list");
+		assert.isOk(fileList, "the upload is pointed at a container, so one has to be there");
+		assert.equal(upload.fileListTarget, ".customfields__file-list", "and the upload has to be pointed at it");
+		assert.equal(
+			fileList.compareDocumentPosition(element.querySelector("[data-field='cf_file'] > et2-vfs-select"))
+			& Node.DOCUMENT_POSITION_PRECEDING,
+			Node.DOCUMENT_POSITION_PRECEDING,
+			"the files are listed after both buttons, not between them"
+		);
+		assert.equal(
+			element.querySelector("[data-field='cf_file'] > et2-label")?.value,
+			"Attachment",
+			"the caption names the field, since the upload cannot show its own label here"
+		);
+		// The button links into the upload's own directory, which it can only learn from the upload:
+		// the server sends that path as an element attribute of the upload, so there is nothing for
+		// the generated attributes to carry.  Without this the server is asked to link into nothing
+		// and puts the file in a temp directory the entry never picks up.
+		const button = element.querySelector("[data-field='cf_file'] > et2-vfs-select");
+		assert.isNotOk(button.methodId, "nothing to link into until the upload has a path");
+		upload.path = "infolog:123:cf_file";
+		element.requestUpdate();
+		await element.updateComplete;
+		assert.equal(
+			button.methodId, "infolog:123:cf_file",
+			"the button has to be told where to link the file, or it is sent without a target"
+		);
+
+		assert.deepEqual(
+			Object.keys(element.getValue()),
+			["#cf_file"],
+			"only the field's own value is submitted - the button has no customfield name"
+		);
+	});
+
+	/**
+	 * Contract: a readonly filemanager customfield is still named.  A print or view template is
+	 * nothing but readonly fields, and every other type shows its label there, so this one has to
+	 * as well - but a readonly upload has no button, and the button is where an upload keeps its
+	 * own label, so the caption has to supply it here exactly as it does for noUpload.
+	 * Setup: render a filemanager customfield in a readonly container.
+	 * Pass: the caption is there and names the field, and the button to link a file is not.
+	 */
+	it("names a filemanager customfield that is only being shown", async() =>
+	{
+		await import("../../Et2Vfs/Et2VfsUpload");
+		await import("../../Et2Vfs/Et2VfsSelectButton");
+		const element = await fixture<any>(html`
+			<et2-customfields readonly></et2-customfields>
+		`);
+		element.customfields = {cf_file: {label: "Attachment", type: "filemanager"}};
+		element.fields = {cf_file: true};
+		await element.updateComplete;
+
+		assert.deepEqual(
+			[...element.querySelectorAll("[data-field='cf_file'] > *")].map((w : any) => w.localName),
+			["et2-label", "et2-vfs-upload"],
+			"the name has to come from the caption, and there is nothing to link into"
+		);
+		assert.equal(
+			element.querySelector("[data-field='cf_file'] > et2-label")?.value,
+			"Attachment",
+			"a shown file with no name beside it does not say which field it is"
+		);
+	});
+
+	/**
+	 * Contract: et2-customfields is itself the submitted input.  etemplate2.getValues() only
+	 * visits widgets that implement et2_IInput, and Customfields::validate() reads one
+	 * {"#name": value} map out of the widget's own id - so the widget reports every editable
+	 * field together rather than letting each generated widget submit itself.
+	 * Setup: render editable text and select customfields, then change one.
+	 * Pass: all four et2_IInput methods exist, getValue() returns the prefixed map, and the
+	 * dirty flag follows the generated widgets.
+	 */
+	it("submits every editable customfield under its own id", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_text: {label: "Text", type: "text", rows: 1},
+			cf_select: {label: "Select", type: "select", values: {open: "Open", done: "Done"}}
+		};
+		element.fields = {cf_text: true, cf_select: true};
+		element.value = {"#cf_text": "first", "#cf_select": "open"};
+		await element.updateComplete;
+
+		["getValue", "isDirty", "resetDirty", "isValid"].forEach((method) =>
+			assert.isFunction(element[method], `et2_IInput requires ${method}(), or getValues() skips us`)
+		);
+
+		assert.deepEqual(
+			element.getValue(),
+			{"#cf_text": "first", "#cf_select": "open"},
+			"values should be reported as a prefixed map"
+		);
+
+		element.resetDirty();
+		assert.isFalse(element.isDirty(), "nothing is changed right after a reset");
+
+		const text = element.querySelector("[data-field='cf_text'] > *") as any;
+		text.value = "second";
+		assert.isTrue(element.isDirty(), "a changed field should make the customfields dirty");
+		assert.equal(element.getValue()["#cf_text"], "second", "getValue should read the live widget");
+	});
+
+	/**
+	 * Contract: a template that places <customfields/> with no id still has its values read from
+	 * `custom_fields` server-side (Customfields::GLOBAL_ID), and readonly fields are not submitted
+	 * because the server has nothing to validate for them.
+	 * Setup: render a widget with no id, and a readonly one.
+	 * Pass: the id defaults to custom_fields, and a readonly widget submits an empty map.
+	 */
+	it("defaults its id to custom_fields, and submits nothing when readonly", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.transformAttributes({});
+		assert.equal(element.id, "custom_fields", "a customfields widget with no id needs the server's key");
+
+		const readonly = await fixture<any>(html`
+			<et2-customfields readonly></et2-customfields>
+		`);
+		readonly.customfields = {cf_text: {label: "Text", type: "text", rows: 1}};
+		readonly.fields = {cf_text: true};
+		readonly.value = {"#cf_text": "shown"};
+		await readonly.updateComplete;
+		assert.deepEqual(readonly.getValue(), {}, "a readonly customfield should not be submitted");
+	});
+
+	/**
+	 * Contract: generated field widgets need our array managers and instance manager to reach the
+	 * server and resolve readonly, but must NOT be moved by Et2Widget.addChild(), which appends.
+	 * Setup: render an editable customfield and inspect the generated widget's placement.
+	 * Pass: it has us as its parent and is still inside the row lit put it in.
+	 */
+	it("parents generated widgets without moving them out of their row", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", rows: 1}};
+		element.fields = {cf_text: true};
+		await element.updateComplete;
+
+		const row = element.querySelector("[data-field='cf_text']");
+		const widget = row?.firstElementChild as any;
+		assert.equal(widget?.getParent(), element, "the generated widget should reach our array managers");
+		assert.equal(widget?.parentElement, row, "it should stay in the row, not be appended to the host");
+	});
+
+	/**
+	 * Contract: a customfields widget renders into its own light DOM but can itself sit inside
+	 * another component's shadow root - a nextmatch puts its rows inside et2-datagrid's - and it
+	 * has to be styled there too.  A document-level stylesheet does not reach a shadow root, and
+	 * one adopted onto that root does not survive the datagrid reassigning its adoptedStyleSheets.
+	 * Setup: attach a shadow root to a host, connect an et2-customfields-list inside it, then
+	 * clear that root's adoptedStyleSheets the way the datagrid's own render does.
+	 * Pass: the widget is still laid out by its own stylesheet.
+	 */
+	it("styles itself inside another component's shadow root", async() =>
+	{
+		const host = await fixture<HTMLElement>(html`
+			<div></div>
+		`);
+		const shadow = host.attachShadow({mode: "open"});
+		const list = document.createElement("et2-customfields-list") as any;
+		shadow.appendChild(list);
+		list.customfields = {cf_text: {label: "Text", type: "text"}};
+		list.fields = {cf_text: true};
+		list.value = {"#cf_text": "Value"};
+		await list.updateComplete;
+
+		shadow.adoptedStyleSheets = [];
+		await list.updateComplete;
+
+		assert.equal(
+			getComputedStyle(list.querySelector(".customfields-list")).display,
+			"flex",
+			"the widget should be laid out by its own stylesheet inside a shadow root"
+		);
+	});
+
+	/**
+	 * Contract: an editable customfield is named by the generated widget's own label, not by
+	 * a sibling <label> - a custom element is not labelable, so a sibling would neither focus
+	 * it on click nor name it for a screen reader.
+	 * Setup: render an editable text customfield with a label.
+	 * Pass: the generated widget carries the label and the widget renders no <label> element.
+	 */
+	it("lets the generated widget carry its own label when editable", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_text: {label: "Project code", type: "text", rows: 1}
+		};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": "abc"};
+		await element.updateComplete;
+
+		const widget = element.querySelector("[data-field='cf_text'] > *") as any;
+		await widget?.updateComplete;
+
+		assert.equal(widget?.label, "Project code", "the generated widget should carry the field label");
+		assertNoElement(element.querySelector("label"), "no inert sibling <label> should be rendered");
 	});
 
 	it("wires readonly URL customfield widgets to their default action", async() =>
@@ -201,10 +702,68 @@ describe("Et2Customfields webcomponents", () =>
 			"editable single-row text should use textbox"
 		);
 		assert.equal(
-			element.querySelector("[data-field='cf_notes'] > *")?.localName,
+			// a multi-line text customfield is wrapped in et2-ai, so look inside it
+			element.querySelector("[data-field='cf_notes'] et2-textarea")?.localName,
 			"et2-textarea",
 			"editable multi-row text should use textarea"
 		);
+	});
+
+	/**
+	 * Contract: false as a field's value means empty.  The server sends it for an empty field
+	 * when a submit only re-renders the form, eg. Addressbook's address book change.
+	 * Setup: render an editable date customfield with the value false.
+	 * Pass: the date widget is empty, not the invalid date "false" parses to, which failed
+	 * validation on the next save.
+	 */
+	it("treats false as an empty field value", async() =>
+	{
+		await import("../../Et2Date/Et2Date");
+		const {et2_arrayMgr} = await import("../../et2_core_arrayMgr");
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		// the generated widget only stringifies its value when it has content to expand it against
+		(<any>element).setArrayMgr("content", new et2_arrayMgr({}));
+		element.customfields = {cf_date: {label: "Date", type: "date"}};
+		element.fields = {cf_date: true};
+		element.value = {"#cf_date": false};
+		await element.updateComplete;
+		const date = <any>element.querySelector("[data-field='cf_date'] et2-date");
+		await date?.updateComplete;
+
+		assert.exists(date, "date customfield should render an et2-date");
+		assert.equal(date.value, "", "false should leave the date empty");
+	});
+
+	/**
+	 * Contract: a generated field can be found by its id, and is validated before submit.
+	 * The server reports a customfield's validation error under the field's id, and eTemplate
+	 * only validates widgets in its tree - which the generated fields are not.
+	 * Setup: render an empty required text customfield.
+	 * Pass: getWidgetById() finds the field widget, submit() resolves false, and resolves true
+	 * once the field has a value.
+	 */
+	it("finds and validates its generated fields", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {cf_text: {label: "Text", type: "text", needed: true}};
+		element.fields = {cf_text: true};
+		element.value = {"#cf_text": ""};
+		await element.updateComplete;
+		const field = <any>element.querySelector("[data-field='cf_text'] et2-textbox");
+		await field?.updateComplete;
+
+		// compare, rather than assert on the DOM nodes: chai hangs formatting a node for a failure
+		assert.isTrue((<any>element).getWidgetById("#cf_text") === field, "the field widget should be found by its id");
+		assert.isTrue((<any>element).getWidgetById("#cf_missing") === null, "an unknown field should not be found");
+		assert.isFalse(await (<any>element).submit({}), "an empty required field should stop the submit");
+
+		field.value = "filled";
+		await field.updateComplete;
+		assert.isTrue(await (<any>element).submit({}), "a filled required field should let the submit through");
 	});
 
 	/**
@@ -225,7 +784,7 @@ describe("Et2Customfields webcomponents", () =>
 			[],
 			"row values must not create customfield definitions; missing metadata is a setup problem"
 		);
-		assert.isNull(
+		assertNoElement(
 			element.querySelector("[data-field='cf_text']"),
 			"customfields list should remain empty until customfield metadata is supplied"
 		);
@@ -245,6 +804,30 @@ describe("Et2Customfields webcomponents", () =>
 		);
 	});
 
+	it("offers a tabbed customfield as a filter, since a filter box has no tabs", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {
+			cf_select: {label: "Select", type: "select", values: {open: "Open"}, tab: null},
+			cf_on_a_tab: {label: "On a tab", type: "select", values: {yes: "Yes"}, tab: "Files"}
+		};
+		await element.updateComplete;
+
+		// Which entries a filter selects has nothing to do with which tab of the edit dialog
+		// shows the field, so a tab must not keep a customfield out of the filter box
+		assert.deepEqual(
+			element.getVisibleFieldNames(),
+			["cf_select", "cf_on_a_tab"],
+			"a customfield on a tab is still worth filtering on"
+		);
+		assert.isOk(
+			element.querySelector("[data-field='cf_on_a_tab'] > et2-select"),
+			"and it has to actually render its filter control"
+		);
+	});
+
 	it("renders customfields filters as selectboxes and skips non-filter fields", async() =>
 	{
 		const element = await fixture<Et2CustomfieldsBase>(html`
@@ -261,8 +844,68 @@ describe("Et2Customfields webcomponents", () =>
 		assert.equal(select?.localName, "et2-select", "select customfield filters should render as selectboxes");
 		assert.equal(select?.emptyLabel, "all", "filter selectbox should use the legacy empty label");
 		assert.isTrue(select?.multiple, "filter selectbox should be multiple");
-		assert.isNull(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
-		assert.isNull(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
+		assertNoElement(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
+		assertNoElement(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
+	});
+
+	/**
+	 * Contract: a filter box sets the customfield filters the way legacy did, one `{"#name": value}`
+	 * map through set_value() - that is how clearing the filters and applying a favourite reach them,
+	 * and a field missing from the map is emptied.
+	 * Setup: render a select filter, set it, then set an empty map.
+	 * Pass: getValue() reports the value set, then nothing.
+	 */
+	it("takes its filters from set_value(), and empties those left out", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {cf_select: {label: "Select", type: "select", values: {open: "Open", closed: "Closed"}}};
+		await element.updateComplete;
+
+		element.set_value({"#cf_select": ["open"]});
+		await element.updateComplete;
+		assert.deepEqual(element.getValue()["#cf_select"], ["open"], "set_value() should reach the filter");
+
+		element.set_value({});
+		await element.updateComplete;
+		assert.isEmpty(element.getValue()["#cf_select"], "a filter missing from the map should be emptied");
+	});
+
+	/**
+	 * Contract: once we are updated, getValue() reports what was set - including from an entry
+	 * filter limited to one app, which keeps reporting its old entry until it has re-rendered.
+	 * A filter box clearing the filters applies whatever getValue() says as soon as we are done.
+	 * Setup: render an app-backed filter, select an entry, then clear it.
+	 * Pass: getValue() is empty as soon as updateComplete resolves.
+	 */
+	it("is not updated until its entry filters have caught up", async() =>
+	{
+		const linkAppList = egwStub.link_app_list;
+		egwStub.link_app_list = () => ({tracker: "Tracker"});
+		try
+		{
+			const element = await fixture<any>(html`
+				<et2-customfields-filters></et2-customfields-filters>
+			`);
+			element.customfields = {cf_ticket: {label: "Ticket", type: "tracker"}};
+			await element.updateComplete;
+			const entry = element.querySelector("[data-field='cf_ticket'] > *") as any;
+			assert.equal(entry?.localName, "et2-link-entry", "an app-backed customfield filters by entry");
+			assert.equal(entry.onlyApp, "tracker", "limited to its app");
+
+			element.set_value({"#cf_ticket": "174"});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "174", "the entry should be selected");
+
+			element.set_value({});
+			await element.updateComplete;
+			assert.equal(element.getValue()["#cf_ticket"], "", "clearing must have landed once we are updated");
+		}
+		finally
+		{
+			egwStub.link_app_list = linkAppList;
+		}
 	});
 
 	it("supports type_filter previous across widget instances", async() =>

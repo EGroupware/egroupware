@@ -1103,6 +1103,7 @@ remove selected accounts	common	nl	Verwijder geselecteerde accounts
 remove shortcut	common	nl	Snelkoppeling verwijderen
 remove this link (not the entry itself)	common	nl	Verwijder deze link (niet de entry zelf)
 removed (now) empty directory fs_id=%1	admin	nl	Verwijdert (nu) lege map fs_id=%1
+removed category	common	nl	verwijderde categorie
 rename	common	nl	Hernoemen
 repeat password	common	nl	Herhaal wachtwoord
 replace	common	nl	Vervangen

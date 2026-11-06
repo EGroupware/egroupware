@@ -130,6 +130,29 @@ describe("Et2LazyLoadController", () =>
 		assert.isAtLeast(host.calls, 1);
 	});
 
+	it("counts a host as displayed when an ancestor has data-lazy-load-ready, without asking the browser", async() =>
+	{
+		const wrapper = await fixture<HTMLElement>(html`
+            <div data-lazy-load-ready style="display: none">
+                <test-lazy-load-host></test-lazy-load-host>
+            </div>`);
+		const host = <any>wrapper.querySelector("test-lazy-load-host");
+		assert.isFalse(host.checkVisibility(), "test setup: host should be hidden");
+		let asked = 0;
+		const original = host.checkVisibility;
+		host.checkVisibility = () => { asked++; return original.call(host); };
+		assert.isTrue(host.controller.ready);
+		assert.equal(asked, 0, "checkVisibility() was called");
+	});
+
+	it("does not treat a hidden host as displayed without the attribute", async() =>
+	{
+		const wrapper = await fixture<HTMLElement>(html`
+            <div style="display: none"><test-lazy-load-host></test-lazy-load-host></div>`);
+		const host = <TestLazyLoadHost>wrapper.querySelector("test-lazy-load-host");
+		assert.isFalse(host.controller.ready);
+	});
+
 	it("keeps the extra condition independent of visibility, reacting only to recheck()", async() =>
 	{
 		const host = await fixture<TestLazyLoadHost>(html`<test-lazy-load-host></test-lazy-load-host>`);

@@ -1,6 +1,31 @@
 import {Et2DatagridColumn} from "./Et2Datagrid.types";
 
 /**
+ * Column visibility states as the column-selection dialog
+ * (`et2-nextmatch-columnselection`) understands them.
+ *
+ * ALWAYS / ALWAYS_NOSELECT are shown but cannot be switched off, VISIBLE and
+ * INVISIBLE are the two states the user toggles between, and DISABLED means the
+ * column is not offered at all.
+ *
+ * The dialog is shared by this datagrid and the legacy `et2_dataview` grid, so
+ * these numbers are a wire vocabulary between the two rather than something
+ * either grid is expected to store: the datagrid models column state as the
+ * booleans `hidden`/`disabled` on `Et2DatagridColumn` and only speaks these
+ * values where it hands columns to the dialog. Defined here, not in
+ * `et2_dataview_model_columns.ts` where they used to live, so the dialog no
+ * longer has to import the legacy grid to name them; that file now takes its
+ * `et2_dataview_column.ET2_COL_VISIBILITY_*` statics from here.
+ */
+export const Et2DatagridColumnVisibility = {
+	ALWAYS: 0,
+	VISIBLE: 1,
+	INVISIBLE: 2,
+	ALWAYS_NOSELECT: 3,
+	DISABLED: 4
+} as const;
+
+/**
  * Shape consumed by the existing `et2-nextmatch-columnselection` widget.
  *
  * The chooser component expects id/visibility metadata in a specific format.
@@ -204,11 +229,16 @@ export class Et2DatagridColumnState
 	 * would overwrite the user's own show/hide choice with `hidden: true` and persist it,
 	 * turning a condition that is meant to override the preference while it holds into a
 	 * permanent change to it.
+	 * @param exactCustomfields A customfields column that is selected without any of its fields
+	 * shows none of them.  By default it keeps the fields it shows now, which is what the column
+	 * chooser wants, as it lists the fields as they are.  Print passes true, its choice is the
+	 * whole of what is printed.
 	 */
 	applySelectionOrder(
 		columns : Et2DatagridColumn[],
 		selectedKeysInOrder : string[],
-		parseExpression? : (expression : string) => boolean
+		parseExpression? : (expression : string) => boolean,
+		exactCustomfields : boolean = false
 	) : Et2DatagridColumn[]
 	{
 		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
@@ -305,7 +335,7 @@ export class Et2DatagridColumnState
 				continue;
 			}
 			const selectedForColumn = selectedCustomfields.get(key);
-			if(!selectedForColumn && selectedKeys.has(key))
+			if(!exactCustomfields && !selectedForColumn && selectedKeys.has(key))
 			{
 				continue;
 			}

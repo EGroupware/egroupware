@@ -3,6 +3,7 @@ import {assert} from "@open-wc/testing";
 import "./MailAppImportStub";
 import "../../../api/js/etemplate/Et2Widget/Et2Widget";
 import {MailApp} from "../app";
+import {assertNoElement} from "../../../api/js/etemplate/test/assertDom";
 
 /**
  * Regression/gap coverage for MailApp.retryAttachmentIndexForRow() - the async retry path
@@ -65,7 +66,7 @@ describe("MailApp.retryAttachmentIndexForRow()", () =>
 			{filename : "photo.jpg", type : "image/jpeg", mime_url : "https://example.com/photo.jpg"},
 		]);
 
-		assert.isNull(doc.body.querySelector(".mail_attachmentIndex"),
+		assertNoElement(doc.body.querySelector(".mail_attachmentIndex"),
 			"a stale row's attachments must never render into an iframe that has since moved on");
 	});
 
@@ -79,7 +80,7 @@ describe("MailApp.retryAttachmentIndexForRow()", () =>
 			{filename : "photo.jpg", type : "image/jpeg", mime_url : "https://example.com/photo.jpg"},
 		]);
 
-		assert.isNull(doc.body.querySelector(".mail_attachmentIndex"));
+		assertNoElement(doc.body.querySelector(".mail_attachmentIndex"));
 	});
 
 	it("does nothing, without throwing, when there is no messageIFRAME widget at all", () =>

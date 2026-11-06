@@ -50,12 +50,19 @@ const formatDate = function(date : Date, options = {units: "YmdHis"})
 		smallest = (valid.pop() || [])[0];
 	}
 
+	// dates in the future (negative diff) get the unit picked by their size too and are shown as "in 5 hours"
+	const future = diff < 0;
+	const abs = Math.abs(diff);
 	for(var unit in unit2s)
 	{
 		var unit_s = unit2s[unit];
-		if(diff >= unit_s || unit === smallest)
+		if(abs >= unit_s || unit === smallest)
 		{
-			display = Math.round(diff / unit_s) + ' ' + this.egw().lang(unit2label[unit]);
+			display = Math.round(abs / unit_s) + ' ' + this.egw().lang(unit2label[unit]);
+			if(future)
+			{
+				display = this.egw().lang('in %1', display);
+			}
 			break;
 		}
 	}

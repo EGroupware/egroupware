@@ -73,6 +73,19 @@ class JmapIssetTest extends TestCase
 	}
 
 	/**
+	 * Unlike accountId/accountCapabilities (typed, no default - genuinely unset before bootstrap()
+	 * runs), $sharedAccounts has a `= []` default, so it reads as set (empty) even before
+	 * bootstrap() - see JmapBootstrapSharedAccountsTest for bootstrap()'s own population logic.
+	 */
+	public function testSharedAccountsIsSetAfterBeingPopulated()
+	{
+		$jmap = $this->jmapWithProperty('sharedAccounts', ['u' => ['name' => 'info@example.invalid']]);
+
+		$this->assertTrue(isset($jmap->sharedAccounts));
+		$this->assertSame(['u' => ['name' => 'info@example.invalid']], $jmap->sharedAccounts ?? 'FALLBACK-WAS-WRONGLY-USED');
+	}
+
+	/**
 	 * Before bootstrap() ever runs, these properties are genuinely unset (typed, no default) -
 	 * isset() must still correctly report false then, not throw and not always report true.
 	 */

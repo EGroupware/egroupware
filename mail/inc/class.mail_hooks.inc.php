@@ -387,12 +387,14 @@ class mail_hooks
 			'allowExternalIMGs' => array(
 				'type'   => 'select',
 				'label'  => 'Allow external images',
-				'help'   => 'allow images from external sources in html emails',
+				'help'   => 'Allow images from external sources in HTML emails. "Ask for permission" shows a banner to load them this time only ("Show") or always from their domain ("Allow"). "Ask for permission, only allow listed domains" offers only "Show", so only the listed domains are always allowed, eg. as set by the admin for everyone.',
 				'name'   => 'allowExternalIMGs',
 				'values' => array(
 					0 => lang('Never'),
 					1 => lang('Always'),
-					2 => lang('Ask for permission')
+					2 => lang('Ask for permission'),
+					// no "Allow" adding to the listed domains, eg. to keep a list set by the admin for everyone
+					3 => lang('Ask for permission, only allow listed domains'),
 				),
 				'xmlrpc' => True,
 				'admin'  => True,
@@ -835,6 +837,35 @@ class mail_hooks
 		}
 		Api\Cache::setCache(Api\Cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
 		return true;
+	}
+
+	/**
+	 * Does the current user have at least one mail account with notify_folders configured?
+	 *
+	 * Cheap: config-only (Mail\Notifications::read(), cached), no IMAP connection - unlike
+	 * notification_check_mailbox() itself, which this only decides whether to keep triggering.
+	 *
+	 * Used by notifications/inc/hook_after_navbar.inc.php to tell the client
+	 * (notifications/js/app.ts) whether it needs to keep polling
+	 * notifications.notifications_ajax.get_notifications() (which runs the check_notify hook,
+	 * ie. notification_check_mailbox() above) even once a real push connection already handles
+	 * general delivery - see doc/ai/projects/push-fallback-longpoll.md's "Mail notification-check
+	 * polling" follow-up note for why push availability is deliberately NOT considered here:
+	 * neither Dovecot's nor JMAP's mail-server push currently triggers this notify_folders check
+	 * itself, only polling does, regardless of push.
+	 *
+	 * @return bool
+	 */
+	public static function needsNotificationCheckPolling()
+	{
+		foreach(Mail\Account::search(true, true) as $acc_id => $identity_name)
+		{
+			if (!empty(Mail\Notifications::read($acc_id)['notify_folders']))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

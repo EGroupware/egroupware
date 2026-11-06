@@ -467,7 +467,7 @@ class preferences_settings
 					$tabs[] = array(
 						'id' => $tab,
 						'content' => $tab,
-						'template' => 'preferences.settings.tab1',
+						'template' => $setting['tab'] ?? 'preferences.settings.tab1',
 						'label' => $setting['title'],
 					);
 					// fall through

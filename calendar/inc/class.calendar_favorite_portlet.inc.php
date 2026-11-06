@@ -46,6 +46,13 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				'filter'          => 'after',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
 				'row_modified'    => 'modified',
+				// A nextmatch with no order of its own falls back to sorting by 'row_modified'.
+				// That field is a key into the *row content*, which for calendar is 'modified' -
+				// not a column the query can ORDER BY (that would be cal_modified), so the fallback
+				// would fail the whole query. A list of upcoming events wants to start at the
+				// earliest one anyway.
+				'order'           => 'cal_start',
+				'sort'            => 'ASC',
 				'get_rows'	=> 'calendar_favorite_portlet::get_rows',
 				// Use a different template so it can be accessed from client side
 				'template'	=> 'calendar.list.rows',

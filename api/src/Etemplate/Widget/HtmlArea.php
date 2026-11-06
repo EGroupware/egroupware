@@ -144,12 +144,15 @@ class HtmlArea extends Etemplate\Widget
 	 *
 	 * @param string $cname
 	 */
-	public function beforeSendToClient($cname)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		if (($this->attrs['mode'] ?? '') !== 'ascii')
 		{
 			Api\Framework::includeJS('/node_modules/tinymce/tinymce.min.js');
 		}
+
+		// may the markdown editor offer to attach a file to this entry yet?
+		Vfs::set_can_attach_file($this, $cname, $expand);
 	}
 
 	/**

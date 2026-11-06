@@ -32,6 +32,7 @@ add to bcc	addressbook	de	Als Blindkopie hinzufügen
 add to cc	addressbook	de	Als Kopie hinzufügen
 add to distribution list	addressbook	de	Zu Verteilerliste hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
+add to or remove from list	addressbook	de	Zu Liste hinzufügen oder entfernen
 add to to	addressbook	de	Als An hinzufügen
 added	addressbook	de	hinzugefügt
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation

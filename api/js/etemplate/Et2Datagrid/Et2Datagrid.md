@@ -334,6 +334,31 @@ Row rendering is driven by a row template.
 
 :::
 
+#### A row widget must not change its own attributes after first render
+
+A rendered row is handed to lit's `unsafeHTML()` as `rowElement.outerHTML`, and `unsafeHTML`
+replaces the entire row node whenever that string differs from last time. An unchanged string
+keeps the same physical nodes (`Et2Datagrid.rowRerender.benchmark.ts` measures this); a changed
+one tears the row down and re-runs every widget constructor in it.
+
+So any widget that can appear in a row template has to reach its final attribute set during its
+first render:
+
+- Do **not** `reflect: true` a property whose value is resolved asynchronously. The late write
+  lands in the row's serialized HTML and rebuilds the row. `Et2Avatar.image` did exactly this: it
+  resolves a contact's photo URL over the network, and reflecting it rebuilt one row per avatar.
+  The property still updates and still renders - only the property-to-attribute write is dropped.
+- Attribute-to-property binding is unaffected, so `image="$row_cont[photo]"` in a template still
+  works, and an attribute written by the template stays in the HTML because reflection never
+  wrote it.
+
+:::warning
+
+This is invisible until a list gets slow: the row renders correctly either way, just far more
+often than it should. `Et2Avatar.rowStringStability.test.ts` shows the shape of a test for it.
+
+:::
+
 ### Row data bindings
 
 Use direct bindings for row data in templates:

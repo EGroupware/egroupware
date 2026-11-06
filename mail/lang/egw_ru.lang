@@ -28,7 +28,6 @@ all my email addresses	mail	ru	все мои адреса
 all of	mail	ru	Все из
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ru	Все вложенные папки также будут удалены, а все сообщения во всех затронутых папках будут потеряны
 allow external images	mail	ru	Разрешить внешние изображения
-allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
 allow users to create further identities	mail	ru	Разрешить пользователям создавать дополнительные идентичности
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ru	Позволяет пользователю читать, писать и создавать папки и письма, отправлять в них сообщения, добавлять в них сообщения и удалять их
 always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
@@ -431,7 +430,6 @@ sent	mail	ru	Отправленные
 sent folder	mail	ru	Отправленные
 server supports special-use folders	mail	ru	Сервер поддерживает папки специального назначения
 set flags	mail	ru	Пометить электронную почту как
-set predefined values for compose...	mail	ru	Установите предопределенные значения для составления ...
 should new messages show up on the home page	mail	ru	отображать новые сообщения на домашней странице
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ru	Должна ли подпись вставляться после (стандартно) или перед ответом или пересылкой, а также должна ли подпись быть видимой и изменяемой при составлении сообщения.
 show all addresses	mail	ru	Показать все адреса

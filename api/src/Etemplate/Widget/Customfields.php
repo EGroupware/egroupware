@@ -82,6 +82,15 @@ class Customfields extends Transformer
 	{
 		$this->attrs['prefix'] = self::$prefix;
 		parent::__construct($xml);
+
+		// <et2-customfields field="Mitgliedsart"/> places that one field.  Showing and validating a
+		// single field already works off an id naming it, eg. "#Mitgliedsart", which is how a
+		// template has always had to ask - so build that id here and the rest applies unchanged.
+		// In the constructor because rendering and validating are separate instances.
+		if (empty($this->id) && !empty($this->attrs['field']))
+		{
+			$this->id = $this->attrs['prefix'].$this->attrs['field'];
+		}
 	}
 
 	/**
@@ -560,8 +569,14 @@ class Customfields extends Transformer
 					}
 				}
 
-				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 				$field_name = $this->id[0] == self::$prefix && $customfields[substr($this->id, strlen($this->attrs['prefix']))] ? $this->id : self::form_name($form_name != self::GLOBAL_ID ? $form_name : $cname, $field);
+				// a template can hold several customfields widgets with the same id, eg. one per tab, which
+				// all submit the same values: validate each field once, or its error is reported once per widget
+				if(!is_null(self::get_array($validated, $field_name)))
+				{
+					continue;
+				}
+				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 				$valid =& self::get_array($validated, $field_name, true);
 
 				// Arrays are not valid, but leave filemanager alone, we'll catch it

@@ -29,8 +29,10 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 
 	protected static $prefix = '';
 
+	// The editable customfields widget, not et2-customfields-filters: that one only offers fields
+	// it can turn into a selection, and a filter here also needs eg. its date ranges
 	protected static $transformation = array(
-		'type' => 'customfields'
+		'type' => 'et2-customfields'
 	 );
 
 	/**
@@ -75,6 +77,13 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 
 			// No filters are required
 			$field['needed'] = false;
+
+			// Most of these are the app's own columns, labelled with a phrase.  The customfields
+			// widget shows labels as they are, since a real customfield's label is the user's text.
+			if (!empty($field['label']))
+			{
+				$field['label'] = lang($field['label']);
+			}
 
 			switch($type)
 			{

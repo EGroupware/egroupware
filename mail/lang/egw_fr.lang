@@ -46,7 +46,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	fr	Autoriser
 allow external images	mail	fr	Autoriser les images externes
 allow external images from listed domains	mail	fr	Autoriser les images externes des domaines listés
-allow images from external sources in html emails	mail	fr	Autoriser les images de sources externes dans les emails HTML.
 allow images from listed domains in html emails	mail	fr	Autoriser les images des domaines listes dans les emails HTML.
 allow users to create further identities	mail	fr	Autoriser les utilisateurs à créer d'autres identités
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fr	Permet à un utilisateur de lire, écrire et créer des dossiers et des messages, d'y poster, d'y ajouter des messages et de les supprimer.
@@ -200,8 +199,6 @@ draft folder	mail	fr	dossier brouillon
 drafts	mail	fr	Projets
 drafts folder	mail	fr	Dossier brouillons
 edit account	mail	fr	Modifier le compte
-edit account ...	mail	fr	Modifier le compte ...
-edit folder acl ...	mail	fr	Modifier le dossier ACL ...
 edit vacation settings	mail	fr	Modifier les paramètres de vacances
 effective only if server supports acl at all	admin	fr	Ne fonctionne que si le serveur supporte les ACL
 email address	mail	fr	Adresse email
@@ -265,7 +262,6 @@ folder %1 %2 failed!	mail	fr	Dossier %1 %2 en échec !
 folder %1 has been created successfully, although the subscription failed because of %2	mail	fr	Le dossier %1 a été créé avec succès, bien que l'abonnement ait échoué à cause de %2
 folder %1 is moving to folder %2	mail	fr	Le dossier %1 est déplacé vers le dossier %2
 folder management	mail	fr	Gestion des dossiers
-folder management ...	mail	fr	Gestion des dossiers ...
 folder settings	mail	fr	Paramètres du dossier
 force html	mail	fr	Forcer le HTML
 force plain text	mail	fr	Forcer le texte brut
@@ -601,7 +597,6 @@ set / remove flags	mail	fr	Marquer
 set / remove labels	mail	fr	Etiquettes
 set flags	mail	fr	Marquer l'e-mail comme
 set it as default:	mail	fr	Définir par défaut :
-set predefined values for compose...	mail	fr	Définir les valeurs prédéfinies pour la composition ...
 should new messages show up on the home page	mail	fr	Est-ce que les nouveaux messages doivent apparaître sur la page d'accueil
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fr	La signature doit-elle être insérée après (standard) ou avant une réponse ou un transfert, et doit-elle être visible et modifiable pendant la rédaction.
 show	mail	fr	Afficher
@@ -648,7 +643,6 @@ step 3: sieve - server side mail filtering	mail	fr	Etape 3 : Sieve, les règles 
 step 4: smtp - outgoing mail	mail	fr	Etape 4 : SMTP - mail sortant
 store to folder	mail	fr	Conserver au dossier
 subscribe folder	mail	fr	S'abonner au dossier
-subscribe folder ...	mail	fr	S'abonner au dossier ...
 subscribe to folder %1	mail	fr	S'abonner au dossier %1
 subscription folders	mail	fr	Abonnement dossiers
 subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès

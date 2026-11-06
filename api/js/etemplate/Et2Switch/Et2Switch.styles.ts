@@ -52,7 +52,7 @@ export default css`
 	 */
 
 	:host(.et2SlideSwitch) .switch {
-	min-width: 60px;
+	min-width: calc(var(--sl-input-height-medium) * 1.5);
 	--height: var(--sl-input-height-medium);
 	border-color: var(--sl-input-border-color);
 	border-width: var(--sl-input-border-width);

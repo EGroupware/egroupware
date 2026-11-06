@@ -5,6 +5,7 @@ import {assert, fixture, html} from '@open-wc/testing';
 import {Et2HtmlAreaReadonly} from "../Et2HtmlAreaReadonly";
 import * as sinon from "sinon";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {assertNoElement} from "../../test/assertDom";
 
 // Reference to component under test
 let element : Et2HtmlAreaReadonly;
@@ -54,7 +55,7 @@ describe("HtmlArea readonly widget", () =>
 		element.value = "<strong>not bold</strong>";
 		await element.updateComplete;
 
-		assert.notExists(element.shadowRoot.querySelector("[part='readonly-content'] strong"));
+		assertNoElement(element.shadowRoot.querySelector("[part='readonly-content'] strong"));
 		assert.include(element.shadowRoot.querySelector("[part='readonly-content']").textContent, "<strong>not bold</strong>");
 	});
 });
@@ -67,7 +68,8 @@ describe("HtmlArea readonly widget", () =>
 inputBasicTests(before, "some html value", "input", {
 	expectedValue: null,
 	emptyValue: null,
-	skip: ["required"],
+	// conformance: the readonly htmlarea renders display-only content, no interactive control
+	skip: ["required", "disabled-controls", "required-aria", "help-text-aria", "focus", "label-click"],
 	checkEmptyDisplay: (element : Et2HtmlAreaReadonly) =>
 		assert.equal(element.shadowRoot.querySelector("[part='readonly-content']").textContent.trim(), "",
 			"Displaying something when there is no value")

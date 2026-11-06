@@ -9,7 +9,8 @@
 
 import {SlFormatBytes} from "@shoelace-style/shoelace";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {nothing} from "lit";
+import {html, nothing} from "lit";
+import {readonlyFixedLabelStyles} from "../Et2Widget/Et2Widget.styles";
 
 /**
  * Ported from legacy et2_vfsSize::human_size() - used where a plain string is needed
@@ -46,6 +47,14 @@ export function humanFileSize(size : number) : string
  */
 export class Et2VfsSize extends Et2Widget(SlFormatBytes as any)
 {
+	static get styles()
+	{
+		return [
+			...super.styles,
+			readonlyFixedLabelStyles
+		];
+	}
+
 	private _hasValue = false;
 
 	private _normalizeSize(_value) : number | null
@@ -92,7 +101,11 @@ export class Et2VfsSize extends Et2Widget(SlFormatBytes as any)
 
 	render()
 	{
-		return this._hasValue ? super.render() : nothing;
+		if(!this._hasValue)
+		{
+			return nothing;
+		}
+		return html`${this.label ? html`<span class="form-control-label" part="form-control-label">${this.label}</span>` : nothing}${super.render()}`;
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement

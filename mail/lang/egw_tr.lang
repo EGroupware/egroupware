@@ -245,6 +245,7 @@ please select the number of days to wait between responses	mail	tr	Lütfen yanı
 please supply the message to send with auto-responses	mail	tr	Lütfen otomatik yanıtlarla gönderilecek mesajı sağlayın
 post	mail	tr	gönder
 predefined addresses for compose	mail	tr	Compose için önceden tanımlanmış adresler
+prevent managing filters	mail	tr	Filtrelerin yönetilmesini engelle
 preview pane	mail	tr	Pencere düzeni
 printing	mail	tr	Baskı
 private key created, downloading csr...	mail	tr	Özel anahtar oluşturuldu, CSR indiriliyor...
@@ -307,7 +308,6 @@ send attachments greater than given size as download link instead (in mb)	mail	t
 send message and move to send folder (if configured)	mail	tr	Mesaj gönderme ve gönderme klasörüne taşıma (yapılandırılmışsa)
 send message pgp encrypted: requires keys from all recipients!	mail	tr	PGP şifreli mesaj gönderme: tüm alıcıların anahtarlarını gerektirir!
 server supports special-use folders	mail	tr	Sunucu özel kullanım klasörlerini destekler
-set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	tr	İmza, bir yanıttan veya iletiden sonra (standart) veya önce eklenmeli mi ve imza oluşturma sırasında görünür ve değiştirilebilir olmalı mı?
 show all addresses	mail	tr	Tüm adresleri göster
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	tr	Ana ekran klasör bölmesinde tüm klasörleri (abone olunan VE abone olunmayan) gösterme

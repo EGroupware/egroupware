@@ -52,12 +52,13 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	en	Allow
 allow external images	mail	en	Allow external images
 allow external images from listed domains	mail	en	Allow external images from listed domains
-allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	en	Allow images from external sources in HTML emails. "Ask for permission" shows a banner to load them this time only ("Show") or always from their domain ("Allow"). "Ask for permission, only allow listed domains" offers only "Show", so only the listed domains are always allowed, eg. as set by the admin for everyone.
 allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails.
 allow users to create further identities	mail	en	Allow users to create further identities
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	en	Allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
+always allow external sources from %1 and load content from %2	mail	en	Always allow external sources from %1 and load content from %2
 always respond / auto-responder	mail	en	Always respond / auto-responder
 always show html emails	mail	en	Always show HTML emails
 always show notifiction	mail	en	Always show notification
@@ -79,6 +80,7 @@ are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you w
 arrival	mail	en	Received
 ask	mail	en	ask
 ask for permission	mail	en	Ask for permission
+ask for permission, only allow listed domains	mail	en	Ask for permission, only allow listed domains
 attach files	mail	en	Attach files
 attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email.
 attach vcard	mail	en	Attach vCard
@@ -159,6 +161,7 @@ cross account forward attachment is not allowed!	mail	en	Cross account forward a
 current folder	mail	en	current folder
 current subject	mail	en	Current subject
 currently:	mail	en	Currently:
+dark mode for mails	mail	en	Dark mode for mails
 deactive	mail	en	Deactive
 default identity for compose	mail	en	Default identity for compose
 default signature	mail	en	Default signature
@@ -226,8 +229,7 @@ draft folder	mail	en	Draft Folder
 drafts	mail	en	Drafts
 drafts folder	mail	en	Drafts Folder
 edit account	mail	en	Edit Account
-edit account ...	mail	en	Edit account ...
-edit folder acl ...	mail	en	Email access rights ...
+edit folder acl	mail	en	Email access rights
 edit vacation settings	mail	en	Edit vacation notice
 effective only if server supports acl at all	admin	en	Effective only if server supports email access rights at all
 email address	mail	en	Email address
@@ -268,6 +270,7 @@ export csr	mail	en	Export CSR
 expunge	mail	en	Expunge
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
+failed to copy message	mail	en	Failed to copy message
 failed to copy messages	mail	en	Failed to copy messages
 failed to create folder %1	mail	en	Failed to create folder %1
 failed to delete %1	mail	en	Failed to delete %1
@@ -309,7 +312,6 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
 folder '%1' not found	mail	en	Folder '%1' not found
 folder management	mail	en	Folder Management
-folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
 force html	mail	en	Force HTML
 force plain text	mail	en	Force text
@@ -402,6 +404,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+load content from %1 this time only	mail	en	Load content from %1 this time only
 lookup	mail	en	Lookup
 lookup (mailbox is visible to list/lsub commands, subscribe mailbox)	mail	en	Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
 low priority	mail	en	Low priority
@@ -451,6 +454,7 @@ move to archive	mail	en	Move to archive folder
 move to bcc and send	mail	en	Move to Bcc and send
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3.
+moving a folder between different accounts is not supported	mail	en	Moving a folder between different accounts is not supported
 moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported.
 name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
@@ -683,7 +687,7 @@ set / remove flags	mail	en	Set / Remove flags
 set / remove labels	mail	en	Set / Remove labels
 set flags	mail	en	Set flags
 set it as default:	mail	en	Set it as default:
-set predefined values for compose...	mail	en	Set predefined values for compose ...
+set predefined values for compose	mail	en	Set predefined values for compose
 should new messages show up on the home page	mail	en	Should new messages show up on the Home page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	en	Should signature be inserted after (standard) or before a reply or forward, and should signature be visible and changeable during compose.
 show	mail	en	Show
@@ -730,7 +734,6 @@ step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side e
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email
 store to folder	mail	en	Store to folder
 subscribe folder	mail	en	Subscribe folder
-subscribe folder ...	mail	en	Subscribe folder ...
 subscribe to folder %1	mail	en	Subscribe to folder %1
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
@@ -830,6 +833,7 @@ wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
+you do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them	mail	en	You do not have sufficient rights for this action in this shared folder - ask the folder owner to grant them
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
 you may add this key into your contact, if you trust this signature.	mail	en	You may add this key into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.

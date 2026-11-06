@@ -679,6 +679,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 	set value(value)
 	{
+		// This accessor is ours, so Lit does not know the value changed: ask for the update that refreshes hasValue
+		this.requestUpdate();
+
 		if(!value || value == 0 || value == "0")
 		{
 			value = "";

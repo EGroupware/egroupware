@@ -17,6 +17,7 @@ use EGroupware\Api\Mail;
 use EGroupware\SwoolePush\Tokens;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
+use EGroupware\Api\Mail\Jmap\Mailbox as JmapMailbox;
 
 /**
  * Manages connection to Jmap e.g. Stalwart mail-server
@@ -536,6 +537,48 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP-native meeting-invite (inline text/calendar part) resolution for Stalwart - counterpart
+	 * of the classic path's own $calendar_part handling in
+	 * MessageDisplayHandler::get_load_email_data() (ticket #127361, 2026-11-04: that classic path
+	 * does a raw IMAP FETCH via Mail::getStructure()/getMessageBody()/fetchPartContents(), none of
+	 * which are overridden here, so for a JMAP-only/Stalwart account it tried real IMAP against
+	 * what is actually a JMAPS endpoint on port 443 - "Mail server closed the connection
+	 * unexpectedly"). Downloads just the invite part's own JMAP blob (no full raw-message download
+	 * needed, unlike resolveSmimeJmap()/resolveBareJmap() above - the part's blobId is already in
+	 * Email/get's bodyStructure response).
+	 *
+	 * The VCALENDAR's own METHOD property (REQUEST/REPLY/CANCEL/...) is extracted from the ICS text
+	 * itself rather than read as a MIME Content-Type parameter - RFC 8621's EmailBodyPart shape has
+	 * no generic Content-Type-parameter field to read "method=..." from directly (only charset/
+	 * name/disposition/cid/language/location are exposed, see RFC 8621 §4.1.4), while RFC 5546
+	 * requires a scheduling message's top-level METHOD: property to match it, so the two are
+	 * interchangeable in practice.
+	 *
+	 * @param string $emailId JMAP Email id
+	 * @param string $partId the invite's own JMAP partId (JmapImap::findInlineCalendarPart())
+	 * @return array{charset: string, attachment: string, method: ?string} same shape
+	 *  MessageDisplayHandler's classic path caches to the 'calendar'/'ical' session slot for
+	 *  calendar_uiforms::meeting() to consume
+	 * @throws Api\Exception part not found
+	 */
+	public function resolveCalendarJmap(string $emailId, string $partId) : array
+	{
+		$client = $this->jmapClient();
+		$email = $client->emailGet($emailId, ['bodyStructure']);
+		$part = JmapImap::findInlineCalendarPart($email['bodyStructure'] ?? []);
+		if (!$part || ($part['partId'] ?? null) !== $partId)
+		{
+			throw new Api\Exception("Calendar part '$partId' not found on Email '$emailId'");
+		}
+		$raw = $client->downloadBlob($part['blobId'], 'invite.ics', 'text/calendar');
+		return [
+			'charset' => $part['charset'] ?: 'utf-8',
+			'attachment' => $raw,
+			'method' => preg_match('/^METHOD:(.+)$/mi', $raw, $matches) ? trim($matches[1]) : null,
+		];
+	}
+
+	/**
 	 * MailboxRights (RFC 8621 §2 "myRights", writable per-principal via the mail:share
 	 * extension's "shareWith") mapped to RFC 4314 IMAP ACL letters, so the existing ACL UI
 	 * (mail_acl.inc.php/acl.xet) keeps working unchanged against JMAP-native (Stalwart)
@@ -728,6 +771,361 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * List every mailbox in this account as flat "path => translated label" pairs, eg.
+	 * "INBOX/Trash" => "INBOX/Papierkorb" - JMAP-native (one batched Mailbox/query + Mailbox/get
+	 * call via Mail\Jmap\Mailbox::listAllPaths(), independently unit-tested there against a fake
+	 * JMAP session), for server-side folder search/enumeration on an account with no real IMAP
+	 * connection behind it (a plain Horde_Imap_Client_Socket listMailboxes()/
+	 * listSubscribedMailboxes() call - what getFolderObjects() and getSubfolders() both ultimately
+	 * rely on - throws for this class, see project_jmap_imap_fallthrough_cleanup).
+	 *
+	 * Used by mail_acl.inc.php's folder search (ticket #124351/#124711 follow-up) - that class must
+	 * never hand real IMAP/JMAP credentials to client-side JS (it can run in an admin-impersonation
+	 * context, see doc/ai/projects/mail-folder-tree-jmap.md's "hard constraint"), so this stays a
+	 * server-side JMAP HTTP call via the already-server-side $this->jmapClient(), not a reuse of
+	 * the client-side MailJmap.getAllMailboxes()/buildMailboxPaths() this mirrors.
+	 *
+	 * @return array path => translated label
+	 */
+	public function listMailboxPaths() : array
+	{
+		return (new JmapMailbox($this->jmapClient()))->listAllPaths();
+	}
+
+	/**
+	 * JMAP-native listSubscribedMailboxes() - Mailbox isSubscribed property instead of IMAP
+	 * LIST/LSUB, for an account with no real IMAP connection behind it. parent::
+	 * listSubscribedMailboxes() is un-overridden on this class and falls through to
+	 * Horde_Imap_Client_Socket's raw listMailboxes() via a real socket connect - the same
+	 * fallthrough class as getACL()/listMailboxPaths() above (see
+	 * project_jmap_imap_fallthrough_cleanup).
+	 *
+	 * Found live (ticket #126691 follow-up, 2026-10-29, right after migrating egroupware.org to
+	 * Stalwart): mail/src/Ui.php's subscription() calls this unconditionally to seed/diff the
+	 * subscribe popup; its catch-block never set $subscribed on this throw, crashing
+	 * array_map() right after with "Argument #2 ($array) must be of type array, null given".
+	 * This override removes the throw at the source; Ui.php also gets a defensive default as a
+	 * general safety net, not a fix for this specific cause.
+	 *
+	 * @param string $reference unused - no IMAP hierarchy-reference concept over JMAP
+	 * @param mixed $restriction_search unused - always returns every subscribed mailbox
+	 * @param bool $returnAttributes true: assoc array mailbox-path => attributes (only
+	 *  SUBSCRIBED is meaningful - JMAP has no delimiter/ATTRIBUTES equivalent); false: plain
+	 *  list of paths - same contract shape as parent::listSubscribedMailboxes()
+	 * @return array mailbox path (canonical '/'-delimited, matching listMailboxPaths())
+	 */
+	public function listSubscribedMailboxes($reference = '', $restriction_search = 0, $returnAttributes = false)
+	{
+		$paths = (new JmapMailbox($this->jmapClient()))->listAllPaths(null, true);
+		if (!$returnAttributes)
+		{
+			return array_keys($paths);
+		}
+		$ret = [];
+		foreach (array_keys($paths) as $path)
+		{
+			$ret[$path] = ['MAILBOX' => $path, 'ATTRIBUTES' => [], 'delimiter' => '/', 'SUBSCRIBED' => true];
+		}
+		return $ret;
+	}
+
+	/**
+	 * JMAP-native subscribeMailbox() - Mailbox/set isSubscribed instead of IMAP SUBSCRIBE/
+	 * UNSUBSCRIBE, for an account with no real IMAP connection behind it (same fallthrough
+	 * class as listSubscribedMailboxes() above / getACL()/setACL() below). Unlike sharing,
+	 * subscription is a plain RFC 8621 Mailbox property - no mailShareSupported() capability
+	 * check needed.
+	 *
+	 * @param mixed $mailbox a mailbox path (canonical '/'-delimited, matching listMailboxPaths())
+	 * @param bool $subscribe true (default) = subscribe, false = unsubscribe
+	 * @throws \Horde_Imap_Client_Exception mailbox not found, or on any JMAP error
+	 */
+	public function subscribeMailbox($mailbox, $subscribe = true)
+	{
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'update' => [
+					$mailboxId => ['isSubscribed' => (bool)$subscribe],
+				],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set isSubscribed failed: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$mailboxId]));
+		}
+	}
+
+	/**
+	 * JMAP-native listMailboxes() - Mailbox/query+get (via Jmap\Mailbox::listAll(), see there)
+	 * instead of IMAP LIST, for an account with no real IMAP connection behind it (same
+	 * fallthrough class as getACL()/listSubscribedMailboxes() above - see
+	 * project_jmap_imap_fallthrough_cleanup). Api\Mail\Imap::getMailboxes() (not overridden -
+	 * calls this) is the real consumer; mail_zpush's getFolderObjects()/getFolderStatus() both go
+	 * through it - the latter is what AlterPingChanges() (ActiveSync's "Ping" mechanism) needs,
+	 * whose unguarded fallthrough caused the live outage this whole fix traces back to (see
+	 * doc/ai/projects/mail-zpush-jmap-folders.md).
+	 *
+	 * JMAP has no hierarchical wildcard search - $pattern is interpreted as either an exact
+	 * mailbox path (no trailing '*') or a path prefix (trailing '*', stripped before matching)
+	 * against the full, already-resolved path list - covers both real call shapes in this
+	 * codebase (an exact single-mailbox lookup, or "everything under this prefix").
+	 *
+	 * @param mixed $pattern string or array of strings (only the first is used - no real caller
+	 *  here passes more than one)
+	 * @param int $mode unused - JMAP exposes one set of mailboxes per account, there's no
+	 *  analogue to IMAP's "all" vs "subscribed only" LIST variants at this level (a caller
+	 *  needing subscribed-only uses listSubscribedMailboxes() instead)
+	 * @param array $options 'attributes'/'children'/'special_use'/'sort'/'status' unused -
+	 *  attributes are always included, status is not computed here (see status() below)
+	 * @return array path => ['attributes' => string[], 'delimiter' => '/', 'mailbox' =>
+	 *  \Horde_Imap_Client_Mailbox] - same contract shape as parent::listMailboxes()
+	 */
+	public function listMailboxes($pattern, $mode = \Horde_Imap_Client::MBOX_ALL, array $options = array())
+	{
+		$pattern = (string)(is_array($pattern) ? reset($pattern) : $pattern);
+		$isPrefix = $pattern === '' || substr($pattern, -1) === '*';
+		$prefix = $isPrefix ? rtrim($pattern, '*') : $pattern;
+
+		$ret = [];
+		foreach ((new JmapMailbox($this->jmapClient()))->listAll() as $path => $mailbox)
+		{
+			if ($isPrefix ? strpos($path, $prefix) !== 0 : $path !== $pattern)
+			{
+				continue;
+			}
+			$ret[$path] = [
+				'attributes' => !empty($mailbox['isSubscribed']) ? [self::SUBSCRIBED_ATTRIBUTE] : [],
+				'delimiter' => '/',
+				'mailbox' => \Horde_Imap_Client_Mailbox::get($path),
+			];
+		}
+		return $ret;
+	}
+
+	/**
+	 * JMAP-native status() - one Mailbox/get call instead of IMAP STATUS, for an account with no
+	 * real IMAP connection behind it. Api\Mail\Imap::getStatus()/getMailboxCounters() (neither
+	 * overridden - both call this) are the real consumers, via Api\Mail::getFolderStatus() ->
+	 * AlterPingChanges() - see listMailboxes() above for why that chain matters.
+	 *
+	 * JMAP has no 1:1 equivalent for several of these - see doc/ai/projects/
+	 * mail-zpush-jmap-folders.md's "UID/UIDVALIDITY/HIGHESTMODSEQ semantic gap" section for why
+	 * the synthesized values below are good enough for mail_zpush's actual use (pure
+	 * change-detection between polls, never real UID arithmetic) without claiming real IMAP UID
+	 * semantics:
+	 *  - messages/unseen: real values (Mailbox totalEmails/unreadEmails)
+	 *  - recent: always 0 (IMAP4rev2 itself drops RECENT; Stalwart's own real IMAP always
+	 *    returns 0 too, confirmed live)
+	 *  - uidnext: synthetic (totalEmails+1) - changes whenever the message count grows
+	 *  - uidvalidity: synthetic but STABLE per mailbox (derived from the mailboxId) - correct
+	 *    IMAP semantics only require this to change if the mailbox were recreated, which this
+	 *    satisfies (mailboxId is itself stable for the mailbox's lifetime)
+	 *  - highestmodseq: always 0 ("CONDSTORE not available", same as any real server without it)
+	 *
+	 * @param mixed $mailbox a single mailbox path (UTF-8) - array input (Horde's multi-mailbox
+	 *  mode) is not supported, no real caller here ever passes one
+	 * @param int $flags bitmask - only distinguishes whether HIGHESTMODSEQ was requested, every
+	 *  other STATUS_* value is always included (cheap from one Mailbox/get call, unlike real IMAP
+	 *  where some counters can cost a separate round-trip)
+	 * @param array $opts unused
+	 * @return array ['messages'=>int,'recent'=>int,'uidnext'=>int,'uidvalidity'=>int,
+	 *  'unseen'=>int,'highestmodseq'?=>int] - same contract shape as parent::status() for a
+	 *  single mailbox
+	 * @throws \Horde_Imap_Client_Exception mailbox not found, multiple mailboxes requested, or
+	 *  on any JMAP error
+	 */
+	public function status($mailbox, $flags = \Horde_Imap_Client::STATUS_ALL, array $opts = array())
+	{
+		if (is_array($mailbox))
+		{
+			throw new \Horde_Imap_Client_Exception(__METHOD__.'() does not support multiple mailboxes over JMAP');
+		}
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		$response = $client->jmapCall([
+			['Mailbox/get', [
+				'accountId' => $client->accountId,
+				'ids' => [$mailboxId],
+				'properties' => ['totalEmails', 'unreadEmails'],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!($mbox = $response['methodResponses'][0][1]['list'][0] ?? null))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		$ret = [
+			'messages' => (int)$mbox['totalEmails'],
+			'recent' => 0,
+			'uidnext' => (int)$mbox['totalEmails'] + 1,
+			'uidvalidity' => abs(crc32($mailboxId)),
+			'unseen' => (int)$mbox['unreadEmails'],
+		];
+		if ($flags & \Horde_Imap_Client::STATUS_HIGHESTMODSEQ)
+		{
+			$ret['highestmodseq'] = 0;
+		}
+		return $ret;
+	}
+
+	/**
+	 * JMAP-native openMailbox() - just a mailboxId-existence check, for an account with no real
+	 * IMAP connection/selected-mailbox session state behind it - every JMAP call already
+	 * addresses its target by mailboxId explicitly, so there's nothing to "select". Same
+	 * treatment openConnection() above already gets (see its own JMAP-FALLTHROUGH-GUARD comment,
+	 * project_jmap_imap_fallthrough_cleanup). currentMailbox() (inherited, unoverridden) then
+	 * correctly keeps returning null - fine, nothing in Api\Mail/mail_zpush depends on it
+	 * reflecting a real "currently open" mailbox for a JMAP account.
+	 *
+	 * Api\Mail\Imap::mailboxExist() (not overridden - calls this as its existence probe) and
+	 * mail_zpush's reopen() (direct call) are the real consumers.
+	 *
+	 * @param mixed $mailbox a mailbox path (UTF-8)
+	 * @param int $mode unused
+	 * @throws \Horde_Imap_Client_Exception mailbox not found
+	 */
+	public function openMailbox($mailbox, $mode = \Horde_Imap_Client::OPEN_AUTO)
+	{
+		if (!$this->jmapClient()->getMailboxId((string)$mailbox))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+	}
+
+	/**
+	 * Split a canonical '/'-delimited mailbox path into its parent path (may be '') and leaf
+	 * name - shared by createMailbox()/renameMailbox() below.
+	 *
+	 * @param string $path
+	 * @return string[] [$parentPath, $name]
+	 */
+	private function _splitMailboxPath(string $path) : array
+	{
+		$pos = strrpos($path, '/');
+		return $pos === false ? ['', $path] : [substr($path, 0, $pos), substr($path, $pos + 1)];
+	}
+
+	/**
+	 * JMAP-native createMailbox() - Mailbox/set create instead of IMAP CREATE, for an account
+	 * with no real IMAP connection behind it. Api\Mail::createFolder() (not overridden - calls
+	 * this, then separately calls the already-JMAP-native subscribeMailbox()) is the real
+	 * consumer.
+	 *
+	 * @param mixed $mailbox a mailbox path (UTF-8) to create
+	 * @param array $opts 'special_use' (string[], eg. ['\Sent']) - mapped to the JMAP Mailbox
+	 *  'role' property (first recognised value only - JMAP has one role per mailbox, IMAP can in
+	 *  theory advertise several special-use attributes on one mailbox)
+	 * @throws \Horde_Imap_Client_Exception parent mailbox not found, or on any JMAP error
+	 */
+	public function createMailbox($mailbox, array $opts = array())
+	{
+		[$parentPath, $name] = $this->_splitMailboxPath((string)$mailbox);
+		$client = $this->jmapClient();
+		$parentId = null;
+		if ($parentPath !== '' && !($parentId = $client->getMailboxId($parentPath)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$parentPath' not found");
+		}
+		$create = ['name' => $name, 'parentId' => $parentId];
+		static $roles = ['\\sent' => 'sent', '\\drafts' => 'drafts', '\\trash' => 'trash',
+			'\\junk' => 'junk', '\\archive' => 'archive', '\\all' => 'all', '\\flagged' => 'flagged'];
+		foreach ((array)($opts['special_use'] ?? []) as $use)
+		{
+			if (isset($roles[strtolower($use)]))
+			{
+				$create['role'] = $roles[strtolower($use)];
+				break;
+			}
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'create' => ['0' => $create],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!empty($response['methodResponses'][0][1]['notCreated']['0']))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set create failed: '.
+				json_encode($response['methodResponses'][0][1]['notCreated']['0']));
+		}
+	}
+
+	/**
+	 * JMAP-native renameMailbox() - Mailbox/set update (name+parentId) instead of IMAP RENAME,
+	 * for an account with no real IMAP connection behind it. Api\Mail::renameFolder() (not
+	 * overridden - calls this) is the real consumer.
+	 *
+	 * @param mixed $old the mailbox's current path (UTF-8)
+	 * @param mixed $new its new path (UTF-8) - may change the leaf name, the parent, or both
+	 * @throws \Horde_Imap_Client_Exception mailbox/new parent not found, or on any JMAP error
+	 */
+	public function renameMailbox($old, $new)
+	{
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$old)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$old' not found");
+		}
+		[$newParentPath, $newName] = $this->_splitMailboxPath((string)$new);
+		$newParentId = null;
+		if ($newParentPath !== '' && !($newParentId = $client->getMailboxId($newParentPath)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$newParentPath' not found");
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'update' => [
+					$mailboxId => ['name' => $newName, 'parentId' => $newParentId],
+				],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set rename failed: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$mailboxId]));
+		}
+	}
+
+	/**
+	 * JMAP-native deleteMailbox() - Mailbox/set destroy instead of IMAP DELETE, for an account
+	 * with no real IMAP connection behind it. Api\Mail::deleteFolder() (not overridden - calls
+	 * this, after separately calling the already-JMAP-native subscribeMailbox($mailbox, false))
+	 * is the real consumer.
+	 *
+	 * @param mixed $mailbox a mailbox path (UTF-8) to delete
+	 * @throws \Horde_Imap_Client_Exception mailbox not found, or on any JMAP error
+	 */
+	public function deleteMailbox($mailbox)
+	{
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'destroy' => [$mailboxId],
+			], '0'],
+		], JmapHttp::JMAP_MAIL);
+		if (!empty($response['methodResponses'][0][1]['notDestroyed'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set destroy failed: '.
+				json_encode($response['methodResponses'][0][1]['notDestroyed'][$mailboxId]));
+		}
+	}
+
+	/**
 	 * JMAP-native setACL() - patches Mailbox shareWith[principalId] instead of IMAP SETACL, for
 	 * accounts whose session advertises mail:share. Throws otherwise - NOT a fall back to the
 	 * classic IMAP implementation: Stalwart is JMAP-only, with no real IMAP connection ever
@@ -857,12 +1255,43 @@ class Jmap extends Mail\Imap
 				]));
 				$subscription_id = $this->jmap->createPushSubscription($client_id, $url, self::SUBSCRIBTION_TYPES, $expires, $this->jmap_sessionState)['id'];
 			}
-			// check the subscription is about to expire --> renew/extend it
-			elseif ((new Api\DateTime($subscriptions[0]['expires'])) < (new Api\DateTime('+1day')))
+			else
 			{
-				$this->jmap->updatePushSubscription($subscriptions[0]['id'], [
-					'expires' => $expires->format(JmapHttp::DATETIME_UTC_FORMAT),
-				]);
+				// Self-heal duplicates: PushSubscription/set's "create" has no server-side dedup on
+				// deviceClientId - two enablePush() calls racing each other (eg. two tabs loading the
+				// mail app within the same second) can each find zero matching subscriptions above and
+				// each create their own, leaving duplicates that each independently deliver every
+				// future push event to this one client, multiplying client-side notifications (found
+				// live, 2026-10-29: "3 notifications per received mail" reported on
+				// pole.egroupware.org). Keep whichever has the furthest-out expiry (the most recently
+				// created/renewed one) and destroy the rest on every call, not just the first time one
+				// is spotted - self-heals duplicates that accumulated before this fix existed too, not
+				// only preventing new ones.
+				usort($subscriptions, static fn($a, $b) => $b['expires'] <=> $a['expires']);
+				$keep = array_shift($subscriptions);
+				if ($subscriptions)
+				{
+					error_log(__METHOD__."() found ".(count($subscriptions)+1)." duplicate PushSubscriptions for ".
+						"deviceClientId=$client_id, destroying ".count($subscriptions)." and keeping id={$keep['id']}");
+				}
+				foreach ($subscriptions as $duplicate)
+				{
+					try
+					{
+						$this->jmap->destroyPushSubscription($duplicate['id'], $this->jmap_sessionState);
+					}
+					catch (\Exception $e)
+					{
+						_egw_log_exception($e);
+					}
+				}
+				// check the subscription is about to expire --> renew/extend it
+				if ((new Api\DateTime($keep['expires'])) < (new Api\DateTime('+1day')))
+				{
+					$this->jmap->updatePushSubscription($keep['id'], [
+						'expires' => $expires->format(JmapHttp::DATETIME_UTC_FORMAT),
+					]);
+				}
 			}
 
 			// get states to calculate changes
@@ -938,7 +1367,10 @@ class Jmap extends Mail\Imap
 		$jmap = $stalwart->jmapClient();
 		$old_states = Api\Cache::getSession(__CLASS__, 'states:'.$mail_account->acc_id);
 		$sessionState = Api\Cache::getSession(__CLASS__, 'sessionState:'.$mail_account->acc_id);
-		$currentFolder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$mail_account->acc_id);
+		// default to INBOX: no session cache yet (eg. Stalwart's very first push for a session
+		// that hasn't opened a folder), $mailbox is not nullable - found live 2026-10-29 as a
+		// TypeError flooding the log after bulk-resubscribing push on a domain migration
+		$currentFolder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$mail_account->acc_id) ?? 'INBOX';
 		//error_log(__METHOD__."() client_data=".json_encode($client_data).", old_states=".json_encode($old_states).", current_folder='$currentFolder', data=".json_encode($data));
 		switch($data['@type'])
 		{
@@ -952,6 +1384,15 @@ class Jmap extends Mail\Imap
 				// flag change: Email, Mailbox
 				// change is an object with possible attributes: EMail, EmailDelivery, Mailbox, Thread, ...
 				$new_states = $old_states;
+				$push_payload = [];
+				// Stalwart can bundle changes for MULTIPLE accountIds into a single StateChange push -
+				// eg. the subscriber's own account plus a mail:share-shared account like birgit's
+				// "user/birgit" - so $changes/$push_payload/$push used to be overwritten on every
+				// iteration of this loop, meaning only the LAST account in the map ever actually got
+				// pushed to the client; every other account's changes were fetched (silently advancing
+				// its diff baseline, so they'd never be retried either) but never turned into a push at
+				// all. Found live 2026-11-05: shared-account folders never got push updates, or only
+				// sometimes, depending on how Stalwart happened to bundle the StateChange.
 				foreach($data['changed'] as $accountId => $states)
 				{
 					$changes = $jmap->getChanges($accountId, array_combine(array_keys($states), array_map(static function($state, $name) use($old_states, $accountId)
@@ -974,66 +1415,66 @@ class Jmap extends Mail\Imap
 							$new_states[$accountId][$name] = $changes[$changesKey]['newState'];
 						}
 					}
-				}
-				Api\Cache::setSession(__CLASS__, 'states:'.$mail_account->acc_id, $new_states);
-				// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
-				// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
-				// true, so this never actually short-circuited anything; fixed to check the real
-				// "destroyed" id lists too, now that they can produce a push on their own.
-				if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-changes']['destroyed']) &&
-					empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-changes']['destroyed']))
-				{
-					break;  // no change or nothing we're interested in
-				}
-				$push_payload = [];
-				foreach($changes as $type => $change)
-				{
-					if (empty($change['list'])) continue;
-					[$what, $type] = explode('-', $type);   // "mailbox-created", "email-updated", ...
-					foreach($change['list'] ?? [] as $i => $item)
+					// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
+					// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
+					// true, so this never actually short-circuited anything; fixed to check the real
+					// "destroyed" id lists too, now that they can produce a push on their own.
+					if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-changes']['destroyed']) &&
+						empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-changes']['destroyed']))
 					{
-						if ($what !== 'email' && $what !== 'mailbox')
+						continue;  // no change for THIS account, or nothing we're interested in
+					}
+					unset($push);
+					foreach($changes as $type => $change)
+					{
+						if (empty($change['list'])) continue;
+						[$what, $type] = explode('-', $type);   // "mailbox-created", "email-updated", ...
+						foreach($change['list'] ?? [] as $i => $item)
 						{
-							continue;
-						}
-						$folderId = $what === 'email' ? key($item['mailboxIds']) : $item['id'];
-						try
-						{
-							// only needed for acl.folder (badge/special-folder use, see below) - the
-							// row id itself uses $folderId directly, see $id below
-							$folder = $jmap->folderId2path($folderId);
-						}
-						catch (\Horde_Imap_Client_Exception $e)
-						{
-							// the mailbox behind this push item's mailboxId/folderId is not (or no longer)
-							// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
-							// or a genuine delete/rename race) - skip just this item, not the whole batch
-							error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
-								", folderId=$folderId: ".$e->getMessage());
-							continue;
-						}
-						// native JMAP row-id shape (mail_ui::generateJmapRowID()): account::acc_id::
-						// folderId::emailId - NOT the classic account::acc_id::base64(folder)::uid shape
-						// - this is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
-						// are cached client-side under the native JMAP shape (see
-						// mail-jmap-modernization.md's "Row-id scheme"; mirrors MailJmap.
-						// buildWsPushPayload()'s client-side equivalent of this same code)
-						$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId;
-						// check if we can combine with the last change into a single push
-						if (!isset($push) || !str_starts_with($push['id'], $id))
-						{
-							if (isset($push))
+							if ($what !== 'email' && $what !== 'mailbox')
 							{
-								$push_payload[] = $push;
+								continue;
 							}
-							$push = [
-								'app' => 'mail',
-								'id' => $id,
-								'acl' => [
-									'folder' => $folder,
-								]
-							];
-						}
+							$folderId = $what === 'email' ? key($item['mailboxIds']) : $item['id'];
+							try
+							{
+								// only needed for acl.folder (badge/special-folder use, see below) - the
+								// row id itself uses $folderId directly, see $id below. $accountId: this
+								// folderId may belong to a mail:share-shared account, not the subscriber's
+								// own default one (see Mailbox::folderId2path()'s own docblock)
+								$folder = $jmap->folderId2path($folderId, $accountId);
+							}
+							catch (\Horde_Imap_Client_Exception $e)
+							{
+								// the mailbox behind this push item's mailboxId/folderId is not (or no longer)
+								// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
+								// or a genuine delete/rename race) - skip just this item, not the whole batch
+								error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
+									", folderId=$folderId: ".$e->getMessage());
+								continue;
+							}
+							// native JMAP row-id shape (mail_ui::generateJmapRowID()): account::acc_id::
+							// folderId::emailId - NOT the classic account::acc_id::base64(folder)::uid shape
+							// - this is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
+							// are cached client-side under the native JMAP shape (see
+							// mail-jmap-modernization.md's "Row-id scheme"; mirrors MailJmap.
+							// buildWsPushPayload()'s client-side equivalent of this same code)
+							$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId;
+							// check if we can combine with the last change into a single push
+							if (!isset($push) || !str_starts_with($push['id'], $id))
+							{
+								if (isset($push))
+								{
+									$push_payload[] = $push;
+								}
+								$push = [
+									'app' => 'mail',
+									'id' => $id,
+									'acl' => [
+										'folder' => $folder,
+									]
+								];
+							}
 						if ($what === 'email')
 						{
 							$push['id'] = $id.'::'.$item['id'];
@@ -1109,7 +1550,7 @@ class Jmap extends Mail\Imap
 				{
 					try
 					{
-						$folder = $jmap->folderId2path($folderId);
+						$folder = $jmap->folderId2path($folderId, $accountId);
 					}
 					catch (\Horde_Imap_Client_Exception $e)
 					{
@@ -1122,9 +1563,14 @@ class Jmap extends Mail\Imap
 						'acl' => ['folder' => $folder],
 					];
 				}
+			}	// end foreach($data['changed'] as $accountId => $states)
+			Api\Cache::setSession(__CLASS__, 'states:'.$mail_account->acc_id, $new_states);
+			if ($push_payload)
+			{
 				$push = new Api\Json\Push($client_data['account_id']);
 				$push->call('egw.push', $push_payload);
-				break;
+			}
+			break;
 			case 'EmailDelivery':   // extension is not supported
 			default:
 				error_log(__METHOD__.' Unknown push type: '.json_encode($data));
@@ -1382,17 +1828,23 @@ class Jmap extends Mail\Imap
 	 * what's actually the JMAP(S) endpoint for a JMAP account - found live 2026-09-08 via
 	 * mail_ui::importMessage()'s folder-picker (Compose::ajax_searchFolder() -> Api\Mail::
 	 * getFolderObjects() -> _getNameSpaces()), "Mail server closed the connection unexpectedly."
-	 * RFC 8621 has no IMAP-NAMESPACE-equivalent concept at all - every JMAP account only ever has
-	 * a flat, unprefixed personal hierarchy from this call's perspective (shared/other-user
-	 * mailboxes are just regular Mailbox objects with role=null, not a distinct namespace - see
-	 * folderTree.ts's own isNamespaceRootName() for how the client already treats that
-	 * client-side), so 'others'/'shared' are always empty here.
+	 * RFC 8621 has no IMAP-NAMESPACE-equivalent concept at all, so there's no real NAMESPACE reply
+	 * to synthesize 'others' from the usual way.
+	 *
+	 * 'others' is populated instead (2026-10-29, ticket #126691 follow-up, see
+	 * doc/ai/projects/mail-jmap-shared-mailboxes.md) whenever $this->jmapClient()->sharedAccounts
+	 * is non-empty - mailboxes someone else shared with us (RFC 9670 "JMAP for Sharing"), confirmed
+	 * live to already appear there from existing Mailbox.shareWith ACL grants alone, no separate
+	 * discovery/subscribe step needed. The raw prefix name deliberately stays the classic "user"
+	 * (ralf, 2026-10-29: keep migrations simple) - mail/js/folderTree.ts's isNamespaceRootName()
+	 * already matches that literally, and the UI already translates it to "Other users" for
+	 * display, so nothing client-side needs to change to recognize it.
 	 *
 	 * @return array
 	 */
 	function getNameSpaceArray()
 	{
-		return [
+		$result = [
 			'personal' => [[
 				'type' => 'personal',
 				'name' => '',
@@ -1401,5 +1853,16 @@ class Jmap extends Mail\Imap
 				'delimiter' => '/',
 			]],
 		];
+		if ($this->jmapClient()->sharedAccounts)
+		{
+			$result['others'] = [[
+				'type' => 'others',
+				'name' => 'user/',
+				'prefix' => 'user',
+				'prefix_present' => true,
+				'delimiter' => '/',
+			]];
+		}
+		return $result;
 	}
 }

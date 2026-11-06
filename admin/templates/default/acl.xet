@@ -2,8 +2,19 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="admin.acl.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button  statustext="Add" id="add" onclick="app.admin.acl({id:'add'},[{id:''}])" noSubmit="true"></et2-button>
+	<!-- Shown in the nextmatch's own header slot.  The two filter selects live here because a
+	     nextmatch rendered in a popup gets NO generated filterbox at all: Nextmatch::beforeSendToClient()
+	     returns early for output_mode 2, so nothing builds the search/filter/filter2 controls the
+	     legacy widget used to put in its own header bar.  Being children of the nextmatch also puts
+	     them in its namespace (so they read $content['nm']['filter'/'filter2']) and makes
+	     nm.getWidgetById() find them, which is how Et2NextmatchDataProvider hands filter2 the app
+	     list admin_acl::get_rows() recomputes on every fetch. -->
+	<et2-template  id="admin.acl.header" template="" lang="" group="0" version="1.9.001">
+		<et2-hbox  class="admin_aclHeader">
+			<et2-button  statustext="Add" id="add" onclick="app.admin.acl({id:'add'},[{id:''}])" noSubmit="true"></et2-button>
+			<et2-select  id="filter" onchange="app.admin.aclFilterChange" noLang="1"></et2-select>
+			<et2-select  id="filter2" onchange="app.admin.aclFilterChange" emptyLabel="All applications" noLang="1"></et2-select>
+		</et2-hbox>
 	</et2-template>
 	<et2-template  id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -22,11 +33,11 @@
 				<column width="70"/>
 			</columns>
 			<rows>
-				<row>
+				<row class="th">
 					<et2-description></et2-description>
-					<nextmatch-sortheader label="Application" id="acl_appname"/>
-					<nextmatch-sortheader label="Data from" id="acl_account"/>
-					<nextmatch-sortheader label="Access by" id="acl_location"/>
+					<et2-nextmatch-sortheader  label="Application" id="acl_appname"/>
+					<et2-nextmatch-sortheader  label="Data from" id="acl_account"/>
+					<et2-nextmatch-sortheader  label="Access by" id="acl_location"/>
 					<et2-nextmatch-header  label="Read" id="read"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Add" id="add"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Edit" id="edit"></et2-nextmatch-header>
@@ -52,22 +63,19 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
-	<et2-template  id="admin.acl" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="100%"/>
-			</columns>
-			<rows>
-				<row>
-					<nextmatch id="nm" template="admin.acl.rows" header_left="admin.acl.add" height="600"/>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-hbox>
-						<et2-button  label="Close" id="cancel" onclick="window.close();"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="admin.acl" template="" lang="" group="0" version="1.9.001" layout="stack">
+		<!-- The nextmatch is a direct child of the popup template, not wrapped in a <grid>: a grid is
+		     a real <table> and a table cell can not constrain its child's height, so et2-datagrid
+		     would grow to fit every row instead of scrolling inside the popup.  The Add button that
+		     used to be the nextmatch's header_left template goes in its own header slot - et2-nextmatch
+		     has no header_left/header_right property. -->
+		<et2-nextmatch  id="nm" template="admin.acl.rows" grow="1">
+			<et2-template  id="admin.acl.header" slot="header"></et2-template>
+		</et2-nextmatch>
+		<et2-hbox  class="dialogFooterToolbar">
+			<et2-button  label="Close" id="cancel" onclick="window.close();"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>

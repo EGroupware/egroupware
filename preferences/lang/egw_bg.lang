@@ -106,7 +106,6 @@ used instead of the application color.	preferences	bg	Използва се вм
 users choice	preferences	bg	По избор на потребителя
 what to display for an avatar, if there is no photo	preferences	bg	Какво да се показва за аватар, ако няма снимка
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на EGroupware.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	bg	В какъв режим се отварят текстовите полета, поддържащи Markdown. Промяната на режима в дадено поле актуализира тази настройка.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	bg	Можете да изберете функциите, които да бъдат активирани в лентата с инструменти.
 you must enter a password	preferences	bg	Трябва да въведете парола
 your preferences	preferences	bg	Вашите настройки

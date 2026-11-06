@@ -5,7 +5,9 @@
       <li><a href="/">Home</a></li>
       <li><a href="https://github.com/EGroupware/egroupware/wiki/#Development">Development</a></li>
       <li><a href="/getting-started/widgets">Widgets</a></li>
+      <li><a href="/getting-started/usage">Usage</a></li>
       <li><a href="/getting-started/styling">Styling</a></li>
+      <li><a href="/getting-started/layout">Layout</a></li>
       <li><a href="https://github.com/EGroupware/example">Example app</a></li>
     </ul>
   </li>
@@ -25,6 +27,7 @@
 	  <li><a href="/tutorials/web-component-authoring">Web Component Authoring</a></li>
 	  <li><a href="/tutorials/converting-to-webcomponents">Converting to WebComponent</a></li>
 	  <li><a href="/tutorials/automatic-testing">Automatic testing</a></li>
+	  <li><a href="https://github.com/EGroupware/egroupware/blob/master/doc/app-ci.md">Continuous integration</a></li>
       <li><a href="https://github.com/EGroupware/example/tree/step5?tab=readme-ov-file">Implementing the linking system</a></li>
     </ul>
   </li>
@@ -67,6 +70,16 @@
                           </ul>
                         {% endif %}
                       </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+
+                {# Controllers this widget owns - they live at /mixins/ but are listed here rather
+                   than under "Controllers & Mixins", which is for pieces you can reuse. #}
+                {% if entry.base.controllers.length %}
+                  <ul class="associated-widgets">
+                    {% for c in entry.base.controllers %}
+                      <li><a href="/mixins/{{ c.name | slugify }}">{{ c.name | classNameToComponentName }}</a></li>
                     {% endfor %}
                   </ul>
                 {% endif %}

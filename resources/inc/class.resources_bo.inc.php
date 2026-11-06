@@ -135,7 +135,7 @@ class resources_bo
 				break;
 			case -2:
 				// Accessories only
-				$filter[] = 'accessory_of != -1';
+				$filter[] = Api\Db\SqlFragment::raw('accessory_of != -1');
 				break;
 			case -3:
 				// All
@@ -145,7 +145,7 @@ class resources_bo
 			case self::DELETED:
 				$join = $acc_join;
 				$extra_cols[] = 'acc_count';
-				$filter[] = 'deleted IS NOT NULL';
+				$filter[] = Api\Db\SqlFragment::raw('deleted IS NOT NULL');
 				break;
 			default:
 				$filter['accessory_of'] = $query['filter2'];
@@ -249,7 +249,10 @@ class resources_bo
 				$accessories = $this->get_acc_list($resource['res_id'],$query['filter2']==self::DELETED);
 				foreach($accessories as $acc_id => $acc_name)
 				{
-					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
+					$title = $this->link_title($acc_id);
+					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $title);
+					// the same as links for the list's et2-link-string, id as string: et2-link only opens those
+					$resource['accessory_links'][] = array('app' => 'resources', 'id' => (string)$acc_id, 'title' => $title);
 				}
 			} elseif ($resource['accessory_of'] > 0) {
 				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);

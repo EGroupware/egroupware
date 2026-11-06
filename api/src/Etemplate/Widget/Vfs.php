@@ -289,8 +289,10 @@ class Vfs extends File
 		elseif (isset($template))
 		{
 			$data = self::$request->content[$widget_id];
-			$path = self::store_file($path = (!is_array($data) && $data[0] == '/' ? $data :
-				self::get_vfs_path($data['to_app'].':'.$data['to_id'])).'/', $file);
+			// rtrim, as get_vfs_path() already returns a directory with its trailing slash -
+			// appending a second one gave "/apps/tracker/4//" and a download URL to match
+			$path = self::store_file($path = rtrim(!is_array($data) && $data[0] == '/' ? $data :
+				self::get_vfs_path($data['to_app'].':'.$data['to_id']), '/').'/', $file);
 
 			// store temp. vfs-path like links to be able to move it to the correct location after entry is stored
 			if (is_array($data) && (empty($data['to_id']) || is_array($data['to_id'])))
@@ -342,12 +344,32 @@ class Vfs extends File
 	}
 
 	/**
-	 * Fix source/url of dragged in images in html
+	 * The characters Vfs::download_url() percent-encodes when it turns a path into a URL.
+	 *
+	 * Kept here rather than re-derived, so fix_html_dragins() below can recognise a path in the
+	 * form it was actually written into the text.
+	 *
+	 * @var array
+	 */
+	protected static $download_url_encode = ['+' => '%2B', ' ' => '%20', '"' => '%22'];
+
+	/**
+	 * Fix source/url of dragged in images in html - and of images pasted into a markdown field
+	 *
+	 * An upload for an entry that had no id yet parks in the user's temp directory, and the save
+	 * files it away under /apps/$app/$id/.  The URL written into the text at upload time still
+	 * points at the temp directory, so it has to be rewritten to follow the file.
+	 *
+	 * This is a plain strtr() over the text, so it does not care whether that text is html with
+	 * <img src="..."> or markdown with ![](...) - both spell the URL the same way.  The parameter
+	 * is still called $html for the callers that have always passed html.
+	 *
+	 * Call it AFTER Link::link() has filed the pending links away: it removes the temp directories.
 	 *
 	 * @param string $app
 	 * @param int|string $id
-	 * @param array $links
-	 * @param string& $html
+	 * @param array $links the pending links, ie. $content['link_to']['to_id']
+	 * @param string& $html html or markdown source, rewritten in place
 	 * @return boolean true if something was fixed and $html needs to be stored
 	 */
 	static function fix_html_dragins($app, $id, array $links, &$html)
@@ -358,8 +380,18 @@ class Vfs extends File
 			$matches = null;
 			if (is_array($link) && !empty($link['id']['tmp_name']) && preg_match('|^'.preg_quote(Api\Vfs::PREFIX,'|').'('.preg_quote(self::get_temp_dir($app, ''), '|').'[^/]+)/|', $link['id']['tmp_name'], $matches))
 			{
-				$replace[substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX))] =
-					Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
+				$from = substr($link['id']['tmp_name'], strlen(Api\Vfs::PREFIX));
+				$to = Api\Link::vfs_path($app, $id, Api\Vfs::basename($link['id']['tmp_name']), true);
+				$replace[$from] = $to;
+
+				// The text does not hold the bare VFS path, it holds what Vfs::download_url() made of it
+				// - and that percent-encodes three characters.  So a file with a space in its
+				// name is "..../my%20shot.png" in the text and the raw path above never matches it,
+				// leaving that one image dangling after the save.  Match both spellings.
+				if (($from_url = strtr($from, self::$download_url_encode)) !== $from)
+				{
+					$replace[$from_url] = strtr($to, self::$download_url_encode);
+				}
 
 				if (!in_array($matches[1], $remove_dir)) $remove_dir[] = $matches[1];
 			}
@@ -502,6 +534,74 @@ class Vfs extends File
 	}
 
 	/**
+	 * Tell a markdown-enabled widget whether it may offer to attach a file
+	 *
+	 * The markdown editor attaches through ajax_htmlarea_upload(), the endpoint TinyMCE already
+	 * posts a dragged-in image to, which reads its target from the named widget's *server-side*
+	 * content - normally "link_to", ie. {to_app, to_id}.  Only the server can see whether that
+	 * names a saved entry, so only the server can answer this.
+	 *
+	 * An entry with no id yet is allowed: ajax_htmlarea_upload() parks the upload in the user's
+	 * temp directory and links it so the save files it away, and fix_html_dragins() then rewrites
+	 * the URL in the text to follow it - exactly what already happens to an image dragged into the
+	 * html editor of a new entry.  That last step is the app's to make (tracker does it in
+	 * tracker_ui::edit()); an app that skips it leaves the first save's URLs dangling, in markdown
+	 * the same way it already would in html.
+	 *
+	 * @param Etemplate\Widget $widget widget to check and, if it may, enable
+	 * @param string $cname current namespace
+	 * @param ?array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public static function set_can_attach_file(Etemplate\Widget $widget, $cname, ?array $expand=null)
+	{
+		// markdown may be bound to content, so expand before believing it
+		$markdown = self::expand_name($widget->attrs['markdown'] ?? '', $expand['c'] ?? null,
+			$expand['row'] ?? null, $expand['c_'] ?? null, $expand['row_'] ?? null,
+			$expand['cont'] ?? self::$request->content ?? array());
+
+		// The user's Markdown preference overrules the template in both directions, the same way
+		// Et2MarkdownMixin applies it client-side; anything but a real choice leaves the
+		// template's answer standing - "use default" stores the literal string "default", so an
+		// untouched preference reads back as "", null or "default" depending on how it got there.
+		// Without this a field that is markdown only because of the preference would get the
+		// editor but no way to attach anything to it.
+		$preference = $GLOBALS['egw_info']['user']['preferences']['common']['markdown'] ?? '';
+		if ($preference === 'on' || $preference === 'off')
+		{
+			$markdown = $preference === 'on';
+		}
+		if (empty($markdown) || $markdown === 'false') return;
+
+		if (self::can_attach_file($widget->attrs['imageUpload'] ?? null))
+		{
+			self::setElementAttribute(self::form_name($cname, $widget->id, $expand), 'canAttachFile', true);
+		}
+	}
+
+	/**
+	 * Does the given content key name an entry a file can be attached to right now?
+	 *
+	 * @param ?string $widget_id content key, default "link_to" as et2-link-to uses
+	 * @param ?array $content default the current request's
+	 * @return boolean
+	 */
+	public static function can_attach_file($widget_id=null, ?array $content=null)
+	{
+		$content ??= self::$request->content ?? array();
+		$data = $content[$widget_id ?: 'link_to'] ?? null;
+
+		// a literal path names a fixed directory, so there is nothing to wait for
+		if (is_string($data) && $data !== '' && $data[0] === '/')
+		{
+			return true;
+		}
+		// {to_app, to_id}.  to_id is empty for an entry that has not been saved yet, and an array
+		// of the links accumulated for it once something has been attached - both are fine, see the
+		// method docblock: the upload parks in a temp directory and the save files it away.
+		return is_array($data) && !empty($data['to_app']);
+	}
+
+	/**
 	 * Change an ID like app:id:relative/path to an actual VFS location
 	 */
 	public static function get_vfs_path($path)
@@ -530,7 +630,19 @@ class Vfs extends File
 			}
 			$path = Api\Link::vfs_path($app,$id,'',true);
 		}
-		if (!empty($relpath)) $path .= '/'.$relpath;
+		if (!empty($relpath))
+		{
+			$path .= '/'.$relpath;
+		}
+		else
+		{
+			// "app:id:" with no relative path means the entry's directory, NOT a file named after
+			// the entry.  store_file() decides that by the trailing slash: without one it treats
+			// the path as the target file name, so an upload to "tracker:4:" used to land as
+			// /apps/tracker/4.png - beside the entry directory rather than in it, and not an
+			// attachment at all.  Same for a new entry, where it became <tempdir>.png.
+			$path .= '/';
+		}
 		return $path;
 	}
 

@@ -1,0 +1,46 @@
+/**
+ * EGroupware - Row styles for admin's nextmatch lists, mobile skin
+ *
+ * Loaded into each datagrid row's shadow root via <et2-styles src="rows.css"> in the row
+ * templates.  A shadow root is its own node tree, so the "#admin-index table.egwGridView_outer
+ * tbody ..." selectors these rules replaced (in app.less/app.css) could never match a row
+ * element - neither the id nor the legacy dataview table exists in there.  They are keyed off
+ * classes on the row widgets instead of generated widget ids for the same reason.
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package admin
+ * @link http://www.egroupware.org
+ */
+
+/* Login-ID is the row's headline */
+.adminLoginId {
+	font-weight: bold;
+}
+
+/* "Lastname, Firstname" - the comma belongs to the layout, not to the data */
+.adminLastname::after {
+	content: ",";
+}
+
+/* Second column is right-aligned metadata (created / status / modified) */
+.adminCol2 {
+	text-align: right;
+}
+
+.adminStatus {
+	text-align: right;
+}
+
+/* Long email addresses must not push the column wider than its share */
+.adminOverflowEllipsis {
+	width: 100%;
+	white-space: nowrap;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Categories list: top-level categories are bold, sub-categories are indented by level_spacer */
+.level0 {
+	font-weight: bold;
+}

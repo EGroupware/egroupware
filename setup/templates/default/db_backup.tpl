@@ -106,7 +106,7 @@ function sort_table(id)
 </script>
 
 <form method="post" name="backup_form" action="{self}" style="height: 100%; overflow-y: auto" enctype="multipart/form-data">
-{hidden_vars}
+{hidden_vars}{password_warned}
 <input name="sortedby" id="sortedby" type="hidden" />
 <table border="0" align="center" width="98%" cellpadding="5">
 <!-- BEGIN setup_header -->
@@ -179,6 +179,14 @@ function sort_table(id)
 		</td>
 		<td align="right">
 			{lang_backup_files} {backup_files}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			{lang_old_db_password}
+		</td>
+		<td align="right">
+			{old_db_password}
 		</td>
 	</tr>
 	<tr>

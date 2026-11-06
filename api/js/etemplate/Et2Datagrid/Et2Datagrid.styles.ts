@@ -23,20 +23,18 @@ export default css`
 		display: none;
 	}
 
-	/* Same-tbody print mode: #rows is the one element that holds both the
-	 * normal virtualized rows and the static print rows, so retain table
-	 * fragmentation on it instead of treating it as one CSS grid fragment. */
+	/* The virtualized rows stay in the DOM, with their virtualizer, but empty and out of the
+	 * way: the static print rows are in #print-rows beside them. */
 	:host(.print) .dg-body #rows {
+		display: none !important;
+	}
+
+	/* Retain table fragmentation on the print rows instead of treating them as one CSS grid fragment. */
+	:host(.print) .dg-body #print-rows {
 		display: table-row-group;
 		height: auto !important;
 		min-height: 0 !important;
 		contain: none !important;
-		/* The very last printed row can still end up slightly clipped at the page
-		 * bottom. Physical units are used here rather than em/vh because they 
-		 * resolve consistently across print contexts; the margin is sized to roughly a full page so the last row
-		 * has somewhere safe to overflow into even if the driver is a full page short.
-		 */
-		padding-bottom: 250mm;
 	}
 	/* A grid printing itself (see Et2Datagrid.beforePrint()) sits in a form with more below it,
 	 * so its last row is not the end of the page and the page of padding only wastes paper */

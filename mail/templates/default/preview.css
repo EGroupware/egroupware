@@ -9,7 +9,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-.sl-theme-dark {
+.sl-theme-dark,
+html.mailDarkmode {
   color-scheme: dark;
   --sl-color-gray-50: hsl(240, 5.1%, 15%);
   --sl-color-gray-100: hsl(240, 5.7%, 18.2%);
@@ -23,7 +24,8 @@
   --sl-color-gray-900: hsl(240, 9.1%, 91.8%);
   --sl-color-gray-950: hsl(0, 0%, 95%);
 }
-.sl-theme-light {
+.sl-theme-light,
+html:not(.mailDarkmode) {
   color-scheme: light;
   --sl-color-gray-50: hsl(0, 0%, 97.5%);
   --sl-color-gray-100: hsl(240, 4.8%, 95.9%);
@@ -112,67 +114,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
 img[alt*="[blocked external image:"] {
   object-fit: scale-down;
 }
-.mail_externalImagesMsg {
-  display: block;
-  position: fixed;
-  height: auto;
-  width: 100%;
-  bottom: 0px;
-  left: 0px;
-  background: #ffe5a5;
-  border-top: 1px solid #8f8b8b;
-  box-shadow: #8f8b8b 0px 1px 13px 2px;
-}
-@media print {
-  .mail_externalImagesMsg {
-    display: none !important;
-  }
-}
-.mail_externalImagesMsg.red {
-  background: rgba(204, 0, 51, 0.8) !important;
-}
-.mail_externalImagesMsg.red * {
-  color: white !important;
-}
-.mail_externalImagesMsg button {
-  float: right;
-  margin: 7px;
-  display: inline-block;
-  background-color: transparent;
-  border: none;
-  font-weight: bold;
-  color: #30558c;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.mail_externalImagesMsg button:hover {
-  color: #143058;
-}
-.mail_externalImagesMsg p {
-  display: inline-block;
-  width: 70%;
-  font-size: 9pt;
-  margin: 7px 7px 7px 10px;
-  color: #1f1f1f;
-}
-.mail_externalImagesMsg button.closeBtn {
-  float: right;
-  background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
-  height: 30px;
-  width: 50px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 22px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  margin: 0;
-  opacity: 0.6;
-}
-.mail_externalImagesMsg button.closeBtn:hover {
-  opacity: 1;
-}
 #smimePasswordRequest {
   background-image: url('../api/templates/default/images/lock.svg');
   width: 100%;
@@ -253,4 +194,97 @@ img[alt*="[blocked external image:"] {
 .mail_attachmentIndexIcon img {
   width: 64px;
   height: 64px;
+}
+@media screen {
+  html:not(.mailDarkmode) {
+    color-scheme: light;
+    background-color: var(--sl-color-gray-50);
+  }
+  html.mailDarkmode {
+    --sl-color-primary-700: hsl(210, 36%, 63%);
+    --sl-color-primary-800: hsl(210, 33%, 73%);
+    background-color: var(--sl-color-neutral-50);
+    color: var(--sl-color-neutral-700);
+  }
+  html.mailDarkmode .td_display,
+  html.mailDarkmode .td_display:has(pre),
+  html.mailDarkmode blockquote {
+    color: inherit;
+    background-color: transparent;
+  }
+  html.mailDarkmode blockquote[type=cite] {
+    color: var(--sl-color-primary-700);
+  }
+  html.mailDarkmode a:link {
+    color: var(--sl-color-primary-700);
+  }
+  html.mailDarkmode a:visited {
+    color: var(--sl-color-primary-800);
+  }
+}
+/* Header of a printed message, only added for printing (MailApp.printMessage()),
+   in the user's default font of .mailDefaultFont */
+.mailPrintHeader {
+  display: none;
+}
+/* Content wider than the page: images and long words or lines fit the page width when printing,
+   what still does not (eg. a wide table) gets scaled down by printBody.ts's fitToPrintWidth(),
+   which measures with these rules applied via html.mailPrintMeasure */
+html.mailPrintMeasure img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+html.mailPrintMeasure body {
+  overflow-wrap: anywhere;
+}
+html.mailPrintMeasure pre {
+  white-space: pre-wrap !important;
+}
+/* The body document gets printed on its own (MailApp.printMessage()) */
+@media print {
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  body {
+    overflow-wrap: anywhere;
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  /* not scrolling in its on-screen height, which printed only the first screenful */
+  body,
+  html,
+  .mailDisplayBody {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  /* Word's HTML puts its content on a named page (@page WordSection1, div.WordSection1 { page: WordSection1 }),
+     forcing a page break before it, which leaves the header alone on the first page */
+  * {
+    page: auto !important;
+  }
+  .mailPrintHeader {
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 0.1em solid #d7d7d7;
+    color: black;
+  }
+  .mailPrintHeader table {
+    border-collapse: collapse;
+  }
+  .mailPrintHeader td {
+    padding: 1px 8px 1px 0;
+    vertical-align: top;
+    font: inherit;
+  }
+  .mailPrintHeader td:first-child {
+    white-space: nowrap;
+  }
+  .mailPrintHeader_subject {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 4px;
+  }
 }

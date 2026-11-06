@@ -21,45 +21,40 @@
             </columns>
             <rows>
                 <row class="th">
-                    <nextmatch-sortheader label="Date" id="ts_start"/>
-                    <grid spacing="0" padding="0">
-                        <columns>
-                            <column/>
-                        </columns>
-                        <rows>
-                            <row disabled="@pm_integration=full">
-                                <et2-nextmatch-header-filter  id="ts_project" search="false" noLang="1" emptyLabel="All projects"></et2-nextmatch-header-filter>
-                            </row>
-                            <row disabled="!@pm_integration=full">
-                                <et2-nextmatch-header-entry  id="pm_id" noLang="1" placeholder="All projects" onlyApp="projectmanager"></et2-nextmatch-header-entry>
-                            </row>
-                            <row>
-                                <nextmatch-customfilter id="linked" options="link-entry"/>
-                            </row>
-                            <row>
-                                <nextmatch-sortheader label="Title" id="ts_title"/>
-                            </row>
-                        </rows>
-                    </grid>
-                    <nextmatch-sortheader label="Category" id="cat_id"/>
+                    <et2-nextmatch-sortheader  label="Date" id="ts_start"/>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Duration" id="ts_duration"/>
+                        <et2-hbox  disabled="@pm_integration=full">
+                            <et2-nextmatch-header-filter  id="ts_project" search="false" noLang="1" ariaLabel="Project" emptyLabel="All projects"></et2-nextmatch-header-filter>
+                        </et2-hbox>
+                        <et2-hbox  disabled="!@pm_integration=full">
+                            <et2-nextmatch-header-entry  id="pm_id" noLang="1" ariaLabel="Project" placeholder="All projects" onlyApp="projectmanager"></et2-nextmatch-header-entry>
+                        </et2-hbox>
+                        <et2-hbox>
+                            <et2-nextmatch-header-entry  id="linked" ariaLabel="Linked"></et2-nextmatch-header-entry>
+                        </et2-hbox>
+                        <et2-hbox>
+                            <et2-nextmatch-sortheader  label="Title" id="ts_title"/>
+                        </et2-hbox>
+                    </et2-vbox>
+                    <et2-nextmatch-sortheader  label="Category" id="cat_id"/>
+                    <et2-vbox>
+                        <et2-nextmatch-sortheader  label="Duration" id="ts_duration"/>
                         <et2-date-duration  id="duration" readonly="true"></et2-date-duration>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Quantity" id="ts_quantity"/>
+                        <et2-nextmatch-sortheader  label="Quantity" id="ts_quantity"/>
                         <et2-number  id="quantity" readonly="true" precision="3"></et2-number>
                     </et2-vbox>
-                    <nextmatch-sortheader label="Price" id="ts_unitprice"/>
+                    <et2-nextmatch-sortheader  label="Price" id="ts_unitprice"/>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Total" id="ts_total"/>
+                        <et2-nextmatch-sortheader  label="Total" id="ts_total"/>
                         <et2-number  id="price" readonly="true" precision="2"></et2-number>
                     </et2-vbox>
                     <et2-nextmatch-header-filter  id="ts_owner" noLang="1" emptyLabel="User"></et2-nextmatch-header-filter>
-                    <nextmatch-sortheader label="Created" id="ts_created"/>
-                    <nextmatch-sortheader label="ID" id="ts_id"/>
+                    <et2-nextmatch-sortheader  label="Created" id="ts_created"/>
+                    <et2-nextmatch-sortheader  label="ID" id="ts_id"/>
                     <et2-nextmatch-header-filter  id="ts_status" emptyLabel="Status"></et2-nextmatch-header-filter>
-                    <nextmatch-customfields id="customfields"/>
+                    <et2-nextmatch-header-customfields  id="customfields" app="timesheet"/>
                     <et2-nextmatch-header  label="Kanban" id="kanban"></et2-nextmatch-header>
                 </row>
                 <row class="$row_cont[cat_id] $row_cont[class]">
@@ -78,10 +73,11 @@
                     <et2-date-time  id="${row}[ts_created]" readonly="true"></et2-date-time>
                     <et2-description  id="${row}[ts_id]"></et2-description>
                     <et2-select  id="${row}[ts_status]" readonly="true"></et2-select>
-                    <customfields-list id="$row" readonly="true"/>
+                    <et2-customfields-list  id="$row" readonly="true" app="timesheet"/>
                     <et2-link-string  entryId="$row_cont[ts_id]" application="timesheet" onlyApp="kanban"></et2-link-string>
                 </row>
             </rows>
         </grid>
+        <et2-styles  src="rows.css"></et2-styles>
     </et2-template>
 </overlay>

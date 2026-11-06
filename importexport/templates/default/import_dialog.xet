@@ -22,7 +22,7 @@
         <et2-vbox  id="preview_box" span="all" class="preview">
             <et2-html  id="preview" class="content"></et2-html>
             <et2-box  align="center" id="buttons">
-                <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;" noSubmit="true"></et2-button>
+                <et2-button  align="center" label="OK" onclick="this.closest('.preview').style.display='none'; return false;" noSubmit="true"></et2-button>
             </et2-box>
         </et2-vbox>
         <et2-vbox  id="progress_box" span="all" class="import_progress hideme">

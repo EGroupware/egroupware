@@ -19,6 +19,7 @@ import "./egw_images";
 import "./egw_jsonq";
 import "./egw_files";
 import "./egw_json";
+import "./egw_push_fallback";
 import "./egw_store";
 import "./egw_tooltip";
 import "./egw_css";

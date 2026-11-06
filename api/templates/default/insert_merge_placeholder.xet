@@ -80,7 +80,7 @@
             /** Cosmetics **/
             #insert_merge_placeholder {
             min-width: 500px;
-            min-height: 250px;
+            min-height: 480px;
             }
             ._outer_box option:first-letter {
             text-transform: capitalize;

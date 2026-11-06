@@ -62,7 +62,8 @@ class Updates
 				// find latest security release for optional API version
 				foreach(array_reverse($all_versions) as $security)
 				{
-					if (isset($api) && $api === substr($security, 0, strlen($api))) break;
+					// match including the dot, as 26.1 must not match 26.10.x, 26.11.x or 26.12.x
+					if (isset($api) && str_starts_with($security, $api.'.')) break;
 				}
 				$versions = array(
 					'current'  => $current,		// last maintenance update
@@ -106,7 +107,7 @@ class Updates
 			}
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] && version_compare($api, $versions['current'], '<'))
 			{
-				$msg = substr($versions['current'], 0, strlen($api_major)) == $api_major ?
+				$msg = isset($api_major) && str_starts_with($versions['current'], $api_major.'.') ?
 					lang('EGroupware maintenance update %1 available', $versions['current']) :
 					lang('New EGroupware release %1 available', $versions['current']);
 				return self::notification_icon('update', $msg);
@@ -158,7 +159,10 @@ class Updates
 	}
 
 	/**
-	 * Get current API version from api/setup/setup.inc.php "maintenance_release" or database, whichever is bigger
+	 * Get current API version from api/setup/setup.inc.php "maintenance_release" or "version", whichever is bigger
+	 *
+	 * Always read from the code and never from $GLOBALS['egw_info'], as that might be restored from a session
+	 * created before the code got updated, and the value is cached for the whole tree / all users.
 	 *
 	 * @param string &$changelog on return path to changelog
 	 * @return string
@@ -169,26 +173,12 @@ class Updates
 
 		return Cache::getTree(__CLASS__, 'api_version', function()
 		{
-			if (!isset($GLOBALS['egw_info']['server']['versions']))
+			$setup_info = null;
+			include(EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
+			$version = $setup_info['api']['version'];
+			if (version_compare($version, $setup_info['api']['versions']['maintenance_release'], '<'))
 			{
-				$GLOBALS['egw_info']['server']['versions'] = [];
-			}
-			else
-			{
-				$version = preg_replace('/[^0-9.]/', '', $GLOBALS['egw_info']['server']['versions']['api']);
-			}
-
-			if (empty($GLOBALS['egw_info']['server']['versions']['maintenance_release']))
-			{
-				$setup_info = null;
-				include (EGW_SERVER_ROOT.'/api/setup/setup.inc.php');
-				$GLOBALS['egw_info']['server']['versions'] += $setup_info['api']['versions'];
-				$version = $version ?? $setup_info['api']['version'];
-				unset($setup_info);
-			}
-			if (version_compare($version, $GLOBALS['egw_info']['server']['versions']['maintenance_release'], '<'))
-			{
-				$version = $GLOBALS['egw_info']['server']['versions']['maintenance_release'];
+				$version = $setup_info['api']['versions']['maintenance_release'];
 			}
 			return $version;
 		}, array(), 300);

@@ -311,6 +311,7 @@ export class Et2Email
 		if(this._sortable)
 		{
 			this._sortable.destroy();
+			this._sortable = null;
 		}
 		document.removeEventListener('focusin', this.handleLostFocus);
 	}
@@ -407,6 +408,7 @@ export class Et2Email
 		if(this._sortable)
 		{
 			this._sortable.destroy();
+			this._sortable = null;
 		}
 
 		if(!this.allowDragAndDrop)
@@ -921,7 +923,8 @@ export class Et2Email
 
 	protected handleLabelClick()
 	{
-		this._search.focus();
+		// Like focus(), which also marks the widget as focused - not just the input
+		this.focus();
 	}
 
 	/**

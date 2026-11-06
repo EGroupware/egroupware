@@ -30,6 +30,7 @@ $setup_info[NOTIFICATION_APP]['description'] =
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'after_navbar';
+$setup_info[NOTIFICATION_APP]['hooks'][] = 'framework_header';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'settings';
 $setup_info[NOTIFICATION_APP]['hooks'][] = 'admin';
 $setup_info[NOTIFICATION_APP]['hooks']['deleteaccount'] = 'notifications.notifications.deleteaccount';

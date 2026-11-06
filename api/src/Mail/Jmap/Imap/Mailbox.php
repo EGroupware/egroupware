@@ -78,9 +78,11 @@ class Mailbox extends Base
 
 	/**
 	 * @param string $folderId base64-encoded folder path
+	 * @param string|null $accountId unused - a shim folderId already carries the full path,
+	 *  independent of any JMAP account namespace (see getMailboxId()'s own docblock)
 	 * @return string
 	 */
-	public function folderId2path(string $folderId)
+	public function folderId2path(string $folderId, ?string $accountId=null)
 	{
 		return Imap::folderPath($folderId);
 	}

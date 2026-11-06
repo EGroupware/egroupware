@@ -6,8 +6,9 @@ import {
 	Et2DatagridUpdateType
 } from "../Et2Datagrid/Et2Datagrid.types";
 import type {ReactiveController} from "lit";
-import {Et2Nextmatch} from "./Et2Nextmatch";
-import {IegwData} from "../../jsapi/egw_global";
+import type {NextmatchDataProviderHost} from "./NextmatchInterfaces";
+// IegwData is an ambient global interface (api/js/jsapi/egw_global.d.ts), not an export -
+// importing it by name was always a TS error, and it resolves without any import.
 
 /**
  * Nextmatch server adapter for Et2Datagrid.
@@ -15,7 +16,7 @@ import {IegwData} from "../../jsapi/egw_global";
  */
 export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, ReactiveController
 {
-	private host : Et2Nextmatch;
+	private host : NextmatchDataProviderHost;
 	/**
 	 * UIDs this provider is holding in egw's central cache for the current query.
 	 *
@@ -128,9 +129,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 	}
 
 	/**
-	 * @param host Nextmatch owner used to access egw data APIs and exec context.
+	 * @param host owner widget used to access egw data APIs and exec context - a nextmatch, or
+	 *	any other datagrid owner satisfying NextmatchDataProviderHost (eg. Et2Historylog).
 	 */
-	constructor(host : Et2Nextmatch)
+	constructor(host : NextmatchDataProviderHost)
 	{
 		this.host = host;
 		// Optional chaining because some tests construct this against a bare mock
@@ -287,8 +289,15 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 					{
 						this.self._rowProvider.categories = null;
 					}*/
-					// update array mgr so select widgets in row also get refreshed options
-					this.host.getParent().getArrayMgr('sel_options').data[id] = additionalData.sel_options[id];
+					// update array mgr so select widgets in row also get refreshed options.
+					// Optional: an owner that is not a nextmatch may sit at the top of its own
+					// widget tree and have no parent to reach through (see
+					// NextmatchDataProviderHost) - its own manager was already updated above.
+					const parent_options_mgr = this.host.getParent?.()?.getArrayMgr?.('sel_options');
+					if(parent_options_mgr)
+					{
+						parent_options_mgr.data[id] = additionalData.sel_options[id];
+					}
 					// update filterbox, app-toolbar widgets
 					[(this.host as any)._filterbox?.getWidgetById?.(id), app_toolbar?.getWidgetById?.(id)].forEach(widget =>
 					{
@@ -325,7 +334,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 		// infolog's `<column disabled="@no_customfields"/>`.  Nothing about writing into the
 		// content array manager is reactive, so the grid keeps the columns it last rendered
 		// unless we ask it to look again.
-		this.host.refreshColumnVisibility();
+		this.host.refreshColumnVisibility?.();
 	}
 
 	/**

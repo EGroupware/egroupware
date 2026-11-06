@@ -3,6 +3,7 @@ import * as sinon from 'sinon';
 import {Et2VfsPath} from "../Et2VfsPath";
 import {sendKeys} from "@web/test-runner-commands";
 import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
+import {assertNoElement} from "../../test/assertDom";
 
 /**
  * Test file for Etemplate webComponent VfsPath
@@ -68,6 +69,102 @@ describe("Path widget basics", () =>
 		assert.equal(element.shadowRoot.activeElement, element._edit, "Editable path did not get focus when widget got focus");
 	});
 });
+/**
+ * The label stays beside the field whether the path is shown or being edited.
+ *
+ * Contract under test: in a container only just wide enough for label and field side by side, they share a row in
+ * both modes, and editing neither makes the widget taller (the label dropping above) nor wider (a text input's own
+ * width pushing the widget out of its cell).
+ */
+describe("Path widget layout", () =>
+{
+	let widget : Et2VfsPath;
+
+	beforeEach(async() =>
+	{
+		const wrapper = await fixture<HTMLElement>(html`
+            <div style="width: 60em; --sl-input-spacing-medium: 0.875rem; --sl-input-border-width: 1px">
+                <et2-vfs-path label="I'm a vfs path" value="/home/test/directory"></et2-vfs-path>
+            </div>`);
+		widget = <Et2VfsPath>wrapper.firstElementChild;
+		sinon.stub(widget, "egw").returns(window.egw);
+		await elementUpdated(widget);
+
+		// Just wide enough for the label and the field's minimum width side by side - but not for a field whose
+		// padding and border come on top of that minimum, which is where the label used to drop above it
+		const label = widget.shadowRoot.querySelector("label");
+		const field = widget.shadowRoot.querySelector(".form-control-input");
+		const labelWidth = label.getBoundingClientRect().width + parseFloat(getComputedStyle(label).marginInlineEnd);
+		wrapper.style.width = (labelWidth + parseFloat(getComputedStyle(field).minWidth) + 8) + "px";
+		await elementUpdated(widget);
+	});
+
+	const layout = () =>
+	{
+		const label = widget.shadowRoot.querySelector("label").getBoundingClientRect();
+		const field = widget.shadowRoot.querySelector(".form-control-input").getBoundingClientRect();
+		const host = widget.getBoundingClientRect();
+		return {sameRow: Math.abs(label.top - field.top) < label.height / 2, height: Math.round(host.height), width: Math.round(host.width)};
+	};
+
+	it("puts the label beside the path", () =>
+	{
+		assert.isTrue(layout().sameRow, "The label is above the path");
+	});
+
+	it("keeps the label beside the field while editing", async() =>
+	{
+		widget.edit();
+		await elementUpdated(widget);
+
+		assert.isTrue(layout().sameRow, "The label is above the field while editing");
+	});
+
+	it("does not change size when editing starts", async() =>
+	{
+		const shown = layout();
+
+		widget.edit();
+		await elementUpdated(widget);
+		const editing = layout();
+
+		assert.equal(editing.height, shown.height, "Editing changed the height");
+		assert.isAtMost(editing.width, shown.width, "Editing made the widget wider");
+	});
+});
+
+describe("A disabled path", () =>
+{
+	beforeEach(before);
+
+	it("does not look clickable: labels and separators show the not-allowed cursor", async() =>
+	{
+		element.value = "/home/test/directory";
+		element.disabled = true;
+		await elementUpdated(element);
+
+		const item = element.shadowRoot.querySelector("sl-breadcrumb-item");
+		assert.exists(item, "No breadcrumb to look at");
+		const part = (name : string) => getComputedStyle(item.shadowRoot.querySelector(`[part~="${name}"]`)).cursor;
+
+		assert.equal(part("label"), "not-allowed");
+		assert.equal(part("separator"), "not-allowed");
+	});
+
+	it("does not change the value when a segment is clicked", async() =>
+	{
+		element.value = "/home/test/directory";
+		element.disabled = true;
+		await elementUpdated(element);
+
+		const items = element.shadowRoot.querySelectorAll("sl-breadcrumb-item");
+		(<HTMLElement>items[1].shadowRoot.querySelector("[part~=label]")).click();
+		await elementUpdated(element);
+
+		assert.equal(element.value, "/home/test/directory");
+	});
+});
+
 describe("User interactions", () =>
 {
 	// Setup run before each test
@@ -159,7 +256,7 @@ describe("Read-only display of a value that is not a path", () =>
 		await elementUpdated(element);
 
 		assert.exists(element.shadowRoot.querySelector("sl-breadcrumb"), "No breadcrumb for a path");
-		assert.notExists(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
+		assertNoElement(element.shadowRoot.querySelector(".vfs-path__plain"), "Path rendered as plain text");
 	});
 
 	it("renders a bare name as plain text, with no icon", async() =>
@@ -171,8 +268,8 @@ describe("Read-only display of a value that is not a path", () =>
 		const plain = element.shadowRoot.querySelector(".vfs-path__plain");
 		assert.exists(plain, "Bare name not rendered as plain text");
 		assert.equal(plain.textContent.trim(), "attachment.pdf");
-		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
-		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
+		assertNoElement(element.shadowRoot.querySelector("sl-breadcrumb"), "Bare name rendered as a breadcrumb");
+		assertNoElement(element.shadowRoot.querySelector("et2-image"), "Bare name got a filemanager icon");
 	});
 
 	it("renders nothing for an empty value", async() =>
@@ -181,8 +278,8 @@ describe("Read-only display of a value that is not a path", () =>
 		await elementUpdated(element);
 
 		assert.equal(element.shadowRoot.querySelector(".vfs-path__plain").textContent.trim(), "");
-		assert.notExists(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
-		assert.notExists(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
+		assertNoElement(element.shadowRoot.querySelector("sl-breadcrumb"), "Empty value rendered as a breadcrumb");
+		assertNoElement(element.shadowRoot.querySelector("et2-image"), "Empty value got a filemanager icon");
 	});
 
 	it("survives a null value", async() =>
@@ -215,10 +312,17 @@ describe("Read-only display of a value that is not a path", () =>
 // clickable root affordance, so the check strips separators/whitespace rather than requiring
 // completely empty content.
 inputBasicTests(before, "/home/test/directory", "input", {
+	// conformance: the controls are breadcrumb buttons, which cannot be required or described by a help text
+	skip: ["required-aria", "help-text-aria"],
 	checkEmptyDisplay: (element : Et2VfsPath) =>
+	{
+		// The root item's name for screen readers is hidden text, not a displayed path segment
+		const breadcrumb = <Element>element.shadowRoot.querySelector(".vfs-path__breadcrumb")?.cloneNode(true);
+		breadcrumb?.querySelectorAll("et2-visually-hidden").forEach(hidden => hidden.remove());
 		assert.equal(
-			element.shadowRoot.querySelector(".vfs-path__breadcrumb")?.textContent.replace(/[/\s]/g, ""),
+			breadcrumb?.textContent.replace(/[/\s]/g, ""),
 			"",
 			"Displaying a path segment when there is no value"
-		)
+		);
+	}
 });

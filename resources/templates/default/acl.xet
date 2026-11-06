@@ -35,7 +35,7 @@
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
 					<et2-hbox>
-						<et2-html  id="${row}[level_spacer]"></et2-html>
+						<et2-html  id="${row}[level_spacer]" class="level_spacer"></et2-html>
 						<et2-description  id="${row}[name]" class="$row_cont[class]"></et2-description>
 					</et2-hbox>
 					<et2-image  align="center" src="${row}[icon_url]"></et2-image>
@@ -49,8 +49,9 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="acl.rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="resources.acl" template="" lang="" group="0" version="">
-		<nextmatch id="nm" template="resources.acl.rows" />		
+		<et2-nextmatch  id="nm" template="resources.acl.rows"></et2-nextmatch>
 	</et2-template>
 </overlay>

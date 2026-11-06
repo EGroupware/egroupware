@@ -12,9 +12,7 @@ ask to start and stop working time with session	timesheet	km	សុំឱ្យ�
 both: allow to use projectmanager and free project-names	admin	km	ទាំងពីរ៖ អនុញ្ញាតឱ្យប្រើកម្មវិធីគ្រប់គ្រងគម្រោង និងឈ្មោះគម្រោងឥតគិតថ្លៃ
 by	timesheet	km	ដោយ
 category for 'working time'	admin	km	ប្រភេទសម្រាប់ 'ម៉ោងធ្វើការ'
-change category	timesheet	km	ផ្លាស់ប្តូរប្រភេទ
 change owner when updating	timesheet	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
-changed category to %1	timesheet	km	បានប្តូរប្រភេទទៅជា%1
 changed status	timesheet	km	បានផ្លាស់ប្តូរស្ថានភាព
 choose 'creator' of imported data	timesheet	km	ជ្រើសរើស 'អ្នកបង្កើត' នៃទិន្នន័យដែលបាននាំចូល
 comment by %1 at %2:	timesheet	km	ផ្ដល់មតិដោយ%1 នៅ%2៖

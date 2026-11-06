@@ -12,6 +12,7 @@
 (leave empty for no quota)	mail	bg	(Оставете празна, за да нямате квота)
 (no subject)	mail	bg	(без тема)
 (not connected)	mail	bg	(няма връзка)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	bg	Вмъкнато, пуснато или добавено изображение, чийто размер надвишава определена граница, се мащабира до тази ширина (като се запазва съотношението на страните), за да не се претоварва писмото. Оставете полето празно, за да се използва стойността по подразбиране от 800 пиксела.
 account	mail	bg	Акаунт
 account editable by user	mail	bg	акаунт редактируем от потребителя
 account not reachable	mail	bg	Няма достъп до акаунта.
@@ -46,7 +47,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	bg	Покажи
 allow external images	mail	bg	Покажи външни изображения
 allow external images from listed domains	mail	bg	Показване на външни изображения от изброените домейни
-allow images from external sources in html emails	mail	bg	Показване на изображения от външни източници в HTML съобщения.
+allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	bg	Показване на изображения от външни източници в HTML съобщения. "Попитайте за разрешение" показва съобщение, с което те могат да се заредят само този път ("Покажи") или винаги от техния домейн ("Разреши"). "Попитайте за разрешение, разрешавайте само изброените домейни" предлага само "Покажи", така че винаги са разрешени само изброените домейни, напр. зададени от администратора за всички.
 allow images from listed domains in html emails	mail	bg	Показване на изображения от изброени домейни в HTML съобщения.
 allow users to create further identities	mail	bg	позволява на потребителите да създават допълнителни самоличности
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	bg	Позволява на потребителя да чете, пише и създава папки и писма, да публикува в тях, да добавя съобщения и да изтрива съобщения.
@@ -68,6 +69,7 @@ are you sure you want to delete all selected folders?	mail	bg	Сигурни л�
 are you sure you want to move folder %1 to folder %2?	mail	bg	Сигурни ли сте, че искате преместите папка %1 в папка %2?
 arrival	mail	bg	Приет(и)
 ask for permission	mail	bg	Попитайте за разрешение
+ask for permission, only allow listed domains	mail	bg	Попитайте за разрешение, разрешавайте само изброените домейни
 attach files	mail	bg	Прикачи файлове
 attach users vcard at compose to every new mail	mail	bg	Прикачване на vCard на потребителите при съставяне на всяко ново писмо.
 attach vcard	mail	bg	Прикачете vCard
@@ -200,8 +202,6 @@ draft folder	mail	bg	папка "Чернови"
 drafts	mail	bg	Чернови
 drafts folder	mail	bg	Папка "Чернови"
 edit account	mail	bg	Редактиране на акаунта
-edit account ...	mail	bg	Редактиране на акаунта ...
-edit folder acl ...	mail	bg	Редактиране на ACL папката ...
 edit vacation settings	mail	bg	редактиране на настройките за "ваканция"
 effective only if server supports acl at all	admin	bg	използваем, само ако сървърът изобщо поддържа ACL
 email address	mail	bg	e-mail адрес
@@ -265,7 +265,6 @@ folder %1 %2 failed!	mail	bg	Папка %1 %2 не бе успешна!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	bg	Папка %1 е създадена успешно, въпреки че абонаментът не бе успешен поради %2
 folder %1 is moving to folder %2	mail	bg	Папка %1 се премества в папка %2
 folder management	mail	bg	Управление на папката
-folder management ...	mail	bg	Управление на папката ...
 folder settings	mail	bg	Настройки на папката
 force html	mail	bg	форсиране на HTML
 force plain text	mail	bg	форсиране на обикновен текст
@@ -294,6 +293,7 @@ high priority	mail	bg	Висок приоритет
 hold %1 to drag files to your computer	mail	bg	Натиснете и задръжте %1, за да плъзнете файлове към вашия компютър
 home page folders	mail	bg	Папки за начална страница
 hostname or ip	mail	bg	Име на хост или IP
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	bg	Колко време съобщението трябва да остане отворено в панела за преглед или в изскачащ прозорец, преди да бъде маркирано като прочетено – това ви позволява да прегледате набързо съобщението, без да го маркирате като прочетено. „Веднага“ е предишното поведение по подразбиране.
 how often to check with the server for new mail	mail	bg	Колко често да бъде проверявано за нова поща със сървъра
 how should the available information on identities be displayed	admin	bg	Как да се показва наличната информация за самоличността
 how to forward messages	mail	bg	Как да се препращат съобщенията
@@ -323,7 +323,8 @@ imap administration	mail	bg	IMAP администрация
 imap server	mail	bg	IMAP сървър
 imap timeout	mail	bg	Време за изчакване на IMAP
 import ca-signed certificate for this key	mail	bg	Импортиране на сертификат, подписан от сертификационен орган (CA), за този ключ
-import message	mail	bg	съобщение за импортиране
+import certificate	mail	bg	Importovat certifikátИмпортиране на сертификат
+import message	mail	bg	Импортиране на съобщение
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	bg	Импортирането на съобщение %1 не бе успешно. Не можа да се запише съобщение в папка %2 поради: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	bg	Импортирането на съобщение% 1 не бе успешно. Дестинация папка% 2 не съществува.
 import of message %1 failed. destination folder not set.	mail	bg	Импортирането на съобщение %1 не е успешно. Не е зададена папка на местоназначението.
@@ -368,8 +369,10 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	bg	Маркирайте всички като прочетени
 mark all messages in folder as read	mail	bg	Маркиране на всички съобщения в папката като прочетени
 mark as deleted	mail	bg	Маркирай като изтрито
+mark message as read after	mail	bg	Маркиране на съобщението като прочетено след
 matches	mail	bg	съвпада с
 matches regexp	mail	bg	съвпада с рег. израз
+max. width of inline images in a mail body or signature (in px)	mail	bg	Макс. ширина на вградените изображения в тялото на писмото или в подписа (в пиксели)
 message learned as spam and moved to spam folder	mail	bg	Съобщението е разпознато като спам и е преместено в папката за спам
 message saved successfully.	mail	bg	Съобщението е записано успешно.
 message send failed: %1	mail	bg	Изпращането на съобщението е неуспешно: %1
@@ -392,6 +395,7 @@ never show	mail	bg	Никога не показвайте
 never show notification	mail	bg	Никога не показвайте известие
 new mail from %1	mail	bg	Нов имейл от %1
 new mail notification	mail	bg	Уведомление за нов имейл
+new mail to sender	mail	bg	Ново писмо до изпращача
 new message type	mail	bg	Нов тип съобщение
 new subject	mail	bg	Нова тема
 no access	mail	bg	Няма достъп
@@ -498,6 +502,7 @@ see attachments for content of the orignial mail	mail	bg	Вижте прикач
 select all	mail	bg	Избиране на всичко
 select an existing entry in order to append mail content to it	mail	bg	Изберете съществуващ запис, за да добавите към него съдържанието на пощата
 select an item to read	mail	bg	Изберете елемент, който да прочетете
+select file to import into folder	mail	bg	Избор на файл за импортиране в папка
 select mail addresses from addressbook	mail	bg	Изберете пощенски адреси от адресната книга
 select or insert email address	mail	bg	Изберете или вмъкнете имейл адрес
 selected date range (with quicksearch)	mail	bg	Избран диапазон от дати (с бързо търсене)
@@ -511,7 +516,6 @@ server supports special-use folders	mail	bg	Сървърът поддържа п
 serverside filterrules (sieve) are not activated	mail	bg	Филтърните правила от страна на сървъра (Sieve) не са активирани
 serverside vacationnotice (via sieve) are not activated	mail	bg	Съобщенията за отсъствие от страна на сървъра (чрез Sieve) не са активирани
 set flags	mail	bg	Маркирайте имейл като
-set predefined values for compose...	mail	bg	Задаване на предварително определени стойности за compose ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	bg	Трябва ли подписът да се поставя след (стандартно) или преди отговор или препращане и трябва ли подписът да е видим и да може да се променя по време на съставяне.
 show all addresses	mail	bg	Покажи всички адреси
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	bg	Показва всички папки (абонирани и неабонирани) в панела с папки на главния екран.

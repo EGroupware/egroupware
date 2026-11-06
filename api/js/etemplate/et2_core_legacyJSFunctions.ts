@@ -12,6 +12,7 @@
 import {egw} from "../jsapi/egw_global";
 import {et2_IDOMNode} from "./et2_core_interfaces";
 import {et2_form_name} from "./et2_core_common";
+import {trustedScript} from "../jsapi/egw_trusted_types";
 
 export function et2_compileLegacyJS(_code, _widget, _context)
 {
@@ -115,7 +116,7 @@ export function et2_compileLegacyJS(_code, _widget, _context)
 		// use app object from etemplate2, which might be private and not just window.app
 		_code = _code.replace(/(window\.)?app\./, 'widget.getInstanceManager().app_obj.');
 
-		var func = new Function('ev', 'widget', _code);
+		var func = new Function('ev', 'widget', trustedScript(_code));
 	} catch(e) {
 		_widget.egw().debug('error', 'Error while compiling JS code ', _code);
 		return (function() {return false;});

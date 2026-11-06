@@ -26,7 +26,6 @@ all my email addresses	mail	fi	kaikki sähköpostiosoitteeni
 all of	mail	fi	kaikki
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	fi	Myös kaikki alikansiot poistetaan, ja kaikki viestit kaikissa kansioissa menetetään.
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
-allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allow images from listed domains in html emails	mail	fi	Salli listattujen verkkotunnusten kuvat HTML-sähköposteissa.
 allow users to create further identities	mail	fi	Salli käyttäjien luoda uusia identiteettejä
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fi	Käyttäjä voi lukea, kirjoittaa ja luoda kansioita ja sähköposteja, lähettää niihin viestejä, liittää niihin viestejä ja poistaa viestejä.
@@ -317,6 +316,7 @@ please select the number of days to wait between responses	mail	fi	Valitse päiv
 please supply the message to send with auto-responses	mail	fi	Anna viesti joka lähetetään automaattisella vastauksella
 post	mail	fi	lähetä
 predefined addresses for compose	mail	fi	Ennalta määritetyt osoitteet laatimista varten
+prevent managing filters	mail	fi	Estä suodattimien hallinta
 preview pane	mail	fi	Ikkunan asettelu
 printing	mail	fi	Tulostus
 printview	mail	fi	Tulostuksen esikatselu
@@ -391,7 +391,6 @@ sent	mail	fi	Lähetetyt
 sent folder	mail	fi	Lähetetyt kansio
 server supports special-use folders	mail	fi	Palvelin tukee erityiskäytössä olevia kansioita
 set flags	mail	fi	Merkitse sähköposti
-set predefined values for compose...	mail	fi	Aseta valmiiksi määritetyt arvot lähettämistä varten ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	fi	Pitäisikö allekirjoitus lisätä vastauksen tai edelleenlähetyksen jälkeen (vakio) tai ennen vastausta tai eteenpäinlähetystä ja pitäisikö allekirjoituksen olla näkyvissä ja muutettavissa laatimisen aikana.
 show all addresses	mail	fi	Näytä kaikki osoitteet
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	fi	Näytä kaikki kansiot (tilatut ja tilaamattomat) päänäytön kansioruudussa.

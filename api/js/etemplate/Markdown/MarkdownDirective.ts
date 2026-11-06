@@ -57,6 +57,10 @@ function getParser() : MarkdownIt
 	if(!parser)
 	{
 		parser = new MarkdownIt({html: false, linkify: true, breaks: true, typographer: false});
+		// Linkify only text that is clearly a URL - with a scheme or a leading "www." -
+		// fuzzy mode would also turn any bare domain into a link,
+		// e.g. "Claude.ai" in a mail subject
+		parser.linkify.set({fuzzyLink: false});
 
 		// Harden links at the token level rather than with a DOMPurify hook.  Hooks are global to
 		// the module, so one installed here would also rewrite Et2Image's SVG and the mail bodies
@@ -76,6 +80,13 @@ function getParser() : MarkdownIt
 			}
 			return defaultLinkOpen(tokens, idx, options, env, self);
 		};
+
+		// Setext headings off: a row of dashes under a line of text would make it an <h2>,
+		// but quoted mail and text pasted from elsewhere use such a row as a plain separator all the time,
+		// and that is what it means here -
+		// the text above stays a paragraph and the dashes become the <hr> they look like
+		// This also drops the "===" form of the same syntax for H1
+		parser.disable("lheading");
 
 		// Record which source line each block came from, so the preview can be clicked to put
 		// the caret back in the right place.  Off unless env.sourceMap asks for it

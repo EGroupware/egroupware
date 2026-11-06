@@ -881,7 +881,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,
+		return $this->bo->read(array(self::$path_attr => $id, Api\Db\SqlFragment::raw("info_status!='deleted'")),false,
 			Api\CalDAV::isJson() ? 'object' : 'server');
 	}
 

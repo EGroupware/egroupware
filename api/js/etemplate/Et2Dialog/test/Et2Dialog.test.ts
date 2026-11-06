@@ -2,6 +2,10 @@ import {assert, elementUpdated, expect, fixture, html, oneEvent} from '@open-wc/
 import {sendKeys} from "@web/test-runner-commands";
 import * as sinon from 'sinon';
 import {Et2Dialog} from "../Et2Dialog";
+import {assertNoElement} from "../../test/assertDom";
+import "../../Et2Textarea/Et2Textarea";
+import "../../Et2Textbox/Et2Textbox";
+import "../../Et2Template/Et2Template";
 
 /**
  * Test file for Etemplate webComponent Et2Dialog
@@ -163,7 +167,7 @@ describe("Properties", async() =>
 		assert.isNotNull(document.querySelector("et2-dialog"));
 		await element.hide();
 
-		assert.isNull(document.querySelector("et2-dialog"));
+		assertNoElement(document.querySelector("et2-dialog"));
 	});
 	it("destroyOnClose = false", async() =>
 	{
@@ -225,5 +229,154 @@ describe("Properties", async() =>
 			event = await closeListener;
 			return requestCloseListener;
 		});
+	});
+});
+describe("Enter key", () =>
+{
+	// Enter on its own in a single line field presses the dialog's default button, but Enter from a
+	// multi-line field is a line break, and so is Shift+Enter from anywhere.  The dialog only sees the
+	// key events after they are retargeted to the shadow host (et2-textarea, et2-textbox), so these use
+	// real keyboard input into the fields' inner elements rather than synthetic events on the host.
+	let dialog : Et2Dialog;
+	let clicked : sinon.SinonSpy;
+
+	beforeEach(async() =>
+	{
+		// Buttons have to be there from the start, see "resolves getComplete() with a custom string button_id"
+		// @ts-ignore
+		dialog = await fixture<Et2Dialog>(html`
+			<et2-dialog title="Enter key" .buttons=${Et2Dialog.BUTTONS_OK_CANCEL} .destroyOnClose=${false}>
+			</et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await elementUpdated(dialog);
+
+		const content = dialog.querySelector(".dialog_content");
+		// Where a loaded template would put its fields
+		content.insertAdjacentHTML("beforeend", "<et2-textarea></et2-textarea><et2-textbox></et2-textbox>");
+		// Shoelace focuses the dialog panel one animation frame after opening; wait for that, or it takes the
+		// focus away from the field again before the keys are sent
+		const initialFocus = oneEvent(dialog, "sl-initial-focus");
+		await dialog.show();
+		await initialFocus;
+		await elementUpdated(dialog.querySelector("et2-textarea"));
+		await elementUpdated(dialog.querySelector("et2-textbox"));
+
+		const button = dialog.querySelector("et2-button[slot='footer']");
+		assert.isNotNull(button, "Dialog must have a footer button");
+		clicked = sinon.spy();
+		button.addEventListener("click", clicked);
+	});
+
+	async function press(selector : string, key : string)
+	{
+		const field = <HTMLElement>dialog.querySelector(selector);
+		field.focus();
+		// The keys have to come from inside the field, not from wherever the focus happened to be
+		const keyup = oneEvent(field, "keyup");
+		await sendKeys({press: key});
+		await keyup;
+		// Let any click the keyup triggered run
+		await new Promise(resolve => setTimeout(resolve, 50));
+	}
+
+	it("Shift+Enter in a textarea does not press the default button", async() =>
+	{
+		await press("et2-textarea", "Shift+Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Shift+Enter in a textbox does not press the default button", async() =>
+	{
+		await press("et2-textbox", "Shift+Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Enter in a textarea does not press the default button", async() =>
+	{
+		await press("et2-textarea", "Enter");
+		assert.isFalse(clicked.called, "Default button was pressed");
+		assert.isTrue(dialog.open, "Dialog closed");
+	});
+
+	it("Enter in a textbox presses the default button", async() =>
+	{
+		await press("et2-textbox", "Enter");
+		assert.isTrue(clicked.calledOnce, "Default button was not pressed");
+	});
+});
+
+
+describe("Dialog size", () =>
+{
+	// The test frame is narrow, and a dialog never opens wider than the window
+	let innerWidth : PropertyDescriptor | undefined;
+	beforeEach(() =>
+	{
+		innerWidth = Object.getOwnPropertyDescriptor(window, "innerWidth");
+		Object.defineProperty(window, "innerWidth", {value: 3000, configurable: true});
+	});
+	afterEach(() =>
+	{
+		if(innerWidth)
+		{
+			Object.defineProperty(window, "innerWidth", innerWidth);
+		}
+		else
+		{
+			delete (<any>window).innerWidth;
+		}
+	});
+
+	async function layoutDialog(extra : any = {}) : Promise<Et2Dialog>
+	{
+		const dialog = await fixture<Et2Dialog>(html`
+            <et2-dialog title="Layout" .isModal=${false} .width=${extra.width}>
+                <div class="dialog_content">
+                    <et2-template layout="2-column" style="--column-min-width: 26em">
+                        <et2-textbox label="One"></et2-textbox>
+                        <et2-textbox label="Two"></et2-textbox>
+                        <et2-textbox label="Three"></et2-textbox>
+                    </et2-template>
+                </div>
+            </et2-dialog>
+		`);
+		sinon.stub(dialog, "egw").returns(window.egw);
+		await dialog.show();
+		await dialog.updateComplete;
+		return dialog;
+	}
+
+	it("starts a dialog holding a layout at the width the layout prefers", async() =>
+	{
+		// A layout fills the width it is given, so in a dialog that sizes to its content it used to come out
+		// 0px wide and the dialog stayed at its minimum width
+		const dialog = await layoutDialog();
+		const template = dialog.querySelector<any>("et2-template");
+		const preferred = template.getPreferredSize();
+		assert.isOk(preferred, "the template reports a preferred size");
+		assert.isBelow(template.getBoundingClientRect().width, preferred.width, "the dialog starts too narrow for its layout");
+
+		// Asked for, not rendered: the panel is also capped to the (narrow) test frame by the stylesheet
+		const panel = dialog.shadowRoot.querySelector<HTMLElement>(".dialog__panel");
+		panel.style.width = "";
+		panel.style.height = "";
+		assert.isTrue(dialog._fitToLayout(panel), "the dialog was widened");
+		assert.isAtLeast(parseFloat(panel.style.width), preferred.width,
+			"the panel is asked to be at least as wide as the layout wants its content");
+	});
+
+	it("leaves a dialog with a width of its own alone", async() =>
+	{
+		const dialog = await layoutDialog({width: 300});
+		const preferred = dialog.querySelector<any>("et2-template").getPreferredSize();
+
+		const panel = dialog.shadowRoot.querySelector<HTMLElement>(".dialog__panel");
+		panel.style.width = "";
+		assert.isFalse(dialog._fitToLayout(panel), "the dialog was not widened");
+		assert.equal(panel.style.width, "", "no width was asked for");
+		assert.isAbove(preferred.width, 300, "the layout wanted more than the dialog's own width");
 	});
 });

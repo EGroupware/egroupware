@@ -250,8 +250,10 @@ centered	common	sl	Na sredini
 central african republic	common	sl	SREDNJEAFRIŠKA REPUBLIKA
 chad	common	sl	ČAD
 change	common	sl	Spremeni
+change category	common	sl	Spremeni kategorijo
 change owner	common	sl	Spremeni lastnika
 changed	common	sl	Spremenjeno
+changed category to %1	common	sl	Spremenjena kategorija v %1
 changes that you made may not be saved.	common	sl	Opravljene spremembe se morda ne bodo shranile.
 charset	common	sl	Charset
 check all	common	sl	Preveri vse
@@ -1118,6 +1120,7 @@ remove selected accounts	common	sl	Odstrani izbrane račune
 remove shortcut	common	sl	Odstrani bližnjico
 remove this link (not the entry itself)	common	sl	Odstrani to povezavo (ne samega vnosa)
 removed (now) empty directory fs_id=%1	admin	sl	Odstranjen (zdaj) prazen imenik fs_id =%1
+removed category	common	sl	odstranjena kategorija
 rename	common	sl	Preimenuj
 repeat password	common	sl	Ponovitev gesla
 replace	common	sl	Zamenjaj

@@ -527,6 +527,13 @@ class Nextmatch extends Etemplate\Widget
 		{
 			$value = ($value) ? array($value) : array();
 		}
+		// csv_export is a per-request instruction to get_rows ("do not store this query in the
+		// session"), not part of the widget's value.  It used to be written back into the stored
+		// request content below, where it stuck for the rest of the session: after the first
+		// single-row refresh every later query claimed to be one, so get_rows() stopped caching
+		// the query - and everything that reads that cache (a "select all" expansion, addressbook's
+		// delete_list) silently used whatever filters were in force when the page was opened.
+		unset($value['csv_export']);
 
 		// filter out numerical indexes, which are treated as SQL fragments and are not necessary to process filters/select-boxes
 		if (!empty($filters['col_filter']))
@@ -546,16 +553,30 @@ class Nextmatch extends Etemplate\Widget
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
-			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'et2-nextmatch') ??
-				$template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
+			// Try every type that can legitimately back a row request, rather than guessing the
+			// type from the widget id.  The previous heuristic ("id starts with 'history'") meant
+			// a history log had to be called 'history' to work at all, and it had no way to know
+			// about the et2-historylog web component: api/etemplate.php rewrites <historylog> to
+			// <et2-historylog> only in the copy served to the client, while Template::read()
+			// parses the raw file here - so either tag can be what this sees, depending on
+			// whether that template was hand-converted.
+			$widget = null;
+			$types = ['et2-nextmatch', 'nextmatch', 'et2-historylog', 'historylog'];
+			foreach($types as $type)
+			{
+				if (($widget = $template->getElementById($form_name, $type)))
+				{
+					break;
+				}
+			}
 			// A tab added through a tabbox's extraTabs (eg. the hook-provided tabs of Preferences'
 			// "Security & Password" popup) is only attached to the template while it runs, so
 			// getElementById() can not see a nextmatch in it.
-			if (!$template)
+			if (!$widget)
 			{
-				$template = self::getExtraTabsElementById($form_name,
-					strpos($form_name, 'history') === 0 ? ['historylog'] : ['et2-nextmatch', 'nextmatch']);
+				$widget = self::getExtraTabsElementById($form_name, $types);
 			}
+			$template = $widget;
 		}
 		else
 		{
@@ -568,7 +589,10 @@ class Nextmatch extends Etemplate\Widget
 			);
 			$valid_filters = array();
 			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
-			$filters = $valid_filters[$form_name];
+			// ?? []: a widget whose validate() is an allow-list (eg. HistoryLog) deliberately
+			// writes nothing when the client sent no permitted filter, rather than writing an
+			// empty/null entry - so the key is not guaranteed to exist.
+			$filters = $valid_filters[$form_name] ?? [];
 		}
 		elseif (isset(self::$raw_form_names[$form_name]))
 		{
@@ -762,7 +786,8 @@ class Nextmatch extends Etemplate\Widget
 		foreach(array_keys($value_in ?? []) + array_keys($value ?? []) as $key)
 		{
 			// These keys are ignored
-			if(in_array($key, array('col_filter','start','num_rows','total','order','sort')))
+			// csv_export: set per request above, never stored - see unset() at the top
+			if(in_array($key, array('col_filter','start','num_rows','total','order','sort','csv_export')))
 			{
 				continue;
 			}
@@ -1286,6 +1311,8 @@ class Nextmatch extends Etemplate\Widget
 				// Allow default actions to keep their onExecute
 				if (!empty($action['default'])) unset($inherit_keys['onExecute']);
 				$action = array_diff_key($action, $inherit_keys);
+
+				self::selectChildrenIfTooLong($action);
 			}
 
 			// link or popup action
@@ -1334,6 +1361,70 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
+	 * How many children a sub-menu may have before it is offered as a dialog instead
+	 *
+	 * Deliberately NOT DEFAULT_MAX_MENU_LENGTH: that is a pagination threshold (past it,
+	 * egw_actions() folds the rest into a "More" sub-menu), which turns a long menu into a deep
+	 * one. This is a usability threshold - roughly a screenful, past which a searchable picker
+	 * beats any menu.
+	 */
+	const DEFAULT_MAX_MENU_SELECT = 15;
+
+	/**
+	 * Offer an over-long sub-menu as a selection dialog instead of a sub-menu
+	 *
+	 * A menu entry per row of user data - one per category, distribution list, addressbook,
+	 * tracker queue or kanban board - is fine while there are a handful and unusable once there
+	 * are hundreds, and nothing notices when an installation crosses over. Past the threshold the
+	 * container is marked `nm_action = select_children`, which makes EgwAction.appendToTree()
+	 * render it as a plain leaf (its children stay in the action manager, they are just not
+	 * drawn) and Et2NextmatchActionController open a picker over them. Choosing one executes that
+	 * very child action, so each keeps its own onExecute/nm_action/confirm/enabled - the dialog
+	 * cannot diverge from what the sub-menu did.
+	 *
+	 * An app can override all of it through `data`, NOT through `onExecute`: for a container with
+	 * children, egw_actions() inherits onExecute down to the children and strips it off the
+	 * parent (see the caller), so setting it here does the opposite of taking over.
+	 *
+	 *	'data' => ['maxMenuLength' => 40]     // this menu is fine up to 40
+	 *	'data' => ['maxMenuLength' => 0]      // always use the dialog
+	 *	'data' => ['maxMenuLength' => false]  // never collapse, keep the sub-menu at any size
+	 *	'data' => ['selectDialog' => ['widget' => 'et2-select-cat', 'multiple' => true,
+	 *	                              'title' => '...', 'okLabel' => '...',
+	 *	                              'template' => '/myapp/templates/default/my_picker.xet',
+	 *	                              'onExecute' => 'javaScript:app.myapp.pickThing']]
+	 *
+	 * @param array& $action a container action, already recursed into
+	 */
+	protected static function selectChildrenIfTooLong(array &$action)
+	{
+		// never override a declared behaviour with a heuristic. A hand-written nm_action stays at
+		// the action's own top level (egw_actions() only writes into data[] for the cases it
+		// derives itself), so both places have to be checked.
+		if (isset($action['data']['nm_action']) || isset($action['nm_action']))
+		{
+			return;
+		}
+		$max = $action['data']['maxMenuLength'] ?? self::DEFAULT_MAX_MENU_SELECT;
+		if ($max === false || $max === null)
+		{
+			return;		// explicitly opted out
+		}
+		// only the children that are actually drawn as menu entries count towards the length:
+		// a checkbox is a modifier, and it travels into the dialog alongside the picker
+		$n = 0;
+		foreach($action['children'] as $child)
+		{
+			if (is_array($child) && !empty($child['checkbox'])) continue;
+			$n++;
+		}
+		if ($n > (int)$max)
+		{
+			$action['data']['nm_action'] = 'select_children';
+		}
+	}
+
+	/**
 	 * Action with submenu for categories
 	 *
 	 * Automatic switch to hierarchical display, if more then $max_cats_flat=14 cats found.
@@ -1345,14 +1436,51 @@ class Nextmatch extends Etemplate\Widget
 	 * @param boolean $globals =true application global categories too
 	 * @param int $parent_id =0 only returns cats of a certain parent
 	 * @param int $max_cats_flat =self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
+	 * @param boolean|null $multiple dialog shape, see the code; null = sub-menu, false = sub-menu too while the list is short (DEFAULT_MAX_MENU_SELECT), else single-value dialog
+	 * @param boolean $none =true sub-menu only: offer a leading "None" entry that sends the bare prefix to clear the category
 	 * @return array like self::egw_actions
 	 */
 	public static function category_action($app, $group=0, $caption='Change category',
-		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
+		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH,
+		$multiple=null, $none=true)
 	{
 		$cat = new Api\Categories(null,$app);
 		$cats = $cat->return_sorted_array($start=0, false, '', 'ASC', 'cat_name', $globals, $parent_id, true);
 
+		// $multiple opts in to the picker dialog and says which shape it takes. Leaving it null
+		// keeps the historic sub-menu (one entry per category), which for a long category list
+		// selectChildrenIfTooLong() will collapse into the generic picker anyway - just without
+		// the verbs below.
+		// A single-value category (false) with few enough categories, counting "None", stays a
+		// plain sub-menu: a dialog is needless for a handful of entries. Multi-value (true) always
+		// needs the dialog, as it offers Add/Remove/Replace.
+		$submenu = $multiple === false && count($cats) + ($none ? 1 : 0) <= self::DEFAULT_MAX_MENU_SELECT;
+		if (isset($multiple) && !$submenu)
+		{
+			return array(
+				'caption' => $caption,
+				'group' => $group,
+				'icon' => 'category',
+				'data' => array(
+					'nm_action' => 'categories',
+					'categories' => array(
+						'application' => $app,
+						// An entry holds several categories in some apps and exactly one in
+						// others, which changes both the picker and the verbs it can offer. There
+						// is no central registry of which is which - the only place it is declared
+						// today is multiple="true" on the app's edit-template et2-select-cat,
+						// which is invisible from here - so the call site has to say.
+						'multiple' => (bool)$multiple,
+						'globals' => (bool)$globals,
+						'parentCat' => $parent_id ?: null,
+						// action ids the dialog builds, matching what the sub-menu used to send:
+						// multiple -> <prefix>add_<id> / <prefix>del_<id> / <prefix>set_<csv>,
+						// single   -> <prefix><id>, and <prefix> alone to clear it
+						'prefix' => $prefix,
+					),
+				),
+			);
+		}
 		// if more then max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
 		{
@@ -1378,13 +1506,30 @@ class Nextmatch extends Etemplate\Widget
 				}
 			}
 		}
-		return array(
+		$enabled = (bool)$cat_actions;
+		if ($enabled && $none)
+		{
+			// an empty key makes the action id the bare prefix, which is how the apps' action()
+			// handlers (and the picker dialog's "Remove") clear the category
+			$cat_actions = array('' => array(
+				'caption' => 'None',
+				'icon' => 'delete',
+			)) + $cat_actions;
+		}
+		$action = array(
 			'caption' => $caption,
 			'children' => $cat_actions,
-			'enabled' => (bool)$cat_actions,
+			'enabled' => $enabled,
 			'group' => $group,
 			'prefix' => $prefix,
 		);
+		if ($submenu)
+		{
+			// EgwApp::ajax_action() sends the action id + ids to <app>.<app>_ui.ajax_action, the
+			// same ids the picker dialog sends. egw_actions() hands this down to the children.
+			$action['onExecute'] = 'javaScript:app.'.$app.'.ajax_action';
+		}
+		return $action;
 	}
 
 	/**
@@ -1592,6 +1737,39 @@ class Nextmatch extends Etemplate\Widget
 	 * @param array $prefs preference-name => value pairs to save
 	 * @param string $action 'default'|'reset'|'force'
 	 */
+	/**
+	 * Does this ajax request come from a live eTemplate, or could anything have sent it?
+	 *
+	 * An eTemplate submit carries an etemplate_exec_id; a context-menu action converted to ajax
+	 * does not get one for free, and json.php has no CSRF token of its own - it authenticates by
+	 * session cookie, checks the app's run rights and that the method is named ajax_*, and that is
+	 * all.  So for a converted action the unguessable id is what has to be passed along and checked
+	 * here, or the endpoint is reachable by anything that can make the browser send its cookie.
+	 *
+	 * The id is <app>_<account_lid>_<base64 of 32 random bytes> (Request::request_id()), stored
+	 * server-side and only ever handed to the page that owns it.  Reading it is enough on its own:
+	 * WHICH template it belongs to is not checked, because it does not decide anything - the
+	 * menuaction already pins the class, json.php has already required the app, and every handler
+	 * re-derives its authority from the entry id it was given.  What this adds is that the caller
+	 * had to have a page of ours open.
+	 *
+	 * Reading does not consume the request: remove_if_not_modified is off by default, so the id
+	 * stays valid for the page that is still using it.
+	 *
+	 * @param string|null $exec_id as sent by the client
+	 * @return bool false and an error message to the user if it is missing or no longer known
+	 */
+	public static function validateExecId($exec_id) : bool
+	{
+		if (!empty($exec_id) && Etemplate\Request::read($exec_id, false))
+		{
+			return true;
+		}
+		Api\Json\Response::get()->call('egw.message',
+			lang('Your session has expired, please reload the page.'), 'error');
+		return false;
+	}
+
 	public static function ajax_set_admin_default($exec_id, $form_name, array $prefs, $action)
 	{
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || empty($prefs) ||

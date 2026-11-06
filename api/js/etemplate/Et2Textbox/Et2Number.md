@@ -1,6 +1,14 @@
-## Examples ##
+## Examples
 
-### Spinners ###
+### Basic
+
+A text field that only accepts numbers.
+
+```html:preview
+<et2-number label="Quantity"></et2-number>
+```
+
+### Spinners
 
 To add up / down arrow buttons to change the value, set `step`.
 
@@ -8,7 +16,7 @@ To add up / down arrow buttons to change the value, set `step`.
 <et2-number label="0.5 step" step="0.5"></et2-number>
 ```
 
-### Precision ###
+### Precision
 
 To enforce a certain number of decimal places, set `precision`.
 
@@ -17,7 +25,7 @@ To enforce a certain number of decimal places, set `precision`.
 <et2-number label="Integers only" precision="0" value="123.456"></et2-number>
 ```
 
-### Number Format ###
+### Number Format
 
 Normally numbers use the user's number format for thousands and decimal separator from preferences, but it is possible
 to specify for a particular number. The internal value is not affected.
@@ -26,7 +34,7 @@ to specify for a particular number. The internal value is not affected.
 <et2-number decimalSeparator="p" thousandsSeparator=" " value="1234.56"></et2-number>
 ```
 
-### Minimum and Maximum ###
+### Minimum and Maximum
 
 Limit the value with `min` and `max`
 
@@ -35,7 +43,7 @@ Limit the value with `min` and `max`
 <et2-number min="10" max="20" label="Between 10 and 20"></et2-number>
 ```
 
-### Prefix & Suffix ###
+### Prefix & Suffix
 
 Use `prefix` and `suffix` attributes to add text before or after the input field. To include HTML or other widgets, use
 the `prefix` and `suffix` slots instead.
@@ -44,7 +52,7 @@ the `prefix` and `suffix` slots instead.
 <et2-number prefix="$" value="15.46"></et2-number>
 ```
 
-### Currency ###
+### Currency
 
 Using `suffix`,`min` and `precision` together
 

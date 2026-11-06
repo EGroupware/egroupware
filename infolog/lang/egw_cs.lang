@@ -78,14 +78,12 @@ cancelled	infolog	cs	Zrušeno
 categories	infolog	cs	Kategorie
 category	infolog	cs	Kategorie
 change	infolog	cs	Změnit
-change category	infolog	cs	Změnit kategorii
 change completed	infolog	cs	Změna provedena
 change completion	infolog	cs	Provedení změn
 change history	infolog	cs	Změnit historii
 change owner when updating	infolog	cs	Při úpravě změnit vlastníka
 change responsible	infolog	cs	Zodpovídá za změnu
 change the status of an entry, eg. close it	infolog	cs	Změnit stav záznamu, např. jej uzavřít
-changed category to %1	infolog	cs	Kategorie byla změněna na %1
 changed completion to %1%	infolog	cs	Provedena změna na %1%
 changed status to %1	infolog	cs	Stav byl změněn na %1
 changed type	infolog	cs	Typ byl změněn
@@ -398,7 +396,6 @@ regular expression	infolog	cs	Regulární výraz
 remark	infolog	cs	Poznámka
 remove this link (not the entry itself)	infolog	cs	Odstranit tento odkaz (ne celý záznam)
 removed	infolog	cs	Odstraněno.
-removed category	infolog	cs	kategorie odstraněna
 replacement	infolog	cs	Zástupci
 replacements for inserting entries into documents	infolog	cs	Zástupci pro vkládání informací o událostech do dokumentů
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	cs	Vyžaduje, aby měl editující uživatel přístup k zápisu do těchto kontaktů, aby je mohl sdílet s odpovědným uživatelem.

@@ -10,6 +10,9 @@
  */
 
 import {egw} from "../jsapi/egw_global";
+import {Et2DatagridColumnVisibility} from "./Et2Datagrid/Et2DatagridColumnState";
+
+export {Et2DatagridColumnVisibility} from "./Et2Datagrid/Et2DatagridColumnState";
 
 /**
  * Class which stores the data of a single column.
@@ -22,11 +25,17 @@ export class et2_dataview_column
 	public static readonly ET2_COL_TYPE_DEFAULT = 0;
 	public static readonly ET2_COL_TYPE_NAME_ICON_FIXED = 1;
 
-	public static readonly ET2_COL_VISIBILITY_ALWAYS = 0;
-	public static readonly ET2_COL_VISIBILITY_VISIBLE = 1;
-	public static readonly ET2_COL_VISIBILITY_INVISIBLE = 2;
-	public static readonly ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
-	public static readonly ET2_COL_VISIBILITY_DISABLED = 4;
+	/**
+	 * The visibility vocabulary now lives in Et2DatagridColumnVisibility, so that the
+	 * column-selection dialog - shared with the Et2Datagrid/Et2Nextmatch stack - can
+	 * name these states without importing this legacy grid.  Kept as statics here
+	 * because this grid's own code reads them by these names throughout.
+	 */
+	public static readonly ET2_COL_VISIBILITY_ALWAYS = Et2DatagridColumnVisibility.ALWAYS;
+	public static readonly ET2_COL_VISIBILITY_VISIBLE = Et2DatagridColumnVisibility.VISIBLE;
+	public static readonly ET2_COL_VISIBILITY_INVISIBLE = Et2DatagridColumnVisibility.INVISIBLE;
+	public static readonly ET2_COL_VISIBILITY_ALWAYS_NOSELECT = Et2DatagridColumnVisibility.ALWAYS_NOSELECT;
+	public static readonly ET2_COL_VISIBILITY_DISABLED = Et2DatagridColumnVisibility.DISABLED;
 
 	static readonly _attributes: any = {
 		"id": {

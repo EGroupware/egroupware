@@ -78,14 +78,12 @@ cancelled	infolog	ja	キャンセルしました。
 categories	infolog	ja	カテゴリ
 category	infolog	ja	カテゴリ
 change	infolog	ja	変更
-change category	infolog	ja	カテゴリを変更
 change completed	infolog	ja	変更を完了しました。
 change completion	infolog	ja	変更管理用
 change history	infolog	ja	履歴変更
 change owner when updating	infolog	ja	更新時に所有者を変更
 change responsible	infolog	ja	変更責任者
 change the status of an entry, eg. close it	infolog	ja	項目の状態を変更しました。
-changed category to %1	infolog	ja	カテゴリを %1 に変更しました。
 changed completion to %1%	infolog	ja	進捗度を %1% に変更しました。
 changed status to %1	infolog	ja	状態を %1 に変更しました。
 changed type	infolog	ja	変更後のタイプ
@@ -398,7 +396,6 @@ regular expression	infolog	ja	正規表現
 remark	infolog	ja	注意
 remove this link (not the entry itself)	infolog	ja	このリンクを削除（項目本体でなくリンクを削除）
 removed	infolog	ja	削除されました。
-removed category	infolog	ja	削除済みカテゴリ
 replacement	infolog	ja	置換
 replacements for inserting entries into documents	infolog	ja	ドキュメントに項目挿入時に用いる置換
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	ja	編集ユーザがこれらの連絡先への書き込み権限を持ち、責任ユーザと共有する必要があります。

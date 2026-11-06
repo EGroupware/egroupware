@@ -7,6 +7,7 @@ import {inputBasicTests} from "../../Et2InputWidget/test/InputBasicTests";
 import * as sinon from "sinon";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
+import {assertNoElement} from "../../test/assertDom";
 
 // Stub global egw for cssImage to find
 // @ts-ignore
@@ -43,7 +44,7 @@ describe("Password widget", () =>
 
 	it('no toggle button by default', () =>
 	{
-		assert.isNull(element.shadowRoot.querySelector(".input__password-toggle"), "Rendered a toggle button we did not ask for");
+		assertNoElement(element.shadowRoot.querySelector(".input__password-toggle"), "Rendered a toggle button we did not ask for");
 	});
 
 	it('shows the toggle button for the inherited password-toggle attribute', async() =>
@@ -199,7 +200,7 @@ describe("Password widget", () =>
 		await elementUpdated(element);
 
 		assert.isFalse(element.viewable, "A template's passwordToggle was honoured");
-		assert.isNull(
+		assertNoElement(
 			element.shadowRoot.querySelector(".input__password-toggle"),
 			"Rendered a reveal button the server would have masked the password for"
 		);

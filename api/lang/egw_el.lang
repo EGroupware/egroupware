@@ -766,6 +766,7 @@ remove	api	el	Διαγραφή
 remove selected accounts	common	el	Αφαίρεση επιλεγμένων λογαριασμών
 remove shortcut	common	el	Αφαίρεση Συντόμευσης
 remove this link (not the entry itself)	common	el	Αφαιρέστε το σύνδεσμο (όχι την ίδια την καταχώρηση)
+removed category	common	el	Κατηγορία που έχει αφαιρεθεί
 rename	common	el	Μετονομασία
 repeat password	common	el	Επανάληψη κωδικού πρόσβασης
 replace	common	el	Αντικατάσταση

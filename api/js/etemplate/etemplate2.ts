@@ -134,6 +134,7 @@ import "./Et2Vfs/Et2VfsSize.ts";
 import "./Et2Vfs/Et2VfsUpload";
 import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
+import "./Et2Textbox/Et2PasswordReadonly";
 import './Et2Textbox/Et2Searchbox';
 import "./Et2Tree/Et2Tree";
 import "./Et2Tree/Et2TreeDropdown";
@@ -155,7 +156,7 @@ import './et2_widget_dialog';
 import './legacy-shims/et2_widget_diff';
 import './legacy-shims/et2_widget_html';
 import './legacy-shims/et2_widget_taglist';
-import './et2_widget_historylog';
+import './Et2Historylog/Et2Historylog';
 import './et2_widget_hrule';
 import './legacy-shims/et2_widget_file';
 import './et2_widget_placeholder';
@@ -169,7 +170,6 @@ import './et2_widget_itempicker';
 import './et2_widget_script';
 import './et2_widget_countdown';
 import './et2_extension_nextmatch';
-import './et2_extension_customfields';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import {Et2Template} from "./Et2Template/Et2Template";
@@ -290,34 +290,38 @@ export class etemplate2
 			this.resize_timeout = setTimeout(function()
 			{
 				self.resize_timeout = false;
+
+				// A fullscreen video or gallery has the whole screen - fitting the dialog to that
+				// viewport only grows it, to shrink it back again on exit, which fires a resize too
+				const fullscreen = document.fullscreenElement;
+				if(fullscreen && !self._DOMContainer.contains(fullscreen))
+				{
+					return;
+				}
 				if(self._widgetContainer)
 				{
 					const appHeader = jQuery('#divAppboxHeader');
 
-					//Calculate the excess height
-					let frameworkHeight = 0;
-					switch(window.framework?.constructor?.name ?? "")
+					// Calculate the excess height: the space the dialog may use, less what it
+					// wants.  A popup's container is pinned to the window and scrolls inside
+					// itself, so its own height is no use here and its scrollHeight - which can
+					// never be less than that height - reads as exactly full whether the content
+					// needs 300px or 1000px.  Measuring what it would take unpinned gives a number
+					// that is right in both directions, so one resize settles the dialog instead
+					// of creeping a few pixels per event and never quite getting there.
+					// No floor is needed for content taller than the screen: the space the window
+					// offers is then less than what the content wants, so the excess can only shrink
+					// the dialog, and each resizeable widget keeps its own minimum.
+					excess_height = 0;
+					if(egw(window).is_popup())
 					{
-						case 'EgwFramework':
-							// KDots doesn't need extra
-							break;
-						//break;
-						default:
-							frameworkHeight = 11;
-							break;
+						excess_height = self._DOMContainer.clientHeight - self._naturalHeight();
 					}
-					excess_height = egw(window).is_popup() ? jQuery(window).height() - jQuery(self._DOMContainer).height() - appHeader.outerHeight() + frameworkHeight : 0;
+
 					// Recalculate excess height if the appheader is shown
 					if(appHeader.length > 0 && appHeader.is(':visible'))
 					{
 						excess_height -= appHeader.outerHeight() - 9;
-					}
-
-					// Do not resize if the template height is bigger than screen available height
-					// For templates which have sub templates and they are bigger than screenHeight
-					if(screen.availHeight < jQuery(self._DOMContainer).height())
-					{
-						excess_height = 0;
 					}
 
 					// If we're visible, call the "resize" event of all functions which implement the
@@ -346,6 +350,35 @@ export class etemplate2
 			}, this, et2_IResizeable);
 		}
 	};
+
+	/**
+	 * How tall the template would be if it were free to size to its content
+	 *
+	 * In a popup the container is pinned to the window height and scrolls inside itself, which
+	 * hides both how much room is left over and how far the content overflows.  Briefly letting
+	 * it size to its content gives the real number; the reading is taken and the pin put back
+	 * before anything is painted, so nothing flickers.
+	 *
+	 * @return {number} height in pixels the content wants
+	 */
+	private _naturalHeight() : number
+	{
+		const container = this._DOMContainer;
+		const height = container.style.height;
+		const priority = container.style.getPropertyPriority("height");
+
+		container.style.setProperty("height", "auto", "important");
+		const natural = container.scrollHeight;
+		if(height)
+		{
+			container.style.setProperty("height", height, priority);
+		}
+		else
+		{
+			container.style.removeProperty("height");
+		}
+		return natural;
+	}
 
 	/**
 	 * Clears the current instance.
@@ -1238,30 +1271,7 @@ export class etemplate2
 
 				if(invalid_widgets.length && !(invalid_widgets[0] instanceof et2_widget))
 				{
-					// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
-					const scroll = (w) =>
-					{
-						// scroll the widget into view
-						if(typeof w.scrollIntoView === 'function')
-						{
-							w.scrollIntoView();
-						}
-					}
-					let tmpWidget = invalid_widgets[0];
-					while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
-					{
-						tmpWidget = tmpWidget.getParent();
-					}
-					//Activate the tab where the widget with validation error is located
-					if(tmpWidget.getType() === 'ET2-TABBOX')
-					{
-						(<Et2Tabs><unknown>tmpWidget).activateTab(invalid_widgets[0]);
-						(<Et2Tabs><unknown>tmpWidget).updateComplete.then(() => scroll(invalid_widgets[0]));
-					}
-					else
-					{
-						scroll(invalid_widgets[0]);
-					}
+					etemplate2.showWidget(invalid_widgets[0]);
 				}
 				else
 				{
@@ -1881,6 +1891,61 @@ export class etemplate2
 	}
 
 	/**
+	 * Make a widget visible: open the tab it is in, then scroll it into view
+	 *
+	 * Scrolling waits for the tab to be shown, a hidden widget has no position to scroll to.
+	 * A widget that generates its own fields (eg. customfields) is not itself what the user wants to
+	 * see, so we scroll to its first field matching the filter, falling back to the widget.
+	 *
+	 * @param widget et2 widget or DOM node
+	 * @param filter picks which of the widget's generated fields to scroll to, default: has a validation error
+	 */
+	public static showWidget(widget : any, filter : (field : any) => boolean = (field) => (field?.hasFeedbackFor || []).includes("error"))
+	{
+		if(!widget)
+		{
+			return;
+		}
+		const scroll = () =>
+		{
+			let target = widget;
+			if(widget.widgets && typeof widget.widgets === "object")
+			{
+				target = Object.values(widget.widgets).find(filter) || widget;
+			}
+			const node = typeof target.getDOMNode === "function" ? target.getDOMNode() : target;
+			if(typeof target.scrollIntoView === "function")
+			{
+				target.scrollIntoView({block: "center"});
+			}
+			else if(typeof node?.scrollIntoView === "function")
+			{
+				node.scrollIntoView({block: "center"});
+			}
+		};
+		// Walk the DOM, as generated fields are not in the widget tree, and shadow roots to their host
+		let panel = null;
+		for(let node = widget instanceof Node ? widget : widget.getDOMNode?.(); node; node = node.parentNode || (<ShadowRoot>node).host)
+		{
+			if(node.nodeName === 'ET2-TAB-PANEL')
+			{
+				panel = node;
+				break;
+			}
+		}
+		const tabs = <any>panel?.parentElement;
+		if(tabs && typeof tabs.show === "function")
+		{
+			tabs.show(panel.name);
+			tabs.updateComplete.then(() => requestAnimationFrame(scroll));
+		}
+		else
+		{
+			scroll();
+		}
+	}
+
+	/**
 	 * Plugin for egw.json type "et2_validation_error"
 	 *
 	 * @param _type
@@ -1907,22 +1972,7 @@ export class etemplate2
 				console.warn(`Validation error without widget.  ID:${id} - ${_response.data[id]}`);
 				continue;
 			}
-			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
-			let tmpWidget = widget;
-			while(tmpWidget.getParent() && tmpWidget.getType() !== 'ET2-TABBOX')
-			{
-				tmpWidget = tmpWidget.getParent();
-			}
-			//Activate the tab where the widget with validation error is located
-			if(tmpWidget.getType() === 'ET2-TABBOX')
-			{
-				(<Et2Tabs><unknown>tmpWidget).activateTab(widget);
-			}
-			// scroll the widget into view
-			if (typeof widget.getDOMNode().scrollIntoView === 'function')
-			{
-				widget.scrollIntoView();
-			}
+			etemplate2.showWidget(widget);
 		}
 		egw().debug("warn", "Validation errors", _response.data);
 	}

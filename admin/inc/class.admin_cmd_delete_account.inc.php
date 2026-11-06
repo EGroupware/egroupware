@@ -146,7 +146,7 @@ class admin_cmd_delete_account extends admin_cmd
 					}
 					if ($table == 'egw_acl' && $column == 'acl_location')
 					{
-						$where[] = "acl_appname='phpgw_group'";
+						$where[] = Api\Db\SqlFragment::raw("acl_appname='phpgw_group'");
 					}
 					$ids = array();
 					foreach($rs=$db->select($table, 'DISTINCT '.$column, $where, __LINE__, __FILE__) as $row)

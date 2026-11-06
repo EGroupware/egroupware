@@ -66,6 +66,9 @@ const DEFAULT_TILE_LAYOUT = {
 type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
 type Et2DatagridRowHeightSource = "default" | "template" | "css" | "parent" | "measured" | "api";
 
+/** Items handed to the virtualizer while print rows are shown, so it renders nothing and fetches nothing */
+const NO_VIRTUAL_ITEMS : Et2DatagridVirtualItem[] = [];
+
 /**
  * Fixed-pitch flow layout with sparse overrides for expanded branches.
  *
@@ -866,6 +869,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * The container of the print rows, only there while printing.
+	 */
+	get _printRowsBody() : HTMLElement | null
+	{
+		return this.shadowRoot?.getElementById("print-rows") ?? null;
+	}
+
+	/**
 	 * Convenience accessor for scroll container.
 	 */
 	get _body() : HTMLElement | null
@@ -956,14 +967,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		void Promise.resolve().then(() =>
 		{
 			this._reconnectStuckVirtualizerScheduled = false;
-			// Print rows intentionally stop rendering via virtualize() (render()'s
-			// `this._printRows ? ... : virtualize({...})` branch), which legitimately
-			// disconnects the directive - that must stay disconnected while printing,
-			// not get healed back to life here.
-			if(this._printRows)
-			{
-				return;
-			}
 			const virtualizer = this._virtualize as any;
 			if(this.isConnected && virtualizer?._connected === false && typeof virtualizer.connected === "function")
 			{
@@ -1667,14 +1670,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	_syncRowsMinHeight()
 	{
+		// The virtualized rows are hidden and empty while print rows are shown: nothing to size
 		if(this._printRows)
 		{
-			const rowsBody = this._rowsBody as HTMLElement | null;
-			if(rowsBody)
-			{
-				rowsBody.style.height = "";
-				rowsBody.style.minHeight = "";
-			}
 			return;
 		}
 		if(this.embeddedVirtualized)
@@ -3085,6 +3083,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	_observeRowHeightStability() : void
 	{
+		// Print rows are not virtualized and their height is not an estimate for anything
+		if(this._printRows)
+		{
+			return;
+		}
 		if(this._rowHeightLocked || this._usesFixedVirtualizerRowHeight())
 		{
 			this._rowHeightResizeObserver?.disconnect();
@@ -5695,7 +5698,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			await this.loadRowRange(0, this.total - 1);
 		}
 		this._printingSelf = true;
-		this.classList.add("print-self");
 		await this.setPrintRows(this.getLoadedRowIds().filter(Boolean));
 	}
 
@@ -5707,7 +5709,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(this._printingSelf)
 		{
 			this._printingSelf = false;
-			this.classList.remove("print-self");
 			this.clearPrintRows();
 		}
 	}
@@ -5748,6 +5749,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	public syncPrintFlowHeight() : void
 	{
 		this._printController.syncPrintFlowHeight();
+	}
+
+	/**
+	 * Note the scroll position before print preparation changes the layout, for clearPrintRows() to restore.
+	 */
+	rememberScrollForPrint() : void
+	{
+		this._printController.rememberScrollPosition();
 	}
 
 	/** Restore normal virtualized row rendering after printing. */
@@ -5919,11 +5928,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				this._finalizeRefreshedRows();
 			}
+			await this._refreshEmbeddedChildGrids(row_ids, type);
 		}
 		catch(e)
 		{
 			this.egw().debug("error", e.message);
 		}
+	}
+
+	/**
+	 * Pass a targeted refresh on to expanded child grids that render one of the rows
+	 *
+	 * Refreshing stores the new row data centrally, but each grid only re-renders the rows it holds
+	 * itself, so a row shown inside an expanded child grid stays stale unless that grid is told.
+	 * Only grids that currently render a row are asked: refreshing `add` or `update` in a grid
+	 * that does not have the row yet would insert it there.
+	 */
+	private async _refreshEmbeddedChildGrids(row_ids : string[], type : Et2DatagridUpdateType) : Promise<void>
+	{
+		const rowIds = this._normalizeRefreshRowIds(row_ids);
+		await Promise.all(this._directEmbeddedChildGrids().map((childGrid) =>
+		{
+			const rendered = rowIds.filter((rowId) =>
+				!!childGrid.shadowRoot?.querySelector(`[data-row-id='${CSS.escape(rowId)}']`));
+			return rendered.length ? childGrid.refresh(rendered, type) : undefined;
+		}));
 	}
 
 	/**
@@ -6783,9 +6812,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			'--row-height': this._usesFixedVirtualizerRowHeight() ? `${this.rowHeightEstimatePx}px` : undefined,
 			'--embedded-virtualized-height': this._embeddedVirtualizedHostHeight ?? undefined
 		}
-		const rowCount = this._printRows?.length ?? this._virtualRowCount();
+		const rowCount = this._virtualRowCount();
 		const embeddedRowCount = this.embeddedVirtualized && !isTileView && this.total !== null ? Math.max(0, this.total) : rowCount;
-		const virtualItems = this._getVirtualItems(embeddedRowCount);
+		// The virtualizer stays attached while printing, but with nothing to render: the print rows
+		// are in their own container, whose size would otherwise be taken for the viewport
+		const virtualItems = this._printRows ? NO_VIRTUAL_ITEMS : this._getVirtualItems(embeddedRowCount);
 		if(isTileView)
 		{
 			return html`
@@ -6818,15 +6849,25 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                            @pointercancel=${this._handleTablePointerCancel}
 	                            @click=${this._handleTableClick}
 	                    >
-	                        ${this._printRows
-	                          ? this._printRows.map((_row, index) => this._renderVirtualRow(index, undefined, false))
-	                          : virtualize({
+	                        ${virtualize({
 		                            items: virtualItems,
 		                            keyFunction: this._virtualRowKey,
 		                            renderItem: this._renderVirtualRow,
 		                            layout: this._tileLayoutConfig()
 		                        })}
 	                    </div>
+	                    ${this._printRows ? html`
+	                        <div
+	                                id="print-rows"
+	                                data-lazy-load-ready
+	                                class="dg-tile-grid"
+	                                part="rows print-rows"
+	                                role="grid"
+	                                aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
+	                        >
+	                            ${this._printRows.map((_row, index) => this._renderVirtualRow(index, undefined, false))}
+	                        </div>
+	                    ` : nothing}
 					</div>
 				</div>
 			`;
@@ -6886,10 +6927,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 							${this._accessibleHeaderTemplate(visibleColumns)}
 						</thead>
 						<tbody id="rows" part="rows" role="rowgroup">
-							${this._printRows
-								? this._printRows.map((_row, index) => this._renderVirtualRow(index, undefined, false))
-								: virtualize(tableVirtualizerConfig)}
+							${virtualize(tableVirtualizerConfig)}
 						</tbody>
+						${this._printRows ? html`
+							<tbody id="print-rows" data-lazy-load-ready part="rows print-rows" role="rowgroup">
+								${this._printRows.map((_row, index) => this._renderVirtualRow(index, undefined, false))}
+							</tbody>
+						` : nothing}
 					</table>
 				</div>
 			</div>

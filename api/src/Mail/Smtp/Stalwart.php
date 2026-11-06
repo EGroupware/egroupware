@@ -164,7 +164,7 @@ class Stalwart extends Sql
 			$aliases = [];
 			foreach($account['aliases'] as $alias)
 			{
-				if ($alias['enabled'])
+				if ($alias['enable'] ?? $alias['enabled'] ?? true)    // Stalwart 1.0 renamed enabled to enable
 				{
 					$aliases[] = $alias['name'].'@'.$this->domain($alias['domainId'] ?? $account['domainId']);    // aliases can be in other domains
 				}
@@ -235,7 +235,7 @@ class Stalwart extends Sql
 				throw new \Exception("Domain '$domain' not found --> create it!");
 			}
 			$aliases[] = [
-				'enabled' => true,
+				'enable' => true,    // Stalwart 0.16 used 'enabled', 1.0 rejects it with invalidPatch
 				'name' => self::name2stalwart($name),
 				'domainId' => $domainId,
 				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
@@ -1071,13 +1071,20 @@ class Stalwart extends Sql
 		}
 		if (!($domain = array_search($domainId, self::$domainIds, true)))
 		{
+			// Domain/query's response only ever has an "ids" list (never resolved object
+			// properties) - need Domain/get by id to actually read the domain's "name". Found
+			// live 2026-10-30: this previously read a non-existent "name" key off a */query
+			// response, always null, so every alias in a domain other than the account's own
+			// cached default domain silently lost its domain on display (and on save, since
+			// setUserData() then failed to find a domain named '' for the resulting bare
+			// "local-part@" string).
 			$response = $this->jmapClient()->jmapCall([
-				['x:Domain/query', [
-					'filter' => ['id' => $domainId],
+				['x:Domain/get', [
+					'ids' => [$domainId],
 				], 'a']
 			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			// only permanently cache returned id's, not that there was none yet
-			if (($domain = $response['methodResponses'][0][1]['name'][0] ?? null))
+			if (($domain = $response['methodResponses'][0][1]['list'][0]['name'] ?? null))
 			{
 				self::$domainIds[$domain] = $domainId;
 				Api\Cache::setInstance(__CLASS__, 'domainIds-'.$this->account->acc_smtp_host, self::$domainIds);

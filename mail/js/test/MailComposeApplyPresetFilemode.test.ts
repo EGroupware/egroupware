@@ -123,11 +123,11 @@ describe('MailCompose.applyPresetFilemode()', () =>
 
 			compose.applyPresetFiles([
 				{path: 'vfs://default/apps/acemailstor/494433/original_data/raw/raw_mail.eml', name: 'raw_mail.eml', type: 'message/rfc822'},
-				{path: '/home/asig/a.pdf', name: 'a.pdf', type: 'application/pdf'},
+				{path: '~/a.pdf', name: 'a.pdf', type: 'application/pdf'},
 			]);
 
 			assert.deepEqual(merged.map((e) => e.jmapVfsPath),
-				['/apps/acemailstor/494433/original_data/raw/raw_mail.eml', '/home/asig/a.pdf']);
+				['/apps/acemailstor/494433/original_data/raw/raw_mail.eml', '~/a.pdf']);
 			assert.deepEqual(merged.map((e) => e.name), ['raw_mail.eml', 'a.pdf']);
 		});
 

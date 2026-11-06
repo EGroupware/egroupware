@@ -579,4 +579,40 @@ describe("Multi-select across searches", () =>
 		assert.includeMembers(tagValues(element), ["alice", "bob"],
 			"First pick was lost once its rendered node's 'remote' class desynced from its data");
 	});
+
+	/**
+	 * Remote results arrive as option groups (CalendarOwner: accounts / addressbook / resources),
+	 * and a picked value is kept as a plain option.  Every search used to list the picked value
+	 * a second time as a child of the returned group.
+	 */
+	it("does not list a picked value again inside a returned option group", async() =>
+	{
+		const request = sinon.stub();
+		request.callsFake(() => Promise.resolve({
+			total: 3, results: [
+				{label: "accounts", value: [{value: "6", label: "Alice"}, {value: "7", label: "Bob"}]},
+				{label: "other", value: [{value: "9", label: "Carol"}]}
+			]
+		}));
+		window.egw.request = request;
+
+		const element = await makeSelect(`label="Participants" multiple="true" search="true" searchUrl="test"`, '');
+		await searchReady(element);
+		element.select_options = [{value: "6", label: "Alice"}, {value: "7", label: "Bob"}];
+		element.value = ["6", "7"];
+		await element.updateComplete;
+
+		for(const term of ["a", "b", "c"])
+		{
+			await searchFor(element, term);
+			await element.updateComplete;
+			const nodes = Array.from(element.shadowRoot.querySelectorAll("sl-option")).map((n : any) => n.value);
+			for(const value of ["6", "7"])
+			{
+				assert.equal(nodes.filter(v => v == value).length, 1, `'${value}' rendered more than once after search '${term}'`);
+			}
+			assert.include(nodes, "9", "New result missing");
+		}
+		assert.sameMembers(tagValues(element), ["6", "7"]);
+	});
 });

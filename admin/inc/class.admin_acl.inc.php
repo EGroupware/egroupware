@@ -141,8 +141,8 @@ class admin_acl
 		// client queries destinct rows by their row-id
 		if (isset($query['col_filter']['id']))
 		{
-			$query['col_filter'][] = $GLOBALS['egw']->db->concat('acl_appname',"':'",'acl_account',"':'",'acl_location').
-				' IN ('.implode(',', array_map(array($GLOBALS['egw']->db, 'quote'), (array)$query['col_filter']['id'])).')';
+			$query['col_filter'][] = Api\Db\SqlFragment::raw($GLOBALS['egw']->db->concat('acl_appname',"':'",'acl_account',"':'",'acl_location').
+				' IN ('.implode(',', array_map(array($GLOBALS['egw']->db, 'quote'), (array)$query['col_filter']['id'])).')');
 			unset($query['col_filter']['id']);
 		}
 		else
@@ -173,11 +173,11 @@ class admin_acl
 					// remove everything not an account-id in location, like category based acl
 					if (substr($GLOBALS['egw']->db->Type, 0, 5) == 'mysql')
 					{
-						$query['col_filter'][] = "acl_location REGEXP '^-?[0-9]+$'";
+						$query['col_filter'][] = Api\Db\SqlFragment::raw("acl_location REGEXP '^-?[0-9]+$'");
 					}
 					else
 					{
-						$query['col_filter'][] = "acl_location SIMILAR TO '-?[0-9]+'";
+						$query['col_filter'][] = Api\Db\SqlFragment::raw("acl_location SIMILAR TO '-?[0-9]+'");
 					}
 					// get apps not using group-acl (eg. Addressbook) or using it only partialy (eg. InfoLog)
 					$not_enum_group_acls = Api\Hooks::process('not_enum_group_acls', array(), true);
@@ -207,7 +207,7 @@ class admin_acl
 						'acl_account' => $memberships,
 					));
 					if ($not_enum_group_acls) $sql .= ' END)';
-					$query['col_filter'][] = $sql;
+					$query['col_filter'][] = Api\Db\SqlFragment::raw($sql);
 					break;
 
 				case 'own':

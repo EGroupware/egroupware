@@ -61,55 +61,8 @@ if (isset($auth)) $auth->logout();
 // $GLOBALS['egw']->redirect($redirectTarget);
 ?>
 <head>
-<script language="javascript">
-function clearAuthenticationCache(page)
-{
-	// Default to a non-existing page (give error 500).
-	// An empty page is better, here.
-	if (!page) page = '.force_logout';
-
-	try
-	{
-		var agt=navigator.userAgent.toLowerCase();
-		if (agt.indexOf("msie") != -1)
-		{
-			// IE clear HTTP Authentication
-			document.execCommand("ClearAuthenticationCache");
-		}
-		else
-		{
-			var xmlhttp;
-			if (window.XMLHttpRequest)
-			{
-				xmlhttp = new XMLHttpRequest();
-			}
-			else if (window.ActiveXObject)
-			{
-				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			else
-			{
-				return;
-			}
-
-			// Let's prepare invalid credentials
-			xmlhttp.open("GET", page, true, "logout", "logout");
-			// Let's send the request to the server
-			xmlhttp.send("");
-			// Let's abort the request
-			xmlhttp.abort();
-		}
-	}
-	catch(e)
-	{
-		alert("An exception occurred in the script. Error name: " + e.name + ". Error message: " + e.message);
-		// There was an error
-		return;
-	}
-}
-</script>
 <meta http-equiv="refresh" content="1;url=<?php echo htmlspecialchars($redirectTarget, ENT_QUOTES) ?>">
 </head>
-<body onload="clearAuthenticationCache()">
+<body>
 <a href="<?php echo htmlspecialchars($redirectTarget, ENT_QUOTES) ?>">Logout in progress...</a>
 </body>

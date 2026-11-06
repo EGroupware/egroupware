@@ -221,8 +221,8 @@ class ExpressionTest extends TestCase
 	 */
 	public function testColumnDataImplodeSingleElementArrayUnwrapsToScalar()
 	{
-		$fromArray = self::$db->column_data_implode(' AND ', ['t_modifier' => [5]], True, False, self::$table_def);
-		$fromScalar = self::$db->column_data_implode(' AND ', ['t_modifier' => 5], True, False, self::$table_def);
+		$fromArray = (string)self::$db->column_data_implode(' AND ', ['t_modifier' => [5]], True, False, self::$table_def);
+		$fromScalar = (string)self::$db->column_data_implode(' AND ', ['t_modifier' => 5], True, False, self::$table_def);
 
 		$this->assertSame($fromScalar, $fromArray);
 		$this->assertStringNotContainsString('IN', $fromArray, 'a single-element array must not produce an IN(...) clause');
@@ -249,7 +249,7 @@ class ExpressionTest extends TestCase
 		$id = $this->insertRow(['t_modifier' => 10]);
 
 		$fragment = self::$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], True, False, self::$table_def);
-		$this->assertSame('t_modifier=t_modifier+1', $fragment,
+		$this->assertSame('t_modifier=t_modifier+1', (string)$fragment,
 			'an integer-keyed array value must pass through completely unquoted/unmodified');
 
 		self::$db->update('egw_test', [0 => 't_modifier=t_modifier+1'], ['t_id' => $id], __LINE__, __FILE__, 'test');
@@ -285,6 +285,24 @@ class ExpressionTest extends TestCase
 		$fragment = self::$db->column_data_implode(',', ['egw_test.t_title' => 'x'], True, False, self::$table_def);
 
 		$this->assertStringContainsString('t_title', $fragment);
+	}
+
+	/**
+	 * Regression coverage for GHSA-x32h-3hh2-jx3x Finding 1: the "table.column" escape hatch above
+	 * used to be recognized by a non-anchored check (effectively just "does the key contain a dot,
+	 * and does the last segment resolve to a known column"), so a key like
+	 * "1=1 OR 1=1 OR egw_test.t_id" was accepted and its attacker-controlled PREFIX concatenated
+	 * verbatim into the generated SQL as an unescaped boolean expression, with only the trailing
+	 * "egw_test.t_id" needed to satisfy the "looks like a real column" check. The fix (commit
+	 * 8371dc9c32) anchors the match to the whole key
+	 * (`/^([a-z0-9_]+)\.([a-z0-9_]+)$/i`), so anything before/after the "table.column" shape now
+	 * falls through to the unrecognized-column guard instead.
+	 */
+	public function testColumnDataImplodeRejectsPrefixSmuggledBeforeQualifiedColumn()
+	{
+		$this->expectException(Api\Db\Exception\InvalidSql::class);
+
+		self::$db->column_data_implode(',', ['1=1 OR 1=1 OR egw_test.t_id' => 1], True, False, self::$table_def);
 	}
 
 	// -------------------------------------------------------------------

@@ -481,6 +481,52 @@ class Base
 	const USER_TIMEZONE_READ = 'user_timezone_read';
 
 	/**
+	 * Read the rows of many ids in one query - the bulk twin of read()
+	 *
+	 * Anything that has to ask about a whole list of entries - a directory listing of /apps
+	 * checking access to every entry in it, say - otherwise reads them one at a time, which costs
+	 * a query per entry and does not scale.
+	 *
+	 * The contract is that this returns, for every id, the same row read() would have returned for
+	 * it, just without the per-entry queries. A class that gives read() something extra (another
+	 * table joined in, a 1:N relation hydrated) therefore has to override this too, or its rows
+	 * come back missing exactly that - which is why callers that depend on the two agreeing check
+	 * that whoever declared read() declared this as well.
+	 *
+	 * Ids that have no row are simply absent from the result, as read() returns false for them.
+	 *
+	 * @param array $ids values of the (single-column) primary key
+	 * @return array id => row pairs
+	 */
+	function readRows(array $ids)
+	{
+		$rows = array();
+		// a multi-column primary key cannot be matched with a single IN(), which is the whole point here
+		if (!$ids || count($this->db_key_cols) != 1)
+		{
+			return $rows;
+		}
+		$db_pk = array_key_first($this->db_key_cols);
+		$pk = $this->db_key_cols[$db_pk];
+
+		foreach($this->db->select($this->table_name, '*', array($db_pk => array_values($ids)),
+			__LINE__, __FILE__, false, '', $this->app) as $row)
+		{
+			// read() returns the row under its internal names, not the database's - so must we
+			$data = array();
+			foreach($this->db_cols as $db_col => $col)
+			{
+				$data[$col] = $row[$db_col] ?? null;
+			}
+			$data = $this->db2data($data);
+			$data[self::USER_TIMEZONE_READ] = Api\DateTime::$user_timezone->getName();
+
+			$rows[$data[$pk]] = $data;
+		}
+		return $rows;
+	}
+
+	/**
 	 * reads row matched by key and puts all cols in the data array
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
@@ -556,7 +602,12 @@ class Base
 				unset($query[$col]);
 			}
 		}
-		// copy direct SQL parts from $keys
+		// copy direct SQL parts from $keys - NOT wrapped in Db\SqlFragment here: $keys is the
+		// caller's own parameter, not something this method constructs itself. Wrapping a plain
+		// string unconditionally would launder an attacker-controlled value into looking like a
+		// deliberately-built fragment, defeating Db::requireSqlFragmentObjects() for exactly the
+		// callers it exists to protect. A caller that wants to pass a raw fragment safely under
+		// strict mode must wrap it itself before calling read().
 		for($i = 0; is_array($keys) && isset($keys[$i]); ++$i)
 		{
 			$query[] = $keys[$i];
@@ -675,7 +726,8 @@ class Base
 				}
 				$data[$db_col] = !is_object($this->data[$col]) && (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
-			// allow to add direct sql updates, eg. "etag=etag+1" with int keys
+			// allow to add direct sql updates, eg. "etag=etag+1" with int keys - NOT wrapped: $keys
+			// is the caller's own parameter, see the identical note in read() above
 			if (is_array($keys) && isset($keys[0]))
 			{
 				for($n=0; isset($keys[$n]); ++$n)
@@ -789,7 +841,8 @@ class Base
 					$keys[$db_col] = $col;
 				}
 			}
-			// keep sql fragments (with integer key)
+			// keep sql fragments (with integer key) - NOT wrapped: $data here is $keys, the
+			// caller's own parameter, see the identical note in read() above
 			foreach($data as $key => $val)
 			{
 				if (is_int($key))
@@ -884,12 +937,14 @@ class Base
 					}
 					if(is_int($col))
 					{
+						// NOT wrapped: $val is from $filter, the caller's own parameter, see the
+						// identical note in read() above
 						$db_filter[] = $val;
 					}
 					// only allow "!''" for real column-names NOT (e.g. injected) SQL fragments
 					elseif ($val === "!''" && preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)?$/iu', $col))
 					{
-						$db_filter[] = $col." != ''";
+						$db_filter[] = Api\Db\SqlFragment::raw($col." != ''");
 					}
 					else
 					{
@@ -901,7 +956,7 @@ class Base
 			{
 				if ($op != 'AND')
 				{
-					$db_filter[] = '('.$this->db->column_data_implode(' '.$op.' ',$query).')';
+					$db_filter[] = Api\Db\SqlFragment::raw('('.$this->db->column_data_implode(' '.$op.' ',$query).')');
 				}
 				else
 				{
@@ -1160,6 +1215,13 @@ class Base
 		{
 			if (is_int($col))
 			{
+				// NOT wrapped: $val is from $_criteria, the caller's own parameter (possibly an
+				// array here - eg. search2criteria()'s single-element return, wrapped again into
+				// $criteria=[$search] by search() - column_data_implode() unwraps a single-element
+				// array back to its value, whatever that is, before checking it). Wrapping a plain
+				// string unconditionally here would launder an attacker-controlled value into
+				// looking like a deliberately-built fragment, defeating
+				// Db::requireSqlFragmentObjects() for exactly the callers it exists to protect.
 				$query[] = $val;
 			}
 			elseif ($empty || $val != '')
@@ -1175,7 +1237,7 @@ class Base
 						$this->table_def['fd'][$db_col]['nullable'] !== false)
 					{
 						unset($criteria[$col]);
-						$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
+						$query[] = Api\Db\SqlFragment::raw('(' . $db_col . ' IS NULL OR ' . $db_col . " = '')");
 					}
 					else
 					{
@@ -1201,9 +1263,9 @@ class Base
 					}
 					foreach((is_array($criteria[$col]) ? $criteria[$col] : explode(' ',$criteria[$col])) as $crit)
 					{
-						$query[] = ($negate ? ' ('.$table_name.$db_col.' IS NULL OR ' : '').$table_name.$db_col.$cmp_op.
+						$query[] = Api\Db\SqlFragment::raw(($negate ? ' ('.$table_name.$db_col.' IS NULL OR ' : '').$table_name.$db_col.$cmp_op.
 							$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$crit).$wildcard).
-							($negate ? ') ' : '');
+							($negate ? ') ' : ''));
 					}
 				}
 				elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
@@ -1220,11 +1282,11 @@ class Base
 						{
 							$v = $this->db->quote($v, $type);
 						}
-						$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
+						$query[] = $sql = Api\Db\SqlFragment::raw($db_col.' IN (' .implode(',',$val).')');
 					}
 					else
 					{
-						$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type);
+						$query[] = Api\Db\SqlFragment::raw($db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type));
 					}
 				}
 				else
@@ -1355,7 +1417,7 @@ class Base
 		// Special handling for an ID search, #<int>
 		if(strpos($_pattern, '#') === 0 && is_numeric(substr($_pattern, 1)))
 		{
-			return array('(' . $this->table_name.'.'. $this->autoinc_id . '=' . (int)substr($_pattern,1) . ')');
+			return array(Api\Db\SqlFragment::raw('(' . $this->table_name.'.'. $this->autoinc_id . '=' . (int)substr($_pattern,1) . ')'));
 		}
 		if(!$search_cols)
 		{
@@ -1533,7 +1595,7 @@ class Base
 		}
 
 		$op = 'OR';
-		return array('(' . $result . ')');
+		return array(Api\Db\SqlFragment::raw('(' . $result . ')'));
 	}
 
 	/**

@@ -6,32 +6,69 @@ on:
     branches:
       - master
   workflow_dispatch:
-  # Lets a private repo (eg. one in the EGroupwareGmbH org) run this exact same suite with its
-  # own apps checked out alongside the public ones, instead of maintaining a second copy of it.
+  # Lets a private repo run this exact same suite with its own apps checked out alongside the
+  # public ones, instead of maintaining a second copy of it.
   # Private sources must never be checked out by this repo's own triggers, so they arrive purely
   # through the "extra-apps" input - see the "Checkout additional apps" step below.
   workflow_call:
     inputs:
       egw-repo:
-        description: 'EGroupware repository to test. Required for cross-repo callers.'
+        description: 'EGroupware repository to test.'
         type: string
-        default: ''
+        default: 'EGroupware/egroupware'
       egw-ref:
-        description: 'Branch/tag/sha of egw-repo to test. Required for cross-repo callers.'
+        description: >-
+          Branch/tag/sha of egw-repo to test. Leave at master for day-to-day runs and pin a
+          release tag (eg. 26.1) to verify an app against a release. Note this selects the code
+          under test only - the steps themselves come from whichever ref the caller's "uses:"
+          points at, so pin that too if a release needs its own CI setup.
         type: string
-        default: ''
+        default: 'master'
       extra-apps:
         description: >-
           JSON array of additional app repositories to check out into the tree, eg.
-          [{"repo":"EGroupwareGmbH/epl","dir":"stylite","ref":"master"}].
-          "dir" defaults to the repository name, "ref" defaults to master.
+          [{"repo":"myorg/myrepo","dir":"myapp","ref":"master"}].
+          "dir" defaults to the repository name, and is only needed where the app's directory
+          differs from it. "ref" defaults to master.
           Their tests are picked up automatically: doc/phpunit.xml collects ../*/tests/ and
           web-test-runner.config.mjs builds a group per app from <app>/js/**/*.test.ts.
         type: string
         default: ''
+      test-apps:
+        description: >-
+          Space-separated subset of the extra-apps directories whose tests should run.
+          Defaults to every app in extra-apps. Only affects which tests run - every extra app is
+          still checked out and installed, which is what lets an app that another one depends on
+          be present without its suite being run.
+        type: string
+        default: ''
+      test-scope:
+        description: >-
+          "all" (default) runs the whole suite. "extra-apps" still builds and installs the full
+          instance, but then runs only the tests of the apps supplied via extra-apps - for
+          callers who already know from the public repo's own CI whether the rest passed, and
+          only need their own apps exercised inside a complete install.
+        type: string
+        default: 'all'
+      test-also:
+        description: >-
+          Extra test paths, relative to the EGroupware root, to run alongside an "extra-apps"
+          scope - space separated, files or directories. For an app whose own tests declare
+          DependsOnClass on tests outside it: PHPUnit skips a test whose dependency was never
+          run, so without naming them here those tests quietly pass as skipped.
+        type: string
+        default: ''
+      with-collabora:
+        description: >-
+          Start the Collabora backend, so a share of an editable file opens in the editor.
+          EGroupware's own runs leave this off: with no backend the share serves the file itself,
+          which is the right answer and what the tests then require. Collabora's own CI turns it
+          on and requires the editor instead.
+        type: boolean
+        default: false
       extra-apps-owner:
         description: >-
-          Organisation owning the extra-apps repositories, eg. EGroupwareGmbH. Required when
+          Organisation owning the extra-apps repositories. Required when
           authenticating via a GitHub App: this workflow file lives in another org, so without
           it the App installation would be looked up against the wrong owner.
         type: string
@@ -69,6 +106,8 @@ jobs:
       SYSOP_USER: ""
       SYSOP_PASS: ""
       EGW_EXTRA_APP_DIRS: ""
+      EGW_TEST_APP_DIRS: ""
+      EGW_TEST_ALSO: "${{ inputs.test-also }}"
       # The secrets context is not available in a step's "if:", so route it through job env.
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
 
@@ -81,6 +120,57 @@ jobs:
           ref: ${{ inputs.egw-ref || github.ref }}
           submodules: true
           path: sources
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+          restore-keys: |
+            composer-cache-${{ runner.os }}-
+
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
+      - name: Install PHP dependencies in sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
+          php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
 
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
@@ -96,14 +186,18 @@ jobs:
         if: inputs.extra-apps != ''
         env:
           EXTRA_APPS: ${{ inputs.extra-apps }}
+          TEST_APPS: ${{ inputs.test-apps }}
           GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
         run: |
           set -euo pipefail
-          if [ -z "$GH_TOKEN" ]; then
-            echo "::error::extra-apps was given, but no credentials: set either the" \
-                 "extra-apps-app-id/extra-apps-private-key pair (plus extra-apps-owner)" \
-                 "or the extra-apps-token secret"
-            exit 1
+          # Credentials are optional: a public app repository clones fine without any, and a
+          # private one fails on git's own "repository not found" which says enough. Requiring a
+          # token here would lock out exactly the community apps this input exists to serve.
+          AUTH=""
+          if [ -n "$GH_TOKEN" ]; then
+            AUTH="x-access-token:${GH_TOKEN}@"
+          else
+            echo "::notice::no extra-apps credentials supplied, cloning anonymously"
           fi
           DIRS=""
           while read -r app; do
@@ -111,8 +205,16 @@ jobs:
             dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
             ref="$(jq -r '.ref // "master"' <<<"$app")"
             echo "::group::$repo@$ref -> $dir"
+            # A public app is normally provided by composer, pinned to composer.lock and
+            # extracted without a .git (composer's source clone is blocked on the runner). To
+            # test the app's own ref instead, that copy has to be replaced - which is why this
+            # runs after "Install PHP dependencies in sources" rather than before it.
+            if [ -d "$GITHUB_WORKSPACE/sources/$dir" ]; then
+              echo "replacing the composer-provided $dir"
+              rm -rf "$GITHUB_WORKSPACE/sources/$dir"
+            fi
             git clone --depth 1 --branch "$ref" \
-              "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" \
+              "https://${AUTH}github.com/${repo}.git" \
               "$GITHUB_WORKSPACE/sources/$dir"
             # Drop the clone's .git: it keeps the token out of a stored remote url, and stops
             # "install-cli.php --git-apps pull" below from trying to update these apps.
@@ -120,27 +222,25 @@ jobs:
             echo "::endgroup::"
             DIRS="$DIRS $dir"
           done < <(jq -c '.[]' <<<"$EXTRA_APPS")
-          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
+          DIRS="${DIRS# }"
+          echo "EGW_EXTRA_APP_DIRS=$DIRS" >> "$GITHUB_ENV"
 
-      - name: Cache Composer downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache
-          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
-          restore-keys: |
-            composer-cache-${{ runner.os }}-
-
-      - name: Install PHP dependencies in sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
-          php "${GITHUB_WORKSPACE}/sources/install-cli.php" --git-apps pull
+          # Which of those to actually test. Checking an app out and running its tests are
+          # separate concerns: an app that only needs to be present so another one installs has
+          # no reason to have its own suite run.
+          TEST_DIRS="${TEST_APPS:-}"
+          if [ -z "$TEST_DIRS" ]; then
+            TEST_DIRS="$DIRS"
+          else
+            for app in $TEST_DIRS; do
+              case " $DIRS " in
+                *" $app "*) ;;
+                *) echo "::error::test-apps names '$app', which is not in extra-apps"; exit 1;;
+              esac
+            done
+          fi
+          echo "testing: $TEST_DIRS"
+          echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
 
       - name: Install PHP dependencies of additional apps
         if: env.EGW_EXTRA_APP_DIRS != ''
@@ -148,10 +248,23 @@ jobs:
         run: |
           set -euo pipefail
           COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          # Apps cloned from git are not composer packages, so their requirements are absent from
-          # the root composer.lock - they carry their own vendor/ dir, same as a manual install.
+          # Only for apps the root project does NOT already require: those carry their own
+          # vendor/ dir, same as a manual install, because their requirements are absent from the
+          # root composer.lock.
           for dir in $EGW_EXTRA_APP_DIRS; do
             [ -f "$GITHUB_WORKSPACE/sources/$dir/composer.json" ] || continue
+            # An app the root project requires already had its dependencies resolved into the root
+            # vendor/, and its composer.json is the package's own definition rather than a manifest
+            # to install from. Running composer there finds no lock, re-resolves everything from
+            # scratch, and can fail on constraints the root lock had long since settled. It would
+            # also leave an app-level vendor/, which api/src/autoload.php treats as a fallback
+            # source of classes.
+            pkg="$(jq -r '.name // empty' "$GITHUB_WORKSPACE/sources/$dir/composer.json")"
+            if [ -n "$pkg" ] && jq -e --arg p "$pkg" '.packages[] | select(.name == $p)' \
+                 "$GITHUB_WORKSPACE/sources/composer.lock" > /dev/null; then
+              echo "::notice::$dir is provided by the root composer.lock as $pkg, skipping"
+              continue
+            fi
             echo "::group::composer install in $dir"
             docker run --rm --user "$(id -u):$(id -g)" \
               -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
@@ -173,7 +286,18 @@ jobs:
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE up -d --force-recreate db egroupware nginx
+          # Pull only the three images this job starts.  nginx depends_on push, collabora-key
+          # and rocketchat, and those on collabora-init and mongo, so a plain
+          # "up db egroupware nginx" fetches eight images to run three: docker-compose.ci.yml
+          # parks the other five at replicas: 0, which keeps them from running but not from being
+          # fetched.  Measured at 66s of a 5m41s job, all of it before the first container started.
+          #
+          # "pull" does not follow depends_on unless asked (--include-deps), and --no-deps stops
+          # "up" from putting them back.  --pull never is what makes that stick: without it "up"
+          # would fetch again for itself.  Images stay current regardless - the pull above runs on
+          # every job, it is only the redundant second fetch that is suppressed.
+          $COMPOSE pull db egroupware nginx
+          $COMPOSE up -d --force-recreate --no-deps --pull never db egroupware nginx
 
       - name: Wait for install
         run: |
@@ -325,10 +449,10 @@ jobs:
 
           # Get test user from phpunit.xml
           EGW_TEST_USER="$(
-            sed -n 's/.*<var name="EGW_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+            sed -n 's/.*<env name="EGW_NONADMIN_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
           EGW_TEST_PASS="$(
-            sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+            sed -n 's/.*<env name="EGW_NONADMIN_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
           for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
             if [ -z "${!v}" ]; then
@@ -435,35 +559,52 @@ jobs:
             echo "::warning::fixture app 'test' not installed, some tests will be skipped"
           fi
 
-      - name: Install webauthn app
-        run: |
-          set -euo pipefail
-          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          # webauthn is a newer first-party app (composer.json require egroupware/webauthn); the CI
-          # image's baked-in install predates it, so its schema (egw_webauthn_pubkeys) was never
-          # created - install it explicitly, same as the "test" fixture app above.
+          # Name a missing dependency as such. An extra app whose setup.inc.php depends on an app
+          # that is not installed otherwise fails somewhere inside its own tests, with nothing
+          # pointing at the cause. This can only report it: setup.inc.php names an app but not the
+          # repository to clone it from, so adding it to extra-apps is the caller's job.
           #
-          # header.inc.php still points EGW_SERVER_ROOT at the image's baked-in /usr/share/egroupware
-          # at this point in the pipeline (that only gets patched to $EGW_SRC_DIR later, in "Run
-          # PHPUnit") - without this, setup-cli.php scans the old baked-in app list, never sees
-          # webauthn as new, and silently no-ops with "No update necessary". Patch it here too
-          # (idempotent, harmless if "Run PHPUnit" repeats it) so the scan sees the real checkout.
-          $COMPOSE exec -T egroupware sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
-          $COMPOSE exec -T \
-            -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
-            -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
-            -w "$EGW_SRC_DIR" egroupware sh -lc '
-            set +e
-            php setup/setup-cli.php --update default,$EGW_CONFIG_USER,$EGW_CONFIG_PASSWD,no,webauthn
-            rc=$?
-            set -e
-            echo "setup-cli exit code: $rc"
-          '
-          if ! $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e "SHOW TABLES LIKE 'egw_webauthn_pubkeys';" | grep -q "egw_webauthn_pubkeys"; then
-            echo "::error::egw_webauthn_pubkeys table not found after webauthn app install"
-            exit 1
+          # A warning rather than an error, deliberately. "depends" is not enforced at install time
+          # and apps over-declare it - an app can list another as a dependency of the product
+          # bundle while its code runs fine without it, guarding the optional integration. Failing
+          # here would break such a setup over a declaration that is known not to be load-bearing.
+          if [ -n "${EGW_EXTRA_APP_DIRS:-}" ]; then
+            $COMPOSE exec -T \
+              -e EGW_EXTRA_APP_DIRS="$EGW_EXTRA_APP_DIRS" \
+              -e EGW_INSTALLED_APPS="$INSTALLED" \
+              -w "$EGW_SRC_DIR" egroupware php -r '
+                // A setup.inc.php is not a plain data file: it may call into classes of the app it
+                // describes while building $setup_info. Register the EGroupware autoloader so
+                // those resolve, and still catch whatever a not-yet-installed app throws - this
+                // check only emits warnings, so it must never be the thing that fails the job.
+                // NB: no apostrophes below, the whole script is a single-quoted shell string.
+                require "api/src/autoload.php";
+                $installed = preg_split("/\s+/", trim(getenv("EGW_INSTALLED_APPS")), -1, PREG_SPLIT_NO_EMPTY);
+                $missing = 0;
+                foreach (preg_split("/\s+/", trim(getenv("EGW_EXTRA_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
+                {
+                    $file = "$app/setup/setup.inc.php";
+                    if (!file_exists($file)) continue;
+                    $setup_info = [];
+                    try {
+                        include $file;
+                    }
+                    catch (\Throwable $e) {
+                        fwrite(STDERR, "::warning::could not read $file to check its dependencies: ".$e->getMessage()."\n");
+                        continue;
+                    }
+                    foreach ($setup_info[$app]["depends"] ?? [] as $dep)
+                    {
+                        $name = $dep["appname"];
+                        if (!in_array($name, $installed, true))
+                        {
+                            fwrite(STDERR, "::warning::$app declares a dependency on $name, which is not installed - if its tests fail unexpectedly, add $name to the extra-apps input\n");
+                            $missing++;
+                        }
+                    }
+                }
+                if ($missing) fwrite(STDERR, "$missing declared dependency/ies not installed\n");
+              '
           fi
 
       - name: Disable swoolepush for CI tests
@@ -480,8 +621,64 @@ jobs:
             \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Hooks::class, "locations");
           '
 
+      - name: Start Collabora backend
+        if: ${{ inputs.with-collabora }}
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
+            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
+          # docker-compose.ci.yml parks both at replicas: 0 for everyone else.  collabora-init
+          # populates the config volume collabora-key then reads; without it coolwsd comes up
+          # with nothing to serve and /hosting/discovery never answers.
+          # collabora-init copies the default config into the volume collabora-key reads, and
+          # without it coolwsd dies on "File not found: /etc/coolwsd/coolwsd.xml" in a loop.  Its
+          # compose "command" never runs as written: the image entrypoint takes it as its own
+          # arguments and answers "Unknown option specified: c", so the entrypoint is bypassed
+          # here, and run (not up) waits for the copy before collabora-key looks for it.
+          # as root: the image runs as the cool user, which cannot write the bind-mounted
+          # config directory the runner owns - and the chown below needs it anyway
+          $COMPOSE run --rm --no-deps --user root --entrypoint /bin/bash collabora-init \
+            -c 'test -f /tmp/coolwsd/coolwsd.xml || (cp -p /etc/coolwsd/* /tmp/coolwsd/ && cd /tmp/coolwsd && ln -sf coolwsd.xml loolwsd.xml && chown -R 33:33 /tmp/coolwsd);
+                sed -i "/<ssl /,\\#</ssl>#s#>true</enable>#>false</enable>#" /tmp/coolwsd/coolwsd.xml;
+                grep -m1 -A2 "<ssl " /tmp/coolwsd/coolwsd.xml'
+          $COMPOSE up -d --scale collabora-key=1 collabora-key
+
+          # Straight at the container: with SSL off above it speaks plain HTTP, so there is no
+          # certificate to verify and nginx - which answered nothing from in here - is not in the
+          # way. Nothing sets this during a CI install, and without it
+          # Bo::get_server() is empty, discover() throws "Collabora is not configured!" and the
+          # share is served as the file instead of opening in the editor.
+          $COMPOSE exec -T db mariadb -u root -p"$EGW_DB_ROOT_PW" -D "egroupware" -e \
+            "REPLACE INTO egw_config (config_app, config_name, config_value)
+             VALUES ('collabora', 'server', 'http://collabora-key:9980');"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php -r '
+            require "api/src/loader/common.php";
+            \EGroupware\Api\Cache::unsetInstance(\EGroupware\Api\Config::class, "configs");
+          '
+
+          # Collabora takes a while to answer; without this the first discover() fails and its
+          # result is what the tests then see
+          for i in $(seq 1 90); do
+            if $COMPOSE exec -T egroupware php -r 'exit(@file_get_contents("http://collabora-key:9980/hosting/discovery") === false ? 1 : 0);'; then
+              echo "Collabora discovery answered after ${i}s"
+              break
+            fi
+            sleep 2
+          done
+          # if it never came up, its own log is the only thing that says why
+          $COMPOSE exec -T egroupware php -r 'exit(@file_get_contents("http://collabora-key:9980/hosting/discovery") === false ? 1 : 0);' \
+            || $COMPOSE logs --tail 60 collabora-key collabora-init || true
+          $COMPOSE exec -T egroupware php -r '
+            $d = @file_get_contents("http://collabora-key:9980/hosting/discovery");
+            if ($d === false) { fwrite(STDERR, "::error::Collabora discovery never answered\n"); exit(1); }
+            fwrite(STDERR, "discovery returned ".strlen($d)." bytes\n");
+          '
+
       - name: Run PHPUnit
         timeout-minutes: 30
+        env:
+          TEST_SCOPE: ${{ inputs.test-scope || 'all' }}
         run: |
           set -euo pipefail
           COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
@@ -506,14 +703,79 @@ jobs:
           $COMPOSE exec -T egroupware \
             sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
 
+          # Share the *tree* cache between PHPUnit and the test webserver.  Every process reads the
+          # key for its instance cache out of the tree cache on each request (Api\Cache::keys), so
+          # Api\Cache::generate_instance_key() is how one process tells the others to drop theirs -
+          # which is what a test needs after it creates a Vfs mount, since mounts are persisted
+          # through Api\Config and the webserver would otherwise serve a cached vfs_fstab for its
+          # whole life.  Unset, cache_provider_tree defaults to the instance provider, and those are
+          # NOT shared: PHPUnit runs under SAPI "cli" and gets the file cache, the built-in server
+          # runs under "cli-server" and gets APCu.  Only the tree level is shared here; the instance
+          # caches stay separate, so the webserver still reads accounts and config for itself.
+          # Both paths: the processes include the one in the document root, which is normally a
+          # symlink to the one under /var/lib - but if it is a separate file, patching only the
+          # latter silently does nothing and the setting reads back as NULL.
+          # Anchor on page_start_time, the first executable statement after the mcrypt block:
+          # header.inc.php.template comments that whole block out, so an insert anchored on
+          # mcrypt_iv lands INSIDE the comment - present to grep, never executed by PHP.
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'printf "%s\n" "\$GLOBALS[\"egw_info\"][\"server\"][\"cache_provider_tree\"] = array(\"EGroupware\\\\Api\\\\Cache\\\\Files\");" > /tmp/tree-cache.inc; for f in /var/lib/egroupware/header.inc.php "$HDR"; do [ -e "$f" ] || continue; grep -q cache_provider_tree "$f" || sed -i "/page_start_time/r /tmp/tree-cache.inc" "$f"; done'
+          echo "== header.inc.php in the document root =="
+          $COMPOSE exec -T -e HDR="$EGW_SRC_DIR/header.inc.php" egroupware sh -c 'ls -la "$HDR"; grep -c cache_provider_tree "$HDR" /var/lib/egroupware/header.inc.php'
+
+          # Narrow the run to the extra apps by generating a config with a single testsuite,
+          # rather than by passing paths: phpunit takes only one positional path, and the <php>
+          # vars plus the bootstrap in doc/phpunit.xml have to be preserved either way. Paths in
+          # a phpunit config resolve against the config's own directory, hence the "../" prefix.
+          PHPUNIT_CONFIG=doc/phpunit.xml
+          if [ "$TEST_SCOPE" = "extra-apps" ]; then
+            if [ -z "${EGW_TEST_APP_DIRS:-}" ]; then
+              echo "::error::test-scope is 'extra-apps' but no extra-apps were supplied"
+              exit 1
+            fi
+            PHPUNIT_CONFIG=doc/phpunit-extra-apps.xml
+            $COMPOSE exec -T -e EGW_TEST_APP_DIRS="$EGW_TEST_APP_DIRS" \
+              -e EGW_TEST_ALSO="${EGW_TEST_ALSO:-}" \
+              -w "$EGW_SRC_DIR" egroupware php -r '
+                $doc = new DOMDocument();
+                $doc->preserveWhiteSpace = false;
+                $doc->formatOutput = true;
+                $doc->load("doc/phpunit.xml");
+                $suites = $doc->getElementsByTagName("testsuites")->item(0);
+                while ($suites->firstChild) $suites->removeChild($suites->firstChild);
+                $suite = $doc->createElement("testsuite");
+                $suite->setAttribute("name", "ExtraApps");
+                $found = 0;
+                foreach (preg_split("/\s+/", trim(getenv("EGW_TEST_APP_DIRS")), -1, PREG_SPLIT_NO_EMPTY) as $app)
+                {
+                    if (!is_dir("$app/tests")) { fwrite(STDERR, "no tests/ in $app, skipped\n"); continue; }
+                    $suite->appendChild($doc->createElement("directory", "../$app/tests/"));
+                    $found++;
+                }
+                if (!$found) { fwrite(STDERR, "none of the extra apps has a tests/ directory\n"); exit(3); }
+                // Tests that an extra app declares DependsOnClass on: PHPUnit skips a test whose
+                // dependency never ran, so these must be in the same suite to be of any use
+                foreach (preg_split("/\s+/", trim((string)getenv("EGW_TEST_ALSO")), -1, PREG_SPLIT_NO_EMPTY) as $also)
+                {
+                    if (!file_exists($also)) { fwrite(STDERR, "test-also path $also does not exist\n"); exit(4); }
+                    $suite->appendChild($doc->createElement(is_dir($also) ? "directory" : "file", "../$also"));
+                    fwrite(STDERR, "also running $also\n");
+                }
+                $suites->appendChild($suite);
+                $doc->save("doc/phpunit-extra-apps.xml");
+                fwrite(STDERR, "generated doc/phpunit-extra-apps.xml with $found app(s)\n");
+              '
+          fi
+
           # Run tests with local HTTP endpoint inside egroupware container
           $COMPOSE exec -T \
+            -e PHPUNIT_CONFIG="$PHPUNIT_CONFIG" \
             -e HTTP_HOST=127.0.0.1:8081 \
             -e HTTP_X_FORWARDED_PROTO=http \
             -e EGW_URL=http://127.0.0.1:8081 \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
             -e EGW_ADMIN_PASSWORD="$SYSOP_PASS" \
+            -e EGW_TEST_COLLABORA="${{ inputs.with-collabora && '1' || '' }}" \
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
@@ -525,12 +787,34 @@ jobs:
                 php -r '\''$fp=@fsockopen("127.0.0.1",8081,$errno,$errstr,0.2); if($fp){fclose($fp); exit(0);} exit(1);'\'' && break
                 sleep 1
               done
+
               set +e
-              php vendor/bin/phpunit --configuration doc/phpunit.xml
+              php vendor/bin/phpunit --configuration "$PHPUNIT_CONFIG"
               rc=$?
               set -e
-              echo "=== php built-in server log (last 300 lines) ==="
-              tail -n 300 /tmp/egw-phpunit-http.log || true
+              # Drop the push endpoint and the per-connection Accepted/Closing pairs before
+              # tailing: notification polling alone produces thousands of lines, so the last 300
+              # were reliably all push traffic and whatever error actually failed a test had long
+              # scrolled off - which is the only place a server-side error lands, since EGW logs
+              # via error_log and the built-in server sends that here.
+              # Fatals first, wherever they are: display_errors is off in the container and
+              # error_log is unset, so PHP sends these to stderr and they land here - but a
+              # request that dies never gets its "[500]:" line written, so neither a tail nor a
+              # search anchored on the status code will find them.
+              echo "=== php built-in server log: fatal errors ==="
+              grep -nE "Fatal error|Uncaught|Segmentation|Allowed memory size|Parse error|core dumped" \
+                /tmp/egw-phpunit-http.log | tail -n 60 || true
+              # A 5xx is the one thing worth reading here, and it is rarely near the end - the
+              # suite keeps running for thousands of requests afterwards.  Show each one with the
+              # lines before it, which is where the error text lands: the request line is only
+              # written once the response is finished, the error_log output as it happens.
+              echo "=== php built-in server log: 5xx with preceding context ==="
+              grep -E -B 40 "\[5[0-9][0-9]\]: " /tmp/egw-phpunit-http.log \
+                | grep -vE "(POST /egroupware/push|:[0-9]+ (Accepted|Closing)$)" \
+                | tail -n 400 || true
+              echo "=== php built-in server log (last 300 lines, push polling filtered) ==="
+              grep -vE "(POST /egroupware/push|:[0-9]+ (Accepted|Closing)$)" /tmp/egw-phpunit-http.log \
+                | tail -n 300 || true
               exit $rc
             '
       - name: Tear down
@@ -543,7 +827,21 @@ jobs:
 
   jstest:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 25
+    # One job per browser per shard, so the suite runs on four runners that do not share a CPU
+    # instead of four pages sharing one.  Measured on 4 cores (a runner's size): both browsers
+    # together 338s, firefox alone 285s, chromium alone 157s, half the files in firefox 145s/152s
+    # - it splits near enough linearly, because the cost is per test FILE (one browser page each),
+    # not per test.  Raising web-test-runner's own concurrency instead does not work; the comment
+    # on the launchers in web-test-runner.config.mjs has those numbers.
+    #
+    # fail-fast is off: a failure in one browser is exactly when the other browser's result is
+    # most worth having.
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, chromium]
+        shard: [1, 2]
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
@@ -555,6 +853,7 @@ jobs:
       SYSOP_USER: ""
       SYSOP_PASS: ""
       EGW_EXTRA_APP_DIRS: ""
+      EGW_TEST_APP_DIRS: ""
       # The secrets context is not available in a step's "if:", so route it through job env.
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
     defaults:
@@ -571,6 +870,56 @@ jobs:
           submodules: true
           path: sources
 
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+          restore-keys: |
+            composer-cache-${{ runner.os }}-
+
+      # vendor/ is not the whole of "composer install": composer/installers puts the 15
+      # egroupware-app packages (tracker, projectmanager, smallpart, collabora, ...) into
+      # top-level directories instead.  Caching vendor/ on its own would restore an
+      # installed.json claiming those apps are present, composer would not reinstall the
+      # missing directories, and both suites would quietly run fewer tests - so the whole
+      # result is cached as one archive, with the app list read out of composer.lock rather
+      # than written down here where it would drift.
+      #
+      # The key is composer.lock's hash and there are deliberately no restore-keys: a near
+      # miss must not serve a tree built from a different lock file.  It is either exactly
+      # this lock's install, or a fresh one.  Skipped for an extra-apps run, whose "Checkout
+      # additional apps" step replaces composer's copy of an app with a git clone - that tree
+      # must never be packed up and handed to a later run.
+      - name: Cache composer install
+        id: composer-install-cache
+        if: inputs.test-scope != 'extra-apps'
+        uses: actions/cache@v4
+        with:
+          path: ~/composer-install.tar
+          key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
+
+      - name: Install PHP dependencies in sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.composer-install-cache.outputs.cache-hit }}" = "true" ]; then
+            tar -xf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources"
+          else
+            COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
+            docker run --rm --user "$(id -u):$(id -g)" \
+              -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
+              -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
+              -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
+              composer install --no-interaction --ignore-platform-reqs
+            # Pack vendor plus every directory composer installed an app into, so a restore
+            # reproduces this tree exactly.  tar fails loudly if one is missing, rather than
+            # caching an incomplete install.
+            APPS=$(jq -r '.packages[] | select(.type=="egroupware-app") | .name | split("/")[1]' \
+              "${GITHUB_WORKSPACE}/sources/composer.lock")
+            tar -cf "${HOME}/composer-install.tar" -C "${GITHUB_WORKSPACE}/sources" vendor $APPS
+          fi
+
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
         if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
@@ -585,14 +934,18 @@ jobs:
         if: inputs.extra-apps != ''
         env:
           EXTRA_APPS: ${{ inputs.extra-apps }}
+          TEST_APPS: ${{ inputs.test-apps }}
           GH_TOKEN: ${{ steps.extra-apps-app-token.outputs.token || secrets.extra-apps-token }}
         run: |
           set -euo pipefail
-          if [ -z "$GH_TOKEN" ]; then
-            echo "::error::extra-apps was given, but no credentials: set either the" \
-                 "extra-apps-app-id/extra-apps-private-key pair (plus extra-apps-owner)" \
-                 "or the extra-apps-token secret"
-            exit 1
+          # Credentials are optional: a public app repository clones fine without any, and a
+          # private one fails on git's own "repository not found" which says enough. Requiring a
+          # token here would lock out exactly the community apps this input exists to serve.
+          AUTH=""
+          if [ -n "$GH_TOKEN" ]; then
+            AUTH="x-access-token:${GH_TOKEN}@"
+          else
+            echo "::notice::no extra-apps credentials supplied, cloning anonymously"
           fi
           DIRS=""
           while read -r app; do
@@ -600,8 +953,16 @@ jobs:
             dir="$(jq -r '.dir // (.repo | split("/") | last)' <<<"$app")"
             ref="$(jq -r '.ref // "master"' <<<"$app")"
             echo "::group::$repo@$ref -> $dir"
+            # A public app is normally provided by composer, pinned to composer.lock and
+            # extracted without a .git (composer's source clone is blocked on the runner). To
+            # test the app's own ref instead, that copy has to be replaced - which is why this
+            # runs after "Install PHP dependencies in sources" rather than before it.
+            if [ -d "$GITHUB_WORKSPACE/sources/$dir" ]; then
+              echo "replacing the composer-provided $dir"
+              rm -rf "$GITHUB_WORKSPACE/sources/$dir"
+            fi
             git clone --depth 1 --branch "$ref" \
-              "https://x-access-token:${GH_TOKEN}@github.com/${repo}.git" \
+              "https://${AUTH}github.com/${repo}.git" \
               "$GITHUB_WORKSPACE/sources/$dir"
             # Drop the clone's .git: it keeps the token out of a stored remote url, and stops
             # "install-cli.php --git-apps pull" below from trying to update these apps.
@@ -609,26 +970,25 @@ jobs:
             echo "::endgroup::"
             DIRS="$DIRS $dir"
           done < <(jq -c '.[]' <<<"$EXTRA_APPS")
-          echo "EGW_EXTRA_APP_DIRS=${DIRS# }" >> "$GITHUB_ENV"
+          DIRS="${DIRS# }"
+          echo "EGW_EXTRA_APP_DIRS=$DIRS" >> "$GITHUB_ENV"
 
-      - name: Cache Composer downloads
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache
-          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
-          restore-keys: |
-            composer-cache-${{ runner.os }}-
-
-      - name: Install PHP dependencies in sources
-        shell: bash
-        run: |
-          set -euo pipefail
-          COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
-          docker run --rm --user "$(id -u):$(id -g)" \
-            -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
-            -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
-            composer install --no-interaction --ignore-platform-reqs
+          # Which of those to actually test. Checking an app out and running its tests are
+          # separate concerns: an app that only needs to be present so another one installs has
+          # no reason to have its own suite run.
+          TEST_DIRS="${TEST_APPS:-}"
+          if [ -z "$TEST_DIRS" ]; then
+            TEST_DIRS="$DIRS"
+          else
+            for app in $TEST_DIRS; do
+              case " $DIRS " in
+                *" $app "*) ;;
+                *) echo "::error::test-apps names '$app', which is not in extra-apps"; exit 1;;
+              esac
+            done
+          fi
+          echo "testing: $TEST_DIRS"
+          echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -640,20 +1000,95 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      # Only this job's browser: downloading the other one costs ~10s and it is never launched.
+      # install-deps is an apt-get install of fonts and libraries from azure.archive.ubuntu.com,
+      # which regularly stalls for minutes per package and used to eat the whole job's timeout.
+      # The downloaded .debs are cached (apt skips a package whose .deb is already in
+      # /var/cache/apt/archives), and the step is bounded instead of hanging.
+      # Saved even when the step failed, so the next run resumes with what arrived.
+      - name: Restore apt packages for Playwright ${{ matrix.browser }}
+        id: apt-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/apt-archives
+          key: apt-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
+
+      # azure.archive.ubuntu.com is sometimes slow (tens of KB/s for the fonts, ~10 minutes for the
+      # whole set): that is no failure, so one patient attempt instead of cutting it short and
+      # retrying.  Only a connection that stops delivering altogether is failed (and retried) by apt.
       - name: Install Playwright system dependencies
-        run: npx playwright install-deps chromium firefox
+        timeout-minutes: 15
+        run: |
+          mkdir -p ~/apt-archives
+          sudo cp -n ~/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
+          printf 'Acquire::http::Timeout "20";\nAcquire::Retries "3";\n' | sudo tee /etc/apt/apt.conf.d/99ci-timeouts >/dev/null
+          npx playwright install-deps ${{ matrix.browser }}
 
-      - name: Install Playwright Chromium
+      # Its own step so it also runs when the install above timed out or failed.
+      - name: Keep downloaded apt packages
+        if: always()
+        run: cp -n /var/cache/apt/archives/*.deb ~/apt-archives/ 2>/dev/null || true
+
+      - name: Save apt packages for Playwright ${{ matrix.browser }}
+        if: always() && steps.apt-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/apt-archives
+          key: ${{ steps.apt-cache.outputs.cache-primary-key }}
+
+      # package-lock.json is what pins the Playwright version, so a bump changes the key and
+      # downloads the matching browser.  No restore-keys, for the same reason as above: a
+      # near miss would hand this job a browser from a different Playwright version.
+      - name: Cache Playwright ${{ matrix.browser }}
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
+
+      - name: Install Playwright ${{ matrix.browser }}
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         timeout-minutes: 10
         env:
           DEBUG: pw:install
-        run: npx playwright install chromium
-
-      - name: Install Playwright Firefox
-        timeout-minutes: 10
-        env:
-          DEBUG: pw:install
-        run: npx playwright install firefox
+        run: npx playwright install ${{ matrix.browser }}
 
       - name: Run jstest
-        run: npm run jstest
+        env:
+          TEST_SCOPE: ${{ inputs.test-scope || 'all' }}
+          # Read by web-test-runner.config.mjs: which browser to launch, and which share of the
+          # test files to take.  JSTEST_SHARD splits the same file walk the per-app groups are
+          # built from, so nothing here has to list them.
+          JSTEST_BROWSERS: ${{ matrix.browser }}
+          # The total must match the length of matrix.shard above, or files get dropped.
+          JSTEST_SHARD: ${{ matrix.shard }}/2
+          SHARD_INDEX: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          if [ "$TEST_SCOPE" != "extra-apps" ]; then
+            npm run jstest
+            exit $?
+          fi
+          # An extra app's suite is a handful of files: sharding it would leave shards with
+          # nothing to run (which the config rejects), so only the first shard of each browser
+          # does the work here.
+          if [ "$SHARD_INDEX" != "1" ]; then
+            echo "::notice::extra-apps tests run unsharded, nothing to do in shard $SHARD_INDEX"
+            exit 0
+          fi
+          unset JSTEST_SHARD
+          # Positional globs become the runner's `files`, replacing the per-app groups it would
+          # otherwise discover. Group *names* must not be passed positionally - the config throws
+          # on that - so select by path instead, which also works for an app with no group yet.
+          GLOBS=()
+          for app in ${EGW_TEST_APP_DIRS:-}; do
+            # bash has no globstar here, so probe with find rather than a ** glob
+            if find "$app/js" -name '*.test.ts' -print -quit 2>/dev/null | grep -q .; then
+              GLOBS+=("$app/js/**/*.test.ts")
+            fi
+          done
+          if [ ${#GLOBS[@]} -eq 0 ]; then
+            echo "::notice::no extra app has JS tests, nothing to run"
+            exit 0
+          fi
+          npm run jstest -- "${GLOBS[@]}"

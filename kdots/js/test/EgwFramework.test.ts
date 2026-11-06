@@ -36,7 +36,7 @@ Object.assign(egwStub, {
 	openDialog: sinon.stub(),
 	jsonq: sinon.stub().resolves(undefined),
 	jsonEncode: sinon.stub().callsFake(v => JSON.stringify(v)),
-	hashString: sinon.stub().returns(""),
+	app: sinon.stub().returns(null),
 	app_name: sinon.stub().returns("api"),
 	config: sinon.stub().returns(null),
 	debug: sinon.stub(),
@@ -212,6 +212,50 @@ describe('EgwFramework', () =>
 		);
 	});
 
+	describe('restoreTabApps()', () =>
+	{
+		const tab = (name, internalName) => ({name, internalName, active: false});
+
+		it('drops stored entry-tabs of apps the user has no run-rights for, and writes the pruned list back', async() =>
+		{
+			await element.getEgwComplete();
+			const stored = {
+				'addressbook-MTI=': tab('addressbook-MTI=', 'addressbook'),
+				'admin-MTI=': tab('admin-MTI=', 'admin'),
+				'constructor-MTI=': tab('constructor-MTI=', 'constructor'),
+				'toString-MTI=': tab('toString-MTI=', undefined),
+			};
+			// "__proto__" can only get in through JSON.parse(), an object literal would set the prototype
+			const json = JSON.stringify(stored).replace(/^\{/, '{"__proto__":{"name":"__proto__","internalName":"__proto__"},');
+			// the global egw is shared by every test, put back what this one replaces
+			const replaced = {getSessionItem: sinon.stub().returns(json), setSessionItem: sinon.stub(),
+				user: sinon.stub().callsFake(field => field === 'apps' ? {addressbook: {}} : undefined)};
+			const originals = {window: {}, bound: {}};
+			for(const key of Object.keys(replaced))
+			{
+				originals.window[key] = egwStub[key];
+				originals.bound[key] = egw[key];
+			}
+			Object.assign(egwStub, replaced);
+			Object.assign(egw, replaced);
+			(element as any)._tabApps = {};
+			try
+			{
+				(element as any).restoreTabApps();
+			}
+			finally
+			{
+				Object.assign(egwStub, originals.window);
+				Object.assign(egw, originals.bound);
+			}
+			const setSessionItem = replaced.setSessionItem;
+
+			assert.deepEqual(Object.keys((element as any)._tabApps), ['addressbook-MTI=']);
+			assert.isTrue(setSessionItem.calledOnce, "the refused tabs were not written back");
+			assert.deepEqual(Object.keys(JSON.parse(setSessionItem.firstCall.args[2])), ['addressbook-MTI=']);
+		});
+	});
+
 	describe('openPopup() in same-window mode', () =>
 	{
 		// The "open popups in the same window" preference and a narrow (mobile) viewport share one
@@ -359,6 +403,7 @@ describe('EgwFramework', () =>
 						alert.updateComplete = Promise.resolve(alert);
 						alert.hide = sinon.stub();
 						alert.restartAutoHide = sinon.stub();
+						alert.toast = sinon.stub();
 						created.push(alert);
 						return alert;
 					},
@@ -369,9 +414,21 @@ describe('EgwFramework', () =>
 			return popup;
 		};
 
-		beforeEach(() =>
+		it("shows the same message only once when it is reported several times at once", async() =>
 		{
-			egwStub.hashString.returns("same-message");
+			// eg. apply in a popup reporting its message via refresh_opener() AND message() in the same response
+			const popup = fakePopup();
+			popup.document.body.append = (alert : HTMLElement) => document.body.append(alert);
+
+			await Promise.all([
+				element.message("Event saved.", "success", null, true, null, popup),
+				element.message("Event saved.", "success", null, true, null, popup),
+				element.message("Event saved.", "success", null, true, null, popup),
+			]);
+
+			assert.equal(popup.created.length, 1, "the same message was stacked");
+			assert.equal(popup.created[0].restartAutoHide.callCount, 2, "the repeats did not restart the countdown");
+			popup.created[0].remove();
 		});
 
 		it("forgets the alert when the popup goes away", async() =>
@@ -379,11 +436,11 @@ describe('EgwFramework', () =>
 			// Left in the framework's list, the alert keeps the whole closed popup alive in the main window
 			const popup = fakePopup();
 			await element.message("Draft saved", "success", null, true, null, popup);
-			assert.isDefined((<any>element)._messages["same-message"], "alert was not tracked while the popup is open");
+			assert.isDefined((<any>element)._messages["Draft saved"], "alert was not tracked while the popup is open");
 
 			popup.listeners.pagehide();
 
-			assert.isUndefined((<any>element)._messages["same-message"], "alert of the closed popup is still referenced");
+			assert.isUndefined((<any>element)._messages["Draft saved"], "alert of the closed popup is still referenced");
 		});
 
 		it("does not reuse the alert of a popup that is gone for the same message", async() =>
@@ -397,7 +454,7 @@ describe('EgwFramework', () =>
 
 			assert.equal(popup.created.length, 2, "the stale alert was reused instead of showing the message again");
 			assert.isTrue(first.restartAutoHide.notCalled, "countdown of an alert nobody can see was restarted");
-			assert.notStrictEqual((<any>element)._messages["same-message"], first);
+			assert.notStrictEqual((<any>element)._messages["Draft saved"], first);
 		});
 	});
 });

@@ -273,6 +273,7 @@ please enter password	mail	id	Silakan masukkan kata sandi
 please select a address	mail	id	Silakan pilih alamat
 post	mail	id	kirim
 predefined addresses for compose	mail	id	Alamat yang telah ditentukan sebelumnya untuk penulisan
+prevent managing filters	mail	id	Cegah pengelolaan filter
 preview pane	mail	id	Tata letak jendela
 printing	mail	id	Pencetakan
 printview	mail	id	Lihat cetakan
@@ -341,7 +342,6 @@ sender	mail	id	Pengirim
 sent	mail	id	Sent
 sent folder	mail	id	Sent Folder
 server supports special-use folders	mail	id	Server mendukung folder penggunaan khusus
-set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	id	Haruskah tanda tangan dimasukkan setelah (standar) atau sebelum balasan atau penerusan, dan haruskah tanda tangan terlihat dan dapat diubah selama penulisan.
 show all addresses	mail	id	Tampilkan semua alamat
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	id	Tampilkan semua folder, (berlangganan DAN berhenti berlangganan) di panel folder layar utama.

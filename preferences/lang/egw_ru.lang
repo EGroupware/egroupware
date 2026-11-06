@@ -6,6 +6,7 @@
 24 hour	preferences	ru	24 часа
 a template defines the layout of egroupware and it contains icons for each application.	preferences	ru	Шаблон определяет расклад EGroupware и содержит значки для каждого приложения
 a theme defines the colors and fonts used by the template.	preferences	ru	Тема определяет цвета и фоны,используемые в шаблонах
+access token revoked.	preferences	ru	Токен доступа отозван.
 acl grants have been updated	preferences	ru	разрешения ACL обновлены
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	ru	Активируйте, чтобы показывать более красочные значки приложений в открытых вкладках. Если эта опция не отмечена, по умолчанию используется светлый пользовательский цвет.
 allows to set a default or force the active application tab for new logins.	preferences	ru	Позволяет установить вкладку приложения по умолчанию или принудительно открывать активную вкладку приложения при новом входе в систему.
@@ -21,11 +22,15 @@ automatically start with this font size	preferences	ru	Автоматическ�
 br	preferences	ru	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ru	Изменяет пароль пользователя при введении прежнего и нового пароля. Возвращает TRUE при успешном изменении, FALSE - пароль не изменен.
 charset for the csv export/import	preferences	ru	Кодировка
+close after selection	preferences	ru	Закрывать после выбора
 code is invalid	preferences	ru	Код недействителен
 code is required	preferences	ru	Код необходим
 color	preferences	ru	Цвет
 country	preferences	ru	Страна
+current password	preferences	ru	Текущий пароль
+custom login box color, defaults to above color darkened	preferences	ru	Пользовательский цвет поля входа; по умолчанию — затемнённый вариант указанного выше цвета
 custom login box text color, defaults to white	preferences	ru	Цвет текста в поле входа (по умолчанию — белый)
+custom sidebar menu active color, defaults to above color darkened	preferences	ru	Пользовательский цвет активных элементов меню боковой панели; по умолчанию — затемнённый вариант указанного выше цвета
 dark mode theme	preferences	ru	Темный режим темы
 date format	preferences	ru	Формат даты
 default	preferences	ru	по умолчанию
@@ -34,9 +39,11 @@ default font size	preferences	ru	Размер шрифта по умолчани
 default preferences	preferences	ru	Настройки по умолчанию
 delete categories	preferences	ru	Удалить категории
 deny following groups access to application passwords	preferences	ru	Запретить доступ к паролям приложений следующим группам
+deny following groups access to edit categories	admin	ru	Запретить следующим группам доступ к редактированию категорий
 deny following groups access to preferences	admin	ru	Запретить доступ к предпочтениям следующим группам
 description can not exceed 255 characters in length !	preferences	ru	Описание не должно быть более 255 символов !
 disable	preferences	ru	Запретить
+disable two factor auth	preferences	ru	Отключить двухфакторную аутентификацию
 display thumbnails for linked images	preferences	ru	Показывать миниатюры связанных изображений
 div	preferences	ru	div
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	ru	Хотите ли вы всегда видеть полную дату и время, если места мало, или только время на сегодня, а в остальных случаях — дату?
@@ -52,6 +59,8 @@ enter code to verify correct setup	preferences	ru	Введите код для �
 enter your new password	preferences	ru	Введите новый пароль
 enter your old password	preferences	ru	введите прежний пароль
 failed to change password.	preferences	ru	Ошибка при смене пароля
+failed to delete secret!	preferences	ru	Не удалось удалить секрет!
+failed to store secret!	preferences	ru	Не удалось сохранить секрет!
 fast	preferences	ru	Быстрое обновление
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ru	Быстрое обновление добавляет новые записи всегда в начало списка и обновляет существующие на месте, если список не отсортирован по последнему изменению. Точное обновление делает полное обновление, если список не отсортирован по последнему изменению.
 features of the editor	preferences	ru	Возможности редактора

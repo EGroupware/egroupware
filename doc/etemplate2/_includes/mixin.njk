@@ -11,7 +11,7 @@
 
     <div class="component-header__tag">
       <code>{{ mixin.name }}</code>
-      <sl-badge variant="neutral" pill>Mixin / Controller</sl-badge>
+      <sl-badge variant="neutral" pill>{% if mixin.isController %}Controller{% else %}Mixin{% endif %}</sl-badge>
     </div>
   </header>
 
@@ -33,7 +33,13 @@
   {# Consumed by #}
   {% if mixin.consumedBy.length %}
     <h2>Used by</h2>
-    <p>This mixin is applied by the following widgets.</p>
+    {# A controller is instantiated by its host, not mixed into it - saying "applied by" on a
+       controller page would describe the wrong relationship. #}
+    {% if mixin.isController %}
+      <p>These widgets create and host this controller.</p>
+    {% else %}
+      <p>This mixin is applied by the following widgets.</p>
+    {% endif %}
     <ul>
       {% for consumer in mixin.consumedBy %}
         <li>

@@ -76,7 +76,6 @@ cancelled	infolog	id	Dibatalkan
 categories	infolog	id	Kategori
 category	infolog	id	Kategori
 change	infolog	id	Ubah
-change category	infolog	id	Ubah kategori
 change completed	infolog	id	Perubahan selesai.
 change history	infolog	id	Riwayat pengubahan
 change responsible	infolog	id	Ubah yang bertanggung jawab
@@ -353,7 +352,6 @@ receive notifications about due entries you are responsible for	infolog	id	Mener
 regular expression	infolog	id	Ekspresi reguler
 remark	infolog	id	Remark
 removed	infolog	id	Dihapus
-removed category	infolog	id	kategori yang dihapus
 replacement	infolog	id	Penggantian
 replacements for inserting entries into documents	infolog	id	Penggantian untuk memasukkan entri ke dalam dokumen
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	id	Memerlukan pengguna pengeditan untuk memiliki akses tulis ke kontak-kontak ini, untuk membaginya dengan pengguna yang bertanggung jawab.

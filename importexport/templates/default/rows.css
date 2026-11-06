@@ -1,0 +1,14 @@
+/**
+ * EGroupware Import/Export - styles for the definition list rows
+ *
+ * Loaded into the list's row shadow DOM by <et2-styles src="rows.css"> in definition_index.xet,
+ * app.css does not reach the rows.
+ */
+.lr_padding {
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+}
+
+.button, .button img {
+	cursor: pointer;
+}

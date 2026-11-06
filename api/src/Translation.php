@@ -188,10 +188,9 @@ class Translation
 
 		if ($load_translations)
 		{
-			if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang']))
-			{
-				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-			}
+			// always (re-)set userlang, defaulting to 'en' - NOT leaving a stale value from a
+			// previous init() call when the preference is currently empty
+			self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'] ?: 'en';
 			$apps = array('common');
 			// for eTemplate apps, load etemplate before app itself (allowing app to overwrite etemplate translations)
 			if (class_exists('EGroupware\\Api\\Etemplate', false) || class_exists('etemplate', false)) $apps[] = 'etemplate';
@@ -1110,7 +1109,7 @@ class Translation
 		{
 			self::init();
 		}
-		$where = array('content '.self::$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation));
+		$where = array(Db\SqlFragment::raw('content '.self::$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation)));
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
 

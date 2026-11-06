@@ -25,7 +25,7 @@ export default css`
 		flex: 1 1 auto;
 		font-size: var(--height);
 		/*add more height to the image container to allow centering*/
-		height: calc(var(--height) + 4px);
+		height: calc(var(--height) + var(--sl-spacing-2x-small));
 		user-select: none;
 	}
 

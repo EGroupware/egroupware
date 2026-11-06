@@ -190,6 +190,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		protected validateComplete : Promise<undefined>;
 		// Hold on to any server messages while the user edits
 		private _messagesHeldWhileFocused : Validator[];
+		private _ariaApplied = false;
+		private _ariaLabelFallback : string;
 
 		// Allows us to check to see if label or help-text is set.  Override to check additional slots.
 		protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
@@ -299,7 +301,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.addEventListener("blur", this.et2HandleBlur);
 
 			// set aria-label and -description fallbacks (done here and not in updated to ensure reliable fallback order)
-			if (!this.ariaLabel) this.ariaLabel = this.label || this.placeholder || this.statustext;
+			if (!this.ariaLabel) this.ariaLabel = this._ariaLabelFallback = this.label || this.placeholder || this.statustext;
 			if (!this.ariaDescription) this.ariaDescription = this.helpText || (this.statustext !== this.ariaLabel ? this.statustext : '');
 			this._setAriaAttributes();
 		}
@@ -317,6 +319,16 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				input.ariaLabel = this.ariaLabel;
 				input.ariaDescription = this.ariaDescription;
+				// Not every input node takes `required` itself (flatpickr's does not), but only some can be required at all
+				// (aria-required on a button is an error)
+				if(this.required && input.matches("input, textarea, select, [role=textbox], [role=combobox], [role=listbox], [role=spinbutton], [role=radiogroup], [role=tree]"))
+				{
+					input.setAttribute("aria-required", "true");
+				}
+				else
+				{
+					input.removeAttribute("aria-required");
+				}
 			}
 		}
 
@@ -355,16 +367,37 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			super.willUpdate(changedProperties);
 
-			if(changedProperties.has("value"))
+			// On every update, not only when the value property changed: a widget with its own value accessor does
+			// not name `value` when it asks for one.  Base off this.value, not this.getValue(), to ignore readonly
+			this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+
+			// The label falls back to the label, placeholder or statustext (see connectedCallback()) - keep following
+			// them when they change later, unless an aria-label was set explicitly
+			if(this.hasUpdated && (changedProperties.has("label") || changedProperties.has("placeholder") || changedProperties.has("statustext")))
 			{
-				// Base off this.value, not this.getValue(), to ignore readonly
-				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+				const fallback = this.label || (<any>this).placeholder || this.statustext;
+				if(!this.ariaLabel || this.ariaLabel === this._ariaLabelFallback)
+				{
+					this.ariaLabel = fallback;
+				}
+				this._ariaLabelFallback = fallback;
+			}
+
+			// The description falls back to the help text (see connectedCallback()) - keep following it when it
+			// changes later, unless a description was set explicitly
+			if(changedProperties.has("helpText") && (!this.ariaDescription || this.ariaDescription === changedProperties.get("helpText")))
+			{
+				this.ariaDescription = this.helpText;
 			}
 		}
 
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
+
+			// Again, now that we have rendered: a widget that derives its value from what it renders (Et2Listbox's
+			// checked items) only has the new value here, not in willUpdate()
+			this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
 
 			// required changed, add / remove validator
 			if(changedProperties.has('required'))
@@ -377,9 +410,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				}
 			}
 
-			// pass aria-attributes to our input node
-			if (changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription'))
+			// pass aria-attributes to our input node.  Also once after the first render: connectedCallback() runs
+			// before there is an input node to pass them to, for any widget that renders its own
+			if(!this._ariaApplied || changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription') || changedProperties.has('required'))
 			{
+				this._ariaApplied = true;
 				this._setAriaAttributes();
 			}
 		}
@@ -392,6 +427,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		_oldChange(_ev : Event) : boolean
 		{
+			// The user changed the value: whether there is one (hasValue) may have changed with it
+			this.requestUpdate();
+
 			if(typeof this.onchange == 'function' && (
 				// If we have an instanceManager, make sure it's ready.  Otherwise, we ignore the event
 				!this.getInstanceManager() || this.getInstanceManager().isReady
@@ -629,8 +667,28 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return this.shadowRoot?.querySelector('input');
 		}
 
+		/**
+		 * Take focus away from whatever has it inside us.  Blurring the host is not enough everywhere (Firefox): the
+		 * focused node is in our shadow root, or in the one of a widget inside it.
+		 */
+		blur()
+		{
+			let active = this.shadowRoot?.activeElement;
+			while(active?.shadowRoot?.activeElement)
+			{
+				active = active.shadowRoot.activeElement;
+			}
+			(<HTMLElement>active)?.blur?.();
+			super.blur && super.blur();
+		}
+
 		async focus()
 		{
+			// Like a native disabled control.  Not every inner control is natively disabled (a Shoelace trigger button)
+			if(this.disabled)
+			{
+				return;
+			}
 			const tab = <Et2TabPanel>this.closest('et2-tab-panel');
 			if(tab && tab.name)
 			{
@@ -640,6 +698,21 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.scrollIntoViewIfNeeded && this.scrollIntoViewIfNeeded();
 			super.focus && super.focus();
 			this.getInputNode()?.focus();
+
+			// A widget built out of other widgets has no input of its own: hand focus to the first of them that takes it
+			if(!this.matches(":focus-within"))
+			{
+				const nested = Array.from(this.shadowRoot?.querySelectorAll<HTMLElement>("*") ?? [])
+					.filter(el => el.localName.includes("-") && !(<any>el).disabled && !el.hidden && (<any>el).checkVisibility());
+				for(const el of nested)
+				{
+					el.focus();
+					if(this.matches(":focus-within"))
+					{
+						break;
+					}
+				}
+			}
 		}
 
 		transformAttributes(attrs)
@@ -765,6 +838,15 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *    'form-control--has-label' class on the wrapper div.
 		 * @protected
 		 */
+		/**
+		 * Clicking a label focuses what it labels, as a native <label> does.  A widget with its own handleLabelClick()
+		 * keeps it.
+		 */
+		protected _focusOnLabelClick()
+		{
+			this.focus();
+		}
+
 		protected _labelTemplate() : TemplateResult | typeof nothing
 		{
 			const hasLabelSlot = this.hasSlotController?.test('label');
@@ -775,7 +857,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
                         part="form-control-label"
                         class="form-control__label"
                         aria-hidden=${hasLabel ? 'false' : 'true'}
-                        @click=${typeof this.handleLabelClick == "function" ? this.handleLabelClick : nothing}
+                        @click=${typeof this.handleLabelClick == "function" ? this.handleLabelClick : this._focusOnLabelClick}
                 >
                     <slot name="label">${this.label}</slot>
                 </label>

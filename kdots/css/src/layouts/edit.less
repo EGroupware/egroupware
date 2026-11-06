@@ -1,0 +1,166 @@
+@import "./grid-base.less";
+
+/* Base container */
+.layout-grid-base(~'[layout="edit"]');
+
+// lessc moves a /* comment */ written before a nested rule up into the parent, away from the rule it
+// describes - so a comment goes inside the rule it is about, or the rule is written out in full at
+// the top level with the comment above it.  These // comments are not output.
+
+[layout="edit"] {
+  [class*="header"], [class*="footer"], [class*="Header"], [class*="Footer"] {
+	/* Header / footer are automatically full width */
+	grid-column: 1 / -1;
+  }
+
+  [class*="footer"], [class*="Footer"] {
+	/* Keep the buttons (Save / Apply / Cancel) reachable when the form scrolls, e.g. in a side panel */
+	position: sticky;
+	bottom: 0;
+	background: var(--sl-panel-background-color);
+
+	&::part(base) {
+	  /* Its widgets wrap onto another line rather than run off the edge of a narrow panel */
+	  flex-wrap: wrap;
+	}
+
+	et2-checkbox {
+	  white-space: nowrap;
+	}
+  }
+
+  et2-appicon {
+	flex-grow: 0;
+  }
+
+  et2-tabbox {
+	// Room for a tab's content as well as its tab bar: an et2-htmlarea wants 20em of its own, and with
+	// 20em for the whole tabbox it got less than that and the tab had to scroll instead
+	min-height: 25em;
+  }
+}
+
+/* A dialog that scrolls gives its tabbox no height of its own, and a tabbox that then scrolls its tab as
+ * well shows two scrollbars.  Et2LayoutStrategies sets data-tabs-flow on a dialog that scrolls: there
+ * the tabbox takes the height its tab needs and the dialog scrolls, with the tab bar staying at the
+ * top of the dialog while its content scrolls past.  A tab with a nextmatch, datagrid or historylog
+ * has no height of its own to take, so while that tab is showing the tabbox keeps its share of the
+ * dialog. */
+[layout="edit"][data-tabs-flow] et2-tabbox:not(:has(et2-tab-panel[active] :is(et2-nextmatch, et2-datagrid, et2-historylog))) {
+  min-height: max-content;
+  // Et2Tabs clips its host when it has a tab height, and a sticky tab bar only sticks to the nearest
+  // ancestor that scrolls - that has to be the dialog, not the tabbox
+  overflow: visible;
+
+  &::part(base) {
+    min-height: max-content;
+  }
+
+  &::part(body) {
+    overflow: visible;
+    // What the 25em minimum gave a tab, less its tab bar: min-height: max-content replaces that
+    // minimum, and a tab holding only a textarea would shrink to a single line
+    min-height: 22em;
+  }
+
+  &::part(nav) {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--sl-panel-background-color);
+  }
+}
+
+/* Read-only facts at the bottom of a dialog - who changed it, when - as a row of their own: a
+ * label in the label column, then the name and the date.  The name starts where the inputs above
+ * do and the date ends at the cell's edge, so stacked in one column the dates line up whatever
+ * the names before them.  When the cell is too narrow for both, the date drops to a line of its
+ * own and starts under the name.  A row with nothing but a date (Created) has the date at the
+ * edge.  The text is centred in the cell, which is as tall as the inputs beside it. */
+[layout="edit"] .dialogMeta et2-select-account_ro,
+[layout="edit"] .dialogMeta et2-date-time_ro,
+[layout="edit"] .dialogMeta et2-description {
+  display: flex;
+  align-items: center;
+}
+
+/* No gap of its own: the label is followed by exactly the gap the inputs' labels have */
+[layout="edit"] .dialogMeta::part(base) {
+  column-gap: 0;
+  justify-content: space-between;
+}
+
+/* The label is as wide as the inputs' labels, so what follows it starts where the inputs do */
+[layout="edit"] .dialogMeta et2-description {
+  width: var(--label-width, 8em);
+  min-width: var(--label-width, 8em);
+}
+
+/* The name and the date, after the label's gap */
+[layout="edit"] .dialogMeta > et2-hbox {
+  flex: 1 1 0;
+  min-width: 0;
+  margin-left: var(--sl-spacing-medium);
+}
+
+/* The name and the date go to opposite ends of the row.  When there is no room for both the date
+ * wraps, and being alone on its line it starts at the left, under the name */
+[layout="edit"] .dialogMeta > et2-hbox::part(base) {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* The name keeps its width.  Its widget sets its flex with !important, so this has to as well */
+[layout="edit"] .dialogMeta et2-select-account_ro {
+  flex-shrink: 0 !important;
+}
+
+/* The date has its own width, or there is no room left to put between the two */
+[layout="edit"] .dialogMeta et2-date-time_ro {
+  flex: 0 0 auto;
+}
+
+/* At the width where labels stack above their fields (the same 36em as _grid-one-column).
+ *
+ * Written out in full, not nested in the block above: less hoists a nested @container and drops
+ * the parent selector, which would shrink every icon button in the app. */
+@container (max-width: 36em) {
+  /* The name and the date drop under their label like an input does */
+  [layout="edit"] .dialogMeta:has(> et2-hbox)::part(base) {
+	flex-wrap: wrap;
+  }
+
+  [layout="edit"] .dialogMeta:has(> et2-hbox) > et2-description {
+	width: 100%;
+  }
+
+  [layout="edit"] .dialogMeta > et2-hbox {
+	flex-basis: 100%;
+	margin-left: 0;
+  }
+
+  /* Buttons with an icon give up their label and keep just the icon.  Above this width there is
+   * room for both, so both stay.  The label is only clipped, not removed, so it is still the
+   * button's accessible name. */
+  [layout="edit"] et2-button:has(> et2-image) {
+	flex: none;
+	min-width: 0;
+	width: var(--sl-input-height-medium);
+  }
+
+  [layout="edit"] et2-button:has(> et2-image)::part(base) {
+	width: var(--sl-input-height-medium);
+	padding-inline: 0;
+	justify-content: center;
+  }
+
+  [layout="edit"] et2-button:has(> et2-image)::part(label) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	padding: 0;
+	white-space: nowrap;
+  }
+}

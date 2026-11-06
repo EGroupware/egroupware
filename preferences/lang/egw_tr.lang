@@ -1,4 +1,5 @@
 %1 - preferences	preferences	tr	%1 - Tercihler
+access token revoked.	preferences	tr	Erişim Jetonu iptal edildi.
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	tr	Etkinleştirerek açık sekmelerde daha renkli uygulama simgeleri göster. İşaretlenmezse, varsayılan olarak özel renkler açılır.
 allows to set a default or force the active application tab for new logins.	preferences	tr	Varsayılan bir ayar belirlemenize veya yeni oturum açışlarda aktif uygulama sekmesini zorla açmanıza olanak tanır.
 allows to set a default or force the open application tabs.	preferences	tr	Varsayılan olarak ayarlamaya veya açık uygulama sekmelerini zorlamaya olanak tanır.
@@ -7,19 +8,26 @@ app chooser icons + text	preferences	tr	Uygulama seçici simgeleri + metin
 applications list scroll area	preferences	tr	Yan menü için kaydırma düğmesi
 are you sure you want to delete this category ?	preferences	tr	Bu kategoriyi silmek istediğinize emin misiniz?
 are you sure?	preferences	tr	Emin misiniz?
+close after selection	preferences	tr	Seçimden sonra kapat
 code is invalid	preferences	tr	Kod geçersiz
 code is required	preferences	tr	Kod gerekli
 color	preferences	tr	Renk
 country	preferences	tr	Ülke
+current password	preferences	tr	Mevcut şifre
+custom login box color, defaults to above color darkened	preferences	tr	Özel giriş kutusu rengi; varsayılan olarak yukarıdaki rengin koyu tonu kullanılır
 custom login box text color, defaults to white	preferences	tr	Özel oturum açma kutusu metin rengi; varsayılan renk beyazdır
+custom sidebar menu active color, defaults to above color darkened	preferences	tr	Özel kenar çubuğu menüsü etkin rengi; varsayılan olarak yukarıdaki rengin koyu tonu kullanılır
 dark mode theme	preferences	tr	Karanlık mod teması
 date format	preferences	tr	Tarih biçimi
 default	preferences	tr	Varsayılan
 default preferences	preferences	tr	Varsayılan tercihler
 deny following groups access to application passwords	preferences	tr	Aşağıdaki grupların uygulama parolalarına erişimini reddetme
+deny following groups access to edit categories	admin	tr	Aşağıdaki grupların kategorileri düzenleme erişimini engelle
 deny following groups access to preferences	admin	tr	Aşağıdaki grupların tercihlere erişimini reddetme
 description can not exceed 255 characters in length !	preferences	tr	Açıklama en fazla 255 karakter olabilir!
 disable	preferences	tr	Engelle
+disable two factor auth	preferences	tr	İki Faktörlü Kimlik Doğrulamayı Devre Dışı Bırak
+disabling allows to again log in without a second factor.	preferences	tr	Вимкнення цієї функції дозволяє знову входити в систему без другого фактора.
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	tr	Yer kısıtlı olduğunda her zaman tam tarih ve saati mi görmek istersiniz, yoksa sadece bugünün saatini ve diğer zamanlarda tarihi mi?
 edit custom fields	preferences	tr	Özel alanları düzenleme
 editor and preview	preferences	tr	Düzenleyici ve önizleme
@@ -30,6 +38,8 @@ enabled features in toolbar	preferences	tr	Araç çubuğunda etkinleştirilmiş 
 enter code to authenticate the actions below	preferences	tr	Aşağıdaki eylemleri doğrulamak için kodu girin
 enter code to verify correct setup	preferences	tr	Doğru kurulumu doğrulamak için kodu girin
 enter your old password	preferences	tr	Eski şifreyi girin
+failed to delete secret!	preferences	tr	Gizli anahtarın silinmesi başarısız!
+failed to store secret!	preferences	tr	Gizli anahtarın kaydedilmesi başarısız!
 fast	preferences	tr	Hızlı
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	tr	Hızlı güncelleme, yeni girişleri her zaman listenin en üstüne ekler ve liste son değiştirilene göre sıralanmadığı sürece mevcut olanları yerinde günceller. Tam güncellemeler, liste son değiştirilene göre sıralanmamışsa tam bir yenileme yapar.
 features of the editor	preferences	tr	Düzenleyicinin özellikleri
@@ -77,7 +87,6 @@ use initials from first and last name	preferences	tr	Ad ve soyadın baş harfler
 used instead of the application color.	preferences	tr	Uygulamanın rengi yerine kullanılır.
 users choice	preferences	tr	Kullanıcı Seçimleri
 what to display for an avatar, if there is no photo	preferences	tr	Fotoğraf yoksa avatar için ne görüntülenmeli
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	tr	Markdown özellikli metin alanlarının hangi görünümde açılacağı. Bir alandaki görünümü değiştirmek bu ayarı günceller.
 you can show the applications as icons only, icons with app-name or both.	preferences	tr	Uygulamaları yalnızca simgeler olarak, uygulama adıyla birlikte simgeler olarak veya her ikisiyle birlikte görüntüleyebilirsiniz.
 you can show the linked entries with icons only, icons with app-name or both.	common	tr	Uygulamaları yalnızca simgelerle, uygulama adıyla birlikte simgelerle veya her ikisiyle birden göster.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	tr	Araç çubuğunda etkinleştirilecek özellikleri seçebilirsiniz.

@@ -248,7 +248,7 @@ class admin_cmd_change_account_id extends admin_cmd
 			}
 			if (!empty($extra_set))
 			{
-				$extra_set_array[] = $extra_set;
+				$extra_set_array[] = Api\Db\SqlFragment::raw($extra_set);
 				$extra_set .= ',';
 			}
 		}
@@ -260,8 +260,8 @@ class admin_cmd_change_account_id extends admin_cmd
 			case 'serialized':
 				if (!$where) $where = array();
 				$select = $where;
-				$select[] = "$column IS NOT NULL";
-				$select[] = "$column != ''";
+				$select[] = Api\Db\SqlFragment::raw("$column IS NOT NULL");
+				$select[] = Api\Db\SqlFragment::raw("$column != ''");
 				$change = array();
 				foreach($db->select($table,'DISTINCT '.$column,$select,__LINE__,__FILE__) as $row)
 				{

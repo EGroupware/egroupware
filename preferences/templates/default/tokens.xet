@@ -15,23 +15,23 @@
 				<column width="30%"/> <!-- remark -->
 			</columns>
 			<rows>
-				<row>
-					<nextmatch-sortheader label="ID" id="token_id"/>
+				<row class="th">
+					<et2-nextmatch-sortheader  label="ID" id="token_id"></et2-nextmatch-sortheader>
 					<et2-nextmatch-header-account  id="account_id" emptyLabel="User" accountType="accounts">
                         <option value="0">All users</option>
                     </et2-nextmatch-header-account>
 					<et2-nextmatch-header  id="token_apps" label="Applications"></et2-nextmatch-header>
-					<nextmatch-sortheader label="Expiration" id="token_valid_until"/>
+					<et2-nextmatch-sortheader  label="Expiration" id="token_valid_until"></et2-nextmatch-sortheader>
 					<et2-vbox>
-						<nextmatch-sortheader label="Revoked" id="token_revoked"/>
+						<et2-nextmatch-sortheader  label="Revoked" id="token_revoked"></et2-nextmatch-sortheader>
 						<et2-nextmatch-header-account  emptyLabel="By" id="token_revoked_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Created" id="token_created"/>
+						<et2-nextmatch-sortheader  label="Created" id="token_created"></et2-nextmatch-sortheader>
 						<et2-nextmatch-header-account  emptyLabel="By" id="token_created_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-sortheader label="Updated" id="token_updated"/>
+						<et2-nextmatch-sortheader  label="Updated" id="token_updated"></et2-nextmatch-sortheader>
 						<et2-nextmatch-header-account  emptyLabel="By" id="token_updated_by"></et2-nextmatch-header-account>
 					</et2-vbox>
 					<et2-nextmatch-header  label="Remark" id="token_remark"></et2-nextmatch-header>
@@ -57,11 +57,18 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
 	<et2-template  id="preferences.tokens.add" template="" lang="" group="0" version="1.9.001">
-		<et2-button  label="Add" id="add" onclick="app.preferences.addToken" noSubmit="true"></et2-button>
+		<et2-button-icon  statustext="Add" image="add" id="add" onclick="app.preferences.addToken" noSubmit="true"></et2-button-icon>
 	</et2-template>
 	<et2-template  id="preferences.tokens" template="" lang="" group="0" version="1.9.001">
-		<nextmatch replaceFilters="false" id="token" template="preferences.tokens.rows" header_left="preferences.tokens.add"/>
+		<!-- Shown as a tab of the "Security &amp; Password" popup, which has no app header, so the Add
+		     button stays in the nextmatch's own header, as header_left did: it is in the nextmatch's
+		     namespace, which Token::security() relies on for $readonlys['token[add]']. -->
+		<!-- replaceFilters="false": a popup gets no filterbox, so the "By" filters stay in the column headers -->
+		<et2-nextmatch  id="token" template="preferences.tokens.rows" replaceFilters="false">
+			<et2-template  id="preferences.tokens.add" slot="header"></et2-template>
+		</et2-nextmatch>
 	</et2-template>
 </overlay>

@@ -13,6 +13,7 @@ import "../../Et2Url/Et2UrlEmailReadonly";
 import {Et2UrlPhone} from "../../Et2Url/Et2UrlPhone";
 import "../../Et2Url/Et2UrlPhoneReadonly.ts";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
+import {assertNoElement} from "../../test/assertDom";
 
 const egw = {
 	debug: () => {},
@@ -390,8 +391,8 @@ describe("Et2Datagrid row rendering", () =>
 		assert.isNotNull(state, "empty state should keep the dg-state context-menu anchor");
 		assert.isNotNull(emptyRow, "default no-results fallback should render row-like markup");
 		assert.equal(emptyCell?.textContent?.trim(), "Nothing here yet", "empty row should show configured placeholder text");
-		assert.isNull(state?.querySelector("sl-alert"), "default no-results fallback should not render a Shoelace alert");
-		assert.isNull(state?.querySelector(".dg-empty-action-menu"), "empty action menu button should be hidden by default");
+		assertNoElement(state?.querySelector("sl-alert"), "default no-results fallback should not render a Shoelace alert");
+		assertNoElement(state?.querySelector(".dg-empty-action-menu"), "empty action menu button should be hidden by default");
 
 		el.remove();
 	});
@@ -534,7 +535,7 @@ describe("Et2Datagrid row rendering", () =>
 		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
 
 		assert.isNotNull(state?.querySelector(".template-no-results"), "template noResults content should render");
-		assert.isNull(state?.querySelector("slot[name='noResults']"), "live noResults slot should not be used when a template is provided");
+		assertNoElement(state?.querySelector("slot[name='noResults']"), "live noResults slot should not be used when a template is provided");
 
 		el.remove();
 	});
@@ -680,6 +681,8 @@ describe("Et2Datagrid row rendering", () =>
 			assert.deepEqual(el.rows.map((row) => row.id), ["row-0", "row-1"], "print preparation must not replace normal rows");
 			assert.deepEqual((el as any)._printRows.map((row) => row.id), ["addressbook::print-0"], "print mode should normalize requested row ids for the shared data cache");
 			assert.isTrue(el.classList.contains("print"), "print mode should be styled explicitly");
+			assert.strictEqual(el.shadowRoot!.querySelectorAll("#print-rows > tr[data-row-id]").length, 1, "the print row should be rendered in its own container");
+			assert.strictEqual(el.shadowRoot!.querySelectorAll("#rows > tr[data-row-id]").length, 0, "the virtualized rows should not be rendered while printing");
 
 			el.clearPrintRows();
 			await el.updateComplete;
@@ -688,7 +691,8 @@ describe("Et2Datagrid row rendering", () =>
 			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 			assert.isNull((el as any)._printRows, "clearing print mode should restore normal virtualized rendering");
 			assert.isFalse(el.classList.contains("print"), "print styling should be removed after cleanup");
-			assert.isAtLeast(el.shadowRoot!.querySelectorAll("tbody tr[data-row-id]").length, 1, "clearing print mode should restart normal virtualized row rendering");
+			assert.isNull(el.shadowRoot!.getElementById("print-rows"), "the print container should be gone after cleanup");
+			assert.isAtLeast(el.shadowRoot!.querySelectorAll("#rows > tr[data-row-id]").length, 1, "clearing print mode should restart normal virtualized row rendering");
 		}
 		finally
 		{
@@ -757,31 +761,39 @@ describe("Et2Datagrid row rendering", () =>
 
 	/**
 	 * Contract under test:
-	 * - A virtualizer spacer from normal scrolling must not survive into print
-	 *   mode and reserve an otherwise blank page.
-	 *
-	 * Setup strategy:
-	 * - Render a datagrid, add a representative inline min-height, then enter
-	 *   print mode.
+	 * - Printing replaces neither the virtualized rows container nor its virtualizer: the
+	 *   print rows go beside them, and the virtualizer is only fed no items meanwhile.
+	 *   A virtualizer created after the first render is configured differently from the
+	 *   first one (other scroller and clipping ancestors) and leaves the old directive's
+	 *   rangeChanged listener behind on the shared container, so every range change
+	 *   renders its rows twice.
 	 *
 	 * Pass criteria:
-	 * - Print preparation clears both virtualizer-owned height properties.
+	 * - The rows container and the virtualizer on it are the same objects after printing.
 	 */
-	it("clears virtualizer spacer sizing for print rows", async() =>
+	it("keeps its virtualizer while printing", async() =>
 	{
 		const el = createDatagrid();
+		const rows = Array.from({length: 50}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(rows);
+		el.total = rows.length;
 		document.body.append(el);
 		try
 		{
 			await el.updateComplete;
-			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
-			rows.style.height = "25000px";
-			rows.style.minHeight = "25000px";
+			const body = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			const virtualizer = (body as any)[virtualizerRef];
+			assert.isOk(virtualizer, "the grid should have a virtualizer");
 
 			await el.setPrintRows(["print-0"]);
+			assert.strictEqual(el.shadowRoot!.querySelector("#rows"), body, "printing must not replace the virtualized rows container");
+			assert.strictEqual((body as any)[virtualizerRef], virtualizer, "printing must not replace the virtualizer");
+			assert.isTrue(virtualizer._connected, "the virtualizer stays connected while printing");
 
-			assert.notStrictEqual(rows.style.height, "25000px", "print rows should replace the virtualizer height spacer with their measured flow extent");
-			assert.strictEqual(rows.style.minHeight, "", "print rows should clear the virtualizer min-height spacer");
+			el.clearPrintRows();
+			await el.updateComplete;
+			assert.strictEqual(el.shadowRoot!.querySelector("#rows"), body);
+			assert.strictEqual((body as any)[virtualizerRef], virtualizer, "the virtualizer is still the first one after printing");
 		}
 		finally
 		{
@@ -791,17 +803,137 @@ describe("Et2Datagrid row rendering", () =>
 
 	/**
 	 * Contract under test:
-	 * - Leaving print mode must remove the print spacer instead of retaining a
-	 *   full-result min-height in the normal grid.
-	 *
-	 * Setup strategy:
-	 * - Render a grid with a print-sized inline spacer, enter print mode, then
-	 *   simulate the browser's cancellation cleanup.
+	 * - A grid with a fixed row pitch (a sparse layout on its virtualizer) keeps both the
+	 *   virtualizer and that layout through printing.  Printing turns off the fixed-row-height
+	 *   styling, which must not change the layout the virtualizer is given.
 	 *
 	 * Pass criteria:
-	 * - The rows container has no inline height reservation after cleanup.
+	 * - The same virtualizer, with the same sparse layout instance, before and after printing.
 	 */
-	it("removes print spacer sizing when print is cancelled", async() =>
+	it("keeps a sparse layout and its virtualizer through printing", async() =>
+	{
+		const el = createDatagrid();
+		const rows = Array.from({length: 50}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(rows);
+		el.total = rows.length;
+		(el as any)._rowHeightLocked = true;
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			(el as any)._sparseVirtualizerLayoutActive = true;
+			el.requestUpdate();
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			const body = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			const virtualizer = (body as any)[virtualizerRef];
+			const layout = virtualizer._layout;
+			assert.strictEqual(layout.constructor.name, "Et2DatagridSparseFlowLayout", "precondition: the grid should be on its sparse layout");
+
+			await el.setPrintRows(["print-0"]);
+			assert.strictEqual((body as any)[virtualizerRef], virtualizer, "printing must not replace the virtualizer");
+			assert.strictEqual(virtualizer._layout, layout, "printing must not swap the layout");
+
+			el.clearPrintRows();
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			assert.strictEqual((body as any)[virtualizerRef], virtualizer, "the virtualizer is still the same after printing");
+			assert.strictEqual(virtualizer._layout, layout, "the layout is still the same after printing");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - The print rows are upgraded (their row-scoped template attributes resolved) although
+	 *   they are not in the container the upgrade observer watches.
+	 *
+	 * Pass criteria:
+	 * - When setPrintRows() resolves, every print row is marked as upgraded.
+	 */
+	it("upgrades the print rows", async() =>
+	{
+		const el = createDatagrid();
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			await el.setPrintRows(["print-0", "print-1"]);
+
+			const printRows = Array.from(el.shadowRoot!.querySelectorAll("#print-rows > tr[data-row-id]")) as HTMLElement[];
+			assert.lengthOf(printRows, 2);
+			for(const row of printRows)
+			{
+				assert.isOk(row.getAttribute("data-et2dg-upgraded-for"), `print row ${row.getAttribute("data-row-id")} was not upgraded`);
+			}
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - After printing, a range change from the virtualizer renders each row of the range
+	 *   once, as it did before printing.
+	 *
+	 * Setup strategy:
+	 * - Dispatch the virtualizer's `rangeChanged` on the rows container and count the rows
+	 *   built, which happens synchronously in the directive's listener.  Every listener left
+	 *   on the container by a directive that was replaced would build them again.
+	 *
+	 * Pass criteria:
+	 * - Ten rows in the range are built ten times, before and after printing.
+	 */
+	it("builds each row of a range change once after printing", async() =>
+	{
+		const el = createDatagrid();
+		const rows = Array.from({length: 50}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(rows);
+		el.total = rows.length;
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			const body = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			const build = sinon.spy((el as any)._rowRenderer, "buildRowElement");
+			const rangeChanged = () =>
+			{
+				build.resetHistory();
+				body.dispatchEvent(Object.assign(new Event("rangeChanged"), {first: 10, last: 19}));
+				return build.callCount;
+			};
+			const before = rangeChanged();
+			assert.strictEqual(before, 10, "the range should build its rows once before printing");
+
+			await el.setPrintRows(["print-0"]);
+			el.clearPrintRows();
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+			assert.strictEqual(rangeChanged(), before, "the range should still build its rows once after printing");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - The print rows' flow height is pinned on their own container, and printing being
+	 *   cancelled (clearPrintRows()) takes the container with it, leaving no height reserved
+	 *   on the body, the table or the virtualized rows.
+	 *
+	 * Pass criteria:
+	 * - Height pinned on #print-rows while printing; none left anywhere after cleanup, and the
+	 *   virtualized rows reserve their scroll extent again.
+	 */
+	it("leaves no print height behind when print is cancelled", async() =>
 	{
 		const el = createDatagrid();
 		const normalRows = Array.from({length: 200}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
@@ -812,16 +944,68 @@ describe("Et2Datagrid row rendering", () =>
 		{
 			await el.updateComplete;
 			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
-			rows.style.minHeight = "25000px";
+			const extent = () => parseFloat(rows.style.minHeight || rows.style.height || "0");
+			assert.isAbove(extent(), 1000, "precondition: the virtualized rows reserve the scroll extent of 200 rows");
 
-			await el.setPrintRows(normalRows.map((row) => row.id));
+			await el.setPrintRows(normalRows.slice(0, 20).map((row) => row.id));
+			assert.notStrictEqual(el.shadowRoot!.querySelector<HTMLElement>("#print-rows")!.style.height, "", "the print rows' flow height should be pinned on their container");
+
 			el.clearPrintRows();
 			await el.updateComplete;
-			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			for(let frame = 0; frame < 20 && extent() <= 1000; frame++)
+			{
+				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			}
 
-			assert.strictEqual(rows.style.height, "", "cancelling print must clear the print-only tbody height");
-			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body")!.style.height, "", "cancelling print must clear the print-only body height");
-			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body table")!.style.height, "", "cancelling print must clear the print-only table height");
+			assert.isAbove(extent(), 1000, "the virtualized rows must get their scroll extent back after printing");
+
+			assert.isNull(el.shadowRoot!.getElementById("print-rows"), "cancelling print must remove the print rows and their pinned height");
+			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body")!.style.height, "", "cancelling print must leave no height on the body");
+			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body table")!.style.height, "", "cancelling print must leave no height on the table");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - The min-height sync is an upward-only floor. It must never shrink the tbody
+	 *   below the scroll extent the virtualizer itself published, or the scroll
+	 *   container's scrollHeight collapses to the realized rows and the scrollbar
+	 *   thumb jumps on every scroll step.
+	 *
+	 * Setup strategy:
+	 * - Render a long grid, then stand in for @lit-labs/virtualizer with a layout
+	 *   reporting a scroll extent far larger than the handful of realized rows.
+	 *   The real virtualizer publishes that extent as `min-height` on this element
+	 *   (not `style.height`), which is why the sync has to ask the layout for it.
+	 *
+	 * Pass criteria:
+	 * - The synced min-height is at least the virtualizer's scroll extent.
+	 */
+	it("keeps the virtualizer scroll extent when only some rows are realized", async() =>
+	{
+		const el = createDatagrid();
+		const normalRows = Array.from({length: 500}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(normalRows);
+		el.total = normalRows.length;
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			(<any>rows)[virtualizerRef] = {_layout: {_scrollSize: 25000}};
+			rows.style.minHeight = "25000px";
+
+			el._syncRowsMinHeight();
+
+			assert.isAtLeast(
+				parseFloat(rows.style.minHeight),
+				25000,
+				"min-height sync must not shrink the tbody below the virtualizer's own scroll extent"
+			);
 		}
 		finally
 		{
@@ -1204,7 +1388,7 @@ describe("Et2Datagrid row rendering", () =>
 
 		const layout = (el as any)._virtualize?._layout;
 		assert.isBelow(layout._last, (el as any)._virtualRowCount(), "virtualizer's realized range should not extend past the real (shrunk) row count");
-		assert.isNull(
+		assertNoElement(
 			el.shadowRoot?.querySelector("[data-et2dg-placeholder]"),
 			"no unresolved loading-placeholder row should remain once the final total is known"
 		);
@@ -1475,7 +1659,7 @@ describe("Et2Datagrid row rendering", () =>
 			simple?.hasAttribute("data-et2-description"),
 			"native text should be marked so the datagrid styles keep its newlines"
 		);
-		assert.isNull(
+		assertNoElement(
 			prepared?.template.content.querySelector("span[data-et2nm-id]"),
 			"native text should not need row attribute upgrade bookkeeping"
 		);
@@ -1590,7 +1774,7 @@ describe("Et2Datagrid row rendering", () =>
 			1,
 			"container should contain only the prepared lightweight child"
 		);
-		assert.isNull(
+		assertNoElement(
 			container?.querySelector("et2-description"),
 			"source description child should not also be loaded by the container widget"
 		);
@@ -1656,7 +1840,7 @@ describe("Et2Datagrid row rendering", () =>
 		const templateData = await (provider as any)._fromTemplateRoot(templateRoot);
 
 		assert.lengthOf(templateData?.rowStylesheets || [], 1, "template-local et2-styles should be returned as stylesheets");
-		assert.isNull(
+		assertNoElement(
 			templateData?.rowTemplate.content.querySelector("et2-styles"),
 			"row-local et2-styles tags should not remain in the prepared row template"
 		);
@@ -1740,7 +1924,7 @@ describe("Et2Datagrid row rendering", () =>
 		const email = prepared?.template.content.querySelector("et2-url-email_ro") as HTMLElement | null;
 
 		assert.isNotNull(email, "email URL widgets should use the readonly custom element in rows");
-		assert.isNull(
+		assertNoElement(
 			prepared?.template.content.querySelector("et2-url-email"),
 			"editable email URL widgets should not be kept for readonly rows"
 		);
@@ -2067,7 +2251,7 @@ describe("Et2Datagrid row rendering", () =>
 				row.data,
 				"row customfields should reuse the complete row object"
 			);
-			assert.isNotOk(
+			assertNoElement(
 				list!.shadowRoot?.querySelector("[data-field='cf_hidden']"),
 				"hidden customfield should not be rendered even when the row has a value"
 			);
@@ -4825,7 +5009,7 @@ describe("Et2Datagrid virtual height stability", () =>
 			const rendered = scratchBody.querySelector("[data-row-id='row-160']") as HTMLElement | null;
 			assert.isNotNull(rendered, "second deep render should output row 160");
 			assert.equal(rendered!.getAttribute("data-row-index"), "160", "second deep render should keep the absolute row index");
-			assert.isNull(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
+			assertNoElement(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
 
 			scratchTable.remove();
 			host.remove();

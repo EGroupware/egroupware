@@ -2,24 +2,23 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-    <et2-template  id="nm_print_dialog" template="" lang="" group="0" version="22.1">
-        <et2-vbox>
-            <et2-textbox  id="name" label="Name" class="et2-label-fixed"/>
-            <et2-select-account  id="group" label="For group" class="et2-label-fixed" emptyLabel="Just for me" accountType="groups"/>
-            <et2-details  summary="Details">
-                <grid id="current_filters">
-                    <columns>
-                        <column/>
-                        <column/>
-                    </columns>
-                    <rows>
-                        <row>
-                            <et2-description  id="${row}[label]"/>
-                            <et2-description  id="${row}[value]"/>
-                        </row>
-                    </rows>
-                </grid>
-            </et2-details>
-        </et2-vbox>
+    <et2-template  id="add_favorite" template="" lang="" group="0" version="22.1" layout="stack">
+        <et2-textbox  id="name" label="Name"/>
+        <et2-select-account  id="group" label="For group" emptyLabel="Just for me" accountType="groups"/>
+        <et2-select  id="folder" label="Folder" emptyLabel="No folder" allowFreeEntries="true"/>
+        <et2-details  summary="Details">
+            <grid id="current_filters">
+                <columns>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        <et2-description  id="${row}[label]"/>
+                        <et2-description  id="${row}[value]"/>
+                    </row>
+                </rows>
+            </grid>
+        </et2-details>
     </et2-template>
 </overlay>

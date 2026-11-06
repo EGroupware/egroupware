@@ -174,7 +174,6 @@ re-planned time	infolog	tr	Yeniden planlanan zaman
 receive notifications about items of type owned by groups you are part of	infolog	tr	Parçası olduğunuz grupların sahip olduğu türdeki öğeler hakkında bildirimler alın
 regular expression	infolog	tr	Düzenli ifade
 removed	infolog	tr	Kaldırıldı.
-removed category	infolog	tr	kaldırıldı kategorisi
 replacement	infolog	tr	Değiştirme
 replacements for inserting entries into documents	infolog	tr	Belgelere giriş eklemek için değiştirmeler
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	tr	Düzenleyen kullanıcının, sorumlu kullanıcıyla paylaşmak için bu kişilere yazma erişimine sahip olmasını gerektirir.

@@ -26,7 +26,7 @@ import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import type {et2_button} from "../../api/js/etemplate/legacy-shims/et2_widget_button";
 import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import type {et2_iframe} from "../../api/js/etemplate/legacy-shims/et2_widget_iframe";
 // sprintf() is declared with an untyped 0-arg signature (uses `arguments` internally), so every
 // call with format args errors under TS - alias it locally with the real variadic signature rather
@@ -34,13 +34,11 @@ import type {et2_iframe} from "../../api/js/etemplate/legacy-shims/et2_widget_if
 import {sprintf as _sprintf} from "../../api/js/egw_action/egw_action_common";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
 import type {et2_number} from "../../api/js/etemplate/legacy-shims/et2_widget_number";
-import type {et2_template} from "../../api/js/etemplate/legacy-shims/et2_widget_template";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
 import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
 import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_action_constants";
-import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import flatpickr from "flatpickr";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
@@ -157,6 +155,13 @@ export class CalendarApp extends EgwApp
 	// Calendar-wide autorefresh
 	_autorefresh_timer : ReturnType<typeof setInterval> = null;
 
+	// The tab hide/show listeners the autorefresh pauses and resumes on, bound once per element
+	// (see _bindAutorefreshTabEvents()) rather than on every _set_autorefresh() call
+	private _autorefresh_tab : {el : Element, hide : EventListener, show : EventListener} = null;
+
+	// The refresh interval elapsed while the tab was hidden, so the next "show" refreshes
+	private _autorefresh_stale : boolean = false;
+
 	// Set by _scroll()'s scroll_animate() to prevent scrolling too fast, read via app.calendar
 	// since scroll_animate's own `this` is dynamic (see _scroll())
 	_scroll_disabled : boolean = false;
@@ -259,6 +264,7 @@ export class CalendarApp extends EgwApp
 			window.clearInterval(this._autorefresh_timer);
 			this._autorefresh_timer = null;
 		}
+		this._unbindAutorefreshTabEvents();
 	}
 
 	/**
@@ -441,8 +447,7 @@ export class CalendarApp extends EgwApp
 		let do_refresh = false;
 		if(this.state.view === 'listview')
 		{
-			// @ts-ignore
-			CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm').refresh(_id,_type);
+			this.listNextmatch?.refresh(_id, _type);
 		}
 		switch(_app)
 		{
@@ -1898,48 +1903,28 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * show/hide the filter of nm list in calendar listview
+	 * Copy the date range filter of the nm list in calendar listview into the state
 	 *
 	 */
 	filter_change()
 	{
-		const view = (<etemplate2> CalendarApp.views['listview'].etemplates[0]).widgetContainer || null;
-		const nm = view ? <et2_nextmatch>view.getWidgetById('nm') : null;
-		const filter = view && nm ? <et2_selectbox>nm.getWidgetById('filter') : null;
-		const dates = view ? <et2_template> view.getWidgetById('calendar.list.dates') : null;
+		const nm = this.listNextmatch;
+		// The date range filter lives in calendar.filter (the app's own filterbox), not in the
+		// nextmatch header, so read the value the nextmatch is actually querying with.
+		const filter = nm ? nm.activeFilters.filter : null;
 
-		// Update state when user changes it
-		if(view && filter)
+		// Update state when user changes it.  Sort order is NOT set here: for 'before' the list
+		// is shown newest-first, but that has to go into the same applyFilters() call that
+		// reloads the list (see update_state()) - setting it separately afterwards changes the
+		// query while that reload's fetch is still in flight, and Et2Datagrid then discards the
+		// response as superseded without re-fetching, leaving the list empty.
+		if(nm && filter)
 		{
-			this.state.filter = filter.getValue();
-			// Change sort order for before - this is just the UI, server does the query
-			if(this.state.filter == 'before')
-			{
-				nm.sortBy('cal_start',false, false);
-			}
-			else
-			{
-				nm.sortBy('cal_start',true, false);
-			}
+			this.state.filter = filter;
 		}
 		else
 		{
 			delete this.state.filter;
-		}
-		if (filter && dates)
-		{
-			dates.set_disabled(filter.getValue() !== "custom");
-			if (filter.getValue() == "custom" && !this.state_update_in_progress)
-			{
-				// Copy state dates over, without causing [another] state update
-				const actual = this.state_update_in_progress;
-				this.state_update_in_progress = true;
-				(<et2_date>view.getWidgetById('startdate')).set_value(this.state.first);
-				(<et2_date>view.getWidgetById('enddate')).set_value(this.state.last);
-				this.state_update_in_progress = actual;
-
-				(<et2_date>view.getWidgetById('startdate')).getDOMNode().querySelector('input')?.focus();
-			}
 		}
 	}
 
@@ -2115,14 +2100,10 @@ export class CalendarApp extends EgwApp
 	 */
 	ical(_action, _events)
 	{
-		// Send it through nextmatch
-		_action.data.nextmatch = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm');
-		const ids = {ids:[]};
-		for(let i = 0; i < _events.length; i++)
-		{
-			ids.ids.push(_events[i].id);
-		}
-		nm_action(_action, _events, null, ids);
+		// Export is a server-side nextmatch action (calendar_uilist::action()), and the other
+		// views have no nextmatch of their own, so run the list's copy of the action on the
+		// events that were selected here.
+		this.listNextmatch?.executeAction('ical', {ids: _events.map(event => event.id), all: false});
 	}
 
 	/**
@@ -2193,7 +2174,10 @@ export class CalendarApp extends EgwApp
 		_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
 		_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
 
-		nm_action(_action, _senders,false,{ids:[id]});
+		// Only the listview wires this action to cal_fix_app_id (calendar_uiviews::get_actions()
+		// swaps it for action_open in the other views), so _action is the list nextmatch's own
+		// action object and executeAction() re-resolves to exactly the object patched above.
+		this.listNextmatch?.executeAction(_action.id, {ids: [id], all: false});
 
 		_action.data.url = backup_url;	// restore url
 	}
@@ -2277,7 +2261,10 @@ export class CalendarApp extends EgwApp
 		let js_integration_data;
 		if(_action.parent.data && _action.parent.data.nextmatch)
 		{
-			js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
+			// Set by calendar_uilist::get_rows() and sent as part of the list's content.
+			// Et2Nextmatch only keeps an allow-list of settings, so there is no copy of this
+			// on the widget to read back - it comes from the content array or not at all.
+			js_integration_data = this.listEtemplate?.widgetContainer.getArrayMgr('content')?.getEntry('nm[js_integration_data]');
 			if(typeof js_integration_data == 'string')
 			{
 				js_integration_data = JSON.parse(js_integration_data);
@@ -2365,6 +2352,8 @@ export class CalendarApp extends EgwApp
 	cal_delete(_action, _senders)
 	{
 		let all = _action.parent.data.nextmatch?.getSelection().all;
+		// the endpoint refuses without it, see Nextmatch::validateExecId()
+		let exec_id = _action.parent.data.nextmatch?.getInstanceManager()?.etemplate_exec_id ?? "";
 		let no_notifications = _action.parent.getActionById("no_notifications")?.checked;
 		let matches = false;
 		let ids = [];
@@ -2391,11 +2380,11 @@ export class CalendarApp extends EgwApp
 				case 'single':
 				case 'exception':
 					// Just this one, handle in the normal way but over AJAX
-					this.egw.request("calendar.calendar_uilist.ajax_action",[_action.id, ids, all, no_notifications]);
+					this.egw.request("calendar.calendar_uilist.ajax_action",[exec_id, _action.id, ids, all, no_notifications]);
 					break;
 				case 'series':
 					// No recurrences, handle in the normal way but over AJAX
-					this.egw.request("calendar.calendar_uilist.ajax_action",["delete_series", ids, all, no_notifications]);
+					this.egw.request("calendar.calendar_uilist.ajax_action",[exec_id, "delete_series", ids, all, no_notifications]);
 					break;
 				case 'cancel':
 				default:
@@ -2472,65 +2461,6 @@ export class CalendarApp extends EgwApp
 		const data = egw.dataGetUIDdata(_selected[0].id) || {data:{}};
 		const event = data.data;
 		void this.composeMeetingMail(event, false, _action.id==='sendrequest');
-	}
-
-	/**
-	 * Sidebox merge
-	 *
-	 * Manage the state and pass the request to the correct place.  Since the nextmatch
-	 * and the sidebox have different ideas of the 'current' timespan (sidebox
-	 * always has a start and end date) we need to call merge on the nextmatch
-	 * if the current view is listview, so the user gets the results they expect.
-	 *
-	 * @param {Event} event UI event
-	 * @param {et2_widget} widget Should be the merge selectbox
-	 */
-	sidebox_merge(event, widget)
-	{
-		if(!widget || !widget.getValue()) return false;
-
-		if(this.state.view == 'listview')
-		{
-			// If user is looking at the list, pretend they used the context
-			// menu and process it through the nextmatch
-			const nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
-			const selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
-			const action = nm.controller._actionManager.getActionById('document_'+widget.getValue());
-			if(nm && (!selected || !selected.length))
-			{
-				nm.controller._selectionMgr.selectAll(true);
-			}
-			if(action && selected)
-			{
-				// EgwApp.merge() was renamed to mergeAction() (see egw_app.ts) - this call site
-				// was never updated, so it threw "super.merge is not a function" whenever hit.
-				super.mergeAction(action, selected);
-			}
-		}
-		else
-		{
-			// Set the hidden inputs to the current time span & submit
-			widget.getRoot().getWidgetById('first')?.set_value(this.state.first);
-			widget.getRoot().getWidgetById('last')?.set_value(this.state.last);
-
-			const vars = {
-				menuaction: 'calendar.calendar_merge.merge_entries',
-				document: widget.getValue(),
-				merge: 'calendar_merge',
-				options: {pdf: false},
-				select_all: false,
-				id: JSON.stringify({
-					first: this.state.first,
-					last: this.state.last,
-					date: this.state.first,
-					view: this.state.view
-				})
-			};
-			this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
-		}
-		widget.set_value('');
-
-		return false;
 	}
 
 	/**
@@ -2634,9 +2564,7 @@ export class CalendarApp extends EgwApp
 		// Keywords are only for list view
 		if(state.view == 'listview')
 		{
-			const listview : et2_nextmatch = typeof CalendarApp.views.listview.etemplates[0] !== 'string' &&
-				CalendarApp.views.listview.etemplates[0].widgetContainer &&
-				<et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+			const listview = this.listNextmatch;
 			if(listview && listview.activeFilters && listview.activeFilters.search)
 			{
 				state.keywords = listview.activeFilters.search;
@@ -3193,7 +3121,7 @@ export class CalendarApp extends EgwApp
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
 				delete state.state.keywords;
 
-				const nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
+				const nm = <Et2Nextmatch>view.etemplates[0].widgetContainer.getWidgetById('nm');
 
 				// 'Custom' filter needs an end date
 				if(nm.activeFilters.filter === 'custom' && !state.state.end_date)
@@ -3204,6 +3132,11 @@ export class CalendarApp extends EgwApp
 				{
 					state.state.enddate = state.state.startdate;
 				}
+				// 'before' shows the most recent events first.  This is just which sort header
+				// gets the arrow, the server decides the actual order - but it has to be part of
+				// this same apply: a separate sortBy() afterwards changes the query while this
+				// reload's fetch is in flight, and the response is then dropped as superseded.
+				state.state.sort = {id: 'cal_start', asc: state.state.filter !== 'before'};
 				nm.applyFilters(state.state);
 
 				// Try to keep last value up to date with what's in nextmatch
@@ -3216,14 +3149,6 @@ export class CalendarApp extends EgwApp
 			}
 			else
 			{
-				// Turn off nextmatch's automatic stuff - it won't work while it
-				// is hidden, and can cause an infinite loop as it tries to layout.
-				// (It will automatically re-start when shown)
-				try
-				{
-					const nm = (<etemplate2>CalendarApp.views.listview.etemplates[0]).widgetContainer.getWidgetById('nm');
-					nm.controller._grid.doInvalidate = false;
-				} catch (e) {}
 				// Other views do not search
 				delete state.state.keywords;
 			}
@@ -4315,39 +4240,14 @@ export class CalendarApp extends EgwApp
 			CalendarApp.views[view].etemplates.forEach(et => {all_loaded = all_loaded && typeof et !== 'string';});
 		}
 
-		// Add some extras to the nextmatch so it can keep the dates in sync with
-		// those in the sidebox calendar.  Care must be taken to not trigger any
-		// sort of refresh or update, as that may resulte in infinite loops so these
-		// are only used for the 'week' and 'month' filters, and we just update the
-		// date range
 		if(_name == 'calendar.list')
 		{
-			const nm = _et2.widgetContainer.getWidgetById('nm');
-			if(nm)
+			// Preserve pre-set search (calendar_uilist::adjust_for_search() can set one from
+			// the URL) - setState() would otherwise drop it on the first state update.
+			const nm = <Et2Nextmatch>_et2.widgetContainer.getWidgetById('nm');
+			if(nm?.activeFilters.search)
 			{
-				// Avoid unwanted refresh immediately after load
-				nm.controller._grid.doInvalidate = false;
-
-				// Preserve pre-set search
-				if(nm.activeFilters.search)
-				{
-					this.state.keywords = nm.activeFilters.search;
-				}
-
-				// Only mirror the list's date range into the state while the list is the
-				// view being shown.  These fire from an etemplate "assign" in an ajax
-				// response, which can land after the user has already switched to a grid
-				// view - overwriting that view's own (narrower) first/last.  _update_events()
-				// then drops every newly added event falling outside the list's range, so it
-				// does not show up until the next reload.
-				nm.set_startdate = (date) => {
-					if(this.state.view !== 'listview') return;
-					this.state.first = this.date.toString(new Date(date));
-				};
-				nm.set_enddate = (date) => {
-					if(this.state.view !== 'listview') return;
-					this.state.last = this.date.toString(new Date(date));
-				};
+				this.state.keywords = nm.activeFilters.search;
 			}
 		}
 
@@ -4393,42 +4293,82 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * The listview's etemplate, or null if it has not loaded (yet).
+	 *
+	 * CalendarApp.views.listview.etemplates[0] holds the template *name* until the template
+	 * actually loads and _et2_view_init() swaps the etemplate2 object in - and swaps the name
+	 * back in again when it is cleared - so every caller has to allow for getting a string.
+	 */
+	private get listEtemplate() : etemplate2 | null
+	{
+		const et2 = CalendarApp.views.listview?.etemplates[0];
+		return !et2 || typeof et2 == 'string' ? null : <etemplate2>et2;
+	}
+
+	/**
+	 * The listview's nextmatch, or null if the listview is not loaded.
+	 */
+	private get listNextmatch() : Et2Nextmatch | null
+	{
+		return <Et2Nextmatch>this.listEtemplate?.widgetContainer.getWidgetById('nm') || null;
+	}
+
+	/**
+	 * Autorefresh interval in seconds, 0 for off
+	 *
+	 * Same formula as Nextmatch.php and Et2NextmatchAutoRefresh: the column selection
+	 * dialog, which is where this value gets set, stores it under the row template name
+	 * when the app sets no columnselection_pref - which calendar does not.  Reading
+	 * columnselection_pref alone gave "nextmatch-undefined-autorefresh", so this never
+	 * found a value at all and the non-list views never refreshed themselves.
+	 */
+	private _autorefresh_time() : number
+	{
+		const nm = this.listNextmatch;
+		if(!nm)
+		{
+			return 0;
+		}
+		const refresh_preference = "nextmatch-" + (nm.settings.columnselection_pref || nm.template) + "-autorefresh";
+		return this.egw.preference(refresh_preference, 'calendar') || 0;
+	}
+
+	/**
+	 * Clear cache and redraw the current state, what an autorefresh tick does
+	 */
+	private _autorefresh_refresh = () =>
+	{
+		// Deleted events are not coming properly, so clear it all
+		this._clear_cache();
+		// Force redraw to current state
+		this.setState({state: this.state});
+
+		// This is a fast update, but misses deleted events
+		//this._fetch_data(this.state);
+	};
+
+	/**
 	 * Set a refresh timer that works for the current view.
-	 * The nextmatch goes into an infinite loop if we let it autorefresh while
-	 * hidden.
+	 *
+	 * Only the other views need one: the listview's nextmatch runs its own background
+	 * autorefresh (Et2NextmatchAutoRefresh), off the same preference read here, and pauses
+	 * itself while the calendar tab or the browser window is in the background.
 	 */
 	_set_autorefresh( )
 	{
-		// Listview not loaded
-		if(typeof CalendarApp.views.listview.etemplates[0] == 'string') return;
-
-		const nm = <et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
-		// nextmatch missing
+		const nm = this.listNextmatch;
+		// Listview (and with it the preference the interval comes from) not loaded
 		if(!nm) return;
 
-		const refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";
-		const time = this.egw.preference(refresh_preference, 'calendar');
+		const time = this._autorefresh_time();
 
-		if(this.state.view == 'listview' && time)
+		if(this.state.view == 'listview')
 		{
-			nm._set_autorefresh(time);
+			// The nextmatch refreshes itself, and a full setState() would fight it
+			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_timer = null;
 			return;
 		}
-		else
-		{
-			nm._set_autorefresh(0);
-		}
-		// An arrow, so it's already correctly bound to this CalendarApp instance regardless of
-		// how it's later invoked (bare call, setInterval, ...) - no self/proxy needed.
-		const refresh = () => {
-			// Deleted events are not coming properly, so clear it all
-			this._clear_cache();
-			// Force redraw to current state
-			this.setState({state: this.state});
-
-			// This is a fast update, but misses deleted events
-			//this._fetch_data(this.state);
-		};
 
 		// Start / update timer
 		if (this._autorefresh_timer)
@@ -4438,34 +4378,77 @@ export class CalendarApp extends EgwApp
 		}
 		if(time > 0)
 		{
-			this._autorefresh_timer = setInterval(refresh, time * 1000);
+			this._autorefresh_timer = setInterval(this._autorefresh_refresh, time * 1000);
 		}
 
-		// Bind to tab show/hide events, so that we don't bother refreshing in the background.
-		// Both handlers below always run at most once (the "hide" one unconditionally clears
-		// itself right after firing too), so {once: true} is the exact native equivalent of the
-		// old jQuery `.on(...)` + manual `.off(e)`-on-self dance.
-		const parentEl = nm.getInstanceManager().DOMContainer.parentNode;
-		parentEl.addEventListener('hide', () => {
-			// Stop
-			window.clearInterval(this._autorefresh_timer);
+		// Pause while the tab is in the background, so that we don't bother refreshing there
+		this._bindAutorefreshTabEvents(nm.getInstanceManager().DOMContainer.parentNode);
+	}
 
+	/**
+	 * Pause the autorefresh while the calendar tab is hidden, and bring it back when it is shown
+	 *
+	 * _set_autorefresh() runs on every state change, and on every autorefresh tick, so the
+	 * listeners are bound once per element and read the current preference when they fire.
+	 * Binding them per call stacked one more pair on the tab each time, none of which went away
+	 * until the tab was actually hidden or shown - and each stale "show" then ran its own
+	 * _set_autorefresh() and added still more.
+	 *
+	 * @param {Element} el the calendar's tab (egw-app)
+	 */
+	private _bindAutorefreshTabEvents(el : Element)
+	{
+		if(this._autorefresh_tab?.el === el)
+		{
+			return;
+		}
+		this._unbindAutorefreshTabEvents();
+
+		const hide = () =>
+		{
+			// Stop - also drops the pending timeout from an earlier hide
+			window.clearInterval(this._autorefresh_timer);
+			this._autorefresh_stale = false;
+
+			const time = this._autorefresh_time();
 			if(!time) return;
 
-			// If the autorefresh time is up, bind once to trigger a refresh
-			// (if needed) when tab is activated again
-			this._autorefresh_timer = setTimeout(() => {
+			// If the autorefresh time is up, refresh (if needed) when the tab is activated again
+			this._autorefresh_timer = setTimeout(() =>
+			{
 				// Check in case it was stopped / destroyed since
 				if(!this._autorefresh_timer) return;
 
-				parentEl.addEventListener('show', () => refresh(), {once: true});
-			}, time*1000);
-		}, {once: true});
-		parentEl.addEventListener('show', () => {
-			// Start normal autorefresh timer again. _set_autorefresh() recomputes the same
-			// preference value itself, so no argument is needed here.
+				this._autorefresh_stale = true;
+			}, time * 1000);
+		};
+		const show = () =>
+		{
+			const stale = this._autorefresh_stale;
+			this._autorefresh_stale = false;
+
+			// Start normal autorefresh timer again
 			this._set_autorefresh();
-		}, {once: true});
+			if(stale)
+			{
+				this._autorefresh_refresh();
+			}
+		};
+		el.addEventListener('hide', hide);
+		el.addEventListener('show', show);
+		this._autorefresh_tab = {el, hide, show};
+	}
+
+	private _unbindAutorefreshTabEvents()
+	{
+		if(!this._autorefresh_tab)
+		{
+			return;
+		}
+		this._autorefresh_tab.el.removeEventListener('hide', this._autorefresh_tab.hide);
+		this._autorefresh_tab.el.removeEventListener('show', this._autorefresh_tab.show);
+		this._autorefresh_tab = null;
+		this._autorefresh_stale = false;
 	}
 
 	/**

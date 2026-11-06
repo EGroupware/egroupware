@@ -22,8 +22,8 @@ use PHPUnit\Framework\TestCase;
  * - nextmatch-accountfilter --> et2-nextmatch-header-account
  * - nextmatch-customfilter with a type --> et2-nextmatch-header-custom
  * - nextmatch-entryheader, -entry --> et2-nextmatch-header-entry
- * - a sortheader keeps its tag, its options= (the default sort direction) becoming sortmode=, an explicit
- *   sortmode= winning
+ * - nextmatch-sortheader --> et2-nextmatch-sortheader, its options= (the default sort direction) becoming
+ *   sortmode=, also for an already converted et2-nextmatch-sortheader, an explicit sortmode= winning
  * - already converted et2-nextmatch-header-* stay as they are
  *
  * etemplate.php runs its conversion on include, so it is run as a separate process.
@@ -55,9 +55,9 @@ class ConvertNextmatchHeadersTest extends TestCase
 		return [
 			'header with closing tag'  => ['header_closed', 'et2-nextmatch-header', ['label' => 'Closed']],
 			'self-closing header'      => ['header_short', 'et2-nextmatch-header', ['label' => 'Short']],
-			'sortheader'               => ['sort', 'nextmatch-sortheader', ['sortmode' => 'DESC', 'options' => null]],
+			'sortheader'               => ['sort', 'et2-nextmatch-sortheader', ['sortmode' => 'DESC', 'options' => null]],
 			'converted sortheader'     => ['et2_sort', 'et2-nextmatch-sortheader', ['sortmode' => 'DESC', 'options' => null]],
-			'sortheader with sortmode' => ['sort_both', 'nextmatch-sortheader', ['sortmode' => 'ASC', 'options' => null]],
+			'sortheader with sortmode' => ['sort_both', 'et2-nextmatch-sortheader', ['sortmode' => 'ASC', 'options' => null]],
 			'filterheader'             => ['filterheader', 'et2-nextmatch-header-filter', ['emptyLabel' => 'Type']],
 			'taglistheader'            => ['taglistheader', 'et2-nextmatch-header-filter', ['emptyLabel' => 'Tags']],
 			'filter'                   => ['filter', 'et2-nextmatch-header-filter', ['emptyLabel' => 'Filter']],
@@ -70,6 +70,7 @@ class ConvertNextmatchHeadersTest extends TestCase
 			'dashed header-filter'     => ['header_filter', 'et2-nextmatch-header-filter', ['emptyLabel' => 'Dashed']],
 			'converted account header' => ['et2_account', 'et2-nextmatch-header-account', ['emptyLabel' => 'Owner']],
 			'converted custom header'  => ['et2_custom', 'et2-nextmatch-header-custom', ['widgetType' => 'select-app']],
+			'customfields'             => ['customfields', 'et2-nextmatch-header-customfields', []],
 		];
 	}
 

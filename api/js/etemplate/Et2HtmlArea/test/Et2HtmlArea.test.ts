@@ -18,6 +18,7 @@ import {
 	TOOLBAR_ADVANCED,
 	TOOLBAR_SIMPLE
 } from "../Et2HtmlAreaConfig";
+import {assertNoElement} from "../../test/assertDom";
 
 type Preferences = Record<string, any>;
 
@@ -283,7 +284,7 @@ describe("Et2HtmlArea default rich text mode", () =>
 
 		assert.equal(element.mode, "", "Empty mode should be the default rich text mode");
 		assert.exists(editor, "Default mode should render TinyMCE");
-		assert.notExists(element.shadowRoot.querySelector("textarea"), "Default mode should not render textarea");
+		assertNoElement(element.shadowRoot.querySelector("textarea"), "Default mode should not render textarea");
 		assert.equal(editor.getAttribute("toolbar"), "bold italic | link", "Default mode should use the toolbar preference");
 		assert.equal(editor.getAttribute("menubar"), DEFAULT_MENUBAR, "Default mode should use the menubar preference");
 		assert.equal(editor.getAttribute("statusbar"), "false", "Statusbar should keep the HtmlArea default");
@@ -329,8 +330,8 @@ describe("Et2HtmlArea default rich text mode", () =>
 		`);
 		const readonlyContent = element.shadowRoot.querySelector("[part='readonly-content']");
 
-		assert.notExists(element.shadowRoot.querySelector("tinymce-editor"), "Readonly rich text should not initialize TinyMCE");
-		assert.notExists(element.shadowRoot.querySelector("textarea"), "Readonly rich text should not render a textarea");
+		assertNoElement(element.shadowRoot.querySelector("tinymce-editor"), "Readonly rich text should not initialize TinyMCE");
+		assertNoElement(element.shadowRoot.querySelector("textarea"), "Readonly rich text should not render a textarea");
 		assert.equal(readonlyContent?.querySelector("p")?.textContent, "Hello world");
 		assert.exists(
 			readonlyContent?.querySelector("strong"),
@@ -356,10 +357,10 @@ describe("Et2HtmlArea default rich text mode", () =>
 		`);
 		const readonlyContent = element.shadowRoot.querySelector("[part='readonly-content']");
 
-		assert.notExists(element.shadowRoot.querySelector("tinymce-editor"), "Readonly ASCII text should not initialize TinyMCE");
-		assert.notExists(element.shadowRoot.querySelector("textarea"), "Readonly ASCII text should not render a textarea");
+		assertNoElement(element.shadowRoot.querySelector("tinymce-editor"), "Readonly ASCII text should not initialize TinyMCE");
+		assertNoElement(element.shadowRoot.querySelector("textarea"), "Readonly ASCII text should not render a textarea");
 		assert.include(readonlyContent?.textContent ?? "", "First line\n<strong>literal</strong>");
-		assert.notExists(
+		assertNoElement(
 			readonlyContent?.querySelector("strong"),
 			"Readonly ASCII text should render markup as literal text"
 		);
@@ -482,8 +483,8 @@ describe("Et2HtmlAreaReadonly", () =>
 		const readonlyContent = element.shadowRoot.querySelector("[part='readonly-content']");
 
 		assert.instanceOf(element, customElements.get("et2-htmlarea_ro"));
-		assert.notExists(element.shadowRoot.querySelector("tinymce-editor"), "Readonly component should not initialize TinyMCE");
-		assert.notExists(element.shadowRoot.querySelector("textarea"), "Readonly component should not render a textarea");
+		assertNoElement(element.shadowRoot.querySelector("tinymce-editor"), "Readonly component should not initialize TinyMCE");
+		assertNoElement(element.shadowRoot.querySelector("textarea"), "Readonly component should not render a textarea");
 		assert.equal(readonlyContent?.querySelector("p")?.textContent, "Readonly HTML");
 		assert.exists(readonlyContent?.querySelector("em"), "Readonly component should render HTML values as HTML");
 	});
@@ -496,7 +497,7 @@ describe("Et2HtmlAreaReadonly", () =>
 		const readonlyContent = element.shadowRoot.querySelector("[part='readonly-content']");
 
 		assert.equal(readonlyContent?.textContent?.trim(), "<p>Literal</p>");
-		assert.notExists(readonlyContent?.querySelector("p"), "ASCII mode should not treat the value as HTML");
+		assertNoElement(readonlyContent?.querySelector("p"), "ASCII mode should not treat the value as HTML");
 	});
 
 	it("accepts detached row value updates", async() =>
@@ -548,7 +549,11 @@ inputBasicTests(async() =>
 	`);
 	sinon.stub(element, "egw").returns(window.egw as any);
 	return element;
-}, "Rich text value", "tinymce-editor");
+}, "Rich text value", "tinymce-editor", {
+	// conformance: the control is TinyMCE's iframe editor, which the TinyMceStub in these tests does not render, so
+	// there is nothing here to check - the stub also has no options.get(), which disabling goes through
+	skip: ["a11y", "disabled-controls", "required-aria", "help-text-aria", "focus", "label-click"]
+});
 /**
  * Contract under test: markdown is a plain-text feature, confined to mode="ascii".
  *

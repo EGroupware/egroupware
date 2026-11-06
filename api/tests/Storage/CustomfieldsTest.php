@@ -20,7 +20,7 @@ use EGroupware\Api\Vfs;
 class CustomfieldsTest extends LoggedInTest
 {
 	const APP = 'test';
-	protected $customfields = null;
+	protected $customfields = array();
 	private $mounts = array();
 
 	protected $simple_field = array(

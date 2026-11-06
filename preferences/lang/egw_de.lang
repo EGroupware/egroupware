@@ -210,7 +210,7 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import/Export. Der Standard-Zeichensatz ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	de	In welcher Ansicht werden Markdown-fähige Textfelder geöffnet? Wenn Sie die Ansicht in einem Feld ändern, wird diese Einstellung aktualisiert.
+which view markdown-enabled text fields open in by default	preferences	de	In welcher Ansicht Textfelder mit Markdown standardmäßig geöffnet werden
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	de	Sie können Funktionen auswählen, die in der Symbolleiste aktiviert werden sollen.

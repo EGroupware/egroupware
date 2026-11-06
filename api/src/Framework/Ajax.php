@@ -206,6 +206,21 @@ abstract class Ajax extends Api\Framework
 		// should we draw the framework, or just a header
 		$do_framework = isset($_GET['cd']) && $_GET['cd'] === 'yes';
 
+		// exposed to the client as data-push-longpolling-fallback on the egw.js bootstrap script
+		// tag (id="egw_script_id") - the SAME condition swoolepush's own framework_header() hook
+		// already uses to decide whether to embed websocket bootstrap data at all (see
+		// swoolepush/src/Hooks.php - 'popup' => !$do_framework, passed to every framework_header
+		// hook below), now also readable generically by anything client-side (currently only
+		// egw_push_fallback.ts) that needs the exact same "is this the real top framework page"
+		// signal without duplicating a client-side-only, and considerably more fragile,
+		// egw-object-identity check. NOT named 'popup': Api\Framework\Extra::popup() already
+		// writes a DIFFERENT, unrelated self::$extra['popup'] (a JSON-encoded egw.open_link() args
+		// array, read by egw.js's own, pre-existing data-popup handling) - reusing that name here
+		// clobbered it (found live: 'popup' => true became a bare boolean where egw.js expected an
+		// array, throwing "TypeError: CreateListFromArrayLike called on non-object" whenever a
+		// page load ALSO happened to call Extra::popup()).
+		$extra['push-longpolling-fallback'] = !$do_framework;
+
 		// load clientside link registry to framework only
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
@@ -833,14 +848,21 @@ abstract class Ajax extends Api\Framework
 		}
 		$open = implode(',',$tabs);
 
-		if ($open != $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'] ||
-			$active != $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'])
+		// compare against the stored prefs and the session copy, as get_navbar_apps() restores from
+		// the session first: skipping the update because the prefs (possibly changed by another
+		// session) already match would leave a stale session list to be restored on reload
+		$GLOBALS['egw']->preferences->read_repository();
+		$stored = $GLOBALS['egw']->preferences->data['common'] ?? [];
+		$session_open = Api\Cache::getSession(__CLASS__, 'open_tabs');
+		if ($open !== $session_open)
+		{
+			Api\Cache::setSession(__CLASS__, 'open_tabs', $open);
+		}
+		if ($open != ($stored['open_tabs'] ?? '') || ($active ?? '') != ($stored['active_tab'] ?? ''))
 		{
 			//error_log(__METHOD__.'('.array2string($tablist).") storing common prefs: open_tabs='$tabs', active_tab='$active'");
-			Api\Cache::setSession(__CLASS__, 'open_tabs', $open);
-			$GLOBALS['egw']->preferences->read_repository();
 			$GLOBALS['egw']->preferences->add('common', 'open_tabs', $open);
-			$GLOBALS['egw']->preferences->add('common', 'active_tab', $active);
+			$GLOBALS['egw']->preferences->add('common', 'active_tab', $active ?? '');
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
 	}

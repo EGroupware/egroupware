@@ -55,6 +55,26 @@ export function checkContact(email : string) : Promise<false | ContactInfo>
 	}
 	if(!contact_request && window.egw)
 	{
+		// Answer everybody waiting, and reset the lookup state in the same step: a caller arriving
+		// between the two would queue on state about to be discarded, and never be answered.
+		// A failed lookup (offline, session expired, ...) has no result: its callers are told
+		// "no contact", and nothing is cached so the next call tries again.  Left alone, the state
+		// stayed set and every later call queued behind a request that was never going to answer,
+		// until the page was reloaded.
+		const answer = (result? : {[email : string] : ContactInfo | false}) =>
+		{
+			const waiting = contact_requests;
+			contact_request = null;
+			contact_requests = {};
+			for(const email in waiting)
+			{
+				if(result)
+				{
+					email_cache[email] = result[email];
+				}
+				waiting[email].forEach((resolve) => resolve(result ? result[email] : false));
+			}
+		};
 		contact_request = window.egw.jsonq('EGroupware\\Api\\Etemplate\\Widget\\Url::ajax_contact', [[]], null, null,
 			(parameters) =>
 			{
@@ -62,19 +82,7 @@ export function checkContact(email : string) : Promise<false | ContactInfo>
 				{
 					parameters[0].push(email);
 				}
-			}).then((result) =>
-		{
-			for(const email in contact_requests)
-			{
-				email_cache[email] = result[email];
-				contact_requests[email].forEach((resolve) =>
-				{
-					resolve(result[email]);
-				});
-			}
-			contact_request = null;
-			contact_requests = {};
-		});
+			}).then((result) => answer(result), () => answer());
 	}
 	if(typeof contact_requests[email] === 'undefined')
 	{

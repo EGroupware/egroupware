@@ -13,11 +13,15 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags (box/hbox/vbox/vfs-select)
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
+// customfields sits inside the (/?) group, not beside it, so a paired tag has its closing
+// </customfields> rewritten too - matched on its own it would leave the opening converted and the
+// closing behind.  "customfields-types" is a different widget and must not be caught, which the
+// alternation's explicit -list/-filters takes care of.
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box|customfields(?:-list|-filters)?)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // add et2- prefix to this (larger) set of widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|vfs-mode|link|link-[a-z]+|favorites|html|htmlarea|styles))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|historylog|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|vfs-mode|link|link-[a-z]+|favorites|html|htmlarea|styles))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -151,6 +155,11 @@ function send_template()
 				'checkbox'                => 'selected_value,unselected_value,ro_true,ro_false',
 				'radio'                   => 'set_value,ro_true,ro_false',
 				'customfields'            => 'type_filter,private,fields',
+				// calendar's edit.xet uses <historylog options="history_status"/>.  Named here so
+				// the attribute arrives as status_id= rather than as a raw options= the web
+				// component would ignore; the legacy widget declares status_id as an attribute
+				// too, so this is equally correct for either tag.
+				'historylog'              => 'status_id',
 				'date'                    => 'data_format,ignore',
 				// Legacy option "mode" was never implemented in et2
 				'description'             => 'bold-italic,link,activate_links,label_for,link_target,link_popup_size,link_title',
@@ -442,7 +451,8 @@ function send_template()
 
 		// nextmatch headers
 		// replace all filters with NM headers, if not running via cli (as we currently don't want to remove them permanently!)
-		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<nextmatch [^>]*replaceFilters="false"/', $str);
+		// replaceFilters="false" keeps them, eg. for a nextmatch in a popup, which gets no filterbox
+		$replace_filters = PHP_SAPI !== 'cli' && !preg_match('/<(et2-)?nextmatch [^>]*replaceFilters="false"/', $str);
 		// legacy name --> web-component: nextmatch-header, -filterheader/-taglistheader/-filter, -accountfilter,
 		// -customfilter, -entryheader/-entry, the dashed nextmatch-header-* form and the et2- prefixed one
 		// (closing tag optional) all give a "kind" of '', filter, account, custom or entry
@@ -459,7 +469,7 @@ function send_template()
 			{
 				$attrs['widget_type'] = $attrs['type'] ?? null;
 			}
-			// sortheaders keep their tag, et2- prefixed headers are already converted
+			// sortheaders get renamed by convertNextmatch(), et2- prefixed headers are already converted
 			if ($kind === 'sort' || !$replace_filters && ($matches[2] || $kind === 'custom' && empty($attrs['widget_type'])))
 			{
 				return $matches[0];
@@ -564,11 +574,14 @@ function send_template()
 		}
 
 		// wrap et2-textarea and htmlarea in et2-ai, if not already done or noAiTools attribute is set truish
+		// nextmatch rows (ids bound to the row: ${row}[...], $row_cont[...]) are never wrapped, a template can still
+		// wrap them explicitly with <et2-ai>
 		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|et2-htmlarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 			$noAiTools = $attrs['noAiTools'] ?? 'false';
-			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false')
+			if (!empty($matches[1]) || $noAiTools && $noAiTools !== 'false' ||
+				preg_match('/^\$(\{row\}|row_cont\b|row\b)/', $attrs['id'] ?? ''))
 			{
 				return $matches[0];
 			}
@@ -663,6 +676,22 @@ function send_template()
 			return str_replace($matches[3], stringAttrs($attrs).(substr($matches[3], -1) === '/' ? '/' : ''), $matches[0]);
 		}, $str);
 
+		// legacy <nextmatch> --> <et2-nextmatch>, unless it opts out with legacy="true"
+		$str = convertNextmatch($str, $fspath);
+
+		// legacy grid: the grid widget only takes pixels or percent as plain numbers, so a numeric column
+		// width (pixels) becomes a relative length (1em = 16px), which the grid passes on to CSS unchanged
+		$str = preg_replace_callback('#<column\b([^>]*?)(/?)>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (!isset($attrs['width']) || !is_numeric($attrs['width']))
+			{
+				return $matches[0];
+			}
+			$attrs['width'] = round($attrs['width'] / 16, 2) . 'em';
+			return '<column' . stringAttrs($attrs) . $matches[2] . '>';
+		}, $str);
+
 		$processing = microtime(true);
 
 		if (isset($cache) && (file_exists($cache_dir = dirname($cache)) || mkdir($cache_dir, 0755, true) || is_dir($cache_dir)))
@@ -742,6 +771,300 @@ function send_template()
 }
 
 /**
+ * Convert legacy <nextmatch> widgets and their row templates to <et2-nextmatch>
+ *
+ * Runs last, on the otherwise fully converted template, so apps nobody hand-converted (eg. customer
+ * customisations) still get a working list.  It only makes the template changes every hand conversion
+ * made; app JS written against the legacy widget (nm.controller, nm_action(), ...) is not touched and
+ * can still fail on first use.  Like <historylog>, only the copy sent to the client changes: the server
+ * keeps parsing the raw file and so keeps processing the row templates the legacy way, which is what
+ * provides eg. the customfields data the rows need.
+ *
+ * <nextmatch legacy="true"> keeps the legacy widget, together with the row template it references.
+ *
+ * What gets converted:
+ * - the nextmatch itself: options= becomes template=, header_left/header_row become a template in its
+ *   "header" slot, header_right a sibling template in the "main-header" slot
+ * - its row template(s): the first row becomes the header row (class="th"), the legacy
+ *   sortheader/customfields headers get renamed, bare $field row classes become $row_cont[field],
+ *   and options= left on a row widget is removed, as a web-component can not take it
+ * - a grid nested in a header or row cell becomes an et2-vbox of et2-hboxes, as the datagrid can only
+ *   render web-components; row/column disabled= and a row class= carry over, column alignment is lost
+ *
+ * A repeating grid (an id containing $row, one row per entry of an array in the row data) can not be
+ * expressed this way: it is left alone, with a comment in the template and a note in the error log, and the
+ * datagrid warns about it in the browser console.
+ *
+ * @param string $str template xml
+ * @param string $path template path, for the error log
+ * @return string
+ */
+function convertNextmatch(string $str, string $path) : string
+{
+	// only a legacy nextmatch, or a separate row template still using legacy headers, needs converting
+	if (!preg_match('#<nextmatch[\s/>]|<nextmatch-(sortheader|customfields)[\s/>]#', $str))
+	{
+		return $str;
+	}
+	$dom = new DOMDocument();
+	$use_errors = libxml_use_internal_errors(true);
+	$loaded = $dom->loadXML($str, LIBXML_NONET);
+	libxml_clear_errors();
+	libxml_use_internal_errors($use_errors);
+	if (!$loaded)
+	{
+		error_log(__FUNCTION__."() $path: can not parse template, nextmatch NOT converted");
+		return $str;
+	}
+	$xpath = new DOMXPath($dom);
+	$warnings = [];
+	$row_templates = $legacy_templates = [];
+
+	foreach (iterator_to_array($xpath->query('//nextmatch')) as $nm)
+	{
+		$template = $nm->getAttribute('template') ?: $nm->getAttribute('options');
+		if ($nm->getAttribute('legacy') === 'true')
+		{
+			$nm->removeAttribute('legacy');
+			$legacy_templates[$template] = true;
+			continue;
+		}
+		$row_templates[$template] = true;
+		convertNextmatchWidget($nm, $template);
+	}
+
+	foreach (iterator_to_array($xpath->query('//template[@id]|//et2-template[@id]')) as $tpl)
+	{
+		$id = $tpl->getAttribute('id');
+		if (isset($legacy_templates[$id]) || !isset($row_templates[$id]) &&
+			!$xpath->query('.//nextmatch-sortheader|.//nextmatch-customfields', $tpl)->length)
+		{
+			continue;
+		}
+		convertNextmatchRowTemplate($tpl, $xpath, $warnings);
+	}
+
+	if ($warnings)
+	{
+		error_log(__FUNCTION__."() $path: ".implode("\n", $warnings));
+	}
+	// empty web-components must not be self-closing, everything else keeps its short form
+	return preg_replace('#<((?!et2-)[a-zA-Z][\w.:-]*)(\s[^<>]*)?></\1>#', '<$1$2/>',
+		$dom->saveXML(null, LIBXML_NOEMPTYTAG));
+}
+
+/**
+ * Turn one legacy <nextmatch> element into <et2-nextmatch>
+ *
+ * @param DOMElement $nm
+ * @param string $template row template
+ */
+function convertNextmatchWidget(DOMElement $nm, string $template) : void
+{
+	$dom = $nm->ownerDocument;
+	$et2 = $dom->createElement('et2-nextmatch');
+	foreach (iterator_to_array($nm->attributes) as $attr)
+	{
+		switch ($attr->name)
+		{
+			case 'template':
+			case 'options':
+			case 'no_dynheight':    // no longer needed
+			case 'disable_selection_advance':    // no equivalent, the next row is not selected
+				break;
+			case 'header_left':
+			case 'header_row':
+				// the header slot is inside the nextmatch's namespace, as the legacy header templates were
+				$header = $dom->createElement('et2-template');
+				$header->setAttribute('id', $attr->value);
+				$header->setAttribute('slot', 'header');
+				$et2->appendChild($header);
+				break;
+			case 'header_right':
+				$header = $dom->createElement('et2-template');
+				$header->setAttribute('template', $attr->value);
+				$header->setAttribute('slot', 'main-header');
+				$nm->parentNode->insertBefore($header, $nm);
+				break;
+			default:
+				$et2->setAttribute(camelCaseAttr($attr->name), $attr->value);
+		}
+	}
+	if ($template !== '')
+	{
+		$et2->setAttribute('template', $template);
+	}
+	$nm->parentNode->replaceChild($et2, $nm);
+}
+
+/**
+ * Make a legacy nextmatch row template usable by the et2-nextmatch datagrid
+ *
+ * @param DOMElement $tpl <template> or <et2-template>
+ * @param DOMXPath $xpath
+ * @param string[] &$warnings
+ */
+function convertNextmatchRowTemplate(DOMElement $tpl, DOMXPath $xpath, array &$warnings) : void
+{
+	$id = $tpl->getAttribute('id');
+	if (($grid = $xpath->query('(.//grid)[1]', $tpl)->item(0)))
+	{
+		// nested grids, innermost first, so an outer one is converted with its content already done
+		foreach (array_reverse(iterator_to_array($xpath->query('./rows/row//grid', $grid))) as $nested)
+		{
+			if (!convertNestedGrid($nested, $xpath))
+			{
+				$message = "row template '$id': repeating grid id=\"{$nested->getAttribute('id')}\" can not be converted, its cell stays empty";
+				$warnings[] = $message;
+				$nested->parentNode->insertBefore($tpl->ownerDocument->createComment(' '.$message.' '), $nested);
+			}
+		}
+		$rows = iterator_to_array($xpath->query('./rows/row', $grid));
+		// the datagrid finds the header row by its class, the legacy widget just took the first row
+		if (count($rows) > 1 && !preg_match('/(^|\s)th(\s|$)/', $rows[0]->getAttribute('class')))
+		{
+			$rows[0]->setAttribute('class', trim('th '.$rows[0]->getAttribute('class')));
+		}
+		foreach (array_slice($rows, 1) as $row)
+		{
+			// on a row, only the $row_cont[field] form resolves, a bare $field is used literally
+			if (($class = $row->getAttribute('class')) !== '')
+			{
+				$row->setAttribute('class', preg_replace('/(^|\s)\$(?!row(_cont)?\b)([a-z_][a-z0-9_]*)(?=\s|$)/i',
+					'$1$row_cont[$3]', $class));
+			}
+			foreach (iterator_to_array($xpath->query('.//*[@options]', $row)) as $widget)
+			{
+				$warnings[] = "row template '$id': removed options=\"{$widget->getAttribute('options')}\" from <$widget->tagName>";
+				$widget->removeAttribute('options');
+			}
+		}
+	}
+	foreach (iterator_to_array($xpath->query('.//nextmatch-sortheader|.//nextmatch-customfields', $tpl)) as $header)
+	{
+		renameElement($header, $header->tagName === 'nextmatch-customfields' ?
+			'et2-nextmatch-header-customfields' : 'et2-nextmatch-sortheader');
+	}
+}
+
+/**
+ * Replace a grid nested in a row template cell with et2-vbox/et2-hbox
+ *
+ * Each grid row becomes an et2-hbox, carrying the row's disabled= and class=, a column's disabled= goes
+ * onto each of its cells.  A grid with a single, plain row becomes a single et2-hbox.
+ *
+ * @param DOMElement $grid
+ * @param DOMXPath $xpath
+ * @return bool false if it is a repeating grid, which can not be converted
+ */
+function convertNestedGrid(DOMElement $grid, DOMXPath $xpath) : bool
+{
+	if (str_contains($grid->getAttribute('id'), '$'))
+	{
+		return false;
+	}
+	$dom = $grid->ownerDocument;
+	$columns_disabled = array_map(static fn(DOMElement $column) => $column->getAttribute('disabled'),
+		iterator_to_array($xpath->query('./columns/column', $grid)));
+	$rows = iterator_to_array($xpath->query('./rows/row', $grid));
+	$cells = array_map(static fn(DOMElement $row) => iterator_to_array($xpath->query('./*', $row)), $rows);
+	$multi_column = count($columns_disabled) > 1 || max(array_map('count', $cells) ?: [0]) > 1;
+	$single_row = count($rows) === 1 && !$rows[0]->hasAttribute('disabled') && !$rows[0]->hasAttribute('class');
+
+	$box = $dom->createElement($single_row ? 'et2-hbox' : 'et2-vbox');
+	foreach (iterator_to_array($grid->attributes) as $attr)
+	{
+		// layout attributes of the grid have no meaning for a box
+		if (!in_array($attr->name, ['width', 'height', 'spacing', 'padding', 'border', 'resize_ratio'], true))
+		{
+			$box->setAttribute(camelCaseAttr($attr->name), $attr->value);
+		}
+	}
+	foreach ($rows as $n => $row)
+	{
+		$parent = $box;
+		if (!$single_row && ($multi_column && count($cells[$n]) > 1 || $row->hasAttribute('disabled') || $row->hasAttribute('class')))
+		{
+			$parent = $box->appendChild($dom->createElement('et2-hbox'));
+			foreach (['disabled', 'class'] as $name)
+			{
+				if ($row->hasAttribute($name)) $parent->setAttribute($name, $row->getAttribute($name));
+			}
+		}
+		$column = 0;
+		foreach ($cells[$n] as $cell)
+		{
+			$span = $cell->getAttribute('span');
+			$cell->removeAttribute('span');
+			if (!empty($disabled = $columns_disabled[$column] ?? ''))
+			{
+				if (!$cell->hasAttribute('disabled'))
+				{
+					$cell->setAttribute('disabled', $disabled);
+				}
+				else
+				{
+					// a widget has only one disabled= expression, so the column's goes on a wrapper
+					$wrapper = $dom->createElement('et2-hbox');
+					$wrapper->setAttribute('disabled', $disabled);
+					$wrapper->appendChild($cell);
+					$cell = $wrapper;
+				}
+			}
+			$parent->appendChild($cell);
+			$column = $span === 'all' ? count($columns_disabled) : $column + max(1, (int)$span);
+		}
+	}
+	$grid->parentNode->replaceChild($box, $grid);
+	return true;
+}
+
+/**
+ * Rename an element, keeping its attributes (camelCased for a web-component) and children
+ *
+ * @param DOMElement $element
+ * @param string $name new tag name
+ * @return DOMElement the new element
+ */
+function renameElement(DOMElement $element, string $name) : DOMElement
+{
+	$new = $element->ownerDocument->createElement($name);
+	foreach (iterator_to_array($element->attributes) as $attr)
+	{
+		$new->setAttribute(str_starts_with($name, 'et2-') ? camelCaseAttr($attr->name) : $attr->name, $attr->value);
+	}
+	while ($element->firstChild)
+	{
+		$new->appendChild($element->firstChild);
+	}
+	$element->parentNode->replaceChild($new, $element);
+	return $new;
+}
+
+/**
+ * Web-component attribute name for a legacy one, eg. "no_lang" --> "noLang"
+ *
+ * The same renames the web-component attribute pass in send_template() does, for elements created after it ran.
+ *
+ * @param string $name
+ * @return string
+ */
+function camelCaseAttr(string $name) : string
+{
+	static $deprecated = [
+		'needed' => 'required',
+		'blur' => 'placeholder',
+	];
+	$name = $deprecated[$name] ?? $name;
+	if (count($parts = preg_split('/[_-]/', $name)) > 1)
+	{
+		if ($name === 'parent_node') $parts[1] = 'Id';  // we can not use DOM property parentNode --> parentId
+		$name = array_shift($parts).implode('', array_map('ucfirst', $parts));
+	}
+	return $name;
+}
+
+/**
  * Parse attributes in an array
  *
  * @param string $str
@@ -753,7 +1076,7 @@ function parseAttrs($str)
 	{
 		return [];
 	}
-	if (!preg_match_all('/(^|\s)([a-z\d_-]+)="([^"]*)"/i', $str, $attrs, PREG_PATTERN_ORDER))
+	if (!preg_match_all('/(^|\s)([a-z\d_-]+)\s*=\s*"([^"]*)"/i', $str, $attrs, PREG_PATTERN_ORDER))
 	{
 		throw new Exception("Can NOT parse attributes from '$str'");
 	}

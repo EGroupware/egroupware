@@ -19,8 +19,8 @@
         </et2-visually-hidden>
         <et2-select  id="filter" label="Filter" class="et2-label-fixed"></et2-select>
         <et2-details  summary="Column Filters" id="col_filters" open="true">
-            <customfields-filters id="col_filter" readonly="true" label="" fields="" class="et2-label-fixed">
-            </customfields-filters>
+            <et2-customfields-filters id="col_filter" readonly="true" label="" fields="" class="et2-label-fixed">
+            </et2-customfields-filters>
         </et2-details>
         <et2-details  summary="Favorites" open="true">
             <et2-favorites-menu  application="filemanager"></et2-favorites-menu>

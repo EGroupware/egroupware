@@ -29,8 +29,12 @@ import {renderAttachmentIndex} from "./attachmentIndex";
 import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {dropRtfBody, findTnefEntry, isTnefEntry, renumber, spliceUnpacked} from "./tnef";
 import {activateBodyLinks, openLinksInNewTab} from "./bodyLinks";
+import {adaptMessageForDarkMode, restoreMessageFromDarkMode} from "./darkReader";
+import {addPrintShortcut, imagesLoaded, printBodyWithHeader, printHeaderRows} from "./printBody";
 import {buildErrorNode, buildFolderLevel, buildMailboxPaths, FolderTreeNode, isNamespaceRootName} from "./folderTree";
 import {Et2UrlEmail} from "../../api/js/etemplate/Et2Url/Et2UrlEmail";
+import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {defaultFont} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -167,24 +171,31 @@ export class MailApp extends EgwApp
 	image_proxy : any = 'https://';
 
 	/**
+	 * Url of the stylesheet of the client-side rendered message body, with a cache-buster
+	 */
+	preview_css : string = '';
+
+	/**
 	 * Re-render a JMAP-native (srcdoc) body document showing its external content,
 	 * set by loadMessageBody() and used by resolveExternalImages()
 	 */
 	private externalContentRenderers = new WeakMap<Document, () => void>();
 
 	/**
-	 * Intercepts Ctrl/Cmd+P on mail.index (the main window), see its own installation site in
-	 * et2_ready() for why. Bound at most once (et2_ready('mail.index') can re-run for a client-
-	 * side template reload, see this.tree_wdg's own comment a few lines below that case).
+	 * Watches EGroupware's own dark mode (data-darkmode of <html>), set by et2_ready()
 	 */
-	private printKeydownHandler : ((e : KeyboardEvent) => void) | null = null;
+	private darkmodeObserver: MutationObserver;
 
 	/**
-	 * Resolves once preparePrint()'s latest tmpPrintDiv copy (including waiting out any still-
-	 * decoding inline images) has actually landed - displayPrint() awaits this before calling
-	 * window.print(), see both methods' own docblocks for why.
+	 * External content banner shown for the body in a frame, see externalContentBannerAnchor()
 	 */
-	private printContentReady : Promise<void> = Promise.resolve();
+	private externalContentBanners = new WeakMap<HTMLElement, HTMLElement>();
+
+
+	/**
+	 * Row data of the message renderMessageInto() displayed last, for the header printMessage() prints
+	 */
+	private printHeaderData: {rowId: string, data: any};
 
 	customLabels: CustomLabels = {};
 
@@ -389,6 +400,9 @@ export class MailApp extends EgwApp
 		this._jmap?.destroy();
 		delete this._jmap;
 
+		this.darkmodeObserver?.disconnect();
+		delete this.darkmodeObserver;
+
 		// call parent
 		super.destroy.apply(this, arguments);
 	}
@@ -427,6 +441,13 @@ export class MailApp extends EgwApp
 		
 		this.et2_obj = et2;
 		this.push_active = {};
+		// switch already loaded message bodies, when EGroupware switches dark mode,
+		// the framework also sets it on popups like mail.display
+		if (!this.darkmodeObserver)
+		{
+			this.darkmodeObserver = new MutationObserver(() => this.applyBodyDarkmode());
+			this.darkmodeObserver.observe(document.documentElement, {attributes: true, attributeFilter: ['data-darkmode']});
+		}
     const self = this;
 		switch (_name)
 		{
@@ -437,25 +458,13 @@ export class MailApp extends EgwApp
 				this.importMessageInit();
 				break;
 			case 'mail.index':
-				this.installPrintKeydownInterception();
+				// ctrl/cmd+P prints the mail shown in the preview, without one the framework prints the list
+				// (EgwFramework.handleKeydown())
+				this.addPrintShortcut(document);
 				const messageIframeEl = this.et2?.getWidgetById('messageIFRAME')?.iframe as HTMLIFrameElement | undefined;
-				messageIframeEl?.addEventListener('load', () =>
-				{
-					// A keydown fired while the user's focus is INSIDE the iframe (eg. they clicked
-					// or selected text in the message body - a common state while reading mail) never
-					// reaches a listener on the outer document at all - an iframe is a separate
-					// browsing context with its own document, keyboard events there simply do not
-					// bubble out. Found live 2026-10-15 (ralf, re-testing on boulder): Cmd+P still
-					// opened the native dialog over the main window even after installPrintKeydown-
-					// Interception() ran, because focus was inside this very iframe. Re-attached on
-					// every 'load' (not just once) because the iframe gets a brand-new document on
-					// every message selection - the previous document's listener is simply discarded
-					// with it, nothing to remove.
-					if (self.printKeydownHandler)
-					{
-						messageIframeEl.contentDocument?.addEventListener('keydown', self.printKeydownHandler, {capture : true});
-					}
-				});
+				// a key pressed in the mail body does not reach the page's own listener,
+				// and every message is a new document
+				messageIframeEl?.addEventListener('load', () => self.addPrintShortcut(messageIframeEl.contentDocument));
 				const nm = this.et2.getWidgetById(this.nm_index);
 				this.isMainWindow = true;
 
@@ -476,7 +485,6 @@ export class MailApp extends EgwApp
 				{
 					(nm as unknown as { applyFilters : (f : Record<string, any>) => void }).applyFilters({unseenFirst : '1'});
 				}
-				this.sizeUnseenFirstToggleIcons();
 
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
 				// see rememberUsedFolder()/updateFolderQuickAction().
@@ -600,10 +608,11 @@ export class MailApp extends EgwApp
 				if (!already_refreshed) this.callRefreshVacationNotice();
 				break;
 			case 'mail.display':
-				// Prepare display dialog for printing
-				// copies iframe content to a DIV, as iframe causes
-				// trouble for multipage printing
-
+				this.addPrintShortcut(document);
+				// the user's default font for printing the whole popup (app.less), as for the body (MailJmap.wrapDocument())
+				const {fontFamily, fontSize} = defaultFont();
+				document.documentElement.style.setProperty('--mail-default-font-family', fontFamily);
+				document.documentElement.style.setProperty('--mail-default-font-size', fontSize);
 				this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.addEventListener('load', function(e)
 				{
 					// mailvelopeAvailable(mailvelopeDisplay) moved to loadMessageBody()'s own fast
@@ -613,7 +622,8 @@ export class MailApp extends EgwApp
 					// calling it from both created two separate Mailvelope display containers side
 					// by side for the same message (found live 2026-09-08, ralf: "It showed 3
 					// versions of the message side by side... twice the message with mailvelope").
-					self.preparePrint();
+					// a key pressed in the body does not reach the popup's own listener
+					self.addPrintShortcut((this as HTMLIFrameElement).contentDocument);
 					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
@@ -778,6 +788,7 @@ export class MailApp extends EgwApp
 		this.updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
+		this.preview_css = this.et2.getArrayMgr('content').getEntry('preview_css') || '';
 	}
 
 	/**
@@ -2059,7 +2070,40 @@ export class MailApp extends EgwApp
 				'mail.EGroupware\\Mail\\Compose.ajax_getComposeToolbarData', [accId.split(':')[0]]
 			);
 		}
-		return this.composeToolbarDataPromises[accId];
+		// Hand every caller its OWN deep copy, never the cached objects themselves: a compose popup
+		// writes objects of its own realm into what it gets (eg. its toolbar replaces actions.<id>.data,
+		// below bootstrapComposePopup()'s shallow {...actions} copy). Left in this MAIN-window cache,
+		// they kept every closed compose popup alive (~20MB each) until the main window reloaded.
+		// The cached value is plain JSON from ajax_getComposeToolbarData() and nobody else ever gets
+		// a reference to it, so structuredClone() always works.
+		return this.composeToolbarDataPromises[accId].then(data => structuredClone(data));
+	}
+
+	/**
+	 * Ticket #125092 (Ingo/Birgit, via ralf - "ohne Neuladen wird wieder die genommen von der ich
+	 * zuvor gewechselt war... als würde die pref nicht neu gelesen"): getComposeToolbarData()'s
+	 * own cache is keyed ONLY by accId, kept "for the life of the MAIN window" - it has no way to
+	 * know its cached `content.mailaccount` (baked in from whatever mail/LastSignatureIDUsed was
+	 * at the time of that FIRST fetch for this account) goes stale the moment a later send updates
+	 * that very preference (MailJmap.rememberLastUsedIdentity()) - every LATER compose for the
+	 * same account, same main-window lifetime, kept reusing that now-wrong identity pre-selection
+	 * without a full page reload (which simply starts a fresh MailApp/cache) ever being involved.
+	 * Called right after rememberLastUsedIdentity() updates the preference, so the NEXT compose
+	 * for this account re-fetches fresh content instead.
+	 *
+	 * Same opener-redirect as getComposeToolbarData() itself - a send can complete from within a
+	 * popup's own MailJmap instance, whose `this.app` is that popup's OWN freshly-instantiated
+	 * MailApp, not the one actually holding the cache.
+	 */
+	invalidateComposeToolbarData(accId : string) : void
+	{
+		const openerMail : MailApp = MailApp.safeOpener((opener) => (opener as any).app?.mail);
+		if (openerMail && openerMail !== this)
+		{
+			openerMail.invalidateComposeToolbarData(accId);
+			return;
+		}
+		delete this.composeToolbarDataPromises[accId];
 	}
 
 	/**
@@ -2963,6 +3007,7 @@ export class MailApp extends EgwApp
 		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
 		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
+		data.mail_darkmode = this.mailDarkmodePref();
 
 		if (partID)
 		{
@@ -3125,6 +3170,7 @@ export class MailApp extends EgwApp
 			this._popupMergedContent = {...data, attachmentsBlock: []};
 		}
 		if (!egwIsMobile() && template) template.set_value({content: partID ? this._popupMergedContent : data, sel_options:sel_options});
+		this.printHeaderData = {rowId, data};
 
 		return data;
 	}
@@ -3685,6 +3731,107 @@ export class MailApp extends EgwApp
 	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
 	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
 	 */
+	/**
+	 * User did not switch dark mode off for message bodies (mail_darkmode preference, default on)
+	 */
+	private mailDarkmodePref(): boolean
+	{
+		return this.egw.preference('mail_darkmode', 'mail') !== '0';
+	}
+
+	/**
+	 * Message bodies are shown in dark mode (mailDarkmode in preview.css):
+	 * EGroupware itself is in dark mode and the user did not switch it off for mails
+	 */
+	private isBodyDarkmode(): boolean
+	{
+		return this.mailDarkmodePref() && document.documentElement.dataset.darkmode === '1';
+	}
+
+	/**
+	 * Show message bodies in dark mode or not, see isBodyDarkmode()
+	 *
+	 * Port of Thunderbird's "Dark Reader": the body gets a dark background and light text,
+	 * and adaptMessageForDarkMode() removes the colors the message sets itself, which would not be readable on that.
+	 *
+	 * Also syncs the mailDarkmodeToggle buttons, as eg. mobile's mail.display gets no
+	 * mail_darkmode content from renderMessageInto().
+	 *
+	 * @param doc body document to update, default all loaded ones (marked by a data-row-id)
+	 */
+	private applyBodyDarkmode(doc?: Document): void
+	{
+		const pref = this.mailDarkmodePref();
+		const active = this.isBodyDarkmode();
+		const docs = doc ? [doc] : Array.from(document.querySelectorAll('et2-iframe'),
+			(iframe: any) => iframe.iframe?.contentDocument as Document)
+			.filter((d) => d?.documentElement?.dataset.rowId);
+		docs.forEach((d) =>
+		{
+			d.documentElement.classList.toggle('mailDarkmode', active);
+			if (active)
+			{
+				adaptMessageForDarkMode(d);
+			}
+			else
+			{
+				restoreMessageFromDarkMode(d);
+			}
+			const iframe = d.defaultView?.frameElement as HTMLIFrameElement;
+			this.setBodyFrameColorScheme(iframe);
+			// hidden by hideBodyFrameUntilAdapted()
+			iframe?.style.removeProperty('visibility');
+		});
+		document.querySelectorAll('et2-button-toggle.mailDarkmodeToggle').forEach((toggle: any) =>
+		{
+			if (toggle.value !== pref) toggle.value = pref;
+		});
+	}
+
+	/**
+	 * Hide the body iframe while loading a body to show in dark mode, until applyBodyDarkmode() adapted it on load
+	 *
+	 * Otherwise the not yet adapted message, eg. with its own white background, flashes up before every message.
+	 *
+	 * @param iframe
+	 */
+	private hideBodyFrameUntilAdapted(iframe: HTMLIFrameElement): void
+	{
+		if (iframe && this.isBodyDarkmode()) iframe.style.visibility = 'hidden';
+	}
+
+	/**
+	 * Show a message with its own dark mode support (see darkReader.ts hasOwnDarkMode()) light,
+	 * if the user switched dark mode off for mails, while EGroupware itself is in dark mode
+	 *
+	 * Inside the iframe, prefers-color-scheme follows the iframe's color-scheme, which it inherits from
+	 * EGroupware's dark mode, so the message's own "@media (prefers-color-scheme: dark)" rules would still apply.
+	 * Set before loading the message, so its dark skin doesn't flash up.
+	 *
+	 * @param iframe
+	 */
+	private setBodyFrameColorScheme(iframe: HTMLIFrameElement): void
+	{
+		if (!iframe) return;
+		if (document.documentElement.dataset.darkmode === '1' && !this.mailDarkmodePref())
+		{
+			iframe.style.colorScheme = 'light';
+		}
+		else
+		{
+			iframe.style.removeProperty('color-scheme');
+		}
+	}
+
+	/**
+	 * Switch dark mode for message bodies on or off, onchange of the mailDarkmodeToggle button
+	 */
+	toggleMailDarkmode(_event: Event, _widget: any): void
+	{
+		this.egw.set_preference('mail', 'mail_darkmode', _widget.value ? '1' : '0');
+		this.applyBodyDarkmode();
+	}
+
 	/** Shared by loadMessageBody()'s {special:true} result and its own catch() fallback below. */
 	private loadClassicBody(iframeWidget: any, iframe: HTMLIFrameElement, rowId: string, onLoad: (doc: Document) => void,
 		partID?: string): void
@@ -3693,6 +3840,7 @@ export class MailApp extends EgwApp
 		{
 			const doc = iframe.contentWindow.document;
 			doc.documentElement.dataset.rowId = rowId;
+			this.applyBodyDarkmode(doc);
 			openLinksInNewTab(doc);
 			// classic-fallback counterpart of loadMessageBody()'s own fast-path trigger below - the
 			// ONLY place left that calls this for the classic-navigation case, now that et2_ready()'s
@@ -3767,6 +3915,8 @@ export class MailApp extends EgwApp
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
 		const iframe = iframeWidget?.iframe;
+		this.hideBodyFrameUntilAdapted(iframe);
+		this.setBodyFrameColorScheme(iframe);
 		const fetchPromise = partID ?
 			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
 			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);
@@ -3806,9 +3956,11 @@ export class MailApp extends EgwApp
 				this.externalContentRenderers.set(doc, () =>
 				{
 					iframe.addEventListener('load', onBodyLoad, {once: true});
+					this.hideBodyFrameUntilAdapted(iframe);
 					iframe.srcdoc = this.jmap.showExternalContent(iframe.srcdoc);
 				});
 				doc.documentElement.dataset.rowId = rowId;
+				this.applyBodyDarkmode(doc);
 				openLinksInNewTab(doc);
 				// srcdoc body runs no script of its own (MailJmap.wrapDocument()), unlike the classic one with preview.js
 				activateBodyLinks(doc, this.egw);
@@ -3922,11 +4074,21 @@ export class MailApp extends EgwApp
 		// first url of other external content blocked by a JMAP-native body's CSP
 		const blocked_other = _node.querySelector('[data-blocked-external]')?.getAttribute('data-blocked-external');
 		const renderShowingExternal = this.externalContentRenderer(doc);
-		if ((external_images.length > 0 || blocked_other) && _node.querySelector('.mail_externalImagesMsg') === null)
+		// a banner of the previous message in the same frame - it lives outside the body document
+		const frame = this.externalContentBannerAnchor(doc);
+		this.externalContentBanners?.get(frame)?.remove();
+		if ((external_images.length > 0 || blocked_other) && (frame || _node.querySelector('.mail_externalImagesMsg') === null))
 		{
-			const container = document.createElement('div');
+			// web components only work in our own document, a detached body (no frame) gets plain elements
+			const bannerDoc : Document = frame ? document : (_node.ownerDocument ?? document);
+			const container = bannerDoc.createElement('sl-alert') as HTMLElement & {variant : string, closable : boolean, open : boolean};
 			container.classList.add('mail_externalImagesMsg');
-			container.addEventListener('click', () =>{ container.remove(); });
+			container.variant = 'warning';
+			container.closable = true;
+			container.open = true;
+			container.addEventListener('sl-after-hide', () => container.remove());
+			// a click anywhere on the banner hides it, the buttons' own handlers run first
+			container.addEventListener('click', () => container.remove());
 			const getUrlParts = (_rawUrl) => {
 				let u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
@@ -3998,15 +4160,22 @@ export class MailApp extends EgwApp
 				return;
 			}
 			const host = getUrlParts(blocked_alts[0]);
-			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
+			// every host "Show"/"Allow" loads content from: the blocked images' and the hosts of
+			// a JMAP-native body's other blocked content (MailJmap.wrapDocument())
+			const blocked_hosts = [...new Set([
+				...blocked_alts.map((alt) => MailJmap.urlHost(alt.split('[blocked external image:')[1].replace(/\]$/, ''))),
+				...(_node.querySelector('[data-blocked-hosts]')?.getAttribute('data-blocked-hosts')?.split(' ') ?? []),
+			])].filter(Boolean).join(', ');
+			// untranslated, et2-description translates it
+			let message = 'In order to protect your privacy all external sources within this email are blocked.';
 			for (const alt of blocked_alts)
 			{
 				if (!alt) continue;
 				const r = getUrlParts(alt);
 				if (r && r.protocol == 'http')
 				{
-					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
-					container.classList.add('red');
+					message = 'This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!';
+					container.variant = 'danger';
 					break;
 				}
 			}
@@ -4022,20 +4191,24 @@ export class MailApp extends EgwApp
 				}
 			}
 
-			const messageP = document.createElement('p');
-			messageP.textContent = message;
-			container.appendChild(messageP);
+			const messageText = bannerDoc.createElement('et2-description') as HTMLElement & {value : string};
+			messageText.classList.add('mail_externalImagesMsgText');
+			messageText.value = message;
+			container.appendChild(messageText);
 
-			const closeBtn = document.createElement('button');
-			closeBtn.classList.add('closeBtn');
-			closeBtn.addEventListener('click', () =>{
-				container.remove();
-			});
-			container.appendChild(closeBtn);
+			const createButton = (_label : string, _statustext : string, _class : string) =>
+			{
+				const button = bannerDoc.createElement('et2-button') as HTMLElement & {statustext : string, noSubmit : boolean, size : string};
+				button.classList.add(_class);
+				button.size = 'small';
+				// the default slot is the button's label, available right away unlike the label property
+				button.textContent = this.egw.lang(_label);
+				button.statustext = _statustext;
+				button.noSubmit = true;
+				return button;
+			};
 
-			const allowBtn = document.createElement('button');
-			allowBtn.textContent = this.egw.lang('Allow');
-			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
+			const allowBtn = createButton('Allow', this.egw.lang('Always allow external sources from %1 and load content from %2', host.domain, blocked_hosts), 'mailExternalAllow');
 			allowBtn.addEventListener('click', () =>{
 				container.remove();
 				// only the domain the button's title names, not eg. a tracker's domain of another image
@@ -4049,11 +4222,8 @@ export class MailApp extends EgwApp
 					showImages(external_images);
 				}
 			});
-			container.appendChild(allowBtn);
 
-			const showBtn = document.createElement('button');
-			showBtn.textContent = this.egw.lang('Show');
-			showBtn.title = this.egw.lang('Show them this time only');
+			const showBtn = createButton('Show', this.egw.lang('Load content from %1 this time only', blocked_hosts), 'mailExternalShow');
 			showBtn.addEventListener('click', () =>
 			{
 				container.remove();
@@ -4086,9 +4256,47 @@ export class MailApp extends EgwApp
 
 				}
 			});
+			// Show before Allow, as Allow also does what Show does
 			container.appendChild(showBtn);
-			(_node.body ? _node.body : _node).appendChild(container);
+			// "Ask for permission, only allow listed domains": only the allow-list in the preferences adds domains
+			if (pref_img != 3)
+			{
+				container.appendChild(allowBtn);
+			}
+			if (frame)
+			{
+				// overlaid at the bottom of the body iframe, see .mail_externalImagesMsg in app.less
+				frame.after(container);
+				frame.parentElement?.classList.add('mail_externalImagesMsgHost');
+				(this.externalContentBanners ??= new WeakMap()).set(frame, container);
+			}
+			else
+			{
+				(_node.body ? _node.body : _node).appendChild(container);
+			}
 		}
+	}
+
+	/**
+	 * Element the external content banner of a message body document is placed after
+	 *
+	 * The banner uses our web components, which can not live in the body document itself
+	 * (it has its own custom element registry and no scripts), so it is overlaid at the bottom of
+	 * the body's iframe in our own document: after the et2-iframe, or the iframe itself.
+	 *
+	 * @param doc body document
+	 * @return null if the body is not in an iframe in our document, eg. a detached node
+	 */
+	private externalContentBannerAnchor(doc : Document) : HTMLElement | null
+	{
+		const frame = doc?.defaultView?.frameElement as HTMLElement | null;
+		if (!frame)
+		{
+			return null;
+		}
+		const host = (frame.getRootNode() as ShadowRoot).host as HTMLElement | undefined;
+		const anchor = host?.localName === 'et2-iframe' ? host : frame;
+		return anchor.parentElement ? anchor : null;
 	}
 
 	/**
@@ -8840,10 +9048,20 @@ export class MailApp extends EgwApp
 		// put special folders as siblings of INBOX (parentPath === ''), others nest them under it
 		// (parentPath === 'INBOX') - both are covered.
 		const isTopLevel = parentPath === '' || parentPath === 'INBOX';
-		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, subscribedOnlyOverride).then((mailboxes) =>
+		// browsing INSIDE the "user" (shared-accounts) namespace root - MailJmap.
+		// getSharedAccountMailboxChildren() already never subscribedOnly-filters its own JMAP query
+		// (see its own docblock: a shared mailbox is typically isSubscribed:false for a viewer who's
+		// never touched it), but buildFolderLevel() below re-filters by isSubscribed independently
+		// for its OWN (unrelated) ancestor-chain-preserving reasons - without this override that
+		// second filter silently re-hid every real folder this path just correctly fetched (found
+		// live, 2026-10-29, boulder.egroupware.org acc_id=1: a real, populated shared account
+		// rendered as a permanently-empty expand).
+		const inSharedAccountBranch = parentPath === 'user' || parentPath.startsWith('user/');
+		const effectiveOverride = inSharedAccountBranch ? false : subscribedOnlyOverride;
+		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, effectiveOverride).then((mailboxes) =>
 		{
 			if (mailboxes === null) return null;
-			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const subscribedOnly = effectiveOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
 			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly, isTopLevel}, egw);
 		});
 	}
@@ -8894,7 +9112,11 @@ export class MailApp extends EgwApp
 		switch (currentTemp)
 		{
 			case 'mail.index':
-				this.prevPrint(_action, _senders);
+				// the mail of the preview prints right here, another one (eg. from a row's context menu) in a popup
+				if (!this.isPreviewMessage(_senders) || !this.printMessage())
+				{
+					this.prevPrint(_action, _senders);
+				}
 				break;
 			case 'mail.display':
 				this.displayPrint();
@@ -8926,148 +9148,81 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Redirect the native Ctrl/Cmd+P shortcut on mail.index (the main window) to the SAME
-	 * isolated-popup print path the toolbar's own "print" button already uses (print() ->
-	 * prevPrint() -> openMessage(..., 'print') -> a fresh mail.display popup, its own separate
-	 * document/window) instead of letting the browser print this, the main window, in place.
+	 * Are the given rows (of a print action) just the message the preview of mail.index shows?
 	 *
-	 * Found live 2026-10-15 (ralf, following up on the Ctrl+P CSS-leak report): preparePrint()'s
-	 * tmpPrintDiv is a plain copy of the preview iframe's body innerHTML, including any <style>
-	 * tag the sanitized mail body itself may now contain (since "style-sheets embeded in mails
-	 * are no longer removed when displaying or replying"). A <style> element applies
-	 * document-wide wherever it sits in the DOM, not scoped to "where its content came from", so
-	 * copied into a div that is a direct child of THIS window's own document.body it leaked into
-	 * the whole EGroupware UI permanently, not just while printing.
-	 *
-	 * A keydown listener - not the 'beforeprint' event, which fires only once the browser has
-	 * already committed to printing the current document, too late, and is not cancelable - is
-	 * the only point this can actually be intercepted and redirected before the browser acts on
-	 * its own built-in shortcut. mail.display (a disposable popup opened for exactly one message)
-	 * keeps printing in place as before - there is no persistent window for it to leak into.
-	 *
-	 * Bound at most once: et2_ready('mail.index') can re-run for a client-side template reload
-	 * (see this.tree_wdg's own comment in et2_ready()), and document-level listeners would
-	 * otherwise pile up, firing the redirect once per past reload on every single keypress.
+	 * @param _senders rows, none for the preview's own toolbar
 	 */
-	private installPrintKeydownInterception()
+	private isPreviewMessage(_senders?: {id: string}[]): boolean
 	{
-		if (this.printKeydownHandler) return;
+		const rowId = this.et2?.getWidgetById('messageIFRAME')?.iframe?.contentDocument?.documentElement?.dataset.rowId;
+		const ids = (_senders || []).map((sender) => sender?.id).filter(Boolean);
+		return !!rowId && (!ids.length || ids.length === 1 && ids[0] === rowId);
+	}
 
-		this.printKeydownHandler = (e : KeyboardEvent) =>
+
+
+	/**
+	 * Print the displayed message: its body iframe on its own, with a header block added
+	 *
+	 * Nothing of the message gets copied into the page this way, see printBody.ts: a copy restyled
+	 * the whole popup with the message's own CSS and loaded content the body's CSP blocked.
+	 * As its own document, the body also prints completely, unlike an iframe within a printed page.
+	 * A body shown in dark mode is printed with the message's own colors.
+	 *
+	 * @return false if there is no body of our own to print (nothing loaded or no mail selected, or
+	 *  Mailvelope shows the decrypted message in its own iframe, hiding ours - see mailvelopeDisplay()),
+	 *  nothing done
+	 */
+	printMessage(): boolean
+	{
+		const displayIframe = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
+		const iframe: HTMLIFrameElement = displayIframe || this.et2?.getWidgetById('messageIFRAME')?.iframe;
+		const doc = iframe?.contentDocument;
+		const rowId = doc?.documentElement?.dataset.rowId;
+		if (!rowId || !doc.body || iframe.style.display === 'none')
 		{
-			if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key?.toLowerCase() === 'p')
-			{
-				e.preventDefault();
-				e.stopImmediatePropagation();
-				const toolbar = egw_getActionManager('toolbar', false) ?? egw_getActionManager('displayToolbar', false);
-				this.print(toolbar?.getActionById('print') ?? {data: {}}, []);
-			}
-		};
-		document.addEventListener('keydown', this.printKeydownHandler, {capture: true});
+			return false;
+		}
+		// mail.index's preview still shows the last mail, after it got deselected (preview())
+		if (!displayIframe && rowId !== this.currentlyFocussed)
+		{
+			return false;
+		}
+		const data = (this.printHeaderData?.rowId === rowId ? this.printHeaderData.data : null) ??
+			egw.dataGetUIDdata(rowId)?.data ?? this.printHeaderData?.data;
+		const darkmode = doc.documentElement.classList.contains('mailDarkmode');
+		if (darkmode)
+		{
+			doc.documentElement.classList.remove('mailDarkmode');
+			restoreMessageFromDarkMode(doc);
+			// or the message's own "@media (prefers-color-scheme: dark)" rules would still apply
+			iframe.style.colorScheme = 'light';
+		}
+		printBodyWithHeader(iframe, data?.subject ?? '',
+			printHeaderRows(data, (phrase) => this.egw.lang(phrase), formatDateTime),
+			darkmode ? () => this.applyBodyDarkmode(doc) : undefined);
+		return true;
 	}
 
 	/**
-	 * Prepare display dialog for printing
-	 * copies iframe content to a DIV, as iframe causes
-	 * trouble for multipage printing
-	 * @param _iframe mail body iframe, can be ommited to use querySelector
+	 * Print the displayed message (printMessage()) on ctrl+P or cmd+P, see printBody.ts's addPrintShortcut()
+	 *
+	 * @param doc document of the page, or of the body iframe
 	 */
-	preparePrint(_iframe?: HTMLIFrameElement)
+	addPrintShortcut(doc: Document)
 	{
-		// Only ever called from mail.display now (a disposable popup opened for exactly one
-		// message, see its own 'load' listener below) - mail.index's preview pane used to call
-		// this too, printing in place via tmpPrintDiv, until installPrintKeydownInterception()
-		// redirected Ctrl/Cmd+P there to this same popup path instead (2026-10-15, see that
-		// method's own docblock for why: a <style> tag the sanitized mail body may contain leaked
-		// document-wide once copied into the MAIN window's own document.body).
-		const iframeWidget : any = this.et2?.getWidgetById('mailDisplayBodySrc');
-		const mainIframe = _iframe || iframeWidget?.iframe;
-		// tmpPrintDiv is attached directly to document.body - NOT as a sibling anywhere inside the
-		// template's own widget tree (mailDisplay vbox -> mailDisplayContainer box -> et2-ai, all
-		// three shadow-DOM hosts the mail body iframe/tempPrintDiv would otherwise be slotted
-		// through). Chrome's print/PDF pipeline has known, long-standing limitations paginating
-		// content projected through nested shadow-DOM <slot>s - found live 2026-09-14 (ralf,
-		// relaying a real user's report): a long newsletter's print preview correctly said "page 1
-		// of 3" but pages 2/3 were blank. Moving the print copy fully outside the shadow-DOM/slot
-		// chain entirely - a single, ordinary light-DOM div, direct child of body - sidesteps the
-		// whole class of bug (confirmed live: this alone was sufficient, no ancestor CSS fix or
-		// extra paint-cycle delay needed once the print copy no longer lives inside any shadow root).
-		let tmpPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
-		let notAttached = false;
-
-		if (!tmpPrintDiv)
+		addPrintShortcut(doc, () =>
 		{
-			tmpPrintDiv = document.createElement('div');
-			tmpPrintDiv.id = 'tempPrintDiv';
-			tmpPrintDiv.classList.add('tmpPrintDiv');
-			// api/templates/default/print.css's own `@media screen { .tmpPrintDiv { display: none }
-			// }` is a light-DOM stylesheet - correctly reaches this element (a direct child of
-			// body, see this method's own docblock above), but kept as an inline style too
-			// (belt-and-suspenders, cheap): displayPrint() clears it right before actually printing
-			// and restores it after via the same inline property.
-			tmpPrintDiv.style.display = 'none';
-			notAttached = true;
-		}
-
-		if (mainIframe && tmpPrintDiv)
-		{
-			const copyContent = () =>
+			// app.mail, not this: the shortcut must not use a destroyed instance, if the app got reloaded
+			const mail = (window as any).app?.mail;
+			// another application is active: leave it to the framework, printing that application
+			if (!mail || framework.activeApp.appName !== mail.appname)
 			{
-				// Reassigned SYNCHRONOUSLY, before the setTimeout/image-wait below even starts -
-				// critically, for the "?print=" auto-triggered case (mail.display's own 'load'
-				// listener below calls self.print() right alongside self.preparePrint(), both off
-				// the SAME iframe 'load' event, in the same synchronous tick): displayPrint()
-				// reads this.printContentReady right after preparePrint() returns, so it must
-				// already be the real (still-pending) promise for THIS copy by then, not get
-				// reassigned to it only later from inside the timeout. Found live 2026-10-15
-				// (ralf, re-testing on boulder): without this, displayPrint() captured whatever
-				// stale promise (typically the already-resolved default) was sitting there before
-				// this copy even began.
-				this.printContentReady = new Promise<void>((resolveReady) =>
-				{
-					// Wait a little longer
-					window.setTimeout(() =>
-					{
-						const body = mainIframe.contentDocument.body;
-						// Inline cid: images are already resolved to real blob: urls in the markup
-						// by the time this iframe's own body exists (MailJmap.resolveInlineCid-
-						// Images() runs before the resolved HTML is ever assigned as its srcdoc) -
-						// but the <img> elements themselves still need their own, separate,
-						// genuinely async decode of that blob data, which this fixed 600ms alone
-						// does not wait for. Found live 2026-10-15 (ralf, re-testing on boulder - a
-						// CheckMK mail with several embedded graphs): images were missing from the
-						// print popup only sometimes, not reliably reproducible, because this was
-						// always a race against however long THIS particular print happened to
-						// take to decode - nothing to do with which trigger (Ctrl+P vs the toolbar
-						// button) opened the popup, since both land here identically once it's
-						// open. A pending <img> is waited out (resolved on its own load OR error -
-						// a broken image must not hang printing forever), capped at 5s so one
-						// truly-stuck image can't block printing everything else indefinitely.
-						const pending = Array.from(body.querySelectorAll('img'))
-							.filter((img : HTMLImageElement) => !img.complete);
-						const whenReady = pending.length === 0 ? Promise.resolve() : Promise.race([
-							Promise.all(pending.map((img : HTMLImageElement) => new Promise<void>((resolve) =>
-							{
-								img.addEventListener('load', () => resolve(), {once : true});
-								img.addEventListener('error', () => resolve(), {once : true});
-							}))),
-							new Promise<void>((resolve) => window.setTimeout(resolve, 5000)),
-						]);
-						whenReady.then(() => { tmpPrintDiv.innerHTML = body.innerHTML; resolveReady(); });
-					}, 600);
-				});
+				return false;
 			}
-			copyContent();
-			// Wait if iframe fires load, then copy again
-			mainIframe.contentDocument.body.addEventListener("load", copyContent);
-		}
-
-		// Attach the element to the DOM after maniupulation
-		if (notAttached)
-		{
-			document.body.appendChild(tmpPrintDiv);
-		}
-		tmpPrintDiv.querySelector('#divAppboxHeader')?.remove();
+			// false without a mail shown: leaves ctrl/cmd+P to the framework, printing the list
+			return mail.printMessage();
+		});
 	}
 
 	/**
@@ -9077,35 +9232,19 @@ export class MailApp extends EgwApp
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
-		// Wait for preparePrint()'s own async tmpPrintDiv copy (which itself waits out any
-		// still-decoding inline images, see its own docblock) before the rest of this - otherwise
-		// this method's own flat, independent 1000ms timer below could win the race and print
-		// whatever tmpPrintDiv happened to hold at that moment instead.
-		this.printContentReady.then(() =>
-		{
-			// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
-			setTimeout(() =>{
-				// preparePrint()'s own inline `display: none` needs an explicit inline override here
-				// too (belt-and-suspenders alongside print.css's own `@media print` rule), restored
-				// afterward via onafterprint (Firefox/IE) or a short timeout (Chrome has no such
-				// event, same fallback printForCompose() already uses), so a cancelled print dialog
-				// doesn't leave the copy visible on screen. Looked up the SAME way preparePrint()
-				// itself anchors it now - a direct child of document.body, entirely outside the
-				// template's own shadow-DOM/slot chain (see that method's own docblock for why).
-				const tmpPrintDiv = document.body.querySelector<HTMLElement>(':scope > #tempPrintDiv');
-				if (tmpPrintDiv) tmpPrintDiv.style.display = 'block';
-				const hideAgain = () => { if (tmpPrintDiv) tmpPrintDiv.style.display = 'none'; };
-				if ('onafterprint' in window)
+		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
+		setTimeout(() =>{
+			const doc = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe?.contentDocument;
+			// eg. inline images still decoding, which would be missing from the printout
+			(doc ? imagesLoaded(doc) : Promise.resolve()).then(() =>
+			{
+				// no body of our own to print, as Mailvelope shows the message: print the popup (prepareMailvelopePrint())
+				if (!this.printMessage())
 				{
-					window.addEventListener('afterprint', hideAgain, {once: true});
+					egw(window).window.print();
 				}
-				else
-				{
-					setTimeout(hideAgain, 2000);
-				}
-				egw(window).window.print();
-			},1000);
-		});
+			});
+		},1000);
 	}
 
 	/**
@@ -9186,10 +9325,10 @@ export class MailApp extends EgwApp
 	 */
 	prepareMailvelopePrint()
 	{
-		const tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
+		// mail.display only: the whole popup gets printed for Mailvelope (displayPrint())
 		const originFrame = this.et2?.getWidgetById('mailDisplayBodySrc')?.iframe;
 
-		if (tempPrint)
+		if (originFrame)
 		{
 			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
 			// we add an arbitary plus pixels to make sure it's covering the full content in print view and
@@ -9201,7 +9340,6 @@ export class MailApp extends EgwApp
 				el.classList.add('mailvelopeIframe');
 				el.style.height = height + 'px';
 			});
-			tempPrint.style.display = 'none';
 			document.querySelectorAll('div.mailDisplayContainer').forEach(el => el.classList.add('mailvelopeTopContainer'));
 		}
 	}
@@ -10593,43 +10731,6 @@ export class MailApp extends EgwApp
 	{
 		this.nm && this.nm.applyFilters({unseenFirst: _widget.value ? '1' : ''});
 		this.egw.set_preference('mail', 'unseenFirstToggle', _widget.value ? '1' : '');
-		this.sizeUnseenFirstToggleIcons();
-	}
-
-	/**
-	 * Cosmetic sizing for the "unseenFirst" toggle's two icons (ralf, 2026-10-13 follow-up):
-	 * the plain "circle-fill"/"circle" icons default to a font-size inherited from the toolbar
-	 * context (21px live, itself already font-size-preference-relative, NOT a fixed value set by
-	 * Et2SwitchIcon.styles.ts/Et2ButtonToggle.styles.ts - neither actually declares `--width` here)
-	 * - a little large, and the "circle" (outline) glyph's thin stroke nearly disappears under
-	 * anti-aliasing at that weight. Shrinks both icons to 0.75em (relative to that SAME inherited
-	 * font-size, not a fixed px value - confirmed live the row's own unseen-dot, rows.less's
-	 * `.status_img`, is `calc(1em + 2px)` of ITS OWN - different - font-size context, so this is an
-	 * approximate visual match, not a literal shared value, deliberately kept relative so it still
-	 * scales if the user picks a different UI font size) and adds a `-webkit-text-stroke` (also in
-	 * em, same reasoning) to reinforce the thin outline glyph - an inherited property, so setting it
-	 * on the host element reaches its own font-icon `::before` content correctly.
-	 *
-	 * Same "reach into the shadow root directly" approach as the (removed) colour-matching
-	 * attempt's own docblock explained at length - mail/templates/default/app.css is never adopted
-	 * into this toolbar's shadow context at all (confirmed live), and must be re-applied after
-	 * every `.value` change since Et2ButtonToggle's own Lit re-render replaces these exact nodes.
-	 */
-	private sizeUnseenFirstToggleIcons() : void
-	{
-		const toggle = this.et2?.getWidgetById('unseenFirst') as unknown as (HTMLElement & { updateComplete? : Promise<unknown> });
-		if (!toggle) return;
-		const apply = () =>
-		{
-			const onImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.on');
-			const offImage = toggle.shadowRoot?.querySelector<HTMLElement>('.image.off');
-			onImage?.style.setProperty('font-size', '0.75em', 'important');
-			offImage?.style.setProperty('font-size', '0.75em', 'important');
-			offImage?.style.setProperty('-webkit-text-stroke-width', '0.05em', 'important');
-			offImage?.style.setProperty('-webkit-text-stroke-color', 'currentColor', 'important');
-		};
-		apply();
-		(toggle.updateComplete ?? Promise.resolve()).then(apply);
 	}
 
 	/**
@@ -10747,7 +10848,6 @@ export class MailApp extends EgwApp
 			if (unseen_first_toggle && unseen_first_toggle.value != (value === '1')) {
 				unseen_first_toggle.value = value === '1';
 			}
-			this.sizeUnseenFirstToggleIcons();
 		}
 	}
 

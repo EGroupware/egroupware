@@ -555,6 +555,28 @@ function buildTaxonomy(allComponents, allMixins)
 		return tagged.filter(c => associatedParentOf.get(c.name) === name).map(slimComponent);
 	}
 
+	// A controller typed to one concrete widget (`private host : Et2Nextmatch`) is that widget's own
+	// code in its own file: it uses the controller pattern for the lifecycle, but nobody else can
+	// attach it. It keeps its page, but it is listed under the widget that owns it rather than in
+	// "Controllers & Mixins", which is there to show pieces you can actually reuse. Its page's
+	// "Used by" already names the owner, so the connection stays obvious either way.
+	const ownedControllers = new Set();
+	const controllersByOwner = new Map();
+	const componentNames = new Set(allComponents.map(c => c.name));
+	allMixins.forEach(mixin =>
+	{
+		if (!mixin.hostType || !componentNames.has(mixin.hostType))
+		{
+			return;
+		}
+		ownedControllers.add(mixin.name);
+		if (!controllersByOwner.has(mixin.hostType))
+		{
+			controllersByOwner.set(mixin.hostType, []);
+		}
+		controllersByOwner.get(mixin.hostType).push({name: mixin.name});
+	});
+
 	function slimComponent(component)
 	{
 		return {
@@ -562,7 +584,8 @@ function buildTaxonomy(allComponents, allMixins)
 			tagName: component.tagName,
 			belongsTo: belongsToOf(component),
 			related: (relatedGroups.get(component.name) || []).map(toRef).filter(Boolean),
-			associated: associatedOf(component.name)
+			associated: associatedOf(component.name),
+			controllers: controllersByOwner.get(component.name) || []
 		};
 	}
 
@@ -594,6 +617,12 @@ function buildTaxonomy(allComponents, allMixins)
 	const mixinCategory = ensureCategory(CATEGORIES.CONTROLLERS);
 	allMixins.forEach(mixin =>
 	{
+		// Filed under its widget instead - see ownedControllers above.
+		if (ownedControllers.has(mixin.name))
+		{
+			return;
+		}
+
 		const consumedBy = tagged
 			.filter(c => (c.mixins || []).some(m => m.name === mixin.name))
 			.map(c => ({name: c.name, tagName: c.tagName}));

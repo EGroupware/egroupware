@@ -15,7 +15,7 @@
 					<et2-file  statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"></et2-file>
 				</row>
 				<row>
-					<et2-button  align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;" image="check"></et2-button>
+					<et2-button  align="center" label="Ok" onclick="document.querySelectorAll('table.uploadphoto').forEach(el => el.style.display='none'); return false;" image="check"></et2-button>
 				</row>
 			</rows>
 		</grid>
@@ -49,7 +49,7 @@
 				</row>
 				<row>
 					<et2-description></et2-description>
-					<et2-button  label="Ok" id="button[ok]" class="button_ok" onclick="jQuery('table.editname').css('display','none'); jQuery('#'+form::name('org_name')).focus(); return false;" image="check"></et2-button>
+					<et2-button  label="Ok" id="button[ok]" class="button_ok" onclick="document.querySelectorAll('table.editname').forEach(el => el.style.display='none'); document.getElementById(form::name('org_name')).focus(); return false;" image="check"></et2-button>
 				</row>
 			</rows>
 		</grid>

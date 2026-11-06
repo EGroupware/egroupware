@@ -163,3 +163,38 @@ describe("MailJmap.draftEmailProperties() - Thread-Topic/Thread-Index/List-Id re
 		assert.notProperty(properties, "header:List-Id");
 	});
 });
+
+/**
+ * Ticket #125201: sending to multiple recipients / a distribution list failed with a generic
+ * "Account not reachable", server error log empty. Root-caused live: a distribution-list member
+ * with NEITHER `email` nor `email_home` set (ComposeMessageBuilder::resolveEmailAddressList(),
+ * mail/src/ComposeMessageBuilder.php) pushed a bare `null` into the resolved address list sent
+ * back to the client - draftEmailProperties()'s addressesToJmap() then crashed on `null.trim()`
+ * (TypeError, not a JMAP-shaped error describeJmapError() could recognise), so sendNewEmail()'s
+ * catch-all fell back to its generic "Account not reachable" message. Fixed at the source (PHP
+ * no longer emits the null), plus this defensive client-side hardening so any other future
+ * null/empty entry degrades to "silently dropped" instead of crashing the whole send.
+ */
+describe("MailJmap.draftEmailProperties() - tolerates a null/empty address entry (ticket #125201)", () =>
+{
+	it("drops a null entry from `to` instead of throwing", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY,
+			baseEmail({to : ["recipient@example.org", null, "second@example.org"]}));
+
+		assert.deepEqual(properties.to, [
+			{email : "recipient@example.org"},
+			{email : "second@example.org"},
+		]);
+	});
+
+	it("drops an empty-string entry from `cc` instead of throwing", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const properties = (jmap as any).draftEmailProperties(IDENTITY,
+			baseEmail({cc : ["", "cc@example.org"]}));
+
+		assert.deepEqual(properties.cc, [{email : "cc@example.org"}]);
+	});
+});

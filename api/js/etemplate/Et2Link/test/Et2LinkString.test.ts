@@ -1,6 +1,7 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import "../Et2Link";
 import "../Et2LinkString";
+import {assertNoElement} from "../../test/assertDom";
 
 // Et2LinkString's constructor reads the "maxmatchs" preference before any test code gets a
 // chance to override egw() on the instance, so the fallback needs to be a thenable up front.
@@ -30,7 +31,7 @@ describe("Et2LinkString", () =>
 		await element.updateComplete;
 
 		assert.isEmpty(element._link_list);
-		assert.isNull(element.shadowRoot.querySelector("et2-link"));
+		assertNoElement(element.shadowRoot.querySelector("et2-link"));
 	});
 
 	it("still parses a normal CSV list of ids", async() =>

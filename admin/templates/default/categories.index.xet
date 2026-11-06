@@ -17,14 +17,20 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Name" id="name"/>
-					<nextmatch-sortheader label="Description" id="description"/>
-					<et2-nextmatch-header-filter  label="Application" id="app"></et2-nextmatch-header-filter>
+					<et2-nextmatch-sortheader  label="Name" id="name"/>
+					<et2-nextmatch-sortheader  label="Description" id="description"/>
+					<!-- Global categories belong to no application, so admin_categories::index() blanks
+					     this filter's options there.  The legacy widget hid it via
+					     $readonlys['nm']['rows']['app']; the generated filterbox does not read
+					     readonlys, so it needs telling separately - and the disable travels into the
+					     generated filter template because api/filter-template.php copies a header's
+					     remaining attributes through onto the control it builds. -->
+					<et2-nextmatch-header-filter  label="Application" id="app" disabled="@no_app_filter"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header-account  label="Owner" id="owner" emptyLabel="all" accountType="both"></et2-nextmatch-header-account>
 					<et2-nextmatch-header-filter  label="Private" id="access" emptyLabel="All"></et2-nextmatch-header-filter>
 					<et2-nextmatch-header  align="center" label="Icon" id="icon"></et2-nextmatch-header>
 					<et2-nextmatch-header  label="Color" id="color"></et2-nextmatch-header>
-					<nextmatch-sortheader label="Modified" id="last_mod"/>
+					<et2-nextmatch-sortheader  label="Modified" id="last_mod"/>
 					<et2-nextmatch-header  align="center" label="Children" id="subs"></et2-nextmatch-header>
 				</row>
 				<row class="$row_cont[id] $row_cont[class]">
@@ -43,6 +49,7 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</et2-template>
     <et2-template  id="admin.categories.index.header">
         <et2-toolbar  id="cats-toolbar">
@@ -53,52 +60,31 @@
             <et2-button-icon  id="back_to_list" image="back" label="Back to list" slot="suffix" onclick="widget.closest('egw-app').refresh(); return false;" noSubmit="true"></et2-button-icon>
         </et2-toolbar>
 	</et2-template>
-	<et2-template  id="admin.categories.index" template="" lang="" group="0" version="1.9.001">
+	<et2-template  id="admin.categories.index" template="" lang="" group="0" version="1.9.001" layout="stack">
         <et2-template  template="admin.categories.index.header" slot="main-header"></et2-template>
-        <nextmatch id="nm" template="admin.categories.index.rows" span="all"/>
-		<et2-box  class="action_popup prompt" id="owner_popup">
-			<et2-vbox>
-				<et2-description  value="Change owner" class="promptheader"></et2-description>
-				<et2-description  value="Select owner"></et2-description>
-				<et2-select  id="owner" rows="4" class="action_popup-content" multiple="1" noLang="1"></et2-select>
-				<et2-hbox>
-					<et2-button  label="Add" id="owner_action[add]" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  label="Delete" id="owner_action[delete]" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  disabled="true" label="OK" onclick="nm_submit_popup(this); return false;"></et2-button>
-					<et2-button  label="Cancel" id="owner_action[cancel]" onclick="nm_hide_popup(this,'owner_popup');"></et2-button>
-				</et2-hbox>
-			</et2-vbox>
-		</et2-box>
+        <et2-nextmatch  id="nm" template="admin.categories.index.rows" grow="1"></et2-nextmatch>
+		<!-- The "Change owner" mass action.  This used to be an <et2-box class="action_popup prompt">
+		     shown by CSS, which nm_open_popup() upgraded into a dialog at runtime and whose buttons
+		     relied on the window.nm_popup_action/nm_popup_ids globals that upgrade set.  As a real
+		     <et2-dialog> none of that runs, so the buttons submit through app.admin.submit_popup()
+		     instead.  The inner <et2-box id="owner_popup"> keeps the namespace admin_categories::index()
+		     expects: it merges $content['owner_popup'] up before reading $content['owner_action']. -->
+		<et2-dialog  id="owner_popup_dialog" title="Change owner" open="false" buttons="" destroyOnClose="false">
+			<et2-box  id="owner_popup">
+				<et2-vbox>
+					<et2-description  value="Select owner"></et2-description>
+					<et2-select  id="owner" rows="4" class="action_popup-content" multiple="1" noLang="1"></et2-select>
+				</et2-vbox>
+			</et2-box>
+			<et2-button  slot="footer" variant="primary" label="Add" id="owner_popup[owner_action][add]" onclick="return app.admin.submit_popup(ev, widget, 'owner');"></et2-button>
+			<et2-button  slot="footer" label="Delete" id="owner_popup[owner_action][delete]" onclick="return app.admin.submit_popup(ev, widget, 'owner');"></et2-button>
+			<et2-button  slot="footer" label="Cancel" id="owner_action_cancel" noSubmit="true" onclick="widget.closest('et2-dialog').hide(); return false;"></et2-button>
+		</et2-dialog>
 		<et2-styles>
-            .level0 { font-weight: bold; }
-            .level_spacer { flex: 0 0 auto;}
-            .action_popup {
-            position: fixed;
-            top: 200px;
-            left: 450px;
-            width: 76ex;
-            z-index: 20000;
-            display: none;
-            border-collapse:collapse;
-            border-spacing:0px
-            }
-            .action_popup-content {
-            display:block;
-            padding:2ex;
-            color:#666666;
-            margin: -2px -1px 0px -2px;
-            }
-            .action_popup &gt; table {
-            width: 100%
-            }
-            .action_popup .promptheader {
-	padding: 1ex;
-	width: 100%
-}
-
-.action_select {
-	width: 100%
-}
+			.action_popup-content {
+				display: block;
+				padding: 2ex;
+			}
 		</et2-styles>
 	</et2-template>
 </overlay>

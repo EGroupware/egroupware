@@ -66,13 +66,6 @@ class notifications_ajax
 	private $response;
 
 	/**
-	 * Do we have a real push server, or only a fallback
-	 *
-	 * @var bool
-	 */
-	private $isPushServer;
-
-	/**
 	 * constructor
 	 *
 	 */
@@ -82,11 +75,6 @@ class notifications_ajax
 		$this->recipient = (object)$GLOBALS['egw_info']['user'];
 
 		$this->db = $GLOBALS['egw']->db;
-
-		$this->isPushServer = Api\Cache::getInstance('notifications', 'isPushServer', function ()
-		{
-			return !Api\Json\Push::onlyFallback();
-		}, [], 900);
 	}
 
 	/**
@@ -112,7 +100,6 @@ class notifications_ajax
 		{
 			$this->response->jquery('#currentusers', 'text', array((string)$GLOBALS['egw']->session->session_count()));
 		}
-		if  ($this->isPushServer) $this->response->data(['isPushServer' => true]);
 		$this->get_egwpopup($browserNotify);
 	}
 
@@ -184,7 +171,7 @@ class notifications_ajax
 					'notify_type' => self::_type,
 					'notify_app' => $app,
 					'notify_app_id' => array_unique($ids),
-					'notify_created > '.$cut_off,
+					Api\Db\SqlFragment::raw('notify_created > '.$cut_off),
 				];
 				if (isset($status))
 				{
@@ -215,7 +202,7 @@ class notifications_ajax
 
 		// cleanup messages older than our cut-off-date
 		$this->db->delete(self::_notification_table, [
-			'notify_created <= '.$cut_off,
+			Api\Db\SqlFragment::raw('notify_created <= '.$cut_off),
 			'notify_type' => self::_type
 		], __LINE__, __FILE__, self::_appname);
 	}

@@ -92,7 +92,6 @@ draft folder	mail	ro	Dosar Schițe
 drafts	mail	ro	Schițe
 drafts folder	mail	ro	Dosar Schițe
 edit account	mail	ro	Editează contul
-edit account ...	mail	ro	Editați contul ...
 email address	mail	ro	Adresa de e-mail
 email notification update failed! you need to set an email address!	mail	ro	Actualizarea notificării prin e-mail a eșuat! Trebuie să setați o adresă de e-mail!
 emailaddress	admin	ro	Adresa de e-mail
@@ -241,6 +240,7 @@ please enter password	mail	ro	Vă rugăm să introduceți parola
 please select a address	mail	ro	Vă rugăm să selectați o adresă
 post	mail	ro	trimiteți
 predefined addresses for compose	mail	ro	Adrese predefinite pentru compunere
+prevent managing filters	mail	ro	Blochează gestionarea filtrelor
 preview pane	mail	ro	Dispunerea ferestrei
 printing	mail	ro	Imprimarea
 private key created, downloading csr...	mail	ro	Cheia privată a fost creată, se descarcă CSR-ul...
@@ -295,7 +295,6 @@ send attachments greater than given size as download link instead (in mb)	mail	r
 send message and move to send folder (if configured)	mail	ro	Trimiterea mesajului și mutarea în dosarul de trimitere (dacă este configurat)
 send message pgp encrypted: requires keys from all recipients!	mail	ro	Trimiteți mesajul criptat PGP: necesită chei de la toți destinatarii!
 server supports special-use folders	mail	ro	Serverul acceptă foldere de utilizare specială
-set predefined values for compose...	mail	ro	Setați valori predefinite pentru compunere ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ro	Ar trebui ca semnătura să fie inserată după (standard) sau înainte de un răspuns sau de o expediere și ar trebui ca semnătura să fie vizibilă și schimbabilă în timpul compunerii.
 show all addresses	mail	ro	Afișați toate adresele
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ro	Afișarea tuturor dosarelor, (abonate ȘI dezabonate) în panoul de dosare din ecranul principal

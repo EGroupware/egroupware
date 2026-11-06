@@ -9,10 +9,13 @@ import {formatDate, parseDate} from "./Et2Date";
 import {egw} from "../../jsapi/egw_global";
 
 /**
- * Display a time duration (eg: 3 days, 6 hours)
+ * @summary Choose a start and end date, either as two dates or as a named relative period
  *
- * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
- * but this can be specified with the properties.
+ * The value is an object with `from` and `to`. With `relative` the user instead picks a named
+ * period such as "This month", and the widget resolves it to concrete dates on read.
+ *
+ * (The previous text here described Et2DateDuration - a different widget - and was what the
+ * generated documentation showed as this one's description.)
  */
 export class Et2DateRange extends Et2InputWidget(LitElement)
 {
@@ -24,11 +27,32 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			...dateStyles,
 			css`
 
+				/* dateStyles ask for fit-content, which keeps the range from ever shrinking below both inputs side by side */
+				:host {
+					min-width: 0;
+				}
+
+				/*
+				 * No basis of its own: what the row needs (two dates side by side) is what decides whether the
+				 * label can stay beside it, not the width the dates would like to have.
+				 */
 				.form-control-input {
 					display: flex;
+					flex: 1 1 0;
 					flex-direction: row;
-					flex-wrap: nowrap;
+					flex-wrap: wrap;
 					align-items: baseline;
+					min-width: min(28ex, 100%);
+				}
+
+				/*
+				 * The From and To inputs share the row, or take a row each when it is too narrow for two.  Their
+				 * width is the room left over, so only min-width (the date plus its padding, as in Et2Date) decides
+				 * when they stop fitting side by side.
+				 */
+				et2-date {
+					flex: 1 1 0;
+					min-width: 14ex;
 				}
 			`,
 		];
@@ -69,10 +93,38 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 
 	_handleChange(event)
 	{
+		this._constrainToRange();
 		this.updateComplete.then(() =>
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		});
+	}
+
+	/**
+	 * Keep the two halves a range: the end cannot be before the start.
+	 *
+	 * Each half is an independent et2-date, so without this the picker happily accepts a `to`
+	 * earlier than its `from` - which is not a range, and downstream produces a query that can
+	 * never match anything.  Constraining the pickers says so while choosing, rather than silently
+	 * returning no results afterwards.
+	 *
+	 * Only applies to an absolute range; a relative one ("this week") is a single select.
+	 */
+	protected _constrainToRange()
+	{
+		if(this.relative)
+		{
+			return;
+		}
+		const from = <any>this.fromElement;
+		const to = <any>this.toElement;
+		if(!from || !to)
+		{
+			return;
+		}
+		// "" clears the constraint, which is what flatpickr expects for "no limit"
+		to.minDate = from.value || "";
+		from.maxDate = to.value || "";
 	}
 
 	render()
@@ -85,7 +137,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
                 'form-control': true,
                 'form-control--has-label': this.label.split("%")[0] || false
             })}>
-                <div class="form-control__label" part="form-control-label">
+                <div class="form-control__label" part="form-control-label" @click=${this._focusOnLabelClick}>
                     <label
                             part="form-control-label"
                             class="form-control__label"
@@ -131,6 +183,8 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return html`
             <et2-select
                     name="relative"
+                    statustext=${this.egw().lang("Date range")}
+                    .ariaDescription=${this.helpText}
                     ?disabled=${this.disabled}
                     ?readonly=${this.readonly}
                     ?required=${this.required}
@@ -152,6 +206,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		return html`
 			<et2-date
 				name="from"
+				.ariaDescription=${this.helpText}
 				?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
@@ -161,6 +216,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
             ></et2-date>
             <et2-date
                     name="to"
+                    .ariaDescription=${this.helpText}
                     ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
@@ -210,6 +266,17 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			this._disconnectedValue = new_value;
 			return;
 		}
+		if(!this.hasUpdated)
+		{
+			// Our pickers only exist once we have rendered, eg. et2-customfields gives a field its
+			// value right after placing it.  Without them the value would be lost, or a relative one
+			// would fail on the missing select.
+			this.updateComplete.then(() =>
+			{
+				this.value = new_value;
+			});
+			return;
+		}
 		if(this.relative)
 		{
 			this.relativeElement.value = new_value;
@@ -234,6 +301,11 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				this.fromElement.value = typeof range?.from == "string" ? range.from : (range?.from?.toJSON() || "");
 				this.toElement.value = typeof range?.to == "string" ? range.to : (range?.to?.toJSON() || "");
 			}
+			// Here rather than in updated(): a value set programmatically (restoring a favourite,
+			// seeding a filter from the server) never goes through the pickers' change event, and
+			// updated() runs before the pickers actually hold the value - so constraining there
+			// reads two empty pickers and does nothing.
+			this._constrainToRange();
 		}
 	}
 

@@ -3,7 +3,14 @@ import {css} from "lit";
 export default css`
 	  :host {
 		width: auto;
+		/* lit-flatpickr hides what is outside the host, which includes the validation message under the input */
+		overflow: visible;
 	  }
+
+		/* Required and empty: the yellow etemplate2.css gives other widgets, which cannot reach the textbox in here */
+		:host([required]:not(.hasValue)) et2-textbox::part(base) {
+			--sl-input-background-color: var(--required-background-color, #ffffd0);
+		}
 
 		/* Scroll buttons */
 		.form-control-input {
@@ -34,6 +41,6 @@ export default css`
 		height: calc(var(--sl-input-height-medium) / 2);
 	  }
 	.et2-date-time__scrollbuttons > *::part(base) {
-		padding: 3px;
+		padding: var(--sl-spacing-3x-small);
 	}
 `;

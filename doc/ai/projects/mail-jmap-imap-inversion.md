@@ -1,6 +1,8 @@
 # Mail: invert `Mail\Imap`/`Mail\Jmap` - JMAP-shaped base, IMAP as an adapter
 
 ## Status: Phase 1 committed+pushed 2026-08-26 (`d3545c57f8`). Phase 2 scoping started, no code yet.
+2026-10-29: corrected a wrong Phase-2-scoping claim about `mail_zpush.inc.php` - see
+[[mail-zpush-jmap-folders]] for the independent, much smaller fix this uncovered.
 
 ## Namespace rename done (2026-08-27, `81158a5e5a`)
 
@@ -54,6 +56,18 @@ mail-linking, [[project_tracker_mail_dependency]]), `mail_hooks.inc.php`. Screen
   **`ApiHandler.php`** (zero `mail_bo`/`icServer` calls at all - `Mail::getInstance()` only feeds
   `Api\Mailer` for sending) and **`mail_hooks.inc.php`** (1 property-read site) are not real
   consumers of the raw-IMAP call sites - out of scope, nothing to migrate.
+
+  **Correction (2026-10-29): the `mail_zpush.inc.php` part of this was wrong.** This screening only
+  grepped `mail_zpush.inc.php`'s own direct `icServer->` references - it missed that `mail_zpush`
+  calls ~33 distinct methods on `Api\Mail` itself, several of which call `icServer->getMailboxes()`/
+  `getStatus()`/`mailboxExist()`/etc. two or three layers down, same as everywhere else in
+  `Api\Mail`. Found live via a real ActiveSync outage (egroupware.org's own domain migrated to
+  Stalwart, `mail_zpush`'s `AlterPingChanges()` → `Api\Mail::getFolderStatus()` → unguarded
+  `icServer->getMailboxes()`/`getStatus()` → raw IMAP against a JMAP-only endpoint, failing on
+  every single ping). `mail_zpush` **is** a real consumer, just one layer removed from its own
+  `icServer->` call sites - see [[mail-zpush-jmap-folders]] for the full method-by-method mapping
+  and the scoped fix for it, kept as its own doc since it's independent of (and much smaller than)
+  this doc's Phase 2.
 - **`mail_compose.inc.php`** (~24 sites, every compose exercises this - highest real traffic),
   **`mail_integration.inc.php`** (~13 sites, tracker/infolog/calendar linking), and
   **`Storage/Merge.php`** (7 sites, smallest/most contained) are all real, but **every one of them

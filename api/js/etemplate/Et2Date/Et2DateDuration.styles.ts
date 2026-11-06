@@ -5,10 +5,15 @@ export default css`
 		max-width: 100%;
 	}
 
+	/* dateStyles ask for fit-content, which keeps the widget from shrinking below the number and unit side by side */
+	:host {
+		min-width: 0;
+	}
+
 	.form-control-input {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		align-items: baseline;
 	}
 

@@ -5,6 +5,7 @@ import {assert, elementUpdated, fixture, html} from '@open-wc/testing';
 import {Et2Description} from "../Et2Description";
 import * as sinon from "sinon";
 import {widgetSlotTests} from "../../Et2Widget/test/WidgetSlotTests";
+import {assertNoElement} from "../../test/assertDom";
 
 // Reference to component under test
 let element : Et2Description;
@@ -108,7 +109,7 @@ describe("Textbox widget", () =>
 		await elementUpdated(element);
 
 		// Not turned on, make sure there is no links
-		assert.isNull(element.querySelector("a"), "Links got activated when activate_links property is false");
+		assertNoElement(element.querySelector("a"), "Links got activated when activate_links property is false");
 
 		// Turn it on
 		element.activateLinks = true;
@@ -149,8 +150,8 @@ describe("Et2Description markdown", () =>
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
-		assert.isNull(element.querySelector(".et2_markdown"), "Markdown wrapper present although markdown is off");
-		assert.isNull(element.querySelector("strong"), "Value got parsed although markdown is off");
+		assertNoElement(element.querySelector(".et2_markdown"), "Markdown wrapper present although markdown is off");
+		assertNoElement(element.querySelector("strong"), "Value got parsed although markdown is off");
 		assert.match(element.textContent, /\*\*bold\*\*/, "Value is no longer shown literally");
 	});
 
@@ -173,7 +174,7 @@ describe("Et2Description markdown", () =>
 
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
-		assert.isNull(element.querySelector("strong"), "Parsed before markdown was turned on");
+		assertNoElement(element.querySelector("strong"), "Parsed before markdown was turned on");
 
 		// Also covers "markdown" being in updated()'s changed-property check
 		element.markdown = true;
@@ -206,7 +207,7 @@ describe("Et2Description markdown", () =>
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
-		assert.isNull(element.querySelector(".et2_markdown"), "Markdown was rendered although href is set");
+		assertNoElement(element.querySelector(".et2_markdown"), "Markdown was rendered although href is set");
 		const a = element.querySelector("a");
 		assert.isNotNull(a, "Did not find A tag");
 		assert.match(a.href, new RegExp(href), "A tag had wrong href");
@@ -220,8 +221,8 @@ describe("Et2Description markdown", () =>
 		// @ts-ignore TypeScript doesn't recognize widgets as Elements
 		await elementUpdated(element);
 
-		assert.isNull(element.querySelector("img"), "An img node survived");
-		assert.isNull(element.querySelector('a[href^="javascript:"]'), "A javascript: href survived");
+		assertNoElement(element.querySelector("img"), "An img node survived");
+		assertNoElement(element.querySelector('a[href^="javascript:"]'), "A javascript: href survived");
 	});
 });
 
@@ -229,10 +230,8 @@ describe("Et2Description markdown", () =>
 // Description is not an input widget (no readonly/required/get_value/isValid), so it can't run
 // inputBasicTests()'s value/required/disabled/hidden contract - but its label rendering follows
 // the same part="form-control-label" convention as real input widgets, so that part is still
-// worth checking. It has no help-text slot at all. skipLabelFixed: the label part is a bare
-// <slot part="form-control-label"> (display:contents), which "width" has no effect on at all -
-// .et2-label-fixed genuinely cannot apply here, not a bug.
-widgetSlotTests(before, ["label"], {skipLabelFixed: true});
+// worth checking. It has no help-text slot at all.
+widgetSlotTests(before, ["label"]);
 /**
  * Link styling.
  *

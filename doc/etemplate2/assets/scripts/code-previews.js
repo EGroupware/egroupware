@@ -189,97 +189,10 @@
 		event.target.setAttribute('aria-expanded', codeBlock.classList.contains('code-preview--expanded'));
 	}
 
-	//
-	// Open in CodePen
-	//
-	document.addEventListener('click', event =>
-	{
-		const button = event.target.closest('button');
-
-		if (button?.classList.contains('code-preview__button--codepen'))
-		{
-			const codeBlock = button.closest('.code-preview');
-			const htmlExample = codeBlock.querySelector('.code-preview__source--html > pre > code')?.textContent;
-			const reactExample = codeBlock.querySelector('.code-preview__source--react > pre > code')?.textContent;
-			const isReact = flavor === 'react' && typeof reactExample === 'string';
-			const theme = document.documentElement.classList.contains('sl-theme-dark') ? 'dark' : 'light';
-			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			const isDark = theme === 'dark' || (theme === 'auto' && prefersDark);
-			const editors = isReact ? '0010' : '1000';
-			let htmlTemplate = '';
-			let jsTemplate = '';
-			let cssTemplate = '';
-
-			const form = document.createElement('form');
-			form.action = 'https://codepen.io/pen/define';
-			form.method = 'POST';
-			form.target = '_blank';
-
-			// HTML templates
-			if (!isReact)
-			{
-				htmlTemplate =
-					`<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${shoelaceVersion}/cdn/shoelace.js"></script>\n` +
-					`\n${htmlExample}`;
-				jsTemplate = '';
-			}
-
-			// React templates
-			if (isReact)
-			{
-				htmlTemplate = '<div id="root"></div>';
-				jsTemplate =
-					`import ReactDOM from 'https://esm.sh/react-dom@${reactVersion}';\n` +
-					`import { setBasePath } from 'https://esm.sh/@shoelace-style/shoelace@${shoelaceVersion}/${cdndir}/utilities/base-path';\n` +
-					`\n` +
-					`// Set the base path for Shoelace assets\n` +
-					`setBasePath('https://esm.sh/@shoelace-style/shoelace@${shoelaceVersion}/${npmdir}/')\n` +
-					`\n${convertModuleLinks(reactExample)}\n` +
-					`\n` +
-					`ReactDOM.render(<App />, document.getElementById('root'));`;
-			}
-
-			// CSS templates
-			cssTemplate =
-				`@import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@${shoelaceVersion}/${cdndir}/themes/${
-					isDark ? 'dark' : 'light'
-				}.css';\n` +
-				'\n' +
-				'body {\n' +
-				'  font: 16px sans-serif;\n' +
-				'  background-color: var(--sl-color-neutral-0);\n' +
-				'  color: var(--sl-color-neutral-900);\n' +
-				'  padding: 1rem;\n' +
-				'}';
-
-			// Docs: https://blog.codepen.io/documentation/prefill/
-			const data = {
-				title: '',
-				description: '',
-				tags: ['shoelace', 'web components'],
-				editors,
-				head: `<meta name="viewport" content="width=device-width">`,
-				html_classes: `sl-theme-${isDark ? 'dark' : 'light'}`,
-				css_external: ``,
-				js_external: ``,
-				js_module: true,
-				js_pre_processor: isReact ? 'babel' : 'none',
-				html: htmlTemplate,
-				css: cssTemplate,
-				js: jsTemplate
-			};
-
-			const input = document.createElement('input');
-			input.type = 'hidden';
-			input.name = 'data';
-			input.value = JSON.stringify(data);
-			form.append(input);
-
-			document.documentElement.append(form);
-			form.submit();
-			form.remove();
-		}
-	});
+	// No "Edit on CodePen" button: a pen can only pull Shoelace from a CDN, and an <et2-*>
+	// example needs the EGroupware bundle (etemplate2 + the egw bootstrap it depends on) that
+	// only this site serves - so every exported pen rendered an empty page. See default.njk
+	// for what a page has to load before a widget will upgrade at all.
 
 	// Set the initial flavor
 	window.addEventListener('turbo:load', syncFlavor);

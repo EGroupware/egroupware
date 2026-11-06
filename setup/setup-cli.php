@@ -352,7 +352,8 @@ function do_install($args)
 		list($name,$value) = explode('=',$arg,2);
 		$config[$name] = $value;
 	}
-	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true,$config,$lang);
+	// DB password of the system the backup was created on, to re-encrypt passwords encrypted with it: not on commandline, as it would be visible in ps
+	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true,$config,$lang,$_SERVER['EGW_CLI_OLD_DB_PASSWORD'] ?? null);
 	echo $cmd->run()."\n";
 }
 
@@ -449,6 +450,7 @@ function do_usage($what='')
 	{
 		echo '--check '.lang('checks EGroupware\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
 		echo '--install '.lang('domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]')."\n";
+		echo '        '.lang('to re-encrypt passwords of a backup created with a different DB password, set its old DB password in the environment variable EGW_CLI_OLD_DB_PASSWORD')."\n";
 	}
 	if (!$what || $what == 'config')
 	{

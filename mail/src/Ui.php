@@ -509,6 +509,11 @@ class Ui
 		// as getting all subscribed folders is very fast operation
 		// we can use it to get a comparison base for folders which
 		// got subscribed or unsubscribed by the user
+		// default to empty, not undefined/null, so a thrown exception below degrades to "no
+		// subscribed folders known" instead of crashing array_map() right after (found live,
+		// ticket #126691 follow-up: listSubscribedMailboxes() threw for a Stalwart/JMAP account
+		// and this left $subscribed unset entirely)
+		$subscribed = [];
 		try {
 			$subscribed = array_keys($this->mail_bo->icServer->listSubscribedMailboxes('',0,true) ?: []);
 		} catch (\Exception $ex) {
@@ -624,6 +629,19 @@ class Ui
 			$image_proxy = self::EGROUPWARE_IMAGE_PROXY;
 		}
 		return $image_proxy;
+	}
+
+	/**
+	 * Url of the stylesheet of the client-side rendered message body (MailJmap.wrapDocument())
+	 *
+	 * With its modification time, so browsers do not keep using an outdated version.
+	 *
+	 * @return string
+	 */
+	public static function preview_css()
+	{
+		$file = '/mail/templates/default/preview.css';
+		return Egw::link($file).'?'.filemtime(EGW_SERVER_ROOT.$file);
 	}
 
 	/**
@@ -934,6 +952,7 @@ class Ui
 		));
 		// send configured image proxy to client-side
 		$content['image_proxy'] = self::image_proxy();
+		$content['preview_css'] = self::preview_css();
 		$content['no_vfs'] = !$GLOBALS['egw_info']['user']['apps']['filemanager'];
 		return $etpl->exec('mail.EGroupware\\Mail\\Ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -1015,7 +1034,7 @@ class Ui
 				'toolbarDefault' => false
 			),
 			'subscribe' => array(
-				'caption' => 'Subscribe folder ...',
+				'caption' => 'Subscribe folder',
 				//'icon' => 'configure',
 				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.editSubscribe',
@@ -1028,7 +1047,7 @@ class Ui
 				'group'		=> $group,
 			),
 			'foldermanagement' => array(
-				'caption' => 'Folder Management ...',
+				'caption' => 'Folder Management',
 				'icon' => 'folder_management',
 				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.folderManagement',
@@ -1050,18 +1069,18 @@ class Ui
 				'enabled'	=> 'javaScript:app.mail.sieveEnabled',
 			),
 			'editAccount' => array(
-				'caption' => 'Edit account ...',
+				'caption' => 'Edit account',
 				'icon' => 'configure',
 				'onExecute' => 'javaScript:app.mail.editAccount',
 			),
 			'editAcl'	=> array(
-				'caption' => 'Edit folder ACL ...',
+				'caption' => 'Edit folder ACL',
 				'icon'	=> 'lock',
 				'enabled'	=> 'javaScript:app.mail.aclEnabled',
 				'onExecute' => 'javaScript:app.mail.editAcl',
 			),
 			'predefined-addresses' => array(
-				'caption' => 'Set predefined values for compose...',
+				'caption' => 'Set predefined values for compose',
 				'onExecute' => 'javaScript:app.mail.setPredefinedAddresses',
 				'icon' => 'edit',
 			)
@@ -2060,6 +2079,7 @@ class Ui
 			'part' => $partID,
 			'displayToolbaractions' => json_encode($this->getDisplayToolbarActions()),
 			'image_proxy' => self::image_proxy(),
+			'preview_css' => self::preview_css(),
 			'emailTag' => $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname',
 		];
 		if (!$hA['is_jmap'] && (!$uid || !$mailbox))

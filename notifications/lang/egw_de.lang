@@ -60,6 +60,7 @@ mail account to use for notifications	admin	de	E-Mail-Konto, das für Benachrich
 mail backend	admin	de	E-Mail-Schnittstelle
 mark all as read	notifications	de	Alle als gelesen markieren
 mark as read	notifications	de	Als gelesen markieren
+maximum concurrent long-polls	notifications	de	Maximale gleichzeitige Long-Polls
 message from	notifications	de	Nachricht von
 minutes	notifications	de	Minuten
 more info	notifications	de	Mehr
@@ -68,6 +69,7 @@ notification	common	de	Benachrichtigung
 notifier	notifications	de	Benachrichtiger
 notify me by	notifications	de	Benachrichtige mich per
 notify private email address	notifications	de	Private E-Mail-Adresse benachrichtigen
+once this many browsers are already waiting, further ones get an instant check instead	notifications	de	Warten bereits so viele Browser, erhalten weitere sofort nur eine einmalige Prüfung
 only used if no push server available!	admin	de	Wird nur benutzt wenn kein Push Server verfügbar!
 open notified entry	notifications	de	Eintrag öffnen
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe E-Mail-Programme

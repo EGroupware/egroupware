@@ -77,14 +77,12 @@ cancelled	infolog	en	Cancelled.
 categories	infolog	en	Categories
 category	infolog	en	Category
 change	infolog	en	Change
-change category	infolog	en	Change category
 change completed	infolog	en	Change completed.
 change completion	infolog	en	Change completion
 change history	infolog	en	Change history
 change owner when updating	infolog	en	Change owner when updating
 change responsible	infolog	en	Change responsible
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
-changed category to %1	infolog	en	Changed category to %1
 changed completion to %1%	infolog	en	Changed completion to %1%
 changed status to %1	infolog	en	Changed status to %1
 changed type	infolog	en	Changed type
@@ -400,7 +398,6 @@ regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link, not the entry itself.
 removed	infolog	en	Removed.
-removed category	infolog	en	removed category
 replacement	infolog	en	Replacement
 replacements for inserting entries into documents	infolog	en	Replacements for inserting entries into documents
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	en	Requires the editing user to have write access to theses contacts, to share them with the responsible user.

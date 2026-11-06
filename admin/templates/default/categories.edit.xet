@@ -2,78 +2,33 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="admin.categories.edit.category" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="90"/>
-				<column width="300"/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Parent category" for="parent"></et2-description>
-					<et2-select-cat  id="parent" application="$cont[appname]" emptyLabel="None" globalCategories="$cont[all_cats]"></et2-select-cat>
-				</row>
-				<row valign="top">
-					<et2-description  value="Description" for="description"></et2-description><et2-ai><et2-textarea  id="description" rows="5" cols="50"></et2-textarea></et2-ai>
-				</row>
-				<row class="nmr" disabled="@no_private">
-					<et2-description  value="Private"></et2-description>
-					<et2-checkbox  id="access" selectedValue="private" unselectedValue="public" ></et2-checkbox>
-				</row>
-				<row>
-					<et2-description  value="Color" for="cat_data[color]"></et2-description>
-					<et2-colorpicker  id="data[color]"></et2-colorpicker>
-				</row>
-				<row>
-					<et2-description  value="Icon" for="data[icon]"></et2-description>
-					<et2-select  id="data[icon]" emptyLabel="None" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
-				</row>
-				<row disabled="@appname=phpgw">
-					<et2-description  value="Application"></et2-description>
-					<et2-select-app  id="appname" readonly="true" emptyLabel="All applications"></et2-select-app>
-				</row>
-				<row>
-					<et2-description  value="Category owner" for="owner"></et2-description>
-					<et2-select-account  statustext="Limit global category to members of a certain group" id="owner" accountType="groups" multiple="true" required="1"></et2-select-account>
-				</row>
-
-			</rows>
-		</grid>
+	<et2-template  id="admin.categories.edit.category" template="" lang="" group="0" version="1.9.002" layout="2-column">
+		<et2-select-cat  label="Parent category" id="parent" application="$cont[appname]" emptyLabel="None" globalCategories="$cont[all_cats]"></et2-select-cat>
+		<et2-select-app  label="Application" id="appname" readonly="true" emptyLabel="All applications" hidden="@appname=phpgw"></et2-select-app>
+		<et2-ai  span="all"><et2-textarea  label="Description" class="et2-label-fixed" id="description" rows="5" cols="50"></et2-textarea></et2-ai>
+		<et2-colorpicker  label="Color" id="data[color]"></et2-colorpicker>
+		<et2-select  label="Icon" id="data[icon]" emptyLabel="None" search="true" searchUrl="preferences.preferences_categories_ui.ajax_search"></et2-select>
+		<et2-checkbox  label="Private" id="access" selectedValue="private" unselectedValue="public" hidden="@no_private"></et2-checkbox>
+		<et2-select-account  label="Category owner" statustext="Limit global category to members of a certain group" id="owner" accountType="groups" multiple="true" required="1" span="all"></et2-select-account>
 	</et2-template>
-	<et2-template  id="admin.categories.edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width="90"/>
-				<column width="300"/>
-			</columns>
-			<rows>
-				<row class="dialogHeader">
-					<et2-description  value="Name" for="name"></et2-description>
-					<et2-textbox  id="name" maxlength="150" required="1"></et2-textbox>
-				</row>
-				<row>
-					<et2-tabbox  id="tabs" span="all" tabHeight="350">
-						<tabs>
-							<tab id="category" label="Category"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="admin.categories.edit.category"></et2-template>
-						</tabpanels>
-					</et2-tabbox>
-				</row>
-				<row disabled="!@last_mod">
-					<et2-description  value="Modified"></et2-description>
-					<et2-date-time  id="last_mod" readonly="true"></et2-date-time>
-				</row>
-				<row  class="dialogFooterToolbar">
-					<et2-hbox  span="all">
-						<et2-button  label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save"></et2-button>
-						<et2-button  label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply"></et2-button>
-						<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
-						<et2-button  align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="egw.open_link('$cont[delete_link]&amp;cat_id='+widget.getRoot().getArrayMgr('content').getEntry('id'),'_browser','450x400');window.close();" image="delete" noSubmit="true"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="admin.categories.edit" template="" lang="" group="0" version="1.9.002" layout="edit">
+		<et2-hbox  class="dialogHeader">
+			<et2-textbox  label="Name" class="et2-label-fixed" id="name" maxlength="150" required="1"></et2-textbox>
+		</et2-hbox>
+		<et2-tabbox  id="tabs" tabHeight="auto">
+			<tabs>
+				<tab id="category" label="Category"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="admin.categories.edit.category"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-date-time  label="Modified" id="last_mod" readonly="true" hidden="!@last_mod"></et2-date-time>
+		<et2-hbox  class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  label="Save" id="button[save]" onclick="return app.admin.check_owner(widget);" image="save"></et2-button>
+			<et2-button  label="Apply" id="button[apply]" onclick="return app.admin.check_owner(widget);" image="apply"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
+			<et2-button  align="right" statustext="Delete this category" label="Delete" id="button[delete]" onclick="egw.open_link('$cont[delete_link]&amp;cat_id='+widget.getRoot().getArrayMgr('content').getEntry('id'),'_browser','450x400');window.close();" image="delete" noSubmit="true"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>

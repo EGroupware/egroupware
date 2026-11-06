@@ -532,6 +532,20 @@ class preferences_hooks
 				'help'   => 'You may select features to be enabled in toolbar. Selecting any of the tools from here means seleted "Feature of the editor" preference would be ignored.',
 				'admin'  => true
 			),
+			'markdown' => array(
+				'type'   => 'select',
+				'label'  => 'Markdown',
+				'name'   => 'markdown',
+				'values' => array(
+					'on'  => lang('On'),
+					'off' => lang('Off'),
+					'default' => lang('No selection')
+				),
+				'help'   => 'Write and read plain-text fields as markdown, so **bold**, lists, links and headings are formatted instead of shown as typed. "On" turns it on for every text field, "Off" turns it off even for the fields that ask for it themselves, "No selection" lets each field (template.xet) decide.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => 'default',
+			),
 			'markdown_view' => array(
 				'type'   => 'select',
 				'label'  => 'Markdown view',
@@ -541,7 +555,7 @@ class preferences_hooks
 					'split'   => lang('Editor and preview'),
 					'view'    => lang('Preview only'),
 				),
-				'help'   => 'Which view markdown-enabled text fields open in. Switching the view in a field updates this.',
+				'help'   => 'Which view markdown-enabled text fields open in by default',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => 'view',

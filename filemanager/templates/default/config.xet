@@ -29,6 +29,9 @@
                     </row>
                 </rows>
             </grid>
+            <et2-description  id="links_header" class="subHeader"></et2-description>
+            <et2-number  label="Entries shown before splitting a directory into ranges" id="links_page_size" precision="0" min="0" class="et2-label-fixed" placeholder="100"></et2-number>
+            <et2-description  value="Applies to app directories (Links) without a ?page-size= on their mount, 0 turns splitting off, empty uses the default of 100"></et2-description>
         </et2-vbox>
     </et2-template>
     <et2-template  id="filemanager.config.notification" template="" lang="" group="0" version="1.9.004">
@@ -38,9 +41,8 @@
             <et2-description  value="Full list of placeholder names" href="filemanager.filemanager_merge.show_replacements" extraLinkTarget="_blank"></et2-description>
         </et2-vbox>
     </et2-template>
-    <et2-template  id="filemanager.config" template="" lang="" group="0" version="1.9.004">
-        <et2-vbox  height="100%">
-            <et2-tabbox  id="tabs" width="100%" cfDisabled="true">
+    <et2-template  id="filemanager.config" template="" lang="" group="0" version="1.9.004" layout="edit">
+            <et2-tabbox  id="tabs" width="100%" cfDisabled="true" tabHeight="auto" span="all">
                 <tabs>
                     <tab id="configuration" label="Configuration"/>
                     <tab id="notification" label="Notification"/>
@@ -50,38 +52,32 @@
                     <et2-template  id="filemanager.config.notification"></et2-template>
                 </tabpanels>
             </et2-tabbox>
-            <et2-hbox  span="2" class="dialogFooterToolbar">
+            <et2-hbox  class="dialogFooterToolbar">
                 <et2-button  label="Save" id="button[save]"></et2-button>
                 <et2-button  label="Apply" id="button[apply]"></et2-button>
                 <et2-button  label="Cancel" id="button[cancel]"></et2-button>
             </et2-hbox>
-        </et2-vbox>
         <et2-styles>
             #filemanager-config_quota::part(form-control-input),
-            #filemanager-config_group_quota::part(form-control-input){
+            #filemanager-config_group_quota::part(form-control-input),
+            #filemanager-config_links_page_size::part(form-control-input){
             max-width: 15ex;
             }
 
-            #filemanager-config > div > et2-vbox {
-            height: 100%;
+            #filemanager-config_filemanager-config-configuration {
+            --label-width: 28em;
             }
+
             #filemanager-config_button\[recalculate\],
             #filemanager-config_oversize {
             margin: 2ex 0;
             }
-            #filemanager-config_quota_header,
-            #filemanager-config_notification_header {
+            #filemanager-config .subHeader {
             font-weight: bold;
             border-bottom: 1px solid var(--sl-color-neutral-400);
             padding-bottom: 3px;
             margin-bottom: 5px;
             display: block;
-            }
-            #filemanager-config_tabs {
-            flex: 1 1 auto;
-            }
-            .dialogFooterToolbar {
-            margin-top: auto;
             }
         </et2-styles>
     </et2-template>

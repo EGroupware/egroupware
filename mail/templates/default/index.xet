@@ -34,6 +34,8 @@
                                      MailJmap.verifyPgpSignature(); .hidden specifically, NOT .disabled, which per
                                      Et2Widget's own docblock stays visible (just greyed out) -->
                                 <et2-image  id="pgp_signature" src="envelope-at-fill" inline="true" hidden="true" align="right" width="24"></et2-image>
+                                <!-- only shown while EGroupware itself is in dark mode, see app.less -->
+                                <et2-button-toggle  id="mail_darkmode" class="mailDarkmodeToggle" onIcon="moon" offIcon="sun" statustext="Dark mode for mails" noSubmit="true" onchange="app.mail.toggleMailDarkmode"></et2-button-toggle>
                             </et2-hbox>
                         </et2-hbox>
                         <!-- onlyPrint: simpler, non-interactive layout (no avatar/toolbar/dropdown actions),
@@ -42,7 +44,7 @@
                              message from THIS preview pane (not the mail.display popup) showed no header
                              info at all - the avatar-containing interactive block below doesn't print
                              correctly (same class of shadow-DOM-vs-print issue as the message body itself,
-                             see MailApp.preparePrint()'s own docblock), which is exactly why mail.display
+                             which is printed as its own document, see MailApp.printMessage()), which is exactly why mail.display
                              already has this same print-only duplicate instead of relying on the interactive
                              block printing as-is. Found live 2026-10-12 (ralf, following up on Stefan
                              Unverricht's ctrl+P report). -->
@@ -191,7 +193,7 @@
                     <et2-nextmatch-sortheader  align="center" label="date" id="date" sortmode="DESC"/>
                 </row>
                 <row class="$row_cont[class]">
-                    <et2-hbox  class="$row_cont[class] mobile_cat_col">
+                    <et2-hbox  class="$row_cont[class]">
                         <et2-lavatar  contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]" lname="$row_cont[lavatar][lname]" shape="rounded" loading="lazy"></et2-lavatar>
                         <et2-vbox  class="mail_row_content">
                             <et2-url-email  id="${row}[address]" class="$row_cont[class]" readonly="true" emailDisplay="preference" disableClickAction="true"></et2-url-email>

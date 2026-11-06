@@ -108,6 +108,16 @@ describe("MailJmap external content CSP", () =>
 		assert.equal(doc.body.getAttribute("data-blocked-external"), `${window.location.origin}/trk/pixel.php?v=inline-style`);
 	});
 
+	it("lists the host of every blocked url once, for the Show/Allow titles", () =>
+	{
+		const doc = wrap(new MailJmap(createFakeApp({allowIMGs: 2})),
+			`<div style="background:url(https://a.example.com/1.png)"></div>` +
+			`<table><tr><td background="https://b.example.com:8443/2.png">x</td></tr></table>` +
+			`<div style="background:url(https://a.example.com/3.png)"></div>`);
+
+		assert.equal(doc.body.getAttribute("data-blocked-hosts"), "a.example.com b.example.com:8443");
+	});
+
 	it("marks the body with a blocked inline-style background url", () =>
 	{
 		const doc = wrap(new MailJmap(createFakeApp({allowIMGs: 2})),

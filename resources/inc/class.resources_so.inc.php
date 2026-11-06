@@ -24,6 +24,14 @@ class resources_so extends Api\Storage
 	{
 		parent::__construct('resources','egw_resources', 'egw_resources_extra', '',
 			'extra_name', 'extra_value', 'extra_id' );
+
+		// TEMPORARY per-instance opt-in (doc/ai/projects/sql-fragment-type-safety.md): own clone
+		// (not the shared global instance) so this only affects resources' own queries - every raw
+		// SQL fragment resources builds itself now uses Api\Db\SqlFragment. Once
+		// requireSqlFragmentObjects() becomes the default (opt-out) for Api\Db generally, remove
+		// this clone again - Api\Storage::__construct() already defaults $no_clone=true.
+		$this->db = (clone $this->db)->requireSqlFragmentObjects(true);
+
 		$this->convert_all_timestamps();
 
 		$this->columns_to_search = array('name','short_description','inventory_number','long_description','location');

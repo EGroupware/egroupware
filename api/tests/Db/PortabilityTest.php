@@ -82,20 +82,20 @@ class PortabilityTest extends TestCase
 	public function testGroupConcatMysql()
 	{
 		self::$db->Type = 'mysqli';
-		$this->assertSame('GROUP_CONCAT(col)', self::$db->group_concat('col'));
+		$this->assertSame('GROUP_CONCAT(col)', (string)self::$db->group_concat('col'));
 	}
 
 	public function testGroupConcatMysqlWithOrderBy()
 	{
 		self::$db->Type = 'mysqli';
-		$this->assertSame('GROUP_CONCAT(col ORDER BY col ASC)', self::$db->group_concat('col', 'col ASC'));
+		$this->assertSame('GROUP_CONCAT(col ORDER BY col ASC)', (string)self::$db->group_concat('col', 'col ASC'));
 	}
 
 	public function testGroupConcatMysqlWithCustomSeparator()
 	{
 		self::$db->Type = 'mysqli';
 		// non-default separator goes through quote() - exercises the real connection's qstr()
-		$this->assertSame("GROUP_CONCAT(col SEPARATOR '|')", self::$db->group_concat('col', '', '|'));
+		$this->assertSame("GROUP_CONCAT(col SEPARATOR '|')", (string)self::$db->group_concat('col', '', '|'));
 	}
 
 	public function testGroupConcatPostgresBelow84ReturnsFalse()
@@ -110,7 +110,7 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'pgsql';
 		self::$db->ServerInfo = ['version' => '9.6'];
-		$this->assertSame("ARRAY_TO_STRING(ARRAY_AGG(col), ',')", self::$db->group_concat('col'));
+		$this->assertSame("ARRAY_TO_STRING(ARRAY_AGG(col), ',')", (string)self::$db->group_concat('col'));
 	}
 
 	public function testGroupConcatPostgresWithOrderBy()
@@ -118,7 +118,7 @@ class PortabilityTest extends TestCase
 		self::$db->Type = 'pgsql';
 		self::$db->ServerInfo = ['version' => '9.6'];
 		$this->assertSame("ARRAY_TO_STRING(ARRAY_AGG(col ORDER BY col ASC), ',')",
-			self::$db->group_concat('col', 'col ASC'));
+			(string)self::$db->group_concat('col', 'col ASC'));
 	}
 
 	public function testGroupConcatUnsupportedTypeReturnsFalse()
@@ -135,7 +135,7 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'mysqli';
 		self::$db->ServerInfo = ['version' => '5.7'];
-		$this->assertSame('col', self::$db->regexp_replace('col', '[0-9]', "''"),
+		$this->assertSame('col', (string)self::$db->regexp_replace('col', '[0-9]', "''"),
 			'REGEXP_REPLACE() needs MySQL 8.0 / MariaDB 10.0, older versions get back the untouched $expr');
 	}
 
@@ -143,19 +143,19 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'mysqli';
 		self::$db->ServerInfo = ['version' => '8.0'];
-		$this->assertSame("REGEXP_REPLACE(col,'[0-9]','')", self::$db->regexp_replace('col', '[0-9]', "''"));
+		$this->assertSame("REGEXP_REPLACE(col,'[0-9]','')", (string)self::$db->regexp_replace('col', '[0-9]', "''"));
 	}
 
 	public function testRegexpReplacePostgres()
 	{
 		self::$db->Type = 'pgsql';
-		$this->assertSame("REGEXP_REPLACE(col,'[0-9]','')", self::$db->regexp_replace('col', '[0-9]', "''"));
+		$this->assertSame("REGEXP_REPLACE(col,'[0-9]','')", (string)self::$db->regexp_replace('col', '[0-9]', "''"));
 	}
 
 	public function testRegexpReplaceUnsupportedTypeReturnsExprUnchanged()
 	{
 		self::$db->Type = 'mssql';
-		$this->assertSame('col', self::$db->regexp_replace('col', '[0-9]', "''"));
+		$this->assertSame('col', (string)self::$db->regexp_replace('col', '[0-9]', "''"));
 	}
 
 	// -------------------------------------------------------------------
@@ -166,7 +166,7 @@ class PortabilityTest extends TestCase
 	public function testStrpos($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->strpos('haystack', 'needle'));
+		$this->assertSame($expected, (string)self::$db->strpos('haystack', 'needle'));
 	}
 
 	public static function strposProvider() : array
@@ -187,7 +187,7 @@ class PortabilityTest extends TestCase
 	public function testUnixTimestamp($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->unix_timestamp('ts_col'));
+		$this->assertSame($expected, (string)self::$db->unix_timestamp('ts_col'));
 	}
 
 	public static function unixTimestampProvider() : array
@@ -204,7 +204,7 @@ class PortabilityTest extends TestCase
 	public function testFromUnixtime($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->from_unixtime('int_col'));
+		$this->assertSame($expected, (string)self::$db->from_unixtime('int_col'));
 	}
 
 	public static function fromUnixtimeProvider() : array
@@ -232,7 +232,7 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'mysqli';
 		$this->assertSame("DATE_FORMAT(ts_col,'%Y-%m-%d %H:%i:%s')",
-			self::$db->date_format('ts_col', '%Y-%m-%d %H:%i:%s'));
+			(string)self::$db->date_format('ts_col', '%Y-%m-%d %H:%i:%s'));
 	}
 
 	/**
@@ -245,7 +245,7 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'pgsql';
 		$result = self::$db->date_format('ts_col', '%Y-%y-%m-%d %H:%h:%i:%s %V-%v-%X-%x');
-		$this->assertSame("TO_CHAR(ts_col,'YYYY-YY-MM-DD HH24:HH:MI:SS IW-IW-YYYY-YYYY')", $result);
+		$this->assertSame("TO_CHAR(ts_col,'YYYY-YY-MM-DD HH24:HH:MI:SS IW-IW-YYYY-YYYY')", (string)$result);
 	}
 
 	/**
@@ -257,14 +257,14 @@ class PortabilityTest extends TestCase
 	public function testDateFormatMssqlSinglePlaceholder()
 	{
 		self::$db->Type = 'mssql';
-		$this->assertSame("'+DATEPART(yyyy,(ts_col))+'", self::$db->date_format('ts_col', '%Y'));
+		$this->assertSame("'+DATEPART(yyyy,(ts_col))+'", (string)self::$db->date_format('ts_col', '%Y'));
 	}
 
 	public function testDateFormatMssqlWithLiteralSeparatorBetweenPlaceholders()
 	{
 		self::$db->Type = 'mssql';
 		$this->assertSame("'+DATEPART(yyyy,(ts_col))+'-'+DATEPART(mm,(ts_col))+'",
-			self::$db->date_format('ts_col', '%Y-%m'));
+			(string)self::$db->date_format('ts_col', '%Y-%m'));
 	}
 
 	/**
@@ -276,7 +276,7 @@ class PortabilityTest extends TestCase
 	{
 		self::$db->Type = 'mssql';
 		$this->assertSame("'+DATEPART(yyyy,(ts_col))+DATEPART(mm,(ts_col))+'",
-			self::$db->date_format('ts_col', '%Y%m'));
+			(string)self::$db->date_format('ts_col', '%Y%m'));
 	}
 
 	public function testDateFormatUnsupportedTypeReturnsFalse()
@@ -293,7 +293,7 @@ class PortabilityTest extends TestCase
 	public function testToDouble($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->to_double('col'));
+		$this->assertSame($expected, (string)self::$db->to_double('col'));
 	}
 
 	public static function toDoubleProvider() : array
@@ -311,7 +311,7 @@ class PortabilityTest extends TestCase
 	public function testToInt($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->to_int('col'));
+		$this->assertSame($expected, (string)self::$db->to_int('col'));
 	}
 
 	public static function toIntProvider() : array
@@ -333,7 +333,7 @@ class PortabilityTest extends TestCase
 	public function testToVarchar($type, $expected)
 	{
 		self::$db->Type = $type;
-		$this->assertSame($expected, self::$db->to_varchar('col'));
+		$this->assertSame($expected, (string)self::$db->to_varchar('col'));
 	}
 
 	public static function toVarcharProvider() : array

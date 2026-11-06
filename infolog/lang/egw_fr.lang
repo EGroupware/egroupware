@@ -78,14 +78,12 @@ cancelled	infolog	fr	Annulé
 categories	infolog	fr	Catégories
 category	infolog	fr	Catégorie
 change	infolog	fr	Changer
-change category	infolog	fr	Changer la catégorie
 change completed	infolog	fr	Changement réalisé.
 change completion	infolog	fr	Avancemenent du changement
 change history	infolog	fr	Historique des changements
 change owner when updating	infolog	fr	Changer le propriètaire lors de la mise à jour
 change responsible	infolog	fr	Changer le responsable
 change the status of an entry, eg. close it	infolog	fr	Change le statut d´une entrée, c'est-à-dire la ferme
-changed category to %1	infolog	fr	Changer la catégorie en %1
 changed completion to %1%	infolog	fr	Changer la réalisation en %1%
 changed status to %1	infolog	fr	Changer le statut en %1
 changed type	infolog	fr	Changer le type
@@ -398,7 +396,6 @@ regular expression	infolog	fr	Expression régulière
 remark	infolog	fr	Remarque
 remove this link (not the entry itself)	infolog	fr	Enlever ce lien (pas l'entrée elle-même).
 removed	infolog	fr	Enlevé.
-removed category	infolog	fr	catégorie supprimée
 replacement	infolog	fr	Remplacement
 replacements for inserting entries into documents	infolog	fr	Remplacements pour insertion d'entrées dans des documents
 requires the editing user to have write access to theses contacts, to share them with the responsible user.	infolog	fr	L'utilisateur chargé de l'édition doit avoir un accès en écriture à ces contacts, afin de les partager avec l'utilisateur responsable.

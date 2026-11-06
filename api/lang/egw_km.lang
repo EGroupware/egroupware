@@ -248,8 +248,10 @@ centered	common	km	កណ្តាល
 central african republic	common	km	សាធារណរដ្ឋអាហ្វ្រិកកណ្តាល
 chad	common	km	ឆាដ
 change	common	km	ផ្លាស់ប្តូរ
+change category	common	km	ផ្លាស់ប្តូរប្រភេទ
 change owner	common	km	ផ្លាស់ប្តូរម្ចាស់
 changed	common	km	បានផ្លាស់ប្តូរ
+changed category to %1	common	km	បានប្តូរប្រភេទទៅជា%1
 charset	common	km	សំណុំតួអក្សរ
 check all	common	km	ពិនិត្យ​ទាំងអស់
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	km	ពិនិត្យមើលតម្លៃទទេនៅក្នុងសេចក្តីថ្លែងការណ៍ IF ។ ឧទាហរណ៍ {{IF url~EMPTY~~Website:}} - ប្រសិនបើ url មិនទទេ សរសេរ "គេហទំព័រ៖"
@@ -1091,6 +1093,7 @@ remove selected accounts	common	km	លុបគណនីដែលបានជ្
 remove shortcut	common	km	ដកផ្លូវកាត់ចេញ
 remove this link (not the entry itself)	common	km	លុបតំណ
 removed (now) empty directory fs_id=%1	admin	km	បានលុប (ឥឡូវ) ថតទទេ fs_id=%1
+removed category	common	km	ប្រភេទដែលបានដកចេញ
 removeformat	common	km	លុបទម្រង់
 rename	common	km	ប្តូរឈ្មោះ
 repeat password	common	km	ពាក្យសម្ងាត់ម្តងទៀត

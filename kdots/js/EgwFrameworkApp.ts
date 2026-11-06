@@ -13,7 +13,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
 import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Filterbox} from "../../api/js/etemplate/Et2Filterbox/Et2Filterbox";
 import {waitForEvent} from "../../api/js/etemplate/Et2Widget/event";
 import {egw_getAppObjectManager} from "../../api/js/egw_action/egw_action";
@@ -855,8 +855,21 @@ export class EgwFrameworkApp extends LitElement
 		delete values.sort;
 
 		// If there are no filters set, show filter-circle.  Show filter-circle-fill if there are filters set.
-		const emptyFilter = (v) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
-		if(Object.values(values).filter(emptyFilter).length !== 0)
+		// "Nothing set" is not always falsy: a cleared Et2LinkEntry still reports {app, id: ''} because it
+		// remembers the last chosen app, so an object with an empty id is empty whatever else it holds.
+		const hasValue = (v : any) : boolean =>
+		{
+			if(!v || typeof v !== "object")
+			{
+				return Boolean(v);
+			}
+			if("app" in v && "id" in v && !v.id)
+			{
+				return false;
+			}
+			return Object.values(v).some(hasValue);
+		};
+		if(Object.values(values).some(hasValue))
 		{
 			info.icon = "filter-circle-fill";
 		}
@@ -1014,7 +1027,10 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected handleShow(event)
 	{
-		if(event.detail instanceof et2_nextmatch)
+		// Checked by capability rather than class: the only thing that currently fires et2-show is
+		// the legacy nextmatch (which passes itself as detail), but this also picks up any future
+		// nextmatch-alike, and it keeps the legacy class out of this shell's runtime dependencies.
+		if(typeof event.detail?.controller?.getTotalCount == "function")
 		{
 			this.rowCount = event.detail.controller.getTotalCount();
 		}
@@ -1297,23 +1313,22 @@ export class EgwFrameworkApp extends LitElement
 		let favorites : symbol | TemplateResult = nothing;
 		if(this.features?.favorites)
 		{
-			favorites = html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
-			{
-				// Add favorite menu to sidebox
-				const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
-				return html`
-                    <et2-details
-                            exportparts="base:details-base, header:details-header, summary:details-summary, content:details-content"
-                            class="favorites sidebox" slot="left"
-                                ?open=${favSidebox?.opened}
-                                summary=${this.egw.lang("Favorites")}
-                                @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
-                                @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
-                    >
-                        <et2-favorites-menu application=${this.name} sortable></et2-favorites-menu>
-                    </et2-details>
-				`;
-			}), nothing)}`;
+			// Add favorite menu to sidebox.  Rendered directly: waiting for anything here would throw the sidebox away
+			// and make it again on every render of the app (eg. whenever the number of rows changes), and anything
+			// the user was in the middle of clicking in it would be lost.
+			const favSidebox = this._sideboxData?.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
+			favorites = html`
+                <et2-details
+                        exportparts="base:details-base, header:details-header, summary:details-summary, content:details-content"
+                        class="favorites sidebox" slot="left"
+                        ?open=${favSidebox?.opened}
+                        summary=${this.egw.lang("Favorites")}
+                        @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
+                        @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
+                >
+                    <et2-favorites-menu application=${this.name} sortable></et2-favorites-menu>
+                </et2-details>
+			`;
 		}
 		return html`
             <slot name="left-top"></slot>
