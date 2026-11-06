@@ -417,21 +417,6 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		{
 			return;
 		}
-		if(event.key !== 'Enter')
-		{
-			return;
-		}
-
-		// Only act on an Enter that nothing else wanted.  A widget that deals with Enter itself
-		// either stops the keydown before it reaches us (a select's search field, a searchbox) or
-		// cancels it further along (Shoelace picks the highlighted option from a listener on the
-		// document).  Either way keyup is a separate event it cannot stop, it arrives here looking
-		// exactly like the user pressing Enter on the dialog, and acting on it fires the default
-		// button - so searching for a contact or picking one from the list closes the dialog.
-		// Checking the keydown at keyup time catches both: by now we know whether it was cancelled.
-		const keydown = this._enterKeyDown;
-		this._enterKeyDown = null;
-		const from_dialog = keydown && !keydown.defaultPrevented;
 
 		// Only act on an Enter that nothing else wanted.  A widget that deals with Enter itself
 		// either stops the keydown before it reaches us (a select's search field, a searchbox) or
