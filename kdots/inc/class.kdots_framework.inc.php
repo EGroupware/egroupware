@@ -162,6 +162,7 @@ class kdots_framework extends Api\Framework\Ajax
 					$data['open_app'] .= " open-once=\"{$once}\"";
 				}
 				$data['open_app'] .= "></egw-app>";
+				$data['java_script'] = $this->early_fetch_script($open_app['name'], $url) . ($data['java_script'] ?? '');
 			}
 		}
 		if(!empty($data['open_app_name']) && !$this->sidebox_done)
@@ -170,6 +171,37 @@ class kdots_framework extends Api\Framework\Ajax
 			$data['setSidebox'] = htmlentities(json_encode(static::$extra['setSidebox'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
 		}
 		return $data;
+	}
+
+	/**
+	 * Script tag starting the initially active app's index request before the framework's JavaScript is loaded
+	 *
+	 * Mirrors what EgwFrameworkApp.load() sends for an ajax url, kdots/js/early-fetch.js hands the pending
+	 * response to that request instead of it fetching again.  Cookie early_fetch=0 or ?early_fetch=0 turns it off.
+	 *
+	 * @param string $app
+	 * @param string $url url of the egw-app as given to the egw-app tag
+	 * @return string '' if the url is not an ajax_exec one or the switch is off
+	 */
+	protected function early_fetch_script(string $app, string $url) : string
+	{
+		if(($_GET['early_fetch'] ?? $_COOKIE['early_fetch'] ?? '1') === '0')
+		{
+			return '';
+		}
+		// same match and target url as EgwFrameworkApp.load()
+		if(!preg_match('#/index\.php\?menuaction=([A-Za-z0-9_.]*.*[&?]ajax=[^&]+.*)#', $url, $matches) ||
+			!preg_match('/menuaction=([^&]+)/', $target = 'index.php?menuaction=' . $matches[1], $menuaction))
+		{
+			return '';
+		}
+		$request_url = $GLOBALS['egw_info']['server']['webserver_url'] . '/json.php?menuaction=' .
+			explode('.', $menuaction[1])[0] . '.kdots_framework.ajax_exec.template.' . $menuaction[1];
+		$body = json_encode(['request' => ['parameters' => [$target]]], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+		$js = '/kdots/js/early-fetch.js';
+		return '<script src="' . $GLOBALS['egw_info']['server']['webserver_url'] . $js . '?' .
+			filemtime(EGW_SERVER_ROOT . $js) . '" data-url="' . htmlspecialchars($request_url) .
+			'" data-body="' . htmlspecialchars($body) . "\"></script>\n";
 	}
 
 	static function _get_navbar_apps()
