@@ -9188,8 +9188,15 @@ export class MailApp extends EgwApp
 		{
 			// app.mail, not this: the shortcut must not use a destroyed instance, if the app got reloaded
 			const mail = (window as any).app?.mail;
-			// another application is active: leave it to the framework, printing that application
-			if (!mail || framework.activeApp.appName !== mail.appname)
+			if (!mail)
+			{
+				return false;
+			}
+			// another application's <egw-app> tab, not mail's, carries the [active] attribute:
+			// leave the shortcut to it. No <egw-app> element for mail at all means a bare window
+			// outside the tabbed kdots framework, where nothing else could be "more active".
+			const mailAppElement = document.querySelector(`egw-app[name="${mail.appname}"]`);
+			if (mailAppElement && !mailAppElement.hasAttribute('active'))
 			{
 				return false;
 			}
