@@ -131,9 +131,23 @@ try {
 	{
 		$json->parseRequest($_GET['menuaction'], file_get_contents('php://input'));
 	}
+	// json_data is only accepted via POST now (GET/$_REQUEST no longer read), except this one
+	// read-only, side-effect-free call, which deliberately uses GET so browsers can revalidate
+	// it via ETag/304 (see Framework::ajax_get_preference()).
+	elseif ($className === 'EGroupware\\Api\\Framework' && $functionName === 'ajax_get_preference')
+	{
+		$json->parseRequest($_GET['menuaction'], $_GET['json_data'] ?? '');
+	}
 	else
 	{
-		$json->parseRequest($_GET['menuaction'], $_REQUEST['json_data']);
+		// fail loud, not silently, if json_data still arrives via GET somewhere we missed
+		if (isset($_GET['json_data']))
+		{
+			error_log('json.php: rejected json_data sent via GET from IP '.$_SERVER['REMOTE_ADDR'].
+				' to '.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI']);
+			throw new InvalidArgumentException('json_data must be sent via POST, not GET', 997);
+		}
+		$json->parseRequest($_GET['menuaction'], $_POST['json_data'] ?? '');
 	}
 	Json\Response::get();
 
