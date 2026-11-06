@@ -9841,7 +9841,7 @@ export class MailApp extends EgwApp
 	 * @param {type} _action
 	 * @param {type} _sender
 	 */
-	mobileView(_action, _sender)
+	async mobileView(_action, _sender)
 	{
 		// row id in nm
 		const id = _sender[0].id;
@@ -9885,6 +9885,26 @@ export class MailApp extends EgwApp
 			for(const action in content.data['toolbar'])
 			{
 				content.data.toolbar[action]['toolbarDefault'] = defaultActions.check(action);
+			}
+			// Rows fetched via client-side JMAP carry no resolved attachmentsBlock, and the view is
+			// built from this row's data only, so fetch it first, like renderMessageInto() does for
+			// the desktop preview
+			if (Array.isArray(content.data.attachmentsBlock) && content.data.attachmentsBlock.length === 0 &&
+				content.data.attachments && content.data.attachments !== '&nbsp;')
+			{
+				try
+				{
+					const resolved = await this.resolveJmapAttachmentsBlock(id);
+					if (resolved && Array.isArray(resolved.attachmentsBlock) && resolved.attachmentsBlock.length)
+					{
+						content.data.attachmentsBlock = resolved.attachmentsBlock;
+						await this.resolveAttachmentViewUrls(id, content.data.attachmentsBlock);
+					}
+				}
+				catch (e)
+				{
+					console.log('Can not fetch the attachments for the mobile view!', e);
+				}
 			}
 			// update local storage with added toolbar actions
 			egw.dataStoreUID(id,content.data);
