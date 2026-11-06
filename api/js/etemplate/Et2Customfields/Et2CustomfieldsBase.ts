@@ -305,7 +305,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			tabbox = tabbox.parentElement ?? (<ShadowRoot>tabbox.getRootNode())?.host;
 		}
 		const rendered = <HTMLElement>tabbox?.querySelector?.('et2-tab[panel="' + name + '"]');
-		return rendered?.innerText ?? tabbox?.tabData?.find(tab => tab.id === name)?.label ?? null;
+		return rendered?.textContent ?? tabbox?.tabData?.find(tab => tab.id === name)?.label ?? null;
 	}
 
 	/**

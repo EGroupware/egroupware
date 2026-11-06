@@ -73,6 +73,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	protected tabData = [];
 	protected lazyLoaded = false;
 
+	/**
+	 * Resolves once every tab's content is built, see _buildRemainingTabs()
+	 */
+	protected _tabsBuilt : Promise<void> = Promise.resolve();
+
 	constructor()
 	{
 		super();
@@ -90,6 +95,29 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		// Clean these from parent
 		this.tabs = [];
 		this.panels = [];
+	}
+
+	/**
+	 * We are not complete until all the tabs are built, not just the visible one.
+	 *
+	 * etemplate2 waits for this before it tells the app it is ready, and the template waits for it
+	 * before it fires its "load" event, so everything after that can rely on every tab's widgets existing.
+	 */
+	async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		await this._tabsBuilt;
+		return result;
+	}
+
+	/**
+	 * Our own rendering is done, which does not wait for the tabs still to be built.
+	 *
+	 * What shows the first tab has to use this, not updateComplete, or it would wait for all of them.
+	 */
+	protected async _renderComplete() : Promise<boolean>
+	{
+		return super.getUpdateComplete();
 	}
 
 	get value()
@@ -117,7 +145,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	{
 		super.connectedCallback();
 
-		this.updateComplete.then(() =>
+		this._renderComplete().then(() =>
 		{
 			if (this.__value)
 			{
@@ -220,7 +248,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			// Create the new element
 			this.createElementFromNode(node);
 		}
-		this.updateComplete.then(() =>
+		this._renderComplete().then(() =>
 		{
 			// @ts-ignore show() comes from SlTabGroup
 			this.show(this.querySelector("et2-tab[active]")?.panel);
@@ -397,6 +425,14 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	protected createTabs(tabData)
 	{
 		this.tabData = tabData;
+		// The tab we show first is the tab the app asked for - by the value we were given or the content for our id - and only
+		// otherwise the first one that is not hidden.
+		const wanted = this.__value || (this.id ? this.getArrayMgr("content")?.getEntry(this.id) : null);
+		const asked = typeof wanted === "string" ? tabData.findIndex(tab => tab.id === wanted && !tab.hidden) : -1;
+		if(asked >= 0)
+		{
+			this._selectedIndex = asked;
+		}
 		tabData.forEach((tab, index) =>
 		{
 			// Tab - SlTabGroup looks for sl-tab, so we can't use our own without overriding a lot
@@ -421,13 +457,23 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				tab.flagDiv.loadFromXML(tab.tabNode);
 			}
 		});
+		// Only that tab is built now, so the browser can draw it.  The others follow in later tasks.
+		const first = Math.max(0, this._selectedIndex);
 		tabData.forEach((tab, index) =>
 		{
-			this.createPanel(tab);
+			this.createPanel(tab, false, tabData.length > 1 && index !== first);
 		});
+		this._tabsBuilt = this._buildRemainingTabs();
 	}
 
-	protected createPanel(tab, active = false)
+	/**
+	 * Create the tab panel
+	 *
+	 * @param tab
+	 * @param {boolean} active
+	 * @param {boolean} defer Leave the panel empty, _buildRemainingTabs() (or showing the tab) fills it
+	 */
+	protected createPanel(tab, active = false, defer = false)
 	{
 		// Tab panel
 		tab.contentDiv = loadWebComponent('et2-tab-panel', {
@@ -438,6 +484,26 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			// Set readonly so it gets passed on to children
 			readonly: tab.readonly
 		}, this);
+
+		tab.pending = defer;
+		if(!defer)
+		{
+			this._fillPanel(tab);
+		}
+
+		return tab.contentDiv;
+	}
+
+	/**
+	 * Build the content of a tab panel
+	 *
+	 * @param tab
+	 * @param {boolean} later The template has already finished loading, so legacy widgets in the content need telling
+	 * @return {Promise<void>} resolves when the content, including templates inside it, is loaded
+	 */
+	protected _fillPanel(tab, later = false) : Promise<void>
+	{
+		tab.pending = false;
 
 		// Tab content
 		if(tab.XMLNode)
@@ -454,7 +520,83 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			<Et2Template>loadWebComponent('et2-template', tab.widget_options, tab.contentDiv);
 		}
 
-		return tab.contentDiv;
+		const promises = [];
+		if(later)
+		{
+			tab.contentDiv.loadingFinished?.(promises);
+		}
+		tab.built = Promise.all(promises).then(() => undefined);
+		return tab.built;
+	}
+
+	/**
+	 * Build the tabs that were left empty by createTabs(), one per task
+	 *
+	 * Building every tab before anything is drawn keeps the browser busy for as long as the form is
+	 * complex, although only one tab is visible.  We let it draw first, then build the rest, each in its own
+	 * task so it can draw (and react to the user) in between.  Our updateComplete waits for this.
+	 */
+	protected async _buildRemainingTabs() : Promise<void>
+	{
+		const tabs = this.tabData;
+		if(!tabs.some(tab => tab.pending))
+		{
+			return;
+		}
+		await Et2Tabs.nextFrame();
+		for(const tab of tabs)
+		{
+			// Destroyed while we waited
+			if(this.tabData !== tabs)
+			{
+				return;
+			}
+			if(tab.pending)
+			{
+				this._fillPanel(tab, true);
+				await new Promise(resolve => setTimeout(resolve));
+			}
+		}
+		await Promise.all(tabs.map(tab => tab.built));
+	}
+
+	/**
+	 * Wait until the browser has drawn what is there
+	 *
+	 * A window that is not shown gets no frames, so do not wait for one forever.
+	 */
+	protected static nextFrame() : Promise<void>
+	{
+		return new Promise(resolve =>
+		{
+			const fallback = window.setTimeout(resolve, 100);
+			window.requestAnimationFrame(() =>
+			{
+				window.clearTimeout(fallback);
+				// The callback runs before the frame is drawn, a task after it runs after
+				window.setTimeout(resolve);
+			});
+		});
+	}
+
+	/**
+	 * Make sure the content of a tab is there, because it is about to be shown
+	 *
+	 * @param {string} panel name of the tab panel
+	 */
+	protected _buildNow(panel : string)
+	{
+		const tab = this.tabData.find(tab => tab.pending && tab.id === panel);
+		if(tab)
+		{
+			this._fillPanel(tab, true);
+		}
+	}
+
+	show(panel : string)
+	{
+		this._buildNow(panel);
+		return super.show(panel);
 	}
 
 	getAllTabs(includeDisabled = false)
@@ -647,7 +789,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		{
 			if (label)
 			{
-				return tab._parent?.querySelector('et2-tab[panel="'+tab.name+'"]')?.innerText;
+				return tab._parent?.querySelector('et2-tab[panel="'+tab.name+'"]')?.textContent;
 			}
 			return tab.name;
 		}
@@ -675,6 +817,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		{
 			return this.show(tab);
 		}
+		this._buildNow((<SlTab>tab).panel);
 		return super.setActiveTab(<SlTab>tab, options);
 	}
 
