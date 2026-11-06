@@ -195,6 +195,11 @@ export class etemplate2
 
 
 	private _etemplate_exec_id : string;
+
+	/**
+	 * Set by loadPreview(): rendered without server data, so it has no server request to talk to (widgets must not fetch)
+	 */
+	public isPreview = false;
 	private readonly menuaction : string;
 	name : string;
 	private uniqueId : void | string;
@@ -941,6 +946,37 @@ export class etemplate2
 			// Load & process
 			_load.apply(this, []);
 		}).then(async() => await this._widgetContainer.updateComplete);
+	}
+
+	/**
+	 * Render the template's widgets with no server data, as a placeholder until the real load() arrives.
+	 *
+	 * Unlike load() this never initialises the app object, never calls et2_ready(), is not registered
+	 * in _byTemplate (so getById() / getByTemplate() only ever find the real instance) and has no
+	 * etemplate_exec_id or unload handling.  Widgets just see empty content / sel_options / readonlys.
+	 *
+	 * @param {string} _name name of template
+	 * @param {string} _url url to load template, so the xml is fetched (and cached) without the server's answer
+	 * @return Promise resolves when the widgets are rendered
+	 */
+	async loadPreview(_name : string, _url? : string) : Promise<void>
+	{
+		this.isPreview = true;
+		this.name = _name;
+		this.app = egw().app_name();
+		this.app_obj = window.app;
+		this.template_base_url = _url && _url[0] == '/' ? _url.split(_name.split('.').shift())[0] : '';
+
+		this._widgetContainer = new Et2Template(egw(this.app, egw.elemWindow(this._DOMContainer)));
+		this._widgetContainer.setInstanceManager(this);
+		this._widgetContainer.template = this.name;
+		if(_url)
+		{
+			this._widgetContainer.url = _url;
+		}
+		this._widgetContainer.setArrayMgrs(this._createArrayManagers({}));
+		this.DOMContainer.append(this._widgetContainer);
+		await this._widgetContainer.updateComplete;
 	}
 
 	public focusOnFirstInput()
