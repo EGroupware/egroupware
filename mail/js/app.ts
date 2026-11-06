@@ -6673,17 +6673,31 @@ export class MailApp extends EgwApp
 		const folderWidget : any = this.et2.getWidgetById('FOLDER');
 		if(!folderWidget) return;
 
-		// no opener (eg. opened directly, or the opener window was closed), or the opener's own
-		// mail list has nothing selected yet - fall back to the server's own default, which is
-		// already this widget's current value
-		const openerSelectedFolder = MailApp.safeOpener((opener) => (opener as any).app?.mail?.getActiveFilters?.()?.selectedFolder);
+		// no opener (eg. opened directly, or the opener window was closed), the opener's own mail
+		// list has nothing selected yet, OR the opener's selectedFolder has no "::path" at all (eg.
+		// its folder tree itself never loaded - ticket #127461: a JMAP account whose session fetch
+		// had timed out left window.opener.app.mail.getActiveFilters().selectedFolder as a bare
+		// profileID like "2", no "::path") - any of these fall back to the server's own default,
+		// which is already this widget's current value
+		const rawOpenerSelectedFolder = MailApp.safeOpener((opener) => (opener as any).app?.mail?.getActiveFilters?.()?.selectedFolder);
+		const openerSelectedFolder = rawOpenerSelectedFolder && String(rawOpenerSelectedFolder).includes('::') ?
+			rawOpenerSelectedFolder : null;
 		const targetValue = String(openerSelectedFolder || folderWidget.getValue() || '');
 		const [profileID, path] = targetValue.split('::', 2);
 		if(!profileID || !path) return;
 
 		if(mailaccountWidget && openerSelectedFolder) mailaccountWidget.set_value(profileID);
 
-		let label = path;
+		// Set a usable option/value right away, before the async label lookup below - a previous
+		// version of this method awaited getAllMailboxes() first and only ever set select_options
+		// at the very end, so an opener value with no "::path" used to return above before ever
+		// reaching here, leaving FOLDER with no options at all; an et2-select with no options drops
+		// even its own server-rendered default value, which is exactly how "Destination folder not
+		// set" (ticket #127461) came about. The async lookup only ever refines the LABEL shown for
+		// the value already set here.
+		folderWidget.select_options = [{value: targetValue, label: path}];
+		folderWidget.set_value(targetValue);
+
 		try
 		{
 			const mailboxes = await this.jmap.getAllMailboxes(profileID);
@@ -6691,7 +6705,11 @@ export class MailApp extends EgwApp
 			{
 				const paths = buildMailboxPaths(mailboxes, this.egw);
 				const match = mailboxes.find((mailbox) => paths.get(mailbox.id)?.path === path);
-				if(match) label = paths.get(match.id).label;
+				if(match)
+				{
+					folderWidget.select_options = [{value: targetValue, label: paths.get(match.id).label}];
+					folderWidget.set_value(targetValue);
+				}
 			}
 		}
 		catch(e)
@@ -6699,8 +6717,6 @@ export class MailApp extends EgwApp
 			// a JMAP hiccup resolving the label shouldn't block preselecting a folder at all -
 			// the raw path (set above) is still shown, not nothing
 		}
-		folderWidget.select_options = [{value: targetValue, label}];
-		folderWidget.set_value(targetValue);
 	}
 
 	/**

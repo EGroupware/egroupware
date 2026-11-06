@@ -794,6 +794,9 @@ export class MailJmap
 
 	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
 	private static cspListenerInstalled = false;
+	// see onOnline()'s own docblock - installed once at window level, same pattern as the
+	// securitypolicyviolation listener right below
+	private static onlineListenerInstalled = false;
 	// the most-recently-constructed instance - the securitypolicyviolation listener below is
 	// installed (window-level) only once, but needs the CURRENT instance's this.tokens to decide
 	// whether a violation is actually one of our own accounts, so it's looked up through here
@@ -814,6 +817,11 @@ export class MailJmap
 			MailJmap.cspListenerInstalled = true;
 			window.addEventListener('securitypolicyviolation',
 				(e : SecurityPolicyViolationEvent) => MailJmap.current?.onCspViolation(e));
+		}
+		if (!MailJmap.onlineListenerInstalled)
+		{
+			MailJmap.onlineListenerInstalled = true;
+			window.addEventListener('online', () => MailJmap.current?.onOnline());
 		}
 		// see VISIBILITY_RESUME_GRACE_MS's own docblock
 		document.addEventListener('visibilitychange', () =>
@@ -1023,6 +1031,52 @@ export class MailJmap
 		{
 			console.warn('MailJmap.onConnectionRecovered(): refreshing the message list failed', e);
 		}
+	}
+
+	/**
+	 * The browser's own 'online' event - a strong, but only PARTIAL signal that connectivity may
+	 * have changed: it reflects the local network interface, never whether the actual JMAP
+	 * endpoint is reachable (RECONNECT_DELAYS_MS' own docblock in jmap-jam-websocket.ts - ticket
+	 * #127461's own trigger, a DNS server that never answered, would never have fired this event
+	 * at all, the interface stayed up throughout). So this is purely a latency optimization on top
+	 * of that file's own never-gives-up backoff, not a replacement for it.
+	 *
+	 * Transport-agnostic on purpose: an account with no WebSocket capability at all benefits just
+	 * as much as one that still has it but already exhausted its own reconnect backoff - neither
+	 * case needs anything socket-specific here, just a reason to actually try something again
+	 * instead of waiting for the next user-triggered request to happen to retry on its own.
+	 */
+	private onOnline() : void
+	{
+		Object.keys(this.tokens).forEach((profileID) =>
+		{
+			// lifts the same lockout probeConnection() below already lifts before its own recheck -
+			// an account marked ineligible while offline deserves a fresh look now
+			delete this.ineligibleUntil[profileID];
+			// resets any exhausted WebSocket backoff and retries immediately - a no-op while already
+			// connected, mid-reconnect, or for a client with no WebSocket capability at all (see
+			// retryNow()'s own docblock); a client whose session itself already failed needs
+			// ensureToken() to rebuild it with a fresh session fetch instead, which the probe below
+			// triggers for the one profile actually on screen right now
+			this.clients[profileID]?.retryNow();
+		});
+
+		// Only the folder actually on screen gets a proactive probe+rebuild (same "just the active
+		// profile" gate onConnectionRecovered() above already uses) - an inactive account's own
+		// broken client is rebuilt lazily the next time the user actually switches to it, same as
+		// before this change, rather than firing a bootstrap/session round trip for every JMAP
+		// account the instant a laptop wakes up or Wi-Fi reconnects.
+		const activeProfileID = (this.egw.preference('ActiveProfileID', 'mail') || '').toString().split('::')[0];
+		if (!activeProfileID || !this.tokens[activeProfileID]) return;
+		this.probeConnection(activeProfileID)
+			.then(() => this.onConnectionRecovered(activeProfileID))
+			.catch(() =>
+			{
+				// still broken - stay silent here. The normal popupCheckCert()/confirmCheckCert()
+				// path (driven by the next real failing request) decides if/when the wizard should
+				// open, same as if this 'online' event had never fired at all; 'online' lying (eg. a
+				// captive portal) is not itself reason enough to tell the user anything.
+			});
 	}
 
 	/** Actually open the account wizard - only ever via popupCheckCert()'s confirmation gate */
@@ -6136,6 +6190,49 @@ export class MailJmap
 	 *
 	 * @return null if $profileID is not JMAP-eligible (not Stalwart, MFA required, ...)
 	 */
+	/**
+	 * Build a fresh JamWebSocketClient for profileID and install it as this.clients[profileID] -
+	 * shared by ensureToken()'s token-refresh path and its own cached-token path below (see the
+	 * latter's own docblock, ticket #127461). Installs a handler that drops the client from
+	 * this.clients[profileID] the moment its session promise rejects, but only if it's still the
+	 * CURRENT entry there - a rejection racing a newer client built in the meantime (eg. a
+	 * concurrent rebuild, or a fresh token having already arrived) must never clobber that newer
+	 * one.
+	 */
+	private createClient(profileID : string, token : JmapToken) : JamWebSocketClient
+	{
+		const client = new JamWebSocketClient({
+			sessionUrl: token.sessionUrl,
+			bearerToken: token.access_token,
+			// Stalwart's JMAP-over-WebSocket upgrade only accepts credentials via a real
+			// Authorization header (confirmed against its source - see
+			// doc/ai/projects/mail-jmap-jam-websocket.md), which browsers cannot set on a
+			// WebSocket handshake. Our nginx vhost in front of Stalwart converts an
+			// access_token query parameter back into that header for exactly this path
+			// (/jmap/ws only - every other JMAP request keeps using the real header
+			// directly, unaffected). No-op for the local IMAP shim: it never advertises
+			// the websocket capability, so this transform is simply never invoked.
+			transformWebSocketUrl: (url : string) : string =>
+			{
+				const transformed = new URL(url);
+				transformed.searchParams.set('access_token', token.access_token);
+				return transformed.toString();
+			},
+			// Same scope as the classic server-side subscription's SUBSCRIBTION_TYPES
+			// (Api\Mail\Imap\Jmap) - only relevant if enableWsPush actually registers a
+			// callback (see enableWsPush() below), otherwise never sent at all.
+			pushDataTypes: ['Email', 'Mailbox']
+		});
+		client.session.catch(() =>
+		{
+			if (this.clients[profileID] === client)
+			{
+				delete this.clients[profileID];
+			}
+		});
+		return this.clients[profileID] = client;
+	}
+
 	private async ensureToken(profileID : string) : Promise<JmapToken | null>
 	{
 		// avoid re-requesting the bootstrap endpoint on every single get_rows call for
@@ -6147,6 +6244,17 @@ export class MailJmap
 		const cached = this.tokens[profileID];
 		if (cached && cached.expires_at > Date.now())
 		{
+			// ticket #127461: a client whose initial session fetch already failed (eg. a DNS stall
+			// past HTTP_TIMEOUT_MS) stays permanently rejected on its own (JamWebSocketClient never
+			// retries that one promise) - every later call hit the same dead client for up to ~1h,
+			// until the next token refresh happened to replace it. createClient() drops a client
+			// from here the moment its session rejects, so simply noticing it's missing and
+			// rebuilding it with the still-valid cached token (no fresh bootstrap round trip needed)
+			// is enough; a repeat failure is cleaned up the same way, ready for the next call.
+			if (!this.clients[profileID])
+			{
+				this.createClient(profileID, cached);
+			}
 			return cached;
 		}
 		if (!this.tokenPromises[profileID])
@@ -6195,28 +6303,7 @@ export class MailJmap
 					// (~hourly), and the old socket has nothing more to do once its bearer token
 					// stops being valid.
 					this.clients[profileID]?.close();
-					this.clients[profileID] = new JamWebSocketClient({
-						sessionUrl: token.sessionUrl,
-						bearerToken: token.access_token,
-						// Stalwart's JMAP-over-WebSocket upgrade only accepts credentials via a real
-						// Authorization header (confirmed against its source - see
-						// doc/ai/projects/mail-jmap-jam-websocket.md), which browsers cannot set on a
-						// WebSocket handshake. Our nginx vhost in front of Stalwart converts an
-						// access_token query parameter back into that header for exactly this path
-						// (/jmap/ws only - every other JMAP request keeps using the real header
-						// directly, unaffected). No-op for the local IMAP shim: it never advertises
-						// the websocket capability, so this transform is simply never invoked.
-						transformWebSocketUrl: (url : string) : string =>
-						{
-							const transformed = new URL(url);
-							transformed.searchParams.set('access_token', token.access_token);
-							return transformed.toString();
-						},
-						// Same scope as the classic server-side subscription's SUBSCRIBTION_TYPES
-						// (Api\Mail\Imap\Jmap) - only relevant if enableWsPush actually registers a
-						// callback (see enableWsPush() below), otherwise never sent at all.
-						pushDataTypes: ['Email', 'Mailbox']
-					});
+					this.createClient(profileID, token);
 					// a stale-CSP session-fetch failure for this client is handled by the
 					// securitypolicyviolation listener installed in the constructor (see
 					// onCspViolation()'s docblock for why that event, not this promise, is the
