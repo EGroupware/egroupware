@@ -1218,8 +1218,8 @@ function do_copy()
 {
 	global $config;
 
-	// copy everything, but .svn dirs from checkoutdir to egw_buildroot
-	echo "Copying non-svn/git/tests dirs to buildroot\n";
+	// copy everything, but .svn/.git/test(s) dirs from checkoutdir to egw_buildroot
+	echo "Copying non-svn/git/test(s) dirs to buildroot\n";
 
 	if (!file_exists($config['egw_buildroot']))
 	{
@@ -1240,7 +1240,7 @@ function do_copy()
 	}
 
 	try {
-		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
+		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude tests --exclude test '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
 	}
 	catch (Exception $e) {

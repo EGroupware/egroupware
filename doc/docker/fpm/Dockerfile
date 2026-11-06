@@ -30,7 +30,9 @@ RUN set -e \
 	&& COMPOSER_EXTRA=--ignore-platform-reqs \
 	&& cd /usr/share \
 	&& COMPOSER_ALLOW_SUPERUSER=1 composer create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
-	&& composer clear-cache
+	&& composer clear-cache \
+	# never ship tests into production: PHPUnit suites (*/tests) and JS/TS specs (*/test)
+	&& find /usr/share/egroupware -depth \( -type d -name tests -o -type d -name test \) -exec rm -rf {} +
 RUN set -e \
 	&& cd /usr/share/egroupware \
 	&& npm config set fetch-retries 5 \
