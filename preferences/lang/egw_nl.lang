@@ -137,7 +137,6 @@ what to display for an avatar, if there is no photo	preferences	nl	Wat te tonen 
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	nl	Indien je JA antwoordt, worden de start en logout knoppen als applicaties getoond in de knoppenbalk.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze EGroupware installatie.
 which currency symbol or name should be used in egroupware.	preferences	nl	Welke symbool of naam voor de munteenheid moet gebruikt worden in EGroupware.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	nl	In welke weergave tekstvelden met Markdown-ondersteuning worden geopend. Als je de weergave in een veld wijzigt, wordt dit bijgewerkt.
 you can show the applications as icons only, icons with app-name or both.	preferences	nl	U kunt de toepassingen weergeven met alleen iconen iconen met tekst, of alleen tekst.
 you can show the linked entries with icons only, icons with app-name or both.	common	nl	U kunt de gekoppelde records weergeven met alleen ikonen, ikonen met toepassingsnaam of beiden.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	nl	Je kunt functies selecteren die in de werkbalk moeten worden ingeschakeld.

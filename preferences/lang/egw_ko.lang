@@ -121,7 +121,6 @@ used instead of the application color.	preferences	ko	애플리케이션의 기�
 users choice	preferences	ko	사용자 선택
 what to display for an avatar, if there is no photo	preferences	ko	사진이 없는 경우 아바타에 표시할 내용
 which currency symbol or name should be used in egroupware.	preferences	ko	EGroupware에서 사용할 현금단위의 이름이나 기호는 어떤것으로 할까요
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	ko	마크다운이 지원되는 텍스트 필드가 어떤 보기로 열릴지 설정합니다. 필드에서 보기를 전환하면 이 설정이 업데이트됩니다.
 you can show the applications as icons only, icons with app-name or both.	preferences	ko	응용프로그램의 아이콘만 보이게 하거나 이름과 아이콘 동시에 보이게 할수 있습니다
 you can show the linked entries with icons only, icons with app-name or both.	common	ko	아이콘만 표시, 아이콘과 애플리케이션 이름 함께 표시, 또는 둘 다 표시 중에서 선택할 수 있습니다.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	ko	도구 모음에서 활성화할 기능을 선택할 수 있습니다.

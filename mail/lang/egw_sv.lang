@@ -130,7 +130,6 @@ draft folder	mail	sv	Utkast katalog
 drafts	mail	sv	Utkast
 drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
-edit account ...	mail	sv	Redigera konto ...
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
 email address	mail	sv	E-post adress
 email notification update failed! you need to set an email address!	mail	sv	Uppdateringen av e-postmeddelanden misslyckades! Du måste ange en e-postadress!
@@ -309,6 +308,7 @@ please select the number of days to wait between responses	mail	sv	Antal dagar m
 please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
 post	mail	sv	skicka
 predefined addresses for compose	mail	sv	Fördefinierade adresser för sammansättning
+prevent managing filters	mail	sv	Förhindra hantering av filter
 preview pane	mail	sv	Fönsterlayout
 printing	mail	sv	Utskrift
 private key created, downloading csr...	mail	sv	Privat nyckel skapad, hämtar CSR ...
@@ -385,7 +385,6 @@ send vacation notice and store message in inbox	mail	sv	Skicka semestermeddeland
 sent folder	mail	sv	Skickat katalog
 server supports special-use folders	mail	sv	Servern stöder mappar för särskild användning
 set flags	mail	sv	Markera e-post som
-set predefined values for compose...	mail	sv	Ställ in fördefinierade värden för sammansättning ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sv	Ska signatur infogas efter (standard) eller före ett svar eller vidarebefordran, och ska signaturen vara synlig och ändringsbar under komponeringen.
 show all addresses	mail	sv	Visa alla adresser
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	sv	Visa alla mappar (prenumererade OCH avprenumererade) i huvudskärmens mappfönster.

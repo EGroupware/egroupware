@@ -125,7 +125,6 @@ users choice	preferences	no	Brukers valg
 what to display for an avatar, if there is no photo	preferences	no	Hva som skal vises som avatar hvis det ikke finnes noe bilde
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	no	Når du svarer ja vil hjem- og avloggingsknappene prsenteres som valg i topp av hovedbildet.
 which currency symbol or name should be used in egroupware.	preferences	no	Hvilket valuta symbol eller navn skal brukes i EGroupware.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	no	Hvilken visning tekstfelt med Markdown-støtte åpnes i. Hvis du bytter visning i et felt, oppdateres dette.
 you can show the applications as icons only, icons with app-name or both.	preferences	no	Du kan vises programmene som kun ikoner, ikoner med programnavn eller begge.
 you can show the linked entries with icons only, icons with app-name or both.	common	no	Vis programmer kun med ikoner, ikoner med programnavn eller begge deler.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	no	Du kan velge hvilke funksjoner som skal aktiveres i verktøylinjen.

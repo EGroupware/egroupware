@@ -36,7 +36,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	pt	Permitir
 allow external images	mail	pt	Permitir imagens externas
 allow external images from listed domains	mail	pt	Permitir imagens externas de domínios listados
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	pt	Permitir imagens de fontes externas em HTML e-mails. "Pedir permissão" mostra um aviso para as carregar apenas desta vez ("Exibir") ou sempre a partir do seu domínio ("Permitir"). "Pedir permissão, permitir apenas domínios listados" oferece apenas "Exibir", pelo que só os domínios listados são sempre permitidos, p.ex. conforme definido pelo administrador para todos.
 allow images from listed domains in html emails	mail	pt	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pt	Permite a um utilizador ler, escrever e criar pastas e mensagens de correio eletrónico, enviar mensagens para as mesmas, anexar mensagens às mesmas e apagar mensagens
@@ -51,7 +50,6 @@ any status	mail	pt	qualquer estado
 append	mail	pt	anexar
 archive folder	mail	pt	Pasta de arquivo
 are you sure you want to delete all selected folders?	mail	pt	Tem a certeza de que pretende apagar todas as pastas selecionadas?
-ask for permission, only allow listed domains	mail	pt	Pedir permissão, permitir apenas domínios listados
 attach files	mail	pt	Anexar ficheiros
 attach users vcard at compose to every new mail	mail	pt	anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt	Anexar vCard
@@ -172,8 +170,6 @@ draft folder	mail	pt	Pasta de rascunhos
 drafts	mail	pt	Rascunhos
 drafts folder	mail	pt	Pasta Rascunhos
 edit account	mail	pt	Editar Conta
-edit account ...	mail	pt	Editar conta ...
-edit folder acl ...	mail	pt	Editar pasta ACL ...
 edit vacation settings	mail	pt	Editar configurações de férias
 effective only if server supports acl at all	admin	pt	efetiva apenas se o servidor suporta ACL em tudo
 email address	mail	pt	Endereço de email
@@ -231,7 +227,6 @@ folder %1 %2 failed!	mail	pt	Pasta %1 %2 falhou!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	pt	A pasta %1 foi criada com êxito, embora a subscrição tenha falhado devido a %2
 folder %1 is moving to folder %2	mail	pt	A pasta %1 está a ser movida para a pasta %2
 folder management	mail	pt	Gestão de pastas
-folder management ...	mail	pt	Gestão de pastas ...
 folder settings	mail	pt	Definições das pastas
 force html	mail	pt	Força HTML
 force plain text	mail	pt	Forçar texto
@@ -534,7 +529,6 @@ set / remove flags	mail	pt	Set / Remover Bandeiras
 set / remove labels	mail	pt	Set / Remover Rótulos
 set flags	mail	pt	Bandeiras de bandeira
 set it as default:	mail	pt	Defini-lo como padrão:
-set predefined values for compose...	mail	pt	Definir valores pré-definidos para compor ...
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt	A assinatura deve ser inserida depois (padrão) ou antes de uma resposta ou reencaminhamento, e a assinatura deve ser visível e alterável durante a composição.
 show all addresses	mail	pt	Mostrar todos os endereços
@@ -575,7 +569,6 @@ step 3: sieve - server side mail filtering	mail	pt	Passo 3: Sieve - filtragem de
 step 4: smtp - outgoing mail	mail	pt	Passo 4: SMTP - saída correio
 store to folder	mail	pt	Guarde a pasta
 subscribe folder	mail	pt	Assinar pasta
-subscribe folder ...	mail	pt	Assinar pasta ...
 subscription folders	mail	pt	Pastas de Subscrição
 subscription successfully saved.	mail	pt	Assinatura salvo com sucesso.
 template folder	mail	pt	Pasta de modelo

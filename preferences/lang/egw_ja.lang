@@ -185,7 +185,6 @@ what to display for an avatar, if there is no photo	preferences	ja	写真がな�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ja	ホームやログアウト・ボタンをアプリケーションのようにトップバーに表示します。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ja	CSV インポート/エクスポートで使う文字セットを選択してください。
 which currency symbol or name should be used in egroupware.	preferences	ja	通貨シンボル/通貨名
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	ja	Markdown 対応のテキストフィールドが開くビューを選択します。フィールド内でビューを切り替えると、この設定が更新されます。
 you can show the applications as icons only, icons with app-name or both.	preferences	ja	アプリケーションのは、アイコンだけ、アイコン＋アプリケーション名、またはその両方で表示できます。
 you can show the linked entries with icons only, icons with app-name or both.	common	ja	アプリケーションのは、アイコンだけ、アイコン＋アプリケーション名、またはその両方で表示できます。
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	ja	ツールバーで有効にする機能を選択できます。

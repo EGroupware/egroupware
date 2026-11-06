@@ -26,7 +26,6 @@ all of	mail	et	kõik välja
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	et	Kõik alamkaustad kustutatakse samuti ja kõik sõnumid kõigis mõjutatud kaustades lähevad kaduma.
 allow external images	mail	et	Lubage väliseid pilte
 allow external images from listed domains	mail	et	Lubage väliseid pilte loetletud domeenidest
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine. "Küsi luba" näitab teadet, millega saab need laadida ainult seekord ("Näita") või alati nende domeenilt ("Luba"). "Küsi luba, luba ainult loetletud domeene" pakub ainult "Näita", seega on alati lubatud ainult loetletud domeenid, nt nagu administraator on kõigile määranud.
 allow images from listed domains in html emails	mail	et	Lubage loetelus olevate domeenide pilte HTML-meilides.
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	et	Võimaldab kasutajal lugeda, kirjutada ja luua kaustu ja kirju, postitada sinna, lisada sinna sõnumeid ja kustutada sõnumeid
 always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
@@ -38,7 +37,6 @@ answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 archive folder	mail	et	Arhiivikaust
 are you sure you want to delete all selected folders?	mail	et	Kas olete kindel, et soovite kustutada kõik valitud kaustad?
-ask for permission, only allow listed domains	mail	et	Küsi luba, luba ainult loetletud domeene
 attach files	mail	et	Failide lisamine
 attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
 attach vcard	mail	et	Kinnita vCard
@@ -113,7 +111,6 @@ download all attachments	mail	et	Laadi alla kõik manused
 download attachments	mail	et	Laadi manused alla
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
-edit account ...	mail	et	Muuda kontot ...
 email address	mail	et	E-posti aadress
 email notification update failed! you need to set an email address!	mail	et	E-posti teavitamise ajakohastamine ebaõnnestus! Te peate määrama e-posti aadressi!
 emailaddress	admin	et	E-posti aadress
@@ -258,6 +255,7 @@ please enter password	mail	et	Palun sisestage parool
 please select a address	mail	et	Palun vali aadress
 post	mail	et	saatke
 predefined addresses for compose	mail	et	Koostamise jaoks etteantud aadressid
+prevent managing filters	mail	et	Ära lase filtreid hallata
 preview pane	mail	et	Akna paigutus
 printing	mail	et	Trükkimine
 private key created, downloading csr...	mail	et	Privaatvõti loodud, CSR-i allalaadimine käib ...
@@ -312,7 +310,6 @@ send message and move to send folder (if configured)	mail	et	Sõnumi saatmine ja
 send message pgp encrypted: requires keys from all recipients!	mail	et	Sõnumi saatmine PGP-krüpteeritult: nõuab kõigi vastuvõtjate võtmeid!
 server supports special-use folders	mail	et	Server toetab erikasutuskaustu
 set flags	mail	et	Märgista e-kiri kui
-set predefined values for compose...	mail	et	Määrake komplekteerimise jaoks etteantud väärtused ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	et	Kas allkiri peaks olema lisatud pärast (standard) või enne vastust või edastamist ning kas allkiri peaks olema nähtav ja muudetav koostamise ajal.
 show all addresses	mail	et	Näita kõiki aadresse
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	et	näidata kõiki kaustu (tellitud JA mitte-tellitud) põhiekraani kaustapaneelil.

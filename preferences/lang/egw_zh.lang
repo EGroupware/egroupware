@@ -4,6 +4,7 @@
 24 hour	preferences	zh	24小时
 a template defines the layout of egroupware and it contains icons for each application.	preferences	zh	模板定义了EGroupware 的布局并包含了每个应用程序的图标。
 a theme defines the colors and fonts used by the template.	preferences	zh	界面主题由模板定义了所使用的颜色和字体。
+access token revoked.	preferences	zh	访问令牌已被撤销。
 acl grants have been updated	preferences	zh	ACL 授权已更新
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	zh	启用后，打开的标签页中应用图标将显示更鲜艳的原色。若未勾选，则默认显示为浅化的自定义颜色。
 allows to set a default or force the active application tab for new logins.	preferences	zh	允许设置默认选项或强制在新登录时打开当前活动应用程序标签页。
@@ -16,20 +17,26 @@ are you sure you want to delete this category ?	preferences	zh	您确定要删�
 are you sure?	preferences	zh	确定吗？
 br	preferences	zh	\n 换行
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh	以现有旧密码和一个新密码更改用户密码，如果成功将返回 TRUE，否则返回 FALSE。
+close after selection	preferences	zh	选中后关闭
 code is invalid	preferences	zh	代码无效
 code is required	preferences	zh	需要代码
 color	preferences	zh	颜色
 country	preferences	zh	国家
+current password	preferences	zh	当前密码
+custom login box color, defaults to above color darkened	preferences	zh	自定义登录框颜色，默认为上方颜色的深色版本
 custom login box text color, defaults to white	preferences	zh	自定义登录框文字颜色，默认颜色为白色
+custom sidebar menu active color, defaults to above color darkened	preferences	zh	自定义侧边栏菜单的激活颜色，默认为上方颜色的深色版本
 dark mode theme	preferences	zh	黑暗模式主题
 date format	preferences	zh	日期格式
 default	preferences	zh	默认
 default preferences	preferences	zh	默认用户参数
 delete categories	preferences	zh	删除类别
 deny following groups access to application passwords	preferences	zh	拒绝以下组访问应用程序密码
+deny following groups access to edit categories	admin	zh	禁止以下组编辑分类
 deny following groups access to preferences	admin	zh	拒绝以下用户访问首选项
 description can not exceed 255 characters in length !	preferences	zh	描述的长度不能超过255个字符！
 disable	preferences	zh	禁用
+disable two factor auth	preferences	zh	禁用双因素认证
 display thumbnails for linked images	preferences	zh	显示链接图像的缩略图
 div	preferences	zh	<div> 区快
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	zh	您是希望始终显示完整的日期和时间（即使空间不足），还是仅显示今天的时间，其余时间显示日期？
@@ -44,6 +51,8 @@ enter code to verify correct setup	preferences	zh	输入代码以验证设置是
 enter your new password	preferences	zh	请输入您的新密码
 enter your old password	preferences	zh	请输入您的旧密码
 failed to change password.	preferences	zh	更改密码失败。请联系系统管理员。
+failed to delete secret!	preferences	zh	删除密钥失败！
+failed to store secret!	preferences	zh	存储密钥失败！
 fast	preferences	zh	快速更新
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	zh	快速更新将新条目添加到列表的顶部，并在原地更新现有的条目，除非列表是按最后修改排序的。如果列表不是按最后修改时间排序的，则精确更新会做全面刷新。
 features of the editor	preferences	zh	编辑器的功能
@@ -131,7 +140,6 @@ what to display for an avatar, if there is no photo	preferences	zh	如果没有�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh	如您选择'是'，'主页'和'注销'按钮将作为应用程序显示在顶部应用程序栏上。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	其字符集将用于 CSV 输出。系统默认是 EGroupware 安装的字符集。
 which currency symbol or name should be used in egroupware.	preferences	zh	在 EGroupware 中应使用何种货币符号或名称。
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	zh	支持 Markdown 的文本字段打开时采用的视图。在字段中切换视图会更新此设置。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh	您可以让工具栏上的应用程序只显示图标、文字, 或是两者都显示。
 you can show the linked entries with icons only, icons with app-name or both.	common	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	zh	您可以选择在工具栏中启用的功能。

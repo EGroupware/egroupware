@@ -91,7 +91,6 @@ draft folder	mail	lt	Juodraščių aplankas
 drafts	mail	lt	Juodraščiai
 drafts folder	mail	lt	Juodraščių aplankas
 edit account	mail	lt	Redaguoti paskyrą
-edit account ...	mail	lt	Redaguoti paskyrą ...
 email address	mail	lt	El. pašto adresas
 email notification update failed! you need to set an email address!	mail	lt	Pranešimų el. paštu atnaujinimas nepavyko! Reikia nustatyti el. pašto adresą!
 emailaddress	admin	lt	El. pašto adresas
@@ -235,6 +234,7 @@ please enter password	mail	lt	Įveskite slaptažodį
 please select a address	mail	lt	Prašome pasirinkti adresą
 post	mail	lt	siųsti
 predefined addresses for compose	mail	lt	Iš anksto nustatyti adresai sudarymui
+prevent managing filters	mail	lt	Užkirsti kelią filtrų tvarkymui
 preview pane	mail	lt	Langų išdėstymas
 printing	mail	lt	Spausdinimas
 private key created, downloading csr...	mail	lt	Sukurtas privatus raktas, atsisiunčiama CSR...
@@ -289,7 +289,6 @@ send attachments greater than given size as download link instead (in mb)	mail	l
 send message and move to send folder (if configured)	mail	lt	Siųsti žinutę ir perkelti į siuntimo aplanką (jei sukonfigūruota)
 send message pgp encrypted: requires keys from all recipients!	mail	lt	Siųsti žinutę užšifruotą PGP: reikia visų gavėjų raktų!
 server supports special-use folders	mail	lt	Serveris palaiko specialios paskirties aplankus
-set predefined values for compose...	mail	lt	Nustatykite iš anksto nustatytas reikšmes compose ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lt	Ar parašas turėtų būti įterpiamas po (standartinio) ar prieš atsakymą ar persiuntimą, taip pat ar parašas turėtų būti matomas ir keičiamas sudarymo metu.
 show all addresses	mail	lt	Rodyti visus adresus
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lt	rodyti visus aplankus (prenumeruojamus ir neprenumeruojamus) pagrindiniame ekrano aplankų lange.

@@ -46,7 +46,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	it	Permetti
 allow external images	mail	it	Permetti immagini esterne
 allow external images from listed domains	mail	it	Permetti immagini remote dai seguenti domini
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML. "Richiedi permesso" mostra un avviso per caricarle solo questa volta ("Mostra") o sempre dal loro dominio ("Permetti"). "Richiedi permesso, permetti solo i domini elencati" offre solo "Mostra", quindi solo i domini elencati sono sempre permessi, p.es. come impostati dall'amministratore per tutti.
 allow images from listed domains in html emails	mail	it	permetti immagini remote dai domini seguenti nei messaggi HTML
 allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	it	Consente a un utente di leggere, scrivere e creare cartelle e messaggi, di inviarvi messaggi, di aggiungerne e di eliminarli.
@@ -68,7 +67,6 @@ are you sure you want to delete all selected folders?	mail	it	Sicuro di voler el
 are you sure you want to move folder %1 to folder %2?	mail	it	Sicuro di voler spostare la cartella %1 nella %2?
 arrival	mail	it	Ricevuti
 ask for permission	mail	it	Richiedi permesso
-ask for permission, only allow listed domains	mail	it	Richiedi permesso, permetti solo i domini elencati
 attach files	mail	it	Allega i file
 attach users vcard at compose to every new mail	mail	it	Allega la vCard dell'utente ogni volta che componi un nuovo messaggio.
 attach vcard	mail	it	Allega vCard
@@ -202,8 +200,6 @@ draft folder	mail	it	Cartella Bozze
 drafts	mail	it	Bozze
 drafts folder	mail	it	Cartella bozze
 edit account	mail	it	Modifica account
-edit account ...	mail	it	Modifica account...
-edit folder acl ...	mail	it	Modifica i permessi della cartella ...
 edit vacation settings	mail	it	Modifica impostazioni messaggio "ferie"
 effective only if server supports acl at all	admin	it	effettivo solo se il server supporta l'impostazione di permessi ACL
 email address	mail	it	Indirizzo e-mail
@@ -267,7 +263,6 @@ folder %1 %2 failed!	mail	it	Cartella %1 %2 fallita!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	it	La cartella %1 è stata creata con successo, anche se la sottoscrizione non è riuscita a causa di %2
 folder %1 is moving to folder %2	mail	it	La cartella %1 viene spostata nella %2
 folder management	mail	it	Gestiome cartelle
-folder management ...	mail	it	Gestione cartelle ...
 folder settings	mail	it	Impostazioni Cartelle
 force html	mail	it	Forza HTML
 force plain text	mail	it	Forza testo semplica
@@ -603,7 +598,6 @@ set / remove flags	mail	it	Imposta / Rimuovi flag
 set / remove labels	mail	it	Imposta / Rimuovi etichette
 set flags	mail	it	Segna l'e-mail come
 set it as default:	mail	it	Imposta come predefinito:
-set predefined values for compose...	mail	it	Impostare valori predefiniti per comporre ...
 should new messages show up on the home page	mail	it	I nuovi messaggi devono apparire in Home Page
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	it	La firma dovrebbe essere inserita dopo (standard) o prima del testo di risposta o inoltro? La firma deve essere visibile e modificabile in fase di composizione.
 show	mail	it	Mostra
@@ -650,7 +644,6 @@ step 3: sieve - server side mail filtering	mail	it	Terzo passo: Sieve - filtri e
 step 4: smtp - outgoing mail	mail	it	Quarto passo: SMTP - server posta in uscita
 store to folder	mail	it	Salva nella cartella
 subscribe folder	mail	it	Sottoscrivi cartella
-subscribe folder ...	mail	it	Sottoscrivi cartella ...
 subscribe to folder %1	mail	it	Sottoscrivi cartella %1
 subscription folders	mail	it	Cartelle da sottoscrivere
 subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.

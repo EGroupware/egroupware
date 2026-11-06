@@ -17,6 +17,7 @@ are you sure you want to delete this category ?	preferences	pl	Napewno skasować
 are you sure?	preferences	pl	Czy na pewno?
 br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
+change password	preferences	pl	Zmień hasło
 close after selection	preferences	pl	Zamknij po dokonaniu wyboru
 code is invalid	preferences	pl	Kod jest nieprawidłowy
 code is required	preferences	pl	Kod jest wymagany
@@ -47,6 +48,7 @@ editor only	preferences	pl	Tylko edytor
 enable	preferences	pl	włącz
 enable/disable menubar from top of the editor.	preferences	pl	Włączanie/wyłączanie paska menu u góry edytora.
 enabled features in toolbar	preferences	pl	Włączone funkcje na pasku narzędzi
+encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	pl	Do zmiany hasła wymagane jest szyfrowane połączenie LDAP, ale nie zostało ono skonfigurowane w Twojej instalacji.
 enter code to authenticate the actions below	preferences	pl	Wprowadź kod, aby uwierzytelnić poniższe działania
 enter code to verify correct setup	preferences	pl	Wprowadź kod, aby zweryfikować poprawność konfiguracji
 enter your new password	preferences	pl	Wprowadź nowe hasło
@@ -58,8 +60,11 @@ fast	preferences	pl	Szybki
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	pl	Szybka aktualizacja dodaje nowe wpisy zawsze na górze listy i aktualizuje istniejące na miejscu, chyba że lista jest posortowana według ostatniej modyfikacji. Dokładne aktualizacje wykonują pełne odświeżenie, jeśli lista nie jest posortowana według ostatniej modyfikacji.
 features of the editor	preferences	pl	Funkcje edytora
 forced preferences	preferences	pl	Ustawienia wymuszone
+formatting & general settings	preferences	pl	Formatowanie i ustawienia ogólne
 full date and time	preferences	pl	Pełna data i godzina
 generate new qrcode to disable existing one, after enabling the new one!	preferences	pl	Wygeneruj nowy kod QR, aby wyłączyć istniejący (po włączeniu nowego)
+google authenticator for android	preferences	pl	Google Authenticator dla systemu Android
+google authenticator for ios	preferences	pl	Google Authenticator dla systemu iOS
 help off	preferences	pl	Wyłącz wyświetlanie pomocy
 hours	preferences	pl	godzin
 how do you like to display accounts	preferences	pl	Jak mają być wyświetlane konta użytkowników
@@ -76,6 +81,7 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	pl	W jakim państwie się znajdujesz? EGroupware użyje tego ustawienia do wyboru pewnych konfiguracji domyślnych.
 interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 it sets content size (text only) according to selected size.	preferences	pl	Ustawia rozmiar zawartości (tylko tekst) zgodnie z wybranym rozmiarem.
+keep list open for selecting multiple	preferences	pl	Zostaw listę otwartą, aby umożliwić zaznaczenie wielu pozycji
 language	preferences	pl	Język
 limit following groups to only create application passwords via templates	preferences	pl	Odmowa następującym grupom dostępu do haseł aplikacji
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pl	Logowanie przez SingleSignOn nie zapewnia hasła do przekazania go do serwerów poczty lub plików.
@@ -145,7 +151,7 @@ users choice	preferences	pl	Wybierają użytkownicy
 what to display for an avatar, if there is no photo	preferences	pl	Co wyświetlać jako awatar, jeśli nie ma zdjęcia
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w EGroupware
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	pl	Wybór widoku, w którym otwierają się pola tekstowe obsługujące Markdown. Zmiana widoku w polu powoduje aktualizację tej opcji.
+which view markdown-enabled text fields open in by default	preferences	pl	W jakim widoku domyślnie otwierają się pola tekstowe obsługujące format Markdown
 you can show the applications as icons only, icons with app-name or both.	preferences	pl	Możesz wybrać wyświetlanie aplikacji w formie ikon, tekstów lub obydwojga.
 you can show the linked entries with icons only, icons with app-name or both.	common	pl	Możesz pokazać podlinkowane wpisy jako ikony lub ikony z nazwą aplikacji.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	pl	Możesz wybrać funkcje, które mają być włączone na pasku narzędzi.

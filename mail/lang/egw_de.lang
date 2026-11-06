@@ -14,6 +14,7 @@
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
 (no subject)	mail	de	(Kein Betreff)
 (not connected)	mail	de	(nicht verbunden)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	de	Ein eingefügtes (Paste/Drag&Drop oder Datei einfügen) Bild wird ab einer bestimmten Dateigröße auf diese Breite herunterskaliert (Seitenverhältnis bleibt erhalten), um die Mail nicht unnötig zu vergrößern. Leer lassen für den Standardwert von 800px.
 account	mail	de	Konto
 account editable by user	mail	de	Benutzer kann dieses Konto bearbeiten
 account not reachable	mail	de	Konto nicht erreichbar.
@@ -739,6 +740,7 @@ the entered passphrase is not correct! please try again.	mail	de	Das eingegebene
 the folder %1 's acls saved	mail	de	Die Zugriffsrechte des Ordners %1 wurden gespeichert
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	de	Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.
 the imap server need to meet certain requirements and be configured for it:	mail	de	Der IMAP Server muss verschiedene Vorraussetzungen erfüllen UND dafür konfiguriert sein:
+the mail was sent successfully to all recipients, except the following: %1	mail	de	Die E-Mail wurde erfolgreich an alle Empfänger gesendet, außer an folgende: %1
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
@@ -746,7 +748,6 @@ the s/mime certificate stored in the address book for %1 does not match your acc
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat ist ungültig - bitte auf doppelte oder fehlerhafte Adressbucheinträge für diese Adresse prüfen.
 the total size of the attachments exceeds the limit of %1 mb	mail	de	Die Größe der Anhänge überschreitet %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	de	Die Größe der Anhänge überschreitet %1 MB. Es wurde auf "Link zum Herunterladen" umgestellt.
-the mail was sent successfully to all recipients, except the following: %1	mail	de	Die E-Mail wurde erfolgreich an alle Empfänger gesendet, außer an folgende: %1
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.

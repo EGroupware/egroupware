@@ -6,6 +6,7 @@
 24 hour	preferences	sl	24 ur
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sl	Predloga določa videz EGroupware-a in vsebuje ikone aplikacij.
 a theme defines the colors and fonts used by the template.	preferences	sl	Tema definira barve in pisave, ki so uporabljene v predlogah.
+access token revoked.	preferences	sl	Dostopni žeton je bil preklican.
 acl grants have been updated	preferences	sl	Pravice ACL so bile spremenjene
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	sl	Aktiviraj, da se v odprtih zavihkih prikažejo bolj barvite ikone aplikacij. Če ni izbrana, se privzeto prikažejo v svetlejši barvi.
 allows to set a default or force the active application tab for new logins.	preferences	sl	Omogoča nastavitev privzete ali prisilne odprte zavihke aplikacije ob novih prijavah.
@@ -22,10 +23,12 @@ br	preferences	sl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sl	Spremeni geslo uporabniku tako, da podate staro in novo geslo. Če se operacija uspešno izvede, vrne TRUE, drugače pa FALSE.
 change password	preferences	sl	Spremeni geslo
 charset for the csv export/import	preferences	sl	Komplet znakov
+close after selection	preferences	sl	Zapri po izbiri
 code is invalid	preferences	sl	Koda je neveljavna
 code is required	preferences	sl	Koda je obvezna
 color	preferences	sl	Barva
 country	preferences	sl	Država
+current password	preferences	sl	Trenutno geslo
 custom login box color, defaults to above color darkened	preferences	sl	Barva prijavnega okna po meri, privzeto, da je barva zatemnjena
 custom login box text color, defaults to white	preferences	sl	Barva besedila v prijavnem polju po meri, privzeto je bela
 custom sidebar menu active color, defaults to above color darkened	preferences	sl	Aktivna barva menija na stranskih vrsticah po meri je privzeta, da je barva zatemnjena
@@ -42,6 +45,7 @@ deny following groups access to edit categories	admin	sl	Zavračajte naslednje s
 deny following groups access to preferences	admin	sl	Zavračajte naslednje skupine za dostop do nastavitev
 description can not exceed 255 characters in length !	preferences	sl	Opis ne more presegati 255 znakov!
 disable	preferences	sl	Onemogoči
+disable two factor auth	preferences	sl	Onemogoči dvofaktorsko avtentifikacijo
 display thumbnails for linked images	preferences	sl	Prikaži ikonice za slike s povezavami
 div	preferences	sl	div
 do you always want to see full date and time, if there is less space, or just the time for today and the date otherwise?	preferences	sl	Ali želite vedno videti celoten datum in čas, če je prostora manj, ali le čas za danes, sicer pa datum?
@@ -58,6 +62,8 @@ enter your new password	preferences	sl	Vpišite novo geslo
 enter your old password	preferences	sl	Vpišite staro geslo
 error	preferences	sl	Napaka
 failed to change password.	preferences	sl	Napaka pri spreminjanju gesla.
+failed to delete secret!	preferences	sl	Izbris skrivnosti ni uspel!
+failed to store secret!	preferences	sl	Shranjevanje skrivnosti ni uspelo!
 fast	preferences	sl	Hitro
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	sl	Hitro posodabljanje doda nove vnose vedno na vrh seznama in posodobi obstoječe na mestu, razen če je seznam razvrščen po zadnji spremembi. Natančne posodobitve opravijo popolno osvežitev, če seznam ni razvrščen po zadnji spremembi.
 features of the editor	preferences	sl	Značilnosti urejevalnika
@@ -172,7 +178,6 @@ what to display for an avatar, if there is no photo	preferences	sl	Kaj prikazati
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sl	Če želite, sta lahko gumba za domačo stran in odjavo na voljo na vrhu aplikacije.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sl	Kateri valutni simbol ali ime bo uporabno v EGW.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	sl	V katerem pogledu se odprejo polja za besedilo, ki podpirajo Markdown. To se posodobi ob preklopu pogleda v polju.
 you can show the applications as icons only, icons with app-name or both.	preferences	sl	Lahko pokažem aplikacije kot ikone, ikone z imenom aplikacije ali oboje.
 you can show the linked entries with icons only, icons with app-name or both.	common	sl	Vnose s povezavami lahko prikažete samo z ikonami, samo z imenom aplikacije ali z obojim.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	sl	Izberete lahko funkcije, ki naj bodo omogočene v orodni vrstici.

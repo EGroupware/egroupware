@@ -46,7 +46,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	sk	Povoliť
 allow external images	mail	sk	Povoliť externé obrázky
 allow external images from listed domains	mail	sk	Povoliť externé obrázky z domén na zozname
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov. "Požiadať o povolenie" zobrazí lištu, ktorou ich možno načítať len tentoraz ("Zobraziť") alebo vždy z ich domény ("Povoliť"). "Požiadať o povolenie, povoliť len domény na zozname" ponúka len "Zobraziť", takže vždy povolené sú len domény na zozname, napr. nastavené administrátorom pre všetkých.
 allow images from listed domains in html emails	mail	sk	Povoliť pre HTML e-maily obrázky z domén na zozname.
 allow users to create further identities	mail	sk	Povoliť používateľom vytváranie ďalších identít
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sk	Umožňuje používateľovi čítať, zapisovať a vytvárať priečinky a poštu, odosielať do nich príspevky, pripájať do nich správy a odstraňovať správy
@@ -68,7 +67,6 @@ are you sure you want to delete all selected folders?	mail	sk	Ste si istí že c
 are you sure you want to move folder %1 to folder %2?	mail	sk	Ste si istí že chcete presunúť priečinok %1 do priečinka %2?
 arrival	mail	sk	Prijaté
 ask for permission	mail	sk	Požiadať o povolenie
-ask for permission, only allow listed domains	mail	sk	Požiadať o povolenie, povoliť len domény na zozname
 attach files	mail	sk	Priložiť súbory
 attach users vcard at compose to every new mail	mail	sk	Priložiť používateľovu vizitku VCard pri tvorbe každej novej správy
 attach vcard	mail	sk	Priložiť vCard
@@ -202,8 +200,6 @@ draft folder	mail	sk	Priečinok návrhov
 drafts	mail	sk	Návrhy
 drafts folder	mail	sk	Priečinok návrhov
 edit account	mail	sk	Upraviť účet
-edit account ...	mail	sk	Upraviť účet ...
-edit folder acl ...	mail	sk	Upraviť ACL priečinku ...
 edit vacation settings	mail	sk	Upraviť nastavenia neprítomnosti
 effective only if server supports acl at all	admin	sk	Uplatní sa iba ak server podporuje ACL
 email address	mail	sk	E-mailová adresa
@@ -267,7 +263,6 @@ folder %1 %2 failed!	mail	sk	Priečinok %1 %2 zlyhal!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	sk	Priečinok %1 bol úspešne vytvorený, hoci jeho prihlásenie k odberu sa nepodarilo z dôvodu: %2
 folder %1 is moving to folder %2	mail	sk	Priečinok %1 sa presúva do priečinka %2
 folder management	mail	sk	Správa priečinkov
-folder management ...	mail	sk	Správa priečinkov ...
 folder settings	mail	sk	Nastavenia priečinku
 force html	mail	sk	Vždy HTML
 force plain text	mail	sk	Vždy čistý text
@@ -602,7 +597,6 @@ set / remove flags	mail	sk	Pridať / Odstrániť značky
 set / remove labels	mail	sk	Pridať / Odstrániť menovky
 set flags	mail	sk	Nastavenie príznakov
 set it as default:	mail	sk	Nastaviť to ako predvolené:
-set predefined values for compose...	mail	sk	Nastavenie preddefinovaných hodnôt pre compose ...
 should new messages show up on the home page	mail	sk	Chcete, aby sa nové správy zobrazovali na domovskej stránke
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sk	Umiestňovať podpis za (bežné) alebo pred odpoveď alebo preposlanú správu? A má sa podpis zobraziť už počas úprav textu, vrátane možnosti úpravy podpisu.
 show	mail	sk	Zobraziť
@@ -649,7 +643,6 @@ step 3: sieve - server side mail filtering	mail	sk	Krok 3: Sieve - filtrovanie n
 step 4: smtp - outgoing mail	mail	sk	Krok 4: SMTP - odoslaná pošta
 store to folder	mail	sk	Uložiť do priečinku
 subscribe folder	mail	sk	Prihlásiť priečinok
-subscribe folder ...	mail	sk	Prihlásiť priečinok ...
 subscribe to folder %1	mail	sk	Prihlásiť priečinok %1
 subscription folders	mail	sk	Prihlásené priečinky
 subscription successfully saved.	mail	sk	Stav prihlásenia úspešne uložené.

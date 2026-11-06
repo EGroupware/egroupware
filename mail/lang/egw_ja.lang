@@ -46,7 +46,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	ja	許可
 allow external images	mail	ja	外部画像を許可
 allow external images from listed domains	mail	ja	指定ドメインからの外部画像を許可
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	ja	HTMLメールで外部ソースからの画像を許可。「権限を要求」は、今回のみ読み込む（「表示」）か、そのドメインから常に許可する（「許可」）ためのバナーを表示します。「権限を要求、指定ドメインのみ許可」は「表示」のみを提供するため、常に許可されるのは指定ドメイン（例: 管理者が全員向けに設定したもの）のみです。
 allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可。
 allow users to create further identities	mail	ja	追加名称の生成を許可
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	ja	フォルダーとメールの読み書き、作成、投稿、メッセージの追加、削除ができます。
@@ -68,7 +67,6 @@ are you sure you want to delete all selected folders?	mail	ja	選択されたフ
 are you sure you want to move folder %1 to folder %2?	mail	ja	%2?フォルダ %1 をフォルダ %2 に移動してよろしいですか？
 arrival	mail	ja	受信
 ask for permission	mail	ja	権限を要求
-ask for permission, only allow listed domains	mail	ja	権限を要求、指定ドメインのみ許可
 attach files	mail	ja	ファイルの添付
 attach users vcard at compose to every new mail	mail	ja	新規メール作成時vCardを常に添付。
 attach vcard	mail	ja	vCardを添付
@@ -201,8 +199,6 @@ draft folder	mail	ja	下書きフォルダ
 drafts	mail	ja	下書き
 drafts folder	mail	ja	下書きフォルダ
 edit account	mail	ja	アカウントを編集
-edit account ...	mail	ja	アカウントを編集 ...
-edit folder acl ...	mail	ja	フォルダ ACL を編集 ...
 edit vacation settings	mail	ja	不在案内設定を編集
 effective only if server supports acl at all	admin	ja	サーバーで ACL を利用可能である場合に限り有効
 email address	mail	ja	メール・アドレス
@@ -266,7 +262,6 @@ folder %1 %2 failed!	mail	ja	フォルダ %1 %2 が失敗しました！
 folder %1 has been created successfully, although the subscription failed because of %2	mail	ja	サブスクリプションは %2 で失敗しましたが、フォルダ %1 が正常に作成されました
 folder %1 is moving to folder %2	mail	ja	フォルダ %1 はフォルダ %2 に移動します
 folder management	mail	ja	フォルダ管理
-folder management ...	mail	ja	フォルダ管理 ...
 folder settings	mail	ja	フォルダ設定
 force html	mail	ja	HTML を強制
 force plain text	mail	ja	プレーン・テキストを強制
@@ -602,7 +597,6 @@ set / remove flags	mail	ja	フラグを立てる／外す
 set / remove labels	mail	ja	ラベルを付ける／外す
 set flags	mail	ja	フラグを立てる
 set it as default:	mail	ja	既定に設定:
-set predefined values for compose...	mail	ja	メール作成用の定義済み値を設定する ...
 should new messages show up on the home page	mail	ja	新着メールをホームに表示
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	ja	署名を返信（インライン転送）メッセージの後に挿入する（標準）か、前に挿入するか。またメッセージ作成中に署名を表示して編集可能とするか。
 show	mail	ja	表示
@@ -649,7 +643,6 @@ step 3: sieve - server side mail filtering	mail	ja	ステップ 3: Sieve - サ�
 step 4: smtp - outgoing mail	mail	ja	ステップ 4: SMTP - 送信メール
 store to folder	mail	ja	格納先フォルダ
 subscribe folder	mail	ja	フォルダを購読
-subscribe folder ...	mail	ja	フォルダを購読 ...
 subscribe to folder %1	mail	ja	フォルダ %1 を購読
 subscription folders	mail	ja	購読フォルダー
 subscription successfully saved.	mail	ja	購読フォルダーを更新しました

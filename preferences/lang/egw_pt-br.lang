@@ -143,7 +143,6 @@ what to display for an avatar, if there is no photo	preferences	pt-br	O que exib
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pt-br	Quando você selecionar Sim os botões serão colocados na barra de ferramentas ao topo do aplicativo.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	pt-br	Qual o simbolo monetário ou nome deve ser usado pelo EGroupware.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	pt-br	Em qual visualização os campos de texto compatíveis com Markdown são abertos. Alterar a visualização em um campo atualiza essa opção.
 you can show the applications as icons only, icons with app-name or both.	preferences	pt-br	Você pode exibir os aplicativos como ícones, ícones com o nome do aplicativo ou ambos.
 you can show the linked entries with icons only, icons with app-name or both.	common	pt-br	Você pode exibir os registros linkados como ícones, ícones com o nome do aplicativo ou ambos.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	pt-br	Você pode selecionar os recursos a serem ativados na barra de ferramentas.

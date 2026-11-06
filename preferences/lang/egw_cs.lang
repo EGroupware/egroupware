@@ -206,7 +206,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	cs	Pokud odpovíte kladně, tlačítka pro hlavní stranu a odhlášení budou zobrazena stejně jako aplikace v navigační liště.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Jaká znaková sada má být použita pro export do CSV souboru. Výchozí znakovou sadou systému je ta, která byla použita při instalaci eGroupWaru.
 which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má EGroupware používat.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	cs	V jakém zobrazení se otevírají textová pole podporující Markdown. Změna zobrazení v poli toto nastavení aktualizuje.
 you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
 you can show the linked entries with icons only, icons with app-name or both.	common	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	cs	Na panelu nástrojů můžete vybrat funkce, které mají být povoleny.

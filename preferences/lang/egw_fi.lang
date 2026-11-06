@@ -6,6 +6,7 @@
 24 hour	preferences	fi	24 tuntia
 a template defines the layout of egroupware and it contains icons for each application.	preferences	fi	Mallipohja sisältää ulkoasun ja kuvakkeet jokaiselle sovellukselle.
 a theme defines the colors and fonts used by the template.	preferences	fi	Teema määrittelee mallipohjan värit ja kirjasimet.
+access token revoked.	preferences	fi	Käyttöoikeustunnus peruutettu.
 acl grants have been updated	preferences	fi	Käyttöoikeudet on päivitetty
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	preferences	fi	Aktivoi tämä vaihtoehto, jos haluat näyttää värikkäämpiä sovelluskuvakkeita avoimissa välilehdissä. Jos vaihtoehto ei ole valittuna, kuvakkeet näkyvät oletusarvoisesti vaaleana mukautettuna värinä.
 allows to set a default or force the active application tab for new logins.	preferences	fi	Mahdollistaa oletusasetuksen määrittämisen tai aktiivisen sovellusvälilehden pakottamisen uusille kirjautumisille.
@@ -21,11 +22,15 @@ automatically start with this font size	preferences	fi	Aloita automaattisesti va
 br	preferences	fi	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fi	Vaihda käyttäjän salasana. Mikäli vaihto onnistuu, palauttaa ohjelma arvon TRUE (totta), mikäli se epäonnistuu, palauttaa ohjelma arvon FALSE (väärin).
 charset for the csv export/import	preferences	fi	Merkistökoodit
+close after selection	preferences	fi	Sulje valinnan jälkeen
 code is invalid	preferences	fi	Koodi on virheellinen
 code is required	preferences	fi	Koodi tarvitaan
 color	preferences	fi	Väri
 country	preferences	fi	Maa
+current password	preferences	fi	Nykyinen salasana
+custom login box color, defaults to above color darkened	preferences	fi	Kirjautumiskentän mukautettu väri; oletusarvo on yllä olevan värin tummempi versio
 custom login box text color, defaults to white	preferences	fi	Kirjautumiskentän tekstin väri voidaan määrittää erikseen; oletusarvo on valkoinen
+custom sidebar menu active color, defaults to above color darkened	preferences	fi	Sivupalkin valikon aktiivisen osan mukautettu väri; oletusarvo on yllä olevan värin tummempi versio
 dark mode theme	preferences	fi	Tumman tilan teema
 date format	preferences	fi	Päivämäärän muoto
 default	preferences	fi	Oletus
@@ -34,9 +39,11 @@ default font size	preferences	fi	Oletus kirjasinkoko
 default preferences	preferences	fi	Oletusasetukset
 delete categories	preferences	fi	Poista kategoriat
 deny following groups access to application passwords	preferences	fi	Kiellä seuraavien ryhmien pääsy sovellusten salasanoihin
+deny following groups access to edit categories	admin	fi	Estä seuraavien ryhmien pääsy luokkien muokkaamiseen
 deny following groups access to preferences	admin	fi	Kielletään seuraavien ryhmien pääsy asetuksiin
 description can not exceed 255 characters in length !	preferences	fi	Kuvauksen pituus ei saa ylittää 255:ä merkkiä!
 disable	preferences	fi	Ota pois käytöstä
+disable two factor auth	preferences	fi	Poista kaksivaiheinen todennus käytöstä
 display thumbnails for linked images	preferences	fi	Näytä linkitettyjen kuvien thumbnailit
 div	preferences	fi	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fi	Haluatko näyttää kellonajan 24 tunnin muodossa, vai näyttää 12 tuntia ja am/pm -lyhenteen?
@@ -51,6 +58,8 @@ enter code to verify correct setup	preferences	fi	Syötä koodi oikeiden asetust
 enter your new password	preferences	fi	Anna uusi salasana
 enter your old password	preferences	fi	Anna vanha salasana
 failed to change password.	preferences	fi	Salasanan vaihto ei onnistunut.
+failed to delete secret!	preferences	fi	Salaisuuden poistaminen epäonnistui!
+failed to store secret!	preferences	fi	Salaisuuden tallentaminen epäonnistui!
 fast	preferences	fi	Nopea
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	fi	Nopea päivitys lisää uudet merkinnät aina luettelon alkuun ja päivittää olemassa olevat merkinnät paikalleen, ellei luetteloa ole lajiteltu viimeisimmän muutoksen mukaan. Tarkat päivitykset päivittävät luettelon kokonaan, jos luetteloa ei ole lajiteltu viimeisimmän muutoksen mukaan.
 features of the editor	preferences	fi	Editorin asetukset
@@ -143,7 +152,6 @@ what to display for an avatar, if there is no photo	preferences	fi	Mitä näytet
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fi	Näytä Etusivu ja Poistu -kuvakkeet yläpalkissa.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Valitse merkistökoodaus CSV tuontiin ja vientiin.
 which currency symbol or name should be used in egroupware.	preferences	fi	Rahayksikkö: symboli tai nimi.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	fi	Missä näkymässä Markdown-yhteensopivat tekstikentät avautuvat. Kentän näkymän vaihtaminen päivittää tämän asetuksen.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	fi	Voit valita työkalurivillä käytössä olevat ominaisuudet.

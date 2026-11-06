@@ -46,7 +46,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	sl	Dovolite
 allow external images	mail	sl	Dovoli zunanje fotografije
 allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz domen s seznama
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML. "Prosite za dovoljenje" prikaže obvestilo, s katerim jih lahko naložite samo tokrat ("Prikaži") ali vedno iz njihove domene ("Dovolite"). "Prosite za dovoljenje, dovoli samo domene s seznama" ponuja samo "Prikaži", zato so vedno dovoljene samo domene s seznama, npr. kot jih je za vse nastavil skrbnik.
 allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih.
 allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sl	Uporabniku omogoča branje, pisanje in ustvarjanje map in poštnih sporočil, objavljanje v njih, dodajanje sporočil vanje in brisanje sporočil
@@ -68,7 +67,6 @@ are you sure you want to delete all selected folders?	mail	sl	Ali ste prepričan
 are you sure you want to move folder %1 to folder %2?	mail	sl	Ali ste prepričani, da želite premakniti mapo %1 v mapo %2?
 arrival	mail	sl	Sprejeto
 ask for permission	mail	sl	Prosite za dovoljenje
-ask for permission, only allow listed domains	mail	sl	Prosite za dovoljenje, dovoli samo domene s seznama
 attach files	mail	sl	Priložite datoteke
 attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju.
 attach vcard	mail	sl	Priloži vCard
@@ -201,8 +199,6 @@ draft folder	mail	sl	Mapa Osnutki
 drafts	mail	sl	Osnutki
 drafts folder	mail	sl	Osnutek mape
 edit account	mail	sl	Urejanje računa
-edit account ...	mail	sl	Urejanje računa ...
-edit folder acl ...	mail	sl	Urejanje mape ACL ...
 edit vacation settings	mail	sl	Uredi nastavitve odsotnosti
 effective only if server supports acl at all	admin	sl	deluje samo, če strežnik sploh podpira ACL
 email address	mail	sl	Poštni naslov
@@ -266,7 +262,6 @@ folder %1 %2 failed!	mail	sl	Mapa %1 %2 ni uspela!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	sl	Mapa %1 je bila uspešno ustvarjena, čeprav je bila naročnina neuspešna zaradi %2
 folder %1 is moving to folder %2	mail	sl	Mapa %1 se premakne v mapo %2
 folder management	mail	sl	Upravljanje map
-folder management ...	mail	sl	Upravljanje map ...
 folder settings	mail	sl	Nastavitve mape
 force html	mail	sl	Vsili HTML
 force plain text	mail	sl	Vsili navadnega besedila
@@ -602,7 +597,6 @@ set / remove flags	mail	sl	Nastavite / Odstrani zastavice
 set / remove labels	mail	sl	Nastavite / Odstrani oznake
 set flags	mail	sl	Nastavitev zastavic
 set it as default:	mail	sl	Ga nastavite kot privzeto:
-set predefined values for compose...	mail	sl	Nastavite vnaprej določene vrednosti za compose ...
 should new messages show up on the home page	mail	sl	Če se na domači strani prikažejo nova sporočila
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	sl	Če je treba vstaviti podpis po (standardnem) ali pred odgovorom ali vnaprej, in ali mora biti podpis med zapisom viden in spremenljiv.
 show	mail	sl	Prikaži
@@ -649,7 +643,6 @@ step 3: sieve - server side mail filtering	mail	sl	Korak 3: Sieve - filtriranje 
 step 4: smtp - outgoing mail	mail	sl	Korak 4: SMTP - odhodna pošta
 store to folder	mail	sl	Shranite v mapo
 subscribe folder	mail	sl	Naroči mapo
-subscribe folder ...	mail	sl	Naroči mapo ...
 subscribe to folder %1	mail	sl	Naročite se na mapo %1
 subscription folders	mail	sl	Naročniške mape
 subscription successfully saved.	mail	sl	Naročnina je uspešno shranjena.

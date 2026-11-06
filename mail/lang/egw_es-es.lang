@@ -12,6 +12,7 @@
 (leave empty for no quota)	mail	es-es	(Dejar vacío para sin cuota)
 (no subject)	mail	es-es	(sin asunto)
 (not connected)	mail	es-es	(no conectado)
+a pasted, dropped or inserted image above a certain file-size gets scaled down to this width (keeping aspect ratio), to avoid bloating the mail. leave empty for the default of 800px.	mail	es-es	Las imágenes pegadas, arrastradas o insertadas que superen un determinado tamaño de archivo se reducirán a este ancho (manteniendo la relación de aspecto), para evitar que el correo ocupe demasiado espacio. Déjalo en blanco para mantener el valor predeterminado de 800 píxeles.
 account	mail	es-es	Cuenta
 account editable by user	mail	es-es	cuenta editable por el usuario
 account not reachable	mail	es-es	Account niet bereikbaar.
@@ -134,7 +135,7 @@ could not download %1	mail	es-es	No se ha podido descargar %1.
 could not generate csr.	mail	es-es	No se ha podido generar la CSR.
 could not read uploaded certificate!	mail	es-es	¡No se ha podido leer el certificado cargado!
 could not save the acl because some names are empty	mail	es-es	No se pudo guardar la lista de control de acceso porque algunos nombres están vacíos
-create new account	mail	es-es	crear nueva cuenta
+create new account	mail	es-es	Crear nueva cuenta
 create private key and export csr	mail	es-es	Crear una clave privada y exportar la CSR
 create self-signed certificate	mail	es-es	Crear certificado autofirmado
 cross account forward attachment is not allowed!	mail	es-es	No está permitido adjuntar cuentas cruzadas!
@@ -204,8 +205,6 @@ draft folder	mail	es-es	carpeta de borradores
 drafts	mail	es-es	Borradores
 drafts folder	mail	es-es	Carpeta de borradores
 edit account	mail	es-es	Editar cuenta
-edit account ...	mail	es-es	Editar cuenta ...
-edit folder acl ...	mail	es-es	Editar la lista de control de acceso de la carpeta ...
 edit vacation settings	mail	es-es	Editar configuración de vacaciones
 effective only if server supports acl at all	admin	es-es	eficaz sólo si el servidor admite lista de control de acceso en todo
 email address	mail	es-es	Dirección de correo-e
@@ -271,7 +270,6 @@ folder %1 %2 failed!	mail	es-es	¡Carpeta %1 %2 falló!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	es-es	La carpeta %1 se ha creado correctamente, aunque la suscripción ha fallado debido a %2
 folder %1 is moving to folder %2	mail	es-es	La carpeta %1 se mueve a la carpeta %2
 folder management	mail	es-es	Gestión de carpeta
-folder management ...	mail	es-es	Gestión de carpeta ...
 folder settings	mail	es-es	Opciones de la carpeta
 force html	mail	es-es	Forzar HTML
 force plain text	mail	es-es	Forzar texto sin formato
@@ -300,6 +298,7 @@ high priority	mail	es-es	Alta prioridad
 hold %1 to drag files to your computer	mail	es-es	Sostenga %1 para arrastrar archivos a su computadora
 home page folders	mail	es-es	carpetas de la página de inicio
 hostname or ip	mail	es-es	Nombre de host o IP
+how long a message has to stay open in the preview pane or a popup before it gets marked as read - this lets you skim past a message without marking it read. "immediately" is the previous, default behaviour.	mail	es-es	Tiempo que un mensaje debe permanecer abierto en el panel de vista previa o en una ventana emergente antes de que se marque como leído; esto te permite echar un vistazo rápido a un mensaje sin marcarlo como leído. «Inmediatamente» es el comportamiento anterior por defecto.
 how often to check with the server for new mail	mail	es-es	Con qué frecuencia se debe comprobar el nuevo correo en el servidor
 how should the available information on identities be displayed	admin	es-es	Cómo se debe mostrar la información disponible sobre identidades
 how to forward messages	mail	es-es	Cómo reenviar mensajes
@@ -329,7 +328,7 @@ imap administration	mail	es-es	Administración de IMAP
 imap server	mail	es-es	Servidor IMAP
 imap timeout	mail	es-es	Tiempo de espera de IMAP
 import ca-signed certificate for this key	mail	es-es	Importar certificado firmado por una CA para esta clave
-import message	mail	es-es	importar mensaje
+import message	mail	es-es	Importar mensaje
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	es-es	Falló la importación del mensaje %1. No se pudo guardar el mensaje en la carpeta %2 debido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	es-es	Falló la importación del mensaje %1. La carpeta destino %2 no existe.
 import of message %1 failed. destination folder not set.	mail	es-es	Falló la importación del mensaje %1. La carpeta destino %2 no está configurada..
@@ -374,9 +373,11 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	es-es	Marcar todo como leido
 mark all messages in folder as read	mail	es-es	Marcar todos los mensajes de la carpeta como leídos
 mark as deleted	mail	es-es	Marcar como borrado
+mark message as read after	mail	es-es	Marcar el mensaje como leído después de
 match:	mail	es-es	Coincidir:
 matches	mail	es-es	coincide
 matches regexp	mail	es-es	coincide con la expresión
+max. width of inline images in a mail body or signature (in px)	mail	es-es	Ancho máximo de las imágenes incrustadas en el cuerpo del correo o en la firma (en píxeles)
 mbstring.func_overload=0 is required for correct mail processing!	mail	es-es	¡mbstring.func_overload=0 es necesario para procesar correctamente el correo!
 message body	mail	es-es	Cuerpo del mensaje
 message learned as ham (not spam) and moved back to inbox	mail	es-es	Mensaje detectado como ham (no spam) y devuelto a la bandeja de entrada
@@ -409,6 +410,7 @@ never show	mail	es-es	Nunca mostrar
 never show notification	mail	es-es	Nunca mostrar notificación
 new mail from %1	mail	es-es	Nuevo correo de %1
 new mail notification	mail	es-es	Nueva notificación de correo
+new mail to sender	mail	es-es	Nuevo correo al remitente
 new message type	mail	es-es	Nuevo tipo de mensaje
 new subject	mail	es-es	Nuevo asunto
 no (valid) send folder set in preferences	mail	es-es	Mover a carpeta de archivo
@@ -610,13 +612,12 @@ set / remove flags	mail	es-es	Establecer / quitar marcas
 set / remove labels	mail	es-es	Establecer / quitar etiquetas
 set flags	mail	es-es	Marcar el correo electrónico como
 set it as default:	mail	es-es	Establezca como predeterminado:
-set predefined values for compose...	mail	es-es	Establecer valores predefinidos para componer ...
 should new messages show up on the home page	mail	es-es	Nuevos mensajes deberían aparecer en la página principal
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	es-es	Si la firma debe insertarse después (estándar) o antes de una respuesta o reenvío, y si la firma debe ser visible y modificable durante la redacción.
 show	mail	es-es	Mostrar
 show all addresses	mail	es-es	Mostrar todas las direcciones
 show all attachments	mail	es-es	Mostrar todos los archivos adjuntos
-show all folders	mail	es-es	mostrar todas las carpetas
+show all folders	mail	es-es	Mostrar todas las carpetas
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	es-es	Mostrar todas las carpetas, (suscritas Y no suscritas) en el panel de carpetas de la pantalla principal.
 show horizontal	mail	es-es	Mostrar horizontal
 show horizontal, hide if none selected	mail	es-es	Mostrar horizontal, ocultar si no hay seleccionados
@@ -657,7 +658,6 @@ step 3: sieve - server side mail filtering	mail	es-es	Paso 3: Sieve - filtro de 
 step 4: smtp - outgoing mail	mail	es-es	Paso 4: SMTP - correo saliente
 store to folder	mail	es-es	Guardar en la carpeta
 subscribe folder	mail	es-es	Suscribir carpeta
-subscribe folder ...	mail	es-es	Suscribir carpeta ...
 subscribe to folder %1	mail	es-es	Suscribirse a la carpeta %1
 subscription folders	mail	es-es	Carpetas de suscripción
 subscription successfully saved.	mail	es-es	La suscripción se ha grabado correctamente.
@@ -691,7 +691,7 @@ to do	mail	es-es	Por hacer
 toggled on actions	mail	es-es	Activar acciones
 trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
-trust servers seen / unseen info	mail	es-es	servidores de confianza información VISTA / NO VISTA
+trust servers seen / unseen info	mail	es-es	Servidores de confianza información VISTA / NO VISTA
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	es-es	Confiar en el servidor al recuperar el estado de la carpeta. si selecciona no, buscaremos los mensajes NO VISTADOS y los contaremos nosotros mismos.
 trying to recover from session data	mail	es-es	Intentar recuperar los datos de la sesión
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).\nSi utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.

@@ -104,7 +104,6 @@ draft folder	mail	lv	Izstrādājumu mape
 drafts	mail	lv	Izstrādājumi
 drafts folder	mail	lv	Izstrādājumu mape
 edit account	mail	lv	Rediģēt kontu
-edit account ...	mail	lv	Rediģēt kontu ...
 email address	mail	lv	E-pasta adrese
 email notification update failed! you need to set an email address!	mail	lv	E-pasta paziņojumu atjaunināšana neizdevās! Jums ir jāiestata e-pasta adrese!
 emailaddress	admin	lv	E-pasta adrese
@@ -262,6 +261,7 @@ please enter password	mail	lv	Lūdzu, ievadiet paroli
 please select a address	mail	lv	Lūdzu, izvēlieties adresi
 post	mail	lv	sūtīt
 predefined addresses for compose	mail	lv	Lepriekš noteiktas adreses sastādīšanai
+prevent managing filters	mail	lv	Aizliegt filtru pārvaldīšanu
 preview pane	mail	lv	Loga izkārtojums
 printing	mail	lv	Drukāšana
 private key created, downloading csr...	mail	lv	Privātais atslēgas izveidots, tiek lejupielādēts CSR ...
@@ -327,7 +327,6 @@ send message and move to send folder (if configured)	mail	lv	Nosūtīt ziņu un 
 send message pgp encrypted: requires keys from all recipients!	mail	lv	Nosūtīt ziņu šifrētu ar PGP: nepieciešamas atslēgas no visiem saņēmējiem!
 sent folder	mail	lv	Mape nosūtīts
 server supports special-use folders	mail	lv	Serveris atbalsta īpašas izmantošanas mapes
-set predefined values for compose...	mail	lv	Iestatiet iepriekš definētas vērtības sastādīšanai ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	lv	Vai paraksts jāieliek pēc (standarta) vai pirms atbildes vai pārsūtīšanas, un vai paraksts ir redzams un maināms sastādīšanas laikā.
 show all addresses	mail	lv	Rādīt visas adreses
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	lv	galvenajā ekrāna mapju panelī rādīt visas mapes (parakstītās UN neparakstītās).

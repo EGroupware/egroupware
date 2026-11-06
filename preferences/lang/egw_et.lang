@@ -87,7 +87,6 @@ use first %1 letters from username	preferences	et	Kasuta kasutajanime esimesi %1
 use initials from first and last name	preferences	et	Kasuta ees- ja perekonnanime algustähti
 used instead of the application color.	preferences	et	Kasutatakse rakenduse värvi asemel.
 what to display for an avatar, if there is no photo	preferences	et	Mida kuvada avatariks, kui puudub foto.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	et	Millises vaates avatakse Markdown-tugi toetavad tekstiväljad. Välja vaate vahetamine uuendab seda seadet.
 you can show the linked entries with icons only, icons with app-name or both.	common	et	Näita rakendusi ainult ikoonidega, ikoonidega koos rakenduse nimega või mõlemaga.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	et	Võid valida, millised funktsioonid tööriistaribal aktiveeritakse.
 you must enter a password	preferences	et	Sa pead sisestama parooli

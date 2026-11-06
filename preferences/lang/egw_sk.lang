@@ -203,7 +203,6 @@ when you can select multiple options, should the option list stay open until you
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v EGroupware.
-which view markdown-enabled text fields open in. switching the view in a field updates this.	preferences	sk	V ktorom zobrazení sa otvárajú textové polia s podporou Markdownu. Zmena zobrazenia v poli toto nastavenie aktualizuje.
 you can show the applications as icons only, icons with app-name or both.	preferences	sk	Aplikácie môžu byť zobrazované ako ikonky, ikonky s názvami alebo obidvoje.
 you can show the linked entries with icons only, icons with app-name or both.	common	sk	Odkazované záznamy sa dajú zobrazovať ako ikony, ikony s názvom aplikácie alebo oboje.
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	sk	Môžete si vybrať, ktoré funkcie budú v paneli nástrojov.

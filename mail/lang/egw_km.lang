@@ -40,7 +40,6 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	km	អនុញ្ញាត
 allow external images	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅ
 allow external images from listed domains	mail	km	អនុញ្ញាតឱ្យរូបភាពខាងក្រៅពីដែនដែលបានរាយបញ្ជី
-allow images from external sources in html emails. "ask for permission" shows a banner to load them this time only ("show") or always from their domain ("allow"). "ask for permission, only allow listed domains" offers only "show", so only the listed domains are always allowed, eg. as set by the admin for everyone.	mail	km	អនុញ្ញាតឱ្យរូបភាពពីប្រភពខាងក្រៅនៅក្នុងអុីមែល HTML។ "សុំការអនុញ្ញាត" បង្ហាញសារមួយដើម្បីផ្ទុកវាតែម្តងនេះ ("បង្ហាញ") ឬជានិច្ចពីដែនរបស់វា ("អនុញ្ញាត")។ "សុំការអនុញ្ញាត ដោយអនុញ្ញាតតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះ" ផ្តល់តែ "បង្ហាញ" ដូច្នេះមានតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះដែលត្រូវបានអនុញ្ញាតជានិច្ច ឧ. ដូចដែលអ្នកគ្រប់គ្រងបានកំណត់សម្រាប់អ្នកទាំងអស់គ្នា។
 allow images from listed domains in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីដែនដែលបានរាយក្នុងអុីមែល HTML
 allow users to create further identities	mail	km	អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់បង្កើតអត្តសញ្ញាណបន្ថែម
 always	mail	km	ជានិច្ច
@@ -60,7 +59,6 @@ are you sure you want to delete all selected folders?	mail	km	តើអ្នក
 are you sure you want to move folder %1 to folder %2?	mail	km	តើ​អ្នក​ប្រាកដ​ថា​អ្នក​ចង់​ផ្លាស់ទី​ថត%1 ទៅ​ថត%2?
 arrival	mail	km	បានទទួល
 ask for permission	mail	km	សុំការអនុញ្ញាត
-ask for permission, only allow listed domains	mail	km	សុំការអនុញ្ញាត ដោយអនុញ្ញាតតែដែនដែលបានរាយបញ្ជីប៉ុណ្ណោះ
 attach files	mail	km	ភ្ជាប់ឯកសារ
 attach users vcard at compose to every new mail	mail	km	ភ្ជាប់អ្នកប្រើប្រាស់ VCard នៅពេលសរសេរទៅគ្រប់សំបុត្រថ្មី។
 attach vcard	mail	km	ភ្ជាប់ vCard
@@ -176,8 +174,6 @@ draft folder	mail	km	ថតព្រាង
 drafts	mail	km	សេចក្តីព្រាង
 drafts folder	mail	km	ថតឯកសារព្រាង
 edit account	mail	km	កែសម្រួលគណនី
-edit account ...	mail	km	កែសម្រួលគណនី...
-edit folder acl ...	mail	km	កែសម្រួល​ថត ACL...
 edit vacation settings	mail	km	កែសម្រួលការកំណត់វិស្សមកាល
 effective only if server supports acl at all	admin	km	មានប្រសិទ្ធភាពលុះត្រាតែម៉ាស៊ីនមេគាំទ្រ ACL ទាំងអស់។
 email notification successfully updated!	mail	km	បានធ្វើបច្ចុប្បន្នភាពការជូនដំណឹងតាមអុីមែលដោយជោគជ័យ!
@@ -238,7 +234,6 @@ folder %1 %2 failed!	mail	km	ថត%1%2 បានបរាជ័យ!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	km	ថត %1 ត្រូវ​បាន​បង្កើត​ដោយ​ជោគជ័យ ទោះ​បី​ជា​ការ​ជាវ​បាន​បរាជ័យ​ដោយ​សារ​%2
 folder %1 is moving to folder %2	mail	km	ថត%1 កំពុងផ្លាស់ទីទៅថត%2
 folder management	mail	km	ការគ្រប់គ្រងថតឯកសារ
-folder management ...	mail	km	ការគ្រប់គ្រងថតឯកសារ...
 folder settings	mail	km	ការកំណត់ថត
 force html	mail	km	បង្ខំ HTML
 force plain text	mail	km	បង្ខំអត្ថបទធម្មតា។
@@ -536,7 +531,6 @@ set / remove flags	mail	km	កំណត់ / យកទង់ជាតិចេ�
 set / remove labels	mail	km	កំណត់ / លុបស្លាក
 set flags	mail	km	កំណត់ទង់
 set it as default:	mail	km	កំណត់វាជាលំនាំដើម៖
-set predefined values for compose...	mail	km	កំណត់តម្លៃដែលបានកំណត់ជាមុនសម្រាប់ការតែង...
 should new messages show up on the home page	mail	km	ប្រសិនបើសារថ្មីបង្ហាញនៅលើទំព័រដើម
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	km	គួរបញ្ចូលហត្ថលេខាបន្ទាប់ពី (ស្តង់ដារ) ឬមុនការឆ្លើយតប ឬក្នុងជួរទៅមុខ ហើយហត្ថលេខាគួរតែអាចមើលឃើញ និងអាចផ្លាស់ប្តូរបានក្នុងអំឡុងពេលសរសេរ។
 show	mail	km	បង្ហាញ
@@ -578,7 +572,6 @@ step 3: sieve - server side mail filtering	mail	km	ជំហានទី 3: Siev
 step 4: smtp - outgoing mail	mail	km	ជំហានទី 4: SMTP - សំបុត្រចេញ
 store to folder	mail	km	រក្សាទុកទៅថតឯកសារ
 subscribe folder	mail	km	ថតជាវ
-subscribe folder ...	mail	km	ជាវថត ...
 subscribe to folder %1	mail	km	ជាវទៅថត%1
 subscription folders	mail	km	ថតការជាវ
 subscription successfully saved.	mail	km	ការជាវបានរក្សាទុកដោយជោគជ័យ។
