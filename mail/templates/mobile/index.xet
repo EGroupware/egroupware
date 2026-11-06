@@ -5,9 +5,9 @@
 	<et2-template  id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="50"/>
+				<column width="50px"/>
 				<column width="90%"/>
-				<column width="80"/>
+				<column width="80px"/>
 			</columns>
 			<rows>
 				<row class="th">
