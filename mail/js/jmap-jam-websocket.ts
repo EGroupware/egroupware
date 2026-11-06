@@ -72,10 +72,21 @@ type ProblemDetails =
 
 const WEBSOCKET_CAPABILITY = "urn:ietf:params:jmap:websocket";
 
-// Capped reconnect backoff (ms) - after the last delay is used up without a successful reconnect,
-// the transport gives up for good and stays on HTTP for the rest of this client's lifetime (a fresh
-// successful connection resets the counter, so a later transient blip gets the full budget again).
-const RECONNECT_DELAYS_MS = [1000, 5000, 30000];
+// Capped exponential reconnect backoff (ms) - once the list is exhausted, #handleClose() keeps
+// retrying forever at the last (3min) delay rather than giving up, so a Stalwart outage that
+// outlasts the full ramp still self-heals without any user action or page reload (found live via
+// ticket #127461: "we do not recover automatically"). The 3min cap is deliberately well short of
+// MailJmap's own hourly token-refresh cadence (which replaces the client outright, resetting this
+// to a fresh attempt anyway) while still being gentle enough not to burn a backgrounded mobile
+// tab's battery polling a server that's genuinely down for a while. A fresh successful connection
+// resets the counter, so a later transient blip gets the full ramp again, not the 3min floor.
+// MailJmap's own 'online' listener (see its onOnline()) additionally forces an immediate retry via
+// retryNow() the moment the browser signals connectivity may have changed, rather than always
+// waiting out whichever delay is currently scheduled - but that signal only ever reflects the
+// local network interface, never whether the actual JMAP endpoint is reachable (ticket #127461's
+// own trigger - a DNS server that just never answered - would never have fired it), so this
+// backoff loop remains the real guarantee of eventual recovery, not just a latency optimization.
+const RECONNECT_DELAYS_MS = [1000, 5000, 15000, 30000, 60000, 120000, 180000];
 
 // Bounds ONLY the initial session/capability fetch (this client's constructor, below) - a real
 // connectivity check: is the server reachable at all, and does it advertise the WebSocket
@@ -737,13 +748,28 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		{
 			return;
 		}
-		if (this.#reconnectAttempt >= RECONNECT_DELAYS_MS.length)
+		// never permanently gives up (see RECONNECT_DELAYS_MS' own docblock) - once the ramp is
+		// exhausted, every further attempt reuses its last (capped) delay instead
+		const delay = RECONNECT_DELAYS_MS[Math.min(this.#reconnectAttempt++, RECONNECT_DELAYS_MS.length - 1)];
+		this.#reconnectTimer = window.setTimeout(() => this.#connect(), delay);
+	}
+
+	/**
+	 * Force an immediate reconnect attempt, resetting the exponential backoff - for a strong
+	 * external signal that connectivity may have changed (MailJmap's own 'online' listener) rather
+	 * than waiting out whatever delay #handleClose() last scheduled. A harmless no-op while already
+	 * connected, mid-reconnect, or for an account with no WebSocket capability at all (#connect()/
+	 * #attemptConnect() already short-circuit all three cases on their own).
+	 */
+	retryNow() : void
+	{
+		if (this.transport === "websocket")
 		{
-			console.error("JamWebSocketClient: giving up on the WebSocket transport after repeated failures, staying on HTTP");
 			return;
 		}
-		const delay = RECONNECT_DELAYS_MS[this.#reconnectAttempt++];
-		this.#reconnectTimer = window.setTimeout(() => this.#connect(), delay);
+		window.clearTimeout(this.#reconnectTimer);
+		this.#reconnectAttempt = 0;
+		this.#connect();
 	}
 
 	/**

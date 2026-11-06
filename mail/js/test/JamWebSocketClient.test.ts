@@ -55,6 +55,12 @@ class FakeWebSocket
 		this.#dispatch("close", {});
 	}
 
+	/** A connection attempt that never even opens - a real WebSocket fires "error" before "close". */
+	simulateError() : void
+	{
+		this.#dispatch("error", {});
+	}
+
 	#dispatch(type : string, event : any) : void
 	{
 		(this.#listeners[type] || []).slice().forEach((listener) => listener(event));
@@ -220,6 +226,83 @@ describe("JamWebSocketClient", () =>
 		assert.isTrue(rejected, "a request in flight when the socket closes must reject, not hang or silently retry over HTTP");
 		assert.equal(client.transport, "http");
 		assert.equal(fetchStub.callCount, 1, "only the session bootstrap fetch should have happened - no HTTP retry of the lost request");
+	});
+
+	/** Ticket #127461: "we should not get into a state we stop trying to recover" (ralf). */
+	it("keeps retrying forever at the capped delay once the backoff ramp is exhausted, rather than giving up for good", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+			await client.session;
+			await clock.tickAsync(0);
+
+			// the old [1000, 5000, 30000] ramp gave up for good after exactly 3 failed attempts -
+			// drive it through 10, well past that, ticking generously (180000ms, the new cap) past
+			// each one rather than coupling this test to the exact ramp values. Each attempt never
+			// even opens (simulateError() before simulateClose(), matching a real WebSocket's
+			// error-then-close sequence for a connection that never succeeds) - an attempt that DID
+			// open would reset the backoff counter back to its first (1s) step, same as a real
+			// flaky-but-briefly-working connection would, which is a different (also fine) scenario
+			// from the one this test is isolating.
+			for (let attempt = 0; attempt < 10; attempt++)
+			{
+				const socket = FakeWebSocket.instances[FakeWebSocket.instances.length - 1];
+				socket.simulateError();
+				socket.simulateClose();
+				await clock.tickAsync(180000);
+			}
+
+			assert.equal(FakeWebSocket.instances.length, 11,
+				"11 WebSocket attempts (the initial connect + 10 reconnects) - the transport must never stop trying");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+
+	it("retryNow() reconnects immediately instead of waiting out the scheduled backoff delay, but is a no-op while already connected", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+			await client.session;
+			await clock.tickAsync(0);
+
+			const firstSocket = FakeWebSocket.instances[0];
+			firstSocket.simulateOpen();
+
+			client.retryNow();
+			await clock.tickAsync(0);
+			assert.equal(FakeWebSocket.instances.length, 1, "retryNow() must not open a second socket while already connected");
+
+			// drop the connection - the normal backoff would otherwise wait 1s before reconnecting
+			firstSocket.simulateClose();
+			assert.equal(client.transport, "http");
+
+			client.retryNow();
+			await clock.tickAsync(0);
+			assert.equal(FakeWebSocket.instances.length, 2,
+				"retryNow() must reconnect immediately rather than waiting out the scheduled backoff delay");
+
+			// the delay it would otherwise have waited out must not ALSO fire a second, redundant attempt
+			await clock.tickAsync(1000);
+			assert.equal(FakeWebSocket.instances.length, 2,
+				"the original scheduled reconnect timer must have been cleared by retryNow()");
+		}
+		finally
+		{
+			clock.restore();
+		}
 	});
 });
 
