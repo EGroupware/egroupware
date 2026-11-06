@@ -947,6 +947,13 @@ export class EgwFramework extends LitElement
 			return this.printWindow(_window);
 		}
 		const appElement : EgwFrameworkApp = this.activeApp;
+		// Content in an iframe (eg. a sidebox link): printing the main window would only print the
+		// iframe at its on-screen size, clipped with scrollbars
+		const iframeWindow = appElement?.iframe?.contentWindow;
+		if(iframeWindow)
+		{
+			return this.printWindow(iframeWindow);
+		}
 		try
 		{
 			if(appElement)
