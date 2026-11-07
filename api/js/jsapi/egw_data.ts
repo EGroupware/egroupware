@@ -622,6 +622,14 @@ class Data implements DataModule
 	dataFetch = (_execId : string, _queriedRange : any, _filters : any, _widgetId : string,
 			_callback : Function, _context : any, _knownUids? : string[]) : Promise<void> =>
 	{
+		// Without an etemplate_exec_id there is no server-side request to ask for rows.  The server answers an
+		// unknown id with a framework redirect, so don't ask, and leave the caller loading (eg. a preview of a
+		// template that was rendered before the server was asked for anything)
+		if(!_execId)
+		{
+			egw.debug("log", "dataFetch() without etemplate_exec_id, not fetching", _widgetId);
+			return Promise.resolve();
+		}
 		const self = this;
 		var lm = this.#lastModification;
 		if(typeof _context.lastModification != "undefined") lm = _context.lastModification;

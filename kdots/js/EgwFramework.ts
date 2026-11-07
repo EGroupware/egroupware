@@ -421,6 +421,11 @@ export class EgwFramework extends LitElement
 		{
 			appComponent.slot = app.slot;
 		}
+		if(app.index_template && app.index_url)
+		{
+			appComponent.indexTemplate = app.index_template;
+			appComponent.indexUrl = app.index_url;
+		}
 		if(app.title)
 		{
 			appComponent.title = app.title;
@@ -1931,6 +1936,8 @@ export interface ApplicationInfo
 	status : string,// = "1",
 	/* Application will be slotted into a specific spot in the framework, not added as a normal application */
 	slot? : string
+	index_template? : string
+	index_url? : string
 	/* Is the app open, and at what place in the tab list */
 	opened? : number,
 	/* Is the app currently active */

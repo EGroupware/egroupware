@@ -458,6 +458,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	@state()
 	private _templateLoading : boolean = true;
 
+	/**
+	 * Part of a preview (egw-app's fast index): rendered before the server was asked for anything, so it
+	 * stays loading, it is not empty
+	 */
+	private get _isPreview() : boolean
+	{
+		return !!(<any>this.getInstanceManager?.())?.isPreview;
+	}
+
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
 	private _additionalRowStylesheets : CSSStyleSheet[] = [];
@@ -4374,7 +4383,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
                         .columnPreferenceName=${this.columnPreferenceName}
                         .dataProvider=${this._dataProvider}
                         .expansionConfig=${this._datagridExpansionConfig()}
-                        .configurationLoading=${this._templateLoading}
+                        .configurationLoading=${this._templateLoading || this._isPreview}
                         .emptyStateText=${this.placeholder}
                         .emptyStateActionMenu=${this._hasPlaceholderActions}
                         .filterAction=${this._ownFilterDrawer}
