@@ -622,13 +622,17 @@ class Jmap extends Jmap\Base
 	 * @param string $blobId
 	 * @param string $name suggested filename, substituted into the download URL only
 	 * @param string $type expected mime-type, substituted into the download URL only
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for a blobId belonging to a mail:share-shared account, as a Blob id is only
+	 *  unique WITHIN its own account (no RFC 8620 global-id guarantee) - same reasoning as
+	 *  Mail\Jmap\Email::emailGet()'s own $accountId param
 	 * @return string raw bytes
 	 * @throws Exception|Exception\Http
 	 */
-	public function downloadBlob(string $blobId, string $name='blob', string $type='application/octet-stream') : string
+	public function downloadBlob(string $blobId, string $name='blob', string $type='application/octet-stream', ?string $accountId=null) : string
 	{
 		$url = strtr($this->downloadUrl, [
-			'{accountId}' => rawurlencode($this->accountId),
+			'{accountId}' => rawurlencode($accountId ?: $this->accountId),
 			'{blobId}' => rawurlencode($blobId),
 			'{name}' => rawurlencode($name),
 			'{type}' => rawurlencode($type),

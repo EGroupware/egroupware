@@ -28,13 +28,19 @@ class Email extends Type
 	 * @param string $id JMAP Email id
 	 * @param array $properties e.g. ['bodyStructure','textBody','htmlBody','attachments','bodyValues']
 	 * @param bool $fetchAllBodyValues
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for an id belonging to a mail:share-shared account (same reasoning as
+	 *  Mailbox::folderId2path()'s own $accountId param): a JMAP Email id is only unique WITHIN its
+	 *  own account (no RFC 8621 global-id guarantee), so looking one up under the wrong accountId
+	 *  doesn't reliably fail - it can silently return a real, unrelated Email that just happens to
+	 *  share the same id in the WRONG account (see Api\Mail::decodeSharedMailboxId()'s own docblock)
 	 * @return array the Email object
 	 * @throws Api\Exception if not found
 	 */
-	public function emailGet(string $id, array $properties, bool $fetchAllBodyValues=true) : array
+	public function emailGet(string $id, array $properties, bool $fetchAllBodyValues=true, ?string $accountId=null) : array
 	{
 		$args = [
-			'accountId' => $this->jmap->accountId,
+			'accountId' => $accountId ?: $this->jmap->accountId,
 			'ids' => [$id],
 			'properties' => $properties,
 		];

@@ -107,9 +107,9 @@ class Http extends Jmap
 	// the same method.
 
 	/** @see Email::emailGet() */
-	public function emailGet(string $id, array $properties, bool $fetchAllBodyValues=true) : array
+	public function emailGet(string $id, array $properties, bool $fetchAllBodyValues=true, ?string $accountId=null) : array
 	{
-		return $this->email->emailGet($id, $properties, $fetchAllBodyValues);
+		return $this->email->emailGet($id, $properties, $fetchAllBodyValues, $accountId);
 	}
 
 	/** @see Email::emailQuery() */

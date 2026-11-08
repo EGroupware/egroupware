@@ -39,6 +39,10 @@ function createMailApp(overrides : Record<string, any> = {})
 	const jmap : any = {
 		messageReference: sinon.stub().returns({profileID: '1'}),
 		downloadAttachment: sinon.stub().resolves(),
+		// see MailJmap.rowAccountId()'s own docblock - downloadOneAttachment() (app.ts) resolves
+		// the attachment's real owning account before downloading it; null here (no shared account)
+		// matches every other mock in this file, which all use a plain, non-shared ROW_ID
+		accountIdForRow: sinon.stub().resolves(null),
 	};
 	const app = Object.create(MailApp.prototype) as MailApp;
 	Object.defineProperty(app, 'egw', {value: egw});
@@ -87,7 +91,7 @@ describe("MailApp.attachmentFilenameClick()", () =>
 		assert.isTrue(result);
 	});
 
-	it("downloads via the JMAP blob path for a non-viewable attachment with a blobId", () =>
+	it("downloads via the JMAP blob path for a non-viewable attachment with a blobId", async() =>
 	{
 		const {app, jmap} = createMailApp();
 		const attachment = {filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -99,6 +103,11 @@ describe("MailApp.attachmentFilenameClick()", () =>
 
 		assert.isFalse(result);
 		assert.isTrue((ev.preventDefault as any).called);
+		// downloadOneAttachment() (app.ts) resolves the attachment's real owning account (see
+		// MailJmap.rowAccountId()'s own docblock) before downloading - one microtask turn beyond
+		// this still-synchronous click handler itself
+		await Promise.resolve();
+		await Promise.resolve();
 		assert.isTrue(jmap.downloadAttachment.calledOnceWith('1', 'blob1', 'Report.xlsx', attachment.type));
 	});
 
@@ -131,7 +140,7 @@ describe("MailApp.attachmentFilenameClick()", () =>
 	 * against the template's TOP-LEVEL content instead of a grid row's own scoped sub-array - this
 	 * same literal id string is the NESTED path "attachmentsBlock[0]" there, not a flat key.
 	 */
-	it("resolves the single-attachment summary's own nested 'attachmentsBlock[0]' id shape", () =>
+	it("resolves the single-attachment summary's own nested 'attachmentsBlock[0]' id shape", async() =>
 	{
 		const {app, jmap} = createMailApp();
 		const attachment = {filename: 'Report.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -142,6 +151,9 @@ describe("MailApp.attachmentFilenameClick()", () =>
 		const result = (app as any).attachmentFilenameClick(fakeEvent(), widget);
 
 		assert.isFalse(result);
+		// see the previous test's identical comment on this flush
+		await Promise.resolve();
+		await Promise.resolve();
 		assert.isTrue(jmap.downloadAttachment.calledOnceWith('1', 'blob1', 'Report.xlsx', attachment.type));
 	});
 
