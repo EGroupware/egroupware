@@ -70,6 +70,56 @@ class Mail
 	const DELIMITER = '::';
 
 	/**
+	 * Sentinel prefix for a shared-account row-id's folder/mailboxId segment - byte-identical to
+	 * MailJmap.SHARED_ACCOUNTS_ROOT_ID (mail/js/jmap.ts), which is what actually writes this
+	 * encoding into a row-id (getRows()'s own "browsing into a shared account" row-id scheme, see
+	 * its own docblock). PHP never WRITES this encoding itself - this (and SHARED_ACCOUNT_SEP, and
+	 * decodeSharedMailboxId() below) exist purely so PHP code that re-parses a row-id's folder/
+	 * mailboxId segment (eg. AttachmentJmap::resolveAttachmentsJmap()) can recognize and decode one
+	 * instead of silently treating the raw encoded string as a literal JMAP Mailbox id of ITS OWN
+	 * account - which, for Email ids specifically, doesn't reliably fail (RFC 8621 gives no
+	 * global-id guarantee - see MailJmap.rowAccountId()'s own docblock for the client-side half of
+	 * this same bug class, found live 2026-11-08).
+	 *
+	 * \x01, NOT \0: an earlier version of this sentinel used NUL, which round-tripped fine through
+	 * every plain-JS path but got silently mangled into U+FFFD by the datagrid's own selection
+	 * tracking (confirmed live: an HTML string round-trip - outerHTML then re-parsed via innerHTML -
+	 * replaces an embedded NUL with U+FFFD per the HTML5 tokenizer's "unexpected-null-character"
+	 * rule, which singles out NUL and leaves every other C0 control byte alone). That broke every
+	 * row ACTION (not viewing) on a shared-account row - eg. "mark unread" became a silent no-op,
+	 * found live 2026-11-08 together with the bug above. See MailJmap.SHARED_ACCOUNTS_ROOT_ID's own
+	 * docblock for the full story.
+	 */
+	const SHARED_ACCOUNTS_ROOT_ID = "\x01shared-accounts\x01";
+
+	/** @see SHARED_ACCOUNTS_ROOT_ID */
+	const SHARED_ACCOUNT_SEP = "\x02";
+
+	/**
+	 * Decode a row-id's folder/mailboxId segment (RowIdParts::$folderID, still raw/un-resolved) back
+	 * into the real owning JMAP accountId + mailboxId - PHP counterpart of jmap.ts's own
+	 * decodeSharedMailboxId(), see SHARED_ACCOUNTS_ROOT_ID's own docblock for why this exists.
+	 *
+	 * @param string|null $folderID RowIdParts::$folderID (or any other raw folder/mailboxId segment)
+	 * @return array{accountId: string, mailboxId: string}|null null for an ordinary, non-prefixed
+	 *  value - callers fall back to their own account/connection in that case
+	 */
+	public static function decodeSharedMailboxId(?string $folderID) : ?array
+	{
+		if ($folderID === null || !str_starts_with($folderID, self::SHARED_ACCOUNTS_ROOT_ID))
+		{
+			return null;
+		}
+		$rest = substr($folderID, strlen(self::SHARED_ACCOUNTS_ROOT_ID));
+		$sepPos = strpos($rest, self::SHARED_ACCOUNT_SEP);
+		if ($sepPos === false)
+		{
+			return null;
+		}
+		return ['accountId' => substr($rest, 0, $sepPos), 'mailboxId' => substr($rest, $sepPos + 1)];
+	}
+
+	/**
 	 * Custom mail labels indexed by their action ID
 	 *
 	 * Fallback used by Mail\CustomLabels::getCustomLabels() when Categories aren't available -

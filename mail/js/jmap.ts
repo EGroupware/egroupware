@@ -600,15 +600,30 @@ export class MailJmap
 
 	// Synthetic parentId for the "user" namespace-root pseudo-mailbox injected by
 	// injectSharedAccountsRoot() below - never a real JMAP Mailbox id (those are opaque,
-	// server-assigned strings with no particular format, but never contain NUL), so this can't
-	// collide with one. getMailboxChildren() recognizes it to list the shared accounts themselves
-	// instead of making a real Mailbox/query call.
-	private static readonly SHARED_ACCOUNTS_ROOT_ID = '\u0000shared-accounts\u0000';
+	// server-assigned strings with no particular format), so this can't collide with one.
+	// getMailboxChildren() recognizes it to list the shared accounts themselves instead of making a
+	// real Mailbox/query call.
+	//
+	// Found live 2026-11-08 (ralf, acc_id 89, folder "user/info"): a row-id carrying this encoding
+	// round-trips fine through every JS-only path (messageReference(), egw.data's own uid cache,
+	// ...), but a row ACTION driven by the datagrid's own selection tracking (Et2Nextmatch's
+	// `et2-selection-changed`, read via nm.getSelection()) silently turned into a no-op - "mark
+	// unread" fired no server call and no optimistic UI update at all, for this row and this row
+	// only. Root cause: SOMEWHERE in that selection path the row id passes through an HTML
+	// string round-trip (confirmed live: `el.setAttribute('x', 'a\u0000b'); el.outerHTML` then
+	// re-parsed via `innerHTML` turns the embedded NUL into U+FFFD - the HTML5 tokenizer's
+	// "unexpected-null-character" replacement rule, which applies to NUL alone and leaves every
+	// other C0 control character untouched). That silently corrupts just the two NUL bytes in this
+	// sentinel, so decodeSharedMailboxId() below no longer recognizes its own prefix and the whole
+	// row id is treated as unresolvable. Changed to \u0001 (confirmed safe through the exact same
+	// round-trip) rather than chasing the actual HTML-reparse call site, since nothing requires NUL
+	// specifically and every other control byte survives.
+	private static readonly SHARED_ACCOUNTS_ROOT_ID = '\u0001shared-accounts\u0001';
 	// Separates SHARED_ACCOUNTS_ROOT_ID + <shared accountId> from the real (possibly empty) JMAP
 	// Mailbox id nested underneath it - see getSharedAccountMailboxChildren()'s own docblock for
-	// the full encoding. \u0001 so it can never collide with a real id (same reasoning as the root
-	// sentinel above).
-	private static readonly SHARED_ACCOUNT_SEP = '\u0001';
+	// the full encoding. \u0002 (distinct from the root sentinel's own \u0001, and - like it - never
+	// found in a real opaque JMAP id) so it can never collide with a real id.
+	private static readonly SHARED_ACCOUNT_SEP = '\u0002';
 
 	/**
 	 * Decode a message row-id's own mailboxId segment back into {accountId, mailboxId} - undoing
@@ -632,6 +647,63 @@ export class MailJmap
 		return accountId !== viewerAccountId
 			? MailJmap.SHARED_ACCOUNTS_ROOT_ID + accountId + MailJmap.SHARED_ACCOUNT_SEP + mailboxId
 			: mailboxId;
+	}
+
+	/**
+	 * Resolve a JmapMessageReference's (messageReference()'s own return value) REAL owning JMAP
+	 * accountId - decoding getRows()'s own shared-account row-id encoding carried on `mailboxId`
+	 * (decodeSharedMailboxId()) when present, falling back to the profile's own `token.accountId`
+	 * for an ordinary row. The one-line fix every per-row read (fetchBody(), fetchForReply(),
+	 * verifyPgpSignature(), ...) needed: a JMAP Email id is only unique WITHIN its own account (no
+	 * RFC 8621 global-id guarantee), so asking Stalwart for `emailId` under the wrong account
+	 * doesn't reliably fail - it can silently return a real, unrelated message that just happens to
+	 * share the same id in the VIEWER's own account (found live 2026-11-08: opening a shared
+	 * "info@" folder's message showed a completely different, decade-old message from the viewer's
+	 * own mailbox - same root cause as updateKeywords()'s own docblock already flagged for writes).
+	 */
+	private static rowAccountId(token : JmapToken, mailboxId : string) : string
+	{
+		return MailJmap.decodeSharedMailboxId(mailboxId)?.accountId ?? token.accountId;
+	}
+
+	/**
+	 * Copy a blob from one JMAP account's own blob store into another's, via a plain download+
+	 * re-upload round-trip - RFC 8620 has no cross-account blob-copy primitive (unlike Email/copy
+	 * for a whole message, RFC 8620 §5.4). A no-op (returns `blobId` unchanged) when both accounts
+	 * already match.
+	 *
+	 * Needed wherever a row ACTION (not just viewing) reuses a shared-account message's own blobId
+	 * in a NEW Email/set create/import under the VIEWER's own account -
+	 * importAttachedMessageToDrafts()'s sub-part reply and fetchForForwardAsAttachment()'s
+	 * forward-as-attachment, both of which would otherwise hand Stalwart a blobId it can't find at
+	 * all under the target account (a blob, like an Email id, is scoped to its own account).
+	 */
+	private async copyBlobCrossAccount(client : JamWebSocketClient, sourceAccountId : string, targetAccountId : string,
+		blobId : string, mimeType : string, filename : string) : Promise<string>
+	{
+		if (sourceAccountId === targetAccountId)
+		{
+			return blobId;
+		}
+		const response = await client.downloadBlob({accountId: sourceAccountId, blobId, mimeType, fileName: filename});
+		const blob = await response.blob();
+		const uploaded = await client.uploadBlob(targetAccountId, blob);
+		return uploaded.blobId;
+	}
+
+	/**
+	 * Resolve a row id's REAL owning JMAP accountId - public wrapper around rowAccountId() for
+	 * callers outside this class that only have a rowId and a blobId, not a full
+	 * JmapMessageReference (MailApp.downloadOneAttachment(), app.ts).
+	 *
+	 * @return null if this account has no usable JMAP access-token right now (same "can't reach it"
+	 *  case every other method here returns null/false for, rather than throwing)
+	 */
+	async accountIdForRow(rowId : string) : Promise<string | null>
+	{
+		const ref = this.messageReference(rowId);
+		const token = await this.ensureToken(ref.profileID);
+		return token ? MailJmap.rowAccountId(token, ref.mailboxId) : null;
 	}
 
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
@@ -3597,8 +3669,18 @@ export class MailJmap
 				{
 					properties.push('preview');
 				}
+				// refs[0].mailboxId may carry getRows()'s own shared-account row-id encoding (see
+				// rowAccountId()'s own docblock) - decoded once per group (every ref in a group
+				// shares the same profileID+mailboxId, see groupReferences()) so this refresh asks
+				// for `emailId`/mailboxRole() under the message's REAL owning account, not just this
+				// profile's own token.accountId (found live 2026-11-08 alongside fetchBody()'s
+				// identical bug - a shared folder's rows silently refreshed into unrelated messages
+				// from the viewer's own mailbox).
+				const decoded = MailJmap.decodeSharedMailboxId(refs[0].mailboxId);
+				const accountId = decoded?.accountId ?? token.accountId;
+				const cacheProfileID = decoded ? profileID + '\u0000' + decoded.accountId : profileID;
 				const args : any = {
-					accountId: token.accountId,
+					accountId,
 					ids: refs.map(ref => ref.emailId),
 					properties,
 				};
@@ -3614,7 +3696,7 @@ export class MailJmap
 					this.clients[profileID].requestMany((t) => ({
 						emails: t.Email.get(args) as any,
 					})),
-					this.mailboxRole(this.clients[profileID], token.accountId, profileID, refs[0].mailboxId),
+					this.mailboxRole(this.clients[profileID], accountId, cacheProfileID, decoded?.mailboxId ?? refs[0].mailboxId),
 				]);
 				const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
 				const byId : Record<string, any> = {};
@@ -3779,8 +3861,11 @@ export class MailJmap
 			{
 				return {special: true};
 			}
+			// see rowAccountId()'s own docblock - a shared-account folder's row must be fetched
+			// under its REAL owning account, never just this profile's own token.accountId
+			const accountId = MailJmap.rowAccountId(token, ref.mailboxId);
 			const args : any = {
-				accountId: token.accountId,
+				accountId,
 				ids: [ref.emailId],
 				properties: ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'],
 				fetchAllBodyValues: true,
@@ -3808,6 +3893,27 @@ export class MailJmap
 			this.touchPgpCache(rowId);
 			if (this.isSpecialCase(email.bodyStructure) || this.isBareAttachmentBody(email.bodyStructure))
 			{
+				if (MailJmap.decodeSharedMailboxId(ref.mailboxId))
+				{
+					// ajax_resolveSpecialCaseBody() below (and the classic iframe fallback this whole
+					// branch exists to avoid calling into on failure) are both 100% server-side PHP,
+					// which has NO notion of this client-only shared-account row-id encoding at all -
+					// same documented gap getRows()'s own docblock flags for every per-row ACTION.
+					// Calling either anyway would resolve the row's folder/uid against THIS account
+					// instead of the message's real owning one - the exact "wrong account, silently
+					// wrong message" bug rowAccountId() exists to prevent, just one layer further
+					// down a path this method can't fix client-side. Show a clear, honest message
+					// instead of either silently-wrong content or a raw PHP exception.
+					return {
+						special: false,
+						html: this.wrapDocument(MailJmap.textToHtml(this.egw.lang(
+							"Viewing an S/MIME, TNEF or calendar-invite message from another user's folder is not supported yet."))),
+						attachments: [],
+						profileID: ref.profileID,
+						accountId,
+						isLocal: token.isLocal,
+					};
+				}
 				// S/MIME/TNEF/bare: rendering is 100% server-side either way (private key material,
 				// binary-format decoding, or just structureToHtml()'s own bare-content data: URI
 				// embed for the "bare" case) - mail.EGroupware\\Mail\\Ui.ajax_resolveSpecialCaseBody()
@@ -3855,7 +3961,7 @@ export class MailJmap
 					// "outer" attachments to begin with - the whole point of unwrapping it).
 					attachments: resolved.attachments ?? (email.attachments || []),
 					profileID: ref.profileID,
-					accountId: token.accountId,
+					accountId,
 					isLocal: token.isLocal,
 					smime: resolved.smime,
 				};
@@ -3867,14 +3973,14 @@ export class MailJmap
 			// (mail/js/app.ts) finds it in the `td.td_display > pre` it already scans for.
 			const pgpPart = this.findPgpPart(email.bodyStructure);
 			const html = pgpPart ?
-				this.wrapDocument(MailJmap.textToHtml(await this.downloadPartText(ref.profileID, token, pgpPart)), true) :
+				this.wrapDocument(MailJmap.textToHtml(await this.downloadPartText(ref.profileID, accountId, pgpPart)), true) :
 				this.assembleBodyHtml(email, htmlOptions);
 			return {
 				special: false,
 				html,
 				attachments: email.attachments || [],
 				profileID: ref.profileID,
-				accountId: token.accountId,
+				accountId,
 				isLocal: token.isLocal,
 			};
 		}
@@ -3935,8 +4041,11 @@ export class MailJmap
 			{
 				return {special: true};
 			}
-			// only a real (non-local) JMAP account reaches here now - see the isLocal guard above
-			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			// only a real (non-local) JMAP account reaches here now - see the isLocal guard above.
+			// See rowAccountId()'s own docblock - a shared-account folder's row must be fetched
+			// under its REAL owning account, never just this profile's own token.accountId
+			const accountId = MailJmap.rowAccountId(token, ref.mailboxId);
+			const args : any = {accountId, ids: [ref.emailId], properties: ['attachments']};
 			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
 				emails: t.Email.get(args) as any,
 			}));
@@ -3949,7 +4058,7 @@ export class MailJmap
 				});
 				return {special: true};
 			}
-			const text = await this.downloadPartText(ref.profileID, token, attachment);
+			const text = await this.downloadPartText(ref.profileID, accountId, attachment);
 			if (!text || !text.trim())
 			{
 				console.warn('MailJmap.fetchBodyFromMessagePart(): downloaded part was empty, falling back', {
@@ -3962,7 +4071,7 @@ export class MailJmap
 				html: this.wrapDocument(MailJmap.textToHtml(text)),
 				attachments: [],
 				profileID: ref.profileID,
-				accountId: token.accountId,
+				accountId,
 				isLocal: token.isLocal,
 			};
 		}
@@ -4020,9 +4129,12 @@ export class MailJmap
 		}
 		const client = this.clients[ref.profileID];
 
+		// see rowAccountId()'s own docblock - the CONTAINING message's attachments must be read
+		// from its REAL owning account, never just this profile's own token.accountId
+		const sourceAccountId = MailJmap.rowAccountId(token, ref.mailboxId);
 		// same attachments lookup fetchBodyFromMessagePart() uses to locate the sub-part's own
 		// self-describing blobId
-		const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+		const args : any = {accountId: sourceAccountId, ids: [ref.emailId], properties: ['attachments']};
 		if (token.isLocal)
 		{
 			args.mailboxId = ref.mailboxId;
@@ -4046,7 +4158,12 @@ export class MailJmap
 			throw new Error('Could not find the Drafts folder');
 		}
 
-		const newEmailId = await this.importWholeMessageDraft(token, client, draftsId, attachment.blobId);
+		// the attachment's own blobId lives in the CONTAINING message's account - Email/import
+		// (below) needs one in OUR OWN account's blob store (see copyBlobCrossAccount()'s own
+		// docblock), a no-op when the containing message is already ours
+		const draftBlobId = await this.copyBlobCrossAccount(client, sourceAccountId, token.accountId,
+			attachment.blobId, attachment.type || 'message/rfc822', attachment.name || 'message.eml');
+		const newEmailId = await this.importWholeMessageDraft(token, client, draftsId, draftBlobId);
 		return `mail::${this.egw.user('account_id')}::${ref.profileID}::${draftsId}::${newEmailId}`;
 	}
 
@@ -4075,7 +4192,8 @@ export class MailJmap
 			{
 				return null;
 			}
-			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			// see rowAccountId()'s own docblock
+			const args : any = {accountId: MailJmap.rowAccountId(token, ref.mailboxId), ids: [ref.emailId], properties: ['attachments']};
 			if (token.isLocal)
 			{
 				args.mailboxId = ref.mailboxId;
@@ -4114,8 +4232,11 @@ export class MailJmap
 			{
 				return null;
 			}
+			// see rowAccountId()'s own docblock - the message being replied to must be fetched
+			// under its REAL owning account, never just this profile's own token.accountId
+			const accountId = MailJmap.rowAccountId(token, ref.mailboxId);
 			const args : any = {
-				accountId: token.accountId,
+				accountId,
 				ids: [ref.emailId],
 				properties: ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
 					'messageId', 'references', 'bodyStructure', 'textBody', 'htmlBody', 'bodyValues',
@@ -4181,7 +4302,7 @@ export class MailJmap
 			// string, not yet attached to any DOM/iframe - resolve straight into real blob: URLs
 			// before it's ever inserted into the compose editor, no defer-then-patch-after-render
 			// step needed at all.
-			const body = useHtml ? await this.resolveInlineCidImages(sanitized, email.attachments || [], token, ref.profileID) : sanitized;
+			const body = useHtml ? await this.resolveInlineCidImages(sanitized, email.attachments || [], accountId, ref.profileID) : sanitized;
 
 			// RFC 5322 §3.6.4: the new reply's References is the original's own References (if
 			// any) with the original's own Message-Id appended - NOT a straight copy of the
@@ -4328,7 +4449,7 @@ export class MailJmap
 	 * branch - same as resolveInlineImages()'s own docblock for the message-VIEW's identical
 	 * problem) - confirmed live against the shim 2026-08-31.
 	 */
-	private async resolveInlineCidImages(html : string, attachments : any[], token : JmapToken, profileID : string) : Promise<string>
+	private async resolveInlineCidImages(html : string, attachments : any[], accountId : string, profileID : string) : Promise<string>
 	{
 		// see resolveInlineImages()'s own docblock for why cid: values need bracket-stripping
 		const stripCidBrackets = (cid : string) => cid.trim().replace(/^</, '').replace(/>$/, '');
@@ -4366,7 +4487,7 @@ export class MailJmap
 			try
 			{
 				const response = await client.downloadBlob({
-					accountId: token.accountId,
+					accountId,
 					blobId: attachment.blobId,
 					mimeType: attachment.type,
 					fileName: attachment.name || 'image',
@@ -4416,7 +4537,9 @@ export class MailJmap
 			{
 				return null;
 			}
-			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['subject', 'blobId', 'size']};
+			// see rowAccountId()'s own docblock
+			const sourceAccountId = MailJmap.rowAccountId(token, ref.mailboxId);
+			const args : any = {accountId: sourceAccountId, ids: [ref.emailId], properties: ['subject', 'blobId', 'size']};
 			if (token.isLocal)
 			{
 				args.mailboxId = ref.mailboxId;
@@ -4429,12 +4552,19 @@ export class MailJmap
 			{
 				return null;
 			}
+			// this blobId is reused verbatim in a NEW Email/set create's bodyStructure (compose.ts's
+			// carryForwardAttachments()), which always happens under OUR OWN account - a blob, like
+			// an Email id, is scoped to its own account (see copyBlobCrossAccount()'s own docblock),
+			// so a message forwarded from a shared folder needs its own-account copy first; a no-op
+			// when the message is already ours
+			const blobId = await this.copyBlobCrossAccount(this.clients[ref.profileID], sourceAccountId, token.accountId,
+				email.blobId, 'message/rfc822', (email.subject || 'message') + '.eml');
 			// sourceRowId (the classic mail::profileID::folder::uid row-id, NOT the blobId) is kept
 			// alongside the blobId purely so compose.ts's carryForwardAttachments() can open THIS
 			// message's own display popup directly on click (mail_ui::displayMessage() needs a real
 			// row-id, same as app.displayAttachment()'s own MESSAGE/RFC822 case - it has no concept
 			// of a bare blobId at all) - see displayJmapBlobAttachment()'s own docblock.
-			return {subject: email.subject || '', blobId: email.blobId, size: email.size || 0, profileID: ref.profileID, sourceRowId: rowId};
+			return {subject: email.subject || '', blobId, size: email.size || 0, profileID: ref.profileID, sourceRowId: rowId};
 		}
 		catch (e)
 		{
@@ -4564,10 +4694,10 @@ export class MailJmap
 	}
 
 	/** Download one body part's raw bytes via JMAP Blob download, decoded as UTF-8 text */
-	private async downloadPartText(profileID : string, token : JmapToken, part : any) : Promise<string>
+	private async downloadPartText(profileID : string, accountId : string, part : any) : Promise<string>
 	{
 		const response = await this.clients[profileID].downloadBlob({
-			accountId: token.accountId,
+			accountId,
 			blobId: part.blobId,
 			mimeType: part.type || 'application/octet-stream',
 			fileName: part.name || 'part',
@@ -5009,8 +5139,10 @@ export class MailJmap
 			{
 				return null;
 			}
+			// see rowAccountId()'s own docblock
+			const accountId = MailJmap.rowAccountId(token, ref.mailboxId);
 			const args : any = {
-				accountId: token.accountId,
+				accountId,
 				ids: [ref.emailId],
 				properties: ['bodyStructure', 'blobId', 'from', 'attachments'],
 			};
@@ -5028,7 +5160,7 @@ export class MailJmap
 			const senderEmail = (email.from?.[0]?.email || '').toLowerCase() || null;
 
 			const rawResponse = await this.clients[ref.profileID].downloadBlob({
-				accountId: token.accountId, blobId: email.blobId, mimeType: 'message/rfc822', fileName: 'raw.eml',
+				accountId, blobId: email.blobId, mimeType: 'message/rfc822', fileName: 'raw.eml',
 			});
 			const raw = new Uint8Array(await rawResponse.arrayBuffer());
 			const boundary = MailJmap.extractMultipartSignedBoundary(raw);
@@ -5064,7 +5196,7 @@ export class MailJmap
 				if (inlineKeyPart?.blobId)
 				{
 					const keyResponse = await this.clients[ref.profileID].downloadBlob({
-						accountId: token.accountId, blobId: inlineKeyPart.blobId,
+						accountId, blobId: inlineKeyPart.blobId,
 						mimeType: 'application/pgp-keys', fileName: inlineKeyPart.name || 'key.asc',
 					});
 					armoredKey = await keyResponse.text();
@@ -5889,17 +6021,36 @@ export class MailJmap
 	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
 	 * @param filename suggested filename for the save dialog
 	 * @param mimeType
+	 * @param accountId overrides token.accountId for a shared-account row's attachment (see
+	 *  rowAccountId()'s own docblock) - MailApp.downloadOneAttachment() (app.ts) resolves this via
+	 *  accountIdForRow() before calling here, since this method only ever sees a bare blobId, never
+	 *  a full row reference of its own to decode
 	 * @throws JmapUserError on any failure - there's no classic fallback (see
 	 *  folderTreeAutoload()'s docblock in app.ts for why)
 	 */
-	async downloadAttachment(profileID : string, blobId : string, filename : string, mimeType : string) : Promise<void>
+	async downloadAttachment(profileID : string, blobId : string, filename : string, mimeType : string, accountId? : string) : Promise<void>
 	{
 		let url : string;
 		try
 		{
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+			}
+			const effectiveAccountId = accountId ?? token.accountId;
 			let response : Response;
 			if (blobId.startsWith('smime:'))
 			{
+				if (effectiveAccountId !== token.accountId)
+				{
+					// mail/jmap.php's download endpoint (fetchSmimeBlob()) re-decrypts server-side
+					// against THIS profile's own session/key material and has no accountId parameter
+					// of its own at all (see its own docblock) - no way to tell it "use the OTHER
+					// account's identity" the way a plain downloadBlob() call can below
+					throw new JmapUserError(this.egw.lang(
+						"Downloading an S/MIME-protected attachment from another user's folder is not supported yet."));
+				}
 				response = await this.fetchSmimeBlob(profileID, blobId, mimeType, filename);
 				// a real fetch() Response, unlike client.downloadBlob()'s own return value below -
 				// that one already throws on failure internally, this doesn't
@@ -5910,13 +6061,8 @@ export class MailJmap
 			}
 			else
 			{
-				const token = await this.ensureToken(profileID);
-				if (!token)
-				{
-					throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
-				}
 				response = await this.clients[profileID].downloadBlob({
-					accountId: token.accountId,
+					accountId: effectiveAccountId,
 					blobId,
 					mimeType: mimeType || 'application/octet-stream',
 					fileName: filename || 'attachment',
@@ -5976,9 +6122,32 @@ export class MailJmap
 		this.touchRowUrls(rowId);
 		try
 		{
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+			}
+			// see rowAccountId()'s own docblock - rowId is usually a real, parseable row reference
+			// (MailApp.resolveAttachmentViewUrls(), app.ts, its only real caller, validates this
+			// first), but this method's own object-URL lifecycle tracking (touchRowUrls() above,
+			// rowsWithUrls below) never required that, so an unparseable id (a caller using its own
+			// opaque tracking key) still falls back to this profile's own account, exactly as before
+			let accountId = token.accountId;
+			try
+			{
+				accountId = MailJmap.rowAccountId(token, this.messageReference(rowId).mailboxId);
+			}
+			catch (e) { /* not a real row id - keep this profile's own account, see above */ }
 			let response : Response;
 			if (blobId.startsWith('smime:'))
 			{
+				if (accountId !== token.accountId)
+				{
+					// see downloadAttachment()'s identical guard for why - fetchSmimeBlob() has no
+					// accountId parameter of its own to redirect to the other account's identity
+					throw new JmapUserError(this.egw.lang(
+						"Viewing an S/MIME-protected attachment from another user's folder is not supported yet."));
+				}
 				// a real fetch() Response, unlike client.downloadBlob()'s own return value below -
 				// see downloadAttachment()'s fetchSmimeBlob() docblock
 				response = await this.fetchSmimeBlob(profileID, blobId, mimeType, filename);
@@ -5989,13 +6158,8 @@ export class MailJmap
 			}
 			else
 			{
-				const token = await this.ensureToken(profileID);
-				if (!token)
-				{
-					throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
-				}
 				response = await this.clients[profileID].downloadBlob({
-					accountId: token.accountId,
+					accountId,
 					blobId,
 					mimeType: mimeType || 'application/octet-stream',
 					fileName: filename || 'attachment',
@@ -6046,8 +6210,8 @@ export class MailJmap
 	{
 		try
 		{
-			const {profileID, blobId} = await this.resolveMessageBlobId(rowId);
-			return await this.fetchRawSourceByBlobId(profileID, blobId);
+			const {profileID, blobId, accountId} = await this.resolveMessageBlobId(rowId);
+			return await this.fetchRawSourceByBlobId(profileID, blobId, accountId);
 		}
 		catch (e)
 		{
@@ -6062,7 +6226,7 @@ export class MailJmap
 	 * extracted (2026-09-09) so both share the exact same Email/get-by-id lookup rather than
 	 * duplicating it.
 	 */
-	private async resolveMessageBlobId(rowId : string) : Promise<{profileID : string, blobId : string}>
+	private async resolveMessageBlobId(rowId : string) : Promise<{profileID : string, blobId : string, accountId : string}>
 	{
 		const reference = this.messageReference(rowId);
 		const token = await this.ensureToken(reference.profileID);
@@ -6070,7 +6234,9 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
+		// see rowAccountId()'s own docblock
+		const accountId = MailJmap.rowAccountId(token, reference.mailboxId);
+		const args : any = {accountId, ids: [reference.emailId], properties: ['blobId']};
 		if (token.isLocal)
 		{
 			// standalone Email/get (no preceding Email/query in this request) needs our shim's
@@ -6085,7 +6251,7 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Unable to resolve the message blobId'));
 		}
-		return {profileID: reference.profileID, blobId};
+		return {profileID: reference.profileID, blobId, accountId};
 	}
 
 	/**
@@ -6093,8 +6259,12 @@ export class MailJmap
 	 * fetchRawSourceBytesBase64ByBlobId() - both need the exact same download, only differing in
 	 * how the Response body gets consumed afterward (text() vs arrayBuffer() - see the latter's
 	 * own docblock for why that distinction is not cosmetic).
+	 *
+	 * @param accountId overrides token.accountId - needed for a shared-account row (see
+	 *  rowAccountId()'s own docblock); omitted by sendNewEmail()'s own just-sent-message caller,
+	 *  which always means THIS profile's own account
 	 */
-	private async downloadRawSourceResponse(profileID : string, blobId : string) : Promise<Response>
+	private async downloadRawSourceResponse(profileID : string, blobId : string, accountId? : string) : Promise<Response>
 	{
 		const token = await this.ensureToken(profileID);
 		if (!token)
@@ -6102,7 +6272,7 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		return await this.clients[profileID].downloadBlob({
-			accountId: token.accountId,
+			accountId: accountId ?? token.accountId,
 			blobId,
 			mimeType: 'message/rfc822',
 			fileName: 'source',
@@ -6125,9 +6295,9 @@ export class MailJmap
 	 * mail/js/test/MailRawSourceByteFidelity.test.ts - MailCompose.integrateSentMessage() used to
 	 * go through this method and silently corrupt a genuinely 8-bit signed body this way).
 	 */
-	async fetchRawSourceByBlobId(profileID : string, blobId : string) : Promise<string>
+	async fetchRawSourceByBlobId(profileID : string, blobId : string, accountId? : string) : Promise<string>
 	{
-		const response = await this.downloadRawSourceResponse(profileID, blobId);
+		const response = await this.downloadRawSourceResponse(profileID, blobId, accountId);
 		return await response.text();
 	}
 
@@ -6144,9 +6314,9 @@ export class MailJmap
 	 * integrateSentMessage()'s .eml attachment) - NOT for view-source/view-header display, which
 	 * wants readable text, not base64.
 	 */
-	async fetchRawSourceBytesBase64ByBlobId(profileID : string, blobId : string) : Promise<string>
+	async fetchRawSourceBytesBase64ByBlobId(profileID : string, blobId : string, accountId? : string) : Promise<string>
 	{
-		const response = await this.downloadRawSourceResponse(profileID, blobId);
+		const response = await this.downloadRawSourceResponse(profileID, blobId, accountId);
 		const bytes = new Uint8Array(await response.arrayBuffer());
 		// btoa() needs a "binary string" (one JS UTF-16 code unit per byte, 0-255) - built in
 		// chunks to avoid blowing the call stack via String.fromCharCode(...bytes) on a large
@@ -6168,8 +6338,8 @@ export class MailJmap
 	{
 		try
 		{
-			const {profileID, blobId} = await this.resolveMessageBlobId(rowId);
-			return await this.fetchRawSourceBytesBase64ByBlobId(profileID, blobId);
+			const {profileID, blobId, accountId} = await this.resolveMessageBlobId(rowId);
+			return await this.fetchRawSourceBytesBase64ByBlobId(profileID, blobId, accountId);
 		}
 		catch (e)
 		{
@@ -9392,8 +9562,9 @@ export class MailJmap
 			// requested - requesting the bare form here means the response key always matches
 			// what we're looking for, on Stalwart and any other spec-compliant server alike.
 			const property = `header:${field}`;
+			// see rowAccountId()'s own docblock
 			const args : any = {
-				accountId: token.accountId,
+				accountId: MailJmap.rowAccountId(token, ref.mailboxId),
 				ids: [ref.emailId],
 				properties: [property],
 			};

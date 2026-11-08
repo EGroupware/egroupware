@@ -127,7 +127,7 @@ describe("MailJmap.getRows() - shared account folder", () =>
 
 		const result = await jmap.getRows({selectedFolder : "1::user/teachers/INBOX"});
 
-		assert.include(result.rows[0].row_id, "o\u0001real-inbox-id",
+		assert.include(result.rows[0].row_id, "o\u0002real-inbox-id",
 			"a downstream method that doesn't yet understand this encoding must fail safely (not found), never silently collide with this profile's own real mailbox ids");
 	});
 

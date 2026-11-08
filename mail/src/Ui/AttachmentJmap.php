@@ -422,7 +422,10 @@ class AttachmentJmap
 					{
 						return null;
 					}
-					$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments']);
+					// see resolveAttachmentsJmap()'s identical comment on the same accountId issue
+					$sharedAccount = Mail::decodeSharedMailboxId($idParts['folderID'] ?? null);
+					$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'], true,
+						$sharedAccount['accountId'] ?? null);
 					$winmailPart = current(array_filter($email['attachments'] ?? [], static function ($a)
 					{
 						return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
@@ -432,7 +435,8 @@ class AttachmentJmap
 						return null;
 					}
 					$partID = $winmailPart['partId'];
-					$raw = $icServer->jmapClient()->downloadBlob($winmailPart['blobId'], 'winmail.dat', 'application/ms-tnef');
+					$raw = $icServer->jmapClient()->downloadBlob($winmailPart['blobId'], 'winmail.dat', 'application/ms-tnef',
+						$sharedAccount['accountId'] ?? null);
 				}
 				else
 				{
@@ -535,7 +539,13 @@ class AttachmentJmap
 					{
 						return null;
 					}
-					$attachments = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'])['attachments'] ?? [];
+					// a shared-account row (see Mail::decodeSharedMailboxId()'s own docblock) must be
+					// fetched under its REAL owning accountId - a JMAP Email id is only unique WITHIN
+					// its own account, so asking under the wrong one (this account's own, the default)
+					// doesn't reliably fail, it can silently return a real, unrelated attachments list
+					$sharedAccount = Mail::decodeSharedMailboxId($idParts['folderID'] ?? null);
+					$attachments = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'], true,
+						$sharedAccount['accountId'] ?? null)['attachments'] ?? [];
 					// $uid/$mailbox deliberately left unresolved here - a Stalwart opaque-id row's
 					// msgUID/folder cost a real IMAP EMAILID search (Mail\Imap\Jmap::emailId2uid()) to
 					// resolve, and createAttachmentBlock() only actually needs them for its

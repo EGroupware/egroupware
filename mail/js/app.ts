@@ -1169,14 +1169,14 @@ export class MailApp extends EgwApp
 			case 'mail':
 				if (_id === 'sieve')
 				{
-					const iframe = this.et2.getWidgetById('extra_iframe');
-					if (iframe && iframe.getDOMNode())
+					// the framework treats this as handled by refreshing the mail app and stops, so the
+					// sieve rule list in extra_iframe never gets updated: refresh it ourselves
+					// (extra_iframe is an et2-iframe web component: the real <iframe> is its .iframe property)
+					const iframe : any = this.et2?.getWidgetById('extra_iframe');
+					const contentWindow = iframe?.iframe?.contentWindow;
+					if (contentWindow?.app?.mail)
 					{
-						const contentWindow = iframe.getDOMNode().contentWindow;
-						if (contentWindow && contentWindow.app && contentWindow.app.mail)
-						{
-							contentWindow.app.mail.sieveRefresh();
-						}
+						contentWindow.app.mail.sieveRefresh();
 					}
 					return false;	// mail nextmatch needs NOT to be refreshed
 				}
@@ -6856,8 +6856,14 @@ export class MailApp extends EgwApp
 				classicDownload();
 				return;
 			}
-			this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
-				.catch((e) => this.egw.message(e.message, 'error'));
+			(async() =>
+			{
+				// accountIdForRow() - the attachment's row may be from a shared account's folder,
+				// see MailJmap.rowAccountId()'s own docblock
+				const accountId = await this.jmap.accountIdForRow(attachment.mail_id).catch(() => null);
+				await this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type,
+					accountId ?? undefined);
+			})().catch((e) => this.egw.message(e.message, 'error'));
 			return;
 		}
 		classicDownload();
