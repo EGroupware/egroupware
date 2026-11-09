@@ -1143,7 +1143,7 @@ abstract class Tracking
 				$popup = Api\Link::is_popup($this->app,'view');
 			}
 		}
-		if ($link[0] == '/') Api\Framework::getUrl($link);
+		if (!empty($link) && $link[0] == '/') $link = Api\Framework::getUrl($link);
 
 		if (!$allow_popup)
 		{
