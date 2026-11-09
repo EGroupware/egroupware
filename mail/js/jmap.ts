@@ -5348,6 +5348,22 @@ export class MailJmap
 		{
 			return {html, styles: ''};
 		}
+		// Drop a whole HTML comment that wraps a <style> tag, BEFORE extracting <style> tags below -
+		// mirrors Api\Html\HtmLawed::getStyles()/Api\Mail\BodyDecoding::getStyles()'s identical
+		// whole-comment strip (ticket #127551): an MSO/Outlook conditional comment routinely wraps
+		// an entire <style> block (`<!--[if gt mso 15]><style>...</style><![endif]-->`)
+		// specifically so ONLY Outlook applies it - the extraction regex right below has no
+		// comment-awareness at all, so without this it pulls that <style> out and re-applies it
+		// (re-wrapped in a fresh <style> tag, prepended AFTER DOMPurify.sanitize() has already run)
+		// for every viewer regardless, while DOMPurify silently drops the now-empty leftover
+		// comment markers - so dev tools show a clean, uncommented <style> tag with no trace of
+		// the conditional ever having wrapped it. Only removed when the comment's OWN content
+		// contains a <style> tag - the legacy `<style><!-- real css --></style>` old-browser-hiding
+		// wrapper has the comment INSIDE the <style> tag instead, so its content never matches
+		// `<style` here, and its CSS content survives as plain (harmless) text inside the <style>
+		// element.
+		html = html.replace(/<!--([\s\S]*?)-->/g, (match, content) => /<style/i.test(content) ? '' : match);
+
 		let styles = '';
 		const withoutStyles = html.replace(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi, (_match, css) =>
 		{
