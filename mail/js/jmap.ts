@@ -5370,8 +5370,20 @@ export class MailJmap
 			// same CSS-security denylist as HtmLawed::getStyles()/BodyDecoding::getStyles() -
 			// 'expression(' (old IE only) and '-moz-binding' (old Firefox XBL only) are both dead
 			// in every browser this ships to today, kept only for parity with the server-side list.
-			const cleaned = css.replace(/(javascript|expression|-moz-binding)/gi, '');
-			styles += `<style>${cleaned}</style>`;
+			let cleaned = css.replace(/(javascript|expression|-moz-binding)/gi, '');
+			// the legacy `<style><!-- real css --></style>` old-browser-hiding wrapper has its
+			// comment markers INSIDE the captured css text (same convention HtmLawed::getStyles()/
+			// BodyDecoding::getStyles() handle) - drop just the bare marker substrings so that CSS
+			// content survives the sanitize() pass below unharmed (which would otherwise treat
+			// the whole thing as one HTML comment and discard it, markers and content alike).
+			cleaned = cleaned.replace(/<!--|-->/g, '');
+			// Extra hardening: this extracted block is concatenated back into `styles` after
+			// DOMPurify.sanitize() has already run over the rest of the body (assembleBodyHtml()/
+			// fetchForReply() below), so nothing downstream re-sanitizes it - run it through
+			// DOMPurify too, with every tag/attribute forbidden, keeping only decoded text content.
+			// Legitimate CSS has no legitimate use for an actual HTML tag inside it.
+			const textOnly = DOMPurify.sanitize(cleaned, {ALLOWED_TAGS: [], ALLOWED_ATTR: []});
+			styles += `<style>${textOnly}</style>`;
 			return '';
 		});
 		return {html: withoutStyles, styles};

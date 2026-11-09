@@ -1901,6 +1901,44 @@ describe("MailJmap.extractStyles() - pull <style> out before DOMPurify strips it
 			"a legacy <style><!-- css --></style> wrapper's actual CSS content must survive");
 	});
 
+	/**
+	 * `styles` is concatenated back into the body after DOMPurify.sanitize() has already run over
+	 * the rest of it, so nothing downstream re-sanitizes it - these lock in that a <style> block's
+	 * own content can never be used to smuggle a tag past that, plain or comment-obfuscated.
+	 */
+	it("strips a plain <script> tag placed inside a <style> block's own content", () =>
+	{
+		const {styles} = extract('<style>a{color:red}<script>alert(1)</script>b{color:blue}</style>');
+
+		assert.notInclude(styles, '<script>');
+		assert.notInclude(styles, 'alert(1)');
+		assert.include(styles, 'color:red');
+		assert.include(styles, 'color:blue');
+	});
+
+	it("strips a comment-split <scr<!--x-->ipt> obfuscation inside a <style> block", () =>
+	{
+		const {styles} = extract(
+			'<style>x{color:red}</sty<!--le><scr<!--ipt>alert(1)</scr<!--ipt></style>');
+
+		assert.notInclude(styles, '<script');
+		assert.notInclude(styles, '</script');
+	});
+
+	it("strips a <style onload=...> smuggled as its own nested element", () =>
+	{
+		const {styles} = extract('<style>a{color:red}</style><style onload="alert(1)">b{color:blue}</style>');
+
+		assert.notInclude(styles, 'onload');
+		assert.notInclude(styles, 'alert(1)');
+	});
+
+	it("leaves ordinary CSS - including a literal angle bracket in a string value - untouched", () =>
+	{
+		const {styles} = extract('<style>.a:before{content:"<ok>"} .b{color:blue}</style>');
+
+		assert.include(styles, 'color:blue');
+	});
 });
 
 /**
