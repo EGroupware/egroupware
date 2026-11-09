@@ -604,7 +604,7 @@ class mail_sieve
 			}
 			else
 			{
-				if (!empty($icServer->getExtensions()) && in_array('DATE', $icServer->getExtensions()))
+				if ($icServer->hasExtension('date'))
 				{
 					$ByDate = array('by_date' => lang('By date'));
 				}
@@ -632,7 +632,7 @@ class mail_sieve
 					}
 					//Set default value for days new entry
 					if ((string)($content['days'] ?? null) === '' || $content['days'] < 0 ||
-						empty($content['days']) && !in_array('VACATION-SECONDS', $icServer->getExtensions()))
+						empty($content['days']) && !$icServer->hasExtension('vacation-seconds'))
 					{
 						$content['days'] = '3';
 					}
@@ -758,7 +758,7 @@ class mail_sieve
 					),
 					'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 				);
-				if (in_array('VACATION-SECONDS', $icServer->getExtensions()))
+				if ($icServer->hasExtension('vacation-seconds'))
 				{
 					$sel_options['days']['0'] = lang('Always respond / auto-responder');
 				}
