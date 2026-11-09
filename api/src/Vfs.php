@@ -1738,7 +1738,7 @@ class Vfs extends Vfs\Base
 		}
 		if ($depth > 0)
 		{
-			$where = ['lock_path LIKE '.self::$db->quote($path.'%')];
+			$where = [Db\SqlFragment::raw('lock_path LIKE '.self::$db->quote($path.'%'))];
 		}
 		else
 		{
