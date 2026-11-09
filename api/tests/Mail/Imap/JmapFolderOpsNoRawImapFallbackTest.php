@@ -140,6 +140,20 @@ class JmapFolderOpsNoRawImapFallbackTest extends \EGroupware\Api\AppTest
 		$this->assertSame([], $jmap->jmapClient()->calls);
 	}
 
+	/**
+	 * _connect()'s last-resort rescue (see its own docblock) for every remaining/future
+	 * not-yet-JMAP-native raw-IMAP fallthrough - a configured port that doesn't look like real
+	 * IMAP (eg. 443, this account's actual JMAP(S) port) gets rescued onto 993; one that already
+	 * is a real IMAP port (993 itself, or 143/STARTTLS) is left alone, unrescued.
+	 */
+	public function testRescuePortForSubstitutesOnlyForNonImapPorts()
+	{
+		$this->assertSame(993, Jmap::rescuePortFor(443));
+		$this->assertSame(993, Jmap::rescuePortFor(8080));
+		$this->assertNull(Jmap::rescuePortFor(993));
+		$this->assertNull(Jmap::rescuePortFor(143));
+	}
+
 	public function testListMailboxesWildcardReturnsEveryPathWithSubscribedAttribute()
 	{
 		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));

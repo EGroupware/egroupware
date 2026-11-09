@@ -74,7 +74,19 @@ class Stalwart extends Jmap
 			// real IMAP login below, same as before this fix.
 			return;
 		}
-		parent::login();
+		// _connect()'s own rescue (api/src/Mail/Imap/Jmap.php) would otherwise treat this
+		// deliberate real-IMAP-login attempt the same as any other accidental fallthrough and
+		// substitute a guessed port for it - a login's outcome must only ever depend on the
+		// account's actual configured port/credentials, never a guess
+		$this->allowRawImapConnect = true;
+		try
+		{
+			parent::login();
+		}
+		finally
+		{
+			$this->allowRawImapConnect = false;
+		}
 	}
 
 	/**

@@ -50,6 +50,13 @@ class Jmap extends Mail\Imap
 	 */
 	const ACL_GROUP_PREFIX = '$';
 
+	/**
+	 * Port _connect()'s rescue (see its own docblock) retries on, when acc_imap_port turns out
+	 * not to be a real IMAP port - the standard implicit-TLS IMAP port, since every backend this
+	 * rescue is meant to help (eg. Stalwart) that genuinely also runs real IMAP runs it here.
+	 */
+	const RESCUE_IMAP_PORT = 993;
+
 	// mailbox delimiter
 	var $mailboxDelimiter = '.';
 
@@ -64,6 +71,13 @@ class Jmap extends Mail\Imap
 	 * @var string states of Stalwart, stored in session
 	 */
 	protected $jmap_states;
+	/**
+	 * @var bool set (by Stalwart::login() only) around its deliberate real-IMAP-login fallback
+	 *  attempt, so _connect()'s rescue (see its own docblock) never substitutes a guessed port
+	 *  for THAT one call - a login's success/failure must only ever depend on the account's
+	 *  actual configured port/credentials, never a guess.
+	 */
+	protected $allowRawImapConnect = false;
 	/**
 	 * @var string current folder, stored in session and updated by self::enablePush() (called
 	 *  from mail_ui::ajax_enablePush(), triggered client-side by mail/js/jmap.ts)
@@ -1795,6 +1809,76 @@ class Jmap extends Mail\Imap
 	function pushAvailable()
 	{
 		return true;
+	}
+
+	/**
+	 * Last-resort net for every remaining (and future, not-yet-found) raw-IMAP fallthrough site -
+	 * see [[project_jmap_imap_fallthrough_cleanup]] for the ~16 individual methods already fixed
+	 * one at a time as each was found live; this catches the rest at their one shared root
+	 * instead. acc_imap_port for a JMAP-classed account is the JMAP(S) endpoint, not a real IMAP
+	 * port, so any not-yet-JMAP-native method that falls through to Horde's real socket connect
+	 * always failed here before this existed ("Error when communicating with the mail server"),
+	 * exactly like getDelimiter() did (live report 2026-11-09, via mail_acl::getSubfolders() -
+	 * the recursive-ACL-grant long task's folder-enumeration step).
+	 *
+	 * Deliberately does NOT try to work out *which* caller triggered this - not reliably
+	 * determinable from here - except for the one call this codebase makes on purpose:
+	 * Stalwart::login()'s own real-password-login fallback (used only once the OAuth/JMAP token
+	 * grant has already failed, eg. because MFA is required) sets $allowRawImapConnect=true
+	 * around its parent::login() call specifically so this override never substitutes a guessed
+	 * port for it - a login's outcome must only ever depend on the account's actual configured
+	 * port/credentials, never a guess; silently "rescuing" a failed login could plausibly bypass
+	 * whatever the real IMAP listener's own auth policy (eg. MFA) is meant to be protecting. A
+	 * genuinely dual-protocol account (acc_imap_port already a real IMAP port) is untouched
+	 * either way - the rescue below only ever fires when the configured port is NOT one.
+	 *
+	 * For every other (accidental) case: logs the occurrence - WITH a backtrace, so the actual
+	 * caller can be found afterwards and given a real JMAP-native implementation, the same
+	 * discoverability goal as the JMAP-FALLTHROUGH-GUARD tag on the sites already fixed that way
+	 * - then retries once on the standard IMAPS port. If that ALSO fails (eg. this backend
+	 * genuinely has no real IMAP listener at all), the resulting exception is NOT caught here -
+	 * it propagates exactly as it would have without this override, just with the rescue
+	 * attempt now visible in the log instead of only reaching us via a user bug report.
+	 */
+	protected function _connect()
+	{
+		$configuredPort = (int)$this->getParam('port');
+		$rescuePort = $this->allowRawImapConnect ? null : self::rescuePortFor($configuredPort);
+
+		if ($rescuePort === null)
+		{
+			parent::_connect();
+			return;
+		}
+
+		error_log(sprintf(
+			"JMAP-FALLTHROUGH-RESCUE: raw IMAP connect for acc_id=%s attempted on port %d (this account's ".
+				"JMAP(S) endpoint, not a real IMAP port) - retrying on %d.\n%s",
+			$this->acc_id, $configuredPort, $rescuePort, (new \Exception())->getTraceAsString()
+		));
+		$this->setParam('port', $rescuePort);
+		try
+		{
+			parent::_connect();
+		}
+		finally
+		{
+			$this->setParam('port', $configuredPort);
+		}
+	}
+
+	/**
+	 * Pure decision logic for _connect()'s rescue above, split out so it's unit-testable without
+	 * a real socket (_connect() itself calls into Horde's real connection code, not mockable from
+	 * a plain PHPUnit test).
+	 *
+	 * @param int $configuredPort
+	 * @return int|null the port to retry on instead, or null if $configuredPort already looks
+	 *  like a real IMAP port and should be used as-is, unrescued
+	 */
+	public static function rescuePortFor(int $configuredPort) : ?int
+	{
+		return in_array($configuredPort, [143, self::RESCUE_IMAP_PORT], true) ? null : self::RESCUE_IMAP_PORT;
 	}
 
 	/**
