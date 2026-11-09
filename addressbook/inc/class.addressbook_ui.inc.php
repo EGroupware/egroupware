@@ -2317,8 +2317,8 @@ class addressbook_ui extends addressbook_bo
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
 				$no_letter_search = array('adr_one_postalcode', 'adr_two_postalcode', 'contact_id', 'contact_created','contact_modified');
-				$query['col_filter'][] = (in_array($query['order'],$no_letter_search) ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
-					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+				$query['col_filter'][] = Api\Db\SqlFragment::raw((in_array($query['order'],$no_letter_search) ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
+					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%'));
 			}
 			$wildcard = '%';
 			$op = 'OR';
