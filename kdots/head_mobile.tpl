@@ -25,6 +25,7 @@
 	<style type="text/css">
 		{app_css}
 	</style>
+	<style type="text/css" id="egw-skeleton-css">{skeleton_css}</style>
 	<style type="text/css">
 		{firstload_animation_style}
 	</style>

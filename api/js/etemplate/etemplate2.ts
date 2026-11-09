@@ -195,6 +195,16 @@ export class etemplate2
 
 
 	private _etemplate_exec_id : string;
+
+	/**
+	 * The server wants a skeleton (stand-in) shown while this form loads, see Etemplate::$skeleton
+	 */
+	public skeleton = false;
+
+	/**
+	 * The stand-in the page showed while this form loads, if this is the first etemplate2 of the page, see claimSkeleton()
+	 */
+	protected _skeleton : HTMLElement | null = null;
 	private readonly menuaction : string;
 	name : string;
 	private uniqueId : void | string;
@@ -804,6 +814,11 @@ export class etemplate2
 			this._widgetContainer = new Et2Template(egw(currentapp, egw.elemWindow(this._DOMContainer)));
 			this._widgetContainer.setInstanceManager(this);
 			this._widgetContainer.template = this.name;
+			// The server says whether this form shows a skeleton while it loads: in the data, or by having put one
+			// in the page (a form that is built client-side, eg. mail compose, has no data of that kind)
+			this._skeleton = etemplate2.claimSkeleton(this._DOMContainer.ownerDocument);
+			this.skeleton = _data?.skeleton ?? !!this._skeleton;
+			this._widgetContainer.skeleton = this.skeleton;
 			if(_url)
 			{
 				this._widgetContainer.url = _url;
@@ -920,6 +935,9 @@ export class etemplate2
 							// Let the application that loaded it know too
 							app[this.app].et2_ready(this, this.name);
 						}
+
+						// The stand-in a popup shows while the form loads (Framework::skeleton()) is no longer needed
+						etemplate2.releaseSkeleton(this._skeleton);
 
 						// Dispatch an event that will bubble through shadow DOM boundary (pass through custom elements)
 						this._DOMContainer.dispatchEvent(new CustomEvent('load', {
@@ -1662,6 +1680,40 @@ export class etemplate2
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Take over the stand-in a popup page was sent with (Framework::skeleton()), so only the first etemplate2 of the
+	 * page, not a nested or later one, is the one that removes it
+	 *
+	 * @param {Document} _document
+	 * @returns {HTMLElement | null} null if there is none, or another etemplate2 has it already
+	 */
+	static claimSkeleton(_document : Document) : HTMLElement | null
+	{
+		const skeleton = _document.getElementById('egw-skeleton');
+		if(!skeleton || skeleton.hasAttribute('data-claimed'))
+		{
+			return null;
+		}
+		skeleton.setAttribute('data-claimed', '');
+		return skeleton;
+	}
+
+	/**
+	 * The form is loaded: remove its stand-in
+	 *
+	 * Whoever needs it for a little longer (a popup is resized to fit its form first, so the window does not change in
+	 * front of the user) cancels the 'egw-skeleton-release' event on the element and removes it itself.
+	 *
+	 * @param {HTMLElement | null} _skeleton as returned by claimSkeleton()
+	 */
+	static releaseSkeleton(_skeleton : HTMLElement | null) : void
+	{
+		if(_skeleton?.isConnected && _skeleton.dispatchEvent(new CustomEvent('egw-skeleton-release', {cancelable: true})))
+		{
+			_skeleton.remove();
+		}
 	}
 
 	/**

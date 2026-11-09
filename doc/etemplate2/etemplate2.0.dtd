@@ -77,6 +77,7 @@
     layout CDATA #IMPLIED
     url CDATA #IMPLIED
     onload CDATA #IMPLIED
+    skeleton (true|false) #IMPLIED
     disabled CDATA 'false'
     width CDATA #IMPLIED
     height CDATA #IMPLIED

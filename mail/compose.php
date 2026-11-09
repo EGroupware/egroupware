@@ -153,6 +153,11 @@ Api\Framework::set_extra('mail', 'start', array(
 
 echo $GLOBALS['egw']->framework->header();
 echo '<div id="popupMainDiv" class="popupMainDiv"></div>'."\n";
+// stand-in until the compose form is built client-side, removed by etemplate2 when it has loaded
+if ($bootstrap['skeleton'])
+{
+	echo Api\Framework::skeleton('mail.compose');
+}
 echo $GLOBALS['egw']->framework->footer();
 
 // run egw destructor now explicit, same reasoning mail/jmap.php's/json.php's own callers already

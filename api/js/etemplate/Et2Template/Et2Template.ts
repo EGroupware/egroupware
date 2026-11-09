@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult, unsafeCSS} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2Template.styles";
@@ -35,6 +35,31 @@ import {Et2LayoutController, Et2LayoutHost, Et2LayoutName, Et2LayoutSize} from "
 @customElement("et2-template")
 export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 {
+	/**
+	 * The stand-in for an edit form (Framework::skeletonCss()) comes with the page, so a form can show it as its
+	 * loader without any request.  Empty if the page has none.
+	 */
+	protected static get skeletonCss() : string
+	{
+		if(typeof document === "undefined")
+		{
+			return "";
+		}
+		try
+		{
+			// localStorage egw_skeleton=0 turns the skeletons off, for comparing
+			if(window.localStorage?.getItem("egw_skeleton") === "0")
+			{
+				return "";
+			}
+		}
+		catch(e)
+		{
+			// storage can be blocked, the skeletons stay on
+		}
+		return document.getElementById("egw-skeleton-css")?.textContent ?? "";
+	}
+
 	static get styles()
 	{
 		return [
@@ -42,8 +67,19 @@ export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
 			super.styles,
 			styles,
 			Et2LayoutController.styles,
+			// an adopted style sheet, shared by all templates
+			...(Et2Template.skeletonCss ? [unsafeCSS(Et2Template.skeletonCss)] : []),
 		];
 	}
+
+	/**
+	 * Show a stand-in (skeleton) of the form instead of the spinner while loading
+	 *
+	 * Set by etemplate2 from what the server says (Etemplate::$skeleton, the template's skeleton attribute, or the
+	 * add / edit / compose convention), see Framework::skeletonWanted().
+	 */
+	@property({type: Boolean})
+	skeleton = false;
 
 	/**
 	 * Name / ID of template.
@@ -817,6 +853,14 @@ export class Et2Template extends Et2Widget(LitElement) implements Et2LayoutHost
                     <rect x="0" y="6.5%" width="100%" height="93.5%" fill="url(#shimmer)"></rect>
                 </svg>
 			`;
+		}
+		// A form that wants one shows a stand-in of itself (the page's skeleton CSS, if it came with the page)
+		else if(this.skeleton && Et2Template.skeletonCss)
+		{
+			const app = (this.template || this.id).split(".")[0];
+			const icon = this.egw().image?.("navbar", app);
+			loading = html`
+                <div class="egw-skeleton egw-skeleton--template" aria-hidden="true">${icon ? html`<img src="${icon}" alt="">` : nothing}</div>`;
 		}
 		else
 		{

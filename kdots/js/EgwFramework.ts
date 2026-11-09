@@ -12,6 +12,7 @@ import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import {state} from "lit/decorators/state.js";
 import {EgwPopups} from "./EgwPopups";
+import {DialogSkeletonController} from "../../api/js/etemplate/Et2Dialog/DialogSkeletonController";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 
@@ -727,9 +728,37 @@ export class EgwFramework extends LitElement
 		{
 			// openDialog doesn't take a full URL, just the menuaction part
 			const dialogURL = _url.split("menuaction=").pop();
-			const dialog = await ((this.activeApp.name == _app && typeof window.app[_app]?.openDialog == "function") ?
-								  window.app[_app].openDialog(dialogURL) : this.egw.openDialog(dialogURL));
+			const request = ((this.activeApp.name == _app && typeof window.app[_app]?.openDialog == "function") ?
+							 window.app[_app].openDialog(dialogURL) : this.egw.openDialog(dialogURL));
+			// The request is on its way: draw a stand-in of the form meanwhile, replaced when the real dialog has settled
+			const skeleton = DialogSkeletonController.create(_url,
+				(_app && this.getApp(_app)) ? this.getApp(_app) : this.activeApp,
+				this.egw.image?.("navbar", _url.split("menuaction=").pop().split(".")[0]));
+			let dialog;
+			try
+			{
+				dialog = await request;
+			}
+			catch(e)
+			{
+				skeleton?.discard();
+				throw e;
+			}
+			if(!dialog?.updateComplete)
+			{
+				// not a dialog: do not leave the stand-in on screen, the checks below report it
+				skeleton?.discard();
+			}
 			dialog.classList.add("egw-popup");
+			if(skeleton)
+			{
+				// from here the stand-in goes by itself: when the real dialog has settled, if it closes, or after a timeout
+				skeleton.handOver(dialog);
+			}
+			else
+			{
+				DialogSkeletonController.learn(_url, dialog);
+			}
 
 			// Desired size is probably wrong, but we'll set it anyway for large screens
 			if(!window.matchMedia('(max-width: 800px)').matches)

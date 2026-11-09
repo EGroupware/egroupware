@@ -97,9 +97,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 	/**
 	 * The dialog got its explicit start size already, see _setInitialSize()
-	 * @internal
+	 *
+	 * Set it to true before the dialog is opened to keep it at the size its CSS gives it, without fitting it to its content.
 	 */
-	protected _sizeIsSet : boolean = false;
+	public sizeIsSet : boolean = false;
 
 	/**
 	 * The last Enter keydown that reached the dialog, checked by its keyup, see handleKeyUp()
@@ -1050,11 +1051,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	async _setInitialSize()
 	{
 		const panel = <HTMLElement>this.shadowRoot?.querySelector(".dialog__panel");
-		if(!panel || this._sizeIsSet)
+		if(!panel || this.sizeIsSet)
 		{
 			return;
 		}
-		this._sizeIsSet = true;
+		this.sizeIsSet = true;
 
 		panel.style.width = "";
 		panel.style.height = "";

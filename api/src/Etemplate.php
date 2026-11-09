@@ -32,6 +32,16 @@ class Etemplate extends Etemplate\Widget\Template
 	public $sitemgr=false;
 
 	/**
+	 * Show a skeleton (stand-in) while the form loads: true / false, or null to let the template decide
+	 *
+	 * The template can say so itself with a skeleton="true" or "false" attribute on its root, else add / edit / compose
+	 * forms (template ids ending in .add, .edit, .compose) have one, see Framework::skeletonWanted().
+	 *
+	 * @var bool|null
+	 */
+	public $skeleton = null;
+
+	/**
 	 * @var array Additional attributes to set on the DOM (eg: slot)
 	 */
 	protected $dom_attributes = [];
@@ -97,10 +107,12 @@ class Etemplate extends Etemplate\Widget\Template
 	 * 2 (popup, no navbar) - the only caller of a client-side-only bootstrap so far.
 	 *
 	 * @param string $name template name eg. "mail.compose"
-	 * @return array with keys "name", "url", "etemplate_exec_id"
+	 * @param bool|null $skeleton show a skeleton while it loads: true / false, null: the convention (add / edit / compose
+	 *	forms), see Framework::skeletonWanted(), the template's own skeleton attribute is not read here (no parse)
+	 * @return array with keys "name", "url", "etemplate_exec_id", "skeleton"
 	 * @throws Exception\AssertionFailed if $name is not a valid/existing template
 	 */
-	public static function clientSideBootstrap(string $name) : array
+	public static function clientSideBootstrap(string $name, ?bool $skeleton = null) : array
 	{
 		$etpl = new self($name);
 		if (!$etpl->rel_path)
@@ -114,6 +126,7 @@ class Etemplate extends Etemplate\Widget\Template
 			'name' => $etpl->name,
 			'url' => self::rel2url($etpl->rel_path),
 			'etemplate_exec_id' => self::$request->id(),
+			'skeleton' => Framework::skeletonWanted($etpl->name, $skeleton),
 		);
 	}
 
@@ -214,6 +227,7 @@ class Etemplate extends Etemplate\Widget\Template
 		if (!$template) throw new Exception\AssertionFailed("Template $this->name not instanciable! Maybe you forgot to rename template id.");
 		$this->children = array($template);
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
+		$skeleton = Framework::skeletonWanted($this->name, $this->skeleton, $template->attrs['skeleton'] ?? null);
 
 		if ($output_mode == 5)
 		{
@@ -254,6 +268,8 @@ class Etemplate extends Etemplate\Widget\Template
 			'langRequire' => array_values($langRequire),
 			'currentapp' => $currentapp,
 			'menuaction' => $method.(strpos($method, '::') !== false ? '::' : '.').'et2_process',
+			// tells the client whether to show a skeleton while this form loads, and to remember it for the next time
+			'skeleton' => $skeleton,
 		);
 
 		if (!empty($data['content']['nm']['rows']) && is_array($data['content']['nm']['rows']))
@@ -351,6 +367,11 @@ class Etemplate extends Etemplate\Widget\Template
 				else	// mark popups as such, by enclosing everything in div#popupMainDiv
 				{
 					echo '<div id="popupMainDiv" class="popupMainDiv">'."\n";
+					// stand-in until the form has loaded, removed by etemplate2
+					if ($output_mode == 2 && $skeleton)
+					{
+						echo Framework::skeleton($this->name);
+					}
 				}
 			}
 			// Send any accumulated json responses - after flush to avoid sending the buffer as a response

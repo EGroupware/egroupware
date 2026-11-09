@@ -283,6 +283,14 @@
       <attribute name="url"/>
     </optional>
     <optional>
+      <attribute name="skeleton">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="onload"/>
     </optional>
     <optional>

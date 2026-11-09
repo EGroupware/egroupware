@@ -301,6 +301,104 @@ describe('EgwFramework', () =>
 		});
 	});
 
+	describe('openPopup() in same-window mode, with a stand-in dialog', () =>
+	{
+		const URL = '/index.php?menuaction=app.handler.method';
+		const SIZE_KEY = 'egw_skeleton_size:app.handler.method';
+		let css : HTMLStyleElement;
+		let request : {promise : Promise<any>, resolve : Function, reject : Function};
+
+		const standIn = () => document.querySelector('et2-dialog.egw-dialog-skeleton');
+		const open = () => element.openPopup(URL, 800, 1024, '_blank', undefined, true, undefined, window);
+
+		beforeEach(() =>
+		{
+			css = document.createElement('style');
+			css.id = 'egw-skeleton-css';
+			document.head.append(css);
+			window.localStorage.setItem(SIZE_KEY, JSON.stringify({width: 600, height: 500}));
+			egwStub.preference.resolves('same_window');
+			egwStub.openDialog.resetHistory();
+			request = <any>{};
+			request.promise = new Promise((resolve, reject) => Object.assign(request, {resolve, reject}));
+			egwStub.openDialog.returns(request.promise);
+			element.applicationList = [{
+				name: 'test-app', internalName: 'test', url: 'https://test.app', title: 'Test App',
+				icon: '', status: '1', openOnce: '', features: {}
+			}];
+			element.loadApp('test-app', true);
+		});
+		afterEach(() =>
+		{
+			css.remove();
+			window.localStorage.removeItem(SIZE_KEY);
+			document.querySelectorAll('et2-dialog.egw-dialog-skeleton').forEach(e => e.remove());
+		});
+
+		it('draws the stand-in while the request is on its way, and hides the real dialog until it is handed over', async() =>
+		{
+			const opened = open();
+			// the stand-in is there before the server has answered
+			await new Promise(resolve => setTimeout(resolve, 20));
+			assert.exists(standIn(), 'no stand-in while the request is pending');
+
+			const dialog = <any>document.createElement('et2-dialog');
+			request.resolve(dialog);
+			await opened;
+			document.body.append(dialog);
+			await dialog.updateComplete;
+
+			assert.isTrue(dialog.classList.contains('egw-popup'));
+			// display:contents: what is hidden is the dialog's base part
+			assert.equal(getComputedStyle(dialog.shadowRoot.querySelector('.dialog')).opacity, '0',
+				'the real dialog must stay hidden until it has settled');
+			dialog.remove();
+			assert.exists(standIn());
+		});
+
+		it('takes the stand-in away when the request fails', async() =>
+		{
+			const opened = open();
+			await new Promise(resolve => setTimeout(resolve, 20));
+			assert.exists(standIn());
+
+			request.reject(new Error('server said no'));
+			let failed = false;
+			await opened.catch(() => failed = true);
+
+			assert.isTrue(failed, 'the error is still reported');
+			assert.notExists(standIn());
+		});
+
+		it('takes the stand-in away when what comes back is not a dialog', async() =>
+		{
+			const opened = open();
+			await new Promise(resolve => setTimeout(resolve, 20));
+
+			request.resolve(<any>{classList: {add: sinon.stub()}});
+			await opened.catch(() => {});
+
+			assert.notExists(standIn());
+		});
+
+		it('draws none for a form it has not seen yet', async() =>
+		{
+			window.localStorage.removeItem(SIZE_KEY);
+			const opened = open();
+			await new Promise(resolve => setTimeout(resolve, 20));
+			assert.notExists(standIn());
+
+			const dialog = <any>document.createElement('et2-dialog');
+			request.resolve(dialog);
+			await opened;
+			document.body.append(dialog);
+			await dialog.updateComplete;
+			assert.notEqual(getComputedStyle(dialog.shadowRoot.querySelector('.dialog')).opacity, '0',
+				'without a stand-in the dialog is shown as before');
+			dialog.remove();
+		});
+	});
+
 	describe('print() of a popup window', () =>
 	{
 		// Popups share the main window's framework and call framework.print(window).  A same-origin

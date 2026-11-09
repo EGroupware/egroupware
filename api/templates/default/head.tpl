@@ -16,6 +16,7 @@
 		<style type="text/css">
 			{app_css}
 		</style>
+		<style type="text/css" id="egw-skeleton-css">{skeleton_css}</style>
 		{java_script}
 	</head>
 	<body {body_tags}>

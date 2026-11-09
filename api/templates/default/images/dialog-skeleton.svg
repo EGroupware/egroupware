@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+<!-- Generic stand-in for an edit form (see Framework::skeletonCss()): used as a CSS mask, so only the alpha matters and
+     the colour comes from the theme.  Coordinates are percent of the form; the average of the infolog, addressbook and
+     timesheet edit forms: three field rows (top right is left free for the application icon), a tab strip, a large
+     content area, a status row and the footer buttons. -->
+<defs><filter id="b" x="-2%" y="-2%" width="104%" height="104%"><feGaussianBlur stdDeviation=".35"/></filter></defs>
+<g filter="url(#b)" fill="#000">
+<g fill-opacity=".5">
+<rect x="3.5" y="4.6" width="7" height="1.8" rx=".9"/><rect x="14" y="4" width="68" height="3.4" rx=".8"/>
+<rect x="3.5" y="10.6" width="6" height="1.8" rx=".9"/><rect x="14" y="10" width="38" height="3.4" rx=".8"/>
+<rect x="55" y="10.6" width="6" height="1.8" rx=".9"/><rect x="63" y="10" width="33.5" height="3.4" rx=".8"/>
+<rect x="3.5" y="16.6" width="8" height="1.8" rx=".9"/><rect x="14" y="16" width="68" height="3.4" rx=".8"/>
+<rect x="3.5" y="82.6" width="7" height="1.8" rx=".9"/><rect x="14" y="82" width="26" height="3.4" rx=".8"/>
+</g>
+<g fill-opacity=".4"><rect x="3.5" y="33" width="93" height="45" rx="1"/></g>
+<g fill-opacity=".5">
+<rect x="18" y="26.4" width="9" height="1.8" rx=".9"/><rect x="30" y="26.4" width="10" height="1.8" rx=".9"/>
+<rect x="43" y="26.4" width="12" height="1.8" rx=".9"/><rect x="58" y="26.4" width="9" height="1.8" rx=".9"/>
+</g>
+<g fill-opacity=".8"><rect x="3.5" y="25" width="12" height="4.6" rx="1"/>
+<rect x="3.5" y="92" width="12" height="4.6" rx="1"/><rect x="17.5" y="92" width="12" height="4.6" rx="1"/><rect x="31.5" y="92" width="12" height="4.6" rx="1"/>
+<rect x="84.5" y="92" width="12" height="4.6" rx="1" fill-opacity=".5"/></g>
+<rect x="0" y="89.6" width="100" height=".25" fill-opacity=".4"/>
+</g>
+</svg>

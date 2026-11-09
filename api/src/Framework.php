@@ -1050,6 +1050,92 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * CSS for the stand-in drawn while an edit form (dialog or popup) is still loading, see skeleton()
+	 *
+	 * The shapes are one SVG (api/templates/default/images/dialog-skeleton.svg) used as a mask over a theme colour, so
+	 * it needs no request, no DOM and no layout, scales to any size and follows light / dark mode.  Sent with every
+	 * page (in the style element with id egw-skeleton-css) so a window opened by the client can copy it.
+	 *
+	 * @return string
+	 */
+	public static function skeletonCss() : string
+	{
+		static $css = null;
+		if (!isset($css))
+		{
+			$uri = static function(string $file) : string
+			{
+				$svg = @file_get_contents(EGW_SERVER_ROOT.'/api/templates/default/images/'.$file) ?: '';
+				// keep it short: drop the comment and the whitespace between tags, and escape what is not allowed in a url()
+				$svg = preg_replace(['/<!--.*?-->/s', '/>\s+</', '/\s+/'], ['', '><', ' '], $svg);
+				return 'url("data:image/svg+xml,'.str_replace(['%', '#', '"', '<', '>'], ['%25', '%23', "'", '%3C', '%3E'], $svg).'")';
+			};
+			$css = '.egw-skeleton{--egw-skeleton-mask:'.$uri('dialog-skeleton.svg').';position:absolute;inset:0;z-index:10;overflow:hidden;'.
+					'background:var(--sl-panel-background-color,Canvas)}'.
+				// above everything the form itself puts on top (a template's own loader is at the dialog level, Shoelace's tooltips higher)
+				'.egw-skeleton--page{position:fixed;z-index:calc(var(--sl-z-index-tooltip,1000) + 100);animation:egw-skeleton-expire 0s 15s forwards}'.
+				'.egw-skeleton--template{position:relative;inset:auto;width:100%;height:100%}'.
+				'.egw-skeleton:before{content:"";position:absolute;inset:0;background:var(--egw-skeleton-color,var(--sl-color-neutral-300,#d4d4d8));'.
+					'-webkit-mask:var(--egw-skeleton-mask) 0 0/100% 100% no-repeat;mask:var(--egw-skeleton-mask) 0 0/100% 100% no-repeat}'.
+				// the app icon is 32px, flush with the corner of a form's content (dialog, template), 26px in from the edge of a popup window
+				'.egw-skeleton>img{position:absolute;top:0;right:0;width:32px;height:32px}'.
+				'.egw-skeleton--page>img{top:10px;right:26px}'.
+				'@keyframes egw-skeleton-expire{to{visibility:hidden}}'.
+				// a phone has its own layout
+				'@media (max-width:800px){.egw-skeleton{--egw-skeleton-mask:'.$uri('dialog-skeleton-mobile.svg').'}.egw-skeleton>img{top:.5em;right:1em}}'.
+				// a small window is not an edit form
+				'@media not all and (min-width:32em) and (min-height:24em){.egw-skeleton{display:none}}';
+		}
+		return $css;
+	}
+
+	/**
+	 * Is a skeleton (stand-in drawn while the form loads) wanted for an eTemplate?
+	 *
+	 * In order: what the application set in PHP (Etemplate::$skeleton), the template's own `skeleton` attribute
+	 * (<template id="app.add_material" skeleton="true">), else the convention: an add / edit / compose form.
+	 *
+	 * @param string $template template id, eg. "infolog.edit"
+	 * @param bool|string|null $override Etemplate::$skeleton, null: not set
+	 * @param bool|string|null $attribute the template's skeleton attribute, null: not set
+	 * @return bool
+	 */
+	public static function skeletonWanted(string $template, $override = null, $attribute = null) : bool
+	{
+		foreach ([$override, $attribute] as $value)
+		{
+			if ($value !== null && $value !== '')
+			{
+				return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+			}
+		}
+		return (bool)preg_match('/^[^.]+\.(edit|add|compose)$/', $template);
+	}
+
+	/**
+	 * Markup of the stand-in drawn while an edit form is loading, covering its window (or dialog body)
+	 *
+	 * Removed by etemplate2 when the form has loaded; on a page it also hides itself after 15 s (pure CSS, so it does
+	 * not depend on any script that may have failed).  Turn it off for comparing with the cookie skeleton=0.
+	 *
+	 * Whether a template gets one is decided by the caller, see skeletonWanted().
+	 *
+	 * @param string $template template id, eg. "infolog.edit", used for the application icon
+	 * @param bool $page true: covers the window (popup), false: covers its positioned parent (dialog)
+	 * @return string html, empty if turned off
+	 */
+	public static function skeleton(string $template, bool $page = true) : string
+	{
+		if (($_COOKIE['skeleton'] ?? '1') === '0')
+		{
+			return '';
+		}
+		$icon = Image::find(explode('.', $template)[0], 'navbar');
+		return '<div id="egw-skeleton" class="egw-skeleton'.($page ? ' egw-skeleton--page' : '').'" aria-hidden="true">'.
+			($icon ? '<img src="'.htmlspecialchars($icon).'" alt="">' : '').'</div>'."\n";
+	}
+
+	/**
 	 * Used by template headers for including CSS in the header
 	 *
 	 * 'app_css'   - css styles from a) the menuaction's css-method and b) the $GLOBALS['egw_info']['flags']['css']
@@ -1144,6 +1230,7 @@ abstract class Framework extends Framework\Extra
 		}
 		return array(
 			'app_css'   => $app_css,
+			'skeleton_css' => self::skeletonCss(),
 			'css_file'  => Framework\CssIncludes::tags(),
 		);
 	}
