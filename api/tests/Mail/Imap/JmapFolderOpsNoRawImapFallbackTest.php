@@ -122,6 +122,19 @@ class JmapFolderOpsNoRawImapFallbackTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Three levels deep (INBOX -> Archives -> Old), needed to actually distinguish a one-level
+	 * ('%') match from an any-depth ('*') one - mailboxes()'s own 2-level tree can't tell the two
+	 * apart, since there's only ever one possible child either way.
+	 */
+	private function mailboxesWithGrandchild() : array
+	{
+		return array_merge($this->mailboxes(), [
+			['id' => 'old-id', 'name' => 'Old', 'parentId' => 'archive-id', 'role' => null,
+				'isSubscribed' => false, 'totalEmails' => 1, 'unreadEmails' => 0],
+		]);
+	}
+
+	/**
 	 * getDelimiter() (Mail\Imap::getDelimiter()) used to call $this->getNamespaces() directly -
 	 * Horde_Imap_Client_Base's own raw NAMESPACE command, a different method than the
 	 * already-guarded getNameSpaceArray() - so it fell through to a real IMAP handshake against
@@ -161,9 +174,69 @@ class JmapFolderOpsNoRawImapFallbackTest extends \EGroupware\Api\AppTest
 		$ret = $jmap->listMailboxes('*');
 
 		$this->assertSame(['INBOX', 'INBOX/Archives'], array_keys($ret));
-		$this->assertSame([Jmap::SUBSCRIBED_ATTRIBUTE], $ret['INBOX']['attributes']);
-		$this->assertSame([], $ret['INBOX/Archives']['attributes']);
+		$this->assertSame([Jmap::SUBSCRIBED_ATTRIBUTE, '\HasChildren'], $ret['INBOX']['attributes']);
+		$this->assertSame(['\HasNoChildren'], $ret['INBOX/Archives']['attributes']);
 		$this->assertSame('/', $ret['INBOX']['delimiter']);
+	}
+
+	/**
+	 * getSubfolders()/getMailBoxesRecursive() (see listMailboxes()'s own docblock) only ever
+	 * recurses into a mailbox's children when its own '\HasChildren' attribute is set - without
+	 * it a JMAP account's recursive ACL grant/revoke silently stopped after the root folder even
+	 * though real subfolders existed (found live 2026-11-09).
+	 */
+	public function testListMailboxesMarksParentHasChildrenAndLeafHasNoChildren()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
+
+		$ret = $jmap->listMailboxes('*');
+
+		$this->assertContains('\HasChildren', $ret['INBOX']['attributes']);
+		$this->assertNotContains('\HasNoChildren', $ret['INBOX']['attributes']);
+		$this->assertContains('\HasNoChildren', $ret['INBOX/Archives']['attributes']);
+		$this->assertNotContains('\HasChildren', $ret['INBOX/Archives']['attributes']);
+	}
+
+	/**
+	 * A trailing '%' must match only the IMMEDIATE children of the prefix, same as real IMAP
+	 * LIST's one-level wildcard - Mail\Imap::getMailBoxesRecursive() relies on this exact
+	 * semantics (restriction_search=2 in getMailboxes()) to walk the tree one level at a time.
+	 * Treating '%' the same as '*' (any depth) would pull grandchildren in too early.
+	 */
+	public function testListMailboxesOneLevelWildcardExcludesGrandchildren()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxesWithGrandchild()));
+
+		$ret = $jmap->listMailboxes('INBOX/%');
+
+		$this->assertSame(['INBOX/Archives'], array_keys($ret));
+	}
+
+	public function testListMailboxesAnyDepthWildcardIncludesGrandchildren()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxesWithGrandchild()));
+
+		$ret = $jmap->listMailboxes('INBOX/*');
+
+		$this->assertSame(['INBOX/Archives', 'INBOX/Archives/Old'], array_keys($ret));
+	}
+
+	/**
+	 * End-to-end regression test for the live bug (2026-11-09): recursively granting/revoking
+	 * mail ACL rights on a JMAP account silently only ever touched the root folder, even though
+	 * real subfolders existed - mail_acl::getSubfolders() calls exactly this inherited
+	 * (not overridden) Mail\Imap method, which walks the tree via listMailboxes() one level at a
+	 * time using both the '\HasChildren' attribute and the '%'-vs-'*' distinction fixed above;
+	 * either one alone being wrong silently truncates the walk to the root with no error at all.
+	 */
+	public function testGetMailBoxesRecursiveDescendsIntoJmapChildren()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxesWithGrandchild()));
+
+		$folders = $jmap->getMailBoxesRecursive('INBOX', '/', '');
+		sort($folders);
+
+		$this->assertSame(['INBOX', 'INBOX/Archives', 'INBOX/Archives/Old'], $folders);
 	}
 
 	public function testListMailboxesExactPathReturnsOnlyThatMailbox()
