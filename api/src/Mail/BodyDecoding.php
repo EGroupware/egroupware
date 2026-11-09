@@ -186,6 +186,10 @@ class BodyDecoding
 		// clean out url() calls e.g. in style definitions
 		$style = preg_replace('@url\(http:\/\/[^\)].*?\)@si', '', $style);
 
+		// the <!-- style --> comment wrapper is outdated and ck-editor does not understand it, so remove it
+		// order matters here: this must happen before the keyword checks below, not after
+		$style = str_replace(['<!--', '-->'], '', $style);
+
 		// CSS security - http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 		$css = preg_replace('/(javascript|expression|-moz-binding)/i', '', $style);
 		if (stripos($css, 'script') !== false)
@@ -195,8 +199,7 @@ class BodyDecoding
 		// styledefinitions are enclosed with curly brackets; template stuff tries to replace everything
 		// between curly brackets that has no horizontal whitespace, so pad the opening brackets
 		// (not the colons, that breaks pseudo-classes like :focus);
-		// the <!-- style --> comment wrapper is outdated and ck-editor does not understand it, so remove it
-		$css = str_replace(['{', '<!--', '-->'], ['{ ', '', ''], $css);
+		$css = str_replace('{', '{ ', $css);
 
 		// the outlook style fix sets line-height:0, which breaks all tr lines in the content - restore it
 		if (preg_match('/Outlook 2016 Height Fix/i', $css))
