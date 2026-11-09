@@ -1157,6 +1157,31 @@ abstract class Tracking
 	}
 
 	/**
+	 * Get the link of the html notification's "Open" button: a full url of the entry in this EGroupware
+	 *
+	 * Unlike get_link(), a configured link (eg. the tracker's "URL of the tracker" to a customer portal) is not used,
+	 * as the button opens the entry, like the "Linked entries" link at the bottom of the mail.
+	 * Only if the app has no view, get_link() is used.
+	 *
+	 * @param array $data
+	 * @param array $old
+	 * @param int|string $receiver numeric account_id or email address
+	 * @return ?string
+	 */
+	protected function get_button_link($data, $old, $receiver=null) : ?string
+	{
+		if (!($view = Api\Link::view($this->app, $data[$this->id_field] ?? null)))
+		{
+			return $this->get_link($data, $old, false, $receiver) ?: null;
+		}
+		$link = Api\Framework::link('/index.php', $view);
+		if ($link[0] == '/') $link = Api\Framework::getUrl($link);
+
+		// remove the session-id in the notification mail!
+		return preg_replace('/(sessionid|kp3|domain)=[^&]+&?/', '', $link);
+	}
+
+	/**
 	 * Get a link for notifications to view the entry, can be reimplemented
 	 *
 	 * @param array $data
@@ -1249,7 +1274,7 @@ abstract class Tracking
 		if ($html_email)
 		{
 			$body = $this->get_html_body(array_slice($lines, 0, $header_lines), array_slice($lines, $header_lines),
-				$this->get_link($data,$old,false,$receiver));
+				$this->get_button_link($data,$old,$receiver));
 		}
 		else
 		{
