@@ -633,6 +633,11 @@ class Nextmatch extends Etemplate\Widget
 			}
 			$value['order'] = '';
 		}
+		// likewise $sort: a non-array value is otherwise taken from the request as-is too
+		if (!is_array($value['sort'] ?? null))
+		{
+			$value['sort'] = strtoupper($value['sort'] ?? '') === 'DESC' ? 'DESC' : 'ASC';
+		}
 
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
