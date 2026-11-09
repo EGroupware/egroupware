@@ -107,7 +107,7 @@ class calendar_timezones
 		if (!isset($id) && stripos($tzid, 'America/') === 0 && count($parts = explode('/', $tzid)) == 2)
 		{
 			if (($data = $GLOBALS['egw']->db->select(self::TABLE,'*',array(
-				'tz_tzid LIKE '.$GLOBALS['egw']->db->quote($parts[0].'/%/'.$parts[1]),
+				Api\Db\SqlFragment::raw('tz_tzid LIKE '.$GLOBALS['egw']->db->quote($parts[0].'/%/'.$parts[1])),
 			),__LINE__,__FILE__,false,'','calendar')->fetch()))
 			{
 				$id = $data['tz_id'];
