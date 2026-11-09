@@ -152,6 +152,28 @@ tr.mail et2-lavatar {
   display: flex;
   align-items: center;
 }
+/* sieve rules list (mail.sieve.index) */
+.mailSieveRules > tbody > tr.row {
+  cursor: pointer;
+}
+.mailSieveRules > tbody > tr.row:hover {
+  background-color: var(--gray-1, rgba(128, 128, 128, 0.12));
+}
+.mailSieveRules > tbody > tr.row.focused {
+  outline: 1px dotted var(--primary-color, #3b6ea5);
+  outline-offset: -1px;
+}
+.mailSieveRules > tbody > tr.row.selected {
+  background-color: var(--selected-color, #b7c3ff) !important;
+}
+.mailSieveRules > tbody > tr.row.mail_sieve_DISABLED,
+.mailSieveRules > tbody > tr.row.mail_sieve_DISABLED * {
+  color: Silver;
+}
+.mailSieveRules > tbody > tr.row > td {
+  vertical-align: top;
+  padding: 2px 6px;
+}
 TR.sieveRowActive {
   font-size: 11px;
   height: 20px;
