@@ -68,7 +68,7 @@ class Token extends APi\Storage\Base
 				'token_id' => $matches[1],
 				'account_id' => [0, Api\Accounts::getInstance()->name2id($user)],
 				'token_revoked' => null,
-				'(token_valid_until IS NULL OR token_valid_until > NOW())'
+				Api\Db\SqlFragment::raw('(token_valid_until IS NULL OR token_valid_until > NOW())')
 			]);
 			if (!password_verify($matches[2], $data['token_hash']))
 			{
