@@ -527,7 +527,7 @@ class Sharing extends \EGroupware\Api\Sharing
 		// get all temp. files, to be able to delete them
 		$tmp_paths = array();
 		foreach(self::$db->select(self::TABLE, 'share_path', array(
-			"share_path LIKE '/home/%/.tmp/%'")+$keys, __LINE__, __FILE__, false) as $row)
+			Api\Db\SqlFragment::raw("share_path LIKE '/home/%/.tmp/%'"))+$keys, __LINE__, __FILE__, false) as $row)
 		{
 			$tmp_paths[] = $row['share_path'];
 		}
@@ -644,7 +644,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				'share_id', 'share_path', 'share_owner'
 		),
 				array(
-						"share_path LIKE " . $GLOBALS['egw']->db->quote($path)
+						Api\Db\SqlFragment::raw("share_path LIKE " . $GLOBALS['egw']->db->quote($path))
 				),
 				__LINE__, __FILE__, false) as $share)
 		{

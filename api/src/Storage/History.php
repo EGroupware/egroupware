@@ -505,9 +505,13 @@ class History
 		// (whose columns it does not name) is unaffected.
 		foreach((array)($query['filter'] ?? []) as $fragment)
 		{
-			if (is_string($fragment) && trim($fragment) !== '')
+			if ($fragment instanceof Api\Db\SqlFragment)
 			{
 				$filter[] = $fragment;
+			}
+			elseif (is_string($fragment) && trim($fragment) !== '')
+			{
+				$filter[] = Api\Db\SqlFragment::raw($fragment);
 			}
 		}
 

@@ -647,7 +647,7 @@ class Sql
 				// check if we need to treat username case-insensitive
 				if ($which === 'account_lid' && empty($GLOBALS['egw_info']['server']['case_sensitive_username']))	// = is case sensitiv eg. on postgres, but not on mysql!
 				{
-					$where[] = 'account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']);
+					$where[] = Api\Db\SqlFragment::raw('account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']));
 					unset($where['account_lid']);
 				}
 		}
@@ -657,8 +657,8 @@ class Sql
 		}
 		else
 		{
-			$where[] = 'account_id IS NOT NULL'.	// otherwise contacts with eg. the same email hide the accounts!
-				($table == $this->contacts_table ? " AND contact_tid != 'D'" : '');	// ignore deleted accounts contact-data
+			$where[] = Api\Db\SqlFragment::raw('account_id IS NOT NULL'.	// otherwise contacts with eg. the same email hide the accounts!
+				($table == $this->contacts_table ? " AND contact_tid != 'D'" : ''));	// ignore deleted accounts contact-data
 
 		}
 		if (!($rs = $this->db->select($table,$cols,$where,__LINE__,__FILE__)) || !($row = $rs->fetch()))
@@ -670,7 +670,7 @@ class Sql
 					if (($account_id = $this->db->select(Api\Mail\Smtp\Sql::TABLE, 'account_id', [
 						'mail_value' => $name,
 						'mail_type'  => Api\Mail\Smtp\Sql::TYPE_ALIAS,
-					]+($account_type ? [$account_type === 'g' ? 'account_id<0' : 'account_id>0'] : []), __LINE__, __FILE__)->fetchColumn()))
+					]+($account_type ? [Api\Db\SqlFragment::raw($account_type === 'g' ? 'account_id<0' : 'account_id>0')] : []), __LINE__, __FILE__)->fetchColumn()))
 					{
 						return (int)$account_id;
 					}
