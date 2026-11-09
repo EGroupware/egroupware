@@ -1,5 +1,207 @@
 # SQL fragment type safety (`Api\Db\SqlFragment`)
 
+## Motivation
+
+GHSA-vx89-j2x7-5wp2: `calendar.calendar_ui.ajax_get` let a client-supplied array (an integer-keyed
+JSON object decodes to a PHP array with an integer key) reach `calendar_so::read()`'s
+`$where = $ids` assignment, skipping the calendar ACL and private-event redaction on the way down.
+`Db::column_data_implode()` then treated an integer array key as "this is a pre-built, trusted raw
+SQL fragment, splice it in unquoted" - a convention used pervasively and legitimately throughout the
+codebase (`$where[] = 'cal_start >= '.$ts;`), but indistinguishable, from inside `Api\Db`, from an
+attacker-influenced array that merely happens to contain an integer key.
+
+The two actual entry points (`calendar_ui::ajax_get()`, `calendar_uilist::action()`) were patched
+directly first (commits `b2fe5e684b`, `affb118589`, backported to 26) by rejecting non-scalar event
+ids before they reach `calendar_bo::read()`. This project is the follow-up: closing the vulnerability
+*class* at its actual source, `column_data_implode()`, so the next similarly-shaped bug anywhere in
+the codebase fails loudly instead of silently.
+
+## Design
+
+- **`Api\Db\SqlFragment`** (new, `api/src/Db/SqlFragment.php`) - an immutable value object wrapping a
+  raw SQL string. `__toString()` returns the SQL. Implements read-only `ArrayAccess` (offset access
+  only, writes throw `\LogicException`) so it survives being treated like a string by legacy code
+  doing eg. `$field[0]` - found necessary when `Storage\Base::is_cf()` did exactly that.
+  Deliberately stays a `SqlFragment` instance through every intermediate step (stored in an array,
+  passed to another method, etc.) rather than being cast back to a string early - casting back to a
+  string anywhere along the way would reintroduce the exact bug this class exists to prevent, since
+  by the time it reached `column_data_implode()` it would again be an indistinguishable plain string
+  at an integer key.
+- Api\Db's own fragment-building methods (`expression()`, `concat()`, `group_concat()`,
+  `regexp_replace()`, `strpos()`, `unix_timestamp()`, `from_unixtime()`, `date_format()`,
+  `to_double()`, `to_int()`, `to_varchar()`, `column_data_implode()`) moved to static, fully-typed
+  methods on `Db\SqlFragment` (each takes the originating `Db $db` as its first parameter, since the
+  SQL dialect/driver state isn't separable from the connection). `Api\Db` keeps thin stub methods
+  delegating to them, returning the typed object (not a string).
+  `quote()`/`name_quote()` deliberately NOT moved - they're leaf value/identifier quoters, not
+  fragment combinators, and converting them carries far higher blast-radius risk for no benefit.
+- **`Api\Db::requireSqlFragmentObjects(?bool $require = null)`** - per-instance getter (no arg) /
+  fluent setter (`true`/`false`). Once enabled, `column_data_implode()`'s integer-key branch throws
+  `Db\Exception\InvalidArgument` for a value that isn't a `SqlFragment`, instead of using it as an
+  unquoted raw fragment. Originally off by default (back-compat with every not-yet-converted
+  caller); now **on by default** since the global flip (see "Global default flip" below) - this
+  line is kept for historical context, not as current behavior.
+  `Db\Exception\InvalidArgument` deliberately extends plain `\InvalidArgumentException`, **not**
+  `Db\Exception` - a generic `catch (Db\Exception)` around a query must not silently swallow it.
+- **Opt-in granularity decision**: per-`Api\Db`-*instance*, not a global static flag and not a
+  per-call parameter. Rationale (from the design discussion): a global flag can't be enabled for one
+  converted app while others still share `$GLOBALS['egw']->db` unconverted; a per-call parameter
+  would need threading through every call site even ones already safe. An app that has fully
+  converted its own raw-fragment building clones the shared connection once (in its SO-layer
+  constructor) and calls `requireSqlFragmentObjects(true)` on the clone - enforcement then applies
+  only to that app's own queries.
+- Found and fixed one core-framework instance of the same unguarded pattern while converting
+  calendar: `Db::replaceAsUpdate()` (the REPLACE-avoidance UPDATE fallback inside `insert()`,
+  reachable by any app with a unique-keyed upsert) built its own `"col=DEFAULT"` raw fragment the
+  same unguarded way - now `SqlFragment::raw()`-wrapped too.
+
+## Usage guide
+
+Practical reference for writing or fixing code against `Db\SqlFragment` - the design rationale
+above explains *why* it exists, this is *how* to actually use it day to day.
+
+### The one rule: when to wrap, when not to
+
+Only wrap a value **your own code builds itself**, from inputs you already trust (a hardcoded
+keyword, a matched/validated column name, a `$db->quote()`-escaped value, an internally-computed
+number). **Never** wrap a value that is merely passed through from a caller's own parameter - doing
+so launders whatever the caller handed you into looking like a deliberately-built trusted fragment,
+which defeats the entire mechanism for exactly the bug class it exists to catch (see the "Third
+lesson" below - this was a real, shipped mistake, found and reverted during this project).
+
+If you're not sure which case you're in, ask: "did I just build this string myself in the lines
+above, or did it arrive as an argument?" Built-it-yourself -> wrap it. Arrived-as-an-argument ->
+leave it alone; the *caller* is responsible for wrapping it before handing it to you, if it's really
+meant to be a raw fragment at all.
+
+### Basic usage
+
+A raw fragment at an integer array key, the historical "no column name given" convention:
+
+```php
+$filter = [
+    'account_type' => 'u',                                  // normal column => value, always safe
+    Api\Db\SqlFragment::raw('account_id > 0'),               // hardcoded literal - safe to wrap
+    Api\Db\SqlFragment::raw('account_lid '.$like.' '.$db->quote($name)), // quoted value - safe to wrap
+];
+$db->select('egw_accounts', '*', $filter, __LINE__, __FILE__);
+```
+
+Everything else about `select()`/`update()`/`delete()`/`insert()`'s `$where`/`$data` arrays is
+unchanged - normal `'column' => $value'` entries are always quoted automatically regardless of
+`SqlFragment`, strict mode or not.
+
+### Db's own fragment-building helpers
+
+`Api\Db` still exposes its original builder methods - `expression()`, `concat()`, `group_concat()`,
+`regexp_replace()`, `strpos()`, `unix_timestamp()`, `from_unixtime()`, `date_format()`, `to_double()`,
+`to_int()`, `to_varchar()`, `column_data_implode()` - each now returns a `Db\SqlFragment` instead of
+a plain string (they're thin stubs delegating to the static `Db\SqlFragment::*` equivalents). Using
+them is unaffected by this whole project: carry on casting/concatenating the result as before, or
+pass it straight into a `$where`/`$data` array - it's already a `SqlFragment`, no extra wrapping
+needed:
+
+```php
+$where = [
+    'cat_id' => $cat_id,
+    $db->expression('addressbook', ['contact_owner' => $owner], ' OR ', ['contact_private' => 0]),
+];
+```
+
+### Opting in (forcing strict mode)
+
+Pass `true` as `__construct()`'s second argument (for a brand-new connection) or call
+`requireSqlFragmentObjects(true)` on a clone:
+
+```php
+$this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(true);
+```
+
+This is the idiom every converted pilot app (calendar, infolog, resources, addressbook/Contacts,
+timesheet, projectmanager, tracker) already uses - now redundant with the global default but kept
+for apps that want to stay strict even if an admin opts the whole instance (or the whole install)
+out, and harmless to leave in place. An explicit `true` always wins over both opt-out mechanisms
+below, since it's set directly on the instance itself.
+
+### Two ways to opt out
+
+**1. Per-`Db`-instance** - for one specific app/class that still uses the legacy unwrapped
+convention throughout, rather than auditing every call site in it. Clone the shared connection and
+opt out explicitly on the clone, same shape as opting in, just inverted:
+
+```php
+$this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(false);
+```
+
+Or, if constructing a brand-new connection rather than cloning, pass `false` as `__construct()`'s
+second argument: `new Api\Db($db_data, false)`. Scoped to that one instance only - every other app
+sharing the main `$GLOBALS['egw']->db` stays enforced. Used for apps never covered by this
+conversion project and realistically never going to be (wiki, phpbrain, ranking, schulmanager - see
+the app tracker below) - a deliberate, permanent, auditable exception per app, not a bug. Prefer
+this over the global opt-out below whenever the problem is isolated to one app you can identify -
+it protects everything else on the install that the global switch would otherwise also expose.
+
+**2. Global, install-wide, via `header.inc.php`** - for an admin who hit a 3rd-party/unconverted app
+they don't control and can't patch themselves. Set in that instance's own `header.inc.php`:
+
+```php
+$GLOBALS['egw_info']['server']['opt_out_sql_fragment'] = true;
+```
+
+This reverts the *entire* install back to the old, unenforced behavior - every `Api\Db` instance
+that doesn't explicitly force `true` (see "Opting in" above), not just the one app that's actually
+broken. At the admin's own risk, meant as a stop-gap until that app's own maintainer fixes it or
+(better) gets opted out individually per instance as in option 1 above - not a long-term setting to
+just leave on. Resolved automatically, with no code changes needed anywhere: `Api\Db::__construct()`
+reads this config value itself for every new instance (see "Global default flip" below for exactly
+how). A class that was built with `new Api\Db($data, true)` or opted in via
+`requireSqlFragmentObjects(true)` stays strict regardless of this setting - the global opt-out only
+affects instances that never explicitly chose a side.
+
+### Gotchas found the hard way (read before touching any of this)
+
+- **A nested `column_data_implode()`/`select()`/`update()`/`delete()` call needs its *own* wrapping,
+  independent of what happens to its result afterward.** Wrapping the *outer* expression in
+  `SqlFragment::raw()` does not exempt an *inner* call built from an unwrapped array - each call
+  enforces its own `$array` argument. Real bug, found live: `kanban/src/Hooks.php::get_actions()`
+  wrapped its outer expression correctly but built it from `$db->column_data_implode(' OR ', $where)`
+  where `$where`'s own entries were still bare strings - that inner call threw regardless of the
+  outer wrap.
+- **A plain string `$where`/`$data` (not an array) bypasses the mechanism entirely, by design** -
+  `column_data_implode()`'s first line is `if (!is_array($array)) return $array;`. This is the
+  historical, still-legal "raw SQL string" calling convention, unrelated to the integer-key
+  convention `SqlFragment` guards.
+- **`expression()`'s variadic string arguments are spliced in verbatim, unconditionally** - per its
+  own docblock, a `string` argument is raw by definition (`case 'string': $sql .= $arg;`). Only its
+  `array` arguments go through the guarded integer-key convention.
+- **`select()`'s `$join` parameter is raw SQL, no quoting, ever** - its own docblock says so
+  outright. This was the actual sink of GHSA-3f9x-47f8-j6fw (the addressbook `order`-parameter SQL
+  injection) - `Storage::cf_filter()` built `$join` as a plain concatenated string. Fix that class of
+  bug by validating whatever feeds `$join` before it gets there, not by anything in `SqlFragment`.
+- **`insert()`'s own `$data` does *not* honour the integer-key-as-raw-fragment convention** when
+  called with `$use_key` as `'VALUES'` or `false` (its single- and multi-row forms) - the branch in
+  `columnDataImplode()` requires `$use_key === true` exactly, so an int-keyed entry there just gets
+  `$db->quote()`'d as an ordinary value instead of spliced raw. Not a security bug (the opposite,
+  actually - it's safe by accident), but a correctness footgun: a `SqlFragment::raw()`-wrapped value
+  passed to `insert()` will silently get mangled through `quote()`, not spliced in as SQL. Only
+  `update()`/`select()`/`delete()`'s `$where` (always `$use_key === true`) honour the convention.
+- **Enforcement is per-`Db`-*instance*, not per-app** - even a fully "converted" app is only
+  protected for code that actually reaches *its own* strict clone. Nothing stops a new call site
+  (future code, a shared library, an EPL hook) from reaching a *different*, non-strict instance
+  instead - several of this project's own "lessons" below are exactly this shape of gap, found via
+  live breakage, not by any mechanical check. The 2026-11-09 global default flip closes this for the
+  *shared* instance specifically, but the same risk still applies to any other instance an app
+  explicitly opts out.
+- **Don't trust a "wrapped, no opt-in point yet" entry in the tracker below as proof of
+  correctness.** Flipping the global default on 2026-11-09 turned a large number of these from
+  "future-proofing, never actually exercised under strict mode" into "live, enforced, for the first
+  time" - and immediately surfaced genuine, previously-invisible misses in code that had been marked
+  done for months (`Accounts\Sql::name2id()`, `Session::login_blocked()` - hit on every single login
+  - `Contacts.php`, `Sharing.php`, `Vfs/Sharing.php`, `Storage\History`, `Mail\Credentials`, plus
+  live breakage in webauthn, kanban, records and `Vfs::checkLock()`). Being listed as "wrapped" means
+  someone wrapped what they found at the time, not that strict mode was ever actually exercised
+  against it.
+
 ## App conversion tracker
 
 One row per app that ships by default (core monorepo + `egroupware/*` composer packages) or is an
@@ -55,7 +257,7 @@ in that app's own checkout, not in the main repo.
 | status | N/A - no `Api\Db` usage found |
 | swoolepush | N/A - no `Api\Db` usage found |
 | tracker | **Done** - `requireSqlFragmentObjects(true)` enabled on both `tracker_so` and `tracker_escalations`'s own `Db` clone |
-| webauthn | **Own fragment wrapped** (`PublicKeyCredentialSourceRepository.php`) |
+| webauthn | **Done** (follow-up commit `83ee929`) - two more raw `pubkey_deleted` fragments found live-breaking login (`findOneByCredentialId()`/`findAllForUserEntity()`), missed by the original wrap; no opt-in point (static-ish repository class, shared `Db`), so this only mattered once the global default flip (below) made it live |
 
 `projectmanager` and `tracker` are now full pilots too - `requireSqlFragmentObjects(true)` enabled on
 each of their own `Db` clone(s), per the user's explicit follow-up instruction (see the Ninth lesson
@@ -67,71 +269,28 @@ are already wrapped and ready.
 
 | App | Status |
 |---|---|
-| stylite (EPL core functions) | **Own fragments wrapped, several were live cross-app regressions - see the Tenth/Eleventh lessons below** (commit `922d0c6`) |
+| stylite (EPL core functions) | **Own fragments wrapped, several were live cross-app regressions - see the Tenth/Eleventh lessons below** (commit `922d0c6`); one wrap (`stylite_license_bo.inc.php::concurrent_users()`) had to be reverted (`8264b95`) because the file's bytes are pinned by two hard-coded tamper-detection hashes (`class.stylite_license.inc.php`'s `md5_file()` check, `StreamWrapper::t()`'s `sha1_file()` check) - re-applied together with regenerated hashes via the repo's own `inc/license.php` maintenance script (commit `c88d054`/`49b9e98` on master/26) |
 | esyncpro | **Own fragment wrapped** (`esyncpro_ui.inc.php`) |
 | invoices | **Own fragments wrapped** (`ApiHandler.php`/`Bo.php`) |
-| kanban | **Own fragments wrapped** (`Bo.php`/`Hooks.php`/`Bo/Column.php`) |
+| kanban | **Own fragments wrapped** (`Bo.php`/`Hooks.php`/`Bo/Column.php`); **follow-up fix** (commit `5d79282`) - `Hooks::get_actions()`'s *inner* `column_data_implode()` call still had bare strings in its own `$where` array, even though the outer expression was already wrapped (see the "nested call" gotcha above); live-broke the addressbook list page once the global flip landed |
 | licenses | **Own fragment wrapped** (`licenses_ui.inc.php`) |
 | managementserver | **Own fragments wrapped, every file with `Api\Db` usage swept** (commit `63788ed`); future-proofing only, no opt-in point anywhere in this app - see the Eleventh lesson below |
-| records | **Own fragments wrapped** (`records_bo.inc.php`/`records_fields.inc.php`) |
+| records | **Done** (follow-up commit `d51f788`) - 4 more fragments found live-breaking the records list page the moment the global flip landed (`records_ui::get_rows()`'s default status/date `col_filter` entries - the status filter fires unconditionally on *every* unfiltered view - and `records_export_csv`'s two range-filter entries), missed by the earlier conversion; no `26` branch for this repo, so master-only by necessity |
 | vidopro | N/A - no `Api\Db` usage found |
 
 Not covered by either list above (separate repos, but neither a default composer package nor EPL -
 `guacamole`, `knowledgebase`, `phpbrain`, `profitbricks`, `ranking`, `schulmanager`, `untissync`,
-`wiki`): out of scope for this project unless/until requested.
-
-## Motivation
-
-GHSA-vx89-j2x7-5wp2: `calendar.calendar_ui.ajax_get` let a client-supplied array (an integer-keyed
-JSON object decodes to a PHP array with an integer key) reach `calendar_so::read()`'s
-`$where = $ids` assignment, skipping the calendar ACL and private-event redaction on the way down.
-`Db::column_data_implode()` then treated an integer array key as "this is a pre-built, trusted raw
-SQL fragment, splice it in unquoted" - a convention used pervasively and legitimately throughout the
-codebase (`$where[] = 'cal_start >= '.$ts;`), but indistinguishable, from inside `Api\Db`, from an
-attacker-influenced array that merely happens to contain an integer key.
-
-The two actual entry points (`calendar_ui::ajax_get()`, `calendar_uilist::action()`) were patched
-directly first (commits `b2fe5e684b`, `affb118589`, backported to 26) by rejecting non-scalar event
-ids before they reach `calendar_bo::read()`. This project is the follow-up: closing the vulnerability
-*class* at its actual source, `column_data_implode()`, so the next similarly-shaped bug anywhere in
-the codebase fails loudly instead of silently.
-
-## Design
-
-- **`Api\Db\SqlFragment`** (new, `api/src/Db/SqlFragment.php`) - an immutable value object wrapping a
-  raw SQL string. `__toString()` returns the SQL. Implements read-only `ArrayAccess` (offset access
-  only, writes throw `\LogicException`) so it survives being treated like a string by legacy code
-  doing eg. `$field[0]` - found necessary when `Storage\Base::is_cf()` did exactly that.
-  Deliberately stays a `SqlFragment` instance through every intermediate step (stored in an array,
-  passed to another method, etc.) rather than being cast back to a string early - casting back to a
-  string anywhere along the way would reintroduce the exact bug this class exists to prevent, since
-  by the time it reached `column_data_implode()` it would again be an indistinguishable plain string
-  at an integer key.
-- Api\Db's own fragment-building methods (`expression()`, `concat()`, `group_concat()`,
-  `regexp_replace()`, `strpos()`, `unix_timestamp()`, `from_unixtime()`, `date_format()`,
-  `to_double()`, `to_int()`, `to_varchar()`, `column_data_implode()`) moved to static, fully-typed
-  methods on `Db\SqlFragment` (each takes the originating `Db $db` as its first parameter, since the
-  SQL dialect/driver state isn't separable from the connection). `Api\Db` keeps thin stub methods
-  delegating to them, returning the typed object (not a string).
-  `quote()`/`name_quote()` deliberately NOT moved - they're leaf value/identifier quoters, not
-  fragment combinators, and converting them carries far higher blast-radius risk for no benefit.
-- **`Api\Db::requireSqlFragmentObjects(?bool $require = null)`** - per-instance getter (no arg) /
-  fluent setter (`true`/`false`). Once enabled, `column_data_implode()`'s integer-key branch throws
-  `Db\Exception\InvalidArgument` for a value that isn't a `SqlFragment`, instead of using it as an
-  unquoted raw fragment. Off by default (back-compat with every not-yet-converted caller).
-  `Db\Exception\InvalidArgument` deliberately extends plain `\InvalidArgumentException`, **not**
-  `Db\Exception` - a generic `catch (Db\Exception)` around a query must not silently swallow it.
-- **Opt-in granularity decision**: per-`Api\Db`-*instance*, not a global static flag and not a
-  per-call parameter. Rationale (from the design discussion): a global flag can't be enabled for one
-  converted app while others still share `$GLOBALS['egw']->db` unconverted; a per-call parameter
-  would need threading through every call site even ones already safe. An app that has fully
-  converted its own raw-fragment building clones the shared connection once (in its SO-layer
-  constructor) and calls `requireSqlFragmentObjects(true)` on the clone - enforcement then applies
-  only to that app's own queries.
-- Found and fixed one core-framework instance of the same unguarded pattern while converting
-  calendar: `Db::replaceAsUpdate()` (the REPLACE-avoidance UPDATE fallback inside `insert()`,
-  reachable by any app with a unique-keyed upsert) built its own `"col=DEFAULT"` raw fragment the
-  same unguarded way - now `SqlFragment::raw()`-wrapped too.
+`wiki`): out of scope for this project unless/until requested - until 2026-11-09, when the global
+default flip (below) made several of these live-break during the user's own testing. Resolved
+per-app, not uniformly - see "Global default flip" below for the distinction between "fix properly"
+(untissync, actively used by real schools) and "opt out, no audit" (wiki, phpbrain, ranking,
+schulmanager - dead or never-maintained code, auditing every raw fragment would be pure waste).
+`guacamole`/`profitbricks`/`knowledgebase` were checked and found to have no bare-fragment usage at
+all (either no direct `Api\Db` access, or only ever normal `column => value` arrays) - nothing to do.
+`managementserver` (EPL, already swept once, see the EPL table above) was deliberately **not**
+re-audited proactively - smaller direct-access footprint than the others and partially covered
+already; left for a reactive fix if and when it actually breaks, rather than repeating the
+Eleventh lesson's expensive manual sweep pre-emptively.
 
 ## TEMPORARY: per-instance clone pattern - revert when enforcement becomes the default
 
@@ -517,6 +676,11 @@ it silently unenforced forever.
     pass-through (now need to wrap their own literal, same as any other caller would -
     `SaveDeleteTest`'s three tests, `RequireSqlFragmentObjectsTest`, which was also renamed/inverted
     to test opt-OUT clone isolation instead of opt-IN).
+  - `api/src/Mail/Credentials.php::read()`/`delete()` - 2 fragments (the `cred_type & N > 0` bitmask
+    condition, duplicated in both methods) - hit on **every logout** (`Session::removeRememberMeTokenOnLogout()`
+    reads credentials on the way out), found live by the user testing logout right after the flip.
+  - `api/src/Vfs.php::checkLock()` - 1 fragment (the `depth > 0` `lock_path LIKE` condition) - hit on
+    every filemanager listing (lock-checked per displayed row), live-broke the filemanager list page.
 - **Verification scope and a known limitation**: `api/tests/Db` + `api/tests/Storage` (471 tests) run
   clean under the new default except one pre-existing, unrelated failure (`ContactsTest`: "bad login
   or password" - confirmed via a temporary revert of just the default-flip line that this reproduces
@@ -524,17 +688,46 @@ it silently unenforced forever.
   self-inflicted `egw_access_log` pollution from running login-based tests very many times in one
   session, tripping `Session::login_blocked()`'s own real lockout - needs those rows cleared or the
   block window to pass, not a code fix). A full `api/tests` run was NOT usable as a signal once that
-  lockout tripped (cascades through every test via the shared `LoggedInTest` base). **Not yet run**:
+  lockout tripped (cascades through every test via the shared `LoggedInTest` base). Beyond the
+  automated suite, ralf manually tested the live instance after the flip and found several more
+  fragments breaking real pages (webauthn login, the addressbook/filemanager/records list pages,
+  logout) - all found and fixed the same day, see the per-app tracker entries above and the two
+  core-api fragments listed just above this. **Not yet run**:
   calendar/infolog/resources/addressbook/timesheet/projectmanager/tracker's own full suites, or any
   EPL app's - the global flip is a superset of what those apps' own opt-in already enforced, so no
   regression is expected there, but this has not been empirically re-verified post-flip.
+- **Never-covered legacy/dead apps, handled per the user's explicit instructions once they started
+  live-breaking during testing** - two different treatments depending on whether an app is still
+  relied on:
+  - **wiki** (deprecated, see `project_wiki_app_deprecated` in memory), **phpbrain**, **ranking**:
+    opted out wholesale (clone the shared `Db` and call `requireSqlFragmentObjects(false)` at the
+    one construction point each app's class hierarchy shares - `sowiki`/`soWikiPage`'s shared `$db`,
+    `sokb::__construct()`, `ranking\So::get_rang_db()`) rather than auditing dozens of raw fragments
+    in code nobody maintains any more. `ranking_calendar_integration.inc.php`'s few fragments were
+    wrapped individually instead, since that file reaches *calendar's own* strict `Db` clone directly
+    - opting out ranking's own instance wouldn't have helped there.
+  - **schulmanager**: ralf's call was "opt out, or we ignore it, it's no longer in use" - opted out
+    across all 11 independent SO-layer files (no shared base constructor to do it once).
+  - **untissync**: ralf's explicit correction - "should be fixed, not opt-out, as it's actively used
+    by some of our schools". Properly wrapped all 25 raw fragments individually across 7 files
+    instead (commit `bdb5f81`, backported to untissync's own `26` branch as `1118b67`, both pushed).
+    Also fixed a real, independent bug found along the way: `untissync_bo::syncRooms()` interpolated
+    an external Untis-API value straight into a SQL string unescaped (`"name = '".$val['name']."'"`)
+    - now properly quoted via `$db->quote()` before wrapping. Caught and corrected a self-inflicted
+    mistake during this fix too: the first pass used a Python script to apply the edits, which
+    silently converted these files' original CRLF line endings to LF, producing a ~1700-line
+    spurious diff across 7 files - reverted and redone with targeted edits preserving the original
+    line endings.
+  - **guacamole**, **profitbricks**, **knowledgebase**: checked, found clean (no bare-fragment usage
+    at all, or no direct `Api\Db` access) - nothing to do despite being flagged as actively used.
 - **Not yet done, open**: a broader sweep for more of the same shape of gap (api/src classes/static
   classes previously marked "wrapped, no opt-in point, future-proofing only" - now LIVE enforcement,
   not future-proofing - so any mistake in that earlier wrapping is no longer latent). The findings
-  above were only what `api/tests/Db`+`api/tests/Storage`'s existing coverage happened to exercise;
-  wider app test suites, and especially the composer-package/EPL apps with thin or no test coverage
-  (bookmarks, news_admin, openid, managementserver, ...) are the likely remaining risk, same as every
-  per-app pilot before this one kept finding one or two more misses on first real exercise.
+  above were only what `api/tests/Db`+`api/tests/Storage`'s existing coverage, plus the user's own
+  live testing, happened to exercise; `managementserver` (EPL, partially swept already, deliberately
+  not re-audited - see the app tracker above) and any other composer-package/EPL app with thin or no
+  test coverage are the likely remaining risk, same as every per-app pilot before this one kept
+  finding one or two more misses on first real exercise.
 
 **Unrelated, but found while tracing `Api\Storage\Base::search2criteria()` callers for this
 project**: `search2criteria()`'s own first line (`if (empty($_pattern) || is_array($_pattern) ||
