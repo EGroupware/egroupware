@@ -106,6 +106,53 @@ class BodyDecodingTest extends TestCase
 		$this->assertStringContainsString('{ color:blue', $result, 'every rule\'s opening brace must be padded, not just the first');
 	}
 
+	/**
+	 * Ticket #127551 (live report, forwarded newsletter): an MSO/Outlook conditional comment
+	 * (`<!--[if gt mso 15]><style>...</style><![endif]-->`) wraps a `tr { font-size:0px; ... }`
+	 * rule meant for Outlook alone. getStyles()'s own `<style>` extraction has no comment
+	 * awareness, so it used to pull that style tag straight out of the comment and reapply it
+	 * for every viewer - the Outlook-only rule went live everywhere, hiding the message's text.
+	 * The whole comment (not just its `<!--`/`-->` markers) must now be dropped before extraction,
+	 * so this hidden-for-everyone-but-Outlook rule never surfaces at all.
+	 */
+	public function testGetStylesDropsStyleBlockHiddenInConditionalComment()
+	{
+		\EGroupware\Api\Mail::$displayCharset = 'utf-8';
+		$bodyParts = [
+			['body' => "<!--[if gt mso 15]><style type=\"text/css\" media=\"all\">\n".
+				"tr { font-size:0px; line-height:0px; }\n</style><![endif]-->".
+				'<style>p{color:green}</style>', 'mimeType' => 'text/html', 'charSet' => 'utf-8'],
+		];
+
+		$result = BodyDecoding::getStyles($bodyParts);
+
+		$this->assertStringNotContainsString('font-size:0px', $result,
+			'an Outlook-only rule hidden inside a conditional comment must never apply to every viewer');
+		$this->assertStringContainsString('color:green', $result,
+			"an ordinary, uncommented <style> block elsewhere in the same message must still come through");
+	}
+
+	/**
+	 * Distinct from the conditional-comment case above: a `<style><!-- real css --></style>`
+	 * wrapper is a legacy "hide CSS from browsers that predate <style>" convention - the CSS
+	 * content itself must survive, only the now-meaningless wrapper markers get dropped. This is
+	 * why that case is handled separately (markers only, on the already-extracted CSS text), not
+	 * by the whole-comment strip added for ticket #127551 above (which runs on the raw body,
+	 * before extraction, and would otherwise delete this legitimate CSS along with its wrapper).
+	 */
+	public function testGetStylesKeepsCssContentOfLegacyCommentWrapper()
+	{
+		\EGroupware\Api\Mail::$displayCharset = 'utf-8';
+		$bodyParts = [
+			['body' => "<style><!--\nbody { color: red; }\n--></style>", 'mimeType' => 'text/html', 'charSet' => 'utf-8'],
+		];
+
+		$result = BodyDecoding::getStyles($bodyParts);
+
+		$this->assertStringContainsString('color: red', $result,
+			"a legacy <style><!-- css --></style> wrapper's actual CSS content must survive");
+	}
+
 	public function testHtmlentitiesEncodesWithExplicitCharset()
 	{
 		$this->assertSame('&lt;b&gt;', BodyDecoding::htmlentities('<b>', 'utf-8'));
