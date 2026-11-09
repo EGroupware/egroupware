@@ -956,9 +956,14 @@ class Storage extends Storage\Base
 					unset($filter[$name]);
 					$cf_name = $this->get_cf_name($cf);
 					if (!isset($this->customfields[$cf_name])) continue;    // ignore unavailable CF
+					// only the matched cf-name plus an operator and a single safely-quoted value is
+					// ever legitimately built here (eg. " LIKE 's%'" or " ::text ILIKE 's%'") - the
+					// remainder must NOT be spliced in unless it actually has that shape
+					$tail = substr($val, strlen($cf));
+					if (!preg_match('/^[a-z0-9_: ]*\'[^\'\\\\]*\'$/i', $tail)) continue;
 					$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter .
 						' AND extra_filter.' . $this->extra_key . '=' . $this->db->quote($cf_name) .
-						' AND ' . str_replace($cf, 'extra_filter.' . $this->extra_value, $val));
+						' AND extra_filter.' . $this->extra_value . $tail);
 					++$extra_filter;
 				}
 			}
