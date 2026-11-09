@@ -2618,8 +2618,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 
 			this._updateSortHeaderState();
 			// _filters is not reactive, but the "filters are set" mark on our drawer's menu entry
-			// is rendered from it
-			if(this._ownFilterDrawer)
+			// and the active letter in the A-Z letter search bar are rendered from it
+			if(this._ownFilterDrawer || this.lettersearch || previousFilters.searchletter !== this._filters.searchletter)
 			{
 				this.requestUpdate();
 			}

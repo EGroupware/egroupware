@@ -749,6 +749,43 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
+	 * - The letter bar marks the active letter (or "all" when none) and follows every change,
+	 *   even for a nextmatch without its own filter drawer (addressbook).
+	 *
+	 * Setup strategy:
+	 * - Create nextmatch with `lettersearch=true`; click a letter, then "all" (the last button).
+	 *
+	 * Pass criteria:
+	 * - After each click exactly one button has `lettersearch_active`: initially "all", then the
+	 *   clicked letter, then "all" again.
+	 */
+	it("moves the active lettersearch highlight with each click", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.lettersearch = true;
+		document.body.append(el);
+		await el.updateComplete;
+
+		const buttons = () => Array.from(el.shadowRoot!.querySelectorAll<HTMLButtonElement>(".nextmatch_lettersearch .lettersearch"));
+		const active = () => buttons().filter(b => b.classList.contains("lettersearch_active")).map(b => b.textContent!.trim());
+		const allLabel = buttons()[buttons().length - 1].textContent!.trim();
+
+		assert.deepEqual(active(), [allLabel], "'all' is active initially");
+
+		buttons()[0].click();
+		await waitForBubblingHandlers();
+		await el.updateComplete;
+		assert.deepEqual(active(), [buttons()[0].textContent!.trim()], "clicked letter becomes the active one");
+
+		buttons()[buttons().length - 1].click();
+		await waitForBubblingHandlers();
+		await el.updateComplete;
+		assert.deepEqual(active(), [allLabel], "'all' is active again after clicking it");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Letter-search controls stay hidden when neither `lettersearch` nor active `searchletter` is set.
 	 *
 	 * Setup strategy:
