@@ -96,28 +96,28 @@ class SqlFragmentTest extends TestCase
 	// Db::requireSqlFragmentObjects() - getter/setter and per-instance scope
 	// -------------------------------------------------------------------
 
-	public function testRequireSqlFragmentObjectsDefaultsToFalse()
+	public function testRequireSqlFragmentObjectsDefaultsToTrue()
 	{
 		$db = clone self::$db;
-		$this->assertFalse($db->requireSqlFragmentObjects());
+		$this->assertTrue($db->requireSqlFragmentObjects());
 	}
 
 	public function testRequireSqlFragmentObjectsSetterIsFluentAndReadable()
 	{
 		$db = clone self::$db;
-		$returned = $db->requireSqlFragmentObjects(true);
+		$returned = $db->requireSqlFragmentObjects(false);
 
 		$this->assertSame($db, $returned, 'the setter must return $this for fluent use');
-		$this->assertTrue($db->requireSqlFragmentObjects());
+		$this->assertFalse($db->requireSqlFragmentObjects());
 	}
 
 	public function testRequireSqlFragmentObjectsDoesNotLeakBetweenClones()
 	{
-		$strict = (clone self::$db)->requireSqlFragmentObjects(true);
+		$lenient = (clone self::$db)->requireSqlFragmentObjects(false);
 
-		$this->assertFalse(self::$db->requireSqlFragmentObjects(),
-			'opting in a clone must not affect the instance it was cloned from');
-		$this->assertTrue($strict->requireSqlFragmentObjects());
+		$this->assertTrue(self::$db->requireSqlFragmentObjects(),
+			'opting out a clone must not affect the instance it was cloned from');
+		$this->assertFalse($lenient->requireSqlFragmentObjects());
 	}
 
 	// -------------------------------------------------------------------
@@ -125,52 +125,50 @@ class SqlFragmentTest extends TestCase
 	// -------------------------------------------------------------------
 
 	/**
-	 * Default (opted-out) behavior must be entirely unchanged: a plain raw string at an integer
-	 * key still works exactly as before - existing, not-yet-converted callers must not break.
+	 * Opted-out behavior must be entirely unchanged from the pre-default-flip convention: a plain
+	 * raw string at an integer key still works - existing, not-yet-converted callers that
+	 * explicitly opt out must not break.
 	 */
-	public function testRawStringAtIntegerKeyStillWorksWhenNotOptedIn()
+	public function testRawStringAtIntegerKeyStillWorksWhenOptedOut()
 	{
-		$fragment = self::$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], true, false, self::$table_def);
+		$db = (clone self::$db)->requireSqlFragmentObjects(false);
+
+		$fragment = $db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], true, false, self::$table_def);
 
 		$this->assertSame('t_modifier=t_modifier+1', (string)$fragment);
 	}
 
 	/**
-	 * Once opted in, a plain (non-SqlFragment) value at an integer key must be rejected - this is
-	 * the actual fix for GHSA-vx89-j2x7-5wp2's class of bug: an attacker-influenced array landing in
-	 * $where can no longer smuggle an unquoted raw fragment in merely by using an integer key.
+	 * By default (enforced), a plain (non-SqlFragment) value at an integer key must be rejected -
+	 * this is the actual fix for GHSA-vx89-j2x7-5wp2's class of bug: an attacker-influenced array
+	 * landing in $where can no longer smuggle an unquoted raw fragment in merely by using an
+	 * integer key.
 	 */
-	public function testRawStringAtIntegerKeyThrowsWhenOptedIn()
+	public function testRawStringAtIntegerKeyThrowsByDefault()
 	{
-		$db = (clone self::$db)->requireSqlFragmentObjects(true);
-
 		$this->expectException(InvalidArgument::class);
-		$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], true, false, self::$table_def);
+		self::$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], true, false, self::$table_def);
 	}
 
 	/**
-	 * A deliberately-constructed SqlFragment at an integer key must still work when opted in - the
+	 * A deliberately-constructed SqlFragment at an integer key must still work by default - the
 	 * whole point is to make "this is intentionally raw SQL" an explicit type, not to forbid raw
 	 * fragments altogether.
 	 */
-	public function testSqlFragmentAtIntegerKeyStillWorksWhenOptedIn()
+	public function testSqlFragmentAtIntegerKeyStillWorksByDefault()
 	{
-		$db = (clone self::$db)->requireSqlFragmentObjects(true);
-
-		$fragment = $db->column_data_implode(',', [0 => SqlFragment::raw('t_modifier=t_modifier+1')], true, false, self::$table_def);
+		$fragment = self::$db->column_data_implode(',', [0 => SqlFragment::raw('t_modifier=t_modifier+1')], true, false, self::$table_def);
 
 		$this->assertSame('t_modifier=t_modifier+1', (string)$fragment);
 	}
 
 	/**
-	 * A normal column => value pair (string key) must be completely unaffected by opting in - only
+	 * A normal column => value pair (string key) must be completely unaffected by the default - only
 	 * the integer-key raw-fragment path is guarded.
 	 */
-	public function testNormalColumnValuePairUnaffectedWhenOptedIn()
+	public function testNormalColumnValuePairUnaffectedByDefault()
 	{
-		$db = (clone self::$db)->requireSqlFragmentObjects(true);
-
-		$fragment = (string)$db->column_data_implode(' AND ', ['t_modifier' => 5], true, false, self::$table_def);
+		$fragment = (string)self::$db->column_data_implode(' AND ', ['t_modifier' => 5], true, false, self::$table_def);
 
 		$this->assertStringContainsString('t_modifier', $fragment);
 		$this->assertStringContainsString('5', $fragment);
@@ -180,11 +178,9 @@ class SqlFragmentTest extends TestCase
 	 * expression() - the higher-level builder - must route through the same enforcement, since it's
 	 * one of the paths apps use to build $where fragments.
 	 */
-	public function testExpressionArrayConditionIsUnaffectedByOptIn()
+	public function testExpressionArrayConditionIsUnaffectedByDefault()
 	{
-		$db = (clone self::$db)->requireSqlFragmentObjects(true);
-
-		$where = (string)$db->expression(self::$table_def, ['t_modifier' => 5]);
+		$where = (string)self::$db->expression(self::$table_def, ['t_modifier' => 5]);
 
 		$this->assertStringContainsString('t_modifier', $where);
 	}

@@ -434,12 +434,101 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
   on each of their own `Db` clones - see the tables above). Every other app in the composer-packages
   table is still wrap-only (no opt-in point found, or not attempted yet) - good next candidates if
   continuing this project, since their fragments are already wrapped and ready.
-- The global default flip (opt-out model) is explicitly a *later* step per the original design ask -
-  not scheduled, waits until enough of the above is converted that flipping it wouldn't break
-  everything still unconverted.
 - No 26 backport for any of this (explicit decision) - the actual vulnerability is already closed on
   both branches via the two entry-point patches; this is defense-in-depth architecture that should
   soak on master first.
+
+### Global default flip (opt-out model) - DONE 2026-11-09, master only
+
+The global flip happened sooner than "Open/next" above originally anticipated, once a live security
+review (the GHSA-3f9x-47f8-j6fw addressbook `order`-parameter SQL injection fix, same day) surfaced
+that the per-app opt-in model leaves every app/class still using `$GLOBALS['egw']->db` directly -
+the large majority, per the tracker tables above - with **zero** enforcement, regardless of whether
+its own fragments were ever wrapped. ralf's explicit call: flip the default now; it is up to a
+3rd-party/unconverted app's own maintainer to either fix it or opt out, not EGroupware's job to keep
+it silently unenforced forever.
+
+- **`Api\Db::$requireSqlFragmentObjects` now defaults to `true`** (was `false`), including on the
+  shared `$GLOBALS['egw']->db` instance itself - closing the structural gap the per-instance opt-in
+  model could never close (nothing stopped new code from reaching the always-non-strict shared
+  instance even inside an already-"converted" app). `requireSqlFragmentObjects()`'s own docblock and
+  the property's doc comment updated to describe the opt-OUT convention
+  (`(clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(false)` for code that still needs the
+  legacy, unwrapped convention).
+- **Global admin escape hatch**: `$GLOBALS['egw_info']['server']['opt_out_sql_fragment'] = true;`,
+  settable in an instance's own `header.inc.php`, restores the old, unenforced behavior
+  install-wide, at the admin's own risk, until the 3rd-party/old app in question is fixed. Resolved
+  centrally in `Api\Db::__construct(?array $db_data=null, ?bool $use_sql_fragment=null)` itself
+  (`$this->requireSqlFragmentObjects($use_sql_fragment ?? empty($GLOBALS['egw_info']['server']['opt_out_sql_fragment']))`),
+  per ralf's explicit follow-up design: no individual construction site needs to call
+  `requireSqlFragmentObjects()` itself or be touched at all - every `new Api\Db(...)`/`new
+  Db\Deprecated(...)` anywhere (the shared `$GLOBALS['egw']->db`, `setup_cmd`'s db-swap points,
+  `setup_cmd_showheader`/`setup_cmd_database`'s standalone instances, `khs-egw-migration.php`, any
+  future one) now gets this resolution automatically, for free. A known-good/converted class that
+  wants to stay strict regardless of the admin's opt-out passes `true` explicitly as the 2nd
+  constructor argument (`new Api\Db($data, true)`) instead of calling `requireSqlFragmentObjects()`
+  after the fact - the existing 7 pilots' clone-based `(clone ...)->requireSqlFragmentObjects(true)`
+  idiom still works unchanged too (clone doesn't re-run `__construct()`, so that call is still the
+  only way to flip an already-existing clone). Manually verified all three resolution paths against
+  the real framework bootstrap (opt-out set + no override → false; opt-out set + forced true → true;
+  opt-out unset → true, the default).
+- The 7 existing per-app opt-in clones (calendar, infolog, resources, addressbook/Contacts\Sql,
+  timesheet, projectmanager, tracker) keep their explicit `->requireSqlFragmentObjects(true)` calls -
+  now redundant (the class default is already `true`) but harmless; not touched, to keep this
+  change's diff minimal and avoid re-touching already-verified apps.
+- **Real, previously-missed raw fragments found and fixed by actually running `api/tests/Db` +
+  `api/tests/Storage` under the new default** (none of these were caught by the earlier per-app
+  pilot/sweep rounds, since none of them sat behind any app's own opt-in point - they all reach the
+  shared instance directly):
+  - `Accounts\Sql::name2id()` (api/src/Accounts/Sql.php) - 3 fragments (the case-insensitive
+    `account_lid` LIKE condition, the `account_id IS NOT NULL` dedup condition, and the alias-lookup
+    `account_id<0`/`account_id>0` branch) - hit on every login resolving a username to an account id.
+  - `Session::login_blocked()` (api/src/Session.php) - 4 fragments (3x the `li > $block_time` recency
+    condition across its 3 union legs, plus the `loginid LIKE` alias check) - hit on **every single
+    login attempt** (the brute-force-lockout check itself).
+  - `Session::update_notification_heartbeat()` - 1 fragment (`lo IS NULL`).
+  - `Session::notifications_active()` - 2 fragments (`session_dla > ...`, `notification_heartbeat > ...`) -
+    the exact same pattern as the stylite `concurrent_users()` fix earlier the same day, but in core
+    api, not EPL.
+  - `Contacts::search_n_fileas()`-equivalent bulk-repair loop (api/src/Contacts.php) - 4 fragments
+    (`n_fileas`/`n_fn` IS NULL/empty-string conditions) - a genuinely different pattern than the
+    `Contacts.php` raw-`$db->query()` usage the earlier api/src sweep explicitly excepted; this one is
+    the array-based convention, in scope, just missed.
+  - `Sharing::` Collabora-share cleanup (api/src/Sharing.php) - 2 fragments (`share_expires <`,
+    `share_writable IN (...)`).
+  - `Vfs\Sharing::delete()`/`vfs_hook()` (api/src/Vfs/Sharing.php) - 2 fragments (both `share_path
+    LIKE` conditions).
+  - `Storage\History::get_rows()`'s caller-supplied `'filter'` ingestion (api/src/Storage/History.php)
+    now wraps an incoming plain string itself (narrow, audited trust boundary - only one real caller,
+    `calendar_uiforms::setup_history()`, never client-reachable, see the method's own long-standing
+    comment) rather than requiring every caller to wrap it, keeping both the old plain-string
+    convention and the new explicit-SqlFragment one working; `calendar_uiforms::setup_history()`
+    itself updated to wrap its own literal too, for consistency with the rest of the codebase.
+  - Several test files' own fixtures needed updating for the new default (not app bugs): they either
+    deliberately exercise the legacy unwrapped convention directly (now need an explicit
+    `->requireSqlFragmentObjects(false)` clone - `SqlFragmentTest`, `ExpressionTest`,
+    `InsertUpdateDeleteTest`) or exercise `Storage\Base`'s documented caller-supplied raw-fragment
+    pass-through (now need to wrap their own literal, same as any other caller would -
+    `SaveDeleteTest`'s three tests, `RequireSqlFragmentObjectsTest`, which was also renamed/inverted
+    to test opt-OUT clone isolation instead of opt-IN).
+- **Verification scope and a known limitation**: `api/tests/Db` + `api/tests/Storage` (471 tests) run
+  clean under the new default except one pre-existing, unrelated failure (`ContactsTest`: "bad login
+  or password" - confirmed via a temporary revert of just the default-flip line that this reproduces
+  identically with the OLD default too, so NOT caused by this change; root cause found separately:
+  self-inflicted `egw_access_log` pollution from running login-based tests very many times in one
+  session, tripping `Session::login_blocked()`'s own real lockout - needs those rows cleared or the
+  block window to pass, not a code fix). A full `api/tests` run was NOT usable as a signal once that
+  lockout tripped (cascades through every test via the shared `LoggedInTest` base). **Not yet run**:
+  calendar/infolog/resources/addressbook/timesheet/projectmanager/tracker's own full suites, or any
+  EPL app's - the global flip is a superset of what those apps' own opt-in already enforced, so no
+  regression is expected there, but this has not been empirically re-verified post-flip.
+- **Not yet done, open**: a broader sweep for more of the same shape of gap (api/src classes/static
+  classes previously marked "wrapped, no opt-in point, future-proofing only" - now LIVE enforcement,
+  not future-proofing - so any mistake in that earlier wrapping is no longer latent). The findings
+  above were only what `api/tests/Db`+`api/tests/Storage`'s existing coverage happened to exercise;
+  wider app test suites, and especially the composer-package/EPL apps with thin or no test coverage
+  (bookmarks, news_admin, openid, managementserver, ...) are the likely remaining risk, same as every
+  per-app pilot before this one kept finding one or two more misses on first real exercise.
 
 **Unrelated, but found while tracing `Api\Storage\Base::search2criteria()` callers for this
 project**: `search2criteria()`'s own first line (`if (empty($_pattern) || is_array($_pattern) ||

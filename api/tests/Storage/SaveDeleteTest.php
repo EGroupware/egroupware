@@ -281,7 +281,7 @@ class SaveDeleteTest extends TestCase
 		$original = $this->insertRow(array('t_modifier' => 10));
 
 		$this->storage->data = array('t_id' => $original['t_id']);
-		$errno = $this->storage->update(array(0 => 't_modifier=t_modifier+1'), false);
+		$errno = $this->storage->update(array(0 => Api\Db\SqlFragment::raw('t_modifier=t_modifier+1')), false);
 		$this->assertSame(0, $errno);
 
 		$row = self::$db->select('egw_test', 't_modifier', array('t_id' => $original['t_id']), __LINE__, __FILE__, false, '', 'test')->fetch();
@@ -296,11 +296,11 @@ class SaveDeleteTest extends TestCase
 	{
 		$row = $this->insertRow(array('t_modifier' => 10));
 
-		$found = $this->storage->read(array('t_id' => $row['t_id'], 't_modifier > 5'));
+		$found = $this->storage->read(array('t_id' => $row['t_id'], Api\Db\SqlFragment::raw('t_modifier > 5')));
 		$this->assertNotFalse($found, 'the raw fragment condition is satisfied, the row must be found');
 		$this->assertEquals($row['t_id'], $this->storage->data['t_id']);
 
-		$not_found = $this->storage->read(array('t_id' => $row['t_id'], 't_modifier > 50'));
+		$not_found = $this->storage->read(array('t_id' => $row['t_id'], Api\Db\SqlFragment::raw('t_modifier > 50')));
 		$this->assertFalse($not_found, 'the raw fragment condition is NOT satisfied, nothing must be found');
 	}
 
@@ -314,7 +314,7 @@ class SaveDeleteTest extends TestCase
 		$keep = $this->insertRow(array('t_title' => $shared_title, 't_modifier' => 1));
 		$remove = $this->insertRow(array('t_title' => $shared_title, 't_modifier' => 10));
 
-		$affected = $this->storage->delete(array('t_title' => $shared_title, 't_modifier > 5'));
+		$affected = $this->storage->delete(array('t_title' => $shared_title, Api\Db\SqlFragment::raw('t_modifier > 5')));
 		$this->assertEquals(1, $affected,
 			'only the row matching BOTH the column criteria and the raw fragment must be deleted');
 

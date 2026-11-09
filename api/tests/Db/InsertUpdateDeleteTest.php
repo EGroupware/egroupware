@@ -320,12 +320,16 @@ class InsertUpdateDeleteTest extends TestCase
 	 */
 	public function testUpdateWithIntegerKeyRawSqlFragment()
 	{
-		self::$db->insert('egw_test', array('t_title' => 'InsertUpdateDeleteTest-rawfrag-'.bin2hex(random_bytes(4)), 't_modifier' => 10),
+		// this legacy, unwrapped convention only still works for a Db instance that opts out of
+		// the default Db\SqlFragment enforcement - see SqlFragmentTest for the enforced default
+		$db = (clone self::$db)->requireSqlFragmentObjects(false);
+
+		$db->insert('egw_test', array('t_title' => 'InsertUpdateDeleteTest-rawfrag-'.bin2hex(random_bytes(4)), 't_modifier' => 10),
 			false, __LINE__, __FILE__, 'test');
-		$row = self::$db->query('SELECT * FROM egw_test WHERE t_modifier=10 ORDER BY t_id DESC', __LINE__, __FILE__)->fetch();
+		$row = $db->query('SELECT * FROM egw_test WHERE t_modifier=10 ORDER BY t_id DESC', __LINE__, __FILE__)->fetch();
 		$this->track((int)$row['t_id']);
 
-		self::$db->update('egw_test', array(0 => 't_modifier=t_modifier+1'), array('t_id' => $row['t_id']), __LINE__, __FILE__, 'test');
+		$db->update('egw_test', array(0 => 't_modifier=t_modifier+1'), array('t_id' => $row['t_id']), __LINE__, __FILE__, 'test');
 
 		$updated = $this->fetchRow((int)$row['t_id']);
 		$this->assertEquals(11, $updated['t_modifier']);
@@ -415,7 +419,7 @@ class InsertUpdateDeleteTest extends TestCase
 			{
 				if ($this->hide_existing_row && $cols === 'count(*)')
 				{
-					$where[] = '1=0';	// we do not see the row, which the other process just inserted
+					$where[] = Api\Db\SqlFragment::raw('1=0');	// we do not see the row, which the other process just inserted
 				}
 				return parent::select($table, $cols, $where, $line, $file, $offset, $append, $app, $num_rows, $join, $table_def, $fetchmode);
 			}

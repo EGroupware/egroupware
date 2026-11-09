@@ -123,18 +123,19 @@ class RequireSqlFragmentObjectsTest extends TestCase
 	}
 
 	/**
-	 * The opt-in must only affect the instance it was called on, never the shared self::$db it was
-	 * cloned from - a plain string at an integer key must keep working there exactly as before.
+	 * Opting a clone OUT must only affect the instance it was called on, never the shared self::$db
+	 * it was cloned from - self::$db stays enforced (the default) regardless.
 	 */
-	public function testOptingInOneInstanceDoesNotAffectTheSharedConnection()
+	public function testOptingOutOneInstanceDoesNotAffectTheSharedConnection()
 	{
 		$row = $this->insertRow(array('t_modifier' => 10));
 
-		$this->strictStorage(); // opts in a clone, must not leak back to self::$db
+		$lenient = new Api\Storage\Base('test', 'egw_test', (clone self::$db)->requireSqlFragmentObjects(false));
+		$found = $lenient->read(array('t_id' => $row['t_id'], 't_modifier > 0'));
+		$this->assertNotFalse($found, 'an explicitly opted-out clone must still accept a plain string at an integer key');
 
 		$storage = new Api\Storage\Base('test', 'egw_test', self::$db);
-		$found = $storage->read(array('t_id' => $row['t_id'], 't_modifier > 0'));
-
-		$this->assertNotFalse($found, 'the shared connection must be unaffected by another instance opting in');
+		$this->expectException(Api\Db\Exception\InvalidArgument::class);
+		$storage->read(array('t_id' => $row['t_id'], 't_modifier > 0'));
 	}
 }

@@ -246,15 +246,18 @@ class ExpressionTest extends TestCase
 	 */
 	public function testColumnDataImplodeIntegerKeyPassesThroughRawSqlFragment()
 	{
+		// this legacy, unwrapped convention only still works for a Db instance that opts out of
+		// the default Db\SqlFragment enforcement - see SqlFragmentTest for the enforced default
+		$db = (clone self::$db)->requireSqlFragmentObjects(false);
 		$id = $this->insertRow(['t_modifier' => 10]);
 
-		$fragment = self::$db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], True, False, self::$table_def);
+		$fragment = $db->column_data_implode(',', [0 => 't_modifier=t_modifier+1'], True, False, self::$table_def);
 		$this->assertSame('t_modifier=t_modifier+1', (string)$fragment,
 			'an integer-keyed array value must pass through completely unquoted/unmodified');
 
-		self::$db->update('egw_test', [0 => 't_modifier=t_modifier+1'], ['t_id' => $id], __LINE__, __FILE__, 'test');
+		$db->update('egw_test', [0 => 't_modifier=t_modifier+1'], ['t_id' => $id], __LINE__, __FILE__, 'test');
 
-		$row = self::$db->select('egw_test', 't_modifier', ['t_id' => $id], __LINE__, __FILE__, false, '', 'test')->fetch();
+		$row = $db->select('egw_test', 't_modifier', ['t_id' => $id], __LINE__, __FILE__, false, '', 'test')->fetch();
 		$this->assertEquals(11, $row['t_modifier'], 'the raw SQL fragment must have actually incremented the stored value');
 	}
 

@@ -105,14 +105,15 @@ class Db
 	var $readonly = false;
 
 	/**
-	 * Per-instance opt-in: once true, an integer array key whose value is not an
-	 * Db\SqlFragment instance throws Db\Exception\InvalidArgument, instead of being used as a
-	 * raw, unquoted SQL fragment. Off by default, to not break code not yet converted to use
-	 * Db\SqlFragment for its own raw fragments - see requireSqlFragmentObjects().
+	 * Per-instance opt-out: while true (the default, set by __construct()), an integer array key
+	 * whose value is not a Db\SqlFragment instance throws Db\Exception\InvalidArgument, instead of
+	 * being used as a raw, unquoted SQL fragment. __construct()'s own $use_sql_fragment parameter
+	 * resolves this from $GLOBALS['egw_info']['server']['opt_out_sql_fragment'] by default - see
+	 * requireSqlFragmentObjects() and __construct().
 	 *
 	 * @var bool
 	 */
-	protected bool $requireSqlFragmentObjects = false;
+	protected bool $requireSqlFragmentObjects = true;
 
 	/**
 	* @var int $Debug enable debuging - 0 no, 1 yes
@@ -279,7 +280,14 @@ class Db
 	 *
 	 * @param ?array $db_data =null values for keys 'db_name', 'db_host', 'db_port', 'db_user', 'db_pass', 'db_type', 'db_readonly'
 	 */
-	function __construct(?array $db_data=null)
+	/**
+	 * @param ?array $db_data
+	 * @param ?bool $use_sql_fragment =null null (default): resolve from
+	 *	$GLOBALS['egw_info']['server']['opt_out_sql_fragment'] (see requireSqlFragmentObjects());
+	 *	true/false: force requireSqlFragmentObjects() regardless of that config value - callers
+	 *	already known to only use Db\SqlFragment for their own raw fragments should pass true
+	 */
+	function __construct(?array $db_data=null, ?bool $use_sql_fragment=null)
 	{
 		if (!is_null($db_data))
 		{
@@ -296,6 +304,7 @@ class Db
 				$this->$var = $db_data[$key];
 			}
 		}
+		$this->requireSqlFragmentObjects($use_sql_fragment ?? empty($GLOBALS['egw_info']['server']['opt_out_sql_fragment']));
 //if ($GLOBALS['egw_info']['server']['default_domain'] == 'ralfsmacbook.local') $this->query_log = '/tmp/query.log';
 	}
 
@@ -1641,13 +1650,20 @@ class Db
 	}
 
 	/**
-	 * Get or set this instance's requireSqlFragmentObjects opt-in (see the property's own doc)
+	 * Get or set this instance's requireSqlFragmentObjects opt-out (see the property's own doc)
 	 *
-	 * Opts in THIS Api\Db instance only - clone the (usually shared, eg. $GLOBALS['egw']->db)
-	 * instance first, rather than flipping it on the shared one, unless every caller of that
-	 * shared instance is known to already only use Db\SqlFragment for its own raw fragments:
+	 * Every newly-constructed Api\Db instance (including the shared $GLOBALS['egw']->db) resolves
+	 * this itself via __construct()'s $use_sql_fragment parameter, which defaults to
+	 * empty($GLOBALS['egw_info']['server']['opt_out_sql_fragment']) - an admin can set that config
+	 * value true in their own header.inc.php to restore the old, unenforced behavior install-wide,
+	 * at their own risk, for a 3rd-party/old app not (yet) converted to use Db\SqlFragment for its
+	 * own raw fragments, until that app is fixed.
 	 *
-	 *     $this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects();
+	 * Calling this method directly is only needed for a CLONE of an existing instance (clone does
+	 * not re-run __construct()) - eg. a known-good/converted app forcing its own clone back to
+	 * strict regardless of that opt-out, or vice versa:
+	 *
+	 *     $this->db = (clone $GLOBALS['egw']->db)->requireSqlFragmentObjects(true);
 	 *
 	 * @param ?bool $require null (default): just return the current value; bool: set it
 	 * @return ($require is null ? bool : $this)
