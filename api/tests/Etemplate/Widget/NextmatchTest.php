@@ -503,6 +503,57 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 			'an empty appname would make get_rows() return an empty history with no indication why');
 	}
 
+	// --- ajax_get_rows(): 'order' allow-list, independent of 'sort' being an array ---
+
+	/**
+	 * 'order' is normally re-derived from the allow-list regex applied to $value['sort']['id'],
+	 * but only when 'sort' arrives as an array (the shape a column-header click sends). A plain,
+	 * non-array 'sort' must not let whatever raw 'order' the client sent bypass that same regex -
+	 * a column name/`#customfield` token is all 'order' is ever supposed to carry, and some
+	 * storage layers splice it straight into a SQL fragment uninspected.
+	 */
+	public function testAjaxGetRowsDropsOrderNotMatchingAllowlistWithoutSortArray()
+	{
+		$exec_id = $this->templateRequest(array('sub_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'num_rows' => 0,
+		)));
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'sort'  => 'DESC',    // a plain string, not the ['id' => ..., 'asc' => ...] shape
+			'order' => "#mycf OR 1=1-- -",
+		), 'sub_nm');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertSame('', $query['order'] ?? null,
+			"an 'order' not matching the allow-list regex must be dropped, even when 'sort' is not an array");
+	}
+
+	/**
+	 * The allow-list must still let ordinary column-name and "#customfield" sort/lettersearch
+	 * values through with a non-array 'sort', or every plain single-click sort would break.
+	 */
+	public function testAjaxGetRowsKeepsAllowlistedOrderWithoutSortArray()
+	{
+		$exec_id = $this->templateRequest(array('sub_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'num_rows' => 0,
+		)));
+		self::$mock_get_rows_params = null;
+
+		Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(
+			'sort'  => 'ASC',
+			'order' => '#my cf',
+		), 'sub_nm');
+
+		$query = self::$mock_get_rows_params;
+		$this->assertNotNull($query, 'get_rows callback did not run');
+		$this->assertSame('#my cf', $query['order'] ?? null,
+			'a legitimate lettersearch order token must survive validation');
+	}
+
 	// --- HistoryLog::validate() filter allow-list ---
 
 	/**
