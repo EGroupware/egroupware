@@ -1851,9 +1851,9 @@ class Jmap extends Mail\Imap
 			return;
 		}
 
-		error_log(sprintf(
-			"JMAP-FALLTHROUGH-RESCUE: raw IMAP connect for acc_id=%s attempted on port %d (this account's ".
-				"JMAP(S) endpoint, not a real IMAP port) - retrying on %d.\n%s",
+		self::logRescue(sprintf(
+			"raw IMAP connect for acc_id=%s attempted on port %d (this account's JMAP(S) endpoint, ".
+				"not a real IMAP port) - retrying on %d.\n%s",
 			$this->acc_id, $configuredPort, $rescuePort, (new \Exception())->getTraceAsString()
 		));
 		$this->setParam('port', $rescuePort);
@@ -1879,6 +1879,27 @@ class Jmap extends Mail\Imap
 	public static function rescuePortFor(int $configuredPort) : ?int
 	{
 		return in_array($configuredPort, [143, self::RESCUE_IMAP_PORT], true) ? null : self::RESCUE_IMAP_PORT;
+	}
+
+	/**
+	 * Log a JMAP-FALLTHROUGH-RESCUE occurrence to its own file, instead of the general PHP
+	 * error-log - mixed in with everything else PHP/EGroupware logs there, these would be
+	 * impractical to ever go through for the later triage that's the whole point of logging them
+	 * (same files_dir-based convention as eg. Auth::log()'s auth.log, not a hardcoded path).
+	 *
+	 * @param string $message
+	 */
+	protected static function logRescue(string $message)
+	{
+		if (($fp = fopen($GLOBALS['egw_info']['server']['files_dir'].'/jmap-imap-fallback.log', 'a')))
+		{
+			fwrite($fp, date('Y-m-d H:i:s: ').'JMAP-FALLTHROUGH-RESCUE: '.$message."\n");
+			fclose($fp);
+		}
+		else
+		{
+			error_log('JMAP-FALLTHROUGH-RESCUE: '.$message);
+		}
 	}
 
 	/**
