@@ -887,9 +887,15 @@ class Jmap extends Mail\Imap
 	 * doc/ai/projects/mail-zpush-jmap-folders.md).
 	 *
 	 * JMAP has no hierarchical wildcard search - $pattern is interpreted as either an exact
-	 * mailbox path (no trailing '*') or a path prefix (trailing '*', stripped before matching)
-	 * against the full, already-resolved path list - covers both real call shapes in this
-	 * codebase (an exact single-mailbox lookup, or "everything under this prefix").
+	 * mailbox path (no trailing wildcard), a path prefix matching every descendant at any depth
+	 * (trailing '*', stripped before matching - eg. Mail\Imap::getMailboxes()'s
+	 * $restriction_search=0), or a path prefix matching only its IMMEDIATE children (trailing
+	 * '%', same real-IMAP-LIST one-level semantics - eg. getMailboxes()'s $restriction_search=2,
+	 * which Mail\Imap::getMailBoxesRecursive() uses to discover one level of children at a time
+	 * as it walks down the tree) - covers all real call shapes in this codebase. Getting '%'
+	 * wrong (ie. treating it the same as '*') would make getMailBoxesRecursive() pull in whole
+	 * subtrees at once instead of one level, causing duplicate entries as it then redundantly
+	 * recurses into already-returned grandchildren too.
 	 *
 	 * @param mixed $pattern string or array of strings (only the first is used - no real caller
 	 *  here passes more than one)
@@ -899,23 +905,45 @@ class Jmap extends Mail\Imap
 	 * @param array $options 'attributes'/'children'/'special_use'/'sort'/'status' unused -
 	 *  attributes are always included, status is not computed here (see status() below)
 	 * @return array path => ['attributes' => string[], 'delimiter' => '/', 'mailbox' =>
-	 *  \Horde_Imap_Client_Mailbox] - same contract shape as parent::listMailboxes()
+	 *  \Horde_Imap_Client_Mailbox] - same contract shape as parent::listMailboxes(), now also
+	 *  including '\HasChildren'/'\HasNoChildren' (see below)
 	 */
 	public function listMailboxes($pattern, $mode = \Horde_Imap_Client::MBOX_ALL, array $options = array())
 	{
 		$pattern = (string)(is_array($pattern) ? reset($pattern) : $pattern);
-		$isPrefix = $pattern === '' || substr($pattern, -1) === '*';
-		$prefix = $isPrefix ? rtrim($pattern, '*') : $pattern;
+		$oneLevel = substr($pattern, -1) === '%';
+		$isPrefix = $pattern === '' || $oneLevel || substr($pattern, -1) === '*';
+		$prefix = $isPrefix ? rtrim($pattern, '*%') : $pattern;
+
+		$all = (new JmapMailbox($this->jmapClient()))->listAll();
+		// a mailbox "has children" iff some other mailbox's parentId points at it - needed so
+		// Mail\Imap::getMailBoxesRecursive() (eg. mail_acl::getSubfolders(), the recursive ACL
+		// grant/revoke long task's folder-enumeration step) actually recurses: without a
+		// '\HasChildren' attribute here it always treated every JMAP mailbox as a leaf and
+		// silently stopped after the root folder (found live 2026-11-09, recursive ACL grant
+		// on a folder with real subfolders only ever touched that one folder - see
+		// [[project_jmap_imap_fallthrough_cleanup]])
+		$parentIds = array_flip(array_filter(array_column($all, 'parentId')));
 
 		$ret = [];
-		foreach ((new JmapMailbox($this->jmapClient()))->listAll() as $path => $mailbox)
+		foreach ($all as $path => $mailbox)
 		{
-			if ($isPrefix ? strpos($path, $prefix) !== 0 : $path !== $pattern)
+			if ($isPrefix)
+			{
+				if (strpos($path, $prefix) !== 0 ||
+					($oneLevel && strpos(substr($path, strlen($prefix)), '/') !== false))
+				{
+					continue;
+				}
+			}
+			elseif ($path !== $pattern)
 			{
 				continue;
 			}
+			$attributes = !empty($mailbox['isSubscribed']) ? [self::SUBSCRIBED_ATTRIBUTE] : [];
+			$attributes[] = isset($parentIds[$mailbox['id']]) ? '\HasChildren' : '\HasNoChildren';
 			$ret[$path] = [
-				'attributes' => !empty($mailbox['isSubscribed']) ? [self::SUBSCRIBED_ATTRIBUTE] : [],
+				'attributes' => $attributes,
 				'delimiter' => '/',
 				'mailbox' => \Horde_Imap_Client_Mailbox::get($path),
 			];
