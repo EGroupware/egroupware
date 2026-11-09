@@ -167,6 +167,18 @@ class BodyDecoding
 			}
 			$singleBodyPart['body'] = Translation::convert($singleBodyPart['body'], strtolower($singleBodyPart['charSet']));
 
+			// same reasoning/scope as HtmLawed::getStyles()'s identical strip: drop a whole HTML
+			// comment that wraps a <style> tag, BEFORE the <style>-tag extraction below, so an
+			// MSO conditional comment hiding an entire <style> block from non-Outlook clients
+			// isn't pulled out and reapplied page-wide here instead (ticket #127551). Only
+			// removed when the comment's OWN content contains a <style> tag - distinct from the
+			// marker-only strip further down, which must keep a legacy
+			// `<style><!-- css --></style>` wrapper's actual CSS content (there the comment is
+			// INSIDE the <style> tag instead, so its content never matches `<style` here).
+			$singleBodyPart['body'] = preg_replace_callback('@<!--(.*?)-->@s',
+				static function($m) { return stripos($m[1], '<style') !== false ? '' : $m[0]; },
+				$singleBodyPart['body']);
+
 			$style2buffer = '';
 			if (stripos($singleBodyPart['body'], '<style') !== false &&
 				preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle) > 0)

@@ -137,6 +137,21 @@ class HtmLawed
 	 */
 	static function getStyles(&$html)
 	{
+		// Drop a whole HTML comment that wraps a <style> tag, BEFORE extracting <style> tags
+		// below - an MSO/Outlook conditional comment routinely wraps an entire <style> block
+		// (`<!--[if gt mso 15]><style>...</style><![endif]-->`) specifically so ONLY Outlook
+		// applies it; the extraction regex right below has no comment-awareness at all, so
+		// without this it pulls that <style> out and this method re-applies it page-wide for
+		// every viewer regardless (ticket #127551: an Outlook-only `tr { font-size:0px; ... }`
+		// rule went live for everyone, hiding the message's actual text). Only removed when the
+		// comment's OWN content contains a <style> tag - a DIFFERENT, legacy
+		// `<style><!-- real css --></style>` old-browser-hiding wrapper has the comment INSIDE the
+		// <style> tag instead (so its content never matches `<style` here), and its CSS content
+		// must survive - only that wrapper's markers get dropped, further down. Deliberately does
+		// not touch the non-dashed `<![if !mso]>...<![endif]>` form, whose content must survive
+		// too (see Api\Mail\Html::convertHTMLToText()'s identical distinction).
+		$html = preg_replace_callback('@<!--(.*?)-->@s',
+			static function($m) { return stripos($m[1], '<style') !== false ? '' : $m[0]; }, $html);
 		if (stripos($html,'<style')!==false)
 		{
 			$newStyle = null;
