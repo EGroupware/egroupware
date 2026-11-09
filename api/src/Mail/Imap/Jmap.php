@@ -1823,6 +1823,26 @@ class Jmap extends Mail\Imap
 
 	/**
 	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+	 * without this override, getDelimiter() (Mail\Imap::getDelimiter()) calls $this->getNamespaces()
+	 * directly - Horde_Imap_Client_Base's own raw NAMESPACE command, NOT the getNameSpaceArray()
+	 * override just below (a different method, same underlying problem) - which tries real IMAP
+	 * protocol against what's actually the JMAP(S) endpoint for a JMAP account - found live
+	 * 2026-11-09 via mail_acl::getSubfolders() (the new recursive-ACL-grant long task's folder
+	 * enumeration step), "Error when communicating with the mail server" / raw socket read failure
+	 * during _initCapability(). Same hardcoded '/' every namespace type already uses in
+	 * getNameSpaceArray() below - RFC 8621 has no IMAP-NAMESPACE-equivalent concept, so there's no
+	 * real per-namespace delimiter to ask the server for.
+	 *
+	 * @param mixed $_type unused, kept for signature compatibility
+	 * @return string
+	 */
+	function getDelimiter($_type=1)
+	{
+		return '/';
+	}
+
+	/**
+	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
 	 * without this override, getNameSpaceArray() falls through to Horde_Imap_Client_Socket's raw
 	 * NAMESPACE command (getNamespaces()/_getNamespaces()), which tries real IMAP protocol against
 	 * what's actually the JMAP(S) endpoint for a JMAP account - found live 2026-09-08 via
