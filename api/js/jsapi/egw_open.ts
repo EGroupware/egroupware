@@ -12,6 +12,72 @@
 import './egw_core';
 import {trustedScript} from "./egw_trusted_types";
 
+const POPUP_SIZE_KEY = "egw_popup_size:";
+
+/**
+ * Key the size of a popup is remembered under: its menuaction, so popups of different forms never share one
+ *
+ * @param {string} _url url (or just the query string) of the popup
+ * @returns {string | null} null if the url has no menuaction
+ */
+function popupSizeKey(_url : string) : string | null
+{
+	const action = /[?&]menuaction=([^&#]+)/.exec(_url || "");
+	return action ? POPUP_SIZE_KEY + decodeURIComponent(action[1]) : null;
+}
+
+/**
+ * Size (outer, px) the popup for the given url had when it settled the last time, clamped to the screen
+ *
+ * @param {string} _url
+ * @returns {{width : number, height : number} | null} null if there is none
+ */
+function rememberedPopupSize(_url : string) : {width : number, height : number} | null
+{
+	try
+	{
+		const key = popupSizeKey(_url);
+		const size = key ? JSON.parse(window.localStorage.getItem(key) || "null") : null;
+		if (!size || !(size.width >= 300) || !(size.height >= 200))
+		{
+			return null;
+		}
+		return {
+			width: Math.min(size.width, window.screen.availWidth),
+			height: Math.min(size.height, window.screen.availHeight)
+		};
+	}
+	catch (e)
+	{
+		return null;
+	}
+}
+
+const POPUP_SKELETON_KEY = "egw_popup_skeleton:";
+
+/**
+ * Does the popup for the given url show a skeleton while it loads, as far as we know?
+ *
+ * Only the server knows (Framework::skeletonWanted()), so a popup tells us the first time it is opened, see
+ * rememberPopupSize().  Without it the opener has nothing to draw before the server answers.
+ *
+ * @param {string} _url
+ * @returns {boolean}
+ */
+function popupHasSkeleton(_url : string) : boolean
+{
+	try
+	{
+		const key = popupSizeKey(_url);
+		return !!key && window.localStorage.getItem(POPUP_SKELETON_KEY + key.substring(POPUP_SIZE_KEY.length)) === "1" &&
+			window.localStorage.getItem("egw_skeleton") !== "0" && !!document.getElementById("egw-skeleton-css");
+	}
+	catch (e)
+	{
+		return false;
+	}
+}
+
 export interface OpenModule
 {
 	/**
@@ -88,6 +154,18 @@ export interface OpenModule
 	 */
 	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean,
 			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
+
+	/**
+	 * Remember the size this popup window has now as the size to open the next popup of the same form with
+	 *
+	 * Called once a form popup has fitted itself to its content.  It is stored per menuaction and replaces what was
+	 * stored before, so a form that changed size is opened at its new size the next time.  Does nothing in a
+	 * window that was not opened by another one, or without a menuaction.
+	 *
+	 * @param _skeleton the popup showed a skeleton while it loaded: the next one gets it drawn by the opener right
+	 *	away, before the server has answered (see openPopup())
+	 */
+	rememberPopupSize(_skeleton? : boolean) : void;
 
 	/**
 	 * Open a (centered) popup window whose content is bootstrapped entirely client-side - no
@@ -343,6 +421,86 @@ function urlParamsLength(_extra : string|object) : number
 }
 
 
+/**
+ * A page that shows nothing but the skeleton, for the window to open on while the form is requested
+ *
+ * It is the same markup and styles the server puts in the popup page (Framework::skeleton()), which takes over
+ * when it arrives.  Opened as a page of its own (not the empty initial document of the new window) the browser
+ * keeps showing it until the form has something to paint, instead of a blank window in between.
+ *
+ * @param {Window} _opener
+ * @param {string} _url url of the form
+ * @returns {string} url of the page (a blob: url, no request)
+ */
+function popupSkeletonUrl(_opener : Window, _url : string) : string
+{
+	const action = /[?&]menuaction=([^&#.]+)/.exec(_url);
+	const icon = action ? (<any>_opener).egw?.image?.("navbar", decodeURIComponent(action[1])) : "";
+	const css = _opener.document.getElementById("egw-skeleton-css")?.textContent ?? "";
+	const background = _opener.getComputedStyle(_opener.document.body).backgroundColor;
+	const escape = (text : string) => text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+	const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title></title>' +
+		'<style id="egw-skeleton-css">' + css.replace(/<\/style/gi, "") + '</style>' +
+		'<style>html,body{margin:0;background:' + escape(background) + '}</style></head><body>' +
+		'<div id="egw-skeleton" class="egw-skeleton egw-skeleton--page" aria-hidden="true">' +
+		(icon ? '<img src="' + escape(icon) + '" alt="">' : '') + '</div></body></html>';
+	return _opener.URL.createObjectURL(new _opener.Blob([html], {type: "text/html"}));
+}
+
+/**
+ * Send a window that was opened on popupSkeletonUrl() to its form, once the skeleton has been painted
+ *
+ * Not waiting for ever: if the window does not render (or never gets the page), it goes anyway.
+ *
+ * @param {Window} _opener
+ * @param {Window} _popup the new window
+ * @param {string} _url url of the form
+ * @param {string} _skeletonUrl what the window was opened on, released when it is done
+ */
+function showFormAfterSkeleton(_opener : Window, _popup : Window, _url : string, _skeletonUrl : string) : void
+{
+	let done = false;
+	const go = () =>
+	{
+		if (done)
+		{
+			return;
+		}
+		done = true;
+		_opener.clearInterval(poll);
+		_opener.clearTimeout(giveUp);
+		try
+		{
+			_popup.location.replace(_url);
+		}
+		catch (e)
+		{
+			// closed already
+		}
+		// the new page has its own copy by now, give the browser time to have read this one
+		_opener.setTimeout(() => _opener.URL.revokeObjectURL(_skeletonUrl), 5000);
+	};
+	const giveUp = _opener.setTimeout(go, 500);
+	let painting = false;
+	const poll = _opener.setInterval(() =>
+	{
+		try
+		{
+			if (painting || _popup.closed || !_popup.document.getElementById("egw-skeleton"))
+			{
+				return _popup.closed ? go() : undefined;
+			}
+			painting = true;
+			// two frames: the first one has it painted
+			_popup.requestAnimationFrame(() => _popup.requestAnimationFrame(go));
+		}
+		catch (e)
+		{
+			go();
+		}
+	}, 5);
+}
+
 class Open implements OpenModule
 {
 	#wnd : Window;
@@ -351,6 +509,32 @@ class Open implements OpenModule
 	{
 		this.#wnd = _wnd;
 	}
+
+	rememberPopupSize = (_skeleton? : boolean) : void =>
+	{
+		try
+		{
+			const key = this.#wnd.opener ? popupSizeKey(this.#wnd.location.search) : null;
+			if (key)
+			{
+				this.#wnd.localStorage.setItem(key, JSON.stringify({width: this.#wnd.outerWidth, height: this.#wnd.outerHeight}));
+				const flag = POPUP_SKELETON_KEY + key.substring(POPUP_SIZE_KEY.length);
+				if (_skeleton)
+				{
+					this.#wnd.localStorage.setItem(flag, "1");
+				}
+				else
+				{
+					// the server does not want one any more
+					this.#wnd.localStorage.removeItem(flag);
+				}
+			}
+		}
+		catch (e)
+		{
+			// storage is not available
+		}
+	};
 
 	/**
 	 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
@@ -763,12 +947,45 @@ class Open implements OpenModule
 		// IE fails, if name contains eg. a dash (-)
 		if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
 
-		var windowID : any = self.#wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
+		// A form that is slow to build (the server sends nothing until it is done) would leave an empty window:
+		// open it on a page that is only the skeleton, and send it to the form once that has been painted
+		const standIn = popupHasSkeleton(_url) ? popupSkeletonUrl(self.#wnd, _url) : '';
+		var windowID : any = self.#wnd.open(standIn || _url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
 			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
 		// inject egw object
 		if (windowID) windowID.egw = (<any>self.#wnd).egw;
+		if (standIn)
+		{
+			if (windowID)
+			{
+				showFormAfterSkeleton(self.#wnd, windowID, _url, standIn);
+			}
+			else
+			{
+				self.#wnd.URL.revokeObjectURL(standIn);
+			}
+		}
+
+		// A form popup grows to fit its content once it is loaded (egw.js resize_popup()): give it the size it ended
+		// up with last time right away, so it does not resize and reflow in front of the user
+		const settled = windowID ? rememberedPopupSize(_url) : null;
+		if (settled)
+		{
+			try
+			{
+				windowID.resizeTo(settled.width, settled.height);
+				// it was centered for the size it was opened with
+				windowID.moveTo(
+					Math.max(0, (top_wnd.outerWidth/2)-(settled.width/2)+(<any>self.#wnd).screenX),
+					Math.max(0, (top_wnd.outerHeight/2)-(settled.height/2)+(<any>self.#wnd).screenY));
+			}
+			catch (e)
+			{
+				// the window is not ours to resize
+			}
+		}
 
 		// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 		if (_returnID !== false) return windowID;

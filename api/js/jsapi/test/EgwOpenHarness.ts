@@ -87,9 +87,9 @@ export interface FormSubmit
 	connected : boolean;
 }
 
-export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv>
+export async function createEgwOpenEnv(prefs : object = {}, src? : string) : Promise<EgwOpenEnv>
 {
-	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs));
+	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs), src);
 	const env = base as EgwOpenEnv;
 
 	await loadScript(env.window.document, '/vendor/bower-asset/jquery/dist/jquery.min.js');

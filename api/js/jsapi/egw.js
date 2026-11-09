@@ -550,6 +550,8 @@ window.egw_import = (function()
 		sidebox = null;
 
 		var resize_attempt = 0;
+		var remember_size_timeout;
+		var popup_had_skeleton = false;
 		var resize_popup = function()
 		{
 			var $main_div = jQuery('#popupMainDiv');
@@ -629,6 +631,18 @@ window.egw_import = (function()
 			else
 			{
 				resize_attempt = 0;
+				// the form has its final size and layout now, uncover it (etemplate2 leaves that to us, see below)
+				var skeleton = document.getElementById('egw-skeleton');
+				if (skeleton) skeleton.remove();
+				// remember the size it settled at, the opener opens the next popup like this at that size
+				// instead of growing it after it is shown (see egw_open.ts)
+				window.clearTimeout(remember_size_timeout);
+				remember_size_timeout = window.setTimeout(function()
+				{
+					// egw is the opener's in a popup, so ask for the instance of this window
+					const own = egw(window);
+					if (typeof own.rememberPopupSize === 'function') own.rememberPopupSize(popup_had_skeleton);
+				}, 400);
 			}
 			$main_div = null;
 			$et2 = null;
@@ -644,6 +658,18 @@ window.egw_import = (function()
 			{
 				const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				if (popup || window.opener && !egwIsMobile()) {
+					// The skeleton the server put in the page stays until the popup is resized to fit the form:
+					// when etemplate2 is done with it we keep it, resize_popup() removes it (or we do, if that does not run)
+					const skeleton = document.getElementById('egw-skeleton');
+					popup_had_skeleton = !!skeleton;
+					if (skeleton)
+					{
+						skeleton.addEventListener('egw-skeleton-release', (event) =>
+						{
+							event.preventDefault();
+							window.setTimeout(() => skeleton.remove(), 500);
+						});
+					}
 					// Resize popup when et2 load is done
 					node.addEventListener("load", (event) =>
 					{

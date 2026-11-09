@@ -386,6 +386,220 @@ describe('egw_open.js (open)', () =>
 			assert.strictEqual(result, fakeWindow);
 		});
 
+		describe('remembered popup size', () =>
+		{
+			const URL = '/egroupware/index.php?menuaction=infolog.infolog_ui.edit';
+			const KEY = 'egw_popup_size:infolog.infolog_ui.edit';
+			afterEach(() => window.localStorage.removeItem(KEY));
+
+			it('gives a form popup the size it ended up with last time, so it does not grow after it is shown', () =>
+			{
+				window.localStorage.setItem(KEY, JSON.stringify({width: 600, height: 450}));
+				const fakeWindow : any = {resizeTo: sinon.stub()};
+				(env.window.open as sinon.SinonStub).returns(fakeWindow);
+
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+
+				assert.isTrue(fakeWindow.resizeTo.calledOnceWith(600, 450));
+			});
+
+			it('clamps it to the screen', () =>
+			{
+				window.localStorage.setItem(KEY, JSON.stringify({width: 99999, height: 99999}));
+				const fakeWindow : any = {resizeTo: sinon.stub()};
+				(env.window.open as sinon.SinonStub).returns(fakeWindow);
+
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+
+				const [width, height] = fakeWindow.resizeTo.firstCall.args;
+				assert.isAtMost(width, window.screen.availWidth);
+				assert.isAtMost(height, window.screen.availHeight);
+			});
+
+
+			it('leaves the size alone for a popup it has not seen, a url without menuaction, or a window it cannot resize', () =>
+			{
+				const unseen : any = {resizeTo: sinon.stub()};
+				(env.window.open as sinon.SinonStub).returns(unseen);
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+				assert.isFalse(unseen.resizeTo.called);
+
+				window.localStorage.setItem(KEY, JSON.stringify({width: 600, height: 450}));
+				const plain : any = {resizeTo: sinon.stub()};
+				(env.window.open as sinon.SinonStub).returns(plain);
+				env.egw().openPopup('/egroupware/webdav.php/home/x.pdf', 500, 400, 'name', false, true, 'no');
+				assert.isFalse(plain.resizeTo.called);
+
+				const refusing : any = {resizeTo: () => { throw new DOMException('no', 'SecurityError'); }};
+				(env.window.open as sinon.SinonStub).returns(refusing);
+				assert.doesNotThrow(() => env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no'));
+			});
+		});
+
+		describe('skeleton drawn by the opener', () =>
+		{
+			const URL = '/egroupware/index.php?menuaction=infolog.infolog_ui.edit&type=task';
+			const KEY = 'egw_popup_skeleton:infolog.infolog_ui.edit';
+			let css : HTMLStyleElement, popupFrame : HTMLIFrameElement, fakeWindow : any;
+			beforeEach(() =>
+			{
+				css = env.window.document.createElement('style');
+				css.id = 'egw-skeleton-css';
+				css.textContent = '.egw-skeleton{inset:0}';
+				env.window.document.head.append(css);
+				// stands in for the new window: a real document to draw into, and a location to navigate
+				popupFrame = document.createElement('iframe');
+				document.body.append(popupFrame);
+				fakeWindow = {
+					document: popupFrame.contentDocument,
+					location: {replace: sinon.stub()},
+					setTimeout: (cb : Function, ms : number) => window.setTimeout(cb, ms),
+					clearTimeout: (id : number) => window.clearTimeout(id),
+					requestAnimationFrame: (cb : Function) => window.requestAnimationFrame(cb as any),
+					resizeTo: sinon.stub(), moveTo: sinon.stub()
+				};
+				(env.window.open as sinon.SinonStub).returns(fakeWindow);
+			});
+			afterEach(() =>
+			{
+				css.remove();
+				popupFrame.remove();
+				window.localStorage.removeItem(KEY);
+			});
+
+			it('opens a form it knows has a skeleton on a page that is only the skeleton', async() =>
+			{
+				window.localStorage.setItem(KEY, '1');
+
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+
+				const opened = (env.window.open as sinon.SinonStub).firstCall.args[0];
+				assert.match(opened, /^blob:/, 'no request for it');
+				const html = await (await fetch(opened)).text();
+				assert.include(html, 'id="egw-skeleton"');
+				assert.include(html, '.egw-skeleton{inset:0}', 'with its styles');
+				assert.notInclude(html, '<script');
+			});
+
+			it('sends the window to the form after the skeleton was painted, and not before', async() =>
+			{
+				window.localStorage.setItem(KEY, '1');
+				const frames : Function[] = [];
+				fakeWindow.requestAnimationFrame = (cb : Function) => frames.push(cb);
+				fakeWindow.closed = false;
+
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+				await new Promise(resolve => setTimeout(resolve, 60));
+				assert.isFalse(fakeWindow.location.replace.called, 'the new window has not shown the skeleton yet');
+
+				// the skeleton page is in the window now
+				const skeleton = fakeWindow.document.createElement('div');
+				skeleton.id = 'egw-skeleton';
+				fakeWindow.document.body.append(skeleton);
+				await new Promise(resolve => setTimeout(resolve, 60));
+				assert.lengthOf(frames, 1);
+				assert.isFalse(fakeWindow.location.replace.called, 'wait for the frame');
+				frames.shift()();
+				assert.lengthOf(frames, 1);
+				assert.isFalse(fakeWindow.location.replace.called, 'and the next one');
+				frames.shift()();
+
+				assert.isTrue(fakeWindow.location.replace.calledOnceWith(URL));
+			});
+
+			it('goes to the form anyway when the new window never shows the skeleton', async() =>
+			{
+				window.localStorage.setItem(KEY, '1');
+				fakeWindow.closed = false;
+
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+				await new Promise(resolve => setTimeout(resolve, 700));
+
+				assert.isTrue(fakeWindow.location.replace.calledOnceWith(URL));
+			});
+
+			it('opens everything else on its url as before', () =>
+			{
+				env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+				assert.equal((env.window.open as sinon.SinonStub).firstCall.args[0], URL, 'a form not known to have one');
+
+				window.localStorage.setItem(KEY, '1');
+				env.window.localStorage.setItem('egw_skeleton', '0');
+				try
+				{
+					env.egw().openPopup(URL, 500, 400, 'name', false, true, 'no');
+					assert.equal((env.window.open as sinon.SinonStub).secondCall.args[0], URL, 'skeletons are switched off');
+				}
+				finally
+				{
+					env.window.localStorage.removeItem('egw_skeleton');
+				}
+			});
+
+			it('learns from the popup whether the server showed a skeleton, and forgets when it stops', async() =>
+			{
+				const popup = await createEgwOpenEnv({}, '/api/js/jsapi/test/blank.html?menuaction=infolog.infolog_ui.edit');
+				Object.defineProperty(popup.window, 'opener', {value: {}, configurable: true});
+
+				(<any>popup.egw()).rememberPopupSize(true);
+				assert.equal(window.localStorage.getItem(KEY), '1');
+
+				(<any>popup.egw()).rememberPopupSize(false);
+				assert.isNull(window.localStorage.getItem(KEY));
+				window.localStorage.removeItem('egw_popup_size:infolog.infolog_ui.edit');
+			});
+		});
+
+		describe('rememberPopupSize()', () =>
+		{
+			const KEY = (action : string) => 'egw_popup_size:' + action;
+			const ACTIONS = ['infolog.infolog_ui.edit', 'timesheet.timesheet_ui.edit'];
+			let popup : EgwOpenEnv;
+			// a window of its own, whose location carries the menuaction like a popup's does
+			const popupOf = async(search : string, opener : any = {}) =>
+			{
+				popup = await createEgwOpenEnv({}, '/api/js/jsapi/test/blank.html' + search);
+				Object.defineProperty(popup.window, 'opener', {value: opener, configurable: true});
+				return <any>popup.egw();
+			};
+			afterEach(() => ACTIONS.forEach(a => window.localStorage.removeItem(KEY(a))));
+
+			it('stores the size of the window under its menuaction', async() =>
+			{
+				(await popupOf('?menuaction=infolog.infolog_ui.edit&action=add')).rememberPopupSize();
+
+				assert.deepEqual(JSON.parse(window.localStorage.getItem(KEY('infolog.infolog_ui.edit'))),
+					{width: popup.window.outerWidth, height: popup.window.outerHeight});
+			});
+
+			it('keeps the sizes of different forms apart', async() =>
+			{
+				window.localStorage.setItem(KEY('timesheet.timesheet_ui.edit'), JSON.stringify({width: 640, height: 480}));
+
+				(await popupOf('?menuaction=infolog.infolog_ui.edit')).rememberPopupSize();
+
+				assert.deepEqual(JSON.parse(window.localStorage.getItem(KEY('timesheet.timesheet_ui.edit'))), {width: 640, height: 480});
+			});
+
+			it('replaces what was remembered, so a form that changed size opens at its new size next time', async() =>
+			{
+				window.localStorage.setItem(KEY('infolog.infolog_ui.edit'), JSON.stringify({width: 640, height: 480}));
+
+				(await popupOf('?menuaction=infolog.infolog_ui.edit')).rememberPopupSize();
+
+				assert.deepEqual(JSON.parse(window.localStorage.getItem(KEY('infolog.infolog_ui.edit'))),
+					{width: popup.window.outerWidth, height: popup.window.outerHeight});
+			});
+
+			it('does nothing in a window nobody opened, or without a menuaction', async() =>
+			{
+				(await popupOf('?menuaction=infolog.infolog_ui.edit', null)).rememberPopupSize();
+				(await popupOf('?something=else')).rememberPopupSize();
+
+				assert.deepEqual(Object.keys(window.localStorage).filter(k => k.startsWith('egw_popup_size:')), []);
+			});
+		});
+
 		it('returns undefined when _returnID is false, even though window.open() still runs', () =>
 		{
 			const instance = env.egw();
