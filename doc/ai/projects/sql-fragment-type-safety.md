@@ -274,7 +274,7 @@ are already wrapped and ready.
 | invoices | **Own fragments wrapped** (`ApiHandler.php`/`Bo.php`) |
 | kanban | **Own fragments wrapped** (`Bo.php`/`Hooks.php`/`Bo/Column.php`); **follow-up fix** (commit `5d79282`) - `Hooks::get_actions()`'s *inner* `column_data_implode()` call still had bare strings in its own `$where` array, even though the outer expression was already wrapped (see the "nested call" gotcha above); live-broke the addressbook list page once the global flip landed |
 | licenses | **Own fragment wrapped** (`licenses_ui.inc.php`) |
-| managementserver | **Own fragments wrapped, every file with `Api\Db` usage swept** (commit `63788ed`); future-proofing only, no opt-in point anywhere in this app - see the Eleventh lesson below |
+| managementserver | **Done** (follow-up commit `91321f4`, 2026-11-09) - re-read every file with direct `Api\Db` access rather than trusting the earlier fork-assisted sweep, per ralf's explicit "scan and fix, not opt-out" instruction (he actively relies on this app). Found and wrapped real misses in 10 files: `managementserver_automatic` (8 sites, admin-configured scheduled-job filters), `managementserver_ui`, `managementserver_instance` (2, one beyond the single site the Eleventh lesson already found), `managementserver_mail` (4), `managementserver_search` (3), `managementserver_session` (4), `managementserver_sync` (5), `managementserver_vhost`, `managementserver_wopi` (4), and `mail-proxy.php`'s account/hash lookup (found live-missing before, never actually committed - now is). No `26` branch for this repo, so master-only by necessity; no test suite, so syntax-checked only, same verification level as the original sweep |
 | records | **Done** (follow-up commit `d51f788`) - 4 more fragments found live-breaking the records list page the moment the global flip landed (`records_ui::get_rows()`'s default status/date `col_filter` entries - the status filter fires unconditionally on *every* unfiltered view - and `records_export_csv`'s two range-filter entries), missed by the earlier conversion; no `26` branch for this repo, so master-only by necessity |
 | vidopro | N/A - no `Api\Db` usage found |
 
@@ -287,10 +287,9 @@ per-app, not uniformly - see "Global default flip" below for the distinction bet
 schulmanager - dead or never-maintained code, auditing every raw fragment would be pure waste).
 `guacamole`/`profitbricks`/`knowledgebase` were checked and found to have no bare-fragment usage at
 all (either no direct `Api\Db` access, or only ever normal `column => value` arrays) - nothing to do.
-`managementserver` (EPL, already swept once, see the EPL table above) was deliberately **not**
-re-audited proactively - smaller direct-access footprint than the others and partially covered
-already; left for a reactive fix if and when it actually breaks, rather than repeating the
-Eleventh lesson's expensive manual sweep pre-emptively.
+`managementserver` (EPL, already swept once, see the EPL table above) was initially **not**
+re-audited proactively, then properly fixed (not opted out) once ralf asked directly whether it had
+been - see the EPL table entry above for the full list of what the re-read found.
 
 ## TEMPORARY: per-instance clone pattern - revert when enforcement becomes the default
 
@@ -724,10 +723,10 @@ it silently unenforced forever.
   classes previously marked "wrapped, no opt-in point, future-proofing only" - now LIVE enforcement,
   not future-proofing - so any mistake in that earlier wrapping is no longer latent). The findings
   above were only what `api/tests/Db`+`api/tests/Storage`'s existing coverage, plus the user's own
-  live testing, happened to exercise; `managementserver` (EPL, partially swept already, deliberately
-  not re-audited - see the app tracker above) and any other composer-package/EPL app with thin or no
-  test coverage are the likely remaining risk, same as every per-app pilot before this one kept
-  finding one or two more misses on first real exercise.
+  live testing, happened to exercise, plus `managementserver`'s now-completed full re-read (see the
+  EPL tracker entry above). Any other composer-package/EPL app with thin or no test coverage that
+  hasn't been live-exercised yet is the likely remaining risk, same as every per-app pilot before
+  this one kept finding one or two more misses on first real exercise.
 
 **Unrelated, but found while tracing `Api\Storage\Base::search2criteria()` callers for this
 project**: `search2criteria()`'s own first line (`if (empty($_pattern) || is_array($_pattern) ||
