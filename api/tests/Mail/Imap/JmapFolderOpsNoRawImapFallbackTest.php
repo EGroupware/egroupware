@@ -121,6 +121,25 @@ class JmapFolderOpsNoRawImapFallbackTest extends \EGroupware\Api\AppTest
 		];
 	}
 
+	/**
+	 * getDelimiter() (Mail\Imap::getDelimiter()) used to call $this->getNamespaces() directly -
+	 * Horde_Imap_Client_Base's own raw NAMESPACE command, a different method than the
+	 * already-guarded getNameSpaceArray() - so it fell through to a real IMAP handshake against
+	 * the JMAP(S) endpoint. mail_acl::getSubfolders() (the recursive-ACL-grant/revoke long task's
+	 * folder-enumeration step) calls it directly, so a JMAP account crashed with "Error when
+	 * communicating with the mail server" the moment anyone tried to recursively grant/revoke
+	 * ACL rights (found live 2026-11-09, a sibling report to ticket #126501).
+	 */
+	public function testGetDelimiterReturnsSlashWithoutRawImapFallback()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
+
+		$this->assertSame('/', $jmap->getDelimiter());
+		$this->assertSame('/', $jmap->getDelimiter('shared'));
+		// never even touched jmapCall(), let alone a raw IMAP socket - purely hardcoded
+		$this->assertSame([], $jmap->jmapClient()->calls);
+	}
+
 	public function testListMailboxesWildcardReturnsEveryPathWithSubscribedAttribute()
 	{
 		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
