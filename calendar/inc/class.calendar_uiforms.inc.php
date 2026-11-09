@@ -3503,9 +3503,9 @@ class calendar_uiforms extends calendar_ui
 		if(!empty($content['recurrence']))
 		{
 			$content['history']['filter'] = array(
-				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
+				Api\Db\SqlFragment::raw('(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
 					history_new_value LIKE \'%' . Api\Storage\Tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR
-					history_old_value LIKE \'%' . Api\Storage\Tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))'
+					history_old_value LIKE \'%' . Api\Storage\Tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))')
 			);
 		}
 

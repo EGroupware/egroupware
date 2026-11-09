@@ -203,7 +203,7 @@ class Credentials
 			$rows = self::get_db()->select(self::TABLE, '*', array(
 				'acc_id' => $acc_id,
 				'account_id' => $account_id,
-				'(cred_type & '.(int)$type.') > 0',	// postgreSQL require > 0, or gives error as it expects boolean
+				Api\Db\SqlFragment::raw('(cred_type & '.(int)$type.') > 0'),	// postgreSQL require > 0, or gives error as it expects boolean
 			), __LINE__, __FILE__, false,
 				// account_id DESC ensures 0=all always overwrite (old user-specific credentials)
 				'ORDER BY account_id ASC, cred_type ASC', self::APP);
@@ -528,7 +528,7 @@ class Credentials
 		}
 		elseif ($type != self::ALL)
 		{
-			$where[] = '(cred_type & '.(int)$type.') > 0';	// postgreSQL require > 0, or gives error as it expects boolean
+			$where[] = Api\Db\SqlFragment::raw('(cred_type & '.(int)$type.') > 0');	// postgreSQL require > 0, or gives error as it expects boolean
 		}
 		self::get_db()->delete(self::TABLE, $where, __LINE__, __FILE__, self::APP);
 

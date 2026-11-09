@@ -934,8 +934,8 @@ class Sharing
 			if (class_exists('EGroupware\\Collabora\\Wopi'))
 			{
 				self::$db->delete(self::TABLE, array(
-					'share_expires < '.self::$db->quote(DateTime::to(self::WOPI_KEEP, 'Y-m-d')),
-					'share_writable IN ('.\EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.\EGroupware\Collabora\Wopi::WOPI_READONLY.')',
+					Db\SqlFragment::raw('share_expires < '.self::$db->quote(DateTime::to(self::WOPI_KEEP, 'Y-m-d'))),
+					Db\SqlFragment::raw('share_writable IN ('.\EGroupware\Collabora\Wopi::WOPI_WRITABLE.','.\EGroupware\Collabora\Wopi::WOPI_READONLY.')'),
 				), __LINE__, __FILE__);
 			}
 

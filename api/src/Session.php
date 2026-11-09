@@ -1222,7 +1222,7 @@ class Session
 				'where' => array(
 					'account_id' => 0,
 					'ip' => $ip,
-					"li > $block_time",
+					Db\SqlFragment::raw("li > $block_time"),
 				),
 			),
 			array(
@@ -1231,7 +1231,7 @@ class Session
 				'where' => array(
 					'account_id' => 0,
 					'loginid' => $login,
-					"li > $block_time",
+					Db\SqlFragment::raw("li > $block_time"),
 				),
 			),
 			array(
@@ -1239,8 +1239,8 @@ class Session
 				'cols'  => "'false_id' AS name,COUNT(*) AS num",
 				'where' => array(
 					'account_id' => 0,
-					'loginid LIKE '.$GLOBALS['egw']->db->quote($login.'@%'),
-					"li > $block_time",
+					Db\SqlFragment::raw('loginid LIKE '.$GLOBALS['egw']->db->quote($login.'@%')),
+					Db\SqlFragment::raw("li > $block_time"),
 				)
 			),
 		), __LINE__, __FILE__) as $row)
@@ -2158,7 +2158,7 @@ class Session
 				'notification_heartbeat' => time(),
 			),array(
 				'sessionid' => $this->sessionid_access_log,
-				'lo IS NULL',
+				Db\SqlFragment::raw('lo IS NULL'),
 			),__LINE__,__FILE__);
 		}
 	}
@@ -2437,9 +2437,9 @@ class Session
 	{
 		return $GLOBALS['egw']->db->select(self::ACCESS_LOG_TABLE, 'COUNT(*)', array(
 				'lo' => null,
-				'session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+				Db\SqlFragment::raw('session_dla > '.(int)(time() - $GLOBALS['egw_info']['server']['sessions_timeout'])),
 				'account_id' => $account_id,
-				'notification_heartbeat > '.self::heartbeat_limit(),
+				Db\SqlFragment::raw('notification_heartbeat > '.self::heartbeat_limit()),
 		), __LINE__, __FILE__)->fetchColumn();
 	}
 

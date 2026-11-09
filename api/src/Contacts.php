@@ -599,10 +599,10 @@ class Contacts extends Contacts\Storage
 		}
 		// to be able to work on huge contact repositories we read the contacts in chunks of 100
 		for($n = $updated = $errors = 0; ($contacts = parent::search($all ? array() : array(
-			'n_fileas IS NULL',
-			"n_fileas=''",
-			'n_fn IS NULL',
-			"n_fn=''",
+			Db\SqlFragment::raw('n_fileas IS NULL'),
+			Db\SqlFragment::raw("n_fileas=''"),
+			Db\SqlFragment::raw('n_fn IS NULL'),
+			Db\SqlFragment::raw("n_fn=''"),
 		),false,'','','',false,'OR',array($n*100,100))); ++$n)
 		{
 			foreach($contacts as $contact)
