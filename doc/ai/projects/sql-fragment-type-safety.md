@@ -440,6 +440,12 @@ redundant and should be reverted back to using `$GLOBALS['egw']->db` directly.
 
 ### Global default flip (opt-out model) - DONE 2026-11-09, master only
 
+Committed as `8d2923697b` ("Api\Db: flip Db\SqlFragment enforcement to opt-out by default"), pushed
+to master. **Not backported to 26** - deliberately master-only for now, same soak-before-26 policy
+as the rest of this project, and especially warranted here given how much live breakage the flip
+itself surfaced the same day (see the findings list below) - this needs to prove out longer before
+going anywhere near the release branch.
+
 The global flip happened sooner than "Open/next" above originally anticipated, once a live security
 review (the GHSA-3f9x-47f8-j6fw addressbook `order`-parameter SQL injection fix, same day) surfaced
 that the per-app opt-in model leaves every app/class still using `$GLOBALS['egw']->db` directly -
