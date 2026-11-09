@@ -1859,6 +1859,48 @@ describe("MailJmap.extractStyles() - pull <style> out before DOMPurify strips it
 		assert.include(styles, '.a{color:red}');
 		assert.include(styles, '.b{color:blue}');
 	});
+
+	/**
+	 * Ticket #127551 (live report, forwarded newsletter): an MSO/Outlook conditional comment
+	 * (`<!--[if gt mso 15]><style>...</style><![endif]-->`) wraps a `tr { font-size:0px; ... }`
+	 * rule meant for Outlook alone. Before the comment-aware strip was added here, this method's
+	 * own <style> extraction regex had no comment-awareness, so it pulled that <style> straight out
+	 * of the comment and re-wrapped it as its own plain <style> tag, re-prepended to the body AFTER
+	 * DOMPurify.sanitize() already ran - the leftover (now empty) comment markers got silently
+	 * dropped by DOMPurify's own default comment stripping, so the Outlook-only rule went live for
+	 * every viewer with no trace of the comment ever having wrapped it (confirmed live against
+	 * production: assembleBodyHtml() is the only one of the three server+client implementations of
+	 * this extraction that stayed unfixed).
+	 */
+	it("drops a <style> block hidden inside an MSO conditional comment", () =>
+	{
+		const {html, styles} = extract(
+			'<!--[if gt mso 15]><style type="text/css" media="all">\n' +
+			'tr { font-size:0px; line-height:0px; }\n</style><![endif]-->' +
+			'<p>real content</p><style>p{color:green}</style>');
+
+		assert.notInclude(styles, 'font-size:0px',
+			'an Outlook-only rule hidden inside a conditional comment must never apply to every viewer');
+		assert.include(styles, 'color:green',
+			'an ordinary, uncommented <style> block elsewhere in the same message must still come through');
+		assert.include(html, 'real content',
+			"stripping the conditional comment must not touch the message's actual visible content");
+	});
+
+	/**
+	 * Distinct from the conditional-comment case above: a `<style><!-- real css --></style>`
+	 * wrapper is a legacy "hide CSS from browsers that predate <style>" convention - the comment is
+	 * INSIDE the <style> tag here (not around it), so it must never trip the whole-comment strip;
+	 * the CSS content must survive as harmless plain text inside the re-wrapped <style> tag.
+	 */
+	it("keeps the CSS content of a legacy <style><!-- css --></style> wrapper", () =>
+	{
+		const {styles} = extract('<style><!--\nbody { color: red; }\n--></style>');
+
+		assert.include(styles, 'color: red',
+			"a legacy <style><!-- css --></style> wrapper's actual CSS content must survive");
+	});
+
 });
 
 /**
