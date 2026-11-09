@@ -153,6 +153,11 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	@state() activePrompt : AiPrompt;
 	/* Max height for showing the result */
 	@state() maxResultHeight = 0;
+	/**
+	 * The prompt menu is only built once somebody is about to use it: it has around 30 menu items (every
+	 * prompt, every language to translate to), each costing a couple of ms, in every form that has an AI field
+	 */
+	@state() protected _menuNeeded = false;
 
 	/* AiAssistantController instance to manage the actual communication */
 	private readonly ai : AiAssistantController;
@@ -1214,13 +1219,25 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	protected _dropdownTemplate() : TemplateResult
 	{
 		return html`
-            <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip>
+            <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip
+                         @sl-show=${this._needMenu}
+                         @pointerenter=${this._needMenu}
+                         @focusin=${this._needMenu}
+            >
                 <slot name="trigger" slot="trigger">
                     <et2-button-icon slot="trigger" class="et2-ai-trigger" name="aitools/navbar" noSubmit></et2-button-icon>
                 </slot>
                 <sl-menu @sl-select=${this.handlePromptSelect} part="menu">
-                    ${this.prompts.map(this._promptTemplate)}
+                    ${this._menuNeeded ? this.prompts.map(this._promptTemplate) : nothing}
                 </sl-menu>
             </sl-dropdown>`;
 	}
+
+	/**
+	 * Build the prompt menu, from now on: the pointer is over the trigger, it has focus, or the dropdown opens
+	 */
+	protected _needMenu = () =>
+	{
+		this._menuNeeded = true;
+	};
 }

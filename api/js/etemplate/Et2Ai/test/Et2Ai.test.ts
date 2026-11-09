@@ -293,6 +293,78 @@ describe("Et2AI in the target's field controls", () =>
 		assertNoElement(el.shadowRoot.querySelector(".et2-ai-dropdown"), "no overlay of our own any more");
 	});
 
+	describe("prompt menu", () =>
+	{
+		const items = (el : Et2Ai) => el.shadowRoot!.querySelectorAll("et2-menu-item");
+		const withPrompts = async() =>
+		{
+			const el = await fixture<Et2Ai>(html`
+                <et2-ai endpoint="test-endpoint">
+                    <textarea>Original text</textarea>
+                </et2-ai>
+			`);
+			el.prompts = [
+				{id: "summarize", label: "Summarize"},
+				{id: "translate", label: "Translate", children: [{id: "en", label: "English"}, {id: "de", label: "Deutsch"}]}
+			];
+			await el.updateComplete;
+			return el;
+		};
+
+		it("is not built until it is about to be used", async() =>
+		{
+			const el = await withPrompts();
+			assert.exists(el.shadowRoot!.querySelector("sl-dropdown"), "the trigger is there");
+			assert.lengthOf(items(el), 0, "menu items built for a closed menu");
+		});
+
+		for(const [name, trigger] of <[string, (dropdown : Element) => void][]>[
+			["the pointer is over the trigger", d => d.dispatchEvent(new PointerEvent("pointerenter"))],
+			["it gets focus", d => d.dispatchEvent(new FocusEvent("focusin", {bubbles: true, composed: true}))],
+			["the dropdown opens", d => d.dispatchEvent(new CustomEvent("sl-show", {bubbles: true, composed: true}))]
+		])
+		{
+			it("is built when " + name + ", with its sub-menu", async() =>
+			{
+				const el = await withPrompts();
+				trigger(el.shadowRoot!.querySelector("sl-dropdown")!);
+				await el.updateComplete;
+
+				assert.lengthOf(items(el), 4, "2 prompts and the 2 languages under Translate");
+			});
+		}
+
+		it("still runs the prompt that was chosen", async() =>
+		{
+			const el = await withPrompts();
+			const run = sinon.stub((el as any).ai, "run").resolves();
+			(el.shadowRoot!.querySelector("sl-dropdown") as Element).dispatchEvent(new CustomEvent("sl-show", {bubbles: true, composed: true}));
+			await el.updateComplete;
+
+			el.handlePromptSelect({detail: {item: {value: "summarize"}}} as any);
+
+			assert.isTrue(run.called);
+		});
+
+		it("is built in the target's field controls too, once needed", async() =>
+		{
+			const el = await fixture<Et2Ai>(html`
+                <et2-ai endpoint="test-endpoint">
+                    <et2-textarea></et2-textarea>
+                </et2-ai>
+			`);
+			el.prompts = [{id: "summarize", label: "Summarize"}];
+			await el.updateComplete;
+			const control = (el.querySelector("et2-textarea") as HTMLElement).querySelector(":scope > [slot='field-controls']") as HTMLElement;
+			assert.lengthOf(control.shadowRoot.querySelectorAll("et2-menu-item"), 0);
+
+			control.shadowRoot.querySelector("sl-dropdown").dispatchEvent(new CustomEvent("sl-show", {bubbles: true, composed: true}));
+			await el.updateComplete;
+
+			assert.lengthOf(control.shadowRoot.querySelectorAll("et2-menu-item"), 1);
+		});
+	});
+
 	it("keeps overlaying a target without field controls", async() =>
 	{
 		const el = await fixture<Et2Ai>(html`
