@@ -92,7 +92,7 @@ class LinkNegatedUnlinkHistoryTest extends \EGroupware\Api\AppTest
 		{
 			$GLOBALS['egw']->db->delete(Api\Storage\History::TABLE, array(
 				'history_appname' => '!'.Api\Link::VFS_APPNAME,
-				'history_id > '.$this->max_history_id,
+				Api\Db\SqlFragment::raw('history_id > '.$this->max_history_id),
 			), __LINE__, __FILE__, 'phpgwapi');
 			$this->max_history_id = 0;
 		}
