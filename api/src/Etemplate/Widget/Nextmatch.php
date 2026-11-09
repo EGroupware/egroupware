@@ -624,6 +624,15 @@ class Nextmatch extends Etemplate\Widget
 			$value['order'] = preg_match('/^(#[a-z0-9 _]+|[a-z0-9_]+)$/i', $value['sort']['id']) ? $value['sort']['id'] : '';
 			$value['sort'] = $value['sort']['asc'] ? 'ASC' : 'DESC';
 		}
+		// order is otherwise taken from the request as-is: validate it the same way, regardless of $sort's type
+		elseif (!preg_match('/^(#[a-z0-9 _]+|[a-z0-9_]+)$/i', $value['order'] ?? ''))
+		{
+			if (!empty($value['order']))
+			{
+				error_log(__METHOD__."() dropping 'order' not matching allowed pattern: ".array2string($value['order']));
+			}
+			$value['order'] = '';
+		}
 
 		$value['start'] = (int)$queriedRange['start'];
 		$value['num_rows'] = (int)$queriedRange['num_rows'];
