@@ -808,7 +808,7 @@ class Storage extends Storage\Base
 			{
 				// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
 				$buff = explode(' ',trim($v));
-				$orderDir = array_pop($buff);
+				$orderDir = strtoupper(array_pop($buff)) === 'DESC' ? 'DESC' : 'ASC';
 				$key = substr(trim(implode(' ',$buff)), 1);
 				if (!isset($this->customfields[$key]))
 				{
