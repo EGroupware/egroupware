@@ -116,4 +116,52 @@ class CalendarInviteJmapResolveTest extends \PHPUnit\Framework\TestCase
 		$this->expectException(Exception::class);
 		$imap->resolveCalendarJmap('email-id-123', 'does-not-exist');
 	}
+
+	/**
+	 * A message whose ENTIRE content is one bare "Content-Type: text/calendar; method=REQUEST"
+	 * part - no multipart/alternative wrapper, no separate text/plain or text/html body at all
+	 * (the exact shape reported live via https://help.egroupware.org/t/caldav-invitation-sending/
+	 * 80130/5's attached invite.txt - a single-part meeting request straight from desktop
+	 * Outlook). Per RFC 8621, such a message's bodyStructure has no 'subParts' at all - the
+	 * top-level object itself IS the one leaf part. findInlineCalendarPart()'s own top-level check
+	 * (before it ever recurses into 'subParts') already covers this; this test locks it in, since
+	 * every other coverage in this file only exercised the NESTED (multipart/alternative) shape.
+	 */
+	private function bareCalendarBodyStructure() : array
+	{
+		return [
+			'type' => 'text/calendar',
+			'size' => strlen(self::ICS),
+			'disposition' => null,
+			'partId' => '1',
+			'blobId' => 'fake-blob-id',
+			'charset' => 'utf-8',
+		];
+	}
+
+	public function testFindInlineCalendarPartLocatesBareTopLevelPart() : void
+	{
+		$structure = $this->bareCalendarBodyStructure();
+		$found = JmapShim::findInlineCalendarPart($structure);
+
+		$this->assertNotNull($found);
+		$this->assertSame('text/calendar', $found['type']);
+		$this->assertSame('1', $found['partId']);
+	}
+
+	public function testSpecialCaseTypeRecognizesBareTopLevelCalendarPart() : void
+	{
+		$this->assertSame('calendar', JmapShim::specialCaseType($this->bareCalendarBodyStructure()));
+	}
+
+	public function testResolveCalendarJmapReturnsIcsBytesForABareTopLevelMessage() : void
+	{
+		$imap = $this->mockJmapReturning($this->bareCalendarBodyStructure(), self::ICS);
+
+		$result = $imap->resolveCalendarJmap('email-id-123', '1');
+
+		$this->assertSame('utf-8', $result['charset']);
+		$this->assertSame(self::ICS, $result['attachment']);
+		$this->assertSame('REQUEST', $result['method']);
+	}
 }
