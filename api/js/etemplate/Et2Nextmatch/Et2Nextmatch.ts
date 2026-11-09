@@ -2560,6 +2560,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			this.egw().debug("info", "Changed nm filters", this._filters);
 
 			this._updateSortHeaderState();
+			// _filters is not reactive, but the active letter in the A-Z letter search bar is rendered from it
+			if(this.lettersearch || previousFilters.searchletter !== this._filters.searchletter)
+			{
+				this.requestUpdate();
+			}
 			if(options?.clearActions !== false)
 			{
 				this._actionController.clearRowActionObjects();
