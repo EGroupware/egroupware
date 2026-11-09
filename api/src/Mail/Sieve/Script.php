@@ -183,7 +183,7 @@ class Script
 						$rule['ctype'] = ($bits[14]??null);
 						$rule['field_ctype_val'] = ($bits[15]??null);
 						$rule['unconditional']	= 0;
-						if ($rule['action'] && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
+						if (($rule['action'] || !empty($rule['action_flags'])) && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
 							!$rule['field'] && !$rule['size'] && !$rule['field_bodytransform'] && !$rule['ctype'])
 						{
 							$rule['unconditional'] = 1;
@@ -260,6 +260,33 @@ class Script
 
 
 	/**
+	 * Normalize action(s) of a rule: flags can be combined with any other action
+	 *
+	 * Rules created before flags became an optional add-on stored them as the (only) action "flags"
+	 * with the flags in action_arg. Those are converted to "no further action" plus action_flags,
+	 * which generates the same script as before (addflag + implicit keep).
+	 *
+	 * @param array $rule
+	 * @return array rule with always set action, action_arg and action_flags (space-separated string)
+	 */
+	public static function normalizeRuleActions(array $rule) : array
+	{
+		$rule['action'] = (string)($rule['action'] ?? '');
+		$rule['action_arg'] = (string)($rule['action_arg'] ?? '');
+		$rule['action_flags'] = trim((string)($rule['action_flags'] ?? ''));
+		if ($rule['action'] === 'none')
+		{
+			$rule['action'] = '';
+		}
+		if ($rule['action'] === 'flags')
+		{
+			$rule['action_flags'] = trim($rule['action_flags'].' '.$rule['action_arg']);
+			$rule['action'] = $rule['action_arg'] = '';
+		}
+		return $rule;
+	}
+
+	/**
 	 * update and save sieve script
 	 *
 	 * @param Connection $connection
@@ -295,6 +322,7 @@ class Script
 		foreach ($this->rules as $rule)
 		{
 			$newruletext = "";
+			$rule = self::normalizeRuleActions($rule);
 
 			// don't print this rule if disabled.
 			if ($rule['status'] != 'ENABLED') {
@@ -312,7 +340,7 @@ class Script
 
 				if (!isset($rule['unconditional']))
 				{
-					$rule['unconditional'] = $rule['action'] && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
+					$rule['unconditional'] = ($rule['action'] || $rule['action_flags']) && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
 						!$rule['field'] && !$rule['size'] && !$rule['field_bodytransform'] && !$rule['ctype'];
 				}
 				if (empty($rule['unconditional']))
@@ -485,6 +513,11 @@ class Script
 				if (empty($rule['unconditional'])) $newruletext .= ") {\n";
 				$newruletext .= "\t";
 
+				// flags have to be set BEFORE fileinto/keep, as they only apply to the following actions
+				if ($rule['action_flags'] !== '')
+				{
+					$newruletext .= "addflag \"".$rule['action_flags']."\";\n\t";
+				}
 				if (preg_match("/folder/i",$rule['action'])) {
 						$newruletext .= "fileinto \"" . ($utf7imap_fileinto ?
 							Translation::convert($rule['action_arg'],'utf-8', 'utf7-imap') : $rule['action_arg']) . "\";";
@@ -536,9 +569,6 @@ class Script
 				}
 				if (preg_match("/discard/i",$rule['action'])) {
 						$newruletext .= "discard;";
-				}
-				if (preg_match("/flags/i",$rule['action'])) {
-					$newruletext .= "addflag \"".$rule['action_arg']."\";";
 				}
 				if ($rule['keep'])
 				{

@@ -36,6 +36,7 @@ add this key into contact	mail	de	Diesen Schlüssel dem Kontakt hinzufügen
 add to addressbook	mail	de	Zum Adressbuch hinzufügen
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Blacklist ist fehlgeschlagen, da %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Whitelist ist fehlgeschlagen, da %2
+additionally mark message as:	mail	de	Zusätzlich E-Mail markieren als:
 after %1 seconds	mail	de	Nach %1 Sekunden
 after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
 aliases+forwards	mail	de	Aliase + Weiterleitungen
@@ -181,6 +182,7 @@ deleted!	mail	de	gelöscht!
 deleting %1 folders in progress ...	mail	de	%1 Ordner in Bearbeitung zum Löschen ...
 deleting folders	mail	de	Ordner werden gelöscht
 deny certain groups access to following features	mail	de	Den Zugriff auf bestimmte Funktionen im E-Mail-Modul einschränken
+description (optional)	mail	de	Beschreibung (optional)
 directories have to be shared.	mail	de	Ordner müssen freigegeben werden.
 disable	mail	de	Deaktivieren
 disable caching of flags	mail	de	Caching von Flags ausschalten
@@ -196,6 +198,7 @@ displaying html messages is disabled	mail	de	Die Anzeige von HTML-E-Mails ist de
 displaying plain messages is disabled	mail	de	Die Anzeige von reinen Text-E-Mails ist deaktiviert
 do not auto create folders	mail	de	Automatische Ordnererstellung verhindern für
 do not forward	mail	de	Nicht weiterleiten
+do nothing	mail	de	nichts tun
 do you really want to apply %1 to all messages in the current view?	mail	de	Wollen Sie wirklich %1 auf alle Nachrichten in der aktuellen Ansicht anwenden?
 do you really want to delete folder %1 ?	mail	de	Wollen Sie den Ordner %1 wirklich löschen?
 do you really want to delete this rule	mail	de	Wollen Sie diese Regel wirklich löschen?
@@ -418,6 +421,7 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 many recipients	mail	de	Viele Empfänger
 mark all as read	mail	de	Alle als Gelesen markieren
 mark all messages in folder as read	mail	de	Alle Nachrichten in diesem Ordner als Gelesen markieren
+mark as	mail	de	markiere als
 mark as deleted	mail	de	Als Gelöscht markieren
 mark message as read after	mail	de	Nachricht als gelesen markieren nach
 match:	mail	de	Übereinstimmung:
@@ -475,6 +479,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	de	Keine Ordner
 no mailing-list or group found in the recipients	mail	de	Keine Verteilerliste oder Gruppe in den Empfängern gefunden
 no message body supplied	mail	de	Keinen Nachrichtentext-Teil gefunden
+no other action	mail	de	Keine weitere Aktion
 no plain text part found	mail	de	Kein Text-Teil gefunden
 no private key stored to import a certificate for!	mail	de	Kein privater Schlüssel gespeichert, für den ein Zertifikat importiert werden könnte!
 no recipient address given!	mail	de	Keine Empfänger-Adresse angegeben!

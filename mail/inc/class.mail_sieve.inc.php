@@ -254,7 +254,7 @@ class mail_sieve
 			{
 				$rules = $this->rulesByID;
 				$content= $rules;
-				$content ['ruleID'] = $_GET['ruleID'];
+				$content ['ruleID'] = (int)$_GET['ruleID'] + 1;	// displayed 1-based like in the list
 				switch ($rules['action'])
 				{
 					case 'folder':
@@ -266,10 +266,11 @@ class mail_sieve
 					case 'reject':
 						$content['action_reject_text'] = $rules['action_arg'];
 						break;
-					case 'flags':
-						$content['action_flags_list'] = explode(' ', $rules['action_arg']);
-						break;
 				}
+				// flags are an optional add-on to any action, legacy rules with action "flags" get converted
+				$normalized = Script::normalizeRuleActions($rules);
+				$content['action'] = $normalized['action'] ?: 'none';
+				$content['action_flags_list'] = $normalized['action_flags'] !== '' ? explode(' ', $normalized['action_flags']) : [];
 				$content['anyof'] = $rules['anyof'] != 0?1:0;
 				$content['tokenized'] = !empty($rules['tokenized']) ? 1 : 0;
 			}
@@ -284,6 +285,7 @@ class mail_sieve
 				$readonlys = array(
 					'button[delete]' => 'true',
 					);
+				$newRules['ruleID'] = count($this->rules) + 1;
 				$this->rulesByID = $newRules;
 				$content = $this->rulesByID;
 			}
@@ -295,7 +297,8 @@ class mail_sieve
 			$button = @key($content['button']);
 
 			//$ruleID is calculated by priority from the selected rule and is an unique ID
-			$content['ruleID'] = $ruleID = ($this->rulesByID['priority'] -1) / 2;
+			$ruleID = ($this->rulesByID['priority'] -1) / 2;
+			$content['ruleID'] = $ruleID + 1;	// displayed 1-based like in the list
             $error = 0;
             $msg = '';
 			switch ($button)
@@ -322,10 +325,10 @@ class mail_sieve
 							case 'reject':
 								$newRule['action_arg'] = $content['action_reject_text'];
 								break;
-							case 'flags':
-								$newRule['action_arg'] = implode(' ', $content['action_flags_list']);
-								break;
 						}
+						if ($newRule['action'] === 'none') $newRule['action'] = '';	// "No other action" radio
+						$newRule['action_flags'] = implode(' ', array_filter((array)($content['action_flags_list'] ?? [])));
+						$newRule['description'] = trim((string)($content['description'] ?? ''));
 						unset($newRule['action_folder_text']);
 						unset($newRule['action_address_text']);
 						unset($newRule['action_reject_text']);
@@ -350,7 +353,7 @@ class mail_sieve
 							Etemplate::set_validation_error('field_val', lang("Has to be a positive number."));
 							break;
 						}
-						if($newRule['action'] && $this->rulesByID['priority'])
+						if(($newRule['action'] || $newRule['action_flags']) && $this->rulesByID['priority'])
 						{
 							$this->rules[$ruleID] = $newRule;
 							$ret = $this->account->imapServer()->setRules($this->rules);
@@ -361,7 +364,7 @@ class mail_sieve
 							}
 							else
 							{
-								$msg .= lang("The rule with priority %1 successfully saved!",$ruleID);
+								$msg .= lang("The rule with priority %1 successfully saved!",$ruleID+1);
 							}
 							$this->saveSessionData();
 						}
@@ -387,11 +390,11 @@ class mail_sieve
 					{
 						if ($ruleID === count($this->rules)-1)
 						{
-							$msg = lang('rule with priority ') . $ruleID . lang(' deleted!');
+							$msg = lang('rule with priority ') . ($ruleID+1) . lang(' deleted!');
 						}
 						else
 						{
-							$msg = lang('rule with priority ') . $ruleID . lang(' deleted!') . lang(' And the rule with priority %1, now got the priority %2',$ruleID+1,$ruleID);
+							$msg = lang('rule with priority ') . ($ruleID+1) . lang(' deleted!') . lang(' And the rule with priority %1, now got the priority %2',$ruleID+2,$ruleID+1);
 						}
 						unset($this->rules[$ruleID]);
 						$this->rules = array_values($this->rules);
@@ -1161,6 +1164,10 @@ class mail_sieve
 		if (preg_match("/discard/i",$rule['action']))
 		{
 			$complete .= lang('discard').'.';
+		}
+		if (($flags = Script::normalizeRuleActions($rule)['action_flags']) !== '')
+		{
+			$complete .= ' '.lang('mark as').' '.str_replace('\\', '', $flags).';';
 		}
 		if ($rule['continue'])
 		{

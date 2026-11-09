@@ -15,6 +15,7 @@ import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
 import {et2_action_object_impl, et2_DOMWidget} from "./et2_core_DOMWidget";
 import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action';
+import {EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from '../egw_action/egw_action_constants';
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
@@ -1129,6 +1130,12 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				// Add a new action object to the object manager
 				const row = jQuery('tr', this.tbody)[r];
 				const aoi = new et2_action_object_impl(this, row).getAOI();
+				// show selected / focused state of the row (CSS: tr.selected, tr.focused)
+				aoi.doSetState = function(_state : number)
+				{
+					jQuery(row).toggleClass('selected', !!(_state & EGW_AO_STATE_SELECTED))
+						.toggleClass('focused', !!(_state & EGW_AO_STATE_FOCUSED));
+				};
 				const obj = widget_object.addObject(content.id || "row_" + r, aoi);
 
 				// Set the data to the content so it's available for the action

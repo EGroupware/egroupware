@@ -36,6 +36,7 @@ add this key into contact	mail	en	Add this key into contact
 add to addressbook	mail	en	Add to addressbook
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
+additionally mark message as:	mail	en	Additionally mark message as:
 administer (perform setacl/deleteacl/getacl/listrights)	mail	en	Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)
 after %1 seconds	mail	en	After %1 seconds
 after reply, visible during compose	mail	en	After reply, visible during compose
@@ -185,6 +186,7 @@ deleted!	mail	en	deleted!
 deleting %1 folders in progress ...	mail	en	Deleting %1 folders in progress ...
 deleting folders	mail	en	Deleting folders
 deny certain groups access to following features	mail	en	Deny certain groups access to following features
+description (optional)	mail	en	Description (optional)
 directories have to be shared.	mail	en	Folder have to be shared.
 disable	mail	en	Disable
 disable caching of flags	mail	en	Disable caching of flags
@@ -200,6 +202,7 @@ displaying html messages is disabled	mail	en	displaying HTML messages is disable
 displaying plain messages is disabled	mail	en	displaying plain text messages is disabled
 do not auto create folders	mail	en	Do not auto create folders
 do not forward	mail	en	Do not forward
+do nothing	mail	en	do nothing
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE folder %1?
 do you really want to delete this rule	mail	en	Do you really want to DELETE this Rule?
@@ -425,6 +428,7 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 many recipients	mail	en	Many recipients
 mark all as read	mail	en	Mark all as read
 mark all messages in folder as read	mail	en	Mark all messages in folder as read
+mark as	mail	en	mark as
 mark as deleted	mail	en	Mark as deleted
 mark message as read after	mail	en	Mark message as read after
 match:	mail	en	Match:
@@ -481,6 +485,7 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	en	no folders
 no mailing-list or group found in the recipients	mail	en	No mailing-list or group found in the recipients
 no message body supplied	mail	en	No message body supplied
+no other action	mail	en	No other action
 no plain text part found	mail	en	No plain text part found
 no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
 no recipient address given!	mail	en	No recipient address given!
