@@ -501,6 +501,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	private _expandedRowIdsByParent : Map<string, Set<string>> = new Map();
 	/** Selection state per parent/child grid, merged for legacy action handling. */
 	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
+	/** One shared empty list: a fresh [] on every render would count as a changed `columns` for the grid. */
+	private static readonly NO_COLUMNS : Et2DatagridColumn[] = [];
+
 	/** Current datagrid column state after user preference/resizing changes. */
 	private _datagridColumns : Et2DatagridColumn[] | null = null;
 	/** Temporary runtime state which must be removed after the browser print dialog closes. */
@@ -623,7 +626,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	private get _currentColumns() : Et2DatagridColumn[]
 	{
-		return this._datagridColumns || this._templateData?.columns || [];
+		return this._datagridColumns || this._templateData?.columns || Et2Nextmatch.NO_COLUMNS;
 	}
 
 	/**
@@ -3222,11 +3225,23 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	private _datagridExpansionConfig() : Et2DatagridExpansionConfig
 	{
-		return this._expansionConfigForSet(this._expandedRowIds, (expandedRowIds) =>
+		// render() binds this to the grid, and Lit re-sets the property whenever the object
+		// differs, which re-renders every row of the grid.  Hand out the same object until
+		// the expanded set itself is replaced.
+		if(this._expansionConfigCache?.ids !== this._expandedRowIds)
 		{
-			this._applyExpandedRowIds("", expandedRowIds);
-		});
+			this._expansionConfigCache = {
+				ids: this._expandedRowIds,
+				config: this._expansionConfigForSet(this._expandedRowIds, (expandedRowIds) =>
+				{
+					this._applyExpandedRowIds("", expandedRowIds);
+				})
+			};
+		}
+		return this._expansionConfigCache.config;
 	}
+
+	private _expansionConfigCache : { ids : Set<string>, config : Et2DatagridExpansionConfig } | null = null;
 
 	/**
 	 * Build the reusable expansion bridge for one grid level.
