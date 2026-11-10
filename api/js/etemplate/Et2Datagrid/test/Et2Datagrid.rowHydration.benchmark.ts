@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {buildMountedRow} from "./mountedRow";
 import {Et2Datagrid} from "../Et2Datagrid";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 
@@ -95,7 +96,7 @@ function sample(grid : Et2Datagrid, rowCount : number, forcePerspective : boolea
 	{
 		const data = Object.fromEntries(Array.from({length: WIDGETS_PER_ROW}, (_value, field) => [`field_${field}`, `row-${index}-${field}`]));
 		const row = {id: `row-${index}`, data};
-		return {data, element: (grid as any)._buildRowElement(row, index) as HTMLElement, index};
+		return {data, element: buildMountedRow(grid as any, row, index) as HTMLElement, index};
 	});
 	const start = performance.now();
 	for(const row of rows)

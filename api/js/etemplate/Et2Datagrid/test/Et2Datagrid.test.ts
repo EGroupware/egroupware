@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {buildMountedRow} from "./mountedRow";
 import {virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
 import {html, LitElement, render} from "lit";
 import * as sinon from "sinon";
@@ -1563,7 +1564,7 @@ describe("Et2Datagrid row rendering", () =>
 		} as any;
 
 		const row = {id: "row-0", data: {"#cf_text": "Row customfield value"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from template");
 
 		const applied = (el as any)._applyRowElementAttributes(rowElement!, row.data, 0);
@@ -1645,7 +1646,7 @@ describe("Et2Datagrid row rendering", () =>
 				preferred_link: "tel:+15551234567"
 			}
 		};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLTableRowElement | null;
 		assert.include(
 			rowElement?.querySelector(".name-line")?.textContent || "",
 			"Lightweight row text",
@@ -1693,7 +1694,7 @@ describe("Et2Datagrid row rendering", () =>
 			rowTemplateAttrMap: prepared?.attrMap || {},
 			loaderTemplate: null
 		} as any;
-		const rowElement = (el as any)._buildRowElement(
+		const rowElement = buildMountedRow(el as any, 
 			{id: "row-0", data: {summary: "A ticket", seen_class: "tracker_unseen"}}, 0
 		) as HTMLTableRowElement | null;
 
@@ -1934,7 +1935,7 @@ describe("Et2Datagrid row rendering", () =>
 				rowTemplateAttrMap: prepared?.attrMap ?? {}
 			};
 			const row = {id: "row-0", data: {email: "row@example.com"}};
-			const rowElement = (el as any)._buildRowElement(row, 0) as HTMLElement;
+			const rowElement = buildMountedRow(el as any, row, 0) as HTMLElement;
 
 			(el as any)._applyRowElementAttributes(rowElement, row.data, 0);
 			const email = rowElement.querySelector("et2-url-email_ro") as any;
@@ -2017,7 +2018,7 @@ describe("Et2Datagrid row rendering", () =>
 			rowTemplateAttrMap: prepared?.attrMap ?? {}
 		};
 		const row = {id: "row-0", data: {tel_work: "(555) 123-ABCD"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLElement;
 
 		(el as any)._applyRowElementAttributes(rowElement, row.data, 0);
 		const phone = rowElement.querySelector("et2-url-phone_ro.telWork") as any;
@@ -2159,7 +2160,7 @@ describe("Et2Datagrid row rendering", () =>
 		} as any;
 
 		const row = {id: "row-0", data: {"#cf_text": "Row customfield value", "#cf_hidden": "Hidden value"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from the customfields template");
 		document.body.appendChild(rowElement!);
 
@@ -2267,7 +2268,7 @@ describe("Et2Datagrid row rendering", () =>
 		} as any;
 
 		const row = {id: "row-0", data: {"#cf_one": "One", "#cf_two": "Two", "#cf_three": "Three", "#cf_four": "Four"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from the customfields template");
 		assert.isTrue((el as any)._applyRowElementAttributes(rowElement!, row.data, 0));
 
@@ -2310,7 +2311,7 @@ describe("Et2Datagrid row rendering", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {id: "row-0", class: "primary", cat_id: "3,7", note: "Legacy note"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, row, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from template");
 
 		(rowElement as HTMLElement).setAttribute("data-et2nm-id", "row-root");
@@ -2444,7 +2445,7 @@ describe("Et2Datagrid row rendering", () =>
 		assert.deepEqual(el.rows[0], {id: "addressbook::row-1"}, "public row state should not carry provider-owned data");
 		assert.deepEqual((el as any)._rowsByIndex[0], {id: "addressbook::row-1"}, "indexed row state should not carry provider-owned data");
 
-		const rowElement = (el as any)._buildRowElement((el as any)._rowsByIndex[0], 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, (el as any)._rowsByIndex[0], 0) as HTMLTableRowElement | null;
 		assert.include(rowElement?.textContent || "", "Provider row", "row rendering should resolve data through provider.getRowData()");
 	});
 

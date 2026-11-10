@@ -123,6 +123,12 @@ export class Et2DatagridRowRenderer
 
 	/**
 	 * Build one row element from prepared template data or fallback plain cells.
+	 *
+	 * The element is only used for its markup: the grid serializes it with outerHTML and lets
+	 * unsafeHTML() re-parse it, which is when the widgets are created.  The template is therefore
+	 * cloned inside its own inert document, so the row's custom elements are not upgraded here
+	 * just to be thrown away.  The result is not live: use its attributes and children, not
+	 * widget properties or methods.
 	 */
 	buildRowElement(row : Et2DatagridRow, rowIndex : number) : HTMLElement | null
 	{
@@ -153,7 +159,7 @@ export class Et2DatagridRowRenderer
 		let fragment : DocumentFragment | null = null;
 		if(template)
 		{
-			fragment = document.importNode(template.content, true);
+			fragment = template.content.cloneNode(true) as DocumentFragment;
 		}
 		else if(templateXml)
 		{

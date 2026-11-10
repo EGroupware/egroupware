@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {buildMountedRow} from "./mountedRow";
 import {Et2Datagrid} from "../Et2Datagrid";
 import {Et2RowProvider} from "../Et2RowProvider";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
@@ -78,7 +79,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {label: "Row 0"}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		assert.equal(rowElement.querySelector("et2-dg-rows-transform")?.getAttribute("data-value"), "Row 0");
@@ -101,7 +102,7 @@ describe("Et2Datagrid row hydration", () =>
 		rowTemplate.innerHTML = `<tr><td><et2-dg-rows-transform data-et2nm-id="w1"></et2-dg-rows-transform></td></tr>`;
 		grid.templateData = {columns: grid.columns, rowTemplate, rowTemplateXml: null, rowTemplateAttrMap: {w1: {"data-value": "$row_cont[note]"}}, loaderTemplate: null} as any;
 		const row = {id: "row-0", data: {note: "Direct row value"}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		assert.equal(rowElement.querySelector("et2-dg-rows-transform")?.getAttribute("data-value"), "Direct row value");
@@ -129,7 +130,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {value: "42", label: "Example", meta: {code: "A-1"}}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		const widget = rowElement.querySelector("et2-dg-rows-transform") as HTMLElement;
@@ -165,7 +166,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {id: 1, sub: {name: "cheese"}}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		assert.equal((rowElement.querySelector("et2-dg-row-object") as Et2DatagridRowObjectFixture).value, 1);
@@ -201,7 +202,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {id: 1, sub: {name: "cheese"}}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		assert.equal((rowElement.querySelector("et2-dg-row-object") as Et2DatagridRowObjectFixture).value, "cheese");
@@ -250,7 +251,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {host_name: "kelso", host_created: 1234, host_creator: 5}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		const values = Array.from(rowElement.querySelectorAll("et2-dg-row-object"))
@@ -296,7 +297,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {status: "open", sub: {name: "cheese"}}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		const values = Array.from(rowElement.querySelectorAll("et2-dg-row-object"))
@@ -328,7 +329,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {id: 1, sub: {name: "cheese"}}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.equal(rowElement.querySelector("et2-vbox span")?.textContent, "cheese");
 	});
@@ -368,8 +369,8 @@ describe("Et2Datagrid row hydration", () =>
 			rowTemplateFieldMap: prepared.fieldMap,
 			loaderTemplate: null
 		} as any;
-		const first = (grid as any)._buildRowElement({id: "row-0", data: {sub: {name: "cheese"}}}, 0) as HTMLElement;
-		const second = (grid as any)._buildRowElement({id: "row-1", data: {sub: {name: "pickle"}}}, 1) as HTMLElement;
+		const first = buildMountedRow(grid as any, {id: "row-0", data: {sub: {name: "cheese"}}}, 0) as HTMLElement;
+		const second = buildMountedRow(grid as any, {id: "row-1", data: {sub: {name: "pickle"}}}, 1) as HTMLElement;
 
 		assert.equal(first.querySelector("et2-vbox span")?.textContent, "cheese");
 		assert.equal(second.querySelector("et2-vbox span")?.textContent, "pickle",
@@ -400,7 +401,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {used: "2:30"}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		assert.equal(rowElement.querySelector("et2-dg-rows-transform")?.getAttribute("data-value"), "2:30");
@@ -420,7 +421,7 @@ describe("Et2Datagrid row hydration", () =>
 			loaderTemplate: null
 		} as any;
 		const row = {id: "row-0", data: {name: "report.txt", missing: null}};
-		const rowElement = (grid as any)._buildRowElement(row, 0) as HTMLElement;
+		const rowElement = buildMountedRow(grid as any, row, 0) as HTMLElement;
 
 		assert.isTrue((grid as any)._applyRowElementAttributes(rowElement, row.data, 0));
 		const widget = rowElement.querySelector("et2-dg-row-object") as Et2DatagridRowObjectFixture;

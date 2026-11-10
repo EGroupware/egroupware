@@ -7,6 +7,7 @@
  * resolved a second time as a placeholder, nor compiled as a PHP expression.
  */
 import {assert} from "@open-wc/testing";
+import {buildMountedRow} from "./mountedRow";
 import * as sinon from "sinon";
 import {Et2Datagrid} from "../Et2Datagrid";
 import {Et2RowProvider} from "../Et2RowProvider";
@@ -74,7 +75,7 @@ async function renderRow(cellHtml : string, rowData : any, rowRootAttributes : R
 		rowTemplateFieldMap: prepared?.fieldMap ?? {}
 	};
 	const row = {id: "row-0", data: rowData};
-	const rowElement = (el as any)._buildRowElement(row, 0) as HTMLElement;
+	const rowElement = buildMountedRow(el as any, row, 0) as HTMLElement;
 	(el as any)._applyRowElementAttributes(rowElement, row.data, 0);
 	// The same row again with changed data, as a refresh does: the row's markup is unchanged,
 	// so the grid keeps its DOM and only applies the row attributes again

@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {buildMountedRow} from "./mountedRow";
 import {Et2Datagrid} from "../Et2Datagrid";
 
 const egw = {
@@ -168,7 +169,7 @@ describe("Et2Datagrid column preferences", () =>
 		} as any;
 		(el as any).willUpdate(new Map([["templateData", null]]));
 
-		const rowElement = (el as any)._buildRowElement({id: "row-0", data: {}}, 0) as HTMLTableRowElement | null;
+		const rowElement = buildMountedRow(el as any, {id: "row-0", data: {}}, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from template");
 
 		const visibleCells = Array.from(rowElement!.querySelectorAll(":scope > td:not([data-dg-meta-cell])")) as HTMLElement[];
