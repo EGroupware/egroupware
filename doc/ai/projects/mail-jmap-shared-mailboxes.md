@@ -1,6 +1,6 @@
 # Mail: "Other users" / shared-mailbox namespace for JMAP (Stalwart) accounts
 
-## Status: Phase 1-3 (tree browsing + message listing) implemented (2026-10-29)
+## Status: Phase 1-4 (tree browsing, message listing/actions, Stalwart-matching namespace) implemented (2026-11-10)
 
 - Phase 1 (`cce71762b2`): `Jmap::bootstrap()` retains the Session's shared accounts
   (`$sharedAccounts`); `Imap\Jmap::getNameSpaceArray()` populates `others` from it.
@@ -62,13 +62,36 @@
   mailboxes) but is **not shared-mailbox-specific**. Full root-cause/fix/verification writeup lives
   in [[mail-jmap-jam-websocket]]'s own "Phase 7" section, since it's a `JamWebSocketClient`/
   `MailJmap.resolveHasChildren()` transport fix, not a shared-mailboxes one.
-- **Not yet implemented, deliberately deferred**: reading/acting on an individual message inside a
+- **Superseded 2026-11-08**: the "deliberately deferred" per-row-action gap below was closed - see
+  `MailJmapRowActionsSharedAccount.test.ts`'s own docblock (found live, acc_id 89, folder
+  "user/info/INBOX": opening a message in a shared folder showed the right header but a completely
+  unrelated body from the viewer's own mailbox). `fetchBody()`, `refreshRows()`,
+  `fetchForReply()`, `verifyPgpSignature()` and every other per-row `jmap.ts` method now decode the
+  row_id's `SHARED_ACCOUNTS_ROOT_ID` encoding and use the recovered accountId, not
+  `token.accountId`. Preview and the message-detail display popup both read through this, so they
+  already work correctly for a shared-account message - keep this in mind before assuming the
+  (stale) "deliberately deferred" note below still applies when touching this area.
+- ~~Not yet implemented, deliberately deferred~~: reading/acting on an individual message inside a
   shared folder - `fetchBody()` and the dozen-plus other rowId-consuming methods in `jmap.ts`
   (fetchForReply(), verifyPgpSignature(), markAsRead, move/delete, compose-from-shared-context, ...)
   still assume this profile's own accountId. Live-confirmed this degrades safely today (see above),
   but making it actually work is a materially larger, separate increment - would need the same
   "parse row_id's SHARED_ACCOUNTS_ROOT_ID encoding, use the recovered accountId" treatment applied
   to each one individually, audited rather than batch-converted.
+- **Phase 4 (2026-11-10)**: `user/<name>` now matches Stalwart's own real IMAP "Other Users"
+  namespace exactly (ralf's explicit ask) - there is no separate "Inbox" segment below the owner's
+  name there (`user/<name>` literally IS that account's INBOX), while ordinary folders stay parallel
+  siblings of INBOX (`user/<name>/FolderA`, unchanged). `getSharedAccountPlaceholders()`'s owner
+  node was already selectable straight into that account's own INBOX (Phase 3b above), but
+  `getSharedAccountMailboxChildren()` was still ALSO listing the role:'inbox' mailbox itself as a
+  normal child, producing a second, redundant "user/<name>/INBOX" node that doesn't exist
+  server-side. Fixed by excluding it from the top-level child list there (splicing in its own real
+  children, if it ever genuinely has any, as top-level entries instead of silently hiding them) -
+  `resolveMailboxOwner()`/`getRows()`/every per-row action already treated the bare "user/<name>"
+  path as that account's INBOX (Phase 3b), and the opaque `SHARED_ACCOUNTS_ROOT_ID` row-id encoding
+  Phase 4 above describes is untouched by this, so list/actions/preview/popup needed no further
+  change - only the tree's own duplicate child node was the bug. See
+  `MailJmapSharedAccountsNamespaceRoot.test.ts`'s new tests for the exact invariant.
 
 Follow-up to ticket #126691 (the Dovecot→Stalwart egroupware.org migration, see also
 `adc28974b4` - the Mailbox.isSubscribed crash fix for `mail/src/Ui.php::subscription()`, already

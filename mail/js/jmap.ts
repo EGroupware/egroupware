@@ -2063,6 +2063,35 @@ export class MailJmap
 			// batch-queries Mailbox/query by these ids against sharedAccountId, so it must run
 			// against the real, un-prefixed ids first
 			await this.resolveHasChildren(client, sharedAccountId, list, false);
+			if (realParentId === null)
+			{
+				// Match Stalwart's own real IMAP "user/<name>" namespace (ralf, 2026-11-10): there is
+				// no separate "Inbox" segment below the owner's name at all there - "user/<name>" IS
+				// that account's INBOX. getSharedAccountPlaceholders() already selects straight into it
+				// (resolveMailboxOwner()'s bare "user/<name>" -> 'INBOX' fallback), so surfacing the
+				// role:'inbox' mailbox AGAIN as a child node here would be a second, redundant way to
+				// reach the exact same folder ("user/<name>/INBOX") that doesn't exist server-side.
+				// Drop it; ordinary folders are top-level SIBLINGS of INBOX in this setup (unaffected,
+				// still become "user/<name>/<name>"), but if INBOX itself genuinely has real children
+				// of its own, splice those in as top-level entries instead of silently hiding them.
+				const inboxIdx = list.findIndex((m : any) => m.role === 'inbox');
+				if (inboxIdx !== -1)
+				{
+					const [inbox] = list.splice(inboxIdx, 1);
+					if (inbox.hasChildren)
+					{
+						const [{mailboxes: inboxChildren}] = await client.requestMany((t) =>
+						{
+							const ids = t.Mailbox.query({accountId: sharedAccountId, filter: {parentId: inbox.id}});
+							const mailboxes = t.Mailbox.get({accountId: sharedAccountId, ids: ids.$ref('/ids')});
+							return {ids, mailboxes};
+						}, {retryIdempotentOnClose: true});
+						const grandchildren = inboxChildren.list || [];
+						await this.resolveHasChildren(client, sharedAccountId, grandchildren, false);
+						list.push(...grandchildren);
+					}
+				}
+			}
 			// selectable since getRows() learned to read a shared account's own folder (doc/ai/
 			// projects/mail-jmap-shared-mailboxes.md's getRows()/fetchRows() increment) - the row
 			// LIST now genuinely works; reading/acting on an individual message still doesn't (see

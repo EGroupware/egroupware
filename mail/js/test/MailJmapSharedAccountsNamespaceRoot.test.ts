@@ -251,29 +251,31 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 
 	it("queries Mailbox/query against the SHARED accountId, not the primary one", async() =>
 	{
-		const {jmap, captured} = jmapWithFakeClient(
-			[{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
+		const {jmap, captured} = jmapWithFakeClient([
+			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false},
+			{id : "archive-id", name : "Archive", role : null, parentId : null, isSubscribed : false, hasChildren : false},
+		]);
 		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
 
 		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
 
 		assert.equal(captured.mailboxQuery[0].accountId, "u", "must use the shared accountId, not the primary account's own ('ca')");
 		assert.isNull(captured.mailboxQuery[0].filter.parentId, "top level of the shared account's own hierarchy");
-		assert.lengthOf(children, 1);
-		assert.equal(children[0].name, "Inbox");
+		assert.lengthOf(children, 1, "the Inbox entry is collapsed into the owner placeholder itself, see the describe() below");
+		assert.equal(children[0].name, "Archive");
 		assert.isNotTrue(children[0].noSelect, "selectable now that getRows() reads a shared account's own folder");
 	});
 
 	it("re-encodes each returned mailbox's own id so a deeper expand still carries the shared accountId", async() =>
 	{
 		const {jmap} = jmapWithFakeClient(
-			[{id : "real-inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
+			[{id : "real-folder-id", name : "Archive", role : null, parentId : null, isSubscribed : true, hasChildren : false}]);
 		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
 
 		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
 
 		assert.equal(children[0].id,
-			(MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-inbox-id");
+			(MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "real-folder-id");
 	});
 
 	it("never filters by isSubscribed, unlike the primary account's own getMailboxChildren()", async() =>
@@ -284,7 +286,7 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 		// Et2Tree's own self-correction then made a real, populated shared account look like an
 		// empty dead end
 		const {jmap, captured} = jmapWithFakeClient([
-			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : false, hasChildren : false},
+			{id : "archive-id", name : "Archive", role : null, parentId : null, isSubscribed : false, hasChildren : false},
 		]);
 		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
 
@@ -292,6 +294,92 @@ describe("MailJmap.getSharedAccountMailboxChildren()", () =>
 
 		assert.notProperty(captured.mailboxQuery[0].filter, "isSubscribed");
 		assert.lengthOf(children, 1, "an unsubscribed shared mailbox must still show up");
+	});
+
+	it("excludes the shared account's own Inbox from its top-level children - 'user/<name>' already IS that Inbox", async() =>
+	{
+		// ralf, 2026-11-10: Stalwart's own real IMAP "user/<name>" namespace has no separate
+		// "Inbox" segment below the owner's name at all - matching that exactly, the owner
+		// placeholder (getSharedAccountPlaceholders()) is already selectable straight into this
+		// account's own INBOX, so listing the role:'inbox' mailbox AGAIN as a child here would be
+		// a second, redundant path to the exact same folder that doesn't exist server-side
+		const {jmap, captured} = jmapWithFakeClient([
+			{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false},
+			{id : "archive-id", name : "Archive", role : null, parentId : null, isSubscribed : false, hasChildren : false},
+		]);
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
+
+		assert.isUndefined(children.find((m : any) => m.role === "inbox"), "no 'user/<name>/INBOX' duplicate");
+		assert.deepEqual(children.map((m : any) => m.name), ["Archive"], "ordinary siblings of INBOX are unaffected");
+		assert.notEqual(captured.mailboxQuery.length, 0);
+	});
+
+	it("still excludes Inbox at a genuinely top-level fetch even when it is the ONLY mailbox the account has", async() =>
+	{
+		const {jmap} = jmapWithFakeClient(
+			[{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : false}]);
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
+
+		assert.lengthOf(children, 0, "an account shared with us that has nothing but an Inbox has no CHILD nodes at all - " +
+			"the owner placeholder itself is the Inbox; Et2Tree's own self-correcting hasChildren handles the now-stale 'expandable' hint");
+	});
+
+	it("does NOT exclude a genuine mailbox literally named 'Inbox' that is NOT the account's special-use role:'inbox' one level down", async() =>
+	{
+		// the exclusion is role-based, not name-based - it must never apply below the top level,
+		// where 'Inbox' (if it occurred at all) would just be an ordinary folder with that name
+		const {jmap, captured} = jmapWithFakeClient(
+			[{id : "nested-id", name : "Inbox", role : null, parentId : "archive-id", isSubscribed : false, hasChildren : false}]);
+		const encodedParentId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "archive-id";
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", encodedParentId);
+
+		assert.equal(captured.mailboxQuery[0].filter.parentId, "archive-id", "a descent, not the top level");
+		assert.lengthOf(children, 1, "only the top-level Inbox mailbox is special-cased, not every mailbox named 'Inbox'");
+		assert.equal(children[0].name, "Inbox");
+	});
+
+	it("splices the Inbox's own real children in as top-level entries, when it genuinely has any", async() =>
+	{
+		// rare in this setup (ordinary folders are siblings of INBOX, not nested under it, per
+		// the describe() above) but must not be silently hidden if it ever happens
+		const responsesByParentId : Record<string, any[]> = {
+			"null" : [{id : "inbox-id", name : "Inbox", role : "inbox", parentId : null, isSubscribed : true, hasChildren : true}],
+			"inbox-id" : [{id : "under-inbox-id", name : "UnderInbox", role : null, parentId : "inbox-id", isSubscribed : false, hasChildren : false}],
+		};
+		const captured : {mailboxQuery : any[]} = {mailboxQuery : []};
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) =>
+			{
+				let parentId : any;
+				const t = {
+					Mailbox : {
+						query : (args : any) => { captured.mailboxQuery.push(args); parentId = args.filter.parentId; return {$ref : (_p : string) => ({})}; },
+						get : (_args : any) => ({$ref : (_p : string) => ({})}),
+					},
+				};
+				buildFn(t);
+				return [{mailboxes : {list : responsesByParentId[String(parentId)] || []}}];
+			},
+		};
+		const jmap = new MailJmap(createFakeApp());
+		(jmap as any).clients["89"] = client;
+		(jmap as any).tokens["89"] = {
+			sessionUrl : "https://example.com", accountId : "ca", access_token : "tok",
+			expires_at : Date.now() + 100000, isLocal : false, customLabels : {},
+		};
+		const placeholderId = (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP;
+
+		const children = await (jmap as any).getSharedAccountMailboxChildren("89", placeholderId);
+
+		assert.lengthOf(children, 1, "the Inbox entry itself is dropped, its real child takes its place");
+		assert.equal(children[0].name, "UnderInbox");
+		assert.equal(children[0].id, (MailJmap as any).SHARED_ACCOUNTS_ROOT_ID + "u" + (MailJmap as any).SHARED_ACCOUNT_SEP + "under-inbox-id",
+			"re-encoded the same as any other top-level entry - it now IS one");
 	});
 
 	it("descends a further level using the real parent id recovered from the encoded parentId", async() =>
