@@ -4623,6 +4623,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const expandedSignature = Array.from(this._expandedRowIds()).sort().join(",");
 		if(!expandedSignature)
 		{
+			// The last expanded row just closed (or none ever opened). The per-item height
+			// map is handed to the sparse layout by reference, so entries kept from the
+			// previous expansion would still be added to its scroll extent and shift every
+			// row after that index far down, leaving the grid blank. Drop them, forget the
+			// cached item list so a later expansion rebuilds, and have the layout reflow.
+			if(this._expandedVirtualItemHeights.size)
+			{
+				this._expandedVirtualItemHeights.clear();
+				this._virtualItems = [];
+				this._virtualItemsSignature = "";
+				// A plain reflow request is not enough: the layout only recomputes its
+				// scroll extent on a layout update.
+				this._scheduleVirtualizerLayoutSync();
+			}
 			return this._getVirtualIndexes(rowCount);
 		}
 		const querySignature = this.dataProvider?.getQuerySignature?.() || "";

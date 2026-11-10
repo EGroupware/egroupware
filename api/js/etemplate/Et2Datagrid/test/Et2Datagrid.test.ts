@@ -3431,6 +3431,45 @@ describe("Et2Datagrid virtual height stability", () =>
 		assert.equal((el as any)._virtualItemsSignature, "", "the virtual item cache signature should be invalidated");
 	});
 
+	/**
+	 * Contract: collapsing the last expanded row must drop its reserved height.
+	 *
+	 * Reported from filemanager: with a nested folder open inside an open folder,
+	 * collapsing the inner folder left the grid drawing its first rows and then blank
+	 * space. The height map is handed to the sparse layout by reference and was only
+	 * rebuilt while some row stayed expanded, so the closed row's tall entry kept
+	 * inflating the scroll extent and pushed every later row far below the viewport.
+	 *
+	 * Setup: a grid with one expanded row that has a recorded 1443px reservation, then
+	 * the expansion set is emptied, as `_setRowExpanded(row, false)` does.
+	 *
+	 * Pass: asking for the virtual items again empties the height map, so the layout's
+	 * scroll extent is back to rows only.
+	 */
+	it("drops the reserved height of the last expanded row when it collapses", () =>
+	{
+		const expandedRowIds = new Set(["row-1"]);
+		const el = createDatagrid();
+		el.expansionConfig = {
+			isExpandable: () => true,
+			renderExpandedContent: () => html``,
+			expandedRowIds
+		};
+		(el as any)._rowsByIndex = [{id: "row-0"}, {id: "row-1"}, {id: "row-2"}];
+		(el as any)._expandedRowHeightByParentRowId.set("row-1", 1443);
+		const expanded = (el as any)._getVirtualItems(3);
+		assert.equal(expanded.length, 4, "the expanded branch is a virtual item of its own");
+		assert.equal((el as any)._expandedVirtualItemHeights.get(2), 1443);
+
+		expandedRowIds.clear();
+		(el as any)._expandedRowHeightByParentRowId.delete("row-1");
+		const collapsed = (el as any)._getVirtualItems(3);
+
+		assert.equal(collapsed.length, 3, "no expanded item remains");
+		assert.equal((el as any)._expandedVirtualItemHeights.size, 0,
+			"the closed branch's reserved height must not outlive it");
+	});
+
 	it("bootstraps a non-empty sparse layout from a zero-height host", async() =>
 	{
 		const el = createDatagrid();
