@@ -57,6 +57,12 @@ class Sql extends Mail\Smtp
 	const TYPE_ALIAS = 3;
 	const TYPE_FORWARD = 4;
 	const TYPE_MAILBOX = 5;
+	/**
+	 * Group-only: explicit Stalwart sync mode ('none'|'acl'|'list'|'mailbox'), see
+	 * Smtp\Stalwart::groupSyncMode()/saveGroupSyncMode() - only ever read/written there, harmless
+	 * no-op for every other backend using this same table.
+	 */
+	const TYPE_GROUP_SYNC = 6;
 
 	/**
 	 * Constructor

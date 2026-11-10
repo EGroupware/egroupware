@@ -17,6 +17,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
+use EGroupware\Api\Mail;
 
 /**
  * Group administration:
@@ -121,6 +122,9 @@ class Groups
 				$acl = new Acl($content['account_id']);
 				$acl->read_repository();
 				$content['hidden'] = $acl->check('hidden', 1, 'phpgwapi');
+				// must run BEFORE the $content['old'] snapshot below - see this method's own
+				// docblock for why
+				$this->addStalwartSyncOptions($content, $sel_options);
 				$content['old'] = $content;
 			}
 			else
@@ -167,7 +171,7 @@ class Groups
 								$content['account_members'] = array_diff($content['account_members'], $content['unaccessible_members']);
 							}
 							$content['old'] = array_intersect_key($content, $content['old'] ? $content['old'] :
-								array_flip(array('account_id','account_lid','account_email','account_members')));
+								array_flip(array('account_id','account_lid','account_email','account_members','stalwart_sync')));
 						}
 						$apps = array();
 						foreach((array)$content['apps'] as $data)
@@ -263,7 +267,69 @@ class Groups
 		$content['disable_dn'] = $GLOBALS['egw_info']['server']['account_repository'] !== 'sql' ||
 			!empty($GLOBALS['egw_info']['server']['account_import_source']) && $GLOBALS['egw_info']['server']['account_import_type'] !== 'users';
 
+		$this->addStalwartSyncOptions($content, $sel_options);
+
 		$tpl->exec('admin.'.self::class.'.edit', $content, $sel_options, $readonlys, $content, 2);
+	}
+
+	/**
+	 * Detect whether a managed Stalwart account exists for this group (same account-finding
+	 * logic as Mail\Hooks::run_plugin_hooks(), so "will the hook fire" and "does the UI show
+	 * the selector" stay in sync by construction, rather than guessing independently) and, if
+	 * so, populate $content['stalwart_available'], $sel_options['stalwart_sync'] and (when
+	 * editing an existing group) $content['stalwart_sync'] with its current mode.
+	 *
+	 * Must be called BEFORE edit()'s own $content['old'] = $content snapshot (initial-load
+	 * branch), not just at the end of edit() - found live, 2026-11-10: selecting a different
+	 * sync mode and saving silently reverted to the previously stored value. Root cause: this
+	 * logic used to run only once, at the very end of edit() - after $content['old'] had
+	 * already been captured without a 'stalwart_sync' key. edit()'s save-button handler only
+	 * calls run_command() when `$content['old'] != array_intersect_key($content,
+	 * $content['old'])` - since array_intersect_key() restricts to keys already present in
+	 * $content['old'], a field missing from that snapshot can never make the two sides differ,
+	 * no matter how it changes, so changing ONLY stalwart_sync was invisible to that check and
+	 * the whole save was silently treated as a no-op. Called again at the end of edit() too,
+	 * since $sel_options is rebuilt fresh on every call (including the post-save re-render)
+	 * regardless - the resulting one extra read on the initial load is harmless.
+	 *
+	 * @param array $content
+	 * @param array $sel_options
+	 * @return void
+	 */
+	private function addStalwartSyncOptions(array &$content, array &$sel_options) : void
+	{
+		$content['stalwart_available'] = false;
+		foreach (Mail\Account::search($content['account_id'] ?: 0, 'params') as $params)
+		{
+			if (Mail\Account::is_multiple($params) &&
+				is_a($params['acc_smtp_type'] ?? '', Mail\Smtp\Stalwart::class, true))
+			{
+				$content['stalwart_available'] = true;
+				$options = [
+					Mail\Smtp\Stalwart::GROUP_SYNC_NONE => lang('No sync to Stalwart'),
+					Mail\Smtp\Stalwart::GROUP_SYNC_ACL => lang('ACL group (no mailbox)'),
+				];
+				$needs_email = [
+					Mail\Smtp\Stalwart::GROUP_SYNC_LIST => lang('Distribution list'),
+					Mail\Smtp\Stalwart::GROUP_SYNC_MAILBOX => lang('Shared mailbox'),
+				];
+				if ($content['account_id'])
+				{
+					$content['stalwart_sync'] = (new Mail\Account($params))->smtpServer()
+						->groupSyncMode($content['account_id'], $content['account_email'] ?? null);
+				}
+				// modes requiring an email are only offered once the group actually has one - avoids
+				// ever presenting a choice admin_cmd_edit_group::exec() would reject on save anyway;
+				// still shown if that's already the stored mode, so an (otherwise-prevented) existing
+				// email-less list/mailbox group doesn't have its real value hidden from the admin
+				if (!empty($content['account_email']) || isset($needs_email[$content['stalwart_sync'] ?? null]))
+				{
+					$options += $needs_email;
+				}
+				$sel_options['stalwart_sync'] = $options;
+				break;
+			}
+		}
 	}
 
 	/**
@@ -281,6 +347,7 @@ class Groups
 			'account_description',
 			'account_members',
 			'hidden',
+			'stalwart_sync',
 		);
 		// Only send real changes
 		$account = array();

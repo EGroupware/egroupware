@@ -54,13 +54,58 @@ class Stalwart extends Sql
 	/**
 	 * Hook called when group is added or updated
 	 *
-	 * @param array $data values for keys "location", "account_id", "account_lid", "account_email" and "mailbox"
+	 * Dispatches on the group's explicit Stalwart-sync mode (groupSyncMode()) - 'none' syncs
+	 * nothing (and cleans up anything from a previous mode), 'acl' and 'list' are today's
+	 * pre-existing group()/mailingList() behaviour, now explicit choices instead of an implicit
+	 * "always ACL, plus a list whenever there's an email" combination. 'mailbox' creates/maintains
+	 * a real, unprefixed shared mailbox and ACL-grants full (but not mayShare) access to every
+	 * current member, via syncMailboxShares() - confirmed live (2026-11-10) that the admin JMAP
+	 * session accepts Mailbox/get+set against an arbitrary accountId, not just its own.
+	 *
+	 * @param array $data values for keys "location", "account_id", "account_lid", "account_email",
+	 *  "stalwart_sync" (new, one of groupSyncMode()'s GROUP_SYNC_* values - only present when the
+	 *  admin UI's new selector submitted one) and "mailbox"
 	 * @return void
 	 */
 	function updateGroup($data)
 	{
-		$this->group($data['account_id'], $data['account_lid'],
-			$data['account_email'] ?? Api\Accounts::id2name($data['account_id'], 'account_email'));
+		$account_id = $data['account_id'];
+		$account_lid = $data['account_lid'];
+		$account_email = $data['account_email'] ?? Api\Accounts::id2name($account_id, 'account_email');
+
+		$old_mode = $this->groupSyncMode($account_id, $account_email);
+		$mode = $data['stalwart_sync'] ?? $old_mode;
+
+		switch ($mode)
+		{
+			case self::GROUP_SYNC_NONE:
+				$this->deleteGroupPrincipal($account_id, $account_lid);
+				break;
+
+			case self::GROUP_SYNC_ACL:
+				$this->group($account_id, $account_lid, null);
+				break;
+
+			case self::GROUP_SYNC_LIST:
+				$this->group($account_id, $account_lid, $account_email);
+				break;
+
+			case self::GROUP_SYNC_MAILBOX:
+				$groupId = $this->group($account_id, $account_lid, $account_email, null, true);
+				$this->syncMailboxShares($account_id, $groupId);
+				break;
+		}
+		// leaving GROUP_SYNC_MAILBOX for acl/list: keep the mailbox itself, just revoke every
+		// member's ACL share on the way out (the group principal survives, renamed/reused by the
+		// group()-based branches above). Leaving it for 'none' instead: deleteGroupPrincipal() above
+		// already deleted the whole mailbox (shares and all, see its own docblock for why that's now
+		// fine), so revoking shares here would be a pointless no-op against an account that no
+		// longer exists - skip it.
+		if ($old_mode === self::GROUP_SYNC_MAILBOX && !in_array($mode, [self::GROUP_SYNC_MAILBOX, self::GROUP_SYNC_NONE], true))
+		{
+			$this->revokeAllMailboxShares($account_lid);
+		}
+		$this->saveGroupSyncMode($account_id, $mode);
 
 		parent::updateGroup($data);
 	}
@@ -448,6 +493,270 @@ class Stalwart extends Sql
 	const NON_MAILBOX_GROUP_PREFIX = 'noreply-';
 
 	/**
+	 * Explicit, admin-chosen Stalwart-sync modes for a group (edit-group UI, shown only when a
+	 * managed Stalwart account exists) - stored per-group via groupSyncMode()/saveGroupSyncMode(),
+	 * see doc/ai/projects/ for the full design (TYPE_GROUP_SYNC row in egw_mailaccounts).
+	 */
+	const GROUP_SYNC_NONE = 'none';		// a) no sync to Stalwart at all
+	const GROUP_SYNC_ACL = 'acl';			// b) noreply-prefixed ACL/membership-only Group principal
+	const GROUP_SYNC_LIST = 'list';		// c) same Group principal, PLUS a real MailingList
+	const GROUP_SYNC_MAILBOX = 'mailbox';	// d) unprefixed Group used as a real shared mailbox (Phase B)
+
+	/**
+	 * Get this group's explicitly configured Stalwart-sync mode
+	 *
+	 * No stored row yet (a pre-existing group, from before this feature existed) --> compute AND
+	 * PERSIST the default that reproduces exactly what that group's sync already did before this
+	 * feature existed: GROUP_SYNC_ACL if it has no email, GROUP_SYNC_LIST if it does - so the admin
+	 * UI shows a correct, already-materialized value from the very first time someone opens that
+	 * group's edit dialog, not a value re-derived (and never actually stored) on every read.
+	 *
+	 * Public - the edit-group admin UI (admin/src/Groups.php) needs to read the current mode to
+	 * pre-select it in the new selector; saveGroupSyncMode()/deleteGroupPrincipal() stay
+	 * protected/internal-only, only ever reached through the normal group-save hook dispatch.
+	 *
+	 * @param int $account_id
+	 * @param ?string $account_email pass when already known, to avoid a second accounts lookup
+	 * @return string one of self::GROUP_SYNC_*
+	 */
+	public function groupSyncMode(int $account_id, ?string $account_email=null) : string
+	{
+		foreach ($this->db->select(self::TABLE, 'mail_value', [
+			'account_id' => $account_id,
+			'mail_type' => self::TYPE_GROUP_SYNC,
+		], __LINE__, __FILE__, false, '', self::APP) as $row)
+		{
+			return $row['mail_value'];
+		}
+		$mode = empty($account_email ?? Api\Accounts::id2name($account_id, 'account_email')) ?
+			self::GROUP_SYNC_ACL : self::GROUP_SYNC_LIST;
+		$this->saveGroupSyncMode($account_id, $mode);
+		return $mode;
+	}
+
+	/**
+	 * Store a group's explicitly configured Stalwart-sync mode
+	 *
+	 * @param int $account_id
+	 * @param string $mode one of self::GROUP_SYNC_*
+	 * @return void
+	 */
+	protected function saveGroupSyncMode(int $account_id, string $mode) : void
+	{
+		$this->db->insert(self::TABLE, [
+			'mail_value' => $mode,
+		], [
+			'account_id' => $account_id,
+			'mail_type' => self::TYPE_GROUP_SYNC,
+		], __LINE__, __FILE__, self::APP);
+	}
+
+	/**
+	 * Delete this group's Stalwart Group principal (both the noreply-prefixed ACL-only variant AND
+	 * the unprefixed, real shared-mailbox variant - whichever currently exists) and any mailing-
+	 * list, if they exist - used for sync mode GROUP_SYNC_NONE, where group() itself is never
+	 * called (so its own equivalent mailing-list cleanup branch, see group()'s "remove evtl.
+	 * existing mailing-list" comment, never runs - this folds the same cleanup in here).
+	 *
+	 * Safe to call unconditionally, no confirmation needed: GROUP_SYNC_NONE means "nothing for this
+	 * group on Stalwart at all", full stop, for either variant - including a group that was
+	 * previously GROUP_SYNC_MAILBOX with a real, in-use shared mailbox. This used to be handled far
+	 * more cautiously (ACL shares revoked, but the mailbox and its mail left in place, requiring a
+	 * separate explicit "delete this group's mailbox" admin action that was never actually built -
+	 * see the plan's "Mailbox-deletion policy" history), but ralf decided (2026-11-10) that's no
+	 * longer warranted now that Stalwart's enterprise version backs up deleted accounts (so they
+	 * can be un-deleted) and no real group-mailbox is in production use yet - the risk an automatic
+	 * delete here was guarding against is gone.
+	 *
+	 * @param int $account_id
+	 * @param string $account_lid
+	 * @return void
+	 */
+	protected function deleteGroupPrincipal(int $account_id, string $account_lid) : void
+	{
+		$domainId = $this->domainId($this->defaultDomain);
+		$name = self::name2stalwart($account_lid);
+
+		// delete an existing mailing-list, if any - same lookup/delete shape as group()'s own
+		// "remove evtl. existing mailing-list" branch, which is never reached for this mode
+		$account_email = Api\Accounts::id2name($account_id, 'account_email') ?: $name.'@'.$this->defaultDomain;
+		foreach ($this->getMailingListByRecipient($account_email, false, true) as $list)
+		{
+			if (strtolower($list['emailAddress']) === strtolower($account_email))
+			{
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/set', [
+						'destroy' => [$list['id']],
+					], 'a'],
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+				if (!in_array($list['id'], $response['methodResponses'][0][1]['destroyed'] ?? []))
+				{
+					throw new \Exception("Could not delete mailing list '$account_email'!");
+				}
+				break;
+			}
+		}
+
+		// delete whichever Group principal currently exists - the noreply-prefixed ACL-only one
+		// (modes acl/list) or the unprefixed real shared-mailbox one (mode mailbox) - at most one
+		// of the two can exist for a given group at a time, so trying both candidate names is safe
+		foreach ([self::NON_MAILBOX_GROUP_PREFIX.$name, $name] as $candidateName)
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:Account/query', [
+					'filter' => JmapHttp::filterConditions('AND', [
+						'domainId' => $domainId,
+						'name' => $candidateName,
+					]),
+				], 'b'],
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+			if (($groupId = $response['methodResponses'][0][1]['ids'][0] ?? null))
+			{
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/set', [
+						'destroy' => [$groupId],
+					], 'a'],
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+				if (!in_array($groupId, $response['methodResponses'][0][1]['destroyed'] ?? []))
+				{
+					throw new \Exception("Could not delete group '$account_lid'!");
+				}
+			}
+		}
+		$this->db->delete(self::TABLE, [
+			'account_id' => $account_id,
+			'mail_type' => self::TYPE_ENABLED,
+		], __LINE__, __FILE__, self::APP);
+	}
+
+	/**
+	 * Resolve an email address to its JMAP Principal id, via the ADMIN session - same
+	 * Principal/query pattern as Imap\Jmap::jmapPrincipalId(), which isn't reachable from here
+	 * (different class, bound to a different, per-user session, not this admin-automation one).
+	 *
+	 * @param string $email
+	 * @return ?string null if not found
+	 */
+	protected function jmapPrincipalId(string $email) : ?string
+	{
+		static $cache = [];
+		if (!array_key_exists($email, $cache))
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['Principal/query', ['filter' => ['email' => $email]], 'a'],
+			], [JmapHttp::JMAP_CORE, JmapHttp::JMAP_PRINCIPALS]);
+			$cache[$email] = $response['methodResponses'][0][1]['ids'][0] ?? null;
+		}
+		return $cache[$email];
+	}
+
+	/**
+	 * Full read/write/create/delete/submit access for a shared group-mailbox's own members -
+	 * deliberately NOT mayShare, so a member can never themselves grant others access to the
+	 * group's shared mailbox (that stays an admin-only action, via this group's own membership).
+	 */
+	const MAILBOX_RIGHTS_FULL_MEMBER = [
+		'mayReadItems' => true,
+		'mayAddItems' => true,
+		'mayRemoveItems' => true,
+		'maySetSeen' => true,
+		'maySetKeywords' => true,
+		'mayCreateChild' => true,
+		'mayRename' => true,
+		'mayDelete' => true,
+		'maySubmit' => true,
+		'mayShare' => false,
+	];
+
+	/**
+	 * Grant/revoke a shared group-mailbox's own INBOX ACL shares to match current group
+	 * membership - diffs live against the mailbox's own current shareWith every time (same
+	 * "recompute, don't track prior grants ourselves" philosophy as GROUP_SYNC_LIST's mailing-
+	 * list recipients, see group()) - no new storage needed. Only the group's own INBOX is
+	 * shared (matching this mode's own "a real shared mailbox", not per-subfolder sharing).
+	 *
+	 * @param ?int $account_id null to revoke every existing share without granting anyone (used
+	 *  by revokeAllMailboxShares() when leaving this mode - the group's own EGroupware membership
+	 *  is irrelevant there, every current share must simply go)
+	 * @param string $groupId this group's own (unprefixed) Stalwart Group/Account id - also the
+	 *  JMAP accountId its own Mailbox objects live under
+	 * @return void
+	 */
+	protected function syncMailboxShares(?int $account_id, string $groupId) : void
+	{
+		$memberEmails = $account_id === null ? [] : array_values(array_filter(array_map(
+			fn($member_id) => Api\Accounts::id2name($member_id, 'account_email'),
+			Api\Accounts::getInstance()->members($account_id, true))));
+
+		$response = $this->jmapClient()->jmapCall([
+			['Mailbox/query', ['accountId' => $groupId, 'filter' => ['role' => 'inbox']], 'a'],
+			['Mailbox/get', [
+				'accountId' => $groupId,
+				'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => 'a'],
+				'properties' => ['id', 'shareWith'],
+			], 'b'],
+		], [...JmapHttp::JMAP_MAIL, JmapHttp::JMAP_MAIL_SHARE]);
+		if (!($inbox = $response['methodResponses'][1][1]['list'][0] ?? null))
+		{
+			throw new \Exception("Could not find group's own Inbox (accountId '$groupId') to share!");
+		}
+		$currentShares = array_keys((array)($inbox['shareWith'] ?? []));
+		$wantedPrincipalIds = array_values(array_filter(array_map(
+			fn($email) => $this->jmapPrincipalId($email), $memberEmails)));
+
+		$patch = [];
+		foreach (array_diff($wantedPrincipalIds, $currentShares) as $principalId)
+		{
+			$patch['shareWith/'.$principalId] = self::MAILBOX_RIGHTS_FULL_MEMBER;
+		}
+		foreach (array_diff($currentShares, $wantedPrincipalIds) as $principalId)
+		{
+			$patch['shareWith/'.$principalId] = null;
+		}
+		if (!$patch) return;
+
+		$response = $this->jmapClient()->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $groupId,
+				'update' => [$inbox['id'] => $patch],
+			], 'a'],
+		], [...JmapHttp::JMAP_MAIL, JmapHttp::JMAP_MAIL_SHARE]);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$inbox['id']]))
+		{
+			throw new \Exception('Could not update group mailbox shares: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$inbox['id']]));
+		}
+	}
+
+	/**
+	 * Revoke every member's ACL share on a group's own (unprefixed, real) shared mailbox, without
+	 * touching the mailbox or its mail at all - the only automatic cleanup step when leaving
+	 * GROUP_SYNC_MAILBOX for any other mode (see updateGroup()'s own comment and the plan's
+	 * "Mailbox-deletion policy" note) - actually deleting the mailbox itself requires a separate,
+	 * explicit admin action, never an automatic side effect of a mode change.
+	 *
+	 * @param string $account_lid
+	 * @return void
+	 */
+	protected function revokeAllMailboxShares(string $account_lid) : void
+	{
+		$domainId = $this->domainId($this->defaultDomain);
+		$name = self::name2stalwart($account_lid);
+		$response = $this->jmapClient()->jmapCall([
+			['x:Account/query', [
+				'filter' => JmapHttp::filterConditions('AND', [
+					'domainId' => $domainId,
+					'name' => $name,	// UNPREFIXED - the real shared mailbox, not the noreply- one
+				]),
+			], 'b'],
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+		if (($groupId = $response['methodResponses'][0][1]['ids'][0] ?? null))
+		{
+			$this->syncMailboxShares(null, $groupId);
+		}
+	}
+
+	/**
 	 * Sync the given groups to Stalwart, if not already exist, and return their ids
 	 *
 	 * @param string[] $memberships account_id => account_lid pairs
@@ -491,7 +800,14 @@ class Stalwart extends Sql
 				], false,__LINE__, __FILE__);
 			}
 		}
-		// create still missing groups on Stalwart side
+		// create still missing groups on Stalwart side - unless that group's own explicitly
+		// configured sync mode is GROUP_SYNC_NONE: a group explicitly opted out of Stalwart sync
+		// must stay absent from memberGroupIds too, or simply syncing an unrelated member's own
+		// account would silently recreate a group principal for it, defeating that choice.
+		// GROUP_SYNC_MAILBOX resolves to the real, unprefixed, mailbox-enabled principal here too
+		// (same one updateGroup()'s own dispatcher creates/maintains) - this method only ever
+		// resolves/creates the principal id for memberGroupIds, it never touches ACL shares
+		// itself (that stays this group's OWN save's job, via updateGroup()'s dispatcher).
 		$methodcalls = [
 			['x:Account/set', [
 				'create' => []], 'a'
@@ -501,8 +817,14 @@ class Stalwart extends Sql
 		{
 			foreach ($missing as $account_id => $account_lid)
 			{
+				if (($mode = $this->groupSyncMode((int)$account_id)) === self::GROUP_SYNC_NONE)
+				{
+					continue;
+				}
 				$stalwartIds[$account_id] = $this->group($account_id, $account_lid,
-					Api\Accounts::id2name($account_id, 'account_email'), false);
+					in_array($mode, [self::GROUP_SYNC_LIST, self::GROUP_SYNC_MAILBOX], true) ?
+						Api\Accounts::id2name($account_id, 'account_email') : null,
+					false, $mode === self::GROUP_SYNC_MAILBOX);
 			}
 		}
 		return array_values($stalwartIds);
@@ -595,7 +917,13 @@ class Stalwart extends Sql
 		{
 			if (empty($account_email))
 			{
-				$account_email = $account['account_lid'].'@'.$this->defaultDomain;
+				// $account has no 'account_lid' key (only '@type'/'name'/'description'/'domainId',
+				// see above) - $name (this group's own Stalwart-sanitized bare name) is the correct
+				// value here; using the undefined array key silently produced "@$domain" before,
+				// so an existing mailing-list was never actually found/deleted when email was
+				// cleared - found while wiring GROUP_SYNC_ACL/NONE through this same branch, which
+				// now relies on it being correct
+				$account_email = $name.'@'.$this->defaultDomain;
 			}
 			foreach ($this->getMailingListByRecipient($account_email, false, true) as $list)
 			{
@@ -603,10 +931,10 @@ class Stalwart extends Sql
 				{
 					$response = $this->jmapClient()->jmapCall([
 						['x:Account/set', [
-							'delete' => [$list['id']]
+							'destroy' => [$list['id']]
 						], 'a'],
 					], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
-					if (!array_key_exists($list['id'], $response['methodResponses'][0][1]['deleted']))
+					if (!in_array($list['id'], $response['methodResponses'][0][1]['destroyed'] ?? []))
 					{
 						throw new \Exception("Could not delete mailing list '$account_email'!");
 					}

@@ -1052,3 +1052,9 @@ you will need to remove the subcategories before you can delete this category	ad
 your last submission was less then %1 days ago!	admin	de	Ihre letzte Übertragung liegt weniger als %1 Tage zurück!
 your name	admin	de	Ihr Name
 your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.
+stalwart sync	admin	de	Stalwart-Synchronisation
+no sync to stalwart	admin	de	Keine Synchronisation mit Stalwart
+acl group (no mailbox)	admin	de	ACL-Gruppe (ohne Postfach)
+distribution list	admin	de	Verteilerliste
+this sync mode requires an email address - set one, or switch to a mode that does not need it.	admin	de	Dieser Synchronisations-Modus benötigt eine E-Mail-Adresse - bitte eine eintragen oder einen Modus wählen, der keine benötigt.
+shared mailbox	admin	de	Gemeinsames Postfach
