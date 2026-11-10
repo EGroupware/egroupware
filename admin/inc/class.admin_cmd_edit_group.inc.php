@@ -102,6 +102,20 @@ class admin_cmd_edit_group extends admin_cmd
 				if (is_null($value)) $value = $old[$name];
 			}
 		}
+		// must run AFTER the null-backfill above, not alongside the other validations further up -
+		// account_email is only ever present in $data (the submitted diff, see
+		// Groups::run_command()) when it actually CHANGED; an unrelated edit that leaves email
+		// untouched has it backfilled from $old only by the loop just above, so checking it any
+		// earlier always saw null/empty here regardless of the account's real, already-stored
+		// email (found live, 2026-11-10: switching sync mode on a group that already had a real
+		// email wrongly rejected as "needs an email address")
+		if (in_array($data['stalwart_sync'] ?? null, [
+				\EGroupware\Api\Mail\Smtp\Stalwart::GROUP_SYNC_LIST,
+				\EGroupware\Api\Mail\Smtp\Stalwart::GROUP_SYNC_MAILBOX,
+			], true) && empty($data['account_email']))
+		{
+			throw new Api\Exception\WrongUserinput(lang('This sync mode requires an email address - set one, or switch to a mode that does not need it.'), 19);
+		}
 		// Make sure we have lid for hook even if not changed, some backend require it
 		if (empty($data['account_lid']))
 		{

@@ -1054,3 +1054,9 @@ you will need to remove the subcategories before you can delete this category	ad
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
 your name	admin	en	Your name
 your session could not be verified.	admin	en	Your session could not be verified.
+stalwart sync	admin	en	Stalwart sync
+no sync to stalwart	admin	en	No sync to Stalwart
+acl group (no mailbox)	admin	en	ACL group (no mailbox)
+distribution list	admin	en	Distribution list
+this sync mode requires an email address - set one, or switch to a mode that does not need it.	admin	en	This sync mode requires an email address - set one, or switch to a mode that does not need it.
+shared mailbox	admin	en	Shared mailbox

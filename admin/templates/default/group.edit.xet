@@ -27,6 +27,7 @@
 		</et2-hbox>
 		<et2-textbox  label="Description" id="account_description" maxlength="64" span="all"></et2-textbox>
 		<et2-url-email  label="EMail" id="account_email" maxlength="64" hidden="!@mailAllowed"></et2-url-email>
+		<et2-select  label="Stalwart sync" id="stalwart_sync" hidden="!@stalwart_available"></et2-select>
 		<et2-textbox  label="Filesystem quota" id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
 		<et2-textbox  label="Container" id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
 		<et2-checkbox  id="hidden" label="Group hidden from non-admins" span="all"></et2-checkbox>
