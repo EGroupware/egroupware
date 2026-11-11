@@ -153,6 +153,24 @@ class BodyDecodingTest extends TestCase
 			"a legacy <style><!-- css --></style> wrapper's actual CSS content must survive");
 	}
 
+	/**
+	 * Same gap and fix as HtmLawed::getStyles() (that sibling's regression test has the full
+	 * story) - the tag-level gate used to only catch tags containing the literal word "script",
+	 * so it must now strip any on*= event-handler attribute too, not just that one keyword.
+	 */
+	public function testGetStylesStripsEventHandlerAttribute()
+	{
+		\EGroupware\Api\Mail::$displayCharset = 'utf-8';
+		$bodyParts = [
+			['body' => '<style>x{}<img src=y onerror=alert(1)></style>', 'mimeType' => 'text/html', 'charSet' => 'utf-8'],
+		];
+
+		$result = BodyDecoding::getStyles($bodyParts);
+
+		$this->assertStringNotContainsString('onerror=', $result,
+			'a comment-split tag must not be able to smuggle an event-handler attribute through');
+	}
+
 	public function testHtmlentitiesEncodesWithExplicitCharset()
 	{
 		$this->assertSame('&lt;b&gt;', BodyDecoding::htmlentities('<b>', 'utf-8'));
