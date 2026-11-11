@@ -136,7 +136,11 @@
 					</et2-tabbox>
 				</row>
 				<row class="dialogFooterToolbar">
-					<et2-checkbox  label="Check message against next rule also" id="continue"></et2-checkbox>
+					<et2-select  label="If this rule matches" id="after" statustext="Default: the following rules are skipped for messages this rule matches. Next rules also: they are checked too. Stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.">
+						<option value="end">Next rules only if this one does not match</option>
+						<option value="continue">Next rules also, even if this one matches</option>
+						<option value="stop">Stop: no further rules, no vacation reply or notification</option>
+					</et2-select>
 				</row>
 				<row>
 					<et2-checkbox  label="Keep a copy of the message in your inbox" id="keep"></et2-checkbox>
