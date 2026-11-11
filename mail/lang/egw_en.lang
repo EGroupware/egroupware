@@ -851,3 +851,5 @@ you've got new mail	mail	en	You've got new email
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.
 seen / write	mail	en	Seen / Write
 this server ties the 'seen' and 'write' rights together - granting one grants both	mail	en	This server ties the 'Seen' and 'Write' rights together - granting one grants both
+read & write	mail	en	read & write
+allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).	mail	en	Allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).
