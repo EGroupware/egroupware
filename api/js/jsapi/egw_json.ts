@@ -177,6 +177,10 @@ const CONNECT_TIMEOUT_MS = 8000;
  * MIN_RECONNECT_TIME=1s) doesn't flap a consumer's fallback-poller on and straight back off again.
  */
 const PUSH_UNAVAILABLE_GRACE_MS = 10000;
+/**
+ * Close code of the push server (swoolepush/server.php) for "unknown session": final, no reconnect
+ */
+const PUSH_CLOSE_UNKNOWN_SESSION = 4401;
 
 /**
  * A single JSON request/response object, as returned by Json.json()/.request().
@@ -352,6 +356,18 @@ class JsonRequest
 		{
 			if(connect_timer) { wnd.clearTimeout(connect_timer); connect_timer = null; }
 
+			// the push server does not know our session (eg. expired, while the browser stayed open): reconnecting
+			// with the same dead session can never succeed, so stop here instead of retrying with back-off forever.
+			// Not a push failure either (a long-poll fallback would need the session too), the next normal request
+			// finds the expired session and leads to the login
+			if (event.code === PUSH_CLOSE_UNKNOWN_SESSION)
+			{
+				if (check_timer) wnd.clearTimeout(check_timer);
+				check_timer = null;
+				this.#json.notePushSessionGone(wnd);
+				console.log('[close] Push server does not know our session --> not reconnecting');
+				return;
+			}
 			if (event.wasClean)
 			{
 				this.#json.reconnectTime = MIN_RECONNECT_TIME;
@@ -853,6 +869,23 @@ class Json implements JsonModule
 			this.#unavailableTimer = null;
 		}
 		this.#reportInitialFailure();
+		this.#setPushAvailable(false);
+	}
+
+	/**
+	 * The push server does not know our session (closed with PUSH_CLOSE_UNKNOWN_SESSION): final, nothing
+	 * reconnects. Unavailable, but NOT reported as a failed push: a fallback transport needs the same
+	 * session, so it would only run into the login redirect.
+	 */
+	notePushSessionGone = (_wnd? : Window) : void =>
+	{
+		_wnd ||= this.#wnd;
+		if(this.#unavailableTimer)
+		{
+			_wnd.clearTimeout(this.#unavailableTimer);
+			this.#unavailableTimer = null;
+		}
+		this.#pushSettled = true;	// no "initial failure" report
 		this.#setPushAvailable(false);
 	}
 
