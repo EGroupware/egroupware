@@ -169,6 +169,7 @@ default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
 default your name and email	common	de	Z.B. Ihr Name und Ihre E-Mail-Adresse
+default: the following rules are skipped for messages this rule matches. next rules also: they are checked too. stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.	mail	de	Standard: die folgenden Regeln werden für Nachrichten, auf die diese Regel zutrifft, übersprungen. Weitere Regeln auch: sie werden ebenfalls geprüft. Stopp: beendet die gesamte Verarbeitung, auch Regeln nach einer Regel mit „weitere Regeln auch“, die Abwesenheitsnotiz und die Benachrichtigung.
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	de	Legt fest, was beim Verfassen einer E-Mail als Kontaktbezeichnung für den hinzugefügten Kontakt in An/Kopie/Blindkopie angezeigt werden soll. Die Voreinstellung ist Vorname Nachname und leer bedeutet, dass alles Verfügbare angezeigt wird.
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll. Die Bezeichnungen beziehen sich auf die Felder im E-Mail-Konto.
 delete folder	mail	de	Ordner löschen
@@ -361,6 +362,7 @@ if mail header	mail	de	wenn E-Mail-Header
 if message size	mail	de	wenn Nachrichtengröße
 if shown, which folders should appear on the home page	mail	de	Welche E-Mail Ordner sollen auf der Startseite dargestellt werden (gelesene/ungelesene Nachrichten)
 if subject contains:(*)	mail	de	wenn Betreff enthält: (*)
+if this rule matches	mail	de	Wenn diese Regel zutrifft
 if to contains:(*)	mail	de	wenn An enthält: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	de	Wenn Sie die Vorschau einer E-Mail durch einfaches Anklicken sehen wollen, wählen Sie diese Option aus.
 imap	mail	de	Posteingang-Server
@@ -469,6 +471,8 @@ new mail notification	mail	de	Benachrichtigung über neue E-Mails in:
 new mail to sender	mail	de	Neue Mail an Absender
 new message type	mail	de	Neue E-Mails verfassen als
 new subject	mail	de	Neuer Betreff
+next rules also, even if this one matches	mail	de	Weitere Regeln auch prüfen, wenn diese zutrifft
+next rules only if this one does not match	mail	de	Weitere Regeln nur prüfen, wenn diese nicht zutrifft
 no (valid) send folder set in preferences	mail	de	Es ist kein gültiger Gesendet-Ordner hinterlegt
 no access	mail	de	Kein Zugriff
 no action defined!	mail	de	Keine Aktion ausgewählt!
@@ -726,6 +730,8 @@ step 1: jmap/imap - incoming mail	mail	de	1. Schritt: Posteingang (JMAP/IMAP) ei
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige E-Mail-Filterung (Sieve) einrichten
 step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten
+stop	mail	de	Stopp
+stop: no further rules, no vacation reply or notification	mail	de	Stopp: keine weiteren Regeln, keine Abwesenheitsnotiz oder Benachrichtigung
 store to folder	mail	de	Importordner
 subscribe folder	mail	de	Abonnieren
 subscribe to folder %1	mail	de	Ordner %1 abonieren

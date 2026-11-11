@@ -273,6 +273,7 @@ class mail_sieve
 				$content['action_flags_list'] = $normalized['action_flags'] !== '' ? explode(' ', $normalized['action_flags']) : [];
 				$content['anyof'] = $rules['anyof'] != 0?1:0;
 				$content['tokenized'] = !empty($rules['tokenized']) ? 1 : 0;
+				$content['after'] = !empty($rules['stop']) ? 'stop' : (!empty($rules['continue']) ? 'continue' : 'end');
 			}
 			else // Adding new rule
 			{
@@ -280,6 +281,7 @@ class mail_sieve
 				$newRulePriority = count($this->rules)*2+1;
 				$newRules ['priority'] = $newRulePriority;
 				$newRules ['status'] = 'ENABLED';
+				$newRules ['after'] = 'end';
 				// Default 'tokenized' to the user's last choice (persistent preference)
 				$newRules ['tokenized'] = (int)($GLOBALS['egw_info']['user']['preferences']['mail']['sieve_last_tokenized'] ?? 0);
 				$readonlys = array(
@@ -310,6 +312,10 @@ class mail_sieve
 						unset($content['button']);
 
 						$newRule = $content;
+						// "After this rule": do not check the next rule / continue with the next rule / stop processing
+						$newRule['continue'] = ($content['after'] ?? '') === 'continue';
+						$newRule['stop'] = ($content['after'] ?? '') === 'stop';
+						unset($newRule['after']);
 						$newRule['priority']	= $this->rulesByID['priority'];
 						$newRule['status']	= $this->rulesByID['status'];
 
@@ -1192,6 +1198,10 @@ class mail_sieve
 		if ($rule['continue'])
 		{
 			$complete .= ' ['.lang('Continue').']';
+		}
+		if (!empty($rule['stop']))
+		{
+			$complete .= ' ['.lang('Stop').']';
 		}
 		if ($rule['keep'])
 		{

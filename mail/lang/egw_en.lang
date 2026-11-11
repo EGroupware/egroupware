@@ -171,6 +171,7 @@ default sorting order	mail	en	Default sorting order
 default toolbar actions shown in mail's html editor	mail	en	Functions enabled in the HTML editor toolbar when composing an email
 default value for remembering s/mime passphrase in minutes	mail	en	Default value for remembering S/MIME passphrase in minutes
 default your name and email	common	en	Default your name and email
+default: the following rules are skipped for messages this rule matches. next rules also: they are checked too. stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.	mail	en	Default: the following rules are skipped for messages this rule matches. Next rules also: they are checked too. Stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	en	Defines what to show as contact label for added contact into To/Cc/Bcc when composing an email. Default is firstname lastname and empty means include eveything available.
 defines what to show as identity label on mail folder header	common	en	Defines what to show as identity label on email folder header. The labels refer to the fields in the email account.
 delete folder	mail	en	Delete folder
@@ -366,6 +367,7 @@ if mail header	mail	en	if email header
 if message size	mail	en	if message size
 if shown, which folders should appear on the home page	mail	en	if shown, which folders should appear on the Home page
 if subject contains:(*)	mail	en	if subject contains:(*)
+if this rule matches	mail	en	If this rule matches
 if to contains:(*)	mail	en	if to contains:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	en	If you want to see a preview of a email by single clicking onto the subject, enable this.
 imap	mail	en	IMAP
@@ -475,6 +477,8 @@ new mail notification	mail	en	New email notification
 new mail to sender	mail	en	New mail to sender
 new message type	mail	en	New message type
 new subject	mail	en	New subject
+next rules also, even if this one matches	mail	en	Next rules also, even if this one matches
+next rules only if this one does not match	mail	en	Next rules only if this one does not match
 no (valid) send folder set in preferences	mail	en	No (valid) Send Folder set in preferences
 no access	mail	en	no access
 no action defined!	mail	en	No action defined!
@@ -737,6 +741,8 @@ step 1: jmap/imap - incoming mail	mail	en	Step 1: JMAP/IMAP - incoming mail
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side email filtering
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email
+stop	mail	en	Stop
+stop: no further rules, no vacation reply or notification	mail	en	Stop: no further rules, no vacation reply or notification
 store to folder	mail	en	Store to folder
 subscribe folder	mail	en	Subscribe folder
 subscribe to folder %1	mail	en	Subscribe to folder %1

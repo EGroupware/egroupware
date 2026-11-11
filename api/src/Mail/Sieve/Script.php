@@ -536,8 +536,8 @@ class Script
 					{
 						$newruletext .= 'if header :matches "From" "*" { set "from_header" "${1}"; }'."\n";
 						$newruletext .= "\t".'if address :matches "From" "*" { set "from" "${1}"; }'."\n";
-						// we don't delete ReplyTo header to keep it, if it was already set
-						$newruletext .= "\t".'addheader "ReplyTo" "${from}";'."\n";
+						// replies should go to the original sender: the header is "Reply-To" (not "ReplyTo"), an existing one is kept
+						$newruletext .= "\t".'if not exists "Reply-To" { addheader "Reply-To" "${from}"; }'."\n";
 						if ($connection->hasExtension('envelope'))
 						{
 							$newruletext .= "\t".'if envelope :matches "to" "*" { set "user_email" "${1}"; }'."\n";
@@ -579,6 +579,11 @@ class Script
 					preg_match('/(folder|reject|address|discard)/', $rule['action']))
 				{
 					$newruletext .= "\n\tset \"action\" \"$rule[action]\";";
+				}
+				// "stop": end all processing (no later rule, no forwarding) if this rule matched
+				if (!empty($rule['stop']))
+				{
+					$newruletext .= "\n\tstop;";
 				}
 				if (empty($rule['unconditional'])) $newruletext .= "\n}";
 
