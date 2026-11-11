@@ -108,6 +108,29 @@ class mail_acl
 	var $current_account;
 
 	/**
+	 * $aclRightsAbbrvs, adjusted for a server that ties 's' (Seen) and 'w' (Write) together
+	 * (see $seenWriteTied in edit()): every abbreviation containing 's' without 'w' has 's'
+	 * stripped (same label) - granting "Seen" there silently grants "Write" too, so a preset
+	 * that implies one without the other no longer describes what actually happens. Presets
+	 * that already pair 's' with 'w' (eg. 'ilprsw') are returned unchanged.
+	 *
+	 * @return array same shape as $aclRightsAbbrvs
+	 */
+	protected function tiedAclRightsAbbrvs() : array
+	{
+		$abbrvs = [];
+		foreach ($this->aclRightsAbbrvs as $abbrv => $def)
+		{
+			if ($abbrv !== 'custom' && strpos($abbrv, 's') !== false && strpos($abbrv, 'w') === false)
+			{
+				$abbrv = str_replace('s', '', $abbrv);
+			}
+			$abbrvs[$abbrv] = $def;
+		}
+		return $abbrvs;
+	}
+
+	/**
 	 * Edit folder ACLs of account(s)
 	 *
 	 * @param ?array $content = null
@@ -133,6 +156,14 @@ class mail_acl
 		}
 		$account = Mail\Account::read($acc_id, $account_id);
 		$this->imap = $account->imapServer(isset($account_id) ? (int)$account_id : false);
+		$isJmap = is_a($this->imap, Mail\Imap\Jmap::class) && $this->imap->mailShareSupported();
+		// Stalwart ties IMAP ACL rights 's' (Seen) and 'w' (Write) into one right - granting
+		// either one grants both (confirmed by Stalwart upstream, see
+		// project_mail_jmap_acl_sharing_status memory). Any preset abbreviation that bundles 's'
+		// without 'w' is misleading there, so both the presets and the new-row default below
+		// drop 's' from them when this is the case.
+		$seenWriteTied = $isJmap && $this->imap->seenWriteTied();
+		$aclRightsAbbrvs = $seenWriteTied ? $this->tiedAclRightsAbbrvs() : $this->aclRightsAbbrvs;
 
 		$mailbox = $_GET['mailbox']? base64_decode($_GET['mailbox']): self::_extract_mailbox($content['mailbox'], $acc_id);
 		if (empty($mailbox))
@@ -185,7 +216,7 @@ class mail_acl
 					sort($rights);
 					$acl_abbrvs = implode('',$rights);
 
-					if (array_key_exists($acl_abbrvs, $this->aclRightsAbbrvs))
+					if (array_key_exists($acl_abbrvs, $aclRightsAbbrvs))
 					{
 						$content['grid'][$n]['acl'] = $acl_abbrvs;
 					}
@@ -215,10 +246,13 @@ class mail_acl
 			// own numbering (1, or one past the last real ACL row if there were any).
 			$content['grid'][$n] = array(
 				'acc_id'=>'',
-				'acl' => 'lrs',
+				'acl' => $seenWriteTied ? 'lr' : 'lrs',
 				'acl_l' => true,
-				'acl_r' => true,
-				'acl_s' => true);
+				'acl_r' => true);
+			if (!$seenWriteTied)
+			{
+				$content['grid'][$n]['acl_s'] = true;
+			}
 		}
 		else
 		{
@@ -273,7 +307,7 @@ class mail_acl
 		}
 		$readonlys = $sel_options = array();
 		$sel_options['mailbox'] = [['value' => $mailbox, 'label' => $this->translateMailboxLabel($mailbox)]];
-		$sel_options['acl'] = $this->aclRightsAbbrvs;
+		$sel_options['acl'] = $aclRightsAbbrvs;
 
 		//Make the account owner's fields all readonly as owner has all rights and should not be able to change them
 		foreach($content['grid'] as $key => $fields)
@@ -323,9 +357,22 @@ class mail_acl
 		// Must live under $content['grid'], not top-level $content - the inner <grid id="grid">'s
 		// own widgets resolve a bare "@fieldname" reference against ITS OWN array-manager scope
 		// (content['grid']), same as the pre-existing "@account_type" reference right above this line.
-		$isJmap = is_a($this->imap, Mail\Imap\Jmap::class) && $this->imap->mailShareSupported();
 		$content['grid']['acl_hidden_class'] = $isJmap ? 'mailAclHidden' : '';
 		$content['grid']['acl_hidden_header_class'] = 'mailAclRotatedHeader'.($isJmap ? ' mailAclHidden' : '');
+
+		// same CSS-only-hide mechanism, but for the single "Write" column specifically, only on a
+		// server confirmed to tie 's'+'w' together (see $seenWriteTied above) - the "Seen" column
+		// becomes the combined checkbox instead, relabeled accordingly.
+		$content['grid']['acl_write_hidden_class'] = $seenWriteTied ? 'mailAclHidden' : '';
+		$content['grid']['acl_write_hidden_header_class'] = 'mailAclRotatedHeader'.($seenWriteTied ? ' mailAclHidden' : '');
+		$content['grid']['acl_seen_label'] = $seenWriteTied ? lang('Seen / Write') : lang('Seen');
+		$content['grid']['acl_seen_statustext'] = $seenWriteTied
+			? lang("This server ties the 'Seen' and 'Write' rights together - granting one grants both")
+			: lang('Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])');
+		// top-level (not under $content['grid']) - read directly by app.ts's aclRightChanged(),
+		// which operates outside the grid's own array-manager scope (unlike the CSS-class
+		// strings above, which are template attribute bindings resolved server-side already)
+		$content['acl_sw_tied'] = $seenWriteTied;
 
 		// set a custom autocomplete method for mailbox taglist
 		if ($account_id)

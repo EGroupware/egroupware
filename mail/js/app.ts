@@ -8223,6 +8223,10 @@ export class MailApp extends EgwApp
 	{
 		const rowId = widget.id.replace(/[^0-9.]+/g, '');
 		const aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
+		// Stalwart ties the 's' (Seen) and 'w' (Write) rights into one - the 'w' checkbox is
+		// hidden (merged into 's'/"Seen", see acl_sw_tied/acl_write_hidden_class in
+		// class.mail_acl.inc.php::edit()) and must always mirror 's', never set independently
+		const tied = this.et2.getArrayMgr('content').getEntry('acl_sw_tied') === true;
 		let rights = '';
 		const selectedBox = widget.id;
 		const virtualDelete = ['e','t','x'];
@@ -8241,16 +8245,27 @@ export class MailApp extends EgwApp
 				rightsWidget.set_value(false);
 				rightsWidget.set_readonly(widget.get_value() == "true" ? true:false);
 			}
+			if (tied && this.aclRights[i] == 's')
+			{
+				this.et2.getWidgetById(rowId+'[acl_w]').set_value(rightsWidget.get_value());
+			}
 			if (rightsWidget.get_value() == "true")
 				rights += this.aclRights[i];
 		}
 
-		for (let i=0;i<this.aclCommonRights.length;i++)
+		// same 's'-without-'w' stripping as tiedAclRightsAbbrvs() on the PHP side, so a rights
+		// combination that's actually unreachable when tied (eg. 'lrs') still matches its
+		// renamed preset (eg. 'lr') instead of falling through to "custom"
+		const commonRights = tied
+			? this.aclCommonRights.map(abbrv => (abbrv.indexOf('s') > -1 && abbrv.indexOf('w') == -1) ? abbrv.replace('s', '') : abbrv)
+			: this.aclCommonRights;
+
+		for (let i=0;i<commonRights.length;i++)
 		{
-			if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
-				rights = this.aclCommonRights[i];
+			if (rights.split("").sort().toString() == commonRights[i].split("").sort().toString())
+				rights = commonRights[i];
 		}
-		if (this.aclCommonRights.indexOf(rights) == -1 && rights !='lrswipcda')
+		if (commonRights.indexOf(rights) == -1 && rights !='lrswipcda')
 		{
 			aclCommonWidget.set_value('custom');
 		}
