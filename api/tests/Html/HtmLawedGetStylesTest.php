@@ -78,4 +78,34 @@ class HtmLawedGetStylesTest extends TestCase
 		$this->assertStringContainsString('color: red', $result,
 			"a legacy <style><!-- css --></style> wrapper's actual CSS content must survive");
 	}
+
+	/**
+	 * getStyles()'s tag-level filtering used to gate only on the literal word "script". An
+	 * event-handler attribute on any other element (`onerror`, `onload`, ...) is just as capable
+	 * of executing script once et2-html renders the purified value, so the gate now strips any
+	 * on*= attribute, not just tags spelling "script".
+	 */
+	public function testGetStylesStripsEventHandlerAttribute()
+	{
+		$html = '<style>x{}<img src=y onerror=alert(1)></style>';
+
+		$result = HtmLawed::getStyles($html);
+
+		$this->assertStringNotContainsString('onerror=', $result, 'an event-handler attribute must not survive');
+	}
+
+	/**
+	 * Companion to the test above: the on*= strip must not corrupt real CSS. Child combinators,
+	 * attribute selectors, media queries and ampersands in content are all ordinary stylesheet
+	 * syntax and must survive byte-for-byte.
+	 */
+	public function testGetStylesPreservesOrdinaryCssAroundTheEventHandlerStrip()
+	{
+		$html = '<style>div > p[data-x="a&b"] { color: red; } @media (min-width: 600px) { .a { color: green; } }</style>';
+
+		$result = HtmLawed::getStyles($html);
+
+		$this->assertStringContainsString('div > p[data-x="a&b"]', $result, 'child combinator and attribute selector must survive untouched');
+		$this->assertStringContainsString('@media (min-width: 600px)', $result, 'media query must survive untouched');
+	}
 }

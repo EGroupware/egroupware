@@ -191,6 +191,10 @@ class HtmLawed
 		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 		$css = preg_replace('/(javascript|expression|-moz-binding)/i','',$style);
 		if (stripos($css,'script')!==false) Api\Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		// the check above only gates on the literal word "script"; broaden the same tag-level
+		// defence to strip any on*= event-handler attribute outright too - CSS has no legitimate
+		// reason to contain one, outside a vanishingly rare on*-named attribute selector
+		$css = preg_replace('/\bon\w+\s*=/i','',$css);
 		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
 		//so pad '{' with a space to '{ '
 		// do not pad ':' this breakes css :pseudo-classes
