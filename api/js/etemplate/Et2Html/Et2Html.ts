@@ -12,6 +12,7 @@ import {html, LitElement, nothing, PropertyValues} from "lit";
 import {property} from "lit/decorators/property.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import DOMPurify from "../Et2Image/dompurify-shim";
 
 /**
  * @summary Displays raw HTML content (from the content array or a set value), with a simple
@@ -24,6 +25,11 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  * Legacy et2_html ran embedded `<script>` blocks (via jQuery's .append(), which executes them) -
  * lit's unsafeHTML() inserts them the same inert way plain innerHTML does, so each script element
  * is recreated after render to force execution, preserving that behaviour.
+ *
+ * Server-side purification (Api\Html\HtmLawed::purify()) is the primary gate; DOMPurify here is
+ * defense-in-depth, not a replacement for it. ADD_TAGS keeps both <style> and <script> passing
+ * through intact - FORCE_BODY is required for either to survive at all, as DOMPurify otherwise
+ * drops raw top-level style/script content outside a body context.
  */
 export class Et2Html extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
@@ -35,7 +41,7 @@ export class Et2Html extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	set value(_value : string)
 	{
 		const oldValue = this._value;
-		this._value = _value || "";
+		this._value = _value ? DOMPurify.sanitize(_value, {ADD_TAGS: ["style", "script"], FORCE_BODY: true}) : "";
 		this.requestUpdate('value', oldValue);
 	}
 

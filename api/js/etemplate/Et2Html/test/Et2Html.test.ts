@@ -51,4 +51,25 @@ describe("Et2Html", () =>
 		assert.include(element.textContent, "second");
 		assert.notInclude(element.textContent, "first");
 	});
+
+	// Defense-in-depth: an event-handler attribute must never survive into the rendered DOM,
+	// regardless of what reached this widget - the server-side purifier is the primary gate.
+	it("strips an event-handler attribute from the value (defense-in-depth)", async() =>
+	{
+		const element = await fixture<Et2Html>(html`<et2-html></et2-html>`);
+		element.set_value('<img src="y" onerror="window.__et2HtmlTestFlag = true">');
+		await elementUpdated(element);
+
+		assert.isUndefined((<any>window).__et2HtmlTestFlag, "onerror must never fire");
+		assert.isNull(element.querySelector('img')?.getAttribute('onerror'), "onerror attribute must be stripped");
+	});
+
+	it("preserves a <style> block's CSS untouched alongside the sanitizer (defense-in-depth)", async() =>
+	{
+		const element = await fixture<Et2Html>(html`<et2-html></et2-html>`);
+		element.set_value('<style>div > p { color: red; }</style><p>text</p>');
+		await elementUpdated(element);
+
+		assert.include(element.querySelector('style')?.textContent, "div > p");
+	});
 });
