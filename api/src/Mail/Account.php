@@ -1395,19 +1395,30 @@ class Account implements \ArrayAccess
 	 * envelope - needs no $public_functions entry, answers with a bare, non-enveloped JSON body,
 	 * same convention as Mail\Compose::ajax_uploadInlineImage().
 	 *
+	 * Without $_FILES['file'] (the TinyMCE image dialog's own VFS file-picker, not a paste/drop/
+	 * upload), $_GET['path'] names an existing VFS file to read instead - ticket #127661: this
+	 * branch was missing entirely, so picking a File Manager image here returned no usable
+	 * response and the dialog silently inserted nothing, same fix as
+	 * Mail\Compose::ajax_uploadInlineImage() already has for its own file-picker.
+	 *
 	 * @return void writes {"location": "data:<mime>;base64,<...>"} or {"location": error message}
 	 */
 	public static function ajax_uploadSignatureImage()
 	{
 		$file = $_FILES['file'] ?? null;
-		if (!isset($file) || !is_uploaded_file($file['tmp_name']))
+		$path = $_GET['path'] ?? '';
+		if (isset($file))
 		{
-			$result = ['location' => lang('No _FILES[upload] found!')];
+			$result = !is_uploaded_file($file['tmp_name']) ? ['location' => lang('No _FILES[upload] found!')] :
+				Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::SIGNATURE_IMAGE_RESIZE_THRESHOLD,
+					self::inlineImageMaxWidth());
 		}
 		else
 		{
-			$result = Api\MimeMagic::imageUploadResponse(file_get_contents($file['tmp_name']), self::SIGNATURE_IMAGE_RESIZE_THRESHOLD,
-				self::inlineImageMaxWidth());
+			Api\Vfs::load_wrapper('vfs');
+			$bytes = $path === '' ? false : @file_get_contents('vfs://default'.$path);
+			$result = $bytes === false ? ['location' => lang('Could not read file')] :
+				Api\MimeMagic::imageUploadResponse($bytes, self::SIGNATURE_IMAGE_RESIZE_THRESHOLD, self::inlineImageMaxWidth());
 		}
 
 		Api\Json\Request::isJSONRequest(false);
