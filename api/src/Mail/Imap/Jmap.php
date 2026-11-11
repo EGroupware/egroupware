@@ -406,8 +406,14 @@ class Jmap extends Mail\Imap
 			// already - unlike IMAP/SMTP/Sieve, an UNDECIDED account gets a real strict attempt
 			// first, not an unverified one, so there's no separate raw-socket probe needed here
 			$verify = $undecided || ($ssl & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_ENABLED;
+			// an admin/impersonation connection has no password of its own cached for the
+			// impersonated user - adminConnection() already baked the master-login string
+			// ("<impersonated>%<admin-username>") into acc_imap_admin_username, so use that
+			// pair instead, the same credentials checkAdminConnection() authenticates with
+			$username = $this->isAdminConnection ? $this->acc_imap_admin_username : $this->acc_imap_username;
+			$secret = $this->isAdminConnection ? $this->acc_imap_admin_password : $this->acc_imap_password;
 			try {
-				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify, $this->acc_id ?: null);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $username, $secret, $this->jmap_accountId, $verify, $this->acc_id ?: null);
 				if ($undecided && $this->acc_id)
 				{
 					// the strict connection just succeeded - verification confirmed possible
@@ -423,7 +429,7 @@ class Jmap extends Mail\Imap
 				{
 					throw $e;
 				}
-				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false, $this->acc_id ?: null);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $username, $secret, $this->jmap_accountId, false, $this->acc_id ?: null);
 				if ($this->acc_id)
 				{
 					Mail\Account::persistVerification($this->acc_id, 'acc_imap_ssl',
