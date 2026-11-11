@@ -457,7 +457,7 @@ class Events extends Api\Storage\Base
 		return self::get([
 			'ts_id' => null,
 			'account_id' => self::getInstance()->user,
-			($overall ? '' : 'NOT ').'(tse_type & '.self::OVERALL.')',
+			Api\Db\SqlFragment::raw(($overall ? '' : 'NOT ').'(tse_type & '.self::OVERALL.')'),
 		], $time, $paused);
 	}
 
