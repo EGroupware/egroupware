@@ -8256,8 +8256,13 @@ export class MailApp extends EgwApp
 		// same 's'-without-'w' stripping as tiedAclRightsAbbrvs() on the PHP side, so a rights
 		// combination that's actually unreachable when tied (eg. 'lrs') still matches its
 		// renamed preset (eg. 'lr') instead of falling through to "custom"
+		// 'lrsw' (Lookup+Read+the combined Seen/Write checkbox, no insert/post) has no equivalent
+		// in the untied list at all - the narrowest untied preset including 'w' ('ilprsw')
+		// already bundles insert+post too - but post-tie it's the single most common "upgrade
+		// read-only to read-write" action, so it needs its own preset (mirrors
+		// tiedAclRightsAbbrvs() on the PHP side) or it falls through to "custom"
 		const commonRights = tied
-			? this.aclCommonRights.map(abbrv => (abbrv.indexOf('s') > -1 && abbrv.indexOf('w') == -1) ? abbrv.replace('s', '') : abbrv)
+			? [...this.aclCommonRights.map(abbrv => (abbrv.indexOf('s') > -1 && abbrv.indexOf('w') == -1) ? abbrv.replace('s', '') : abbrv), 'lrsw']
 			: this.aclCommonRights;
 
 		for (let i=0;i<commonRights.length;i++)

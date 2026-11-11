@@ -840,3 +840,5 @@ you've got new mail	mail	de	Sie haben neue E-Mails
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\nBitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.\nWenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
 seen / write	mail	de	Gesehen / Schreiben
 this server ties the 'seen' and 'write' rights together - granting one grants both	mail	de	Dieser Server verknüpft die Rechte 'Gesehen' und 'Schreiben' - die Vergabe des einen vergibt automatisch auch das andere
+read & write	mail	de	Lesen & Schreiben
+allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).	mail	de	Erlaubt einem Benutzer das Postfach zu lesen und zu schreiben (dieser Server verknüpft das Merken von Gesehen/Ungesehen mit Schreibrechten).

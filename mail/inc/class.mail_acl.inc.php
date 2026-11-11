@@ -114,6 +114,15 @@ class mail_acl
 	 * that implies one without the other no longer describes what actually happens. Presets
 	 * that already pair 's' with 'w' (eg. 'ilprsw') are returned unchanged.
 	 *
+	 * Also adds a new 'lrsw' ("read & write") preset right after 'lr' ("readable") - this exact
+	 * combination (Lookup+Read+the combined Seen/Write checkbox, no insert/post) has no
+	 * equivalent in the untied list at all: the narrowest untied preset that includes 'w'
+	 * ('ilprsw') already bundles insert+post too, so "just upgrade read-only to read-write" has
+	 * always fallen through to "custom" - but pre-tie that combination was rare (checking 's'
+	 * alone, ie. plain "readable", was the common case). Post-tie, checking the single combined
+	 * checkbox IS that upgrade, making it the single most common action a tied server's dialog
+	 * needs to label - leaving it unlabeled would make the dialog look broken.
+	 *
 	 * @return array same shape as $aclRightsAbbrvs
 	 */
 	protected function tiedAclRightsAbbrvs() : array
@@ -126,6 +135,11 @@ class mail_acl
 				$abbrv = str_replace('s', '', $abbrv);
 			}
 			$abbrvs[$abbrv] = $def;
+			if ($abbrv === 'lr')
+			{
+				$abbrvs['lrsw'] = ['label' => 'read & write',
+					'title' => 'Allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).'];
+			}
 		}
 		return $abbrvs;
 	}
