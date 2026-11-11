@@ -124,7 +124,16 @@ class EventsTest extends \EGroupware\Api\AppTest
 	 */
 	public function testGetPendingDoesNotThrow()
 	{
-		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		// getPending() filters by Events::getInstance()->user, a lazily-created singleton that can
+		// already exist (and carry a DIFFERENT user) from an earlier test in the same CI process -
+		// use its actual resolved user, not $GLOBALS['egw_info']['user']['account_id'] directly, or
+		// the fixture rows below silently filter out of its own query in a full-suite run
+		$getInstance = new \ReflectionMethod(Events::class, 'getInstance');
+		$getInstance->setAccessible(true);
+		$userProp = new \ReflectionProperty(Events::class, 'user');
+		$userProp->setAccessible(true);
+		$account_id = $userProp->getValue($getInstance->invoke(null));
+
 		$common = array(
 			'account_id' => $account_id,
 			'tse_modifier' => $account_id,
