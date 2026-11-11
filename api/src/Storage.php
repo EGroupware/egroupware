@@ -737,10 +737,10 @@ class Storage extends Storage\Base
 	/**
 	 * Function to test if $field is a custom field: check for the prefix
 	 *
-	 * @param string $field
+	 * @param ?string $field
 	 * @return boolean true if $name is a custom field, false otherwise
 	 */
-	function is_cf(string $field)
+	function is_cf(?string $field)
 	{
 		return !empty($field) && $field[0] == self::CF_PREFIX;
 	}
