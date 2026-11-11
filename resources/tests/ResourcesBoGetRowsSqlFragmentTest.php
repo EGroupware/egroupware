@@ -49,4 +49,30 @@ class ResourcesBoGetRowsSqlFragmentTest extends \EGroupware\Api\AppTest
 
 		$this->assertIsArray($rows);
 	}
+
+	/**
+	 * resources_export_csv::export()'s own "filter" selection-mode range builder
+	 * (`$query['col_filter'][] = "$field >= " . (int)$value['from']`) built a bare string
+	 * itself at an integer key, missed by the original conversion - a numeric-range filter
+	 * (eg. "quantity from 2 to 10") on the CSV export wizard threw instead of exporting.
+	 */
+	public function testExportCsvRangeFilterDoesNotThrow()
+	{
+		$definition = new \importexport_definition();
+		$definition->plugin_options = array('selection' => 'filter', 'mapping' => array());
+		$definition->filter = array('quantity' => array('from' => 1, 'to' => 10));
+
+		$stream = fopen('php://memory', 'w+');
+		try
+		{
+			$export_object = (new \resources_export_csv())->export($stream, $definition);
+
+			$this->assertInstanceOf(\importexport_export_csv::class, $export_object,
+				'export() with a numeric-range filter must complete, not throw');
+		}
+		finally
+		{
+			fclose($stream);
+		}
+	}
 }
