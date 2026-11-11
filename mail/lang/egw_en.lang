@@ -849,3 +849,5 @@ you need to select some folders first (by clicking on them)!	mail	en	You need to
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new email
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.
+seen / write	mail	en	Seen / Write
+this server ties the 'seen' and 'write' rights together - granting one grants both	mail	en	This server ties the 'Seen' and 'Write' rights together - granting one grants both

@@ -18,6 +18,7 @@ use EGroupware\SwoolePush\Tokens;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 use EGroupware\Api\Mail\Jmap\Mailbox as JmapMailbox;
+use EGroupware\Api\Mail\Smtp\Stalwart;
 
 /**
  * Manages connection to Jmap e.g. Stalwart mail-server
@@ -634,6 +635,24 @@ class Jmap extends Mail\Imap
 	public function mailShareSupported() : bool
 	{
 		return array_key_exists(JmapHttp::JMAP_MAIL_SHARE, $this->jmapClient()->accountCapabilities ?? []);
+	}
+
+	/**
+	 * Whether this server ties the IMAP ACL rights 's' (Seen) and 'w' (Write) together as a
+	 * single underlying right - confirmed true for Stalwart (Mauro, 2026-11-11: a single
+	 * "modify items" bit backs both 's' and 'w', deliberate and RFC 4314-compliant, advertised
+	 * via LISTRIGHTS tying them into one optional-rights group - not a bug, won't change). Only
+	 * asserted for Stalwart itself (detected via the 'urn:stalwart:jmap' capability, same idiom
+	 * as mailShareSupported()'s accountCapabilities check - confirmed live on boulder.egroupware.org
+	 * that 'urn:stalwart:jmap' is account-scoped, not session-scoped, despite Smtp\Stalwart.php's
+	 * admin provisioning calls always listing it alongside JMAP_CORE) - a different mail:share
+	 * -capable JMAP server is not assumed to behave the same way.
+	 *
+	 * @return bool
+	 */
+	public function seenWriteTied() : bool
+	{
+		return array_key_exists(Stalwart::USING_STALWART, $this->jmapClient()->accountCapabilities ?? []);
 	}
 
 	/**
