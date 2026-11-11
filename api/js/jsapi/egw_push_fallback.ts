@@ -118,7 +118,13 @@ class PushFallback
 
 		(<any>window).egw_ready.then(() =>
 		{
-			if(!egw.pushAvailable())
+			// Do NOT start while the real push is still connecting (pushAvailable() is false until the
+			// websocket is open: a poll started now is aborted a moment later, but keeps its PHP-FPM
+			// worker for up to 20s/120s): only if no push server is configured at all (no websocket
+			// bootstrap data) or the attempt to reach it already FAILED. A failure later is reported
+			// via onPushAvailabilityChange(false) below.
+			if(!egw.pushAvailable() && (egw.pushFailed() ||
+				!document.getElementById('egw_script_id')?.getAttribute('data-websocket-url')))
 			{
 				this.#start();
 			}

@@ -417,6 +417,14 @@ class Push extends Msg
 				echo 'data: '.json_encode(['response' => Response::get()->initResponseArray()])."\n\n";
 				flush();
 			}
+			else
+			{
+				// SSE comment as keepalive: php-fpm only notices a disconnected client (connection_aborted())
+				// when it writes to it, without this an aborted stream (eg. the client stopped the fallback,
+				// as the websocket connected) keeps its worker and its ajax_poll_active slot until the deadline
+				echo ": ka\n\n";
+				flush();
+			}
 			usleep(self::AJAX_POLL_TICK_USECONDS);
 		}
 	}
