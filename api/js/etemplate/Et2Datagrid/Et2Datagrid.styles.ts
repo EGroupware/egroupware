@@ -301,6 +301,13 @@ export default css`
 			overflow-y: auto;
 		}
 
+		/* A cell holding just an avatar gets no padding:
+		   it would squeeze the avatar narrower than its own size and clip it. */
+		tbody td:has(> :is(et2-avatar, et2-lavatar):only-child),
+		tbody td:has(> :only-child > :is(et2-avatar, et2-lavatar):only-child) {
+			padding: 0;
+		}
+
 		/* Fade out the bottom of a clipped cell. The cell's own scroll timeline is only active while its
 		   content overflows, so cells that fit are left alone. Not when the limit is none: without one
 		   a few pixels of overflow (eg. a child's padding) would fade out the cell's last line.  An
