@@ -503,10 +503,19 @@ class mail_sieve
 
 		$account_email =  Api\Accounts::id2name($accountID, 'account_email');
 		$accAllIdentities = $this->account->smtpServer()->getAccountEmailAddress(Api\Accounts::id2name($accountID)) ?: [];
-		$allAliases = $this->account->ident_email !=''?
-				// Fix ident_email with no domain part set
-				array(Mail::fixInvalidAliasAddress($account_email, $this->account->ident_email))
-				: array();
+		// always include the account's own primary email address as a baseline - the loop below
+		// deliberately excludes the 'default' identity (already covered elsewhere for accounts
+		// with additional identities), but a fresh account with neither a configured ident_email
+		// nor any non-default identity otherwise ends up with a completely empty alias list, even
+		// though its own primary address is perfectly well-known (found live 2026-11-11: both the
+		// "Add all my aliases" button, driven by this same list, and the required "addresses"
+		// field's empty-fallback came back empty for such an account, blocking save entirely)
+		$allAliases = !empty($account_email) ? array($account_email) : array();
+		if ($this->account->ident_email !='')
+		{
+			// Fix ident_email with no domain part set
+			$allAliases[] =  Mail::fixInvalidAliasAddress($account_email, $this->account->ident_email);
+		}
 		foreach ($accAllIdentities as &$val)
 		{
 			if ($val['type'] !='default')
@@ -521,6 +530,7 @@ class mail_sieve
 		{
 			$address = Mail::fixInvalidAliasAddress($account_email, $address);
 		}
+		$allAliases = array_unique($allAliases);
 		asort($allAliases);
 		return array(
 			'vacation' =>$vacation,
@@ -682,6 +692,16 @@ class mail_sieve
 								{
 									$newVacation ['addresses'] = $content['addresses'] =
 										self::strip_rfc882_addresses($content['addresses']);
+								}
+								else
+								{
+									// leaving "Respond to mail sent to" empty means "all my email
+									// addresses" (per the field's own placeholder) - the same
+									// addresses "Add all my aliases" would fill in, not an
+									// invalid/incomplete state (found live 2026-11-11: an account
+									// with no extra identities had nothing to fall back to here,
+									// so an empty field could never be saved at all)
+									$newVacation['addresses'] = $content['addresses'] = $vacRules['aliases'];
 								}
 
 								if($this->checkRule($newVacation,$checkAddresses))
