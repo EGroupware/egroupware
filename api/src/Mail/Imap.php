@@ -1464,6 +1464,23 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				$account_id = (int)substr($_username, 1);
 				break;
 
+			case 'vmailmgr':
+				// symmetric to getMailBoxUserName()'s own 'vmailmgr' case, which appends
+				// '@'.$this->domainName to build the effective username (eg. Stalwart's primary
+				// "lid@domain" address, the account_imap_logintype shown as "username@domainname"
+				// in the admin UI) - strip that same suffix back off before matching account_lid,
+				// or an identifier this very login type constructs (and that Stalwart reports
+				// back unchanged as a shareWith entry's own email, see
+				// Imap\Jmap::jmapPrincipalEmail()) never resolves back to the account that
+				// created it, always falling back to an unresolved "#<identifier>" display
+				$suffix = '@'.$this->domainName;
+				if (!empty($this->domainName) && strcasecmp(substr($_username, -strlen($suffix)), $suffix) === 0)
+				{
+					$_username = substr($_username, 0, -strlen($suffix));
+				}
+				$account_id = $GLOBALS['egw']->accounts->name2id($_username, 'account_lid');
+				break;
+
 			default:
 				$account_id = $GLOBALS['egw']->accounts->name2id($_username, 'account_lid');
 		}
