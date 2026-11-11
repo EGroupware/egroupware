@@ -26,6 +26,15 @@ export interface JsonModule
 	pushAvailable() : boolean;
 
 	/**
+	 * Check if the push connection is known to have FAILED: an attempt to reach the push server
+	 * ended (error, unclean or clean close, or CONNECT_TIMEOUT_MS) without it ever having been
+	 * available. False while the first attempt is still running, so a consumer (eg. the long-poll
+	 * fallback) must NOT start its own transport just because pushAvailable() is still false
+	 * during page load - it gets onPushAvailabilityChange(false) when this turns true.
+	 */
+	pushFailed() : boolean;
+
+	/**
 	 * Subscribe to push-availability transitions (see pushAvailable()'s docs for what "available"
 	 * means here) - fires once per actual transition, not on every reconnect attempt/blip.
 	 *
@@ -769,6 +778,9 @@ class Json implements JsonModule
 	 * down, either because we're connected or because we already declared it unavailable).
 	 */
 	#pushAvailable = false;
+	/** the push connection was available at least once, or a first failure was already reported */
+	#pushSettled = false;
+	#pushFailed = false;
 	#pushListeners = new Set<(_available : boolean) => void>();
 	#unavailableTimer : any = null;
 
@@ -804,6 +816,8 @@ class Json implements JsonModule
 			_wnd.clearTimeout(this.#unavailableTimer);
 			this.#unavailableTimer = null;
 		}
+		this.#pushSettled = true;
+		this.#pushFailed = false;
 		this.#setPushAvailable(true);
 	}
 
@@ -815,6 +829,7 @@ class Json implements JsonModule
 	notePushDisconnected = (_wnd? : Window) : void =>
 	{
 		_wnd ||= this.#wnd;
+		this.#reportInitialFailure();
 		if(this.#unavailableTimer || !this.#pushAvailable) return;	// already counting down, or already unavailable
 
 		this.#unavailableTimer = _wnd.setTimeout(() =>
@@ -837,7 +852,30 @@ class Json implements JsonModule
 			_wnd.clearTimeout(this.#unavailableTimer);
 			this.#unavailableTimer = null;
 		}
+		this.#reportInitialFailure();
 		this.#setPushAvailable(false);
+	}
+
+	/**
+	 * The very first attempt(s) to reach the push server failed, it was never available: tell the
+	 * subscribers once, as pushAvailable() already is (and stays) false, so #setPushAvailable()
+	 * has no transition to report. Until now a subscriber must not assume push has failed.
+	 */
+	#reportInitialFailure()
+	{
+		if(this.#pushSettled || this.#pushAvailable) return;
+		this.#pushSettled = this.#pushFailed = true;
+		this.#pushListeners.forEach((_callback) =>
+		{
+			try
+			{
+				_callback(false);
+			}
+			catch(_e)
+			{
+				console.error("onPushAvailabilityChange() listener threw", _e);
+			}
+		});
 	}
 
 	#setPushAvailable(_available : boolean)
@@ -1084,6 +1122,15 @@ class Json implements JsonModule
 	pushAvailable = () : boolean =>
 	{
 		return this.#pushAvailable;
+	}
+
+	/**
+	 * The push connection is known to have failed (never became available) - see the JsonModule
+	 * interface docs.
+	 */
+	pushFailed = () : boolean =>
+	{
+		return this.#pushFailed && !this.#pushAvailable;
 	}
 
 	/**
