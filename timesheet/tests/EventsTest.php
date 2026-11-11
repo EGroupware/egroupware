@@ -22,6 +22,14 @@ class EventsTest extends \EGroupware\Api\AppTest
 	/** @var int|null ts_id created by the current test, cleaned up in tearDown */
 	private $ts_id;
 
+	protected function setUp(): void
+	{
+		parent::setUp();
+		// ajax_event() ends with Api\Json\Response::get()->data(...) - that singleton refuses a
+		// second data response within the same process, so each test needs a fresh one
+		\EGroupware\Api\Json\Response::get()->initResponseArray();
+	}
+
 	protected function tearDown(): void
 	{
 		if ($this->ts_id)
@@ -98,5 +106,57 @@ class EventsTest extends \EGroupware\Api\AppTest
 
 		$this->assertSame(1, $this->countEventsFor($this->ts_id),
 			'an event row must be created for the caller\'s own timesheet');
+	}
+
+	/**
+	 * getPending()'s filter array builds a raw "NOT (tse_type & ...)"/"(tse_type & ...)" condition
+	 * at an integer key, unwrapped in Api\Db\SqlFragment::raw() - column_data_implode()'s
+	 * requireSqlFragmentObjects() enforcement rejects any such unwrapped value, so stopping the
+	 * overall timer - which calls storeWorkingTime(), which calls getPending(true) to collect the
+	 * completed start/stop sequence to store as a timesheet entry - threw instead (reported live:
+	 * "Fehler beim Speichern der Arbeitszeit").
+	 *
+	 * getPending() only returns a sequence once it ends in a stop event (an in-progress, not yet
+	 * stopped sequence is deliberately excluded - see get()'s own "remove open / unstopped timer
+	 * events" step), so this creates a start+stop pair directly rather than going through
+	 * ajax_event() (which would swallow the exception into a JSON error message instead of
+	 * throwing - exactly how this surfaced live, as an error, not a hard crash).
+	 */
+	public function testGetPendingDoesNotThrow()
+	{
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$common = array(
+			'account_id' => $account_id,
+			'tse_modifier' => $account_id,
+			'tse_app' => null,
+			'tse_app_id' => null,
+			'ts_id' => null,
+		);
+
+		$start = new \EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet_events');
+		$start->data = $common + array(
+			'tse_timestamp' => time(), 'tse_time' => time() - 60, 'tse_type' => Events::OVERALL | Events::START,
+		);
+		$start->save();
+
+		$stop = new \EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet_events');
+		$stop->data = $common + array(
+			'tse_timestamp' => time(), 'tse_time' => time(), 'tse_type' => Events::OVERALL | Events::STOP,
+		);
+		$stop->save();
+		$tse_ids = array($start->data['tse_id'], $stop->data['tse_id']);
+
+		try
+		{
+			$pending = Events::getPending(true, $time, $paused);
+
+			$this->assertIsArray($pending, 'getPending() must return an array, not throw');
+			$this->assertNotEmpty($pending, 'the completed start/stop sequence must be returned');
+			$this->assertGreaterThan(0, $time, 'elapsed time of the sequence must be computed');
+		}
+		finally
+		{
+			$start->delete(array('tse_id' => $tse_ids));
+		}
 	}
 }
