@@ -34,10 +34,17 @@ use EGroupware\Api\Db;
  * integer array key by the time it reaches column_data_implode(). To stay usable as a drop-in
  * replacement for a string in that intermediate code (eg. $field[0] offset access), it implements
  * ArrayAccess read-only over its own string content.
+ *
+ * Not final: a subclass (eg. CfLetterSearchFragment) can take its own constructor parameters in
+ * structured, individually validated form and keep them as readonly properties for a consumer to
+ * inspect, instead of forcing every consumer to re-parse a pre-assembled SQL string apart again -
+ * while still satisfying requireSqlFragmentObjects()'s `instanceof self` check (self here is the
+ * literal SqlFragment class, which a subclass instance also satisfies) and still giving back its
+ * SQL text via __toString() same as a plain instance.
  */
-final class SqlFragment implements \Stringable, \ArrayAccess
+class SqlFragment implements \Stringable, \ArrayAccess
 {
-	private function __construct(private readonly string $sql)
+	protected function __construct(private readonly string $sql)
 	{
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Addressbook: regression test for Storage::cf_filter()'s lettersearch tail validation
+ * EGroupware Addressbook: regression test for Storage::cf_filter()'s lettersearch branch
  *
  * @link https://www.egroupware.org
  * @package addressbook
@@ -14,13 +14,13 @@ use EGroupware\Api\LoggedInTest;
 use EGroupware\Api\Storage\Customfields;
 
 /**
- * Storage::cf_filter()'s lettersearch branch (`#cfname` at an integer col_filter key) only ever
- * legitimately splices a matched, validated custom-field name plus a trailing operator and a single
- * safely-quoted value (eg. " LIKE 's%'", built server-side from a search letter) into the SQL JOIN.
- * The custom-field *name* itself is correctly validated (it must match a real, existing field, which
- * is why it's allowed to contain spaces), but the *tail* after it used to be spliced in verbatim with
- * no validation of its own shape at all - letting anything reaching this sink with that exact shape
- * (operator text/spaces, then one well-formed quoted literal) through, and rejecting anything else.
+ * Storage::cf_filter()'s lettersearch branch (an integer col_filter key) used to receive its
+ * condition as one pre-assembled raw string ("#cfname LIKE 's%'") and had to re-parse it apart again
+ * to recover the custom-field name and re-validate whatever followed it, before daring to splice it
+ * into the JOIN - a sink that has to deconstruct and guess at a string someone else built. It now
+ * instead takes an Api\Db\CfLetterSearchFragment, whose constructor validates the operator and quotes
+ * the value once, at the moment a caller actually has those parts - so cf_filter() only ever reads
+ * $cf_name back out and casts the rest to its already-safe SQL text.
  */
 class CfLettersearchValidationTest extends LoggedInTest
 {
@@ -75,14 +75,14 @@ class CfLettersearchValidationTest extends LoggedInTest
 
 	/**
 	 * A properly-built lettersearch condition (field name, including its embedded spaces, correctly
-	 * matched; tail a single `LIKE`/quoted-value pair) must keep working exactly as before.
+	 * matched; a real LIKE operator) must keep working exactly as before.
 	 */
 	public function testLegitimateLettersearchStillMatches()
 	{
 		[$bo, $id_a, $id_b] = $this->twoContacts();
 
 		$like = $bo->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE];
-		$condition = '#'.self::CF_NAME.' '.$like.' '.$bo->db->quote('a%');
+		$condition = new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, $like, 'a%');
 
 		$rows = $bo->search('', false, '', '', '', false, 'AND', false,
 			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
@@ -92,34 +92,55 @@ class CfLettersearchValidationTest extends LoggedInTest
 	}
 
 	/**
-	 * A tail built from SQL boolean keywords instead of symbols (which the regex guarding the
-	 * `order` parameter itself still allows, since custom-field names may contain spaces) must not
-	 * reach the JOIN as a no-op-disguised-as-true condition.
+	 * An operator that isn't one of the handful of real SQL comparison operators (eg. SQL boolean
+	 * keywords, used by the pre-fix bypass to turn the condition into an always-true/always-false
+	 * no-op) must never reach construction - there's no "tail" left to later validate or drop, the
+	 * fragment simply cannot be built from one.
 	 */
-	public function testMalformedTailCannotForceAMatch()
+	public function testInvalidOperatorIsRejectedAtConstruction()
 	{
-		[$bo, $id_a, $id_b] = $this->twoContacts();
+		$bo = new Api\Contacts();
 
-		$condition = '#'.self::CF_NAME.' or not false';
-		$rows = $bo->search('', false, '', '', '', false, 'AND', false,
-			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
-
-		$this->assertCount(2, $rows,
-			'a malformed tail must be dropped entirely, not force every row to match');
+		$this->expectException(\InvalidArgumentException::class);
+		new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, 'or not false', 'a%');
 	}
 
 	/**
-	 * Same shape, the inverse direction: a tail that would otherwise suppress every row.
+	 * The legacy shape (a plain, pre-assembled string at an integer col_filter key) is no longer
+	 * recognised by cf_filter() at all - Contacts\Sql opts into requireSqlFragmentObjects(), so
+	 * anything reaching the sink that isn't itself a SqlFragment instance (the typed fragment being
+	 * the only legitimate one for this branch) is rejected outright rather than string-sniffed.
 	 */
-	public function testMalformedTailCannotSuppressAllRows()
+	public function testRawStringAtIntegerKeyIsRejectedNotSniffed()
 	{
 		[$bo, $id_a, $id_b] = $this->twoContacts();
 
-		$condition = '#'.self::CF_NAME.' and false';
-		$rows = $bo->search('', false, '', '', '', false, 'AND', false,
-			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
+		$like = $bo->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE];
+		$condition = '#'.self::CF_NAME.' '.$like.' '.$bo->db->quote('a%');
 
-		$this->assertCount(2, $rows,
-			'a malformed tail must be dropped entirely, not suppress every row');
+		$this->expectException(Api\Db\Exception\InvalidArgument::class);
+		$bo->search('', false, '', '', '', false, 'AND', false,
+			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
+	}
+
+	/**
+	 * End-to-end: the actual reported sink, addressbook_ui::get_rows() with a 'searchletter' and an
+	 * 'order' naming a custom field - not just Storage::cf_filter() in isolation.
+	 */
+	public function testGetRowsSearchletterOnCustomFieldOrderFiltersCorrectly()
+	{
+		[, $id_a, $id_b] = $this->twoContacts();
+
+		$query = [
+			'order' => '#'.self::CF_NAME, 'sort' => 'ASC', 'searchletter' => 'a',
+			'col_filter' => ['contact_id' => [$id_a, $id_b]], 'start' => 0, 'num_rows' => 10,
+			'search' => '', 'filter' => '', 'cat_id' => '', 'grouped_view' => '',
+			'advanced_search' => null, 'csv_export' => false, 'template' => '',
+		];
+		$rows = $readonlys = [];
+		(new \addressbook_ui())->get_rows($query, $rows, $readonlys, true);
+
+		$this->assertSame([$id_a], array_map('intval', $rows),
+			"searchletter 'a' on the custom-field order must select only the \"apple\" contact");
 	}
 }
