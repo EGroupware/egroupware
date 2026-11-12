@@ -1,3 +1,20 @@
+egroupware-docker (26.11.20261112) hardy; urgency=low
+
+  * SECURITY: multiple critical security updates in EGroupware, everyone is strongly advised to update to this release!
+  * Api: new notification styling
+  * All Apps: responsive edit dialogs no longer using tables
+  * Api: printing a long list took minutes, now 10x faster
+  * Admin/Password: resetting or changing the password now terminates all existing sessions (but the initiating one)
+  * Mail: fix display and downloading attachments on mobile devices
+  * Mail/Sieve: replaced continue checkbox with more options if processing should continue after a rule
+  * Mail: fix signature image-insert dialog ignoring a File Manager-picked file
+  * Mail: full Stalwart v1.0 support incl. syncing accounts to Stalwart
+  * RAG/Projectmanager: fix fulltext search did not find project-numbers with 2 dashes like 'P-2026-0001'
+  * Tracker: mail-to-ticket inline images were left broken instead of pointing at the attachment
+  * Tracker: "open button" link is now always full link to the egroupware that created the notification
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 12 Nov 2026 15:58:47 +0100
+
 egroupware-docker (26.10.20261030) hardy; urgency=low
 
   * SECURITY: one critical security update in EGroupware and one in TinyMCE, everyone is strongly advised to update to this release!
