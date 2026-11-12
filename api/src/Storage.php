@@ -862,7 +862,6 @@ class Storage extends Storage\Base
 
 		if (is_array($filter) && count($filter))
 		{
-			$_cfnames = array_keys($this->customfields);
 			$extra_filter = null;
 			foreach ($filter as $name => $val)
 			{
@@ -937,33 +936,14 @@ class Storage extends Storage\Base
 					}
 					unset($filter[$name]);
 				}
-				elseif (is_int($name) && $this->is_cf($val))    // lettersearch: #cfname LIKE 's%'
+				elseif (is_int($name) && $val instanceof Db\CfLetterSearchFragment)    // lettersearch: #cfname LIKE 's%'
 				{
-					$_cf = explode(' ', $val);
-					$tcf_name = '';
-					foreach ($_cf as $cf_np)
-					{
-						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
-						$tcf_name = ($tcf_name ? $tcf_name . ' ' : '') . $cf_np;
-						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of
-						// simply splitting by " " and using the first part
-						if ($this->is_cf($tcf_name) && ($cfn = $this->get_cf_name($tcf_name)) && array_search($cfn, (array)$_cfnames, true) !== false)
-						{
-							$cf = $tcf_name;
-							break;
-						}
-					}
 					unset($filter[$name]);
-					$cf_name = $this->get_cf_name($cf);
+					$cf_name = $val->cf_name;
 					if (!isset($this->customfields[$cf_name])) continue;    // ignore unavailable CF
-					// only the matched cf-name plus an operator and a single safely-quoted value is
-					// ever legitimately built here (eg. " LIKE 's%'" or " ::text ILIKE 's%'") - the
-					// remainder must NOT be spliced in unless it actually has that shape
-					$tail = substr($val, strlen($cf));
-					if (!preg_match('/^[a-z0-9_: ]*\'[^\'\\\\]*\'$/i', $tail)) continue;
 					$join .= str_replace('extra_filter', 'extra_filter' . $extra_filter, $this->extra_join_filter .
 						' AND extra_filter.' . $this->extra_key . '=' . $this->db->quote($cf_name) .
-						' AND extra_filter.' . $this->extra_value . $tail);
+						' AND extra_filter.' . $this->extra_value . ' ' . (string)$val);
 					++$extra_filter;
 				}
 			}

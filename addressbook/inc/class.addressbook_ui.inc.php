@@ -2317,8 +2317,17 @@ class addressbook_ui extends addressbook_bo
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
 				$no_letter_search = array('adr_one_postalcode', 'adr_two_postalcode', 'contact_id', 'contact_created','contact_modified');
-				$query['col_filter'][] = Api\Db\SqlFragment::raw((in_array($query['order'],$no_letter_search) ? 'org_name' : (substr($query['order'],0,1)=='#'?'':'egw_addressbook.').$query['order']).' '.
-					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%'));
+				if (!in_array($query['order'], $no_letter_search) && substr($query['order'], 0, 1) == '#')
+				{
+					// custom field: carry name/operator/value as their own validated parts, not a spliced string
+					$query['col_filter'][] = new Api\Db\CfLetterSearchFragment($GLOBALS['egw']->db, substr($query['order'], 1),
+						$GLOBALS['egw']->db->capabilities['case_insensitive_like'], $query['searchletter'].'%');
+				}
+				else
+				{
+					$query['col_filter'][] = Api\Db\SqlFragment::raw((in_array($query['order'],$no_letter_search) ? 'org_name' : 'egw_addressbook.'.$query['order']).' '.
+						$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%'));
+				}
 			}
 			$wildcard = '%';
 			$op = 'OR';
