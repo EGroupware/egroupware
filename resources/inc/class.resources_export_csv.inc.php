@@ -79,7 +79,7 @@ class resources_export_csv implements importexport_iface_export_plugin
 
 					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
 					$query['col_filter'] = array_merge($query['col_filter'],
-						Api\Db\SqlFragment::range($field, $value['from'], $value['to']));
+						Api\Db\SqlFragment::range($GLOBALS['egw']->db, $field, $value['from'], $value['to']));
 				}
 			}
 

@@ -221,43 +221,56 @@ class SqlFragmentTest extends TestCase
 
 	public function testCompareBuildsIntegerComparisonByDefault()
 	{
-		$this->assertSame('t_modifier >= 5', (string)SqlFragment::compare('t_modifier', '>=', 5));
+		$this->assertSame('t_modifier >= 5', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 5));
 	}
 
 	public function testCompareLowercasesOperatorIsAccepted()
 	{
-		$this->assertSame('t_modifier <= 5', (string)SqlFragment::compare('t_modifier', '<=', 5));
+		$this->assertSame('t_modifier <= 5', (string)SqlFragment::compare(self::$db, 't_modifier', '<=', 5));
 	}
 
 	public function testCompareWithIsIntFalseKeepsFloatPrecision()
 	{
-		$this->assertSame('t_modifier >= 1.5', (string)SqlFragment::compare('t_modifier', '>=', 1.5, false));
+		$this->assertSame('t_modifier >= 1.5', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 1.5, false));
 	}
 
 	public function testCompareWithIsIntTrueTruncatesAFloat()
 	{
-		$this->assertSame('t_modifier >= 1', (string)SqlFragment::compare('t_modifier', '>=', 1.9));
+		$this->assertSame('t_modifier >= 1', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 1.9));
 	}
 
 	public function testCompareRejectsAnInvalidOperator()
 	{
 		$this->expectException(\InvalidArgumentException::class);
-		SqlFragment::compare('t_modifier', 'OR 1=1-- ', 5);
+		SqlFragment::compare(self::$db, 't_modifier', 'OR 1=1-- ', 5);
 	}
 
 	/**
-	 * $value is declared int|float - PHP's own type coercion rejects a non-numeric value with a
-	 * TypeError, rather than a bare (int) cast silently turning it into 0.
+	 * A string $value (eg. "pe_status != 'ignore'") is quoted via $db->quote(), never spliced in raw -
+	 * an embedded quote in the value must come out escaped, not able to close the literal early.
 	 */
-	public function testCompareRejectsANonNumericValue()
+	public function testCompareWithStringValueIsQuotedNotSpliced()
+	{
+		$sql = (string)SqlFragment::compare(self::$db, 'pe_status', '!=', "o' OR '1'='1");
+
+		$this->assertStringStartsWith("pe_status != '", $sql);
+		$this->assertStringNotContainsString("' OR '1'='1", $sql,
+			"the attacker-controlled quote must be escaped, not close the string literal early");
+	}
+
+	/**
+	 * $value is declared int|float|string - PHP's own type coercion rejects a non-scalar value (eg.
+	 * an array) with a TypeError, rather than a bare (int) cast silently turning it into 0 or 1.
+	 */
+	public function testCompareRejectsANonScalarValue()
 	{
 		$this->expectException(\TypeError::class);
-		SqlFragment::compare('t_modifier', '>=', '5 OR 1=1-- ');
+		SqlFragment::compare(self::$db, 't_modifier', '>=', ['5 OR 1=1-- ']);
 	}
 
 	public function testRangeWithBothBoundsReturnsTwoFragments()
 	{
-		$fragments = SqlFragment::range('t_modifier', 2, 10);
+		$fragments = SqlFragment::range(self::$db, 't_modifier', 2, 10);
 
 		$this->assertCount(2, $fragments);
 		$this->assertSame('t_modifier >= 2', (string)$fragments[0]);
@@ -270,9 +283,9 @@ class SqlFragmentTest extends TestCase
 	 */
 	public function testRangeWithAFalsyBoundOmitsThatSide()
 	{
-		$this->assertCount(1, SqlFragment::range('t_modifier', 2, null));
-		$this->assertCount(1, SqlFragment::range('t_modifier', 2, ''));
-		$this->assertCount(1, SqlFragment::range('t_modifier', 2, 0));
-		$this->assertCount(0, SqlFragment::range('t_modifier', null, null));
+		$this->assertCount(1, SqlFragment::range(self::$db, 't_modifier', 2, null));
+		$this->assertCount(1, SqlFragment::range(self::$db, 't_modifier', 2, ''));
+		$this->assertCount(1, SqlFragment::range(self::$db, 't_modifier', 2, 0));
+		$this->assertCount(0, SqlFragment::range(self::$db, 't_modifier', null, null));
 	}
 }
