@@ -122,7 +122,7 @@ class setup_cmd_config extends setup_cmd
 	{
 		self::$egw_setup->db->select(self::$egw_setup->config_table,'config_name,config_value',array(
 			'config_app'  => 'phpgwapi',
-			"(config_name LIKE '%\\_dir' OR (config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp\\_%' OR config_name LIKE 'ldap%' OR config_name IN ('webserver_url','system_charset','auth_type','account_repository'))",
+			Api\Db\SqlFragment::raw("(config_name LIKE '%\\_dir' OR (config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp\\_%' OR config_name LIKE 'ldap%' OR config_name IN ('webserver_url','system_charset','auth_type','account_repository'))"),
 		),__LINE__,__FILE__);
 
 		$config = array();
