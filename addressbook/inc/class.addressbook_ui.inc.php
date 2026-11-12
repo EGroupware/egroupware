@@ -2319,9 +2319,9 @@ class addressbook_ui extends addressbook_bo
 				$no_letter_search = array('adr_one_postalcode', 'adr_two_postalcode', 'contact_id', 'contact_created','contact_modified');
 				if (!in_array($query['order'], $no_letter_search) && substr($query['order'], 0, 1) == '#')
 				{
-					// custom field: carry name/operator/value as their own validated parts, not a spliced string
+					// custom field: carry name/value as their own validated parts, not a spliced string
 					$query['col_filter'][] = new Api\Db\CfLetterSearchFragment($GLOBALS['egw']->db, substr($query['order'], 1),
-						$GLOBALS['egw']->db->capabilities['case_insensitive_like'], $query['searchletter'].'%');
+						$query['searchletter'].'%');
 				}
 				else
 				{
