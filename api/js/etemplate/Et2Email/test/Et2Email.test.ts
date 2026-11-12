@@ -145,6 +145,16 @@ describe("Properties", async() =>
 		await elementUpdated(element);
 		assert.sameMembers(element.value, [value], "Placeholder was not accepted when allowed");
 	});
+
+	it("set_value() with a non-empty string containing no address does not crash", async() =>
+	{
+		// a raw header string (eg. "undisclosed-recipients:;") matches no address at all -
+		// String.match() then returns null, not [], which used to reach render() unguarded
+		element.set_value("undisclosed-recipients:;");
+
+		await elementUpdated(element);
+		assert.sameMembers(element.value, [], "Expected an empty array, not null");
+	});
 });
 
 describe("Suggestions", () =>
