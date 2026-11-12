@@ -3259,7 +3259,16 @@ export class MailApp extends EgwApp
 		attachmentsBlock.forEach((item) =>
 		{
 			const type = (item.type || '').toLowerCase();
-			if (item.mime_url && !item.mime_data && !excluded.includes(type) && !MailApp.VIEWABLE_TYPES.has(type))
+			// audio/* is deliberately exempted here, same reasoning as PDF's own `excluded` entry
+			// above: AttachmentJmap::createAttachmentBlock() already built a real, correct,
+			// directly-fetchable mime_url for it (audio/* is never JMAP blob-fetch-eligible either -
+			// it isn't in VIEWABLE_TYPES, which only ever covers the gallery's image-viewer types -
+			// so it needs no blob: URL, unlike those). Clearing it here, as for any other "not a
+			// real view" type, left Et2DescriptionExpose's audio-preview popup
+			// (ExposeMixin.ts::_audio_player()) with an empty <audio src>, which can never determine
+			// a duration - ticket #124711, reported live as a WAV voicemail attachment stuck at
+			// "0:00 / 0:00" and refusing to play, regardless of whether the file itself was valid.
+			if (item.mime_url && !item.mime_data && !excluded.includes(type) && !type.startsWith('audio/') && !MailApp.VIEWABLE_TYPES.has(type))
 			{
 				item.mime_url = '';
 				suppressedAny = true;

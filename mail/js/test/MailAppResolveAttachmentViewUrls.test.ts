@@ -293,4 +293,30 @@ describe("MailApp.resolveAttachmentViewUrls() - non-viewable mime_url suppressio
 		assert.isFalse(result);
 		assert.isUndefined(items[0].mime_url);
 	});
+
+	/**
+	 * Ticket #124711 (reporter on Dovecot via the JMAP shim, reproduced live on bb-trunk with a
+	 * real Stalwart account too - AttachmentJmap::createAttachmentBlock() builds this URL the same
+	 * way for both): a WAV voicemail attachment's inline preview player (Et2DescriptionExpose /
+	 * ExposeMixin.ts::_audio_player(), which reads this same mime_url as its <audio src>) was stuck
+	 * at "0:00 / 0:00" and refused to play, even for a known-valid WAV file. audio/* was simply
+	 * missing from VIEWABLE_TYPES (which only ever covered the gallery's image/text viewer types),
+	 * so this suppression wrongly cleared its perfectly correct server-built mime_url, leaving the
+	 * player with an empty src - not a Content-Length/duration-detection problem at all.
+	 */
+	it("leaves mime_url untouched for audio attachments (ticket #124711 - inline player needs a real src)", async() =>
+	{
+		const {app} = createMailApp();
+		const items = [
+			{filename: 'voicemail.wav', type: 'audio/wav', mime_url: 'https://example/getAttachment?...'},
+			{filename: 'voicemail.mp3', type: 'AUDIO/MPEG', mime_url: 'https://example/getAttachment?...'},
+		];
+
+		const result = await invoke(app, ROW_ID, items);
+
+		assert.isFalse(result);
+		assert.equal(items[0].mime_url, 'https://example/getAttachment?...');
+		assert.equal(items[1].mime_url, 'https://example/getAttachment?...',
+			'audio exclusion must be case-insensitive, matching every other type check here');
+	});
 });
