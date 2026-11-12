@@ -851,9 +851,9 @@ class Open implements OpenModule
 
 			//do not open pdfs (or other non images) on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
 			if ((<any>window).egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
-				url+='&mode=save'
-				(<any>window).etemplate2.prototype.download(url)
-				return
+				url += '&mode=save';
+				(<any>window).etemplate2.prototype.download(url);
+				return;
 			}
 			if (_target == '_browser')
 			{
