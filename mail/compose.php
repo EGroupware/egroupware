@@ -156,6 +156,15 @@ echo '<div id="popupMainDiv" class="popupMainDiv"></div>'."\n";
 // stand-in until the compose form is built client-side, removed by etemplate2 when it has loaded
 if ($bootstrap['skeleton'])
 {
+	// the shape of the compose window (templates/default/compose.skeleton.svg) instead of the generic edit form's: the id
+	// beats the class the page's skeleton css sets the generic mask on
+	$svg = preg_replace(['/<!--.*?-->/s', '/>\s+</', '/\s+/'], ['', '><', ' '],
+		@file_get_contents(__DIR__.'/templates/default/compose.skeleton.svg') ?: '');
+	if ($svg)
+	{
+		echo '<style>#egw-skeleton{--egw-skeleton-mask:url("data:image/svg+xml,'.
+			str_replace(['%', '#', '"', '<', '>'], ['%25', '%23', "'", '%3C', '%3E'], $svg).'")}</style>'."\n";
+	}
 	echo Api\Framework::skeleton('mail.compose');
 }
 echo $GLOBALS['egw']->framework->footer();

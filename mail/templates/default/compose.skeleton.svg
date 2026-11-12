@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+<!-- Skeleton of the mail compose window, shown while it loads (see Api\Framework::skeletonShape(): an SVG next to the
+     .xet is that template's own shape).  Used as a CSS mask, so only the alpha matters and the colour comes from the
+     theme.  Coordinates are percent of the 870 x ~840 px popup, measured on the real form: the toolbar, the To and
+     Subject rows (From, Cc, Bcc, Reply to and Folder are hidden until needed, so they are not drawn), the editor
+     (its own toolbar is part of the one panel).  There is no footer: the buttons are all in the toolbar. -->
+<defs><filter id="b" x="-2%" y="-2%" width="104%" height="104%"><feGaussianBlur stdDeviation=".3"/></filter></defs>
+<g filter="url(#b)" fill="#000">
+<g fill-opacity=".8"><rect x="1.5" y=".8" width="8" height="3" rx=".6"/></g>
+<g fill-opacity=".5">
+<rect x="11" y=".8" width="3" height="3" rx=".6"/><rect x="14.7" y=".8" width="3" height="3" rx=".6"/><rect x="18.4" y=".8" width="3" height="3" rx=".6"/>
+<rect x="22.1" y=".8" width="3" height="3" rx=".6"/><rect x="25.8" y=".8" width="3" height="3" rx=".6"/><rect x="29.5" y=".8" width="3" height="3" rx=".6"/>
+<rect x="92" y="1.5" width="6.5" height="1.7" rx=".8"/>
+<rect x="1.5" y="6.1" width="3.5" height="1.7" rx=".8"/><rect x="11" y="5.3" width="87.5" height="3.3" rx=".6"/>
+<rect x="1.5" y="11.1" width="6" height="1.7" rx=".8"/><rect x="11" y="10.4" width="87.5" height="3.3" rx=".6"/>
+</g>
+<g fill-opacity=".4"><rect x="1.5" y="15" width="97" height="83.6" rx=".5"/></g>
+</g>
+</svg>
