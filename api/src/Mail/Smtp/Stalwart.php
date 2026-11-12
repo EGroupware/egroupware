@@ -1344,12 +1344,14 @@ class Stalwart extends Sql
 		{
 			if (($this->jmap_is_admin_connection = $adminConnection))
 			{
-				if (!$this->account->acc_imap_admin_username || !$this->account->acc_imap_admin_password)
+				// admin credentials are either username and password or an API key (of a tenant admin), used as Bearer token
+				$api_key = Api\Jmap::isApiKey($this->account->acc_imap_admin_password);
+				if (!$this->account->acc_imap_admin_password || !$api_key && !$this->account->acc_imap_admin_username)
 				{
 					throw new \InvalidArgumentException("No admin username or password!");
 				}
 				$this->jmap = new JmapHttp($this->account->acc_smtp_host,
-					$this->account->acc_imap_admin_username,
+					$api_key ? '' : $this->account->acc_imap_admin_username,
 					$this->account->acc_imap_admin_password);
 			}
 			else

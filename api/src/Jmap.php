@@ -114,11 +114,27 @@ class Jmap extends Jmap\Base
 	protected array $using;
 
 	/**
+	 * Prefix of the secret of Stalwart API keys
+	 */
+	const API_KEY_PREFIX = 'API_';
+
+	/**
+	 * Check if given secret is a Stalwart API key, which can be used as Bearer token instead of username and password
+	 *
+	 * @param ?string $secret
+	 * @return bool
+	 */
+	public static function isApiKey(?string $secret) : bool
+	{
+		return is_string($secret) && str_starts_with($secret, self::API_KEY_PREFIX);
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $url JMAP url, or hostname to bootstrap via "https://$host/.well-known/jmap"
-	 * @param string $user username
-	 * @param string $secret password
+	 * @param string $user username, empty to use an API key given as $secret as Bearer token
+	 * @param string $secret password or API key (see isApiKey())
 	 * @param string[] $using capability URNs to declare in every call, eg. Api\Mail\Jmap\Http::JMAP_MAIL
 	 * @param string|null &$accountId jmap accountId
 	 * @param bool $verify =true false: disable TLS certificate verification for this connection -
@@ -132,15 +148,20 @@ class Jmap extends Jmap\Base
 		$this->using = $using;
 		$this->verify = $verify;
 
+		// an API key is only used as Bearer token, if the caller explicitly passes an empty username: otherwise code
+		// logging in a user with a password would silently authenticate as the key's owner (eg. "user*admin" logins)
+		$authorization = 'Authorization: '.($user === '' && self::isApiKey($secret) ? 'Bearer '.$secret :
+			'Basic '.base64_encode($user.':'.$secret));
+
 		if (!preg_match('#^https?://#', $this->url))
 		{
-			$this->authorization[$this->url] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
+			$this->authorization[$this->url] = $authorization;
 
 			$this->url = $this->bootstrap(true, $accountId);
 		}
 		else
 		{
-			$this->authorization[parse_url($this->url, PHP_URL_HOST)] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
+			$this->authorization[parse_url($this->url, PHP_URL_HOST)] = $authorization;
 
 			$this->bootstrap(false, $accountId);
 			// bootstrap() populates $this->apiUrl from the session document but (for this
