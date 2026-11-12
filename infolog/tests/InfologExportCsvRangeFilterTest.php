@@ -16,10 +16,11 @@ use EGroupware\Api;
  * definition's own filter array keys and used to splice it unvalidated into a raw col_filter string
  * ("$field >= ..."). The definition's filter is admin/user-authored config, not runtime-constant, so
  * an unvalidated $field there is the same class of bug as the "stored definition" sibling already
- * fixed in resources_export_csv/tracker_export_csv: only a plain column-name shape is now accepted,
- * quoted, and wrapped in Api\Db\SqlFragment::raw() - anything else is dropped rather than spliced in.
+ * fixed in resources_export_csv/records_export_csv/timesheet_export_csv: only a plain column-name
+ * shape is now accepted and run through Api\Db\SqlFragment::range() - anything else is dropped
+ * rather than spliced in.
  */
-class ExportCsvRangeFilterTest extends \EGroupware\Api\AppTest
+class InfologExportCsvRangeFilterTest extends \EGroupware\Api\AppTest
 {
 	private function makeDefinition(array $filter): importexport_definition
 	{
