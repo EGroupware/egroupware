@@ -178,9 +178,15 @@ class Jmap extends Mail\Imap
 		{
 			throw new Api\Exception(lang('No username to check admin credentials against.'));
 		}
-		$adminUsername = $impersonate.self::MASTER_SEPARATOR.$this->acc_imap_admin_username;
 		$verify = ((int)$this->acc_imap_ssl & Mail\Account::VERIFY_MASK) !== Mail\Account::VERIFY_DISABLED;
 		$accountId = null;
+		if (Api\Jmap::isApiKey($this->acc_imap_admin_password))
+		{
+			// an API key (of a tenant admin) can not impersonate a user, we can only check that the key is valid
+			new JmapHttp($this->jmapUrl(), '', $this->acc_imap_admin_password, $accountId, $verify);
+			return;
+		}
+		$adminUsername = $impersonate.self::MASTER_SEPARATOR.$this->acc_imap_admin_username;
 		// constructing JmapHttp already performs the real JMAP session bootstrap (an authenticated
 		// HTTP request) - nothing further needs to be called to complete the check, and there's no
 		// session state worth persisting for this one-off attempt (unlike jmapClient()'s cached
@@ -413,6 +419,11 @@ class Jmap extends Mail\Imap
 			// pair instead, the same credentials checkAdminConnection() authenticates with
 			$username = $this->isAdminConnection ? $this->acc_imap_admin_username : $this->acc_imap_username;
 			$secret = $this->isAdminConnection ? $this->acc_imap_admin_password : $this->acc_imap_password;
+			if ($this->isAdminConnection && Api\Jmap::isApiKey($secret))
+			{
+				// would NOT act as the impersonated user, but on the mailbox of the key's owner
+				throw new Api\Exception('Admin access to a user\'s mailbox is not possible with an API key (no impersonation)');
+			}
 			try {
 				$this->jmap = new JmapHttp($this->jmapUrl(), $username, $secret, $this->jmap_accountId, $verify, $this->acc_id ?: null);
 				if ($undecided && $this->acc_id)
