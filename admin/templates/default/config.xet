@@ -208,6 +208,13 @@
 				</row>
 				<row>
 					<et2-vbox>
+						<et2-description  value="Allow 2-Factor-Authentication secrets shorter than the current minimum" label="%s:"></et2-description>
+						<et2-description  value="Only needed right after an update, for accounts whose secret predates it. Leave off otherwise." label="(%s)"></et2-description>
+					</et2-vbox>
+					<et2-checkbox  id="newsettings[2fa_allow_short_secret]"></et2-checkbox>
+				</row>
+				<row>
+					<et2-vbox>
 						<et2-description  value="Allow user to set 'Remember me' token" label="%s:"></et2-description>
 						<et2-description  value="Requires 'OpenID / OAuth2 Server' app." label="(%s)"></et2-description>
 					</et2-vbox>
