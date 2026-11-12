@@ -1421,5 +1421,5 @@ function parseEmailsString(value : string, allowPlaceholder = false) : string[]
 	let preg = allowPlaceholder ? IsEmail.EMAIL_PLACEHOLDER_PREG : IsEmail.EMAIL_PREG;
 	// Trim line start / end anchors off validation regex, make global
 	let regex = new RegExp(preg.toString().substring(2, preg.toString().length - 3), 'g'+preg.flags);
-	return value.match(regex);
+	return value.match(regex) ?? [];
 }
