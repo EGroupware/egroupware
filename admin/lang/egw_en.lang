@@ -110,6 +110,7 @@ all groups	admin	en	All groups
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
 allow	admin	en	Allow
+allow 2-factor-authentication secrets shorter than the current minimum	admin	en	Allow 2-Factor-Authentication secrets shorter than the current minimum
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
 allow or deny	admin	en	allow or deny
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
@@ -700,6 +701,7 @@ one week	admin	en	One week
 online	admin	en	online
 only below displayed information is directly submitted to %s.	admin	en	Only below displayed information is directly submitted to %s.
 only if the private key (new upload, or already stored) is passphrase-protected	admin	en	Only if the private key (new upload, or already stored) is passphrase-protected
+only needed right after an update, for accounts whose secret predates it. leave off otherwise.	admin	en	Only needed right after an update, for accounts whose secret predates it. Leave off otherwise.
 openapi configuration	admin	en	OpenAPI configuration
 operating system	admin	en	Operating system
 order	admin	en	Order

@@ -892,7 +892,20 @@ class Session
 			else
 			{
 				$google2fa = new Google2FA\Google2FA();
-				if (!empty($code) && $google2fa->verify($code, $creds['2fa_password']))
+				try
+				{
+					$verified = !empty($code) && $google2fa->verify($code, $creds['2fa_password']);
+				}
+				catch (Google2FA\Exceptions\SecretKeyTooShortException $e)
+				{
+					// secret predates the library's current 16-char minimum (eg. from before an
+					// update): if explicitly allowed by config, still verify it as stored; a new,
+					// compliant secret gets generated whenever the user (re-)opens the 2FA
+					// preferences, so this is meant to be switched off again once nobody still has one
+					$verified = !empty($GLOBALS['egw_info']['server']['2fa_allow_short_secret']) &&
+						!empty($code) && (new Auth\LegacyGoogle2FA())->verify($code, $creds['2fa_password']);
+				}
+				if ($verified)
 				{
 					$factors['2fa_code'] = true;
 				}

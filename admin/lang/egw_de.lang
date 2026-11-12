@@ -110,6 +110,7 @@ all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow	admin	de	Erlauben
+allow 2-factor-authentication secrets shorter than the current minimum	admin	de	Kürzere 2-Faktor-Authentifizierungs-Geheimnisse als das aktuelle Minimum erlauben
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 allow or deny	admin	de	Erlauben oder Verbieten
 allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installation-IDs.
@@ -699,6 +700,7 @@ one week	admin	de	Eine Woche
 online	admin	de	online
 only below displayed information is directly submitted to %s.	admin	de	Nur die unterhalb angezeigte Information wird direkt zu %s übertragen.
 only if the private key (new upload, or already stored) is passphrase-protected	admin	de	Nur falls der private Schlüssel (neuer Upload oder bereits gespeichert) durch eine Passphrase geschützt ist
+only needed right after an update, for accounts whose secret predates it. leave off otherwise.	admin	de	Nur direkt nach einem Update nötig, für Konten deren Geheimnis von davor stammt. Sonst ausgeschaltet lassen.
 openapi configuration	admin	de	OpenAPI Konfiguration
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
