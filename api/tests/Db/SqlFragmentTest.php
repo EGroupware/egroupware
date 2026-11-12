@@ -229,12 +229,12 @@ class SqlFragmentTest extends TestCase
 		$this->assertSame('t_modifier <= 5', (string)SqlFragment::compare(self::$db, 't_modifier', '<=', 5));
 	}
 
-	public function testCompareWithIsIntFalseKeepsFloatPrecision()
+	public function testCompareWithFloatTypeKeepsPrecision()
 	{
-		$this->assertSame('t_modifier >= 1.5', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 1.5, false));
+		$this->assertSame('t_modifier >= 1.5', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 1.5, 'float'));
 	}
 
-	public function testCompareWithIsIntTrueTruncatesAFloat()
+	public function testCompareWithDefaultIntTypeTruncatesAFloat()
 	{
 		$this->assertSame('t_modifier >= 1', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', 1.9));
 	}
@@ -245,13 +245,30 @@ class SqlFragmentTest extends TestCase
 		SqlFragment::compare(self::$db, 't_modifier', 'OR 1=1-- ', 5);
 	}
 
-	/**
-	 * A string $value (eg. "pe_status != 'ignore'") is quoted via $db->quote(), never spliced in raw -
-	 * an embedded quote in the value must come out escaped, not able to close the literal early.
-	 */
-	public function testCompareWithStringValueIsQuotedNotSpliced()
+	public function testCompareRejectsAnInvalidType()
 	{
-		$sql = (string)SqlFragment::compare(self::$db, 'pe_status', '!=', "o' OR '1'='1");
+		$this->expectException(\InvalidArgumentException::class);
+		SqlFragment::compare(self::$db, 't_modifier', '>=', 5, 'bogus');
+	}
+
+	/**
+	 * $type is the caller's own stated intent, not inferred from $value's runtime type - a numeric
+	 * value with $type='string' is still quoted, eg. "pe_status != '5'" (admittedly an odd thing to
+	 * ask for, but it proves $type decides, not is_string($value)).
+	 */
+	public function testCompareWithStringTypeQuotesEvenANumericValue()
+	{
+		$this->assertSame("pe_status != '5'", (string)SqlFragment::compare(self::$db, 'pe_status', '!=', 5, 'string'));
+	}
+
+	/**
+	 * A string $value with $type='string' (eg. "pe_status != 'ignore'") is quoted via $db->quote(),
+	 * never spliced in raw - an embedded quote in the value must come out escaped, not able to close
+	 * the literal early.
+	 */
+	public function testCompareWithStringTypeIsQuotedNotSpliced()
+	{
+		$sql = (string)SqlFragment::compare(self::$db, 'pe_status', '!=', "o' OR '1'='1", 'string');
 
 		$this->assertStringStartsWith("pe_status != '", $sql);
 		$this->assertStringNotContainsString("' OR '1'='1", $sql,
@@ -259,8 +276,17 @@ class SqlFragmentTest extends TestCase
 	}
 
 	/**
+	 * The default $type='int' is the caller's choice too - a string value is silently (int)-cast, same
+	 * as every hand-written version of this comparison already did, not rejected or auto-quoted.
+	 */
+	public function testCompareWithDefaultIntTypeCastsAStringValue()
+	{
+		$this->assertSame('t_modifier >= 5', (string)SqlFragment::compare(self::$db, 't_modifier', '>=', '5 OR 1=1-- '));
+	}
+
+	/**
 	 * $value is declared int|float|string - PHP's own type coercion rejects a non-scalar value (eg.
-	 * an array) with a TypeError, rather than a bare (int) cast silently turning it into 0 or 1.
+	 * an array) with a TypeError regardless of $type, since the declared type doesn't accept it.
 	 */
 	public function testCompareRejectsANonScalarValue()
 	{
