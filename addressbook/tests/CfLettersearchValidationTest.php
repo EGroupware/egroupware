@@ -18,9 +18,9 @@ use EGroupware\Api\Storage\Customfields;
  * condition as one pre-assembled raw string ("#cfname LIKE 's%'") and had to re-parse it apart again
  * to recover the custom-field name and re-validate whatever followed it, before daring to splice it
  * into the JOIN - a sink that has to deconstruct and guess at a string someone else built. It now
- * instead takes an Api\Db\CfLetterSearchFragment, whose constructor validates the operator and quotes
- * the value once, at the moment a caller actually has those parts - so cf_filter() only ever reads
- * $cf_name back out and casts the rest to its already-safe SQL text.
+ * instead takes an Api\Db\CfLetterSearchFragment, whose constructor quotes the value once and always
+ * takes the operator from the connection's own case-insensitive-LIKE capability, never from a caller
+ * - so cf_filter() only ever reads $cf_name back out and casts the rest to its already-safe SQL text.
  */
 class CfLettersearchValidationTest extends LoggedInTest
 {
@@ -75,14 +75,13 @@ class CfLettersearchValidationTest extends LoggedInTest
 
 	/**
 	 * A properly-built lettersearch condition (field name, including its embedded spaces, correctly
-	 * matched; a real LIKE operator) must keep working exactly as before.
+	 * matched) must keep working exactly as before.
 	 */
 	public function testLegitimateLettersearchStillMatches()
 	{
 		[$bo, $id_a, $id_b] = $this->twoContacts();
 
-		$like = $bo->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE];
-		$condition = new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, $like, 'a%');
+		$condition = new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, 'a%');
 
 		$rows = $bo->search('', false, '', '', '', false, 'AND', false,
 			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
@@ -92,17 +91,20 @@ class CfLettersearchValidationTest extends LoggedInTest
 	}
 
 	/**
-	 * An operator that isn't one of the handful of real SQL comparison operators (eg. SQL boolean
-	 * keywords, used by the pre-fix bypass to turn the condition into an always-true/always-false
-	 * no-op) must never reach construction - there's no "tail" left to later validate or drop, the
-	 * fragment simply cannot be built from one.
+	 * The constructor has no operator parameter at all any more - a caller cannot supply one (eg. a
+	 * SQL boolean keyword, used by the pre-fix bypass to turn the condition into an always-true/
+	 * always-false no-op), so a value like 'or not false' can only ever end up quoted as the value.
 	 */
-	public function testInvalidOperatorIsRejectedAtConstruction()
+	public function testValueCannotMasqueradeAsAnOperator()
 	{
-		$bo = new Api\Contacts();
+		[$bo, $id_a, $id_b] = $this->twoContacts();
 
-		$this->expectException(\InvalidArgumentException::class);
-		new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, 'or not false', 'a%');
+		$condition = new Api\Db\CfLetterSearchFragment($bo->db, self::CF_NAME, 'or not false');
+
+		$rows = $bo->search('', false, '', '', '', false, 'AND', false,
+			[0 => $condition, 'contact_id' => [$id_a, $id_b]]);
+
+		$this->assertEmpty($rows, "'or not false' must be matched as a literal value, not run as SQL");
 	}
 
 	/**
