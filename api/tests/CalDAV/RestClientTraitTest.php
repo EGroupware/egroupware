@@ -195,6 +195,9 @@ EOT;
 			'trailing dot' => ['http://127.0.0.1./'],
 			'bracketed IPv6 loopback' => ['http://[::1]/'],
 			'bracketed IPv4-mapped IPv6 loopback' => ['http://[::ffff:127.0.0.1]/'],
+			// ::ffff:7f00:1 is the same loopback address with the IPv4 part itself written in hex
+			'bracketed IPv4-mapped IPv6 loopback (hex IPv4 part)' => ['http://[::ffff:7f00:1]/'],
+			'bracketed IPv4-mapped IPv6 cloud-metadata address' => ['http://[::ffff:169.254.169.254]/'],
 			'IPv6 loopback with zone ID' => ['http://[::1%lo]/'],
 			'IPv6 loopback with percent-encoded zone ID' => ['http://[::1%25lo]/'],
 			'IPv6 link-local with zone ID' => ['http://[fe80::1%eth0]/'],

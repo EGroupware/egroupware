@@ -303,8 +303,11 @@ trait RestClientTrait
 		// check if host is already an IP address
 		if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4|FILTER_FLAG_IPV6))
 		{
+			// GLOBAL_RANGE is needed in addition to NO_PRIV_RANGE|NO_RES_RANGE: on PHP 8.1/8.2 those
+			// two alone miss an IPv4-mapped IPv6 literal ("::ffff:127.0.0.1"); GLOBAL_RANGE catches
+			// it on every version
 			if (!filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
-				FILTER_FLAG_NO_PRIV_RANGE |  FILTER_FLAG_NO_RES_RANGE))
+				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_GLOBAL_RANGE))
 			{
 				throw new \InvalidArgumentException("Host '{$host}' is a private or reserved IP address!");
 			}
@@ -329,7 +332,7 @@ trait RestClientTrait
 				$ip = $record['type'] === 'AAAA' ? ($record['ipv6'] ?? null) : ($record['ip'] ?? null);
 				if (in_array($record['type'], ['A', 'AAAA'], true) && $ip !== null &&
 					!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
-						FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
+						FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_GLOBAL_RANGE))
 				{
 					throw new \InvalidArgumentException("Host '{$host}' resolves to private or reserved IP address '{$ip}'!");
 				}
