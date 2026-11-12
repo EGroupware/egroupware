@@ -92,6 +92,11 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	private const COMPARE_OPERATORS = ['=', '!=', '<', '<=', '>', '>='];
 
 	/**
+	 * Value types compare()/range() can format $value as
+	 */
+	private const VALUE_TYPES = ['int', 'float', 'string'];
+
+	/**
 	 * Build a single "$column $operator $value" comparison
 	 *
 	 * $column is spliced in exactly as given - it is the caller's own column name, not something this
@@ -99,27 +104,35 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	 * source (a stored definition, a request) must validate/allow-list it itself first, same as any
 	 * other raw use of a column name already has to.
 	 *
-	 * A string $value is quoted via $db->quote() (eg. for "pe_status != 'ignore'"). An int|float
-	 * $value is never quoted, since $value's declared type does the checking for free: a non-numeric
-	 * value throws TypeError before this is ever reached, rather than silently casting to 0 like a
-	 * bare (int) would.
+	 * $type picks how $value is formatted - it is the caller's own stated intent, not inferred from
+	 * $value's runtime type (a caller meaning a numeric id must still pass $type='int' even if that id
+	 * happens to arrive as a string). 'int'/'float' cast $value with PHP's own (int)/(float) cast
+	 * (never throwing, same as every hand-written version of this comparison already did); 'string'
+	 * quotes it via $db->quote() (eg. for "pe_status != 'ignore'"). A non-scalar $value (an array, say)
+	 * still throws TypeError regardless of $type, since the declared parameter type doesn't accept it.
 	 *
 	 * @param Db $db
 	 * @param string $column (table.)column name
 	 * @param string $operator one of self::COMPARE_OPERATORS
 	 * @param int|float|string $value
-	 * @param bool $is_int =true for a numeric $value: true to store it as an integer, false to keep
-	 *	its float precision. Ignored for a string $value, which is always quoted as given.
-	 * @throws \InvalidArgumentException for an operator not in self::COMPARE_OPERATORS
+	 * @param string $type ='int' one of self::VALUE_TYPES
+	 * @throws \InvalidArgumentException for an operator not in self::COMPARE_OPERATORS, or a $type not
+	 *	in self::VALUE_TYPES
 	 */
-	public static function compare(Db $db, string $column, string $operator, int|float|string $value, bool $is_int = true) : self
+	public static function compare(Db $db, string $column, string $operator, int|float|string $value, string $type = 'int') : self
 	{
 		$operator = strtoupper($operator);
 		if (!in_array($operator, self::COMPARE_OPERATORS, true))
 		{
 			throw new \InvalidArgumentException(self::class.": invalid comparison operator '$operator'");
 		}
-		$sql_value = is_string($value) ? $db->quote($value) : ($is_int ? (string)(int)$value : (string)(float)$value);
+		$sql_value = match ($type)
+		{
+			'int' => (string)(int)$value,
+			'float' => (string)(float)$value,
+			'string' => $db->quote($value),
+			default => throw new \InvalidArgumentException(self::class.": invalid value type '$type'"),
+		};
 		return new self($column.' '.$operator.' '.$sql_value);
 	}
 
@@ -133,14 +146,14 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	 * @param string $column (table.)column name, see compare()
 	 * @param int|float|string|null $from falsy to omit the lower bound
 	 * @param int|float|string|null $to falsy to omit the upper bound
-	 * @param bool $is_int =true see compare()
+	 * @param string $type ='int' see compare()
 	 * @return self[] zero, one or two fragments
 	 */
-	public static function range(Db $db, string $column, $from, $to, bool $is_int = true) : array
+	public static function range(Db $db, string $column, $from, $to, string $type = 'int') : array
 	{
 		$fragments = [];
-		if ($from) $fragments[] = self::compare($db, $column, '>=', $from, $is_int);
-		if ($to) $fragments[] = self::compare($db, $column, '<=', $to, $is_int);
+		if ($from) $fragments[] = self::compare($db, $column, '>=', $from, $type);
+		if ($to) $fragments[] = self::compare($db, $column, '<=', $to, $type);
 		return $fragments;
 	}
 
