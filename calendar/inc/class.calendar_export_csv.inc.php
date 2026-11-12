@@ -179,6 +179,12 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 						continue;
 					}
 
+					// $field comes from the stored export definition and is spliced into $sql_filter below,
+					// which calendar_so concatenates as trusted, already-quoted raw SQL - only accept a
+					// plain column-name shape, same as the "cal_$field" array-key use above already requires
+					// (column_data_implode() validates a key against the real column list; this does not)
+					if(!preg_match('/^\w+$/', (string)$field)) continue;
+
 					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
 					if($value['from']) $query['sql_filter'][] = "cal_$field >= " . (int)$value['from'];
 					if($value['to']) $query['sql_filter'][] = "cal_$field <= " . (int)$value['to'];

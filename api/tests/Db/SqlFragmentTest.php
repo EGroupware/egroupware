@@ -218,4 +218,65 @@ class SqlFragmentTest extends TestCase
 
 		$this->assertMatchesRegularExpression('/ WHERE .*t_modifier/', $sql);
 	}
+
+	// -------------------------------------------------------------------
+	// SqlFragment::compare() / ::range()
+	// -------------------------------------------------------------------
+
+	public function testCompareBuildsIntegerComparisonByDefault()
+	{
+		$this->assertSame('t_modifier >= 5', (string)SqlFragment::compare('t_modifier', '>=', 5));
+	}
+
+	public function testCompareLowercasesOperatorIsAccepted()
+	{
+		$this->assertSame('t_modifier <= 5', (string)SqlFragment::compare('t_modifier', '<=', 5));
+	}
+
+	public function testCompareWithIsIntFalseKeepsFloatPrecision()
+	{
+		$this->assertSame('t_modifier >= 1.5', (string)SqlFragment::compare('t_modifier', '>=', 1.5, false));
+	}
+
+	public function testCompareWithIsIntTrueTruncatesAFloat()
+	{
+		$this->assertSame('t_modifier >= 1', (string)SqlFragment::compare('t_modifier', '>=', 1.9));
+	}
+
+	public function testCompareRejectsAnInvalidOperator()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		SqlFragment::compare('t_modifier', 'OR 1=1-- ', 5);
+	}
+
+	/**
+	 * $value is declared int|float - PHP's own type coercion rejects a non-numeric value with a
+	 * TypeError, rather than a bare (int) cast silently turning it into 0.
+	 */
+	public function testCompareRejectsANonNumericValue()
+	{
+		$this->expectException(\TypeError::class);
+		SqlFragment::compare('t_modifier', '>=', '5 OR 1=1-- ');
+	}
+
+	public function testRangeWithBothBoundsReturnsTwoFragments()
+	{
+		$fragments = SqlFragment::range('t_modifier', 2, 10);
+
+		$this->assertCount(2, $fragments);
+		$this->assertSame('t_modifier >= 2', (string)$fragments[0]);
+		$this->assertSame('t_modifier <= 10', (string)$fragments[1]);
+	}
+
+	/**
+	 * A falsy bound (null, '', 0) is omitted entirely, matching every hand-written version of this
+	 * range-filter pattern this replaces (eg. resources/infolog export_csv's "if($value['from'])").
+	 */
+	public function testRangeWithAFalsyBoundOmitsThatSide()
+	{
+		$this->assertCount(1, SqlFragment::range('t_modifier', 2, null));
+		$this->assertCount(1, SqlFragment::range('t_modifier', 2, ''));
+		$this->assertCount(1, SqlFragment::range('t_modifier', 2, 0));
+		$this->assertCount(0, SqlFragment::range('t_modifier', null, null));
+	}
 }

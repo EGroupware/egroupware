@@ -87,6 +87,57 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	}
 
 	/**
+	 * Comparison operators compare() accepts
+	 */
+	private const COMPARE_OPERATORS = ['=', '!=', '<', '<=', '>', '>='];
+
+	/**
+	 * Build a single "$column $operator $value" numeric/timestamp comparison
+	 *
+	 * $column is spliced in exactly as given - it is the caller's own column name, not something this
+	 * validates or quotes. A caller whose column name originates from somewhere other than its own
+	 * source (a stored definition, a request) must validate/allow-list it itself first, same as any
+	 * other raw use of a column name already has to - this only takes the value side off that caller's
+	 * hands, since $value's declared type does that checking for free: a non-numeric value throws
+	 * TypeError before this is ever reached, rather than silently casting to 0 like a bare (int) would.
+	 *
+	 * @param string $column (table.)column name
+	 * @param string $operator one of self::COMPARE_OPERATORS
+	 * @param int|float $value
+	 * @param bool $is_int =true true to store $value as an integer, false to keep its float precision
+	 * @throws \InvalidArgumentException for an operator not in self::COMPARE_OPERATORS
+	 */
+	public static function compare(string $column, string $operator, int|float $value, bool $is_int = true) : self
+	{
+		$operator = strtoupper($operator);
+		if (!in_array($operator, self::COMPARE_OPERATORS, true))
+		{
+			throw new \InvalidArgumentException(self::class.": invalid comparison operator '$operator'");
+		}
+		return new self($column.' '.$operator.' '.($is_int ? (string)(int)$value : (string)(float)$value));
+	}
+
+	/**
+	 * Build zero, one or two SqlFragments for an inclusive [$from, $to] range filter on $column
+	 *
+	 * A falsy bound (null, '', 0) is treated as not given - the same convention every existing
+	 * hand-written version of this range-filter pattern already used.
+	 *
+	 * @param string $column (table.)column name, see compare()
+	 * @param int|float|string|null $from falsy to omit the lower bound
+	 * @param int|float|string|null $to falsy to omit the upper bound
+	 * @param bool $is_int =true see compare()
+	 * @return self[] zero, one or two fragments
+	 */
+	public static function range(string $column, $from, $to, bool $is_int = true) : array
+	{
+		$fragments = [];
+		if ($from) $fragments[] = self::compare($column, '>=', $from, $is_int);
+		if ($to) $fragments[] = self::compare($column, '<=', $to, $is_int);
+		return $fragments;
+	}
+
+	/**
 	 * Build a WHERE-clause (or similar) expression from a mix of plain SQL, (array $args[$n]===false
 	 * to skip the next array, "if ($cond) $then else $else" style) booleans, and column=>value arrays
 	 *

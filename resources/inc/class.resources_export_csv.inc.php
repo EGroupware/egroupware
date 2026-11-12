@@ -73,10 +73,13 @@ class resources_export_csv implements importexport_iface_export_plugin
 					$query['col_filter'][$field] = $value;
 					if(!is_array($value) || (!$value['from'] && !$value['to'])) continue;
 
-					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
-					if($value['from']) $query['col_filter'][] = Api\Db\SqlFragment::raw("$field >= " . (int)$value['from']);
-					if($value['to']) $query['col_filter'][] = Api\Db\SqlFragment::raw("$field <= " . (int)$value['to']);
 					unset($query['col_filter'][$field]);
+					// $field comes from the stored export definition: only accept a plain (table.)column name
+					if(!preg_match('/^\w+(\.\w+)?$/', (string)$field)) continue;
+
+					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
+					$query['col_filter'] = array_merge($query['col_filter'],
+						Api\Db\SqlFragment::range($field, $value['from'], $value['to']));
 				}
 			}
 
