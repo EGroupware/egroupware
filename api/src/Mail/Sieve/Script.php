@@ -777,7 +777,8 @@ class Script
 			if ($connection->hasExtension('regex') && $regexused) $newscripthead .= ",\"regex\"";
 			if ($rejectused) $newscripthead .= ",\"reject\"";
 			if ($this->vacation && $vacation_active) {
-				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
+				// :seconds needs "vacation-seconds" IN ADDITION to "vacation" (RFC 6131), Stalwart rejects the script otherwise
+				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation","vacation-seconds"' : ',"vacation"';
 			}
 			foreach(['body','date','relational','variables','imap4flags','envelope','editheader','comparator-i;ascii-numeric'] as $extension)
 			{
@@ -791,7 +792,7 @@ class Script
 			$closeRequired = false;
 			if ($this->vacation)
 			{
-				$newscripthead .= 'require['.((string)$this->vacation['days'] === '0' ? '"vacation-seconds"' : '"vacation"');
+				$newscripthead .= 'require['.((string)$this->vacation['days'] === '0' ? '"vacation","vacation-seconds"' : '"vacation"');
 				if ($connection->hasExtension('variables')) $newscripthead .= ',"variables"';
 				if ($connection->hasExtension('regex') && $regexused) $newscripthead .= ",\"regex\"";
 				if ($connection->hasExtension('date')) $newscripthead .= ",\"date\"";
