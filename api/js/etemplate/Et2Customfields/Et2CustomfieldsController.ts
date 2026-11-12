@@ -448,6 +448,17 @@ export class Et2CustomfieldsController
 				{
 					visible = this._resolveDefaultTabVisibility(field, true);
 				}
+				else if(this.tab)
+				{
+					// No tab of its own, and this is a named tab, not the cf-default catch-all -
+					// it belongs there, never here too (ticket #127781: a named tab's own
+					// <et2-customfields> otherwise ALSO created a widget for every untabbed field,
+					// sharing Et2Customfields.DEFAULT_ID with the real cf-default instance; the two
+					// widgets' values then collide in etemplate2.ts's id-keyed getValues() merge,
+					// silently dropping whichever one lost that merge - regardless of which tab the
+					// user actually edited the field in).
+					visible = false;
+				}
 				visibility[fieldName] = visible;
 			}
 			return visibility;

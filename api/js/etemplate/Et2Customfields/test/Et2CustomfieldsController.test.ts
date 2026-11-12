@@ -66,9 +66,24 @@ describe("Et2CustomfieldsController", () =>
 		});
 	});
 
-	it("matches legacy tab-filter behavior", () =>
+	/**
+	 * Ticket #127781: the legacy baseline itself has a bug here (reproduced faithfully by
+	 * legacyVisibility() for the OTHER parity tests in this file) - an untabbed customfield fell
+	 * through every branch to a bare `else { visible = true }`, so it showed on every NAMED tab,
+	 * not just the cf-default catch-all it actually belongs to. On a dialog with an untabbed
+	 * field plus at least one named tab, that meant two `<et2-customfields>` instances (sharing
+	 * Et2Customfields.DEFAULT_ID) both created a widget for it; whichever one's value etemplate2.ts
+	 * merged last silently won, dropping an edit made in the other - regardless of which tab the
+	 * user actually typed into. This test intentionally diverges from compareToLegacy()'s
+	 * bug-for-bug parity for exactly this one case.
+	 */
+	it("hides an untabbed customfield on a named tab that is not the default catch-all", () =>
 	{
-		compareToLegacy("tab filter mismatch", {tab: "extra"});
+		assert.deepEqual(
+			new Et2CustomfieldsController({customfields: sampleCustomfields, tab: "extra"}).getVisibleMap(),
+			{cf_text: false, cf_project: true, cf_private: false, cf_file: false},
+			"only the field actually assigned to this tab should show; untabbed fields belong on cf-default"
+		);
 	});
 
 	it("keeps selection-item visibility aligned with current map", () =>
@@ -117,11 +132,14 @@ describe("Et2CustomfieldsController", () =>
 			customfields: sampleCustomfields,
 			tab: "missing"
 		});
+		// Ticket #127781: an untabbed field (cf_text, cf_private, cf_file) belongs only on the
+		// cf-default catch-all tab (see the "hides an untabbed customfield on a named tab" test
+		// above) - a named tab that no field actually claims, like this one, shows nothing at all.
 		assert.deepEqual(controller.getVisibleMap(), {
-			cf_text: true,
+			cf_text: false,
 			cf_project: false,
-			cf_private: true,
-			cf_file: true
+			cf_private: false,
+			cf_file: false
 		}, "tab-specific customfields should be hidden when their tab does not match");
 	});
 
@@ -151,13 +169,14 @@ describe("Et2CustomfieldsController", () =>
 			"selecting a tab's customfield in a list has to be enough to show it"
 		);
 
-		// ... and a dialog, which does have tabs, is unaffected
+		// ... and a dialog, which does have tabs, is unaffected - and shows nothing at all for a
+		// named tab no field claims (ticket #127781: untabbed fields belong on cf-default only)
 		assert.deepEqual(
 			new Et2CustomfieldsController({
 				customfields: sampleCustomfields,
 				tab: "missing"
 			}).getVisibleFieldNames(),
-			["cf_text", "cf_private", "cf_file"],
+			[],
 			"a tab still shows only its own customfields"
 		);
 	});
@@ -289,5 +308,39 @@ describe("Et2CustomfieldsController", () =>
 		assert.isFalse(changed, "an empty source has nothing to hydrate");
 		assert.deepEqual(attrs.fields, {}, "fields should stay untouched");
 		assert.deepEqual(attrs.customfields, {}, "customfields should stay untouched");
+	});
+
+	/**
+	 * Ticket #127781 (live-reproduced on bb-trunk, 2026-11-12): a project with an untabbed
+	 * customfield ("Berater") plus at least one named-tab customfield showed "saved" but silently
+	 * dropped an edit to the untabbed one. Both the cf-default tab's and a named tab's
+	 * <et2-customfields> share Et2Customfields.DEFAULT_ID ("custom_fields"); etemplate2.ts's
+	 * getValues() merges same-id widgets' values by key, so if both instances create a widget for
+	 * the same field, whichever is merged last wins regardless of which tab the user actually
+	 * edited. The only thing that keeps that merge safe is each tab's controller reporting a
+	 * disjoint set of visible fields - this asserts that invariant directly, for the real
+	 * untabbed+named-tab shape rather than just one tab's visibility map in isolation.
+	 */
+	it("never shows the same field on both the cf-default tab and a named tab", () =>
+	{
+		const fields = {
+			untabbed: {name: "untabbed", label: "Berater", tab: null},
+			tabbed: {name: "tabbed", label: "Datenschutz field", tab: "Datenschutz"}
+		};
+		const defaultTab = new Et2CustomfieldsController({
+			customfields: fields,
+			defaultTabMatch: ""
+		}).getVisibleFieldNames();
+		const namedTab = new Et2CustomfieldsController({
+			customfields: fields,
+			tab: "Datenschutz"
+		}).getVisibleFieldNames();
+
+		assert.deepEqual(defaultTab, ["untabbed"], "cf-default shows only the untabbed field");
+		assert.deepEqual(namedTab, ["tabbed"], "the named tab shows only its own field, not the untabbed one too");
+		assert.isEmpty(
+			defaultTab.filter((name) => namedTab.includes(name)),
+			"cf-default and a named tab must never both create a widget for the same field"
+		);
 	});
 });
