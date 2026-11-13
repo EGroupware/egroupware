@@ -93,6 +93,7 @@ export default css`
 	/* [open] keeps the panel usable once the pointer has moved off the trigger onto the panel */
 	:host(:hover) .field-controls,
 	:host(:focus-within) .field-controls,
+	:host([field-controls-open]) .field-controls,
 	.markdown-view[open] {
 		visibility: visible;
 	}
