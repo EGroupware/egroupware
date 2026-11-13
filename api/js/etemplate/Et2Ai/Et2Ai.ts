@@ -1220,7 +1220,8 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
 	{
 		return html`
             <sl-dropdown part="dropdown" placement="bottom-end" hoist no-flip
-                         @sl-show=${this._needMenu}
+                         @sl-show=${this._dropdownShow}
+                         @sl-after-hide=${this._dropdownHide}
                          @pointerenter=${this._needMenu}
                          @focusin=${this._needMenu}
             >
@@ -1232,6 +1233,31 @@ export class Et2Ai extends Et2MarkdownMixin(Et2Widget(LitElement))
                 </sl-menu>
             </sl-dropdown>`;
 	}
+
+	/**
+	 * Keep the target's field controls showing while our menu is open.
+	 *
+	 * The target only shows them while it is hovered or focused.  The menu and its submenus
+	 * are hoisted, and the pointer over them is not a hover of the target, so without this
+	 * the strip hid and took the open menu with it (it inherits the visibility) - flickering
+	 * as the pointer moved between the menu and a submenu.
+	 */
+	protected _dropdownShow = (e : Event) =>
+	{
+		this._needMenu();
+		if(e.target === e.currentTarget)
+		{
+			this._fieldControl?.parentElement?.setAttribute("field-controls-open", "");
+		}
+	};
+
+	protected _dropdownHide = (e : Event) =>
+	{
+		if(e.target === e.currentTarget)
+		{
+			this._fieldControl?.parentElement?.removeAttribute("field-controls-open");
+		}
+	};
 
 	/**
 	 * Build the prompt menu, from now on: the pointer is over the trigger, it has focus, or the dropdown opens

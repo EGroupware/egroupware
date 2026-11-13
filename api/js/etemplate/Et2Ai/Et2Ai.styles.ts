@@ -39,7 +39,10 @@ export default css`
 		align-items: stretch;
 		--max-result-height: 3em;
 
-		&:hover .et2-ai-dropdown {
+		&:hover .et2-ai-dropdown,
+		/* The menu is hoisted, so the pointer over it is not a hover of us: stay shown while it is open,
+		   or the open menu hides with us (it inherits visibility) */
+		.et2-ai-dropdown:has(sl-dropdown[open]) {
 			visibility: visible;
 		}
 	}
