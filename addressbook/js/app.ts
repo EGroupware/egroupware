@@ -16,6 +16,7 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import "./CRM";
+import {DistributionListAction} from "./DistributionListAction";
 import type {LitElement} from "lit";
 import type {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
 import type {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
@@ -973,6 +974,17 @@ class AddressbookApp extends EgwApp
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Add the selected contacts to, or remove them from, a distribution list picked in a dialog
+	 *
+	 * @param action the "Add to or remove from list" action
+	 * @param senders the selected row(s)
+	 */
+	distribution_list_action(action : EgwAction, senders : EgwActionObject[])
+	{
+		return DistributionListAction.open(this.egw, action, senders);
 	}
 
 	/**

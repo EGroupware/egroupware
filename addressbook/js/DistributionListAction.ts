@@ -1,17 +1,17 @@
 /**
- * EGroupware eTemplate2 - add the selected contacts to, or remove them from, a distribution list
+ * EGroupware Addressbook - add the selected contacts to, or remove them from, a distribution list
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
+ * @package addressbook
  * @link https://www.egroupware.org
  */
-import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
-import {selectAllFlag} from "./selectAllFlag";
-import type {EgwAction} from "../../egw_action/EgwAction";
-import type {EgwActionObject} from "../../egw_action/EgwActionObject";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {selectAllFlag} from "../../api/js/etemplate/Et2Nextmatch/selectAllFlag";
+import type {EgwAction} from "../../api/js/egw_action/EgwAction";
+import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 
 /**
- * What Nextmatch-driven apps put in data['distributionLists']
+ * What the "Add to or remove from list" action carries in data['distributionLists']
  */
 export interface DistributionListSettings
 {
@@ -23,7 +23,8 @@ export interface DistributionListSettings
 }
 
 /**
- * Backs `nm_action = "distribution_lists"`.
+ * The dialog behind the contact list's "Add to or remove from list" action, opened by
+ * AddressbookApp.distribution_list_action().
  *
  * Replaces a sub-menu with one entry per distribution list, plus a separate
  * "Remove from distribution list" entry, with a single picker offering both verbs.
@@ -91,7 +92,7 @@ export class DistributionListAction
 				},
 				sel_options: {selected: options}
 			},
-			template: egw.webserverUrl + "/api/templates/default/distribution_list_action.xet"
+			template: egw.webserverUrl + "/addressbook/templates/default/distribution_list_action.xet"
 		});
 		document.body.appendChild(dialog);
 		await dialog.updateComplete;

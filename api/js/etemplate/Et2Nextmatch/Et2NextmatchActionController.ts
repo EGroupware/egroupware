@@ -1328,13 +1328,6 @@ export class Et2NextmatchActionController implements ReactiveController
 				});
 				break;
 
-			case "distribution_lists":
-				import("./DistributionListAction").then(({DistributionListAction}) =>
-				{
-					DistributionListAction.open(this.host.egw(), action, senders);
-				});
-				break;
-
 			case "open_popup":
 				if(this.openActionPopup(action, ids.rawIds))
 				{
