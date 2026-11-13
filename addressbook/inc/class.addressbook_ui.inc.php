@@ -623,8 +623,10 @@ class addressbook_ui extends addressbook_bo
 				'to_list' => array(
 					'caption' => 'Add to or remove from list',
 					'icon' => 'foldertree_nolines_plus',
+					'onExecute' => 'javaScript:app.addressbook.distribution_list_action',
+					// opens a dialog to pick the list, so the menu shows it with an ellipsis
+					'promptsForInput' => true,
 					'data' => array(
-						'nm_action' => 'distribution_lists',
 						'distributionLists' => array(
 							// fetched when the dialog opens, not shipped with every get_rows()
 							'optionsMenuaction' => 'addressbook.addressbook_ui.ajax_distribution_lists',

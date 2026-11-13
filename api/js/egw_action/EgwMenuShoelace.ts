@@ -320,7 +320,7 @@ export class EgwMenuShoelace extends LitElement
 	 *   indicator down to "something will happen", which is no information at all.
 	 */
 	private static readonly PROMPTS_FOR_INPUT = [
-		"select_children", "categories", "distribution_lists", "open_popup",
+		"select_children", "categories", "open_popup",
 	];
 
 	/**
@@ -344,7 +344,8 @@ export class EgwMenuShoelace extends LitElement
 	private static promptSuffix(item) : string
 	{
 		const action = item?.data;
-		if(action?.promptsForInput)
+		// an attribute the action class does not know arrives in its data
+		if(action?.promptsForInput || action?.data?.promptsForInput)
 		{
 			return "\u2026";
 		}
