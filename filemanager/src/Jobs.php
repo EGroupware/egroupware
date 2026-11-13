@@ -169,7 +169,7 @@ class Jobs
 		{
 			try {
 				Api\Framework::message($this->action($content['nm']['action'],
-					$content['nm']['selected'], $content['nm']['select_all']));
+					$content['nm']['selected']));
 			}
 			catch (\Exception $ex) {
 				Api\Framework::message($ex->getMessage(), 'error');
@@ -201,7 +201,7 @@ class Jobs
 			return;
 		}
 		try {
-			$msg = $this->action($action, (array)$selected, (bool)$all_selected);
+			$msg = $this->action($action, (array)$selected);
 			$type = 'success';
 		}
 		catch (\Exception $ex) {
@@ -219,11 +219,10 @@ class Jobs
 	 *
 	 * @param string $action
 	 * @param array $ids
-	 * @param bool $select_all
 	 * @return mixed
 	 * @throws \Exception
 	 */
-	protected function action(string $action, array $ids, bool $select_all)
+	protected function action(string $action, array $ids)
 	{
 		switch ($action)
 		{

@@ -259,8 +259,7 @@ class Token
 		{
 			try {
 				Api\Framework::message(
-					self::action($content['token']['action'], $content['token']['selected'], $content['token']['select_all']
-					)
+					self::action($content['token']['action'], $content['token']['selected'])
 				);
 			}
 			catch (\Exception $ex) {
@@ -365,16 +364,15 @@ class Token
 	/**
 	 * Activate or revoke the tokens the list's context menu was opened on
 	 *
-	 * $all_selected is accepted but not expanded: action() loops exactly the ids it is handed, so
-	 * "select all" acts on the rows the client sent and nothing more.
+	 * Acts on exactly the ids it is handed: the client's "all selected" flag, sent as a further
+	 * argument, is ignored, so "select all" covers the rows the client sent and nothing more.
 	 *
 	 * @param string $exec_id eTemplate request this came from - the only thing saying the caller
 	 *	had one of our pages open, see Nextmatch::validateExecId()
 	 * @param string $action
 	 * @param string[] $selected token_ids
-	 * @param bool $all_selected
 	 */
-	public static function ajax_action($exec_id, $action, array $selected, $all_selected=false)
+	public static function ajax_action($exec_id, $action, array $selected)
 	{
 		if (!Api\Etemplate\Widget\Nextmatch::validateExecId($exec_id))
 		{
@@ -382,7 +380,7 @@ class Token
 		}
 		$failed = false;
 		try {
-			$msg = static::action($action, $selected, $all_selected);
+			$msg = static::action($action, $selected);
 		}
 		catch (\Exception $e) {
 			$msg = $e->getMessage();
@@ -408,11 +406,10 @@ class Token
 	 *
 	 * @param string $action
 	 * @param array|int $selected
-	 * @param boolean $select_all
 	 * @returns string with success message
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	protected static function action($action, $selected, $select_all=false)
+	protected static function action($action, $selected)
 	{
 		$success = 0;
 		try {
