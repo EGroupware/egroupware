@@ -18,6 +18,7 @@ import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {selectAllFlag} from "../../api/js/etemplate/Et2Nextmatch/selectAllFlag";
 // egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
 // via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -357,8 +358,10 @@ class InfologApp extends EgwApp
 	confirm_delete(_action, _senders)
 	{
 		const child_button = document.body.querySelector<HTMLButtonElement>('#delete_sub') || document.body.querySelector<HTMLButtonElement>('[id*="delete_sub"]');
-		this._action_all = _action.parent.data.nextmatch?.getSelection().all;
 		this._action_ids = _senders.map(sender => sender.id.split("::").pop());
+		// with "select all" the server expands the selection itself: tell it how many entries
+		// we mean, so it can refuse when its expansion comes out different
+		this._action_all = selectAllFlag(_action.parent.data.nextmatch, this._action_ids, _action);
 		this._action_exec_id = InfologApp._execId(_action.parent.data.nextmatch, this.et2);
 		if(child_button)
 		{
@@ -425,7 +428,7 @@ class InfologApp extends EgwApp
 	}
 
 	private _action_ids = [];
-	private _action_all = false;
+	private _action_all : boolean | number = false;
 	private _action_exec_id = "";
 
 	/**
