@@ -346,7 +346,7 @@ copy to clipboard	common	de	In die Zwischenablage kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
-could not determine the current selection, please try again.	common	de	Die aktuelle Auswahl konnte nicht ermittelt werden, bitte erneut versuchen.
+could not determine the current selection. nothing was changed, please reload the list and try again.	common	de	Die aktuelle Auswahl konnte nicht ermittelt werden. Es wurde nichts geändert, bitte laden Sie die Liste neu und versuchen Sie es erneut.
 could not link: %1	common	de	Konnte nicht verknüpfen: %1
 could not unlink: %1	common	de	Konnte nicht lösen: %1
 create	common	de	Erstellen
@@ -1460,6 +1460,7 @@ the browser popup blocker is on. please click on ok button to see the pop-up.\n\
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
+the list shows %1 entries, but the action would have been applied to %2. nothing was changed, please reload the list and try again.	common	de	Die Liste zeigt %1 Einträge, die Aktion wäre aber auf %2 angewendet worden. Es wurde nichts geändert, bitte laden Sie die Liste neu und versuchen Sie es erneut.
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeordner des Benutzers (%1 Attribute).

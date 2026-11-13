@@ -39,6 +39,11 @@ class filemanager_shares extends filemanager_ui
 	static protected $tmp_dir;
 
 	/**
+	 * Session key under which get_rows() stores the query the list last ran, for "select all"
+	 */
+	const SELECT_ALL_QUERY = 'shares-query';
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -61,6 +66,15 @@ class filemanager_shares extends filemanager_ui
 	public function get_rows(&$query_in, &$rows)
 	{
 		$query = $query_in;
+		// Remember what the list is showing, so "select all" can be expanded to exactly those
+		// shares. Not for the nextmatch's own partial queries (a single-row refresh, a check of
+		// known rows): those are narrowed to a few ids and would turn the next "select all" into
+		// just those rows.
+		if (empty($query['csv_export']))
+		{
+			Api\Cache::setSession('filemanager', self::SELECT_ALL_QUERY,
+				array_intersect_key($query, array_flip(['search', 'col_filter', 'admin'])));
+		}
 		switch ($query['col_filter']['type'])
 		{
 			case Sharing::LINK:
@@ -157,7 +171,9 @@ class filemanager_shares extends filemanager_ui
 				'data' => ['menuaction' => 'filemanager.filemanager_shares.ajax_delete'],
 			),
 		);
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, ['javaScript:app.filemanager.ajax_action']);
 	}
 
 	/**
@@ -193,22 +209,60 @@ class filemanager_shares extends filemanager_ui
 		{
 			throw new Api\Exception\WrongParameter("Unknown action '$action'!");
 		}
-		// same ownership restriction as the submit path: a non-admin may only delete their own
-		$where = [];
-		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
-		{
-			$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
-		}
-		if (!$all_selected)
-		{
-			$where['share_id'] = $selected;
-		}
-		$msg = lang('%1 shares deleted.', Sharing::delete($where));
+		$msg = lang('%1 shares deleted.', $this->deleteShares((array)$selected, $all_selected));
 
 		Api\Json\Response::get()->call('egw.refresh', $msg, 'filemanager',
 			$all_selected ? null : ($selected[0] ?? null),
 			$all_selected || count((array)$selected) > 1 ? null : 'delete',
 			'filemanager', null, null, 'success');
+	}
+
+	/**
+	 * Delete the given shares, or with "select all" every share the list is showing
+	 *
+	 * "Select all" is expanded by re-running the query get_rows() last stored, so it covers
+	 * exactly the shares matching the list's search and filters - never the shares the filters
+	 * hide, other users' shares in the "my shares" view of an admin, or Collabora's own shares,
+	 * which the list does not show at all.
+	 *
+	 * A non-admin may only delete their own shares, whatever ids are asked for.
+	 *
+	 * @param string[] $selected share_id's, ignored with $all_selected
+	 * @param bool|int $all_selected true, or the number of shares the client's list holds
+	 * @return int number of shares deleted
+	 * @throws Api\Exception\WrongUserinput with "select all", if the list's query is not known
+	 *	or matches a different number of shares than the client's list holds
+	 */
+	protected function deleteShares(array $selected, $all_selected) : int
+	{
+		if ($all_selected)
+		{
+			$query = Api\Cache::getSession('filemanager', self::SELECT_ALL_QUERY);
+			if (!is_array($query))
+			{
+				throw new Api\Exception\WrongUserinput(
+					lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'));
+			}
+			@set_time_limit(0);
+			$query['start'] = 0;
+			$query['num_rows'] = -1;
+			$query['csv_export'] = true;	// do not store this query as what the list shows
+			$rows = [];
+			$this->get_rows($query, $rows);
+			$selected = array_column($rows, 'share_id');
+			// refuse to act on a different number of entries than the list showed the user
+			Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($all_selected, count($selected));
+		}
+		if (!$selected)
+		{
+			return 0;
+		}
+		$where = ['share_id' => $selected];
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		return (int)Sharing::delete($where);
 	}
 
 	public function index(?array $content=null, $msg = null)
@@ -240,15 +294,8 @@ class filemanager_shares extends filemanager_ui
 			switch($content['nm']['action'])
 			{
 				case 'delete':
-					if(empty($GLOBALS['egw_info']['user']['apps']['admin']))
-					{
-						$where['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
-					}
-					if (!$content['nm']['select_all'])
-					{
-						$where['share_id'] = $content['nm']['selected'];
-					}
-					Framework::message(lang('%1 shares deleted.', Sharing::delete($where)), 'success');
+					Framework::message(lang('%1 shares deleted.',
+						$this->deleteShares((array)$content['nm']['selected'], $content['nm']['select_all'])), 'success');
 					break;
 				default:
 					throw new Api\Exception\WrongParameter("Unknown action '{$content['nm']['action']}'!");

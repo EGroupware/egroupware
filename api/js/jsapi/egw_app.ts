@@ -19,6 +19,7 @@ import {egw_getFramework} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {fetchAll, nm_action} from "../etemplate/et2_extension_nextmatch_actions";
+import {selectAllFlag} from "../etemplate/Et2Nextmatch/selectAllFlag";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 import type {Et2Widget} from "../etemplate/Et2Widget/Et2Widget";
@@ -1578,7 +1579,7 @@ export abstract class EgwApp
 			EgwApp._execId(nm, this.et2),
 			_action.id,
 			ids,
-			(<Et2Nextmatch>nm)?.getSelection?.().all === true,
+			selectAllFlag(nm, ids, _action),
 			checkboxes,
 			admin_cmd
 		]);
@@ -1650,7 +1651,7 @@ export abstract class EgwApp
 			EgwApp._execId(nm, this.et2),
 			action + "_" + verb + "_" + value,
 			ids,
-			nm?.getSelection?.().all === true,
+			selectAllFlag(nm, ids, manager?.getActionById?.(action)),
 			checkboxes
 		]);
 	}

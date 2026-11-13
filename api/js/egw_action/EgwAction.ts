@@ -12,6 +12,13 @@ import {egwActionStoreJSON, EgwFnct} from "./egw_action_common";
 import {IegwAppLocal} from "../jsapi/egw_global";
 import {egw_getObjectManager} from "./egw_action";
 
+/**
+ * Key in an action's data saying that with "Select all" the server works out the entries itself.
+ *
+ * Set server-side, see Api\\Etemplate\\Widget\\Nextmatch::SERVER_SELECT_ALL.
+ */
+export const SERVER_SELECT_ALL = "server_select_all";
+
 export class EgwAction {
     public id: string;
     public caption: string;
@@ -477,13 +484,32 @@ export class EgwAction {
         // A nextmatch only renders the rows in view, so with "select all" or a shift range over
         // rows not fetched yet, _senders are just part of the selection: collect all rows first.
         // Drag and drop stay synchronous (drag returns its helper), single-row actions get the row.
+        // With "select all", an action the server expands itself (serverSelectsAll()) runs with
+        // the senders it has: its handler does not use the ids, so there is nothing to fetch.
         const nextmatch = this.type !== "drag" && this.type !== "drop" && this.id !== "select_all" &&
             this.allowOnMultiple !== false ? this._selectionOwner() : null;
-        if (nextmatch && nextmatch.selectionIncomplete(_senders)) {
+        const serverExpands = nextmatch && this.serverSelectsAll() && nextmatch.getSelection?.().all === true;
+        if (nextmatch && !serverExpands && nextmatch.selectionIncomplete(_senders)) {
             nextmatch.executeWithCompleteSelection((senders) => this._execute(senders, _target));
             return;
         }
         return this._execute(_senders, _target);
+    };
+
+    /**
+     * Does the server expand "Select all" itself for this action, so its handler needs no ids?
+     *
+     * With "Select all" ticked a nextmatch only holds the rows it has loaded, and execute()
+     * fetches the ids of all matching rows before it runs an action. For an action whose
+     * server-side handler re-runs the list's query instead of using the ids it is sent, that
+     * fetch is a second full query whose result is thrown away, so the server marks such an
+     * action in its data (SERVER_SELECT_ALL) and the fetch is skipped.
+     *
+     * Never true for a long task: it sends one request per row and so needs every id, whatever
+     * the action's data says.
+     */
+    public serverSelectsAll(): boolean {
+        return !!this.data?.[SERVER_SELECT_ALL] && this.data.nm_action !== "long_task";
     };
 
     /**

@@ -6,6 +6,7 @@
  * @link https://www.egroupware.org
  */
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {selectAllFlag} from "./selectAllFlag";
 import type {EgwAction} from "../../egw_action/EgwAction";
 import type {EgwActionObject} from "../../egw_action/EgwActionObject";
 
@@ -124,7 +125,7 @@ export class CategoryAction
 		{
 			// one request per picked category, because that is the granularity the existing
 			// per-app action() handlers work at - no server change needed to get this far
-			await egw.request(menuaction, [execId, actionId, ids, all, {}]);
+			await egw.request(menuaction, [execId, actionId, ids, all && selectAllFlag(nm, ids, action), {}]);
 		}
 	}
 

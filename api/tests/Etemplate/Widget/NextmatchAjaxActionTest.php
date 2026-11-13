@@ -140,11 +140,11 @@ class NextmatchAjaxActionTest extends LoggedInTest
 	 * what says the caller had one of our pages open (Nextmatch::validateExecId()).  Writing to
 	 * the request is what persists it - a brand-new one with nothing set is never saved.
 	 */
-	protected function execId() : string
+	protected function execId(array $nm = []) : string
 	{
 		$request = \EGroupware\Api\Etemplate\Request::read();
 		$id = $request->id();
-		$request->content = ['nm' => []];
+		$request->content = ['nm' => $nm];
 		unset($request);
 		return $id;
 	}
@@ -393,5 +393,197 @@ class NextmatchAjaxActionTest extends LoggedInTest
 
 		$this->assertSame('ongoing', $this->infolog->read($this->info_id)['info_status'],
 			'select-all with no cached query must NOT fall back to acting on everything');
+	}
+
+	/**
+	 * "Select all" sends no ids, the server re-runs the list's cached query to find them. The
+	 * client says how many entries its list shows, and the action must be refused - before
+	 * anything is changed - when the server's own expansion comes out at a different number
+	 * (Nextmatch::checkSelectAllCount()), because the user is then about to change entries they
+	 * never saw selected.
+	 *
+	 * The cached query is narrowed to the one fixture entry, so the expansion finds exactly 1:
+	 * claiming the list showed 40 must throw and leave the entry open, claiming 1 must close it.
+	 */
+	public function testInfologSelectAllIsRefusedWhenTheCountDoesNotMatchTheList()
+	{
+		$this->makeInfolog();
+		Api\Cache::setSession('infolog', 'session_data', [
+			'col_filter' => ['info_id' => $this->info_id], 'filter' => '', 'order' => 'info_id', 'sort' => 'ASC',
+		]);
+		$ui = new \infolog_ui();
+
+		try
+		{
+			$ui->ajax_action($this->execId(), 'close', [], 40, []);
+			$this->fail('a select-all expanding to 1 entry where the list showed 40 must be refused');
+		}
+		catch (Api\Exception\WrongUserinput $e)
+		{
+			$this->assertStringContainsString('40', $e->getMessage());
+		}
+		$this->assertSame('ongoing', $this->infolog->read($this->info_id)['info_status'],
+			'a refused select-all must not have changed anything');
+
+		$ui->ajax_action($this->execId(), 'close', [], 1, []);
+		$this->assertSame('done', $this->infolog->read($this->info_id)['info_status'],
+			'a select-all whose count matches the list must still be carried out');
+	}
+
+	/**
+	 * A view of the InfoLogs linked to something - a contact's CRM view - sends its actions to
+	 * the same endpoint as the main list, but shows a different selection. "Select all" in it
+	 * has to re-run the view's own query, stored per linked entry, which the endpoint can only
+	 * find from the settings the page was rendered with.
+	 *
+	 * The main list's query here is narrowed to an id that is no InfoLog, so re-running it would
+	 * close nothing. The count sent along (1) is a safety net: should a query ever not be
+	 * narrowed to this test's entry, the server refuses to act instead of closing others.
+	 */
+	public function testInfologSelectAllInALinkedViewUsesThatViewsQuery()
+	{
+		$this->makeInfolog();
+		$narrowed = static function(int $info_id) : array
+		{
+			return ['col_filter' => ['info_id' => $info_id], 'filter' => '', 'order' => 'info_id', 'sort' => 'ASC'];
+		};
+		Api\Cache::setSession('infolog', 'session_data', $narrowed(2147483600));
+		Api\Cache::setSession('infolog', 'session_data-addressbook:2147483601', $narrowed($this->info_id));
+
+		(new \infolog_ui())->ajax_action(
+			$this->execId(['action' => 'addressbook', 'action_id' => 2147483601]), 'close', [], 1, []);
+
+		$this->assertSame('done', $this->infolog->read($this->info_id)['info_status'],
+			'select all must act on the entry the linked view showed');
+		Api\Cache::unsetSession('infolog', 'session_data-addressbook:2147483601');
+		Api\Cache::unsetSession('infolog', 'session_data');
+	}
+
+	/**
+	 * A linked view stores its query under a name of its own, one per linked entry, and leaves
+	 * alone what the main list stored: that is what the main list restores on the next visit.
+	 */
+	public function testInfologLinkedViewStoresItsQueryWithoutReplacingTheMainLists()
+	{
+		$main = ['col_filter' => [], 'filter' => 'own', 'order' => 'info_id', 'sort' => 'ASC'];
+		Api\Cache::setSession('infolog', 'session_data', $main);
+
+		$rows = $readonlys = null;
+		$query = ['start' => 0, 'num_rows' => 1, 'col_filter' => [], 'filter' => '', 'search' => '',
+			'order' => 'info_id', 'sort' => 'ASC', 'action' => 'addressbook', 'action_id' => 2147483601];
+		(new \infolog_ui())->get_rows($query, $rows, $readonlys);
+
+		$this->assertSame($main, Api\Cache::getSession('infolog', 'session_data'),
+			'the main list\'s query must be left alone');
+		$stored = Api\Cache::getSession('infolog', 'session_data-addressbook:2147483601');
+		$this->assertIsArray($stored, 'the view\'s query is stored under its own name');
+		$this->assertEquals(2147483601, $stored['action_id']);
+		Api\Cache::unsetSession('infolog', 'session_data-addressbook:2147483601');
+		Api\Cache::unsetSession('infolog', 'session_data');
+	}
+
+	/**
+	 * The same refusal in addressbook, whose action() re-runs the query get_rows() cached under
+	 * 'index'. The cached query is narrowed to the fixture contact (expansion finds 1): a client
+	 * that saw 40 contacts must be refused with the category untouched, one that saw 1 must get
+	 * its category added.
+	 */
+	public function testAddressbookSelectAllIsRefusedWhenTheCountDoesNotMatchTheList()
+	{
+		$this->makeContact(['cat_id' => '1']);
+		Api\Cache::setSession('addressbook', 'index', [
+			'col_filter' => ['contact_id' => $this->contact_id], 'order' => 'contact_id', 'sort' => 'ASC',
+		]);
+		$ui = new \addressbook_ui();
+
+		try
+		{
+			$ui->ajax_action($this->execId(), 'cat_add_9', [], 40, []);
+			$this->fail('a select-all expanding to 1 contact where the list showed 40 must be refused');
+		}
+		catch (Api\Exception\WrongUserinput $e)
+		{
+			$this->assertStringContainsString('40', $e->getMessage());
+		}
+		$this->assertSame('1', $this->contacts->read($this->contact_id)['cat_id'],
+			'a refused select-all must not have changed anything');
+
+		$ui->ajax_action($this->execId(), 'cat_add_9', [], 1, []);
+		$this->assertEqualsCanonicalizing(['1', '9'],
+			explode(',', $this->contacts->read($this->contact_id)['cat_id']),
+			'a select-all whose count matches the list must still be carried out');
+	}
+
+	/**
+	 * An endpoint is told which list an action came from by the settings the page was rendered
+	 * with, read through the exec id: listSetting() returns one of them, listQueryName() the name
+	 * that list stores its query under - its session_for if it has one, else the app's default.
+	 * Neither may invent a name for a request that is not known.
+	 */
+	public function testTheListAnActionCameFromIsReadFromThePagesSettings()
+	{
+		$portlet = $this->execId(['session_for' => 'home-phpunit', 'action_id' => 42]);
+		$main = $this->execId();
+
+		$this->assertSame('home-phpunit', Nextmatch::listSetting($portlet, 'session_for'));
+		$this->assertSame(42, Nextmatch::listSetting($portlet, 'action_id'));
+		$this->assertNull(Nextmatch::listSetting($portlet, 'not_a_setting'));
+		$this->assertNull(Nextmatch::listSetting($main, 'session_for'));
+		$this->assertNull(Nextmatch::listSetting('', 'session_for'), 'no exec id, no setting');
+
+		$this->assertSame('home-phpunit', Nextmatch::listQueryName($portlet, 'index'));
+		$this->assertSame('index', Nextmatch::listQueryName($main, 'index'));
+		$this->assertSame('index', Nextmatch::listQueryName('', 'index'));
+	}
+
+	/**
+	 * A contact list in a Home portlet stores its query under the portlet's own name and sends
+	 * its actions to the same endpoint as the main list. "Select all" in it has to re-run the
+	 * portlet's query, not the main list's.
+	 *
+	 * The main list's query here is narrowed to an id that is no contact, so re-running it would
+	 * change nothing. The count sent along (1) is a safety net: should a query ever not be
+	 * narrowed to this test's contact, the server refuses to act instead of changing others.
+	 */
+	public function testAddressbookSelectAllInAPortletUsesThePortletsQuery()
+	{
+		$this->makeContact(['cat_id' => '1']);
+		$narrowed = static function(int $contact_id) : array
+		{
+			return ['col_filter' => ['contact_id' => $contact_id], 'order' => 'contact_id', 'sort' => 'ASC'];
+		};
+		Api\Cache::setSession('addressbook', 'index', $narrowed(2147483600));
+		Api\Cache::setSession('addressbook', 'home-phpunit',
+			$narrowed($this->contact_id) + ['session_for' => 'home-phpunit']);
+
+		(new \addressbook_ui())->ajax_action($this->execId(['session_for' => 'home-phpunit']), 'cat_add_9', [], 1, []);
+
+		$this->assertEqualsCanonicalizing(['1', '9'],
+			explode(',', $this->contacts->read($this->contact_id)['cat_id']),
+			'select all must act on the contact the portlet showed');
+		Api\Cache::unsetSession('addressbook', 'home-phpunit');
+		Api\Cache::unsetSession('addressbook', 'index');
+	}
+
+	/**
+	 * A contact list shown in a portlet stores its query under the portlet's name and leaves
+	 * alone what the main list stored: that is what the main list restores on the next visit.
+	 */
+	public function testAddressbookPortletStoresItsQueryWithoutReplacingTheMainLists()
+	{
+		$main = ['col_filter' => [], 'filter' => '', 'order' => 'n_family', 'sort' => 'ASC'];
+		Api\Cache::setSession('addressbook', 'index', $main);
+
+		$rows = $readonlys = null;
+		$query = ['start' => 0, 'num_rows' => 1, 'col_filter' => [], 'filter' => '', 'search' => '',
+			'order' => 'n_family', 'sort' => 'ASC', 'session_for' => 'home-phpunit'];
+		(new \addressbook_ui())->get_rows($query, $rows, $readonlys);
+
+		$this->assertSame($main, Api\Cache::getSession('addressbook', 'index'),
+			'the main list\'s query must be left alone');
+		$this->assertIsArray(Api\Cache::getSession('addressbook', 'home-phpunit'),
+			'the portlet\'s query is stored under its own name');
+		Api\Cache::unsetSession('addressbook', 'home-phpunit');
+		Api\Cache::unsetSession('addressbook', 'index');
 	}
 }

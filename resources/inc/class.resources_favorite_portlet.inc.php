@@ -32,7 +32,7 @@ class resources_favorite_portlet extends home_favorite_portlet
 
 		$this->context['template'] = 'resources.show.rows';
 		$this->nm_settings = array_merge($this->nm_settings, array(
-			'get_rows'     => 'resources.resources_bo.get_rows',
+			'get_rows'     => 'resources_favorite_portlet::get_rows',
 			// Use a different template so it can be accessed from client side
 			'template'     => 'resources.show.rows',
 			// Don't store in session, there's no point
@@ -46,6 +46,21 @@ class resources_favorite_portlet extends home_favorite_portlet
 			'filter_label' => lang('Category'),
 			'filter2'      => -1,
 		));
+	}
+
+	/**
+	 * Fetch the rows of the portlet's list
+	 *
+	 * @param array $query
+	 * @param array $rows
+	 * @param array $readonlys
+	 * @return int total rows found
+	 */
+	protected static function rows(&$query, &$rows, &$readonlys)
+	{
+		$bo = new resources_bo();
+
+		return $bo->get_rows($query, $rows, $readonlys);
 	}
 
 	public function exec($id = null, Etemplate &$etemplate = null)

@@ -108,6 +108,10 @@ class home_favorite_portlet extends home_portlet
 			}
 		}
 		$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
+		// Each portlet's list stores its query under a name of its own: not over the query of
+		// the app's main list or of another portlet of the same app, and where the app's action
+		// endpoint finds it for a "select all" - see Nextmatch::listQueryName()
+		$this->nm_settings['session_for'] = 'home-'.$this->context['id'];
 
 		Api\Translation::add_app($context['appname']);
 	}
@@ -152,6 +156,82 @@ class home_favorite_portlet extends home_portlet
 		$etemplate->exec(get_called_class() .'::process',$content,$sel_options);
 
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
+	}
+
+	/**
+	 * Rows for the portlet's list: the nextmatch callback of every favourite portlet
+	 *
+	 * Remembers what the list is showing, then has the app's portlet fetch the rows. Each app's
+	 * portlet supplies only rows(); its get_rows setting names this method on its own class,
+	 * eg. 'infolog_favorite_portlet::get_rows'.
+	 *
+	 * @param array $query
+	 * @param array $rows
+	 * @param array $readonlys
+	 * @return int total rows found
+	 */
+	public static function get_rows(&$query, &$rows, &$readonlys)
+	{
+		static::storeQuery($query);
+
+		$total = static::rows($query, $rows, $readonlys);
+
+		// the app's own list sets the header of its page, which a portlet on Home must not
+		unset($GLOBALS['egw_info']['flags']['app_header']);
+
+		return $total;
+	}
+
+	/**
+	 * Fetch the rows of the portlet's list
+	 *
+	 * To be implemented by each app's portlet. It does not have to remember the query, or to
+	 * leave the page header alone: get_rows() does both.
+	 *
+	 * @param array $query
+	 * @param array $rows
+	 * @param array $readonlys
+	 * @return int total rows found
+	 */
+	protected static function rows(&$query, &$rows, &$readonlys)
+	{
+		$rows = array();
+
+		return 0;
+	}
+
+	/**
+	 * App whose list the portlet shows: what its class is named after
+	 *
+	 * @return string eg. 'infolog' for infolog_favorite_portlet
+	 */
+	protected static function listApp() : string
+	{
+		return preg_replace('/_favorite_portlet$/', '', static::class);
+	}
+
+	/**
+	 * Remember what the portlet's list is showing, for a "select all" in it
+	 *
+	 * The app's action endpoint is handed no ids for a "select all": it re-runs the query of
+	 * the list the action came from, which it finds under the list's session_for name - see
+	 * Nextmatch::listQueryName(). Storing it here, for every portlet, means no app's portlet
+	 * has to: one whose rows come straight from the storage, or that keeps the app's list
+	 * method from storing anything, would otherwise have no query to re-run. An app whose list
+	 * method stores the query itself simply stores it again, under the same name.
+	 *
+	 * Not for the nextmatch's own partial queries (a single-row refresh, a check of known
+	 * rows): those are narrowed to a few ids.
+	 *
+	 * @param array $query as handed to get_rows()
+	 */
+	protected static function storeQuery(array $query) : void
+	{
+		if (empty($query['csv_export']) && !empty($query['session_for']))
+		{
+			Api\Cache::setSession(static::listApp(), $query['session_for'],
+				array_diff_key($query, array_flip(['rows', 'actions', 'action_links', 'placeholder_actions'])));
+		}
 	}
 
 	public static function process($content = array())

@@ -205,4 +205,77 @@ class ImportexportAjaxActionTest extends \EGroupware\Api\AppTest
 		$this->assertNull($parms[4] ?? null,
 			'_targetapp must stay null, or the refresh never reaches the window showing the list');
 	}
+
+	/**
+	 * "Select all" acts on what the list was searched for, not on every definition.
+	 *
+	 * The count the client sends along (1) is there as a safety net: should the expansion ever
+	 * ignore the search, it would find far more than one definition and refuse to act.
+	 */
+	public function testSelectAllUsesTheCachedQuery()
+	{
+		$token = 'phpunit_ajax_all_'.bin2hex(random_bytes(5));
+		$match = $this->makeDefinition($token);
+		$control = $this->makeDefinition('phpunit_ajax_ctl_'.bin2hex(random_bytes(5)));
+
+		// as an admin: for anyone else the list adds its "definitions I may use" condition, which
+		// ends in an unbracketed "OR owner = me" and so shows every definition the user owns
+		// whatever was searched for - the search could not narrow the list to one row
+		$this->asAdmin(function() use ($token, $match)
+		{
+			$ui = new importexport_definitions_ui();
+			$rows = $readonlys = null;
+			$query = ['start' => 0, 'num_rows' => 25, 'search' => $token, 'col_filter' => []];
+			$ui->get_rows($query, $rows, $readonlys);
+			$this->assertSame([$match], array_map('intval', array_column($rows, 'definition_id')),
+				'the search must find exactly the one definition');
+
+			$ui->ajax_action($this->execId(), 'delete', [], 1);
+		});
+
+		$this->assertFalse($this->exists($match), 'select all must delete what the search matched');
+		$this->assertTrue($this->exists($control), 'and must not touch what it did not');
+	}
+
+	/**
+	 * The nextmatch re-queries single rows on its own (a refresh after an edit, a check of the
+	 * rows it knows). Those queries are narrowed to a few ids; were they stored as "what the list
+	 * shows", the next "select all" would act on just those rows.
+	 */
+	public function testARowRefreshDoesNotReplaceTheCachedQuery()
+	{
+		$ui = new importexport_definitions_ui();
+		$rows = $readonlys = null;
+		$query = ['start' => 0, 'num_rows' => 25, 'search' => 'phpunit_ajax_none', 'col_filter' => []];
+		$ui->get_rows($query, $rows, $readonlys);
+		$cached = Api\Cache::getSession('importexport', 'index');
+		$this->assertSame('phpunit_ajax_none', $cached['search'] ?? null, 'the list query is stored');
+
+		$refresh = ['start' => 0, 'num_rows' => 25, 'search' => '', 'col_filter' => ['definition_id' => 1],
+			'csv_export' => 'refresh'];
+		$ui->get_rows($refresh, $rows, $readonlys);
+
+		$this->assertSame($cached, Api\Cache::getSession('importexport', 'index'),
+			'a single-row refresh must not replace it');
+	}
+
+	/**
+	 * With nothing cached there is no way to know what the user was looking at, and an empty
+	 * query is every definition there is - so "select all" has to refuse.
+	 */
+	public function testSelectAllRefusesWithoutACachedQuery()
+	{
+		$id = $this->makeDefinition('phpunit_ajax_nocache_'.bin2hex(random_bytes(5)));
+		Api\Cache::unsetSession('importexport', 'index');
+
+		try
+		{
+			(new importexport_definitions_ui())->ajax_action($this->execId(), 'delete', [], true);
+			$this->fail('select all without a cached query must be refused');
+		}
+		catch (Api\Exception\WrongUserinput $e)
+		{
+			$this->assertTrue($this->exists($id), 'nothing may be deleted without a cached query');
+		}
+	}
 }

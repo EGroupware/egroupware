@@ -9,6 +9,7 @@
  */
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
+import {selectAllFlag} from "../../api/js/etemplate/Et2Nextmatch/selectAllFlag";
 import type {EgwFrameworkApp, FilterInfo} from "../../kdots/js/EgwFrameworkApp";
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -437,6 +438,10 @@ class TimesheetApp extends EgwApp
 			ids.push(_senders[i].id.split("::").pop());
 		}
 		const nm = _action.parent.data.nextmatch;
+		// with "select all" the server expands the selection itself: tell it how many timesheets
+		// we mean, so it can refuse when its expansion comes out different. The list's sum rows
+		// ("sum-...") are no timesheets, and the server does not count them either.
+		all = all && selectAllFlag(nm, ids.filter(id => /^\d+$/.test(id)));
 		egw.request("timesheet.timesheet_ui.ajax_action", [TimesheetApp._execId(nm, this.et2), _action.id, ids, all]);
 	}
 

@@ -10,6 +10,7 @@
  */
 
 import {EgwApp} from "../../api/js/jsapi/egw_app";
+import {selectAllFlag} from "../../api/js/etemplate/Et2Nextmatch/selectAllFlag";
 import type {PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
@@ -2374,6 +2375,9 @@ export class CalendarApp extends EgwApp
 			// At least one event is a series, use its data to trigger the prompt
 			let cal_event = this.egw.dataGetUIDdata( matches[0]);
 		}
+		// with "select all" the server expands the selection itself: tell it how many entries
+		// we mean, so it can refuse when its expansion comes out different
+		all = all && selectAllFlag(_action.parent.data.nextmatch, ids, _action);
 		et2_calendar_event.recur_prompt(cal_event.data,(button_id,event_data) => {
 			switch(button_id)
 			{

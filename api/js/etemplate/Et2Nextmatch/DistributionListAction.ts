@@ -6,6 +6,7 @@
  * @link https://www.egroupware.org
  */
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {selectAllFlag} from "./selectAllFlag";
 import type {EgwAction} from "../../egw_action/EgwAction";
 import type {EgwActionObject} from "../../egw_action/EgwActionObject";
 
@@ -121,6 +122,6 @@ export class DistributionListAction
 		const execId = (<any>nm)?.getInstanceManager?.()?.etemplate_exec_id ?? "";
 		const prefix = button === ADD ? settings.addPrefix : settings.removePrefix;
 
-		return egw.request(menuaction, [execId, prefix + list, ids, all, {}]);
+		return egw.request(menuaction, [execId, prefix + list, ids, all && selectAllFlag(nm, ids, action), {}]);
 	}
 }

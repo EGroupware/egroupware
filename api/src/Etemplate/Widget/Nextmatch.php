@@ -1260,7 +1260,7 @@ class Nextmatch extends Etemplate\Widget
 			}
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
-			if ($default_attrs) $action += $default_attrs;
+			if ($default_attrs) self::inheritActionDefaults($action, $default_attrs);
 
 			// Add 'Select All' after first group
 			if ($first_level && $group !== false && ($action['group']??null) != $group && empty($egw_actions[$prefix.'select_all']))
@@ -1299,7 +1299,7 @@ class Nextmatch extends Etemplate\Widget
 						// checks if children is a valid array and if the "$default_attrs" variable exists
  						if (is_array($children) && $default_attrs)
 						{
-							$action['children'][$key] += $default_attrs;
+							self::inheritActionDefaults($action['children'][$key], $default_attrs);
 						}
 					}
 				}
@@ -1318,7 +1318,10 @@ class Nextmatch extends Etemplate\Widget
 				static $inherit_attrs = array('url','popup','nm_action','onExecute','type','egw_open','allowOnMultiple','confirm','confirm_multiple');
 				$inherit_keys = array_flip($inherit_attrs);
 				$action['children'] = self::egw_actions($action['children'], $template_name, $action['prefix'] ?? '', $action_links, $max_length,
-					array_intersect_key($action, $inherit_keys));
+					array_intersect_key($action, $inherit_keys) +
+					// not an attribute of its own: inheritActionDefaults() turns it into the
+					// child's data[SERVER_SELECT_ALL]
+					(!empty($action['data'][self::SERVER_SELECT_ALL]) ? [self::SERVER_SELECT_ALL => true] : []));
 
 				unset($action['prefix']);
 
@@ -1356,6 +1359,11 @@ class Nextmatch extends Etemplate\Widget
 				$action['data']['nm_action'] = 'egw_open';
 			}
 
+			// a long task sends one request per row, so the client has to collect the ids
+			if (($action['data']['nm_action'] ?? $action['nm_action'] ?? null) === 'long_task')
+			{
+				unset($action['data'][self::SERVER_SELECT_ALL]);
+			}
 			$egw_actions[$prefix.$id] = $action;
 
 			if (!$first_level && $n++ == $max_length) break;
@@ -1372,6 +1380,94 @@ class Nextmatch extends Etemplate\Widget
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
 		return $egw_actions;
+	}
+
+	/**
+	 * Key in an action's data: with "select all" the server works out the entries itself
+	 *
+	 * With "select all" ticked the list only holds the rows it has loaded. Before running an
+	 * action the client therefore fetches the ids of ALL matching rows, page by page behind a
+	 * "Loading" dialog, because an action handled on the client needs them. An action whose
+	 * server-side handler ignores the ids it is sent and re-runs the list's query instead does
+	 * not: for it the fetch is a second full query whose result is thrown away. Setting
+	 *
+	 *	'data' => [Nextmatch::SERVER_SELECT_ALL => true]
+	 *
+	 * on such an action makes the client skip the fetch and send the rows it has, plus the
+	 * list's total as the "all selected" flag for checkSelectAllCount().
+	 *
+	 * Only set it on an action whose handler really expands the selection on the server. One
+	 * that acts on the ids it is sent would, without the fetch, act on just the loaded rows.
+	 * It is never honoured for nm_action "long_task", which sends one request per row.
+	 *
+	 * egw_actions() hands it down to the children of a sub-menu that take over the container's
+	 * onExecute, the same way onExecute itself is inherited. flagServerSelectAll() sets it for a
+	 * whole action list by handler.
+	 */
+	const SERVER_SELECT_ALL = 'server_select_all';
+
+	/**
+	 * Mark every action of a list that is run by the given client-side handler(s) with
+	 * SERVER_SELECT_ALL
+	 *
+	 * For an app whose ajax endpoint expands "select all" itself for every action it gets:
+	 *
+	 *	return Nextmatch::flagServerSelectAll($actions, ['javaScript:app.myapp.ajax_action']);
+	 *
+	 * Marked are the actions (at any depth) declaring one of $handlers as their onExecute, and
+	 * the category picker dialog (nm_action "categories"), which sends what was picked to the
+	 * same endpoint. Children that only inherit a container's onExecute are marked by
+	 * egw_actions(). Checkboxes and long tasks are left alone.
+	 *
+	 * @param array $actions as returned by an app's get_actions(), before egw_actions()
+	 * @param string[] $handlers onExecute values, eg. 'javaScript:app.myapp.ajax_action'
+	 * @return array $actions with the flag set
+	 */
+	public static function flagServerSelectAll(array $actions, array $handlers) : array
+	{
+		foreach($actions as &$action)
+		{
+			if (!is_array($action)) continue;
+
+			$nm_action = $action['data']['nm_action'] ?? $action['nm_action'] ?? null;
+			if (empty($action['checkbox']) && $nm_action !== 'long_task' &&
+				(isset($action['onExecute']) && in_array($action['onExecute'], $handlers, true) ||
+					$nm_action === 'categories'))
+			{
+				$action['data'][self::SERVER_SELECT_ALL] = true;
+			}
+			if (!empty($action['children']) && is_array($action['children']))
+			{
+				$action['children'] = self::flagServerSelectAll($action['children'], $handlers);
+			}
+		}
+		return $actions;
+	}
+
+	/**
+	 * Give a sub-menu's child the attributes it inherits from its container
+	 *
+	 * Attributes the child declares itself win. SERVER_SELECT_ALL is not an attribute but an
+	 * entry of the container's data, and only describes the container's own handler: it is
+	 * handed on to a child that declares no behaviour of its own (onExecute, url, egw_open or
+	 * nm_action) and so runs through that handler, and to no other.
+	 *
+	 * @param array& $action child action
+	 * @param array $default_attrs attributes of the container to inherit
+	 */
+	protected static function inheritActionDefaults(array &$action, array $default_attrs)
+	{
+		$server_select_all = !empty($default_attrs[self::SERVER_SELECT_ALL]) &&
+			!isset($action['onExecute']) && empty($action['url']) && empty($action['egw_open']) &&
+			!isset($action['nm_action']) && !isset($action['data']['nm_action']) && empty($action['checkbox']);
+		unset($default_attrs[self::SERVER_SELECT_ALL]);
+
+		$action += $default_attrs;
+
+		if ($server_select_all)
+		{
+			$action['data'][self::SERVER_SELECT_ALL] = true;
+		}
 	}
 
 	/**
@@ -1782,6 +1878,106 @@ class Nextmatch extends Etemplate\Widget
 		Api\Json\Response::get()->call('egw.message',
 			lang('Your session has expired, please reload the page.'), 'error');
 		return false;
+	}
+
+	/**
+	 * A setting of the nextmatch on the page an ajax request came from
+	 *
+	 * An action endpoint is handed an exec id, an action and ids - not which of its app's lists
+	 * they came from: the main list, one embedded in another app, one in a Home portlet. That
+	 * is in the settings the list was rendered with (eg. session_for), which the page's
+	 * eTemplate request keeps. An endpoint needs it to find the query that list stored, as
+	 * each list stores its own.
+	 *
+	 * The settings are written server-side, so unlike something the client sends they can be
+	 * used to name a session key.
+	 *
+	 * @param string|null $exec_id as sent by the client
+	 * @param string $name setting, eg. 'session_for'
+	 * @param string $nm id of the nextmatch in the page's content
+	 * @return mixed|null null if the request is not known or the list has no such setting
+	 */
+	public static function listSetting($exec_id, string $name, string $nm='nm')
+	{
+		if (empty($exec_id) || !($request = Etemplate\Request::read($exec_id, false)))
+		{
+			return null;
+		}
+		$content = $request->content;
+
+		return is_array($content) && is_array($content[$nm] ?? null) ? $content[$nm][$name] ?? null : null;
+	}
+
+	/**
+	 * Name under which the list an ajax request came from stores its query in the session
+	 *
+	 * An app's main list stores its query under a name of the app's choosing, $default. A list
+	 * of the same app shown somewhere else - embedded in another app, in a Home portlet - is
+	 * rendered with a session_for setting and stores it under that, so the two do not replace
+	 * each other's. Both send their actions to the same endpoint, which asks here which name to
+	 * read. The counterpart in a get_rows() method is $query['session_for'] ?? $default.
+	 *
+	 * @param string|null $exec_id as sent by the client
+	 * @param string $default name of the app's main list
+	 * @return string
+	 */
+	public static function listQueryName($exec_id, string $default) : string
+	{
+		$name = self::listSetting($exec_id, 'session_for');
+
+		return is_string($name) && $name !== '' ? $name : $default;
+	}
+
+	/**
+	 * How far the number of entries a "select all" expands to may be off from what the list showed
+	 *
+	 * Not zero, because the list is live: an entry created or deleted by someone else between the
+	 * user's last look and their action is no reason to refuse it.
+	 */
+	const SELECT_ALL_TOLERANCE = 1;
+
+	/**
+	 * Refuse a "select all" action that would run on a different set of entries than the user saw
+	 *
+	 * With "select all" the client does not send the ids: it only says that everything matching
+	 * the list's current filters is meant, and the server works out which entries those are, by
+	 * re-running the list's query. If that query is not the one the list is showing, the action
+	 * silently runs on entries the user never selected, or misses some they did. To make that
+	 * detectable the client sends the number of entries its list shows in place of a plain true
+	 * (EgwApp.ajax_action() in api/js/jsapi/egw_app.ts), and the code expanding the selection
+	 * calls this with it and the number of entries it found, BEFORE changing anything.
+	 *
+	 * The count travels in the "all selected" flag itself, because that is the one argument
+	 * every ajax_action() signature has in the same place and already passes on to its action():
+	 * a positive integer is as true as true for every existing check of the flag. A plain true
+	 * (an older client, the client not knowing its total, a server-side caller) carries no
+	 * expectation and is not checked.
+	 *
+	 * @param int|bool|null $all_selected the "all selected" flag as sent by the client: the number
+	 *	of entries its list shows, or just true
+	 * @param int $actual number of entries the selection was expanded to
+	 * @param int $tolerance how far the two may be apart
+	 * @throws Api\Exception\WrongUserinput with a translated message, if they are further apart
+	 */
+	public static function checkSelectAllCount($all_selected, int $actual, int $tolerance=self::SELECT_ALL_TOLERANCE) : void
+	{
+		if (($expected = self::selectAllExpected($all_selected)) !== null && abs($expected - $actual) > $tolerance)
+		{
+			throw new Api\Exception\WrongUserinput(lang(
+				'The list shows %1 entries, but the action would have been applied to %2. Nothing was changed, please reload the list and try again.',
+				$expected, $actual));
+		}
+	}
+
+	/**
+	 * Number of entries the client's list showed when it sent a "select all" action
+	 *
+	 * @param int|bool|null $all_selected the "all selected" flag as sent by the client
+	 * @return int|null null if the flag carries no count, see checkSelectAllCount()
+	 */
+	public static function selectAllExpected($all_selected) : ?int
+	{
+		return is_int($all_selected) && $all_selected > 0 ? $all_selected : null;
 	}
 
 	public static function ajax_set_admin_default($exec_id, $form_name, array $prefs, $action)
