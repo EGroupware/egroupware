@@ -314,8 +314,8 @@ class Storage
 			$only_app = substr($only_app, 1);
 		}
 		$where = self::linksWhere($app, $id, $only_app, $not_only, $deleted);
-		if (isset($from)) $where[] = 'link_lastmod >= '.(int)$from->format('ts');
-		if (isset($to))   $where[] = 'link_lastmod <= '.(int)$to->format('ts');
+		if (isset($from)) $where[] = Api\Db\SqlFragment::compare(self::$db, 'link_lastmod', '>=', $from->format('ts'));
+		if (isset($to))   $where[] = Api\Db\SqlFragment::compare(self::$db, 'link_lastmod', '<=', $to->format('ts'));
 
 		$links = array();
 		foreach(self::$db->select(self::TABLE, '*', $where, __LINE__, __FILE__,

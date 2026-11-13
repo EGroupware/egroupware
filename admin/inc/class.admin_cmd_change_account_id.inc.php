@@ -182,7 +182,7 @@ class admin_cmd_change_account_id extends admin_cmd
 					}
 					if ($this->group_renumbered && $table == 'egw_acl')
 					{
-						$where[] = "acl_appname != 'phpgw_group'";
+						$where[] = Api\Db\SqlFragment::raw("acl_appname != 'phpgw_group'");
 					}
 					$total += ($changed = self::_update_account_id($this->change,$db,$table,$column,$where,$type));
 					if (!$check_only && $changed) $this->value .=  "$app:\t$table.$column $changed id's changed\n";

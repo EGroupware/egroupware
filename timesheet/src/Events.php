@@ -154,7 +154,7 @@ class Events extends Api\Storage\Base
 			], [
 				'tse_id' => $tse_id,
 				'account_id' => $this->user,
-				'ts_id IS NULL',
+				Api\Db\SqlFragment::raw('ts_id IS NULL'),
 			], __LINE__, __FILE__, self::APP);
 		}
 	}

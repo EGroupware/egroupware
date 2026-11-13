@@ -524,7 +524,7 @@ abstract class admin_cmd
 		}
 		else if ((string)$query['col_filter']['periodic'] === '1')
 		{
-			$query['col_filter'][] = 'cmd_rrule IS NOT NULL';
+			$query['col_filter'][] = Api\Db\SqlFragment::raw('cmd_rrule IS NOT NULL');
 		}
 		unset($query['col_filter']['periodic']);
 		if($query['col_filter']['parent'])
@@ -1062,7 +1062,7 @@ abstract class admin_cmd
 	{
 		if (!($jobs = admin_cmd::search(array(),false,'cmd_scheduled','','',false,'AND',false,array(
 			'cmd_status' => admin_cmd::scheduled,
-			'cmd_scheduled <= '.time(),
+			Api\Db\SqlFragment::raw('cmd_scheduled <= '.time()),
 		))))
 		{
 			return false;		// no schduled commands, no need to setup the job

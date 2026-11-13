@@ -1533,7 +1533,7 @@ class Contacts extends Contacts\Storage
 			{
 				if (empty($fields[$name]))
 				{
-					$criteria[] = "($name IS NULL OR $name='')";
+					$criteria[] = Db\SqlFragment::raw("($name IS NULL OR $name='')");
 				}
 				else
 				{

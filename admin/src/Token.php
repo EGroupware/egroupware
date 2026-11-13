@@ -213,7 +213,7 @@ class Token
 		// show templates (account_id=0 AND token_hash='')
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || static::APP !== 'admin')
 		{
-			$query['col_filter'][] = "(account_id=0 AND token_hash='' AND token_revoked IS NULL OR account_id=".(int)$GLOBALS['egw_info']['user']['account_id'].')';
+			$query['col_filter'][] = Api\Db\SqlFragment::raw("(account_id=0 AND token_hash='' AND token_revoked IS NULL OR account_id=".(int)$GLOBALS['egw_info']['user']['account_id'].')');
 		}
 		// sort revoked token behind active ones
 		if (empty($query['order']) || $query['order'] === 'token_id')

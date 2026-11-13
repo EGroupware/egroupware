@@ -98,11 +98,11 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				{
 					if($value['from'])
 					{
-						$query['col_filter'][] = "contact_bday >= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['from']));
+						$query['col_filter'][] = Api\Db\SqlFragment::raw("contact_bday >= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['from'])));
 					}
 					if($value['to'])
 					{
-						$query['col_filter'][] = "contact_bday <= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['to']));
+						$query['col_filter'][] = Api\Db\SqlFragment::raw("contact_bday <= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['to'])));
 					}
 					continue;
 				}
@@ -115,8 +115,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				if(!is_array($value) || (!$value['from'] && !$value['to'])) continue;
 
 				// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
-				if($value['from']) $query['col_filter'][] = "$field >= " . (int)$value['from'];
-				if($value['to']) $query['col_filter'][] = "$field <= " . (int)$value['to'];
+				if($value['from']) $query['col_filter'][] = Api\Db\SqlFragment::raw("$field >= " . (int)$value['from']);
+				if($value['to']) $query['col_filter'][] = Api\Db\SqlFragment::raw("$field <= " . (int)$value['to']);
 				unset($query['col_filter'][$field]);
 			}
 			$selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$query['col_filter']);

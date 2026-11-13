@@ -58,26 +58,11 @@ class DeleteTest extends WebDAVTest
 	}
 
 	/**
-	 * Recursive directory DELETE, whose outcome genuinely differs by backend:
+	 * DELETE of a directory removes it together with its children and answers 204
 	 *
-	 * - Plain hard-delete backends (community `sqlfs://`, e.g. CI, which has
-	 *   no EPL/Stylite installed at all) correctly return 204, child gone.
-	 * - This dev environment's Versioning-backed home directories (default
-	 *   "/" mount is stylite.s3://, routing through Versioning\StreamWrapper -
-	 *   see project_vfs_test_coverage.md) hit a real, documented, NOT-YET-FIXED
-	 *   bug: `Vfs::remove()` correctly soft-deletes the child first
-	 *   ({".../child.txt": true}), but the just-soft-deleted (fs_active=0) row
-	 *   is still physically present, and Sqlfs\StreamWrapper::rmdir()'s
-	 *   "is this directory empty" check doesn't exclude inactive rows - so it
-	 *   sees a "non-empty" directory a moment after correctly emptying it, and
-	 *   Vfs\WebDAV::DELETE() (api/src/Vfs/WebDAV.php:81) reports 403 for the
-	 *   WHOLE request even though the child WAS actually removed. Traced via
-	 *   temporary debug instrumentation of DELETE() (added and reverted, not
-	 *   shipped).
-	 *
-	 * Detects which situation applies via whether the EPL Versioning class is
-	 * loaded (same convention used throughout the Vfs project's EPL-conditional
-	 * tests), rather than assuming one universal outcome.
+	 * That holds on every backend: a hard-deleting one (plain sqlfs) removes the child's row, a
+	 * soft-deleting one (versioning, S3) only flags it inactive - and a directory holding nothing
+	 * but inactive rows counts as empty, so it can be removed too.
 	 */
 	public function testDeleteDirectoryWithChildren() : void
 	{
@@ -88,15 +73,9 @@ class DeleteTest extends WebDAVTest
 
 		$response = $this->getClient(self::$user)->delete($this->url($dir));
 
-		if(class_exists('EGroupware\\Stylite\\Vfs\\Versioning\\StreamWrapper'))
-		{
-			$this->assertHttpStatus(403, $response, 'BUG on this Versioning-backed environment, see docblock - the child WAS actually removed, see next assertion');
-		}
-		else
-		{
-			$this->assertHttpStatus(204, $response, 'plain hard-delete backend: recursive DELETE must fully succeed');
-		}
-		$this->assertHttpStatus(404, $this->getFileResponse($file, self::$user), 'the child must be gone either way');
+		$this->assertHttpStatus(204, $response, 'recursive DELETE must fully succeed');
+		$this->assertHttpStatus(404, $this->getFileResponse($file, self::$user), 'the child must be gone');
+		$this->assertHttpStatus(404, $this->getFileResponse($dir, self::$user), 'the directory must be gone');
 	}
 
 	public function testDeleteNonExistentPathReturns404() : void
