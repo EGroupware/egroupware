@@ -59,7 +59,7 @@ describe('InfologApp.confirm_delete()', () =>
 		return {id: "infolog::" + id, iface: {getDOMNode: () => row}};
 	}
 
-	function confirmDelete(senders : any[], rowData : { [uid : string] : any } = {})
+	function confirmDelete(senders : any[], rowData : { [uid : string] : any } = {}, all = false)
 	{
 		const context : any = {
 			egw: {dataGetUIDdata: (uid : string) => rowData[uid] ? {data: rowData[uid]} : null},
@@ -67,7 +67,7 @@ describe('InfologApp.confirm_delete()', () =>
 			_row_has_subs: InfologApp.prototype._row_has_subs
 		};
 		InfologApp.prototype.confirm_delete.call(context,
-			{parent: {data: {nextmatch: {getSelection: () => ({all: false})}}}}, senders);
+			{parent: {data: {nextmatch: {getSelection: () => ({all: all}), totalCount: 500}}}}, senders);
 		return context;
 	}
 
@@ -105,6 +105,25 @@ describe('InfologApp.confirm_delete()', () =>
 			"infolog::2": {info_anz_subs: 0}
 		});
 		assert.isTrue(button.disabled);
+	});
+
+	/**
+	 * With "Select all" the server expands the selection itself and refuses to act if that comes
+	 * out at a different number than the client says its selection holds. Delete is not an
+	 * action the id fetch is skipped for, so its senders are the complete selection and their
+	 * number is what has to be sent - not a plain true, which the server cannot check, and not
+	 * the list's total either.
+	 */
+	it('remembers how many entries a select-all holds, for the server to check', () =>
+	{
+		const context = confirmDelete([sender(1), sender(2), sender(3)], {}, true);
+		assert.strictEqual(context._action_all, 3);
+	});
+
+	it('remembers a plain false without select-all', () =>
+	{
+		const context = confirmDelete([sender(1), sender(2)], {}, false);
+		assert.strictEqual(context._action_all, false);
 	});
 
 	it('falls back to the row class without row data', () =>
