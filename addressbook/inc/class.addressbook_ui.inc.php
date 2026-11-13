@@ -1021,7 +1021,13 @@ class addressbook_ui extends addressbook_bo
 			'dragType' => 'addressbook'
 		);
 		*/
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, [
+			'javaScript:app.addressbook.ajax_action',
+			// its dialog sends the list picked to the same endpoint
+			'javaScript:app.addressbook.distribution_list_action',
+		]);
 	}
 
 	protected function change_type_actions($group)
@@ -1514,6 +1520,9 @@ class addressbook_ui extends addressbook_bo
 		// Only the two lists that have a nextmatch, so a crafted request cannot point action() at
 		// an arbitrary session key
 		if (!in_array($session_name, ['index', 'select'], true)) $session_name = 'index';
+		// unless the page it came from is a list shown somewhere else (a Home portlet), which
+		// stores its query under its own name
+		$session_name = Api\Etemplate\Widget\Nextmatch::listQueryName($exec_id, $session_name);
 
 		// "select all" makes action() re-run get_rows() with the query get_rows() itself cached.
 		// With no cached query that falls through to no filter at all - ie. EVERY contact the
@@ -1521,7 +1530,7 @@ class addressbook_ui extends addressbook_bo
 		if ($all_selected && !is_array(Api\Cache::getSession('addressbook', $session_name)))
 		{
 			Api\Json\Response::get()->call('egw.message',
-				lang('Could not determine the current selection, please try again.'), 'error');
+				lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'), 'error');
 			return;
 		}
 
@@ -1609,6 +1618,10 @@ class addressbook_ui extends addressbook_bo
 				$query['num_rows'] = -1;	// all
 				$readonlys = null;
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+				// refuse to act on a different number of entries than the list showed the user.
+				// Checked here, while there is still one id per row of the list: in an
+				// organisation view these are organisations, replaced by their contacts below.
+				Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($use_all, count((array)$checked));
 			}
 		}
 		// replace org_name:* id's with all id's of that org
@@ -2109,11 +2122,12 @@ class addressbook_ui extends addressbook_bo
 				unset($store_query[$key]);
 			}
 			$old_state = $store_query;
-			Api\Cache::setSession('addressbook', $what, $store_query);
+			// a list shown somewhere else (a Home portlet) stores its query under its own name
+			Api\Cache::setSession('addressbook', $query['session_for'] ?? $what, $store_query);
 		}
 		else
 		{
-			$old_state = Api\Cache::getSession('addressbook', $what);
+			$old_state = Api\Cache::getSession('addressbook', $query['session_for'] ?? $what);
 		}
 		$GLOBALS['egw']->session->commit_session();
 

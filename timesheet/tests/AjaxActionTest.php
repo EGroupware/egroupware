@@ -72,11 +72,11 @@ class AjaxActionTest extends \EGroupware\Api\AppTest
 	/**
 	 * A real eTemplate request id, the way the browser sends one along.
 	 */
-	protected function execId() : string
+	protected function execId(array $nm = array()) : string
 	{
 		$request = Api\Etemplate\Request::read();
 		$id = $request->id();
-		$request->content = array('nm' => array());
+		$request->content = array('nm' => $nm);
 		unset($request);
 		return $id;
 	}
@@ -180,5 +180,71 @@ class AjaxActionTest extends \EGroupware\Api\AppTest
 
 		$this->assertSame((string)$before, (string)$this->readCat(),
 			'an id that resolves to no request is no better than none');
+	}
+
+	/**
+	 * "Select all" re-runs the query the list last stored. With none stored - a session that was
+	 * replaced while the page stayed open, or a list that never loaded - there is no way to know
+	 * what the user was looking at, and an empty query is every timesheet they can see: it has
+	 * to be refused.
+	 *
+	 * The action name is one the endpoint does not know, so should the refusal ever regress this
+	 * test fails without having changed a single timesheet.
+	 */
+	public function testSelectAllIsRefusedWithoutAStoredQuery()
+	{
+		Api\Cache::unsetSession('timesheet', 'index');
+
+		$this->expectException(Api\Exception\WrongUserinput::class);
+		(new \timesheet_ui())->ajax_action($this->execId(), 'selectalltest-noop', array(), true);
+	}
+
+	/**
+	 * A timesheet list in a Home portlet stores its query under the portlet's own name and sends
+	 * its actions to the same endpoint as the main list. "Select all" in it has to re-run the
+	 * portlet's query, not the main list's.
+	 *
+	 * The main list's query here is narrowed to an id that is no timesheet, so re-running it
+	 * would change nothing. The count sent along (1) is a safety net: should a query ever not be
+	 * narrowed to this test's timesheet, the server refuses to act instead of changing others.
+	 */
+	public function testSelectAllInAPortletUsesThePortletsQuery()
+	{
+		$cat_id = $this->aCategory();
+		$narrowed = static function(int $ts_id) : array
+		{
+			return array('col_filter' => array('ts_id' => $ts_id), 'filter' => '', 'order' => 'ts_id', 'sort' => 'ASC');
+		};
+		Api\Cache::setSession('timesheet', 'index', $narrowed(2147483600));
+		Api\Cache::setSession('timesheet', 'home-phpunit', $narrowed($this->ts_id) + array('session_for' => 'home-phpunit'));
+
+		(new \timesheet_ui())->ajax_action($this->execId(array('session_for' => 'home-phpunit')), 'cat_' . $cat_id, array(), 1);
+
+		$this->assertSame((string)$cat_id, (string)$this->readCat(),
+			'select all must act on the timesheet the portlet showed');
+		Api\Cache::unsetSession('timesheet', 'home-phpunit');
+		Api\Cache::unsetSession('timesheet', 'index');
+	}
+
+	/**
+	 * A timesheet list shown in a portlet stores its query under the portlet's name and leaves
+	 * alone what the main list stored: that is what the main list restores on the next visit.
+	 */
+	public function testAPortletStoresItsQueryWithoutReplacingTheMainLists()
+	{
+		$main = array('col_filter' => array(), 'filter' => '', 'order' => 'ts_start', 'sort' => 'DESC');
+		Api\Cache::setSession('timesheet', 'index', $main);
+
+		$rows = $readonlys = null;
+		$query = array('start' => 0, 'num_rows' => 1, 'col_filter' => array('ts_id' => $this->ts_id), 'filter' => '',
+			'search' => '', 'order' => 'ts_start', 'sort' => 'DESC', 'session_for' => 'home-phpunit');
+		(new \timesheet_ui())->get_rows($query, $rows, $readonlys);
+
+		$this->assertSame($main, Api\Cache::getSession('timesheet', 'index'),
+			'the main list\'s query must be left alone');
+		$this->assertIsArray(Api\Cache::getSession('timesheet', 'home-phpunit'),
+			'the portlet\'s query is stored under its own name');
+		Api\Cache::unsetSession('timesheet', 'home-phpunit');
+		Api\Cache::unsetSession('timesheet', 'index');
 	}
 }

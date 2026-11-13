@@ -1204,9 +1204,10 @@ used) and resources was never in this project's inventory. See the note in secti
 ### Proposal B - as built
 
 One `Add to or remove from list...` entry replaces a 37-entry sub-menu *and* the separate
-"Remove from distribution list". `DistributionListAction` +
-`api/templates/default/distribution_list_action.xet`, dispatched by
-`nm_action = 'distribution_lists'`.
+"Remove from distribution list". `DistributionListAction` (`addressbook/js/DistributionListAction.ts`) +
+`addressbook/templates/default/distribution_list_action.xet`, opened by the action's
+`onExecute`, `app.addressbook.distribution_list_action`. It started out in `api` as a generic
+`nm_action = 'distribution_lists'`; addressbook is its only user, so it lives there (2026-11-13).
 
 **It fixes a real usability hole, not just the menu.** The old removal carried no list id at
 all: `action()` fell back to `$query['filter2']`, ie. whichever list the filter dropdown happened
@@ -1887,6 +1888,85 @@ Making it permanent needs three things it did not have as a throw-away:
 It also has to encode the false-positive classes from section 2: `select_all`,
 `egw_copy`/`egw_paste`, and the top-level-vs-`data['nm_action']` distinction that made the
 first run of it wrong.
+
+### "Select all": count check and `server_select_all` (2026-11-12)
+
+**The problem.** With "Select all" the server does not act on the ids it is sent: each app's
+`action()` re-runs the query its `get_rows()` last cached in the session. That cache is per app,
+not per list, so the expansion can differ from what the user sees (see the cause list below) and
+the action then runs on other entries.
+
+**Count check.** The client sends the number of entries it means in place of the plain `true`
+"all selected" flag (`selectAllFlag()`, `api/js/etemplate/Et2Nextmatch/selectAllFlag.ts`), and the
+code expanding the selection calls `Nextmatch::checkSelectAllCount($flag, $found)` before changing
+anything. More than `SELECT_ALL_TOLERANCE` (1) apart throws a translated `WrongUserinput`. A plain
+`true` (older client, total unknown, submit path) is not checked. Wired into: addressbook,
+infolog, tracker, timesheet, calendar, projectmanager (project list), news_admin categories,
+admin access log, importexport, aiassistant, aitools, filemanager shares, smallpart questions
+(delete). Submit- and url-based actions never receive a count.
+
+**`server_select_all`.** `EgwAction.execute()` used to fetch every matching id before any action
+under "Select all" (`Et2Nextmatch.executeWithCompleteSelection()`), which for a server-expanded
+action is a second full query thrown away. An action carrying
+`'data' => [Nextmatch::SERVER_SELECT_ALL => true]` skips that fetch and sends the list's total as
+the count. `Nextmatch::flagServerSelectAll($actions, [<onExecute>, ...])` sets it for a whole
+`get_actions()` list (plus the category / distribution-list dialogs), and `egw_actions()` hands it
+down to sub-menu children that take over the container's onExecute - never to a child with its own
+onExecute/url/egw_open/nm_action, a checkbox, or a `long_task` (one request per row, needs the
+ids; the client ignores the flag for it too).
+
+* Only flag a handler that really expands on the server. One that acts on the ids it is sent
+  (invoices, bookmarks, records, news list, tokens, custom fields, smallpart `exempt`/`readd`)
+  would act on the loaded rows only.
+* **Timesheet is deliberately not flagged**: its list total counts the sum rows, the expansion
+  does not, and without the ids the client cannot subtract them.
+* The skipped fetch also used to re-cache the session query with this tab's filters just before
+  the action. Without it a query overwritten by another tab or portlet is no longer papered over:
+  the count check refuses instead.
+
+**Causes fixed (2026-11-13)** in the lists that have no category filter:
+* news_admin categories, importexport, admin access log: `get_rows()` stored the nextmatch's own
+  partial queries (single-row refresh, known-uid check) as "what the list shows" - they now test
+  `csv_export`, and their own expansion sets it. news_admin also expanded from the cached
+  `start`.
+* news_admin categories, importexport: no cached query meant every row - now refused.
+* filemanager shares: "select all" deleted by owner alone - for an admin every share of every
+  user, and Collabora's hidden ones. It now re-runs the list's query (`deleteShares()`, both
+  the ajax and the submit path).
+* smallpart questions delete: deleted everything of the course and material; now expanded from
+  the list's saved state, the same questions as ticking each row.
+* aiassistant: any search fatalled (`So::search()` raw string fragments not wrapped in
+  `SqlFragment`), so a searched list could neither be shown nor expanded.
+* aitools needed nothing.
+* tracker single-queue and embedded lists, infolog linked views (CRM): each list stores its
+  query under its own static name (infolog: one per linked entry, `session_data-<app>:<id>`),
+  and the endpoint finds that name from the settings the page was rendered with -
+  `Nextmatch::listSetting($exec_id, 'session_for')` reads them from the page's eTemplate
+  request, where they are server-written and so safe to name a session key with.
+* Home portlets: `home_favorite_portlet` gives every portlet list `session_for =
+  'home-<portlet id>'` and owns the nextmatch callback: `home_favorite_portlet::get_rows()`
+  stores the query (`storeQuery()`, under the app the class is named after) and calls the
+  app portlet's `rows()`, which is all an app supplies. An app whose list method stores under
+  `$query['session_for'] ?? <main name>` (infolog, addressbook, calendar, news_admin) just
+  stores it again; timesheet and projectmanager portlets fetch from the storage and tracker's
+  keeps tracker_ui from storing, so without the common callback they had no query and their
+  "select all" was refused. Endpoints read `Nextmatch::listQueryName($exec_id, <main name>)`.
+  Known limit: the re-run goes through the app's list method, which for timesheet and
+  projectmanager reads a category filter differently than the storage the portlet shows rows
+  from - a portlet filtered by a category column is refused by the count check.
+
+Found on the way, not fixed: the importexport definitions list ignores search and filters for a
+non-admin's own definitions (`importexport_definitions_bo::get_rows()` ANDs an unbracketed
+`(...) OR owner = me`). The smallpart questions list reports the first page's size as its total.
+
+**Causes found, not fixed** (the check refuses the ajax ones):
+another tab overwriting the key;
+infolog `limit_modified` narrowing;
+calendar collapsing recurrences to the series;
+projectmanager appending to the client-sent ids.
+Outside the check: resources (reads a key nothing writes), admin categories (`array_slice(...,
+-1)` drops the last), admin password reset (one page of users), document merge (empty id list in
+the multi-document branch).
 
 ---
 

@@ -194,4 +194,34 @@ class AjaxActionTest extends LoggedInTest
 			$actions['status']['data']['menuaction'] ?? null,
 			'"Change your status" must name calendar_uilist, or every child 400s');
 	}
+
+	/**
+	 * "Select all" re-runs the list's query, and get_rows() returns the list's settings
+	 * (sel_options, format) in the same array as its rows. Those are no events: they must not
+	 * reach the action, which would report each of them as a failed event next to the ones it
+	 * really changed.
+	 *
+	 * The count sent along (1) is a safety net: should the search ever not narrow the list to
+	 * this test's event, the server refuses to act instead of changing the status of others.
+	 */
+	public function testSelectAllActsOnTheEventsOnlyNotTheListSettings()
+	{
+		$this->makeEvent();
+		$title = $this->bo->read($this->event_id)['title'];
+
+		$ui = new \calendar_uilist();
+		$rows = $readonlys = null;
+		$query = ['start' => 0, 'num_rows' => 25, 'search' => $title, 'filter' => 'all',
+			'order' => 'cal_start', 'sort' => 'ASC', 'col_filter' => []];
+		$ui->get_rows($query, $rows, $readonlys);
+		$this->assertArrayHasKey('sel_options', $rows, 'the settings this test is about are in the rows');
+
+		$ui->ajax_action($this->execId(), 'status-T', [], 1, []);
+
+		$this->assertSame('T', $this->myStatus(), 'the event the list showed must be changed');
+		$parms = $this->refreshCall();
+		$this->assertNotNull($parms, 'the endpoint must answer with egw.refresh');
+		$this->assertStringContainsString('1 ', (string)$parms[0], 'exactly the one event is reported');
+		$this->assertStringNotContainsString('failed', (string)$parms[0], 'and nothing as failed');
+	}
 }

@@ -312,7 +312,9 @@ class importexport_definitions_ui
 		{
 			unset($actions['schedule']);
 		}
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, ['javaScript:app.importexport.ajax_action']);
 	}
 
 	/**
@@ -376,6 +378,13 @@ class importexport_definitions_ui
 		{
 			// get the whole selection
 			$old_query = $query = is_array($session_name) ? $session_name : Api\Cache::getSession('importexport', $session_name);
+			// nothing cached means we do not know what the user was looking at, and an empty
+			// query would be every definition there is
+			if (!is_array($query))
+			{
+				throw new Api\Exception\WrongUserinput(
+					lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'));
+			}
 
 			@set_time_limit(0);				// switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;		// all
@@ -386,6 +395,8 @@ class importexport_definitions_ui
 			foreach($rows as $row) {
 				$selected[] = $row['definition_id'];
 			}
+			// refuse to act on a different number of entries than the list showed the user
+			Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($use_all, count($selected));
 			if(!is_array($session_name))
 			{
 				// Restore old query
@@ -494,9 +505,16 @@ class importexport_definitions_ui
 
 	public function get_rows(&$query, &$rows, &$readonlys) {
 		$rows = array();
-		Api\Cache::setSession('importexport', 'index', array_intersect_key($query, array_flip(array(
-			'col_filter', 'search', 'filter', 'filter2'
-		))));
+		// Remember what the list is showing, so action() can expand a "select all". Not for the
+		// nextmatch's own partial queries (a single-row refresh, a check of known rows) or
+		// action()'s own: those are narrowed to a few ids and would turn the next "select all"
+		// into just those rows.
+		if (empty($query['csv_export']))
+		{
+			Api\Cache::setSession('importexport', 'index', array_intersect_key($query, array_flip(array(
+				'col_filter', 'search', 'filter', 'filter2'
+			))));
+		}
 
 		// Special handling for allowed users 'private'
 		if($query['col_filter']['allowed_users'] == 'private')

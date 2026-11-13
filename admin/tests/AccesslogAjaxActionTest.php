@@ -183,4 +183,28 @@ class AccesslogAjaxActionTest extends LoggedInTest
 		$this->sessionid = $keep;
 		return $control;
 	}
+
+	/**
+	 * The nextmatch re-queries single rows on its own (a refresh after a delete, a check of the
+	 * rows it knows). Those queries are narrowed to a few ids; were they stored as "what the list
+	 * shows", the next "select all" would act on just those rows.
+	 */
+	public function testARowRefreshDoesNotReplaceTheCachedQuery()
+	{
+		$this->asAdmin(function()
+		{
+			$ui = new \admin_accesslog();
+			$rows = $readonlys = null;
+			$list = ['start' => 0, 'num_rows' => 1, 'search' => 'accesslogajaxactiontest',
+				'col_filter' => [], 'session_list' => false];
+			$ui->get_rows($list, $rows, $readonlys);
+			$cached = Api\Cache::getSession('admin', 'accesslog-log');
+			$this->assertSame('accesslogajaxactiontest', $cached['search'] ?? null, 'the list query is stored');
+
+			$ui->get_rows(['col_filter' => ['sessionid' => 1], 'csv_export' => 'refresh'] + $list, $rows, $readonlys);
+
+			$this->assertSame($cached, Api\Cache::getSession('admin', 'accesslog-log'),
+				'a single-row refresh must not replace it');
+		});
+	}
 }

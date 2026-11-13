@@ -73,9 +73,14 @@ class admin_accesslog
 
 		// Remember what the list is showing, so ajax_action() can expand a "select all" - it has no
 		// $content to read the filters from.  Keyed by which of the two lists it is, since both
-		// run through this same method.
-		Api\Cache::setSession('admin', 'accesslog-'.($query['session_list'] ? 'sessions' : 'log'),
-			array_intersect_key($query, array_flip(['search', 'col_filter', 'session_list'])));
+		// run through this same method.  Not for the nextmatch's own partial queries (a
+		// single-row refresh, a check of known rows): those are narrowed to a few ids and would
+		// turn the next "select all" into just those rows.
+		if (empty($query['csv_export']))
+		{
+			Api\Cache::setSession('admin', 'accesslog-'.($query['session_list'] ? 'sessions' : 'log'),
+				array_intersect_key($query, array_flip(['search', 'col_filter', 'session_list'])));
+		}
 
 		$heartbeat_limit = Api\Session::heartbeat_limit();
 
@@ -303,14 +308,17 @@ class admin_accesslog
 			if (!is_array($query))
 			{
 				Api\Json\Response::get()->call('egw.message',
-					lang('Could not determine the current selection, please try again.'), 'error');
+					lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'), 'error');
 				return;
 			}
 			@set_time_limit(0);
 			$query['num_rows'] = -1;
+			$query['csv_export'] = true;	// do not store this query as what the list shows
 			$all = $readonlys = [];
 			$this->get_rows($query, $all, $readonlys);
 			$selected = array_column($all, 'sessionid');
+			// refuse to act on a different number of entries than the list showed the user
+			Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($all_selected, count($selected));
 		}
 
 		$success = $failed = $action_msg = null;
@@ -444,7 +452,9 @@ class admin_accesslog
 			),
 			'group' => $group++,
 		);
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, ['javaScript:app.admin.ajax_action']);
 	}
 
 	/**

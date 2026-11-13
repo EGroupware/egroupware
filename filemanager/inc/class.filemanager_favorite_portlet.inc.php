@@ -69,14 +69,14 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 	}
 
 	/**
-	 * Override from filemanager to clear the app header
+	 * Fetch the rows of the portlet's list
 	 *
-	 * @param type $query
-	 * @param type $rows
-	 * @param type $readonlys
-	 * @return integer Total rows found
+	 * @param array $query
+	 * @param array $rows
+	 * @param array $readonlys
+	 * @return int total rows found
 	 */
-	public static function get_rows(&$query, &$rows, &$readonlys)
+	protected static function rows(&$query, &$rows, &$readonlys)
 	{
 		$ui = new filemanager_ui();
 		if(!$query['path'])
@@ -89,7 +89,6 @@ class filemanager_favorite_portlet extends home_favorite_portlet
 		{
 			$query['template'] = ($query['view'] == 'row' ? 'filemanager.home.rows' : 'filemanager.tile');
 		}
-		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}
 

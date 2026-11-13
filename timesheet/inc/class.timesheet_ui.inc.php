@@ -652,7 +652,8 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
-		if (!$id_only && !$query_in['csv_export']) Api\Cache::setSession(TIMESHEET_APP, 'index', $query_in);
+		// a list shown somewhere else (a Home portlet) stores its query under its own name
+		if (!$id_only && !$query_in['csv_export']) Api\Cache::setSession(TIMESHEET_APP, $query_in['session_for'] ?? 'index', $query_in);
 
 		$GLOBALS['egw']->session->commit_session();
 
@@ -1336,7 +1337,8 @@ class timesheet_ui extends timesheet_bo
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
-		$session_name = 'index';
+		// the main list, or the Home portlet this came from
+		$session_name = Api\Etemplate\Widget\Nextmatch::listQueryName($exec_id, 'index');
 
 		if($this->action($action, $selected, $all_selected, $success, $failed, $action_msg, $session_name, $msg))
 		{
@@ -1401,6 +1403,13 @@ class timesheet_ui extends timesheet_bo
 		{
 			// get the whole selection
 			$query = is_array($session_name) ? $session_name : Api\Cache::getSession('timesheet', $session_name);
+			// nothing stored means we do not know what the user was looking at, and an empty
+			// query would be every timesheet they can see
+			if (!is_array($query))
+			{
+				throw new Api\Exception\WrongUserinput(
+					lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'));
+			}
 
 			if ($use_all)
 			{
@@ -1415,6 +1424,8 @@ class timesheet_ui extends timesheet_bo
 		{
 			return is_numeric($id) && $id > 0;
 		}));
+		// refuse to act on a different number of timesheets than the list showed the user
+		if ($use_all) Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($use_all, count($checked));
 		//error_log(__METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')");
 
 		if (substr($action,0,9) == 'to_status')

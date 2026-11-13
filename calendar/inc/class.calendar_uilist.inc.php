@@ -260,7 +260,9 @@ class calendar_uilist extends calendar_ui
 				$this->manage_states(array('date' => $this->bo->date2string($params['startdate'])));
 			}
 		}
-		$old_params = Api\Cache::getSession('calendar', 'calendar_list');
+		// a list shown somewhere else (a Home portlet) stores its query under its own name
+		$session_name = $params['session_for'] ?? 'calendar_list';
+		$old_params = Api\Cache::getSession('calendar', $session_name);
 		if (is_array($old_params))
 		{
 			if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
@@ -277,7 +279,7 @@ class calendar_uilist extends calendar_ui
 
 		if (!$params['csv_export'])
 		{
-			Api\Cache::setSession('calendar', 'calendar_list',
+			Api\Cache::setSession('calendar', $session_name,
 				array_diff_key ($params, array_flip(array('rows', 'actions', 'action_links', 'placeholder_actions'))));
 		}
 
@@ -601,7 +603,8 @@ class calendar_uilist extends calendar_ui
 		$success = 0;
 		$failed = 0;
 		$action_msg = '';
-		$session_name = 'calendar_list';
+		// the main list, or the Home portlet this came from
+		$session_name = Api\Etemplate\Widget\Nextmatch::listQueryName($exec_id, 'calendar_list');
 
 		// EgwApp.ajax_action() sends the menu's checkbox actions as an array here; the older
 		// recur-prompt path in calendar/js/app.ts sends a plain bool for "Do not notify"
@@ -613,7 +616,7 @@ class calendar_uilist extends calendar_ui
 		if ($all_selected && !is_array(Api\Cache::getSession('calendar', $session_name)))
 		{
 			Api\Json\Response::get()->call('egw.message',
-				lang('Could not determine the current selection, please try again.'), 'error');
+				lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'), 'error');
 			return;
 		}
 
@@ -670,18 +673,19 @@ class calendar_uilist extends calendar_ui
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$query['num_rows'] = -1;		// all
 			$readonlys = null;
-			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
-			// Get rid of any extras (rows that aren't events)
-			if(in_array($action, array('ical', 'document', 'delete')))
+			$this->get_rows($query,$checked,$readonlys);
+			// get_rows() returns the list's settings alongside its rows (sel_options, format,
+			// no_cat_id): they are no events and must not reach the actions, which would count
+			// each of them as a failed event
+			foreach($checked as $key => $event)
 			{
-				foreach($checked as $key => $event)
+				if(!is_numeric($key))
 				{
-					if(!is_numeric($key))
-					{
-						unset($checked[$key]);
-					}
+					unset($checked[$key]);
 				}
 			}
+			// refuse to act on a different number of events than the list showed the user
+			Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($use_all, count($checked));
 		}
 		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
 		elseif($action == 'document')
@@ -1206,6 +1210,8 @@ class calendar_uilist extends calendar_ui
 		);
 
 		//_debug_array($actions);
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, ['javaScript:app.calendar.ajax_action', 'javaScript:app.calendar.cal_delete']);
 	}
 }

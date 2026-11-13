@@ -48,7 +48,6 @@ class infolog_favorite_portlet extends home_favorite_portlet
 			'template'            => 'infolog.home',
 			'default_cols'        => self::$default_cols,
 			// Don't overwrite infolog
-			'session_for'         => 'home',
 			'no_filter2'          => true,
 			'options-filter'      => $ui->filters,
 			// Allow add actions even when there's no rows
@@ -59,14 +58,14 @@ class infolog_favorite_portlet extends home_favorite_portlet
 	}
 
 	/**
-	 * Override from infolog to clear the app header
+	 * Fetch the rows of the portlet's list
 	 *
-	 * @param type $query
-	 * @param type $rows
-	 * @param type $readonlys
-	 * @return integer Total rows found
+	 * @param array $query
+	 * @param array $rows
+	 * @param array $readonlys
+	 * @return int total rows found
 	 */
-	public static function get_rows(&$query, &$rows, &$readonlys)
+	protected static function rows(&$query, &$rows, &$readonlys)
 	{
 		// Make sure we pass the type check
 		if ($query['col_filter']['info_type'])
@@ -82,7 +81,6 @@ class infolog_favorite_portlet extends home_favorite_portlet
 		$total = $ui->get_rows($query, $rows, $readonlys);
 		// infolog_ui overwrites what we set in constructor
 		$query['default_cols'] = self::$default_cols;
-		unset($GLOBALS['egw_info']['flags']['app_header']);
 		return $total;
 	}
 

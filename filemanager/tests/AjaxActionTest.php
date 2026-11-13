@@ -41,6 +41,8 @@ class AjaxActionTest extends LoggedInTest
 	protected $job_id;
 	protected $jobs_before;
 	protected $tmp_path;
+	/** @var string[] share_id => path of shares made by makeShare() */
+	protected $extra_shares = [];
 
 	protected function setUp() : void
 	{
@@ -62,6 +64,13 @@ class AjaxActionTest extends LoggedInTest
 			Api\Config::save_value('jobs', $this->jobs_before, 'filemanager');
 			$this->job_id = null;
 		}
+		foreach($this->extra_shares as $share_id => $path)
+		{
+			Api\Vfs\Sharing::delete(['share_id' => $share_id]);
+			if (Vfs::file_exists($path)) Vfs::unlink($path);
+		}
+		$this->extra_shares = [];
+		Api\Cache::unsetSession('filemanager', \filemanager_shares::SELECT_ALL_QUERY);
 		if ($this->tmp_path && Vfs::file_exists($this->tmp_path))
 		{
 			Vfs::unlink($this->tmp_path);
@@ -198,5 +207,86 @@ class AjaxActionTest extends LoggedInTest
 		$parms = $this->refreshCall();
 		$this->assertNotNull($parms, 'even a failure has to answer the client');
 		$this->assertSame('error', end($parms), 'and it has to say it failed');
+	}
+
+	/**
+	 * A share on a file of its own, removed again in tearDown via $extra_shares
+	 */
+	protected function makeShare(string $name) : int
+	{
+		$path = '/home/' . $GLOBALS['egw_info']['user']['account_lid'] . '/' . $name;
+		$this->assertNotFalse(file_put_contents(Vfs::PREFIX . $path, 'AjaxActionTest'),
+			'could not create the file to share');
+		$share_id = Api\Vfs\Sharing::create('', $path, Api\Vfs\Sharing::READONLY, '', '')['share_id'] ?? null;
+		$this->assertNotNull($share_id, 'could not create the test share');
+		$this->extra_shares[(int)$share_id] = $path;
+		return (int)$share_id;
+	}
+
+	/**
+	 * "Select all" deletes the shares the list is showing - not every share of the user, which
+	 * is what deleting by owner alone did, whatever the list was filtered to.
+	 *
+	 * The count the client sends along (1) is there as a safety net: should the expansion ever
+	 * ignore the filter, it would find more than the one share and refuse to act.
+	 */
+	public function testSharesSelectAllDeletesOnlyWhatTheListShows()
+	{
+		$match = $this->makeShare('ajaxactiontest_all.txt');
+		$control = $this->makeShare('ajaxactiontest_control.txt');
+
+		$ui = new \filemanager_shares();
+		$rows = null;
+		$query = ['start' => 0, 'num_rows' => 25, 'search' => '', 'col_filter' => ['share_id' => $match]];
+		$ui->get_rows($query, $rows);
+		$this->assertSame([$match], array_map('intval', array_column($rows, 'share_id')),
+			'the filter must find exactly the one share');
+
+		$ui->ajax_delete($this->execId(), 'delete', [], 1);
+
+		$this->assertEmpty($this->readShare($match), 'select all must delete the share the list showed');
+		$this->assertNotEmpty($this->readShare($control), 'and must not touch one it did not show');
+	}
+
+	/**
+	 * The nextmatch re-queries single rows on its own (a refresh after a delete, a check of the
+	 * rows it knows). Those queries are narrowed to a few ids; were they stored as "what the list
+	 * shows", the next "select all" would act on just those rows.
+	 */
+	public function testSharesARowRefreshDoesNotReplaceTheCachedQuery()
+	{
+		$ui = new \filemanager_shares();
+		$rows = null;
+		$query = ['start' => 0, 'num_rows' => 25, 'search' => 'ajaxactiontest', 'col_filter' => []];
+		$ui->get_rows($query, $rows);
+		$cached = Api\Cache::getSession('filemanager', \filemanager_shares::SELECT_ALL_QUERY);
+		$this->assertSame('ajaxactiontest', $cached['search'] ?? null, 'the list query is stored');
+
+		$refresh = ['start' => 0, 'num_rows' => 25, 'search' => '', 'col_filter' => ['share_id' => 1],
+			'csv_export' => 'refresh'];
+		$ui->get_rows($refresh, $rows);
+
+		$this->assertSame($cached, Api\Cache::getSession('filemanager', \filemanager_shares::SELECT_ALL_QUERY),
+			'a single-row refresh must not replace it');
+	}
+
+	/**
+	 * With nothing cached there is no way to know what the user was looking at - so "select all"
+	 * has to refuse, where it used to delete every share the user owns.
+	 */
+	public function testSharesSelectAllRefusesWithoutACachedQuery()
+	{
+		$share_id = $this->makeShare('ajaxactiontest_nocache.txt');
+		Api\Cache::unsetSession('filemanager', \filemanager_shares::SELECT_ALL_QUERY);
+
+		try
+		{
+			(new \filemanager_shares())->ajax_delete($this->execId(), 'delete', [], true);
+			$this->fail('select all without a cached query must be refused');
+		}
+		catch (Api\Exception\WrongUserinput $e)
+		{
+			$this->assertNotEmpty($this->readShare($share_id), 'nothing may be deleted without a cached query');
+		}
 	}
 }

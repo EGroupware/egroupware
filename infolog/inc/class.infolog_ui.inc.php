@@ -378,6 +378,28 @@ class infolog_ui
 	}
 
 	/**
+	 * Name under which a list stores its query in the session
+	 *
+	 * The main list (and a list embedded in another app, named by $session_for) uses one name.
+	 * A view of the entries linked to something gets one per linked entry, eg. per contact for
+	 * the addressbook's CRM view.
+	 *
+	 * @param ?string $session_for name of a list embedded in another app or a Home portlet
+	 * @param ?string $action app of the entry the view shows the linked entries of, 'sp' for sub-entries
+	 * @param int|string|array|null $action_id its id(s)
+	 * @return string
+	 */
+	protected static function listSessionName($session_for, $action, $action_id) : string
+	{
+		$name = (is_string($session_for) ? $session_for : '').'session_data';
+		if (!empty($action) && is_string($action) && !empty($action_id))
+		{
+			$name .= '-'.$action.':'.implode(',', (array)$action_id);
+		}
+		return $name;
+	}
+
+	/**
 	 * Callback for nextmatch widget
 	 *
 	 * @param array &$query
@@ -402,11 +424,14 @@ class infolog_ui
 			}
 			//error_log(__METHOD__."() prefs[listNoSubs]=".array2string($this->prefs['listNoSubs'])." --> parent_id=$parent_id");
 			unset($query['col_filter']['parent_id']);
-			if(!$query['action'])
-			{
-				Api\Cache::setSession('infolog', $query['session_for'].'session_data',
-					array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
-			}
+			// Remember what the list is showing. A view of the entries linked to something (a
+			// contact's CRM view, a project's InfoLogs, sub-entries) stores it under a name of
+			// its own, one per linked entry: it must not replace what the main list restores on
+			// the next visit, and "select all" in it has to find its own query, not the main
+			// list's.
+			Api\Cache::setSession('infolog',
+				self::listSessionName($query['session_for'] ?? '', $query['action'] ?? '', $query['action_id'] ?? ''),
+				array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions'))));
 			$query['actions'] = $this->get_actions($query);
 			$query['row_id'] = 'info_id';
 			$query['row_modified'] = 'row_mod';
@@ -1560,7 +1585,9 @@ class infolog_ui
 			'hideOnDisabled' => true
 		);
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
-		return $actions;
+		// with "select all" action() expands the selection itself from the list's query, so the
+		// client does not have to fetch the ids of all rows first
+		return Api\Etemplate\Widget\Nextmatch::flagServerSelectAll($actions, ['javaScript:app.infolog.ajax_action']);
 	}
 
 	/**
@@ -1594,11 +1621,16 @@ class infolog_ui
 		$query = [];
 		if ($all_selected)
 		{
-			$query = (array)Api\Cache::getSession('infolog', $this->called_by.'session_data');
+			// the settings the page was rendered with say which list this is: the main one, one
+			// embedded in another app, or a view of the entries linked to something
+			$query = (array)Api\Cache::getSession('infolog', self::listSessionName(
+				Api\Etemplate\Widget\Nextmatch::listSetting($exec_id, 'session_for') ?? $this->called_by,
+				Api\Etemplate\Widget\Nextmatch::listSetting($exec_id, 'action'),
+				Api\Etemplate\Widget\Nextmatch::listSetting($exec_id, 'action_id')));
 			if (empty($query['get_rows']) && empty($query['col_filter']) && empty($query['filter']))
 			{
 				Api\Json\Response::get()->call('egw.message',
-					lang('Could not determine the current selection, please try again.'), 'error');
+					lang('Could not determine the current selection. Nothing was changed, please reload the list and try again.'), 'error');
 				return;
 			}
 		}
@@ -1654,6 +1686,8 @@ class infolog_ui
 					$checked[] = $info['info_id'];
 				}
 			}
+			// refuse to act on a different number of entries than the list showed the user
+			Api\Etemplate\Widget\Nextmatch::checkSelectAllCount($use_all, count($checked));
 		}
 
 		// Actions with options in the selectbox
