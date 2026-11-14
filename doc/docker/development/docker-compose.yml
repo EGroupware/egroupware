@@ -55,6 +55,8 @@ volumes:
       type: none
       o: bind
       device: $PWD/data/default/rocketchat/uploads
+  # n8n workflows, credentials and execution history
+  n8n:
 
 services:
   egroupware:
@@ -143,6 +145,7 @@ services:
     - push
     - collabora-key
     - rocketchat
+    - n8n
     container_name: egroupware-nginx
     restart: always
 
@@ -293,6 +296,38 @@ services:
       - PMA_HOST=db
       # phpMyAdmin needs the full URL incl. protocol, domain, path and a trailing slash!
       - PMA_ABSOLUTE_URI=http://localhost/phpmyadmin/
+
+  # n8n: workflow automation over EGroupware's REST APIs, served as http://localhost/n8n/
+  # On first start it imports doc/n8n/mail-to-tracker.workflow.json (support mail -> AI triage ->
+  # Tracker ticket), with the EGW_N8N_* variables below set (eg. in .env) it also activates it.
+  # Like push, start it only once EGroupware is installed. See doc/n8n/README.md
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    entrypoint: ["tini", "--", "/bin/sh", "-c", "f=/var/www/egroupware/doc/n8n/start.sh; [ -f $$f ] && exec /bin/sh $$f; exec /docker-entrypoint.sh start"]
+    volumes:
+    - n8n:/home/node/.n8n
+    # read-only, for the example workflow and its start script
+    - $PWD/sources:/var/www:ro
+    environment:
+    # served by Nginx under /n8n/, see nginx.conf
+    - N8N_PATH=/n8n/
+    - N8N_EDITOR_BASE_URL=http://localhost/n8n/
+    - N8N_WEBHOOK_URL=http://localhost/n8n/
+    - N8N_PROXY_HOPS=1
+    # the development environment uses no TLS by default
+    - N8N_SECURE_COOKIE=false
+    - N8N_DIAGNOSTICS_ENABLED=false
+    # example workflow: EGroupware user and password (or an app password), the id of the mail
+    # account to read and the key for the AI proxy - optional, see doc/n8n/README.md
+    - EGW_N8N_USER=${EGW_N8N_USER:-}
+    - EGW_N8N_PASSWORD=${EGW_N8N_PASSWORD:-}
+    - EGW_N8N_MAIL_ACCOUNT=${EGW_N8N_MAIL_ACCOUNT:-}
+    - EGW_N8N_AI_KEY=${EGW_N8N_AI_KEY:-}
+    - EGW_N8N_QUEUES=${EGW_N8N_QUEUES:-}
+    - EGW_N8N_LLM_URL=${EGW_N8N_LLM_URL:-}
+    - EGW_N8N_LLM_MODEL=${EGW_N8N_LLM_MODEL:-}
+    container_name: egroupware-n8n
 
   # Portainer: Docker GUI (needs to be enabled in nginx.conf too!)
 #   portainer:
