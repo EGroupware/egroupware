@@ -79,6 +79,16 @@ class Dovecot extends Mail\Imap
 	}
 
 	/**
+	 * Admin user-name is already "user*admin", so ManageSieve must not send the user as authorization id too
+	 *
+	 * @return ?string
+	 */
+	public function sieveEffectiveUser() : ?string
+	{
+		return null;
+	}
+
+	/**
 	 * Create mailbox string from given mailbox-name and user-name
 	 *
 	 * Admin connection in Dovecot is always for a given user, we can simply use INBOX here.
