@@ -133,11 +133,15 @@ the content was addressed to, and they are only addressed if the tracker would n
 | Room | Created | Content |
 |---|---|---|
 | user's DM with "EGroupware" | default | all notifications, flat messages |
-| `egw-<app>-<user>` | optional per app, on first notification | that app's notifications |
-| `Tracker-<Queue>` (`egw-tracker-<queue>-<user>`) | on first ticket of the user in that queue | one thread per ticket, all comments |
+| `<App>` e.g. `InfoLog` (unique name `<App>-<user>`) | optional per app, on first notification | that app's notifications |
+| `Tracker-<Queue>` (unique name `Tracker-<Queue>-<user>`) | on first ticket of the user in that queue | one thread per ticket, all comments |
 
-* Room names: `[0-9a-zA-Z-_.]+` by default, unique per server => technical name, friendly name
-  in topic/description. Whether a friendly `fname` can be set via the API needs a spike.
+* Room names: no `egw-` prefix, just the app resp. `Tracker-<Queue>`. Room names are `[0-9a-zA-Z-_.]+`
+  by default and (to be verified in the spike) unique per server for private groups, so as all
+  users get a room of the same kind, the **username is appended** (`<App>-<user>`,
+  `Tracker-<Queue>-<user>`). If a friendly display name (`fname`) can be set via the API, the
+  user sees just `<App>` / `Tracker-<Queue>`. Where the name is already unique (e.g. the
+  DM with the bot) nothing is appended.
 * A ticket thread exists for every user the tracker notifies (creator/assignee/CC per existing
   tracker notification preferences, i.e. "assigned to me" by default). When a user is added
   (`!assign +nathan`), their thread is created with a short summary and current state, when
@@ -212,7 +216,7 @@ Ideas, not yet decided: `!priority`, `!close`, `!reopen`, `!resolution`, `!queue
 ## Phases
 
 0. **Spikes** (against our Community instance): bot role permissions (`create-p`, `create-d`
-   / `im.create`, invite, post, `delete-message`), friendly room names, rate-limit defaults,
+   / `im.create`, invite, post, `delete-message`), room-name uniqueness and friendly `fname`, rate-limit defaults,
    `chat.syncThreadMessages` behaviour and cursor, thread posting with `tmid`, the wake sequence
    against the controller (with and without `ignore_user_abort`).
 1. **REST client refactor** on `RestClientTrait` + tests, wrapper for the old class.
