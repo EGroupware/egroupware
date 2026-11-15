@@ -137,7 +137,9 @@ class Stalwart extends Sql
 
 		if (($userData = $this->getUserData($account_id)) && !empty($userData['stalwart']['id']))
 		{
-			return $this->setUserData($account_id, [], [], null, self::MAIL_ENABLED, $userData['mailLocalAddress'], null);
+			// pass the existing aliases, forwards and quota, otherwise setUserData() removes the aliases, or fails to unset the quota
+			return $this->setUserData($account_id, $userData['mailAlternateAddress'] ?? [], $userData['mailForwardingAddress'] ?? [], null,
+				self::MAIL_ENABLED, $userData['mailLocalAddress'], $userData['quotaLimit'] ?? null);
 		}
 		// not (yet) provisioned in Stalwart at all - fall back to addAccount()'s own derivation
 		return $this->addAccount($data);
@@ -157,7 +159,7 @@ class Stalwart extends Sql
 	 * @link https://stalw.art/docs/ref/object/domain/#xdomainquery
 	 * @link
 	 */
-	function getUserData($user, $match_uid_at_domain=false)
+	function getUserData($user, $match_uid_at_domain=false, bool $no_cache=false)
 	{
 		if (strpos($user, '@') !== false)
 		{
@@ -168,7 +170,7 @@ class Stalwart extends Sql
 		$account_lid = Api\Accounts::id2name($account_id ?? $user) ?: throw new \InvalidArgumentException("Invalid user $user!");
 
 		// we check the SQL user-data, if we have a Stalwart accountId stored in mail_type=0=TYPE_ENABLED
-		if (($userData = parent::getUserData($user, $match_uid_at_domain)))
+		if (($userData = parent::getUserData($user, $match_uid_at_domain, $no_cache)))
 		{
 			if ($userData['accountStatus'] === self::MAIL_ENABLED)
 			{
@@ -220,8 +222,21 @@ class Stalwart extends Sql
 			{
 				$aliases[] = $list['emailAddress'];
 			}
+			// account not yet provisioned (no Stalwart id in SQL, SQL still holds the primary email and aliases of the old backend, eg.
+			// during a migration): the SQL data wins, as setUserData() would otherwise delete the SQL aliases and reset the primary email
+			$sqlQuota = null;
+			if ($userData && !isset($userData['accountStatus']))
+			{
+				$sqlQuota = $userData['quotaLimit'] ?? null;    // MB, like the quota from Stalwart below
+				$aliases = array_merge($userData['mailAlternateAddress'] ?? [], $aliases);
+				foreach(array_map('strtolower', array_filter([$userData['mailLocalAddress'] ?? null])) as $primary)
+				{
+					if (!in_array($primary, $aliases) && $primary !== strtolower($account['emailAddress'])) $aliases[] = $primary;
+				}
+				$aliases = array_values(array_unique(array_map('strtolower', $aliases)));
+			}
 			// check if EGroupware's primary email is just an alias for Stalwart --> preserve it
-			if (($key = array_search(strtolower($userData['mailLocalAddress']), $aliases)) !== false)
+			if (($key = array_search(strtolower($userData['mailLocalAddress'] ?? ''), $aliases)) !== false)
 			{
 				$email = strtolower($userData['mailLocalAddress']);
 				$aliases[] = $account['emailAddress'];
@@ -229,7 +244,7 @@ class Stalwart extends Sql
 			}
 			$userData = [
 				'mailLocalAddress' =>  $email ?? $account['emailAddress'],   // preserve EGroupware's primary mail address
-				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : null, // MB
+				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : ($sqlQuota ?: null), // MB
 				'quotaUsed' => isset($account['usedDiskQuota']) ? $account['usedDiskQuota']>>20 : null, // MB
 				'uid' => [$account['name']],
 				'mailAlternateAddress' => array_values(array_unique($aliases)),

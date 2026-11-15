@@ -117,7 +117,7 @@ class Sql extends Mail\Smtp
 	 * @return array with values for keys 'mailLocalAddress', 'mailAlternateAddress' (array), 'mailForwardingAddress' (array),
 	 * 	'accountStatus' ("active"), 'quotaLimit' and 'deliveryMode' ("forwardOnly")
 	 */
-	function getUserData($user, $match_uid_at_domain=false)
+	function getUserData($user, $match_uid_at_domain=false, bool $no_cache=false)
 	{
 		$userData = array();
 
@@ -164,6 +164,8 @@ class Sql extends Mail\Smtp
 		{
 			if (!is_array($account_id))
 			{
+				// the account (and its primary email address) is cached for 12h: do not use that, if the caller needs fresh data
+				if ($no_cache) Api\Accounts::cache_invalidate($account_id);
 				$userData['mailLocalAddress'] = $this->accounts->id2name($account_id, 'account_email');
 			}
 			$enabled = $forwardOnly = array();
