@@ -213,6 +213,22 @@ Ideas, not yet decided: `!priority`, `!close`, `!reopen`, `!resolution`, `!queue
 `!due <date>`, `!cc +user`, `!time <duration>` (timesheet entry), `!private <text>`
 (restricted comment).
 
+### 9. Chatting with the bot
+
+The bot is for notifications. If a user writes to it in their room, it must not stay silent:
+
+* It answers once per user (not per message), e.g. "Sorry, I only do notifications. Type `!help`
+  for the available commands", and never answers its own messages (no loops).
+* `!help` (and later maybe `!tickets` for open tickets) work in the bot room with the same
+  command parser as in ticket threads.
+* Reading it needs polling of the bot room (`chat.syncMessages`), restricted to users who have the
+  Rocket.Chat notification backend enabled and only while the instance is up.
+* A real conversation would need AI. Existing AI parts: `aitools` (static, predefined prompts
+  and triggers, no chat) and the `aiassistant` demo app, which is to be replaced by Open WebUI.
+  Whether and how the bot talks to an AI is **not decided here**, it would be a separate project:
+  an AI acting with the user's rights must be protected against prompt injection from ticket
+  and mail content.
+
 ## Phases
 
 0. **Spikes** (against our Community instance): bot role permissions (`create-p`, `create-d`
