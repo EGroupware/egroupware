@@ -64,7 +64,7 @@ class ManageSieve extends Horde\ManageSieve implements Connection
 				'context'  => Mail\Account::sslContext((int)$params->acc_sieve_ssl),
 				'user'     => $params->isAdminConnection ? $params->acc_imap_admin_username : $params->acc_imap_username,
 				'password' => $params->isAdminConnection ? $params->acc_imap_admin_password : $params->acc_imap_password,
-				'euser'    => $params->isAdminConnection ? $params->acc_imap_username : null,
+				'euser'    => $params->isAdminConnection ? $params->sieveEffectiveUser() : null,
 				//'logger' => new \admin_mail_logger('/tmp/sieve.log'),
 			);
 		}

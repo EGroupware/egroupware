@@ -1736,6 +1736,19 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	}
 
 	/**
+	 * Effective user (authorization id) for ManageSieve in an admin connection
+	 *
+	 * Plugins, which already put the user into the admin user-name (eg. Dovecot's "user*admin"),
+	 * overwrite it to return null, as sending both makes the server reject the authentication.
+	 *
+	 * @return ?string
+	 */
+	public function sieveEffectiveUser() : ?string
+	{
+		return $this->acc_imap_username;
+	}
+
+	/**
 	 * Return fields or tabs which should be readonly in UI for given imap implementation
 	 *
 	 * @return array fieldname => true pairs or 'tabs' => array(tabname => true)
