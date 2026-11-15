@@ -32,6 +32,24 @@ class Stalwart extends Sql
 	const DESCRIPTION = 'Stalwart';
 
 	/**
+	 * true: an alias, which is the email address of an other account, is skipped (in favor of the account), instead of
+	 * giving an error. Used by the REST API, eg. the migration to Stalwart must not fail because of that.
+	 */
+	public static bool $skipTakenAliases = false;
+
+	/**
+	 * Warnings (translated messages) of skipped aliases, see self::$skipTakenAliases
+	 *
+	 * @var string[]
+	 */
+	public static array $warnings = [];
+
+	/**
+	 * Maximum number of tries to create or update an account, while fixing the reported problems (taken email address, locale)
+	 */
+	const MAX_RETRIES = 10;
+
+	/**
 	 * Capabilities of this class (pipe-separated): default, forward
 	 */
 	const CAPABILITIES = 'default';
@@ -235,10 +253,19 @@ class Stalwart extends Sql
 				}
 				$aliases = array_values(array_unique(array_map('strtolower', $aliases)));
 			}
+			// a primary email on a domain Stalwart does not know (eg. an external email of an external account) can not be
+			// an alias in Stalwart, but it must survive as primary email in EGroupware
+			$primary = strtolower($userData['mailLocalAddress'] ?? '');
+			$external_primary = strpos($primary, '@') !== false && !$this->domainId(explode('@', $primary)[1]);
 			// check if EGroupware's primary email is just an alias for Stalwart --> preserve it
-			if (($key = array_search(strtolower($userData['mailLocalAddress'] ?? ''), $aliases)) !== false)
+			if ($external_primary)
 			{
-				$email = strtolower($userData['mailLocalAddress']);
+				$email = $primary;
+				$aliases = array_values(array_diff($aliases, [$primary]));
+			}
+			elseif (($key = array_search($primary, $aliases)) !== false)
+			{
+				$email = $primary;
 				$aliases[] = $account['emailAddress'];
 				unset($aliases[$key]);
 			}
@@ -291,8 +318,20 @@ class Stalwart extends Sql
 			[$name, $domain] = explode('@', strtolower($alias));
 			if (!($domainId = $this->domainId($domain)))
 			{
-				// ToDo: create domain
-				throw new \Exception("Domain '$domain' not found --> create it!");
+				// the primary email of an external account can be on a domain not hosted by Stalwart: it is neither created
+				// nor sent to Stalwart, but stays in EGroupware (parent::setUserData() stores it in SQL)
+				if (strtolower($alias) === strtolower($_mailLocalAddress))
+				{
+					continue;
+				}
+				// an alias must be on an existing domain or alias-domain (created via mserver or the migration), domains are never created here
+				$msg = lang('Domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!', $domain, $alias);
+				if (!self::$skipTakenAliases)
+				{
+					throw new \Exception($msg, 422);    // 422 Unprocessable Content for the REST API
+				}
+				self::$warnings[] = $msg.' '.lang('Skipped.');
+				continue;
 			}
 			$aliases[] = [
 				'enable' => true,    // Stalwart 0.16 used 'enabled', 1.0 rejects it with invalidPatch
@@ -315,10 +354,11 @@ class Stalwart extends Sql
 			'quotas' => ['maxDiskQuota' => $_quota ? $_quota << 20 : null],
 			'locale' => $locale,
 			'timeZone' => $prefs['common']['tz'] ?? 'UTC',
-			'credentials' => (object)["0" => [  // otherwise PHP's json_encode encodes it as JSON array
+			// Stalwart rejects an empty secret (account without password): do not send credentials then
+			'credentials' => ($pwd = $this->accounts->id2name($_uidnumber, 'account_pwd')) ? (object)["0" => [  // otherwise PHP's json_encode encodes it as JSON array
 				'@type' => 'Password',
-				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
-			]],
+				'secret' => $pwd,
+			]] : null,
 			'memberGroupIds' => JmapHttp::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
 		], fn($val) => isset($val));    // keep empty array
 		// update account in Stalwart
@@ -343,8 +383,14 @@ class Stalwart extends Sql
 			}
 			if ($diff)
 			{
+				$tries = 0;
 				while(true)
 				{
+					// never retry forever: each retry changes $diff, so more than a few can only be an endless loop
+					if (++$tries > self::MAX_RETRIES)
+					{
+						throw new \Exception("Mail account NOT updated after $tries tries: ".json_encode($response ?? null, JSON_UNESCAPED_SLASHES));
+					}
 					$response = $this->jmapClient()->jmapCall([
 						['x:Account/set', [
 							'update' => (object)[    // Stalwart ids can be "0", which would be encoded as JSON array
@@ -367,7 +413,9 @@ class Stalwart extends Sql
 					if ($this->checkErrorEmailTaken($response['methodResponses'][0][1]['notUpdated'][$accountId] ?? null,
 						$aliases_for_retry, $account['name'].'@'.$this->domain($account['domainId'])))
 					{
-						if ($aliases_for_retry != (object)[])
+						// also use an empty map, if there was an alias patch: all its aliases were skipped (otherwise we would retry
+						// the same patch forever)
+						if ($aliases_for_retry != (object)[] || isset($diff['aliases']))
 						{
 							$diff['aliases'] = $aliases_for_retry;
 						}
@@ -378,7 +426,15 @@ class Stalwart extends Sql
 						in_array('locale', $response['methodResponses'][0][1]['notUpdated'][$accountId]['properties']))
 					{
 						// use to currently set one in Stalwart or "en_US" if nothing is set
-						$diff['locale'] = $userData['stalwart']['locale'] ?? 'en_US';
+						$fallback = $userData['stalwart']['locale'] ?? 'en_US';
+						if (($diff['locale'] ?? null) === $fallback)
+						{
+							unset($diff['locale']);    // fallback is rejected too --> do not change the locale at all
+						}
+						else
+						{
+							$diff['locale'] = $fallback;
+						}
 						continue;
 					}
 					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
@@ -408,8 +464,13 @@ class Stalwart extends Sql
 			if (!isset($account['quotas']['maxDiskQuota'])) unset($account['quotas']);
 			if (isset($account['aliases'])) $account['aliases'] = (object)$account['aliases'];
 
+			$tries = 0;
 			while(true)
 			{
+				if (++$tries > self::MAX_RETRIES)
+				{
+					throw new \Exception("Mail account NOT created after $tries tries: ".json_encode($response ?? null, JSON_UNESCAPED_SLASHES));
+				}
 				$response = $this->jmapClient()->jmapCall([
 					['x:Account/set', [
 						'create' => [
@@ -998,14 +1059,32 @@ class Stalwart extends Sql
 
 				// alias address hold by another account --> remove alias and add both to new mailing-list
 				case 'Account':
-					// alias is primary email of another account --> nothing we want to do to allow that currently
+					// alias is the email address of another account: an account and a mailing-list or alias can NOT share an address
+					// --> skip the alias in favor of the account (does NOT fail, eg. a migration), the alias stays in EGroupware
 					if ($key !== false)
 					{
-						throw new \Exception("Account '$object[name]' already exists!");
+						$msg = lang('Email address %1 is already the email address of account %2, it can NOT be used as alias or for a mailing-list!',
+							$object['emailAddress'], $object['name']);
+						if (!self::$skipTakenAliases)
+						{
+							throw new \Exception($msg, 409);    // 409 Conflict for the REST API
+						}
+						self::$warnings[] = $msg.' '.lang('Skipped.');
+						if (is_object($aliases))
+						{
+							unset($aliases->$key);
+						}
+						else
+						{
+							unset($aliases[$key]);
+						}
+						return true;    // --> try again without that alias
 					}
 					// alias is shared with another account --> create new mailing-list and add both
-					foreach(array_intersect($aliases, $this->aliases2emails($object['aliases'])) as $key => $alias_email)
+					$changed = false;
+					foreach(array_intersect($emails, $this->aliases2emails($object['aliases'])) as $key => $alias_email)
 					{
+						$changed = true;
 						$alias_key = $this->aliasKey($object['aliases'], [
 							'name' => explode('@', $alias_email)[0],
 							'domainId' => $this->domainId(explode('@', $alias_email)[1]),
@@ -1018,7 +1097,7 @@ class Stalwart extends Sql
 								'update' => (object)[$object['id'] => ['aliases' => (object)$remaining]],
 							], 'a']
 						], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
-						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['update']))
+						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 						{
 							throw new \Exception("Could not update account $object[email] to remove alias '$alias_email'!");
 						}
@@ -1033,7 +1112,7 @@ class Stalwart extends Sql
 						// then create new mailing list
 						$this->mailingList($alias_email, [$email, $object['emailAddress']]);
 					}
-					return true;
+					return $changed;    // nothing changed --> retrying would give the same error again
 			}
 		}
 		return false;
@@ -1216,7 +1295,7 @@ class Stalwart extends Sql
 	{
 		$response = $this->jmapClient()->jmapCall([
 			["x:$what/get", [
-				'id' => $id,
+				'ids' => [$id],    // "id" is NOT a valid argument and gets ignored, returning ALL objects
 			], 'a']
 		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 

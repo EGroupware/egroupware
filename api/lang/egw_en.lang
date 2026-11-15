@@ -456,6 +456,7 @@ documentation	common	en	Documentation
 documents	common	en	Documents
 doesn't matter	common	en	Doesn't matter
 domain	common	en	Domain
+domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!	common	en	Domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!
 domain name for mail-address, eg. "%1"	common	en	Domain name for mail address, eg. "%1"
 domestic	common	en	Domestic
 dominica	common	en	DOMINICA
@@ -501,6 +502,7 @@ egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 element role title	common	en	Element role title
 email	common	en	Email
+email address %1 is already the email address of account %2, it can not be used as alias or for a mailing-list!	common	en	Email address %1 is already the email address of account %2, it can NOT be used as alias or for a mailing-list!
 email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
 emails	common	en	Emails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
@@ -1378,6 +1380,7 @@ singapore	common	en	SINGAPORE
 site configuration	common	en	App configuration
 size	common	en	Size
 skip	common	en	Skip
+skipped.	common	en	Skipped.
 slovakia	common	en	SLOVAKIA
 slovenia	common	en	SLOVENIA
 solomon islands	common	en	SOLOMON ISLANDS

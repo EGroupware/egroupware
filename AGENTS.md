@@ -111,6 +111,14 @@ Before finalizing:
 - If tests cannot be run, state why.
 - Mention any untested risk areas.
 
+## REST API documentation
+
+The REST API (`groupdav.php`, handlers like `<app>/src/ApiHandler.php`) is documented in two places, which must **always be kept in
+sync with the code**, in the same commit as the change of parameters, attributes, status codes, or error and warning responses:
+
+- `doc/REST-CalDAV-CardDAV/<App>.md` - human readable description with `curl` examples
+- `doc/openapi/<app>.json` - OpenAPI description, check that it stays valid JSON (`python3 -m json.tool`)
+
 ## Reviews
 
 For code review behaviour, follow `doc/ai/review-checklist.md`.

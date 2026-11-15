@@ -1606,7 +1606,8 @@ class ApiHandler extends Api\CalDAV\Handler
 					return $trace;
 				}, $e->getTrace())
 			]), self::JSON_RESPONSE_OPTIONS);
-		return $httpCode.' '.$e->getMessage();
+		// the status line must be a single line (Stalwart errors are multi-line JSON, which turned into HTTP 200)
+		return $httpCode.' '.mb_substr(preg_replace('/\s+/', ' ', $e->getMessage()), 0, 200);
 	}
 
 	/**
@@ -1657,8 +1658,18 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				$user = null;
 			}
+			// ?skipTakenAliases=1 (eg. migration to Stalwart): skip aliases, which are the email address of an other account,
+			// and return them as warnings, instead of an error (409 Conflict)
+			Api\Mail\Smtp\Stalwart::$skipTakenAliases = !empty($_GET['skipTakenAliases']) && $_GET['skipTakenAliases'] !== '0';
+			Api\Mail\Smtp\Stalwart::$warnings = [];
 			Api\Mail\Account::write($data, $user);
 
+			if (Api\Mail\Smtp\Stalwart::$warnings)
+			{
+				header('Content-Type: application/json');
+				echo json_encode(['warnings' => Api\Mail\Smtp\Stalwart::$warnings], self::JSON_RESPONSE_OPTIONS);
+				return '200 OK';
+			}
 			return '204 No Content';
 		}
 		catch (\Throwable $e) {

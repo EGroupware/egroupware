@@ -342,6 +342,51 @@ x-webdav-status: 204 No Content
 ```
 </details>
 
+On a Stalwart mail server an email address can only be used once: an alias (or the address of a mailing-list) can **not**
+be the email address of an other account. By default such a `PATCH` fails with `409 Conflict`.
+An alias must also be on an existing domain or alias-domain of the mail server (created via the management server or the
+migration), domains are never created by this call, otherwise it fails with `422 Unprocessable Content`.
+(The primary email address of an external account can be on any domain, it is only kept in EGroupware.)
+
+<details>
+  <summary>Example: alias is already the email address of an other account</summary>
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/123 --user <user> -H 'Content-Type: application/json' -X PATCH \
+  -d '{"mailAlternateAddress": ["something@example.org"]}'
+
+HTTP/2 409
+content-type: application/json
+
+{
+    "error": 409,
+    "message": "Email address something@example.org is already the email address of account something, it can NOT be used as alias or for a mailing-list!"
+}
+```
+</details>
+
+With the query parameter `skipTakenAliases=1` such aliases (and aliases on unknown domains) are skipped (the account itself is still updated) and returned
+as `warnings` with a `200 OK` status instead (a `204 No Content` is returned, if nothing was skipped). This is used e.g. by the migration to Stalwart,
+which must not fail because of it:
+
+<details>
+  <summary>Example: skipping aliases, which are the email address of an other account</summary>
+
+```
+curl -i 'https://example.org/egroupware/groupdav.php/mail/123?skipTakenAliases=1' --user <user> -H 'Content-Type: application/json' -X PATCH \
+  -d '{"mailAlternateAddress": ["something@example.org"]}'
+
+HTTP/2 200
+content-type: application/json
+
+{
+    "warnings": [
+        "Email address something@example.org is already the email address of account something, it can NOT be used as alias or for a mailing-list! Skipped."
+    ]
+}
+```
+</details>
+
 
 ## Folders and Emails (JMAP-lite)
 
