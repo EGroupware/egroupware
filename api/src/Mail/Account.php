@@ -656,10 +656,10 @@ class Account implements \ArrayAccess
 	 * @param boolean $need_quota =true false: qutoa not needed, do NOT query IMAP server
 	 * @return array with values for keys in self::$user_data
 	 */
-	public function getUserData($need_quota=true)
+	public function getUserData($need_quota=true, bool $no_cache=false)
 	{
 		if ($this->acc_smtp_type != __NAMESPACE__.'\\Smtp' && $this->smtpServer() &&
-			($smtp_data = $this->smtpServer->getUserData($this->user)))
+			($smtp_data = $this->smtpServer->getUserData($this->user, false, $no_cache)))
 		{
 			$this->params += $smtp_data;
 		}

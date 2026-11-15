@@ -1648,7 +1648,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			return '403 Not Authorized';
 		}
 		try {
-			$account->getUserData();
+			$account->getUserData(true, true);    // no cache: the primary email and aliases must be the current ones
 			$data = self::parseJsMailAccount(json_decode($options['content'], true, 2, JSON_THROW_ON_ERROR));
 			$data = Api\CalDAV\JsBase::patch($data, $account->params);
 

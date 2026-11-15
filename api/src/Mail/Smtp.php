@@ -168,7 +168,7 @@ class Smtp
 	 * @return array with values for keys 'mailLocalAddress', 'mailAlternateAddress' (array), 'mailForwardingAddress' (array),
 	 * 	'accountStatus' ("active"), 'quotaLimit' and 'deliveryMode' ("forwardOnly")
 	 */
-	function getUserData($user, $match_uid_at_domain=false)
+	function getUserData($user, $match_uid_at_domain=false, bool $no_cache=false)
 	{
 		unset($user, $match_uid_at_domain);	// not used, but required by function signature
 
