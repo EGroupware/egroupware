@@ -209,10 +209,21 @@
         "tags": ["Mail"],
         "operationId": "patchMailAccount",
         "summary": "Patch mail account configuration",
-        "description": "Updates specific fields of a mail account. Requires appropriate permissions (admin or editable account). Only provided fields are modified.",
+        "description": "Updates specific fields of a mail account. Requires appropriate permissions (admin or editable account). Only provided fields are modified.\n\nOn a Stalwart mail server an email address (alias, or address of a mailing-list) can NOT be used, if it is already the email address of an other account. By default this is an error (409), with `skipTakenAliases=1` such aliases are skipped and returned as warnings. An alias must be on an existing domain or alias-domain of the mail server, otherwise the request fails with 422 (or the alias is skipped with a warning, if `skipTakenAliases=1`).",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "skipTakenAliases",
+            "in": "query",
+            "required": false,
+            "description": "`1`: skip aliases, which are already the email address of an other account (Stalwart) or are on an unknown domain, and return them as `warnings` (HTTP 200), instead of failing with 409 Conflict or 422. Used e.g. by the migration to Stalwart.",
+            "schema": {
+              "type": "integer",
+              "enum": [0, 1],
+              "default": 0
+            }
           },
           {
             "name": "Content-Type",
@@ -235,6 +246,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "Mail account updated, but some aliases were skipped (only with `skipTakenAliases=1`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccountPatchWarnings"
+                }
+              }
+            }
+          },
           "204": {
             "description": "Mail account updated successfully (No Content)"
           },
@@ -246,6 +267,26 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "description": "Conflict: an alias or mailing-list address is already the email address of an other account (Stalwart)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "An alias is on a domain, which is neither a domain nor an alias-domain of the mail server (Stalwart)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1357,6 +1398,18 @@
           "location": {
             "type": "string",
             "description": "Path to the uploaded attachment (e.g., '/mail/attachments/<token>')"
+          }
+        }
+      },
+      "MailAccountPatchWarnings": {
+        "type": "object",
+        "properties": {
+          "warnings": {
+            "type": "array",
+            "description": "Translated warnings, e.g. an alias was skipped, as it is already the email address of an other account",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

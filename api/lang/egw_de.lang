@@ -458,6 +458,7 @@ documentation	common	de	Dokumentation
 documents	common	de	Dokumente
 doesn't matter	common	de	Spielt keine Rolle
 domain	common	de	Domain
+domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!	common	de	Die Domain %1 des Alias %2 ist weder eine Domain noch eine Alias-Domain des Mailservers, sie muss zuerst angelegt werden!
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
 domestic	common	de	Inland
 dominica	common	de	DOMINICA
@@ -503,6 +504,7 @@ egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
 element role title	common	de	Element Rolle Titel
 email	common	de	E-Mail
+email address %1 is already the email address of account %2, it can not be used as alias or for a mailing-list!	common	de	Die E-Mail-Adresse %1 ist bereits die E-Mail-Adresse des Accounts %2, sie kann NICHT als Alias oder für eine Mailingliste verwendet werden!
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
 emails	common	de	E-Mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	Eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
@@ -1381,6 +1383,7 @@ singapore	common	de	SINGAPUR
 site configuration	common	de	App-Konfiguration
 size	common	de	Größe
 skip	common	de	Auslassen
+skipped.	common	de	Übersprungen.
 slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
