@@ -11,6 +11,8 @@ const egwStub = {
 	{
 		openedLink = link;
 	},
+	// compiled legacy javascript logs through egw.debug as it runs
+	debug: () => {},
 	// a widget with statustext binds a tooltip as soon as it connects
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
@@ -707,6 +709,36 @@ describe("Et2Customfields webcomponents", () =>
 			"et2-textarea",
 			"editable multi-row text should use textarea"
 		);
+	});
+
+	/**
+	 * Contract: a button customfield runs the javascript from its `label=onclick` value when
+	 * pressed, with the button available to it as `widget`.
+	 * Setup: render an editable button customfield whose javascript marks the button.
+	 * Pass: the button holds a function as its click handler and a click runs it.  Left holding
+	 * the javascript as text, the button ignores it and submits the form instead.
+	 */
+	it("runs a button customfield's javascript on click", async() =>
+	{
+		await import("../../Et2Button/Et2Button");
+
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_button: {label: "Add", type: "button", values: {"Add child": "widget.setAttribute('data-clicked', '1'); return false;"}}
+		};
+		element.fields = {cf_button: true};
+		element.value = {};
+		await element.updateComplete;
+
+		const button = element.querySelector("[data-field='cf_button'] > et2-button") as any;
+		await button?.updateComplete;
+
+		assert.equal(button?.label, "Add child", "the button should take the label of its value");
+		assert.isFunction(button?.onclick, "the javascript should be compiled into a click handler");
+		button.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
+		assert.equal(button.dataset.clicked, "1", "clicking the button should run its javascript");
 	});
 
 	/**
