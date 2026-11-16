@@ -324,7 +324,11 @@ class Account implements \ArrayAccess
 				// check if we should use admin-credentials, if no session password exists, eg. SSO without password
 				if (!empty($params['acc_admin_use_without_pw']) && empty($params['acc_imap_password']))
 				{
-					$params['acc_imap_username'] .= '*'.$params['acc_imap_admin_username'];
+					// master-user separator: Dovecot uses "*", JMAP/Stalwart impersonation "%" (Imap\Jmap::MASTER_SEPARATOR)
+					$class = $params['acc_imap_type'] ?? null;
+					$separator = $class && class_exists($class) && defined($class.'::MASTER_SEPARATOR') ?
+						constant($class.'::MASTER_SEPARATOR') : '*';
+					$params['acc_imap_username'] .= $separator.$params['acc_imap_admin_username'];
 					$params['acc_imap_password'] = $params['acc_imap_admin_password'];
 				}
 			}
