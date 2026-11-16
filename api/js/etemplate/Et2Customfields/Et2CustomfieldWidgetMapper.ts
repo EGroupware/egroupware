@@ -376,6 +376,12 @@ export function applyCustomfieldWidgetMapping(element : Element | undefined, map
 		{
 			continue;
 		}
+		// transformAttributes() compiles an event handler given as javascript into a function and
+		// sets that; the javascript itself must not go back over it, a widget only calls a function
+		if(typeof value === "string" && name.startsWith("on") && typeof (element as any)[name] === "function")
+		{
+			continue;
+		}
 		(element as any)[name] = value;
 		if(typeof value === "boolean")
 		{
