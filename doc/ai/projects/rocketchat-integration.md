@@ -186,11 +186,24 @@ text.
     (e.g. "Ralf set the ticket to pending"), not the raw command. The raw `!command` message
     can be removed by the bot (needs `delete-message`) or marked with a reaction; errors
     (no permission, unknown user/status) are answered in the thread.
+  * `!restricted <text>` (alias `!r`) -> restricted comment (`reply_visible`), named like the
+    "Restricted comment" of the web UI. Everything after the command, including further lines,
+    is the comment. It is fanned out only to those allowed to see it. Because a mistake here
+    shows the text to the requester:
+    * A message starting with `!` **never** becomes a comment. An unknown or mistyped command
+      (`!restrcted ...`) is answered with an error in the thread, it does not fall through to
+      a plain reply.
+    * No sticky mode (`!restricted on`): the restriction is per message, never hidden state of
+      the thread.
+    * The restriction is decided when the message is imported, never afterwards (e.g. by a
+      reaction): the comment could be imported and fanned out before the mark arrives.
+    * If the queue does not allow restricted comments or the user may not write them, the
+      command fails with an error, it is not downgraded to a normal comment.
   * Skip the bot's own messages and messages already imported (store message ids).
 
 ### 7. Commands
 
-Parser + registry (`!status <name>`, `!assign [+]user...`, later `!priority`, `!close`, ...),
+Parser + registry (`!status <name>`, `!assign [+]user...`, `!restricted <text>`, later `!priority`, `!close`, ...),
 each command: resolve actor (username -> `account_lid`), check the actor's tracker rights via
 `tracker_bo` (never bypass ACL), apply through `tracker_bo->save()`, so history and
 notifications behave as usual. `+nathan` resolves against EGroupware accounts allowed as
@@ -206,12 +219,12 @@ tracker via Rocket.Chat: reviewers, please add the commands that matter to you.
 | `!status <name>` | set status, e.g. `!status pending` | proposed |
 | `!assign <user>...` | replace assignees (`!assign nathan`) | proposed |
 | `!assign +<user>...` | add to assignees (`!assign +nathan`) | proposed |
+| `!restricted <text>`, `!r <text>` | add a restricted comment, only visible for admins, technicians and assigned users (`!r customer called again`) | proposed |
 | `!help` | list available commands | proposed |
 | | | *add yours here: command, effect, example* |
 
 Ideas, not yet decided: `!priority`, `!close`, `!reopen`, `!resolution`, `!queue <name>` (move),
-`!due <date>`, `!cc +user`, `!time <duration>` (timesheet entry), `!private <text>`
-(restricted comment).
+`!due <date>`, `!cc +user`, `!time <duration>` (timesheet entry).
 
 ### 9. Chatting with the bot
 
@@ -239,7 +252,8 @@ The bot is for notifications. If a user writes to it in their room, it must not 
 2. **Bot config, tables, queue + async sender incl. wake.**
 3. **Notification backend** (bot chat, optional per-app rooms).
 4. **Tracker threads**: per-user queue rooms, root message + fan-out.
-5. **Inbound**: polling, replies -> comments, command registry (`!status`, `!assign`).
+5. **Inbound**: polling, replies -> comments, command registry (`!status`, `!assign`,
+   `!restricted`).
 6. *Optional*: Apps-Engine app for real `/` commands on installs that can run private apps,
    as another source of the same "command + actor + thread" call. Per-queue overview room.
 
