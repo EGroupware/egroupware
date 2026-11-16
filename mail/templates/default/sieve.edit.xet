@@ -2,164 +2,153 @@
 <?xml-model href="../../../doc/etemplate2/etemplate2.0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-	<et2-template  id="mail.sieve.condition" template="" lang="" group="0" version="16.1">
-		<grid width="99%">
-			<columns>
-				<column width="40%"/>
-				<column width="60%"/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Match:"></et2-description>
-					<et2-select  id="anyof"></et2-select>
-				</row>
-				<row>
-					<et2-description  value="If from contains:(*)"></et2-description>
-					<et2-textbox  id="from"></et2-textbox>
-				</row>
-				<row>
-					<et2-description  value="If to contains:(*)"></et2-description>
-					<et2-textbox  id="to"></et2-textbox>
-				</row>
-				<row>
-					<et2-description  value="If subject contains:(*)"></et2-description>
-					<et2-textbox  id="subject"></et2-textbox>
-				</row>
-				<row>
-					<et2-description  value="If message size"></et2-description>
-					<et2-hbox>
-						<et2-select  id="gthan"></et2-select>
-						<et2-textbox  id="size"></et2-textbox>
-						<et2-description  value="kilobytes"></et2-description>
-					</et2-hbox>
-				</row>
-				<row>
-					<et2-description  value="If mail header"></et2-description>
-					<et2-hbox>
-						<et2-textbox  id="field" validator="/^[A-Z0-9-]*$/i" statustext="Name of header, only letters, numbers and dash (-) allowed"></et2-textbox>
-						<et2-select  id="comparator"></et2-select>
-						<et2-textbox  id="field_val"></et2-textbox>
-					</et2-hbox>
-				</row>
-				<row>
-					<et2-description  value="If mail body message type"></et2-description>
-					<et2-hbox>
-						<et2-select  id="bodytransform"></et2-select>
-						<et2-description  value="Contains(*)"></et2-description>
-						<et2-textbox  id="field_bodytransform"></et2-textbox>
-					</et2-hbox>
-				</row>
-				<row>
-					<et2-description  value="If mail body content / attachment type"></et2-description>
-					<et2-hbox>
-						<et2-select  id="ctype"></et2-select>
-						<et2-description  value="/"></et2-description>
-						<et2-textbox  id="field_ctype_val" placeholder="for eg.: mpeg"></et2-textbox>
-					</et2-hbox>
-				</row>
-				<row>
-					<et2-description  value="sieve_edit_instructions"></et2-description>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="mail.sieve.condition" template="" lang="" group="0" version="16.1" layout="2-column" style="--label-width:17em; --column-min-width:100%">
+		<et2-select  label="Match:" id="anyof"></et2-select>
+		<et2-textbox  label="If from contains:(*)" id="from"></et2-textbox>
+		<et2-textbox  label="If to contains:(*)" id="to"></et2-textbox>
+		<et2-textbox  label="If subject contains:(*)" id="subject"></et2-textbox>
+		<et2-hbox  class="sieveCondition" style="min-width:0">
+			<et2-select  label="If message size" class="et2-label-fixed" id="gthan"></et2-select>
+			<et2-textbox  id="size"></et2-textbox>
+			<et2-description  value="kilobytes"></et2-description>
+		</et2-hbox>
+		<et2-hbox  class="sieveCondition" style="min-width:0">
+			<et2-textbox  label="If mail header" class="et2-label-fixed" id="field" validator="/^[A-Z0-9-]*$/i" statustext="Name of header, only letters, numbers and dash (-) allowed"></et2-textbox>
+			<et2-select  id="comparator"></et2-select>
+			<et2-textbox  id="field_val"></et2-textbox>
+		</et2-hbox>
+		<et2-hbox  class="sieveCondition" style="min-width:0">
+			<et2-select  label="If mail body message type" class="et2-label-fixed" id="bodytransform"></et2-select>
+			<et2-description  value="Contains(*)"></et2-description>
+			<et2-textbox  id="field_bodytransform"></et2-textbox>
+		</et2-hbox>
+		<et2-hbox  class="sieveCondition" style="min-width:0">
+			<et2-select  label="If mail body content / attachment type" class="et2-label-fixed" id="ctype"></et2-select>
+			<et2-description  value="/"></et2-description>
+			<et2-textbox  id="field_ctype_val" placeholder="for eg.: mpeg"></et2-textbox>
+		</et2-hbox>
+		<et2-hbox  span="all">
+			<et2-description  value="sieve_edit_instructions"></et2-description>
+		</et2-hbox>
+		<et2-styles>
+			/* The labelled widget of a row starts with the label column, then all the row's inputs share what is left equally */
+			.sieveCondition > .et2-label-fixed {
+				flex: 1 1 calc(var(--label-width, 17em) + var(--sl-spacing-medium));
+				min-width: 0;
+			}
+			.sieveCondition > .et2-label-fixed::part(form-control-label) {
+				flex-shrink: 0;
+			}
+			.sieveCondition > :not(.et2-label-fixed) {
+				flex: 1 1 0;
+				min-width: 0;
+			}
+			.sieveCondition > et2-description {
+				flex: none;
+			}
+			/* Where labels move above their inputs, the labelled widget takes a line and the others follow on the next */
+			@container (max-width: 36em) {
+				.sieveCondition::part(base) {
+					flex-wrap: wrap;
+				}
+				.sieveCondition > .et2-label-fixed {
+					flex-basis: 100%;
+				}
+			}
+		</et2-styles>
 	</et2-template>
-	<et2-template  id="mail.sieve.action" template="" lang="" group="0" version="16.1">
-		<grid width="100%">
-			<columns>
-				<column width="40%"/>
-				<column width="60%"/>
-			</columns>
-			<rows>
-				<row>
-					<radio label="File into:" id="action" set_value="folder" />
-					<et2-hbox>
-						<et2-select  id="action_folder_text" allowFreeEntries="false" onfocus="app.mail.sieveFocusRadioBtn" searchUrl="mail.mail_sieve.ajax_getFolders" searchOptions=""></et2-select>
-					</et2-hbox>
-				</row>
-				<row disabled="@no_forward">
-					<radio label="Forward to address (*):" id="action" set_value="address" />
-					<et2-hbox>
-						<et2-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieveFocusRadioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" searchOptions="{&quot;includeLists&quot;: false}"></et2-email>
-					</et2-hbox>
-				</row>
-				<row>
-					<radio label="Send a reject message:" id="action" set_value="reject" /><et2-ai><et2-textarea  id="action_reject_text" onfocus="app.mail.sieveFocusRadioBtn"></et2-textarea></et2-ai>
-				</row>
-				<row>
-					<radio label="Discard message" id="action" set_value="discard" />
-					<et2-description></et2-description>
-				</row>
-				<row>
-					<radio label="No other action" id="action" set_value="none" />
-					<et2-description></et2-description>
-				</row>
-				<row>
-					<et2-description  value="Additionally mark message as:"></et2-description>
-					<et2-select  id="action_flags_list" multiple="true" emptyLabel="do nothing" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_search">
-						<option value="\\Flagged">Flagged</option>
-						<option value="\\Deleted">Deleted</option>
-						<option value="\\Seen">Read</option>
-						<option value="\\Answered">Answered</option>
-						<option value="\\Draft">Draft</option>
-					</et2-select>
-				</row>
-				<row>
-					<et2-description  value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info."></et2-description>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="mail.sieve.action" template="" lang="" group="0" version="16.1" layout="2-column" style="--label-width:17em; --column-min-width:100%">
+		<et2-hbox  class="sieveAction" style="min-width:0">
+			<radio label="File into:" id="action" set_value="folder" />
+			<et2-select  id="action_folder_text" allowFreeEntries="false" onfocus="app.mail.sieveFocusRadioBtn" searchUrl="mail.mail_sieve.ajax_getFolders" searchOptions=""></et2-select>
+		</et2-hbox>
+		<et2-hbox  class="sieveAction" style="min-width:0" hidden="@no_forward" disabled="@no_forward">
+			<radio label="Forward to address (*):" id="action" set_value="address" />
+			<et2-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieveFocusRadioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_email" searchOptions="{&quot;includeLists&quot;: false}"></et2-email>
+		</et2-hbox>
+		<et2-hbox  class="sieveAction" style="min-width:0">
+			<radio label="Send a reject message:" id="action" set_value="reject" />
+			<et2-ai><et2-textarea  id="action_reject_text" onfocus="app.mail.sieveFocusRadioBtn"></et2-textarea></et2-ai>
+		</et2-hbox>
+		<et2-hbox  class="sieveAction">
+			<radio label="Discard message" id="action" set_value="discard" />
+		</et2-hbox>
+		<et2-hbox  class="sieveAction">
+			<radio label="No other action" id="action" set_value="none" />
+		</et2-hbox>
+		<et2-select  label="Additionally mark message as:" id="action_flags_list" multiple="true" emptyLabel="do nothing" searchUrl="EGroupware\Api\Etemplate\Widget\Select::ajax_search">
+			<option value="\\Flagged">Flagged</option>
+			<option value="\\Deleted">Deleted</option>
+			<option value="\\Seen">Read</option>
+			<option value="\\Answered">Answered</option>
+			<option value="\\Draft">Draft</option>
+		</et2-select>
+		<et2-hbox  span="all">
+			<et2-description  value="(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail Servers the limit is 4 by default, please contact your mail server administrator for further info."></et2-description>
+		</et2-hbox>
+		<et2-styles>
+			/* A radio and its label take the label column, so the field beside it starts where the other inputs do */
+			.sieveAction::part(base) {
+				gap: var(--sl-spacing-medium);
+			}
+			.sieveAction > label.et2_label {
+				flex: 0 0 var(--label-width, 17em);
+				display: flex;
+				align-items: center;
+				gap: var(--sl-spacing-x-small);
+			}
+			.sieveAction > label.et2_label > input.et2_radiobox {
+				flex: none;
+				margin: 0;
+			}
+			.sieveAction > :not(label) {
+				flex: 1 1 0;
+				min-width: 0;
+			}
+			/* Where the other labels move above their inputs, the radio does too */
+			@container (max-width: 36em) {
+				.sieveAction::part(base) {
+					flex-wrap: wrap;
+				}
+				.sieveAction > label.et2_label {
+					flex-basis: 100%;
+				}
+				.sieveAction > :not(label) {
+					flex-basis: 100%;
+				}
+			}
+		</et2-styles>
 	</et2-template>
-	<et2-template  id="mail.sieve.edit" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" height="100%">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="dialogHeader sieve-title">
-					<et2-hbox>
-						<et2-label  value="Mail filter rule" ></et2-label>
-						<et2-description  id="ruleID" class="ruleID"></et2-description>
-						<et2-textbox  id="description" class="ruleDescription" placeholder="Description (optional)" maxlength="200"></et2-textbox>
-						<et2-image  src="filter.png" align="right"></et2-image>
-					</et2-hbox>
-				</row>
-				<row>
-					<et2-tabbox  id="tabs" class="et2_nowrap" width="100%" span="all" tabHeight="430">
-						<tabs>
-							<tab id="condition" label="Condition"/>
-							<tab id="action" label="Action"/>
-						</tabs>
-						<tabpanels>
-							<et2-template  id="mail.sieve.condition"></et2-template>
-							<et2-template  id="mail.sieve.action"></et2-template>
-						</tabpanels>
-					</et2-tabbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-select  label="If this rule matches" id="after" statustext="Default: the following rules are skipped for messages this rule matches. Next rules also: they are checked too. Stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.">
-						<option value="end">Next rules only if this one does not match</option>
-						<option value="continue">Next rules also, even if this one matches</option>
-						<option value="stop">Stop: no further rules, no vacation reply or notification</option>
-					</et2-select>
-				</row>
-				<row>
-					<et2-checkbox  label="Keep a copy of the message in your inbox" id="keep"></et2-checkbox>
-				</row>
-				<row>
-					<et2-checkbox  label="Use regular expressions (see wikipedia for information on POSIX regular expressions)" id="regexp"></et2-checkbox>
-				</row>
-				<row>
-					<et2-checkbox  label="Use tokenised search syntax (+word required, -word forbidden, &quot;...&quot; literal phrase; same as the EGroupware search box)" id="tokenized"></et2-checkbox>
-				</row>
-				<row class="dialogFooterToolbar">
-					<et2-hbox  width="100%">
-						<et2-button  statustext="Saves this rule" label="Save" id="button[save]"></et2-button>
-						<et2-button  statustext="Applies the changes made" label="Apply" id="button[apply]"></et2-button>
-                        <et2-button  label="Cancel" id="button[cancel]" onclick="window.close()"></et2-button>
-						<et2-button  label="Delete" id="button[delete]" align="right"></et2-button>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+	<et2-template  id="mail.sieve.edit" template="" lang="" group="0" version="1.9.001" layout="edit" style="--label-width:17em; --column-min-width:14em">
+		<et2-hbox  class="dialogHeader sieve-title">
+			<et2-label  value="Mail filter rule" ></et2-label>
+			<et2-description  id="ruleID" class="ruleID"></et2-description>
+			<et2-textbox  id="description" class="ruleDescription" style="flex:1; min-width:0" placeholder="Description (optional)" maxlength="200"></et2-textbox>
+			<et2-image  src="filter.png" align="right"></et2-image>
+		</et2-hbox>
+		<et2-tabbox  id="tabs" class="et2_nowrap" tabHeight="auto">
+			<tabs>
+				<tab id="condition" label="Condition"/>
+				<tab id="action" label="Action"/>
+			</tabs>
+			<tabpanels>
+				<et2-template  id="mail.sieve.condition"></et2-template>
+				<et2-template  id="mail.sieve.action"></et2-template>
+			</tabpanels>
+		</et2-tabbox>
+		<et2-select  label="If this rule matches" id="after" span="all" statustext="Default: the following rules are skipped for messages this rule matches. Next rules also: they are checked too. Stop: ends all processing, including rules following a rule set to check the next rules, the vacation reply and the notification.">
+			<option value="end">Next rules only if this one does not match</option>
+			<option value="continue">Next rules also, even if this one matches</option>
+			<option value="stop">Stop: no further rules, no vacation reply or notification</option>
+		</et2-select>
+		<et2-checkbox  label="Keep a copy of the message in your inbox" id="keep" span="all"></et2-checkbox>
+		<et2-checkbox  label="Use regular expressions (see wikipedia for information on POSIX regular expressions)" id="regexp" span="all"></et2-checkbox>
+		<et2-checkbox  label="Use tokenised search syntax (+word required, -word forbidden, &quot;...&quot; literal phrase; same as the EGroupware search box)" id="tokenized" span="all"></et2-checkbox>
+		<et2-hbox  class="dialogFooterToolbar" style="min-width:0">
+			<et2-button  statustext="Saves this rule" label="Save" id="button[save]"></et2-button>
+			<et2-button  statustext="Applies the changes made" label="Apply" id="button[apply]"></et2-button>
+			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close()"></et2-button>
+			<et2-button  label="Delete" id="button[delete]" align="right"></et2-button>
+		</et2-hbox>
 	</et2-template>
 </overlay>
