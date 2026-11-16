@@ -183,6 +183,120 @@ class CustomfieldsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 	 * These are all valid, since fields are all text.
 	 * The individual widgets to their own type validation.
 	 */
+	/**
+	 * Mocked customfield linking to an entry of any app, a "Select entry" field.
+	 */
+	const link_entry_cf = [
+		'entry' => array(
+			'id'      => '5',
+			'app'     => 'infolog',
+			'name'    => 'entry',
+			'label'   => 'entry',
+			'type'    => 'link-entry',
+			'needed'  => false,
+			'private' => [],
+		)
+	];
+
+	/**
+	 * A template with the customfield linking to an entry of any app.
+	 *
+	 * A template of its own: a template's widgets are shared between the tests of a run and keep
+	 * the customfields the first test gave them, so the other tests' template would never show
+	 * this field.
+	 */
+	protected function linkEntryTemplate() : Etemplate
+	{
+		$etemplate = new Etemplate();
+		$etemplate->read('api.customfields_link_test', 'test');
+		$etemplate->setElementAttribute('widget', 'customfields', self::link_entry_cf);
+		return $etemplate;
+	}
+
+	/**
+	 * A field linking to an entry of any app is submitted as an app and id pair, and has to be
+	 * saved as app:id.  Joined any other way, the entry can not be opened again: loading the
+	 * form rejects the value.
+	 */
+	public function testLinkEntrySavedAsAppAndId()
+	{
+		$etemplate = $this->linkEntryTemplate();
+
+		$this->validateRoundTrip($etemplate,
+			array('widget' => []),
+			array('widget' => ['#entry' => ['app' => 'addressbook', 'id' => '237']]),
+			array('widget' => ['#entry' => 'addressbook:237'])
+		);
+	}
+
+	/**
+	 * An id holding a colon of its own, eg. a project's element, is saved whole.
+	 */
+	public function testLinkEntryIdWithColonSavedWhole()
+	{
+		$etemplate = $this->linkEntryTemplate();
+
+		$this->validateRoundTrip($etemplate,
+			array('widget' => []),
+			array('widget' => ['#entry' => ['app' => 'projectmanager', 'id' => '5:7']]),
+			array('widget' => ['#entry' => 'projectmanager:5:7'])
+		);
+	}
+
+	/**
+	 * With no entry selected there is nothing to save, whichever app was picked to search in.
+	 */
+	public function testLinkEntryWithoutIdSavedEmpty()
+	{
+		$etemplate = $this->linkEntryTemplate();
+
+		$this->validateRoundTrip($etemplate,
+			array('widget' => []),
+			array('widget' => ['#entry' => ['app' => 'addressbook', 'id' => '']]),
+			array('widget' => ['#entry' => false])
+		);
+	}
+
+	/**
+	 * A stored link to an entry of any app loads into the form as its app and id, whether it
+	 * was stored as app:id or as app,id - which is how forms saved it for a long time, with
+	 * whatever else the widget submitted joined on behind.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('storedLinkEntryProvider')]
+	public function testStoredLinkEntryLoads($stored, $expected = ['app' => 'addressbook', 'id' => '237'])
+	{
+		$etemplate = $this->linkEntryTemplate();
+
+		$result = $this->mockedExec($etemplate, array('widget' => ['#entry' => $stored]));
+
+		$data = array();
+		foreach($result as $command)
+		{
+			if($command['type'] == 'et2_load')
+			{
+				$data = $command['data'];
+				break;
+			}
+		}
+		$this->assertEquals(
+			$expected,
+			$data['data']['content']['widget']['#entry'] ?? null,
+			"Stored value '$stored' did not load as its app and id"
+		);
+	}
+
+	public static function storedLinkEntryProvider()
+	{
+		return array(
+			'app:id'               => ['addressbook:237'],
+			'app,id'               => ['addressbook,237'],
+			'app,id and more'      => ['addressbook,237,'],
+			// an id can hold a separator of its own, eg. a project's element or constraint
+			'app:id with colons'   => ['projectmanager:5:7:9', ['app' => 'projectmanager', 'id' => '5:7:9']],
+			'app,id with colons'   => ['projectmanager,5:7:9', ['app' => 'projectmanager', 'id' => '5:7:9']],
+		);
+	}
+
 	public static function validProvider()
 	{
 		return array(

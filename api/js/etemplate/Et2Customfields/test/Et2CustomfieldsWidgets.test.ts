@@ -813,6 +813,15 @@ describe("Et2Customfields webcomponents", () =>
 
 		assert.equal(saved?.app, "infolog", "a value saved from a form should name its app too");
 		assert.equal(saved?.entryId, "34", "a value saved from a form should name its id too");
+
+		// an id can hold a colon of its own, eg. a project's element
+		element.value = {"#cf_entry": "projectmanager:5:7"};
+		await element.updateComplete;
+		const nested = element.querySelector("[data-field='cf_entry'] > et2-link") as any;
+		await nested?.updateComplete;
+
+		assert.equal(nested?.app, "projectmanager", "only the first part of the value is the app");
+		assert.equal(nested?.entryId, "5:7", "the rest of the value is the id, colons included");
 	});
 
 	/**

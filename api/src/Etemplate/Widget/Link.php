@@ -71,13 +71,22 @@ class Link extends Etemplate\Widget
 
 		if($value && !is_array($value) && !($this->attrs['onlyApp'] ?? $this->attrs['only_app']))
 		{
-			// Try to explode
-			if(count(explode(':', $value)) < 2)
+			// Try to explode: app:id, or app,id which is how a customfield linking to an entry
+			// of any app can be stored.  Whichever comes first ends the app, as an id can hold
+			// either itself, eg. project:element.
+			$app_length = strcspn($value, ':,');
+			if($app_length === strlen($value))
 			{
 				throw new Api\Exception\WrongParameter("Wrong value sent to $this, needs to be an array. " . array2string($value));
 			}
+			$app = substr($value, 0, $app_length);
+			$id = substr($value, $app_length + 1);
+			if($value[$app_length] === ',' && strpos($id, ':') === false)
+			{
+				// stored by a widget that submitted more than the app and id, which got joined on
+				list($id) = explode(',', $id);
+			}
 			$value =& self::get_array(self::$request->content, $form_name, true);
-			list($app, $id) = explode(':', $value, 2);
 			$value = array('app' => $app, 'id' => $id);
 		}
 		elseif (!$value)

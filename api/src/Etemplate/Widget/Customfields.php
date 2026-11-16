@@ -579,9 +579,16 @@ class Customfields extends Transformer
 				$widget->validate($form_name != self::GLOBAL_ID ? $form_name : $cname, $expand, $content, $validated);
 				$valid =& self::get_array($validated, $field_name, true);
 
+				// A field linking to an entry of any app submits the app and the id as a pair, and
+				// is stored as app:id - the form everything reading the value expects.  Without an
+				// id nothing is selected, whatever app the user had picked to search in.
+				if(is_array($valid) && $field_settings['type'] === 'link-entry' && array_key_exists('id', $valid) && !is_array($valid['id']))
+				{
+					$valid = (string)$valid['id'] === '' ? null : ($valid['app'] ?? '') . ':' . $valid['id'];
+				}
 				// Arrays are not valid, but leave filemanager alone, we'll catch it
 				// when saving.  This allows files for new entries.
-				if(is_array($valid) && $field_settings['type'] !== 'filemanager')
+				elseif(is_array($valid) && $field_settings['type'] !== 'filemanager')
 				{
 					$valid = implode(',', $valid);
 				}
