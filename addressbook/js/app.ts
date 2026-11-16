@@ -132,11 +132,12 @@ class AddressbookApp extends EgwApp
 					return false;
 				};
 				// new entry --> open name popup and focus prefix
-				if (!content.id)
+				if(!content.id && !content.showsearchbuttons)
 				{
 					focus_prefix();
 				}
-				// existing entry --> open name popup when user starts typing
+				// existing entry or extended search --> open name popup when user clicks or starts typing,
+				// an open popup covers the fields below the name
 				else
 				{
 					this.et2.getWidgetById('n_fn').addEventListener('keydown', focus_prefix);
