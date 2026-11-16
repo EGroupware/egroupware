@@ -1154,11 +1154,11 @@ class Stalwart extends Sql
 		];
 		if (!$emailAccount)
 		{
-			if (($stalwart_mailing_list = $this->getMailingListByRecipient($email)[0] ?? null) &&
-				$stalwart_mailing_list['emailAddress'] !== $email)
-			{
-				$stalwart_mailing_list = null;
-			}
+			// the list holding $email itself: also a group's list (named like the group, eg. group "SV" --> sv@),
+			// otherwise it is not found and creating it again fails with primaryKeyViolation
+			// (array_filter() keeps the keys, so the first match is not necessarily [0])
+			$stalwart_mailing_list = array_values(array_filter($this->getMailingListByRecipient($email, false, true),
+				fn($list) => $list['emailAddress'] === $email))[0] ?? null;
 		}
 		// remove $email from account currently holding it
 		else
