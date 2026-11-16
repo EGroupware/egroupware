@@ -112,7 +112,7 @@ jobs:
       EXTRA_APPS_APP_ID: ${{ secrets.extra-apps-app-id }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Under workflow_call the github context describes the *calling* repository, so a
           # cross-repo caller has to name what to test; direct triggers fall back to themselves.
@@ -122,7 +122,7 @@ jobs:
           path: sources
 
       - name: Cache Composer downloads
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
@@ -145,7 +145,7 @@ jobs:
       - name: Cache composer install
         id: composer-install-cache
         if: inputs.test-scope != 'extra-apps'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/composer-install.tar
           key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
@@ -175,7 +175,7 @@ jobs:
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
         if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.extra-apps-app-id }}
           private-key: ${{ secrets.extra-apps-private-key }}
@@ -861,7 +861,7 @@ jobs:
         shell: bash
         working-directory: sources
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Under workflow_call the github context describes the *calling* repository, so a
           # cross-repo caller has to name what to test; direct triggers fall back to themselves.
@@ -871,7 +871,7 @@ jobs:
           path: sources
 
       - name: Cache Composer downloads
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
@@ -894,7 +894,7 @@ jobs:
       - name: Cache composer install
         id: composer-install-cache
         if: inputs.test-scope != 'extra-apps'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/composer-install.tar
           key: composer-install-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
@@ -923,7 +923,7 @@ jobs:
       - name: Mint installation token for additional apps
         id: extra-apps-app-token
         if: inputs.extra-apps != '' && env.EXTRA_APPS_APP_ID != ''
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.extra-apps-app-id }}
           private-key: ${{ secrets.extra-apps-private-key }}
@@ -991,7 +991,7 @@ jobs:
           echo "EGW_TEST_APP_DIRS=$TEST_DIRS" >> "$GITHUB_ENV"
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -1008,7 +1008,7 @@ jobs:
       # Saved even when the step failed, so the next run resumes with what arrived.
       - name: Restore apt packages for Playwright ${{ matrix.browser }}
         id: apt-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ~/apt-archives
           key: apt-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
@@ -1031,7 +1031,7 @@ jobs:
 
       - name: Save apt packages for Playwright ${{ matrix.browser }}
         if: always() && steps.apt-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ~/apt-archives
           key: ${{ steps.apt-cache.outputs.cache-primary-key }}
@@ -1041,7 +1041,7 @@ jobs:
       # near miss would hand this job a browser from a different Playwright version.
       - name: Cache Playwright ${{ matrix.browser }}
         id: playwright-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('sources/package-lock.json') }}
