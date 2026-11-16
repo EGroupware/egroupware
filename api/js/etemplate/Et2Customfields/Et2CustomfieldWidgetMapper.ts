@@ -114,7 +114,8 @@ export function mapCustomfieldToWidget(
 		if(attrs.readonly && context !== "filters")
 		{
 			widgetType = "link";
-			attrs.app = app;
+			// A field linking to any app has none of its own to name, its value says which
+			attrs.app = app || attrs.value?.app || "";
 		}
 		else
 		{
@@ -353,9 +354,20 @@ function normalizeLinkValue(app : string, value : any)
 			id: value.id ?? value.entryId ?? value.value ?? ""
 		};
 	}
+	// A field linking to any app stores which one with the id: as app,id when saved from a form,
+	// which submits the two as a pair, and as app:id when written by anything else
+	const stored = String(value);
+	const separator = stored.search(/[:,]/);
+	if(!app && separator > 0)
+	{
+		return {
+			app: stored.substring(0, separator),
+			id: stored.substring(separator + 1)
+		};
+	}
 	return {
 		app,
-		id: String(value)
+		id: stored
 	};
 }
 
@@ -366,7 +378,8 @@ export function applyCustomfieldWidgetMapping(element : Element | undefined, map
 		return;
 	}
 	const attrs = {...(mapping.attrs || {})};
-	if(typeof (element as any).transformAttributes === "function")
+	const transformed = typeof (element as any).transformAttributes === "function";
+	if(transformed)
 	{
 		(element as any).transformAttributes(attrs);
 	}
@@ -376,9 +389,11 @@ export function applyCustomfieldWidgetMapping(element : Element | undefined, map
 		{
 			continue;
 		}
-		// transformAttributes() compiles an event handler given as javascript into a function and
-		// sets that; the javascript itself must not go back over it, a widget only calls a function
-		if(typeof value === "string" && name.startsWith("on") && typeof (element as any)[name] === "function")
+		// A customfield's settings are stored as text, and transformAttributes() has already turned
+		// the text into what the property holds: "false" into false, "3" into 3, javascript into a
+		// function.  The text must not go back over that - "false" is true to a widget that only
+		// tests its flag, and a widget does not call a string.
+		if(transformed && typeof value === "string" && name !== "value" && isConvertedProperty(element, name))
 		{
 			continue;
 		}
@@ -392,6 +407,17 @@ export function applyCustomfieldWidgetMapping(element : Element | undefined, map
 			element.setAttribute(name, String(value));
 		}
 	}
+}
+
+/**
+ * Whether the widget declares the property as something other than text, which is what makes
+ * transformAttributes() convert a value given as text.
+ */
+function isConvertedProperty(element : Element, name : string) : boolean
+{
+	const property = (element.constructor as any).getPropertyOptions?.(name);
+	const type = typeof property === "object" && property ? property.type : property;
+	return [Boolean, Number, Function, Object, Array].includes(type);
 }
 
 function applySelectSettings(field : Record<string, any>, attrs : Record<string, any>)

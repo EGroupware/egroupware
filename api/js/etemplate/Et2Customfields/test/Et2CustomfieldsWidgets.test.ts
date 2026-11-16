@@ -11,6 +11,8 @@ const egwStub = {
 	{
 		openedLink = link;
 	},
+	// a link looks up the title of the entry it points to
+	link_title: () => Promise.resolve("Entry title"),
 	// compiled legacy javascript logs through egw.debug as it runs
 	debug: () => {},
 	// a widget with statustext binds a tooltip as soon as it connects
@@ -739,6 +741,78 @@ describe("Et2Customfields webcomponents", () =>
 		assert.isFunction(button?.onclick, "the javascript should be compiled into a click handler");
 		button.dispatchEvent(new MouseEvent("click", {bubbles: true, composed: true}));
 		assert.equal(button.dataset.clicked, "1", "clicking the button should run its javascript");
+	});
+
+	/**
+	 * Contract: a customfield's settings are stored as text, and reach the widget as what its
+	 * property holds - a flag as true or false, a number as a number.
+	 * Setup: render a password customfield with its flags turned off and a float customfield
+	 * with a precision, all given as text.
+	 * Pass: the flags are false and the precision is a number.  Left as text, "false" and "0"
+	 * count as true and the password field kept its reveal toggle.
+	 */
+	it("converts customfield settings given as text to the type the widget expects", async() =>
+	{
+		await import("../../Et2Textbox/Et2Password");
+		await import("../../Et2Textbox/Et2Number");
+
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_password: {label: "Password", type: "passwd", values: {viewable: "false", disabled: "0"}},
+			cf_number: {label: "Number", type: "float", values: {precision: "3", min: "1"}}
+		};
+		element.fields = {cf_password: true, cf_number: true};
+		element.value = {};
+		await element.updateComplete;
+
+		const password = element.querySelector("[data-field='cf_password'] > et2-password") as any;
+		const number = element.querySelector("[data-field='cf_number'] > et2-number") as any;
+		await password?.updateComplete;
+		await number?.updateComplete;
+
+		assert.strictEqual(password?.viewable, false, "viewable=false should turn the reveal toggle off");
+		assert.strictEqual(password?.disabled, false, "disabled=0 should leave the field enabled");
+		assert.strictEqual(number?.precision, 3, "precision should be a number");
+		assert.strictEqual(number?.min, 1, "min should be a number");
+	});
+
+	/**
+	 * Contract: a customfield linking to an entry of any app stores its value as app:id, or as
+	 * app,id when it was saved from a form, and a list shows the entry it names.
+	 * Setup: render a list with a "link-entry" customfield holding an addressbook entry, once
+	 * in each form.
+	 * Pass: the link is to that app and that id.  Given no app, with the whole value as its id,
+	 * the link has nothing to look up and the column stays empty.
+	 */
+	it("shows a customfield linking to any app in a list", async() =>
+	{
+		await import("../../Et2Link/Et2Link");
+
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-list no-label></et2-customfields-list>
+		`);
+		element.customfields = {
+			cf_entry: {label: "Entry", type: "link-entry"}
+		};
+		element.fields = {cf_entry: true};
+		element.value = {"#cf_entry": "addressbook:12"};
+		await element.updateComplete;
+
+		const link = element.querySelector("[data-field='cf_entry'] > et2-link") as any;
+		await link?.updateComplete;
+
+		assert.equal(link?.app, "addressbook", "the link should be to the app named in the value");
+		assert.equal(link?.entryId, "12", "the link should be to the id named in the value");
+
+		element.value = {"#cf_entry": "infolog,34"};
+		await element.updateComplete;
+		const saved = element.querySelector("[data-field='cf_entry'] > et2-link") as any;
+		await saved?.updateComplete;
+
+		assert.equal(saved?.app, "infolog", "a value saved from a form should name its app too");
+		assert.equal(saved?.entryId, "34", "a value saved from a form should name its id too");
 	});
 
 	/**
