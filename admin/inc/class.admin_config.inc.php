@@ -73,7 +73,8 @@ class admin_config
 			{
 				$parts2 = explode('anon_images.php?src=', $file);
 				$parts = explode('&', $parts2[1]);
-				$path = $base.'/'.urldecode($parts[0]);
+				// never trust the decoded value as a path, only ever touch a file directly in $base
+				$path = $base.'/'.Api\Vfs::basename(urldecode($parts[0]));
 				if (is_writable(dirname($base)) && file_exists($path))
 				{
 					unlink($path);
