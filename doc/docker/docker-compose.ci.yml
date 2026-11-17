@@ -18,6 +18,12 @@ services:
     # Override name to avoid potential conflicts with dev containers
     container_name: egwci-egroupware-db
     restart: "no"
+    # PHPUnit's LoggedInTest disconnects+reconnects once per test class (~100+ times across the
+    # full suite, one long-lived CLI process) - MariaDB's stock default (151) was getting
+    # exhausted mid-run ("Too many connections", found live 2026-11-17, CI run 44048453646),
+    # cascading into every later test class failing identically. CI-only: raising this for a
+    # real install isn't needed, the connection churn here is specific to the test harness.
+    command: --max-connections=500
   nginx:
     volumes:
       - ${EGW_CI_ROOT}/doc/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
