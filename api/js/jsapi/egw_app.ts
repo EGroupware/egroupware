@@ -1340,12 +1340,9 @@ export abstract class EgwApp
 				mergedFiles = await this.egw.request(vars.menuaction, [vars.id, vars.document, vars.options]);
 				this.egw.loading_prompt(vars.menuaction, false);
 
-				// One entry, email template selected - we can open that in the compose window
-				if(email)
-				{
-					// Nothing to do here, ajax_merge_multiple() opened compose & sent its own response
-				}
-				else
+				// One entry, email template selected, nothing to download: the email is not sent,
+				// ajax_merge_multiple()'s response opens it in the compose window instead
+				if(!email || !vars.options.open_email)
 				{
 					this.egw.message(mergedFiles, "success");
 				}
