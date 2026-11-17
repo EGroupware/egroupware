@@ -127,21 +127,32 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 			{
 				// exists
 				case 'exists' :
-					$searchcondition = $condition['string'][0] == Api\Storage::CF_PREFIX ? [$condition['string']] : [];
-
+					$is_cf = $condition['string'][0] == Api\Storage::CF_PREFIX;
+					$searchcondition = [];
+					$join = '';
+					if ($is_cf)
+					{
+						// a bare custom-field name is not itself a filter condition - join the
+						// extra table ourselves, restricted to this field, so contact_value can
+						// be selected for every contact (null for one where it isn't set)
+						$cf_name = substr($condition['string'], 1);
+						$join = ' LEFT JOIN '.Api\Contacts\Sql::EXTRA_TABLE.' ON egw_addressbook.contact_id='.
+							Api\Contacts\Sql::EXTRA_TABLE.'.contact_id AND '.Api\Contacts\Sql::EXTRA_TABLE.'.contact_name='.
+							$GLOBALS['egw']->db->quote($cf_name);
+					}
 					// if we use account_id for the condition, we need to set the owner for filtering, as this
 					// enables Api\Contacts\Storage to decide what backend is to be used
 					if($condition['string'] == 'account_id')
 					{
 						$searchcondition['owner'] = 0;
 					}
-					$field = $condition['string'][0] == Api\Storage::CF_PREFIX ? 'contact_value' : $condition['string'];
+					$field = $is_cf ? 'contact_value' : $condition['string'];
 					$contacts = $this->bocontacts->search(
 					//array( $condition['string'] => $record[$condition['string']],),
 						'',
 						['contact_id', 'cat_id', $field],
 						'', '', '', false, 'AND', false,
-						$searchcondition
+						$searchcondition, $join
 					);
 					foreach($contacts as $contact)
 					{
