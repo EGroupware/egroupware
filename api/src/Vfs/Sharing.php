@@ -442,7 +442,12 @@ class Sharing extends \EGroupware\Api\Sharing
 		if (substr($path, 0, strlen($temp_dir)) == $temp_dir)
 		{
 			$mode = self::LINK;
-			$exists = file_exists($path) && is_readable($path);
+			// resolve to the real path first, so the containment check below can't be fooled
+			$real_temp_dir = realpath($GLOBALS['egw_info']['server']['temp_dir']);
+			$real_path = realpath($path);
+			$exists = $real_path !== false && $real_temp_dir !== false &&
+				substr($real_path.'/', 0, strlen($real_temp_dir) + 1) === $real_temp_dir.'/' &&
+				is_readable($path);
 		}
 		else
 		{
