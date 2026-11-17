@@ -157,13 +157,13 @@ class Jmap extends Jmap\Base
 		{
 			$this->authorization[$this->url] = $authorization;
 
-			$this->url = $this->bootstrap(true, $accountId);
+			$this->url = $this->bootstrapCached(true, $accountId);
 		}
 		else
 		{
 			$this->authorization[parse_url($this->url, PHP_URL_HOST)] = $authorization;
 
-			$this->bootstrap(false, $accountId);
+			$this->bootstrapCached(false, $accountId);
 			// bootstrap() populates $this->apiUrl from the session document but (for this
 			// $use_well_known=false branch) does NOT update $this->url itself - jmapCall()
 			// posts to $this->url directly, so leaving it as the bare host/scheme would send
@@ -279,6 +279,86 @@ class Jmap extends Jmap\Base
 		$this->eventSourceUrl = $response['eventSourceUrl'] ?? null;
 
 		return !$use_well_known ? $this->url : $this->apiUrl ?? throw new Exception("$this->url is NOT a JMAP server!");
+	}
+
+	/**
+	 * How long we cache bootstrap()'s /.well-known/jmap discovery result (seconds) - avoids a full
+	 * extra authenticated HTTP round-trip (TCP+TLS handshake included) on every JMAP session
+	 * construction, which otherwise happens fresh on every stateless PHP request touching a real
+	 * JMAP account (eg. opening a mail attachment). The cache key is derived from the credential
+	 * itself (see bootstrapCacheKey()), so a password/API-key change is NOT masked by this cache at
+	 * all - only a server-side URL/config change without a credential change is delayed by up to
+	 * this long. 12h (one working day) rather than something shorter: nothing about this discovery
+	 * response (URLs, capabilities) is expected to change during a session, ralf 2026-11-17.
+	 */
+	const BOOTSTRAP_CACHE_TTL = 12*3600;
+
+	/**
+	 * Cache-key for bootstrapCached(): keyed on url+user+secret, NOT just url+user - for the API-key
+	 * auth path (isApiKey()) $user is empty for every tenant/admin key against the same host, so
+	 * keying on the username alone would let one admin's cached bootstrap data (accountId,
+	 * capabilities) leak to a different admin on a cache hit. Including the secret (immediately
+	 * one-way-hashed away by the outer md5()) fixes that, and as a bonus busts the cache immediately
+	 * on a credential rotation, instead of waiting out the TTL.
+	 *
+	 * @return string
+	 */
+	protected function bootstrapCacheKey() : string
+	{
+		return md5($this->url.'|'.$this->user.'|'.$this->secret);
+	}
+
+	/**
+	 * Same as bootstrap(), but caches its result across requests (Cache::INSTANCE) for
+	 * BOOTSTRAP_CACHE_TTL seconds, keyed by bootstrapCacheKey() - see that constant's docblock.
+	 *
+	 * bootstrap() itself is deliberately left untouched (and always re-fetches when called
+	 * directly) - some tests rely on that; this wrapper is the only caller that benefits from
+	 * caching, and every real constructor call site goes through it.
+	 *
+	 * Deliberately NOT using Cache::getInstance()'s callback form: Cache::getCache()'s INSTANCE/TREE
+	 * branch catches \Throwable around the callback to release its lock, but then re-throws into an
+	 * outer catch(Exception $e) (Api\Exception, which Exception\Http extends) that SWALLOWS it and
+	 * returns null - so a connection/TLS/protocol failure from bootstrap() would silently come back
+	 * as $data===null instead of propagating, masking the real error. The plain get/miss/set form
+	 * below (same idiom oauthClientId() already uses in this file) calls bootstrap() directly, so
+	 * any exception it throws propagates completely normally.
+	 *
+	 * @param bool $use_well_known true: request https://$host/.well-known/jmap, false: $url/
+	 * @param string|null &$accountId
+	 * @return string
+	 */
+	protected function bootstrapCached(bool $use_well_known, ?string &$accountId) : string
+	{
+		if (($snapshot = Cache::getInstance(__CLASS__, $this->bootstrapCacheKey())))
+		{
+			$accountId = $snapshot['accountId'];
+			$this->accountCapabilities = $snapshot['accountCapabilities'];
+			$this->sharedAccounts = $snapshot['sharedAccounts'];
+			$this->capabilities = $snapshot['capabilities'];
+			if (isset($snapshot['apiUrl'])) $this->apiUrl = $snapshot['apiUrl'];
+			if (isset($snapshot['downloadUrl'])) $this->downloadUrl = $snapshot['downloadUrl'];
+			if (isset($snapshot['uploadUrl'])) $this->uploadUrl = $snapshot['uploadUrl'];
+			if (isset($snapshot['eventSourceUrl'])) $this->eventSourceUrl = $snapshot['eventSourceUrl'];
+
+			return $snapshot['url'];
+		}
+
+		$url = $this->bootstrap($use_well_known, $accountId);
+
+		Cache::setInstance(__CLASS__, $this->bootstrapCacheKey(), [
+			'accountId' => $accountId,
+			'accountCapabilities' => $this->accountCapabilities ?? [],
+			'sharedAccounts' => $this->sharedAccounts,
+			'capabilities' => $this->capabilities ?? [],
+			'apiUrl' => $this->apiUrl ?? null,
+			'downloadUrl' => $this->downloadUrl ?? null,
+			'uploadUrl' => $this->uploadUrl ?? null,
+			'eventSourceUrl' => $this->eventSourceUrl ?? null,
+			'url' => $url,
+		], self::BOOTSTRAP_CACHE_TTL);
+
+		return $url;
 	}
 
 	/**
