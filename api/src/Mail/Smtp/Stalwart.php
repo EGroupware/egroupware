@@ -1099,8 +1099,12 @@ class Stalwart extends Sql
 						], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 						{
-							throw new \Exception("Could not update account $object[email] to remove alias '$alias_email'!");
+							throw new \Exception("Could not update account $object[emailAddress] to remove alias '$alias_email': ".
+								json_encode($response['methodResponses'][0][1]['notUpdated'][$object['id']] ?? $response['methodResponses'][0], JSON_UNESCAPED_SLASHES));
 						}
+						// further shared aliases of the same account must be removed from the aliases WITHOUT this one, otherwise
+						// the update adds this alias (now held by the new mailing-list) again and fails
+						$object['aliases'] = $remaining;
 						if (is_object($aliases))
 						{
 							unset($aliases->$key);
