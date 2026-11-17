@@ -3036,6 +3036,12 @@ abstract class Merge
 					// Surface per-recipient failures (eg. no email address found) to the caller -
 					// ajax_merge_multiple() already knows how to report a ['failed'] entry
 					$merged[] = $msgs;
+					// A message saved as draft (single entry opened in compose) reports its UID as
+					// an IMAP ID list, not a plain UID
+					if($mail_id instanceof \Horde_Imap_Client_Ids)
+					{
+						$mail_id = $mail_id->ids[0] ?? '';
+					}
 				}
 				catch (\Exception $e)
 				{
@@ -3102,6 +3108,11 @@ abstract class Merge
 			if($not_linked)
 			{
 				$merged[] = ['not_linked' => $not_linked];
+			}
+			// A single entry's email was not sent, but saved as draft for the user to check and send
+			if($email && $open_email && count($id_group) == 1 && $mail_id && class_exists(Ui::class))
+			{
+				$merged[] = ['draft' => Ui::generateRowID($mail_bo->profileID, $mail_folder, $mail_id, true)];
 			}
 			return $merged;
 		}
@@ -3268,7 +3279,7 @@ abstract class Merge
 		// entry - internal "stylite.links://..." details the user can't make sense of - so drop
 		// them and report only the send status. Without an email, those paths are the only
 		// feedback we have, so keep showing them.
-		$has_email_result = count(array_filter($merge_result, fn($result) => !is_string($result) && !isset($result['not_linked']))) > 0;
+		$has_email_result = count(array_filter($merge_result, fn($result) => !is_string($result) && !isset($result['not_linked']) && !isset($result['draft']))) > 0;
 
 		$unlinked = array_merge(...array_column(array_filter($merge_result, 'is_array'), 'not_linked'));
 
@@ -3284,6 +3295,11 @@ abstract class Merge
 				{
 					$response->apply('egw.message', [$not_linked, 'info']);
 				}
+			}
+			// The email was saved as draft instead of sent: open it in compose, same as an email-only merge
+			elseif(is_array($result) && isset($result['draft']))
+			{
+				$response->apply('app.mail.composeMessage', [['id' => 'composefromdraft'], [['id' => $result['draft']]]]);
 			}
 			elseif(is_string($result))
 			{
