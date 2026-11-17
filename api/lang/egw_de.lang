@@ -504,6 +504,7 @@ el salvador	common	de	EL SALVADOR
 element role title	common	de	Element Rolle Titel
 email	common	de	E-Mail
 email address %1 is already the email address of account %2, it can not be used as alias or for a mailing-list!	common	de	Die E-Mail-Adresse %1 ist bereits die E-Mail-Adresse des Accounts %2, sie kann NICHT als Alias oder für eine Mailingliste verwendet werden!
+email templates can not be downloaded	common	de	E-Mail-Vorlagen können nicht heruntergeladen werden
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
 emails	common	de	E-Mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	Eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)

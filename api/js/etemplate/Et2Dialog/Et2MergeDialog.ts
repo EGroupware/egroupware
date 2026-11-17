@@ -6,6 +6,7 @@ import {Et2VfsSelectDialog} from "../Et2Vfs/Et2VfsSelectDialog";
 import {property} from "lit/decorators/property.js";
 import {Et2Dialog} from "./Et2Dialog";
 import {state} from "lit/decorators/state.js";
+import type {Et2Button} from "../Et2Button/Et2Button";
 
 @customElement("et2-merge-dialog")
 export class Et2MergeDialog extends Et2Widget(LitElement)
@@ -43,6 +44,14 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 		return <Et2VfsSelectDialog><unknown>this.shadowRoot.querySelector("et2-vfs-select-dialog");
 	}
 
+	/**
+	 * The file dialog's primary button, which downloads the merged documents
+	 */
+	private get downloadButton() : Et2Button
+	{
+		return <Et2Button><unknown>this.dialog?.shadowRoot?.querySelector("et2-button#ok");
+	}
+
 	public async getComplete() : Promise<{
 		documents : { path : string, mime : string }[],
 		options : { [key : string] : string | boolean }
@@ -51,7 +60,8 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 		await this.updateComplete;
 		const [button, value] = await this.dialog.getComplete();
 
-		if(!button)
+		// Download is not available with an email template, however the dialog got confirmed
+		if(!button || button == Et2Dialog.OK_BUTTON && this.canEmail)
 		{
 			return {documents: [], options: this.optionValues};
 		}
@@ -109,6 +119,14 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 			}
 		});
 		this.option("pdf").disabled = !canPDF;
+
+		// An email can only be merged & sent (or opened in compose), not downloaded
+		const download = this.downloadButton;
+		if(download)
+		{
+			download.disabled = this.canEmail;
+			download.statustext = this.canEmail ? this.egw().lang("Email templates can not be downloaded") : "";
+		}
 		this.requestUpdate("canEmail", oldCanEmail);
 	}
 
