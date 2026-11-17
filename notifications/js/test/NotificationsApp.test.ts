@@ -340,14 +340,38 @@ describe("NotificationsApp.tabToggle()", () =>
 
 describe("NotificationsApp.run_notifications()", () =>
 {
-	it("doesn't even poll the server at all while egw.pushAvailable() already says push is working", () =>
+	it("still fetches on the very first call even when egw.pushAvailable() already says push is working - nothing else re-syncs the existing notification state on connect, only push's own going-forward deliveries", async() =>
 	{
-		const json = sinon.spy();
-		const app = createFakeApp({egw: {pushAvailable: () => true, json}});
+		const app = createFakeApp({
+			egw: {pushAvailable: () => true, json: (_m : string, _p : any[], cb : Function) =>
+			{
+				cb({});
+				return {sendRequest: (_close : boolean, _method : string, _cb : Function) => {}};
+			}}
+		});
 
 		app.run_notifications();
+		await Promise.resolve();
 
-		assert.isFalse(json.called);
+		assert.isTrue((<any>app).initialSyncDone, 'the first call must count as the initial sync once it resolves');
+	});
+
+	it("doesn't poll the server again on a SECOND call while egw.pushAvailable() already says push is working", async() =>
+	{
+		const json = sinon.spy((_m : string, _p : any[], cb : Function) =>
+		{
+			cb({});
+			return {sendRequest: (_close : boolean, _method : string, _cb : Function) => {}};
+		});
+		const app = createFakeApp({egw: {pushAvailable: () => true, json}});
+
+		app.run_notifications();	// the initial sync - fetches once regardless of pushAvailable()
+		await Promise.resolve();
+		assert.isTrue(json.calledOnce);
+
+		app.run_notifications();	// a later call - now pushAvailable() alone is enough to skip
+
+		assert.isTrue(json.calledOnce, 'must not have fetched again');
 	});
 
 	it("keeps polling at the (slower) mailCheckInterval cadence, not pollInterval, when push is available but a mail account still needs the notify_folders check", async() =>
