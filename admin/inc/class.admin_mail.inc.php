@@ -2122,6 +2122,19 @@ class admin_mail
 			$content['ident_email_alias'] = $content['ident_email'];
 			$content['select_ident_mail'] = true;
 		}
+		// ident_email_alias is only ever an interactive select here when select_ident_mail is set
+		// (hidden="!@select_ident_mail" in mailaccount.xet) - otherwise it's hidden in favour of the
+		// plain ident_email text field, but Widget\Select::validate() does NOT skip a merely hidden
+		// widget, only a readonly one (Widget::is_readonly() never looks at the hidden attribute) -
+		// so without this, its still-submitted value (set unconditionally to the current identity's
+		// real email a few lines above, in the ident_id-switch block) fails validation against
+		// sel_options['ident_email_alias'] (only ever populated in the branch just above, for a
+		// non-admin with acc_further_identities==2), aborting the WHOLE save/apply with a silent
+		// (no toast) validation error on this one hidden field - found live 2026-11-17 (#127811/
+		// #127711: admin or self-service identity edits failing to save at all, no error shown,
+		// the moment an account has a second/additional identity, which is exactly what first made
+		// this normally-dormant widget's value diverge from its would-be allowed list).
+		$readonlys['ident_email_alias'] = empty($content['select_ident_mail']);
 
 		// only allow to delete further identities, not a standard identity
 		$readonlys['button[delete_identity]'] = !($content['ident_id'] > 0 && $content['ident_id'] != $content['std_ident_id']);
