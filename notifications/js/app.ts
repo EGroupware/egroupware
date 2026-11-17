@@ -139,6 +139,22 @@ export class NotificationsApp extends EgwApp
 	 */
 	private mailCheckInterval : number | null = null;
 
+	/**
+	 * Whether run_notifications() has ever actually fetched the current notification state yet.
+	 *
+	 * Push only ever delivers NEW events going forward (app.notifications.append(), triggered by
+	 * a server-side notifications_popup::save()) - it never re-syncs EXISTING/pending state on
+	 * connect. If the real push connection comes up within the constructor's deferred first poll
+	 * (egw.pushAvailable() already true by then - common, since that's typically a 1-2s handshake
+	 * vs. this class's own 10s initial defer), run_notifications() used to skip that first call
+	 * outright (see its own doc comment) and nothing else ever asked for the current count -
+	 * found live 2026-11-17 (bell/app badges staying blank after every fresh login/reload on an
+	 * instance with working push, until the next actual notification event happened to arrive).
+	 * This flag makes exactly the FIRST call ignore pushAvailable() and fetch unconditionally;
+	 * every call after that still defers to push normally.
+	 */
+	private initialSyncDone = false;
+
 	constructor()
 	{
 		super('notifications');
@@ -209,13 +225,18 @@ export class NotificationsApp extends EgwApp
 	 * onPushAvailabilityChange() subscription is what resumes fast polling again once/if push
 	 * stops being available - nothing else would, since a poll that never runs can't reschedule
 	 * itself.
+	 *
+	 * The very FIRST call is special: it always fetches regardless of pushAvailable(), since
+	 * nothing else re-syncs the existing/pending notification state on connect (push only
+	 * delivers new events going forward) - see initialSyncDone's own doc comment.
 	 */
 	run_notifications()
 	{
-		if(this.egw.pushAvailable() && !this.mailCheckInterval) return;
+		if(this.initialSyncDone && this.egw.pushAvailable() && !this.mailCheckInterval) return;
 
 		this.get_notifications().then((_data) =>
 		{
+			this.initialSyncDone = true;
 			window.clearTimeout(this.timeoutId);
 			const pushAvailable = this.egw.pushAvailable();
 			if(pushAvailable && !this.mailCheckInterval) return;
