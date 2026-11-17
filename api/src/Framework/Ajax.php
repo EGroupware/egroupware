@@ -221,6 +221,15 @@ abstract class Ajax extends Api\Framework
 		// page load ALSO happened to call Extra::popup()).
 		$extra['push-longpolling-fallback'] = !$do_framework;
 
+		// Exposed to the client as data-push-fallback-enabled on the same script tag - admin
+		// opt-in (notifications/templates/default/config.xet, "ajax_poll_enabled"), default off:
+		// egw_push_fallback.ts checks this before ever starting a long-poll/SSE connection or
+		// writing a row into egw_notificationpopup (notifications_push::addGeneric()'s matching
+		// gate), regardless of whether a real push server is configured/reachable - an install
+		// that hasn't asked for this fallback shouldn't pay for it just because its real push
+		// happened to be briefly unreachable.
+		$extra['push-fallback-enabled'] = (bool)(Api\Config::read('notifications')['ajax_poll_enabled'] ?? false);
+
 		// load clientside link registry to framework only
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{

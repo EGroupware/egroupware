@@ -1478,3 +1478,80 @@ Left `SwoolePush\Backend->online()`'s own red-on-exception alone here
 is diagnosing the swoolepush backend specifically, so swoolepush being
 unreachable is genuinely the primary thing this page tests for, not an
 incidental detail the way it is on the generic multi-backend admin page.
+
+## Made admin opt-in, default OFF (found live 2026-11-17, rbz-schuetzenpark.de)
+
+A customer on a default installation *with* a swoolepush container
+reported "massive messages and constant updates" only since their last
+maintenance release - live DB inspection (via the `notifications` app
+ticket investigation this session, #127741's follow-up thread) found
+`egw_notificationpopup` rows with `notify_type='push'`, `notify_app`/
+`notify_app_id` NULL and enormous `notify_message` payloads. Traced to
+two separate, compounding things:
+
+1. `notifications_popup::save()` re-broadcasts the ENTIRE popup backlog
+   (up to 100 full rendered HTML bodies) via `Push::call('app.
+   notifications.append', ...)` on every single saved notification - a
+   long-standing, unrelated mechanism, not new.
+2. Whatever briefly made this customer's `Push::checkSetBackend()`
+   resolve to `notifications_push` (the SQL fallback) instead of the
+   real swoolepush backend - possibly nothing more than the real push
+   connection being momentarily unreachable from one browser, per this
+   doc's own "Known limitations" note above - was enough to make
+   `egw_push_fallback.ts` start long-polling AND every `addGeneric()`
+   call across the whole install (not just notifications - any `Api\
+   Json\Push` caller: `Link`, `Storage\Tracking`, calendar, addressbook,
+   filemanager, ...) start writing SQL rows, neither of which this
+   install actually needed given it has a working push container most
+   of the time.
+
+Ralf's call, once this was traced: having a *working* push container
+should mean this fallback mechanism (built in Phases 1-7 above) simply
+never engages, not "engages the moment the real connection has one bad
+moment, and keeps writing to the DB until an admin notices." Rather than
+try to make the real-vs-fallback transition itself more hysteresis-
+resistant (a bigger, riskier change to `egw.pushAvailable()`/
+`onPushAvailabilityChange()`'s signal), the simplest fix: make the whole
+fallback **admin opt-in, default off** - an install that has a working
+push server (the common case, and the one most likely to hit a transient
+blip) pays nothing for this mechanism at all unless an admin deliberately
+turns it on (eg. for an install that genuinely has no push server, or one
+behind a proxy that blocks WebSocket upgrades).
+
+New config `ajax_poll_enabled` (notifications' `config.xet`, same `select`-
+as-checkbox idiom as `winpopup_enable`), default unset/off, gated at all
+three points data can flow through:
+
+- **Write**: `notifications_push::addGeneric()` (`notifications/inc/
+  class.notifications_push.inc.php`) - no-ops before doing anything else
+  if the config isn't set, so nothing ever lands in
+  `egw_notificationpopup` with `notify_type='push'` while disabled.
+- **Server read/long-poll**: `Push::ajax_poll()` (`api/src/Json/
+  Push.php`) - returns immediately, before even checking
+  `notifications_push` exists, so a disabled install never holds a
+  PHP-FPM worker open for this.
+- **Client**: `egw_push_fallback.ts`'s constructor - checks a new
+  `data-push-fallback-enabled` attribute (mirroring `data-push-
+  longpolling-fallback`'s existing pattern) before ever starting,
+  regardless of `pushAvailable()`/`pushFailed()`/whether a websocket URL
+  was even bootstrapped. The attribute itself is written by `Api\
+  Framework\Ajax::header()` from the same config value.
+
+Each gate was given its own test: `EgwPushFallback.test.ts` gained "does
+not even attempt to start when the admin hasn't enabled the long-poll/
+SSE fallback"; `PushPollTest.php` gained
+`testAddGenericAndAjaxPollAreNoOpsWhenFallbackDisabled`. Every
+pre-existing test in both files now explicitly simulates "admin has
+opted in" (the JS harness's `loadPushFallback()` defaults to
+`fallbackEnabled=true`; the PHPUnit class's `setUp()`/`tearDown()` flips
+`ajax_poll_enabled` on for the duration and restores whatever was there
+before) - correct, since those tests are about the mechanism's own
+behaviour once engaged, not about the new default.
+
+Not done: making `Push::checkSetBackend()`'s real-vs-fallback selection
+itself retry/recover more gracefully once a transient swoolepush failure
+clears - the customer's actual transient blip (whatever it was) is still
+unexplained and may recur; this fix only stops its SIDE EFFECT (SQL
+backlog growth, constant long-polling) from mattering while disabled,
+which was the customer's actual, immediate complaint ("how can we test-
+wise switch that completely off").

@@ -90,6 +90,15 @@ class PushFallback
 		// so there's nothing a push-fallback connection could usefully do here regardless.
 		if((<any>window).egw_appName === 'login') return;
 
+		// Admin opt-in (notifications/templates/default/config.xet, "ajax_poll_enabled"),
+		// default off - see Api\Framework\Ajax::header()'s matching data-push-fallback-enabled
+		// attribute and notifications_push::addGeneric()'s server-side write-side gate. Checked
+		// unconditionally, regardless of pushAvailable()/pushFailed()/whether a websocket URL was
+		// even bootstrapped: an install that hasn't turned this on shouldn't fall into long-
+		// polling (and the SQL writes that come with it) just because its real push happened to
+		// be briefly unreachable - it can enable this if/when it actually needs the fallback.
+		if(!document.getElementById('egw_script_id')?.getAttribute('data-push-fallback-enabled')) return;
+
 		// Only the real, top-level framework page (never a popup/content page, eg. a mail compose
 		// window or swoolepush/test.php's own iframe) should run a fallback connection at all -
 		// reuses the EXACT same signal that already, server-side, keeps the real websocket

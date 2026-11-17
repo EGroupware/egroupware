@@ -48,11 +48,24 @@ class PushPollTest extends LoggedInTest
 {
 	private int $account_id;
 
+	/**
+	 * Whatever 'ajax_poll_enabled' was configured to before this test ran - restored in
+	 * tearDown() so this test doesn't permanently flip the instance's own admin setting.
+	 */
+	private $orig_ajax_poll_enabled;
+
 	protected function setUp() : void
 	{
 		parent::setUp();
 
 		$this->account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		// The SQL long-poll/SSE fallback this whole test class is about is admin opt-in, default
+		// OFF (notifications_push::addGeneric()'s and Push::ajax_poll()'s matching gates on
+		// notifications' config.xet 'ajax_poll_enabled') - simulate an install that has turned it
+		// on, same as the client-side jstest's loadPushFallback() defaulting to "enabled" too.
+		$this->orig_ajax_poll_enabled = Api\Config::read('notifications')['ajax_poll_enabled'] ?? null;
+		Api\Config::save_value('ajax_poll_enabled', 'True', 'notifications');
 
 		Api\Cache::unsetSession(notifications_push::class, 'already_send');
 		Api\Cache::unsetInstance(notifications_push::class, 'max_id');
@@ -62,6 +75,13 @@ class PushPollTest extends LoggedInTest
 			'account_id' => $this->account_id,
 			'notify_type' => 'push',
 		], __LINE__, __FILE__, 'notifications');
+	}
+
+	protected function tearDown() : void
+	{
+		Api\Config::save_value('ajax_poll_enabled', $this->orig_ajax_poll_enabled ?? '', 'notifications');
+
+		parent::tearDown();
 	}
 
 	/**
@@ -76,6 +96,31 @@ class PushPollTest extends LoggedInTest
 	{
 		(new notifications_push())->addGeneric($this->account_id, 'apply',
 			['func' => 'egw.push', 'parms' => [['app' => 'test', 'id' => 1, 'type' => 'update']]]);
+	}
+
+	/**
+	 * The admin opt-in itself (default off) - addGeneric() must not write a row at all, and
+	 * ajax_poll() must return immediately without ever holding the request open, when
+	 * 'ajax_poll_enabled' isn't set. Mirrors EgwPushFallback.test.ts's equivalent client-side test.
+	 */
+	public function testAddGenericAndAjaxPollAreNoOpsWhenFallbackDisabled()
+	{
+		Api\Config::save_value('ajax_poll_enabled', '', 'notifications');
+
+		$this->queuePushMessage();
+
+		$this->assertSame(0, (int)$GLOBALS['egw']->db->select('egw_notificationpopup', 'COUNT(*)', [
+			'account_id' => $this->account_id,
+			'notify_type' => 'push',
+		], __LINE__, __FILE__, false, '', 'notifications')->fetchColumn(),
+			'addGeneric() must not have written a row while the fallback is disabled');
+
+		$start = microtime(true);
+		Push::ajax_poll();
+		$elapsed = microtime(true) - $start;
+
+		$this->assertLessThan(Push::AJAX_POLL_TICK_USECONDS / 1e6, $elapsed,
+			'ajax_poll() must return immediately, not hold the request open, while disabled');
 	}
 
 	public function testGetReturnsFalseWithNothingQueued()

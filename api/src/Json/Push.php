@@ -266,6 +266,16 @@ class Push extends Msg
 		// sibling tab/request from the same session for that long
 		$GLOBALS['egw']->session->commit_session();
 
+		// Opt-in (admin config "ajax_poll_enabled", notifications/templates/default/config.xet),
+		// default off: holding a request open for up to AJAX_POLL_SSE_MAX_WAIT_SECONDS ties up a
+		// PHP-FPM worker for nothing on an install that hasn't asked for this fallback - matches
+		// notifications_push::addGeneric()'s own gate, so there's nothing to deliver here either
+		// way once disabled.
+		if (!(Api\Config::read('notifications')['ajax_poll_enabled'] ?? false))
+		{
+			return;
+		}
+
 		if (!class_exists(notifications_push::class))
 		{
 			return;
