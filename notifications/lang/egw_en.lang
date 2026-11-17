@@ -38,6 +38,7 @@ egroupware-popup verbosity	notifications	en	EGroupware popup verbosity
 email notifications only, if user is not logged in	notifications	en	Email notifications only, if user is not logged in
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	en	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
 enable egroupware-popup backend	admin	en	Enable EGroupware popup backend
+enable long-polling / sse fallback	admin	en	Enable long-polling / SSE fallback
 enable windows-popup backend	admin	en	Enable Windows popup backend
 enabled chains	notifications	en	Enabled chains
 error browser can`t start.	notifications	en	Error browser can`t start.
@@ -70,6 +71,7 @@ notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
 notify private email address	notifications	en	Notify private email address
 once this many browsers are already waiting, further ones get an instant check instead	notifications	en	Once this many browsers are already waiting, further ones get an instant check instead
+only needed if no (working) push server, eg. swoolepush, is available. off by default.	admin	en	Only needed if no (working) push server, eg. SwoolePush, is available. Off by default.
 only used if no push server available!	admin	en	Only used if no push server available!
 open notified entry	notifications	en	Open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client

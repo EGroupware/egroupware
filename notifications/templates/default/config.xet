@@ -21,6 +21,16 @@
 				</row>
 				<row>
 					<et2-vbox>
+						<et2-description  value="Enable long-polling / SSE fallback"></et2-description>
+						<et2-description  value="Only needed if no (working) push server, eg. SwoolePush, is available. Off by default."></et2-description>
+					</et2-vbox>
+					<et2-select  id="newsettings[ajax_poll_enabled]">
+						<option value="">No</option>
+						<option value="True">Yes</option>
+					</et2-select>
+				</row>
+				<row>
+					<et2-vbox>
 						<et2-description  value="Poll interval"></et2-description>
 						<et2-description  value="Only used if no push server available!"></et2-description>
 					</et2-vbox>

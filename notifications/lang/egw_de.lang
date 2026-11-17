@@ -38,6 +38,7 @@ egroupware-popup verbosity	notifications	de	EGroupware-Popup Mitteilungspriorit�
 email notifications only, if user is not logged in	notifications	de	E-Mail, wenn der Benutzer nicht angemeldet ist.
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	de	Nur E-Mail-Admin-Profil (aktive Benutzerdefinierte Konten werden nicht für die Notifizierung per E-Mail verwendet)
 enable egroupware-popup backend	admin	de	EGroupware-Popup Schnittstelle aktivieren
+enable long-polling / sse fallback	admin	de	Long-Polling- / SSE-Fallback aktivieren
 enable windows-popup backend	admin	de	Windows-Popup Schnittstelle aktivieren
 enabled chains	notifications	de	Aktivierte Ketten
 error browser can`t start.	notifications	de	Fehler beim Starten des Browsers.
@@ -70,6 +71,7 @@ notifier	notifications	de	Benachrichtiger
 notify me by	notifications	de	Benachrichtige mich per
 notify private email address	notifications	de	Private E-Mail-Adresse benachrichtigen
 once this many browsers are already waiting, further ones get an instant check instead	notifications	de	Warten bereits so viele Browser, erhalten weitere sofort nur eine einmalige Prüfung
+only needed if no (working) push server, eg. swoolepush, is available. off by default.	admin	de	Nur nötig, wenn kein (funktionierender) Push-Server, z.B. SwoolePush, verfügbar ist. Standardmäßig aus.
 only used if no push server available!	admin	de	Wird nur benutzt wenn kein Push Server verfügbar!
 open notified entry	notifications	de	Eintrag öffnen
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe E-Mail-Programme

@@ -134,6 +134,17 @@ class notifications_push implements Json\PushBackend
 	 */
 	public function addGeneric($account_id, $key, $data)
 	{
+		// SQL fallback is opt-in (admin config "ajax_poll_enabled", notifications/templates/
+		// default/config.xet), default off: without a consumer ever polling for it (see
+		// Api\Json\Push::ajax_poll()'s matching gate), a queued row would just sit in
+		// egw_notificationpopup until cleanup_push_msgs() expires it - pure, avoidable write load
+		// on installs that don't want/need this fallback (eg. because their real push server, once
+		// reachable again, delivers live messages directly and never needed the backlog anyway).
+		if (!(Api\Config::read('notifications')['ajax_poll_enabled'] ?? false))
+		{
+			return;
+		}
+
 		if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 		foreach((array)$account_id as $id)

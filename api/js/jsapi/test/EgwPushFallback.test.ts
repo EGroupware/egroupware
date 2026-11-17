@@ -12,9 +12,12 @@
  * exactly the "server chose not to stream" path Phase 6 adds, exercised here as a side effect
  * rather than needing its own setup. Tests that need a REAL stream use resolveStream() instead.
  *
- * Covered: does nothing at all on the login page (a live regression: no session there, so every
- * attempt hit json.php's login_redirect() path and reloaded the page, forever - found live
- * shortly after this shipped); starts on load when push isn't available (falling straight through
+ * Covered: does nothing at all when the admin hasn't enabled the fallback (data-push-fallback-
+ * enabled absent, the real default - see Api\Framework\Ajax::header()'s matching attribute and
+ * notifications_push::addGeneric()'s write-side gate); does nothing at all on the login page (a
+ * live regression: no session there, so every attempt hit json.php's login_redirect() path and
+ * reloaded the page, forever - found live shortly after this shipped); starts on load when push
+ * isn't available (falling straight through
  * SSE's "not a stream" branch into plain long-polling, per the note above); does NOT poll at all
  * when push is already available; stops when push becomes available mid-poll and resumes when it
  * drops again; re-issues immediately on a successful response; backs off (not hammering) on a
@@ -38,8 +41,29 @@ import {createEgwJsonEnv, EgwJsonEnv, loadScript} from "./EgwJsonHarness";
 
 const MENUACTION = 'EGroupware\\Api\\Json\\Push::ajax_poll';
 
-async function loadPushFallback(env : EgwJsonEnv)
+/**
+ * @param fallbackEnabled mirrors Api\Framework\Ajax::header()'s data-push-fallback-enabled
+ *  attribute (admin opt-in, config.xet's "ajax_poll_enabled", default off) - every test below
+ *  other than the dedicated "admin hasn't enabled it" one wants the mechanism itself engaged, so
+ *  this defaults to true rather than matching the real-world off-by-default here.
+ */
+async function loadPushFallback(env : EgwJsonEnv, fallbackEnabled = true)
 {
+	// Tests that care about data-push-longpolling-fallback (the popup-page guard) already create
+	// their own #egw_script_id before calling this - reuse it instead of clobbering it, so both
+	// attributes end up on the one real element egw_push_fallback.ts reads.
+	let script = env.window.document.getElementById('egw_script_id');
+	if(!script)
+	{
+		script = env.window.document.createElement('script');
+		script.id = 'egw_script_id';
+		env.window.document.body.appendChild(script);
+	}
+	if(fallbackEnabled)
+	{
+		script.setAttribute('data-push-fallback-enabled', '1');
+	}
+
 	// egw_push_fallback.ts's constructor runs `window.egw_ready.then(...)` immediately on
 	// import - the real egw.js (which normally sets this up) is stubbed out empty in this
 	// harness (see EgwJsonHarness's import map), so seed it ourselves first.
@@ -84,6 +108,13 @@ describe('egw_push_fallback.ts', () =>
 
 		assert.equal(env.fetchCalls.length, 1);
 		assert.include(env.fetchCalls[0].url, MENUACTION);
+	});
+
+	it('does not even attempt to start when the admin hasn\'t enabled the long-poll/SSE fallback (data-push-fallback-enabled absent, the real default) - regardless of push being unavailable', async() =>
+	{
+		await loadPushFallback(env, false);
+
+		assert.equal(env.fetchCalls.length, 0);
 	});
 
 	it('does not run at all on a popup/content page - regression: Admin > Test Push loads swoolepush/test.php in its own iframe, and (a first, wrong attempt at this guard aside) that page has its own real, inherited egw indistinguishable from the top window\'s by object identity; without a guard it ALSO started a PushFallback, racing the top window\'s own long-poll to consume the same session\'s queued push-test message and making the test falsely report failure', async() =>
@@ -249,6 +280,14 @@ describe('egw_push_fallback.ts', () =>
 		const clock = sinon.useFakeTimers(<any>{global: env.window, toFake: ['setTimeout', 'clearTimeout']});
 		try
 		{
+			// loadPushFallback() can't be used here - it installs fake timers only AFTER the
+			// load, too late for this test's own needs (see comment above) - so set up the
+			// same data-push-fallback-enabled opt-in by hand instead.
+			const script = env.window.document.createElement('script');
+			script.id = 'egw_script_id';
+			script.setAttribute('data-push-fallback-enabled', '1');
+			env.window.document.body.appendChild(script);
+
 			(<any>env.window).egw_ready = Promise.resolve();
 			await loadScript(env.window.document, '/api/js/jsapi/egw_push_fallback.ts', 'module');
 			await clock.tickAsync(0);	// egw_ready.then() -> #trySse() -> the initial fetch() call
