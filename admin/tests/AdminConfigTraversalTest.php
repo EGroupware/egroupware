@@ -53,4 +53,45 @@ class AdminConfigTraversalTest extends CommandBase
 				'Sanity check: the basename portion of the malicious filename should still appear');
 		});
 	}
+
+	/**
+	 * Regression test for remove_anon_images()'s path hardening - same fix class as
+	 * ajax_upload_anon_images() above.
+	 */
+	public function testRemoveAnonImagesConfinesTargetToBasename()
+	{
+		// remove_anon_images() itself only checks this flag - set/restore it directly rather than
+		// a full admin login, so this test doesn't depend on the admin test account's password
+		$had_admin = $GLOBALS['egw_info']['user']['apps']['admin'] ?? null;
+		$GLOBALS['egw_info']['user']['apps']['admin'] = 1;
+
+		$outside = $GLOBALS['egw_info']['server']['files_dir'].'/AdminConfigTraversalTest-outside.txt';
+		file_put_contents($outside, 'must survive');
+
+		$base = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
+		if (!is_dir($base)) mkdir($base, 0777, true);
+		$traversal = '..%2FAdminConfigTraversalTest-outside.txt';
+
+		try
+		{
+			(new \admin_config())->remove_anon_images([
+				'anon_images.php?src='.$traversal.'&123',
+			]);
+
+			$this->assertFileExists($outside,
+				'remove_anon_images() must not unlink() a file outside the anon-images directory');
+		}
+		finally
+		{
+			@unlink($outside);
+			if ($had_admin === null)
+			{
+				unset($GLOBALS['egw_info']['user']['apps']['admin']);
+			}
+			else
+			{
+				$GLOBALS['egw_info']['user']['apps']['admin'] = $had_admin;
+			}
+		}
+	}
 }
