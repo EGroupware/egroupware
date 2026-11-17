@@ -58,4 +58,27 @@ class SharingValidatePathTest extends LoggedInTest
 			$this->fail('validate_path() truncated a double-leading-slash path to the bare Vfs::PREFIX: '.$e->getMessage());
 		}
 	}
+
+	/**
+	 * validate_path()'s temp_dir check must compare resolved real paths, not literal string
+	 * prefixes - a path rooted at temp_dir but resolving outside it must be rejected (NotFound),
+	 * same as a path that never existed at all.
+	 */
+	public function testTempDirTraversalIsRejected()
+	{
+		$method = new \ReflectionMethod(Sharing::class, 'validate_path');
+		$method->setAccessible(true);
+		$mode = Sharing::READONLY;
+
+		// an existing, readable file outside temp_dir, reached via a relative path rooted at temp_dir
+		$target = realpath(EGW_SERVER_ROOT.'/header.inc.php');
+		$this->assertNotFalse($target, 'test fixture missing: header.inc.php');
+
+		$real_temp_dir = realpath($GLOBALS['egw_info']['server']['temp_dir']);
+		$up = str_repeat('../', substr_count(trim($real_temp_dir, '/'), '/') + 1);
+		$traversal_path = $real_temp_dir.'/'.$up.ltrim($target, '/');
+
+		$this->expectException(\EGroupware\Api\Exception\NotFound::class);
+		$method->invoke(null, $traversal_path, $mode);
+	}
 }
