@@ -3037,6 +3037,12 @@ abstract class Merge
 				// Save to VFS so we can link to entry
 				if($link || $download)
 				{
+					// A message saved as draft (single entry opened in compose) reports its UID as
+					// an IMAP ID list, not a plain UID
+					if($mail_id instanceof \Horde_Imap_Client_Ids)
+					{
+						$mail_id = $mail_id->ids[0] ?? '';
+					}
 					// Load message
 					$message = $mail_bo->getMessageRawBody($mail_id, '', $mail_folder);
 					if(!$message)
