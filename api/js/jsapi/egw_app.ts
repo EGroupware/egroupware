@@ -1427,11 +1427,45 @@ export abstract class EgwApp
 			// Disable individual when only one entry is selected
 			// @ts-ignore
 			(<Et2Checkbox>fileSelect.shadowRoot.querySelector("et2-details > [id='individual']")).disabled = selected.length == 1;
+
+			// Linking needs edit rights: no point offering it when no selected entry can take the document
+			if(!this._canLinkMergedDocument(action, selected))
+			{
+				const link = <Et2Checkbox>fileSelect.shadowRoot.querySelector("et2-details > [id='link']");
+				link.value = false;
+				link.disabled = true;
+				link.statustext = this.egw.lang("You have no edit rights for the selected entries");
+			}
 		});
 		// Remove when done
 		fileSelect.getComplete().then(() => {fileSelect.remove();});
 
 		return fileSelect.getComplete();
+	}
+
+	/**
+	 * Check if a merged document could be linked to at least one of the selected entries
+	 *
+	 * Linking needs edit rights on the entry, which lists flag per row with the "rowNoEdit" class.
+	 * Rows we know nothing about count as editable, as does "select all", where only the loaded
+	 * rows are known: the server makes the final decision per entry.
+	 *
+	 * @param action merge action, used to find the list it was run from
+	 * @param selected selected rows
+	 * @returns false only if every selected entry is known to be not editable
+	 * @protected
+	 */
+	protected _canLinkMergedDocument(action? : EgwAction, selected? : EgwActionObject[]) : boolean
+	{
+		for(let a = action; a; a = a.parent)
+		{
+			if(a.data?.nextmatch?.getSelection()?.all)
+			{
+				return true;
+			}
+		}
+		const noEdit = (row : EgwActionObject) => (<any>this.egw.dataGetUIDdata(row.id))?.data?.class?.includes?.("rowNoEdit");
+		return !selected?.length || !selected.every(noEdit);
 	}
 
 	/**
