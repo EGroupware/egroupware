@@ -657,6 +657,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _deletedRowIds : Set<string> = new Set();
 	private static readonly MAX_DELETED_ROW_IDS = 200;
+	/**
+	 * Fetching rows after a client-side delete. The caller may remove rows here before
+	 * the server has processed the delete (mail does), so for a short time pages can
+	 * still be answered from before it. Such an outdated page has its rows at the
+	 * indexes they had before the delete: merging it would put rows in the wrong place
+	 * and leave the indexes behind the delete empty.
+	 *
+	 * A page is taken as outdated if it contains a row deleted here, or reports the
+	 * total from before the delete (_deleteRefillOutdatedTotals). It is dropped and
+	 * asked for again: at once the first time, as the server had the time that answer
+	 * took, then after a delay that doubles each time, starting at
+	 * _deleteRefillBackoffMs. Each delay starts when the previous answer arrived, so a
+	 * slow server gets fewer requests, not more. The same happens for a page that did
+	 * not look outdated but left indexes empty.
+	 *
+	 * All of this ends DELETE_REFILL_WINDOW_MS after the delete, from then on pages
+	 * are merged as they come, and with a full reload (_clearRows()).
+	 */
+	private _deleteRefillDeadline : number = 0;
+	private _deleteRefillAttempt : number = 0;
+	private _deleteRefillTimer : number | null = null;
+	private _deleteRefillOutdatedTotals : Set<number> = new Set();
+	private static readonly DELETE_REFILL_WINDOW_MS = 20000;
+	/** Delay before the second retry, doubled for each one after it. Internal and adjustable so tests do not have to wait. */
+	_deleteRefillBackoffMs : number = 500;
 	private _initialExportParts : string[] = [];
 	private _scrollListener : (() => void) | null = null;
 	private _scrollListenerBody : HTMLElement | null = null;
@@ -1188,6 +1213,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	disconnectedCallback()
 	{
+		this._abandonDeleteRefillRetry();
 		this._selection.stopPrefetch();
 		this._syncTemplateHandlerListeners(new Set());
 		this.removeEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
@@ -3700,6 +3726,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.fetchFailed = false;
 			this.fetchErrorMessage = "";
 			this._hasFetchedOnce = true;
+			if(this._isPageOutdatedByDelete(response) && this._retryDeleteRefill())
+			{
+				// Dropped, but still marked as fetched below: the retry forgets that
+				// again when it is due, until then the page must not be requested
+				return;
+			}
 			if(typeof response.total !== "undefined")
 			{
 				this.total = response.total ?? null;
@@ -3708,7 +3740,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			for(let rowOffset = 0; rowOffset < (response.rows || []).length; rowOffset++)
 			{
 				const row = response.rows[rowOffset];
-				if(this.displayedRowIds.has(row.id))
+				// A row deleted client-side can still be in a page the server answered
+				// before it processed that delete, once such pages are no longer dropped
+				// (see _deleteRefillDeadline).
+				if(this.displayedRowIds.has(row.id) || this._deletedRowIds.has(row.id))
 				{
 					continue;
 				}
@@ -3718,6 +3753,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 			this._selection.addFetchedRows(start, (response.rows || []).length);
+			this._retryDeleteRefillIfPageLeftGap(start, (response.rows || []).length);
 		}
 		catch(e)
 		{
@@ -3787,10 +3823,95 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Whether the server answered this page before it processed a client-side delete,
+	 * see _deleteRefillDeadline.
+	 */
+	private _isPageOutdatedByDelete(response : Et2DatagridPageResult) : boolean
+	{
+		if(Date.now() >= this._deleteRefillDeadline)
+		{
+			return false;
+		}
+		if(typeof response.total === "number" && this._deleteRefillOutdatedTotals.has(response.total))
+		{
+			return true;
+		}
+		return (response.rows || []).some((row) => this._deletedRowIds.has(row.id));
+	}
+
+	/**
+	 * After a client-side delete, ask again for a page that was merged but left some of
+	 * the indexes it has rows for empty - see _deleteRefillDeadline.
+	 */
+	private _retryDeleteRefillIfPageLeftGap(start : number, rowCount : number) : void
+	{
+		if(Date.now() >= this._deleteRefillDeadline)
+		{
+			return;
+		}
+		for(let index = start; index < start + rowCount; index++)
+		{
+			if(!this._rowsByIndex[index])
+			{
+				this._retryDeleteRefill();
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Have the rows missing behind a client-side delete requested again, at once the
+	 * first time and then with a growing delay - see _deleteRefillDeadline.
+	 *
+	 * @return false if no retry is waiting or was started, because the next one would be
+	 * 	later than the retry window allows
+	 */
+	private _retryDeleteRefill() : boolean
+	{
+		if(this._deleteRefillTimer !== null)
+		{
+			return true;
+		}
+		const delay = this._deleteRefillAttempt === 0 ? 0 :
+		              this._deleteRefillBackoffMs * 2 ** (this._deleteRefillAttempt - 1);
+		if(Date.now() + delay > this._deleteRefillDeadline)
+		{
+			return false;
+		}
+		this._deleteRefillAttempt++;
+		this._deleteRefillTimer = window.setTimeout(() =>
+		{
+			this._deleteRefillTimer = null;
+			// Rows still missing are requested again as soon as they are next needed,
+			// which for the ones on screen is the render requested here
+			this._completedRequestKeys.clear();
+			this.requestUpdate();
+		}, delay);
+		return true;
+	}
+
+	/**
+	 * Stop treating pages as outdated by a client-side delete and stop retrying them,
+	 * see _deleteRefillDeadline.
+	 */
+	private _abandonDeleteRefillRetry() : void
+	{
+		if(this._deleteRefillTimer !== null)
+		{
+			window.clearTimeout(this._deleteRefillTimer);
+			this._deleteRefillTimer = null;
+		}
+		this._deleteRefillAttempt = 0;
+		this._deleteRefillDeadline = 0;
+		this._deleteRefillOutdatedTotals.clear();
+	}
+
+	/**
 	 * Clear rendered rows and related in-memory row id tracking.
 	 */
 	private _clearRows()
 	{
+		this._abandonDeleteRefillRetry();
 		this.rows = [];
 		this._rowsByIndex = [];
 		this._rowRenderVersionById.clear();
@@ -6111,6 +6232,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.selectedRowIds.delete(row.id);
 			this._markRowIdDeleted(row.id);
 			removedCount++;
+		}
+		if(removedCount > 0)
+		{
+			// The server may not have processed this delete yet: until it has, its pages
+			// still report the current total and are retried, see _deleteRefillDeadline.
+			// A retry series still running for an earlier delete starts over.
+			if(this._deleteRefillTimer !== null)
+			{
+				window.clearTimeout(this._deleteRefillTimer);
+				this._deleteRefillTimer = null;
+			}
+			this._deleteRefillAttempt = 0;
+			if(Date.now() >= this._deleteRefillDeadline)
+			{
+				this._deleteRefillOutdatedTotals.clear();
+			}
+			if(this.total !== null)
+			{
+				this._deleteRefillOutdatedTotals.add(this.total);
+			}
+			this._deleteRefillDeadline = Date.now() + Et2Datagrid.DELETE_REFILL_WINDOW_MS;
+			// The rows after a removed one moved up, so the end of the loaded range is now
+			// empty. Those indexes belong to pages already fetched once - forget that, or
+			// they are never requested again and stay loading placeholders.
+			this._completedRequestKeys.clear();
 		}
 		if(removedCount > 0 && this.total !== null)
 		{
