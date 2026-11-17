@@ -986,6 +986,7 @@ no - cancel	common	de	Nicht Löschen - Abbruch
 no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen!
 no data for the selected entry	common	de	Keine Daten für den ausgewählten Eintrag
 no default set	common	de	Keine Vorgabe gesetzt
+no edit rights, document not linked to the entry. saved to: %1	common	de	Keine Bearbeitungsrechte, Dokument wurde nicht mit dem Eintrag verknüpft. Gespeichert unter: %1
 no email address found for %1	common	de	Keine E-Mail-Adresse gefunden für %1
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
 no file	common	de	Keine Datei
@@ -1625,6 +1626,7 @@ you are required to change your password during your first login	common	de	Sie m
 you can not choose more then %1 item(s)!	common	de	Sie dürfen nicht mehr als %1 Einträge auswählen!
 you can respond by visiting:	common	de	Sie können unter dem folgenden Verweis antworten:
 you have been successfully logged out	login	de	Abmelden erfolgreich.
+you have no edit rights for the selected entries	common	de	Sie haben keine Bearbeitungsrechte für die ausgewählten Einträge
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben.
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben.
 you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben.

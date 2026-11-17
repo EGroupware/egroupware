@@ -2961,7 +2961,7 @@ abstract class Merge
 		}
 
 		$id_group = $individual ? $ids : [$ids];
-		$merged = $attach = [];
+		$merged = $attach = $not_linked = [];
 		$target = '';
 		foreach($id_group as $ids)
 		{
@@ -2983,13 +2983,25 @@ abstract class Merge
 				// Move to entry
 				if($link)
 				{
+					$source = $target;
 					foreach((array)$ids as $id)
 					{
-						// Copy to entry
-						Api\Link::link($app, $id, Api\Link::VFS_APPNAME, Vfs::PREFIX . $target);
+						// Copy to entry, which needs edit rights on it
+						if(Api\Link::file_access($app, $id, Api\Acl::EDIT) &&
+							Api\Link::link($app, $id, Api\Link::VFS_APPNAME, Vfs::PREFIX . $source))
+						{
+							$target = Api\Link::vfs_path($app, $id, Vfs::basename(Vfs::PREFIX . $source));
+						}
+					}
+					if($target !== $source)
+					{
 						// Remove
-						Vfs::unlink($target);
-						$target = Api\Link::vfs_path($app, $id, Vfs::basename(Vfs::PREFIX . $target));
+						Vfs::unlink($source);
+					}
+					else
+					{
+						// No entry took it, the document stays where it was merged to
+						$not_linked[] = $source;
 					}
 				}
 
@@ -3068,6 +3080,11 @@ abstract class Merge
 					{
 						foreach((array)$ids as $id)
 						{
+							// Needs edit rights on the entry
+							if(!Api\Link::file_access($app, $id, Api\Acl::EDIT))
+							{
+								continue;
+							}
 							$target = Api\Link::vfs_path($app, $id, $filename);
 
 							// Make sure we won't overwrite something already there
@@ -3088,6 +3105,10 @@ abstract class Merge
 		// Find out what to do with it - can't handle multiple documents directly
 		if($return || count($merged) > 1)
 		{
+			if($not_linked)
+			{
+				$merged[] = ['not_linked' => $not_linked];
+			}
 			return $merged;
 		}
 		// Open email in compose?
@@ -3253,17 +3274,31 @@ abstract class Merge
 		// entry - internal "stylite.links://..." details the user can't make sense of - so drop
 		// them and report only the send status. Without an email, those paths are the only
 		// feedback we have, so keep showing them.
-		$has_email_result = count(array_filter($merge_result, fn($result) => !is_string($result))) > 0;
+		$has_email_result = count(array_filter($merge_result, fn($result) => !is_string($result) && !isset($result['not_linked']))) > 0;
+
+		$unlinked = array_merge(...array_column(array_filter($merge_result, 'is_array'), 'not_linked'));
 
 		foreach($merge_result as $result)
 		{
-			if(is_string($result))
+			// Documents that could not be linked to their entry: say where they are instead
+			if(is_array($result) && isset($result['not_linked']))
+			{
+				$not_linked = lang('No edit rights, document not linked to the entry. Saved to: %1', implode(', ', $result['not_linked']));
+				$message .= $not_linked . "\n";
+				// A single merge opened in compose shows no result message of its own
+				if($open_email)
+				{
+					$response->apply('egw.message', [$not_linked, 'info']);
+				}
+			}
+			elseif(is_string($result))
 			{
 				if($options['download'])
 				{
 					$response->apply('egw.open_link', [Vfs::download_url($result, true), '_browser']);
 				}
-				if(!$has_email_result)
+				// Unlinked documents are reported with their own message
+				if(!$has_email_result && !in_array($result, $unlinked))
 				{
 					$message .= $result . "\n";
 				}

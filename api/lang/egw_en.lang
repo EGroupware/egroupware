@@ -984,6 +984,7 @@ no - cancel	common	en	No - Cancel
 no column to swap with !!!	common	en	No column to swap with!
 no data for the selected entry	common	en	No data for the selected entry
 no default set	common	en	No default set
+no edit rights, document not linked to the entry. saved to: %1	common	en	No edit rights, document not linked to the entry. Saved to: %1
 no email address found for %1	common	en	No email address found for %1
 no entries found, try again ...	common	en	No entries found, try again ...
 no file	common	en	No file
@@ -1623,6 +1624,7 @@ you are required to change your password during your first login	common	en	You a
 you can not choose more then %1 item(s)!	common	en	You can not choose more then %1 item(s)!
 you can respond by visiting:	common	en	You can respond by visiting
 you have been successfully logged out	login	en	You have been successfully logged out.
+you have no edit rights for the selected entries	common	en	You have no edit rights for the selected entries
 you have not entered a title	common	en	You have not entered a title.
 you have not entered a valid date	common	en	You have not entered a valid date.
 you have not entered a valid time of day	common	en	You have not entered a valid time of day.
