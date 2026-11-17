@@ -14,6 +14,15 @@
         <ini name="memory_limit" value="512M"/>
         <!-- Local override without committing: EGW_URL="http://your-host/egroupware" vendor/bin/phpunit -c doc/phpunit.xml -->
         <env name="EGW_URL" value="http://localhost/egroupware"/>
+        <!-- Db's own 1s mysqli connect-timeout (api/src/Db.php, "quicker failover to other
+             db-nodes") is tuned for production, not a shared CI runner: LoggedInTest disconnects
+             and freshly reconnects once per test class (~100+ times over the full suite), and
+             each of those fresh Connect() calls only gets 1s before giving up - enough for a
+             single-node CI DB container to occasionally blow through under runner resource
+             contention, cascading into every later test class failing identically (ralf,
+             2026-11-17, CI run 44048453646). 1s stays the production/real-install default;
+             only CI gets this override. -->
+        <env name="EGW_DB_CONNECT_TIMEOUT" value="10"/>
         <var name="EGW_DOMAIN" value="default" />
         <!-- Non-admin test account, normalized into $GLOBALS['EGW_USER']/['EGW_PASSWORD'] by
              phpunit_bootstrap.php (default "demo"/"guest", matching a fresh install). Accounts

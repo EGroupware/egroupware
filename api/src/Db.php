@@ -558,8 +558,12 @@ class Db
 				}
 				if ($Type == 'mysqli')
 				{
-					// set a connection timeout of 1 second, to allow quicker failover to other db-nodes (default is 20s)
-					$this->Link_ID->setConnectionParameter(MYSQLI_OPT_CONNECT_TIMEOUT, 1);
+					// set a connection timeout of 1 second, to allow quicker failover to other db-nodes
+					// (default is 20s) - overridable via EGW_DB_CONNECT_TIMEOUT (eg. by CI's
+					// phpunit.xml), since a shared CI runner can occasionally need longer than 1s
+					// for a single-node DB container under contention, unlike a real install
+					$this->Link_ID->setConnectionParameter(MYSQLI_OPT_CONNECT_TIMEOUT,
+						(int)(getenv('EGW_DB_CONNECT_TIMEOUT') ?: 1));
 					// ADOdb's mysqli driver constructor (just run by ADONewConnection() above) forces
 					// mysqli_report(MYSQLI_REPORT_OFF), undoing PHP 8.1+'s own exception-throwing
 					// default - re-enable it so query()'s catch(\mysqli_sql_exception $e) block (and
