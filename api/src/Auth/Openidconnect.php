@@ -70,6 +70,23 @@ class Openidconnect implements BackendSSO
 			//error_log(__METHOD__."() session_status()=".session_status().", _SESSION=".json_encode($_SESSION));
 			$this->client->authenticate();
 
+			// TEMPORARY DEBUG: log claims (never the token itself) of the IdP's access token, to check it for use with Stalwart
+			try {
+				$claims = [];
+				foreach(['access' => $this->client->getAccessToken(), 'id' => $this->client->getIdToken()] as $name => $jwt)
+				{
+					$parts = explode('.', (string)$jwt);
+					$payload = count($parts) === 3 ? json_decode(base64_decode(strtr($parts[1], '-_', '+/')), true) : null;
+					$claims[$name] = is_array($payload) ? array_intersect_key($payload, array_flip([
+						'iss', 'aud', 'azp', 'scope', 'typ', 'sub', 'preferred_username', 'email', 'iat', 'exp', 'sid'
+					])) + ['lifetime' => ($payload['exp'] ?? 0) - ($payload['iat'] ?? 0)] : 'NOT a JWT, length '.strlen((string)$jwt);
+				}
+				error_log(__METHOD__."() SSO-DEBUG claims=".json_encode($claims).", refresh_token=".($this->client->getRefreshToken() ? 'yes' : 'no'));
+			}
+			catch (\Throwable $e) {
+				error_log(__METHOD__."() SSO-DEBUG failed: ".$e->getMessage());
+			}
+
 			// use configured payload attribute / claim, defaulting to "sub"
 			$attribute = ($GLOBALS['egw_info']['server']['oic_username_attribute'] ?? 'sub');
 			if ($attribute === 'custom' && !empty($GLOBALS['egw_info']['server']['oic_username_custom']))
