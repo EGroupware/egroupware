@@ -236,13 +236,28 @@ class BodyDecoding
 	 * "message is just a pdf" echo, and Jmap\Imap::structureToHtml()'s identical bare-content
 	 * branch) would otherwise embed/stream the base64 TEXT itself as if it were the real binary.
 	 *
-	 * Deliberately has no per-format magic-byte table (checking for "%PDF-"/PNG/JPEG signatures
-	 * specifically) - genuine binary content (a real PDF or image, of any size worth looking at) is
-	 * virtually certain to contain at least one byte outside the base64 alphabet, so "the ENTIRE
-	 * content, once whitespace is stripped, matches the base64 charset with valid padding" is
-	 * already a safe, strong, format-independent signal on its own that this is undecoded base64
-	 * text, not real bytes - and is what actually let this same fix cover an image just as well as
-	 * a PDF without needing separate detection logic per type.
+	 * Originally had no per-format magic-byte table (checking for "%PDF-"/PNG/JPEG signatures
+	 * specifically) on the theory that genuine binary content (a real PDF or image, of any size
+	 * worth looking at) is virtually certain to contain at least one byte outside the base64
+	 * alphabet - a safe, strong, format-independent signal that content passing that check is
+	 * undecoded base64 text, not real bytes.
+	 *
+	 * That theory missed a second way to reach the same shape: genuine PLAIN TEXT that merely
+	 * happens to be alphanumeric-only for a long stretch - found live (ticket #128021, a fixed-
+	 * width payroll export attachment: digits/letters in space-padded columns, no punctuation
+	 * anywhere near the start) hit the exact same "entire sample is base64-alphabet-safe, correctly
+	 * padded" shape as real base64 text, so this base64-decoded perfectly legitimate content into
+	 * garbage - the reported symptom ("the text looks chinese") is exactly what random bytes look
+	 * like once mis-rendered as text. Unlike real base64-encoded binary, decoding content that was
+	 * never actually base64 produces bytes with no real structure at all - looksGenuinelyDecoded()
+	 * below rejects that: valid UTF-8 (ASCII included) covers every plain-text case this method
+	 * was ever meant to unwrap, and a small signature table covers genuine binary (the magic bytes
+	 * a real PDF/image/office-zip decode would start with) - restoring the original per-format-
+	 * table-free design's goal for formats in that table, while refusing to ever turn good text
+	 * into noise. A binary format outside the table reaching this exact narrow edge case (bare
+	 * whole-message attachment, no Content-Transfer-Encoding, content that also happens to pass
+	 * the base64-alphabet prefix check) is an accepted, deliberate trade-off against the far more
+	 * commonly reported failure mode this fixes.
 	 *
 	 * A PDF/image can be large (tens of MB) and this is only ever reached for the "whole message IS
 	 * the attachment" case, which already holds a base64-inflated copy of the whole thing in memory
@@ -291,7 +306,44 @@ class BodyDecoding
 		rewind($stream);
 		$decoded = stream_get_contents($stream);
 		fclose($stream);
-		return $decoded !== '' ? $decoded : $bytes;
+		return $decoded !== '' && self::looksGenuinelyDecoded($decoded) ? $decoded : $bytes;
+	}
+
+	/**
+	 * Does $decoded look like it was genuinely meant to be base64-decoded, rather than plain text
+	 * that merely happened to pass decodeIfStillBase64()'s cheap alphabet/padding prefix check?
+	 *
+	 * Random-looking bytes produced by base64-decoding content that was never actually base64
+	 * (eg. a fixed-width text export) have no structure at all - neither valid UTF-8 (every real
+	 * text case this is meant to unwrap decodes BACK to text) nor a recognizable binary signature
+	 * (every real binary case on record, PDF/image/office-zip, has one).
+	 *
+	 * @param string $decoded
+	 * @return bool
+	 */
+	private static function looksGenuinelyDecoded(string $decoded) : bool
+	{
+		if (mb_check_encoding($decoded, 'UTF-8'))
+		{
+			return true;
+		}
+		static $signatures = [
+			"%PDF-",             // PDF
+			"\xff\xd8\xff",       // JPEG
+			"\x89PNG\r\n\x1a\n", // PNG
+			"GIF87a", "GIF89a",  // GIF
+			"PK\x03\x04",         // zip-based (docx/xlsx/pptx/odt/...)
+			"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1", // legacy OLE compound file (doc/xls/ppt)
+			"BM",                 // BMP
+		];
+		foreach ($signatures as $signature)
+		{
+			if (str_starts_with($decoded, $signature))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
