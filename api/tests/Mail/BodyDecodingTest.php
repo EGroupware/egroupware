@@ -220,6 +220,26 @@ class BodyDecodingTest extends TestCase
 	}
 
 	/**
+	 * Regression test for ticket #128021: a fixed-width payroll export attachment (digits/letters
+	 * in space-padded columns, no punctuation anywhere near the start) passed the old alphabet/
+	 * padding-only prefix check - exactly like real base64 text does - and got base64-decoded into
+	 * garbage, even though it was never base64 to begin with. Reported live as "the text looks
+	 * chinese" (mis-rendered random bytes). Genuine plain text must always survive unchanged,
+	 * regardless of how alphabet-safe it happens to look.
+	 */
+	public function testAlphanumericPlainTextIsNeverTreatedAsBase64()
+	{
+		// representative of the real attachment: fixed-width records, letters+digits only
+		// (the spaces are stripped by the method's own whitespace-insensitive sampling, same as
+		// real MIME line-wrap whitespace would be) - long enough and alphabet-safe enough to pass
+		// the old checks, but genuinely plain text, not base64.
+		$line = 'AB001EXAMPLEEXPORT'.str_repeat('0', 20).'1970101'.str_repeat(' ', 12).'XXX';
+		$text = str_repeat($line."\r\n", 40);
+
+		$this->assertSame($text, BodyDecoding::decodeIfStillBase64($text));
+	}
+
+	/**
 	 * Memory-safety regression guard (ralf, live: "we must be careful not to exceed PHP
 	 * memory_limit, as PDFs can be quite big!") - a large genuinely-binary attachment must be
 	 * rejected via ONLY its cheap prefix check, never triggering the full-string preg_replace/
