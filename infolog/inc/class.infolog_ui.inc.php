@@ -1159,6 +1159,8 @@ class infolog_ui
 		$values['nm']['parent_id'] = 'info_id_parent';
 		$values['nm']['is_parent'] = 'info_anz_subs';
 		$values['nm']['action_var'] = 'multi_action';    // as 'action' is already used in infolog
+		// the entry the list shows the linked or sub-entries of, a favorite sets or resets it
+		$values['nm']['extra_attributes'] = ['action', 'action_id'];
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change";
