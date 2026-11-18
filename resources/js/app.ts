@@ -47,6 +47,18 @@ class resourcesApp extends EgwApp
 	}
 
 	/**
+	 * A link with view_accs_of lists the accessories of that resource
+	 */
+	protected linkParamFilters(param : string, value : string, query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null | undefined
+	{
+		if(param === "view_accs_of")
+		{
+			return parseInt(value) ? {filter2: parseInt(value)} : null;
+		}
+		return super.linkParamFilters(param, value, query, nm);
+	}
+
+	/**
 	 * Destructor
 	 */
 	destroy(_app)

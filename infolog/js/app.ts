@@ -257,6 +257,87 @@ class InfologApp extends EgwApp
 	}
 
 	/**
+	 * Show a link to the list in the loaded list
+	 *
+	 * The title a link gives its view of linked entries, eg. "selected contacts", is shown as a
+	 * message: nothing in the list says what the entries are linked to, if it is more than one entry.
+	 * The message closes itself after 5 seconds.
+	 */
+	linkHandler(url : string) : boolean | string
+	{
+		const handled = super.linkHandler(url);
+		const title = handled ? new URLSearchParams((url || "").split("?")[1] ?? "").get("action_title") : "";
+		if(title)
+		{
+			const message = this.egw.lang("InfoLog") + ": " + title;
+			const framework = <any>(<any>this.egw.window).framework;
+			// only the framework's message takes a duration, in seconds
+			if(typeof framework?.message === "function")
+			{
+				framework.message(message, "info", 5);
+			}
+			else
+			{
+				this.egw.message(message, "info");
+			}
+		}
+		return handled;
+	}
+
+	/**
+	 * Filter "default" stands for the user's default filter and the view of linked or sub-entries
+	 * needs action together with action_id: these are not set as they are named
+	 */
+	protected linkParamFilters(param : string, value : string, query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null | undefined
+	{
+		if(param === "filter" && value === "default" || ["action", "action_id", "action_id[]", "action_title"].includes(param))
+		{
+			return undefined;
+		}
+		return super.linkParamFilters(param, value, query, nm);
+	}
+
+	/**
+	 * Filters a link to the list stands for
+	 *
+	 * A link with action and action_id lists the entries linked to entries of another application,
+	 * or with action "sp" an entry with its sub-entries.  The server reads both from the filters of
+	 * the list.  For a single linked entry the "linked" column filter is set too, as the index page
+	 * does.  Any other link leaves such a view again, as loading it does.
+	 */
+	protected _linkFilters(query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null
+	{
+		const action = query.get("action");
+		if(!action)
+		{
+			const filters = super._linkFilters(query, nm);
+			return !filters || !nm?.activeFilters?.action ? filters : {
+				...filters, action: null, action_id: null,
+				col_filter: {linked: "", info_id_parent: "", ...(filters.col_filter ?? {})}
+			};
+		}
+		// action_title is not needed, the list does not show it
+		if([...query.keys()].some(param => !["menuaction", "ajax", "action", "action_id", "action_id[]", "action_title"].includes(param)))
+		{
+			return null;
+		}
+		const ids = [...query.getAll("action_id[]"), ...query.getAll("action_id")].filter(id => id !== "");
+		if(action === "sp")
+		{
+			const parent = ids.length === 1 ? ids[0].replace(/^infolog:/, "") : "";
+			return parent ? {action, action_id: parent, col_filter: {info_id_parent: parent, linked: ""}} : null;
+		}
+		if(!ids.length || !this.egw.app(action))
+		{
+			return null;
+		}
+		return {
+			action, action_id: ids,
+			col_filter: {linked: ids.length === 1 ? {app: action, id: ids[0]} : "", info_id_parent: ""}
+		};
+	}
+
+	/**
 	 * Enable or disable the date filter
 	 *
 	 * If the filter is set to something that needs dates, we open the

@@ -787,6 +787,126 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Show a link to the application's list in the list that is already loaded
+	 *
+	 * The framework asks this before it loads a link into the application's tab.  When the tab
+	 * already shows the page the link points to and every parameter of the link is a filter of its
+	 * nextmatch, the filters are set on that nextmatch and the page is kept.  Everything else is left
+	 * to the framework, which loads the link: another page, a link without a filter (it is a request
+	 * to reload) and a link with a parameter linkParamFilters() does not know.
+	 *
+	 * @param {string} url
+	 * @return {boolean|string} true if the link was shown in the loaded list, false for the framework to
+	 *	load it.  Applications with their own handler may return something else that is true or false.
+	 */
+	linkHandler(url : string) : boolean | string
+	{
+		const query = new URLSearchParams((url || "").split("?")[1] ?? "");
+		const nm = this._linkNextmatch(query.get("menuaction"));
+		const filters = nm ? this._linkFilters(query, nm) : null;
+		if(!filters)
+		{
+			return false;
+		}
+		nm.applyFilters(filters);
+		if(query.get("msg"))
+		{
+			this.egw.message(query.get("msg"));
+		}
+		return true;
+	}
+
+	/**
+	 * Filters of the nextmatch a parameter of a link to the application's list stands for
+	 *
+	 * Known without an application's help are the search and every filter the nextmatch already
+	 * has a value for, empty or not: a parameter named like one of its filters, or col_filter[name]
+	 * for one of its column filters.  A parameter with an empty value sets nothing.
+	 *
+	 * Applications extend this for the other parameters their index page reads from the link, and
+	 * must give them the meaning the server gives them.  They return undefined for a parameter
+	 * named like a filter, if the server reads its value differently.
+	 *
+	 * @param {string} param name of the parameter
+	 * @param {string} value its value
+	 * @param {URLSearchParams} query all parameters of the link
+	 * @param {Et2Nextmatch} nm the loaded nextmatch the filters are for
+	 * @return {object|null|undefined} filters to set, null for a parameter that is known and sets
+	 *	no filter, undefined for an unknown parameter: the link is then loaded from the server
+	 */
+	protected linkParamFilters(param : string, value : string, query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null | undefined
+	{
+		const active : Record<string, any> = nm?.activeFilters ?? {};
+		// a number stays a number, widgets compare their value with the filter's
+		const typed = (current : any) => typeof current === "number" && value.trim() !== "" && !isNaN(Number(value)) ? Number(value) : value;
+		const column = param.match(/^col_filter\[([^\]]+)]$/)?.[1];
+		if(column)
+		{
+			const col_filter = active.col_filter ?? {};
+			return !(column in col_filter) ? undefined : (value !== "" ? {col_filter: {[column]: typed(col_filter[column])}} : null);
+		}
+		if(param === "search" || !["col_filter", "sort"].includes(param) && param in active &&
+			(active[param] === null || typeof active[param] !== "object"))
+		{
+			return value !== "" ? {[param]: typed(active[param])} : null;
+		}
+		return undefined;
+	}
+
+	/**
+	 * Filters all parameters of a link stand for
+	 *
+	 * @param {URLSearchParams} query parameters of the link
+	 * @param {Et2Nextmatch} nm the loaded nextmatch the filters are for
+	 * @return {object|null} filters to set, null if the link sets no filter or has an unknown parameter
+	 */
+	protected _linkFilters(query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null
+	{
+		const filters : Record<string, any> = {};
+		for(const [param, value] of query)
+		{
+			if(["menuaction", "ajax", "msg"].includes(param))
+			{
+				continue;
+			}
+			const paramFilters = this.linkParamFilters(param, value, query, nm);
+			if(typeof paramFilters === "undefined")
+			{
+				return null;
+			}
+			const {col_filter, ...others} = paramFilters ?? {};
+			Object.assign(filters, others);
+			if(col_filter)
+			{
+				filters.col_filter = {...(filters.col_filter ?? {}), ...col_filter};
+			}
+		}
+		return Object.keys(filters).length ? filters : null;
+	}
+
+	/**
+	 * Nextmatch of the application's tab, if the tab shows the application's own page and the given
+	 * menuaction is that page
+	 *
+	 * A tab that has loaded any other link, even one to the same page with other parameters, does not
+	 * count: the server may have put the page into a state the next link has to reset.
+	 *
+	 * @param {string} menuaction
+	 * @return {Et2Nextmatch|null} null if the tab shows another link, is loading or has no nextmatch
+	 */
+	protected _linkNextmatch(menuaction : string) : Et2Nextmatch | null
+	{
+		const fwApp = <EgwFrameworkApp>(<any>egw_getFramework())?.querySelector?.(`egw-app[id="${this.appname}"]`);
+		if(!menuaction || !fwApp || fwApp.loading || !fwApp.isUsingAppUrl ||
+			new URLSearchParams((fwApp.url || "").split("?")[1] ?? "").get("menuaction") !== menuaction)
+		{
+			return null;
+		}
+		const nm = <any>fwApp.getNextmatch?.();
+		return nm && nm.isConnected && typeof nm.applyFilters === "function" ? nm : null;
+	}
+
+	/**
 	 * Set the application's state to the given state.
 	 *
 	 * While not pretending to implement the history API, it is patterned similarly

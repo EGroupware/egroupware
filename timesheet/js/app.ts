@@ -55,6 +55,24 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * A link with link_app and link_id lists the timesheets linked to that entry
+	 *
+	 * As on the server, only for an application whose entries can be searched for linking.
+	 */
+	protected linkParamFilters(param : string, value : string, query : URLSearchParams, nm? : Et2Nextmatch) : Record<string, any> | null | undefined
+	{
+		switch(param)
+		{
+			case "link_app":
+				return query.get("link_id") && this.egw.link_get_registry(value, "query") ?
+					{col_filter: {linked: {app: value, id: query.get("link_id")}}} : null;
+			case "link_id":
+				return null;
+		}
+		return super.linkParamFilters(param, value, query, nm);
+	}
+
+	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
 	 * make sure to clean it up in destroy().
