@@ -36,7 +36,6 @@ can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
 check virtual filesystem	common	fi	Tarkista VFS
-classic	filemanager	fi	Standardityökalurivi
 clear search	filemanager	fi	Tyhjennä haku
 clipboard is empty!	filemanager	fi	Leikepöytä on tyhjä!
 comment	filemanager	fi	Kommentti
@@ -197,7 +196,6 @@ no files in this directory.	filemanager	fi	Kansiossa ei ole tiedostoja
 no preview available	filemanager	fi	Esikatselu ei ole käytössä
 no version history for this file/directory	filemanager	fi	Tiedostolla/kansiolla ei ole versioita
 noone	filemanager	fi	Ei kukaan
-notebookbar	filemanager	fi	Tabbed
 older versions or deleted files	filemanager	fi	Vanhat versiot ja/tai poistetut tiedostot
 only owner can rename or delete the content	filemanager	fi	Ainoastaan omistaja voi uudellennimetä tai poistaa sisällön
 open	filemanager	fi	Avoin

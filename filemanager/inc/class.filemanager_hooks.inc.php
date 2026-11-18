@@ -221,16 +221,19 @@ class filemanager_hooks
 			)
 		);
 
-		if($GLOBALS['egw_info']['user']['apps']['collabora'])
+		if(!empty($GLOBALS['egw_info']['user']['apps']['collabora']))
 		{
-			$settings += array(
-				'ui_mode' => array(
-					'type' => 'select',
-					'label' => lang('UI mode'),
-					'name' => 'ui_mode',
-					'values' => ['classic' => lang('classic'),'notebookbar' => lang('notebookbar')],
-					'default' => 'notebookbar'
-				)
+			// Collabora's own settings (interface, documents, ...) are in the preferences of Collabora Online,
+			// switch there like the application selection at the top of the dialog does
+			$settings['collabora_preferences'] = array(
+				'type'       => 'et2-button',
+				'name'       => 'collabora_preferences',
+				'label'      => '',
+				'attributes' => array(
+					'label'    => lang('Collabora Online preferences'),
+					'noSubmit' => true,
+					'onclick'  => "widget.getRoot().getWidgetById('appname').value = 'collabora'; widget.getInstanceManager().submit(); return false;",
+				),
 			);
 		}
 

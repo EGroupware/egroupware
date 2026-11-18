@@ -108,7 +108,6 @@ move to	filemanager	id	Pindahkan ke
 moved %1 to %2	filemanager	id	%1 dipindahkan ke %2
 no access	filemanager	id	No access
 noone	filemanager	id	Noone
-notebookbar	filemanager	id	Tab
 open	filemanager	id	Open
 open documents with collabora, if permissions are given	filemanager	id	Membuka dokumen dengan Collabora Online, jika izin diberikan
 operation	filemanager	id	Operasi

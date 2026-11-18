@@ -4,7 +4,6 @@
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	ro	%1 erori de ștergere, %2 directoare și %3 fișiere șterse!
 %1 failed, %2 succeded	filemanager	ro	%1 a eșuat, %2 a reușit.
 %1 files unlocked.	filemanager	ro	%1 fișiere deblocate.
-classic	filemanager	ro	Bara de instrumente standard
 could not install async job	filemanager	ro	Nu s-a putut instala sarcina asincronă
 creationdate of file	filemanager	ro	Data creării fișierului
 custom fields	filemanager	ro	Câmpuri personalizate
@@ -78,7 +77,6 @@ modified between	filemanager	ro	Modificat între
 mount permanently	filemanager	ro	Montarea permanentă
 mountpoints	filemanager	ro	Puncte de montare
 move file to	filemanager	ro	Mutați fișierul în
-notebookbar	filemanager	ro	Tabulat
 open documents with collabora, if permissions are given	filemanager	ro	Deschideți documente cu Collabora Online, dacă sunt acordate permisiuni
 password for webdav and smb, use $pass for password of logged in user	filemanager	ro	Parola pentru WebDAV și SMB, utilizați $pass pentru parola utilizatorului conectat
 path and query-parameters, smb: share and optional path (with /)	filemanager	ro	Path și parametrii de interogare, SMB: share și calea opțională (cu /)

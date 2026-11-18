@@ -5,7 +5,6 @@
 %1 failed, %2 succeded	filemanager	tr	%1 başarısız, %2 başarılı.
 %1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
 applications	common	tr	Uygulamalar
-classic	filemanager	tr	Standart Araç Çubuğu
 could not install async job	filemanager	tr	Asenkron iş yüklenemedi
 creationdate of file	filemanager	tr	Dosyanın oluşturulma tarihi
 custom fields	filemanager	tr	Özel Alanlar
@@ -90,7 +89,6 @@ mountpoints	filemanager	tr	Mountpoints
 move file to	filemanager	tr	Dosyayı şuraya taşıyın
 new directory	common	tr	Yeni klasör
 no preview available	filemanager	tr	Önizleme mevcut değil.
-notebookbar	filemanager	tr	Sekmeli
 open documents with collabora, if permissions are given	filemanager	tr	İzinler verilmişse Collabora Online ile belgeleri açın
 password for webdav and smb, use $pass for password of logged in user	filemanager	tr	WebDAV ve SMB için şifre, oturum açmış kullanıcının şifresi için $pass kullanın
 path and query-parameters, smb: share and optional path (with /)	filemanager	tr	Yol ve sorgu parametreleri, SMB: paylaşım ve isteğe bağlı yol (/ ile)

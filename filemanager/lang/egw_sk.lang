@@ -48,7 +48,6 @@ cancel editing %1 without saving	filemanager	sk	Zrušiť úpravy %1 bez uloženi
 cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť priečinok lebo začína alebo končí medzerou
 cautiously rejecting to remove folder '%1'!	filemanager	sk	Z opatrnosti odmietam odstrániť priečinok '%1'!
 check virtual filesystem	common	sk	Skontrolovať virtuálny súborový systém
-classic	filemanager	sk	Štandardný panel nástrojov
 clear search	filemanager	sk	Vyčistiť hľadanie
 clipboard is empty!	filemanager	sk	Schránka je prázdna!
 comment	filemanager	sk	Poznámka
@@ -223,7 +222,6 @@ no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
 no preview available	filemanager	sk	Nie je k dispozícii žiadny náhľad
 no version history for this file/directory	filemanager	sk	Žiadna história verzií pre tento súbor/priečinok.
 noone	filemanager	sk	Nikto
-notebookbar	filemanager	sk	V kartách
 older versions or deleted files	filemanager	sk	Staré verzie alebo odstránené súbory
 only owner can rename or delete the content	filemanager	sk	Iba vlastník môže premenovať alebo odstrániť obsah
 open	filemanager	sk	Otvoriť
@@ -315,7 +313,6 @@ there's already a file with that name!	filemanager	sk	Súbor s týmto menom už 
 tile view	filemanager	sk	Dlaždicové zobrazenie
 to overwrite the existing file store again.	filemanager	sk	Ak chcete prepísať existujúci súbor, uložte znovu.
 total files	filemanager	sk	Súborov celkovo
-ui mode	filemanager	sk	Štandardný panel nástrojov
 under directory	filemanager	sk	pod adresárom
 unlock	filemanager	sk	Odomknúť
 unmount	filemanager	sk	Odpojiť

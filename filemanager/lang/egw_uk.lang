@@ -5,7 +5,6 @@
 %1 failed, %2 succeded	filemanager	uk	Не вдалося виконати %1, успішно виконано %2.
 %1 files unlocked.	filemanager	uk	Розблоковано %1 файл.
 applications	common	uk	Приложення
-classic	filemanager	uk	Стандартна панель інструментів
 comment	filemanager	uk	Коментувати
 could not install async job	filemanager	uk	Не вдалося встановити асинхронне завдання
 creationdate of file	filemanager	uk	Дата створення файлу
@@ -86,7 +85,6 @@ modified between	filemanager	uk	Змінено між
 mount permanently	filemanager	uk	Змонтувати назавжди
 mountpoints	filemanager	uk	Точки монтування
 move file to	filemanager	uk	Перемістити файл до
-notebookbar	filemanager	uk	З табуляцією
 open	filemanager	uk	відкрито
 open documents with collabora, if permissions are given	filemanager	uk	Відкривайте документи за допомогою Collabora Online, якщо надані дозволи
 password for webdav and smb, use $pass for password of logged in user	filemanager	uk	Пароль для WebDAV і SMB, використовуйте $pass як пароль користувача, що увійшов до системи

@@ -50,9 +50,9 @@ cannot create symlink: %1 and %2 would create a loop!	filemanager	de	Symlink kan
 cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Ordners '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
-classic	filemanager	de	Symbolleisten
 clear search	filemanager	de	Suchfelder zurücksetzen
 clipboard is empty!	filemanager	de	Zwischenablage ist leer!
+collabora online preferences	filemanager	de	Collabora Online Einstellungen
 comment	filemanager	de	Kommentar
 configuration changed.	filemanager	de	Konfiguration geändert
 confirm final delete	filemanager	de	Endgültiges Löschen bestätigen
@@ -227,7 +227,6 @@ no files in this directory.	filemanager	de	Keine Dateien in diesem Ordner
 no preview available	filemanager	de	Keine Vorschau verfügbar
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder diesen Ordner
 noone	filemanager	de	Niemand
-notebookbar	filemanager	de	In Registern
 older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte Dateien
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
 open	filemanager	de	Öffnen
@@ -320,7 +319,6 @@ there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei
 tile view	filemanager	de	Kachelansicht
 to overwrite the existing file store again.	filemanager	de	Zum Überschreiben der Datei nochmal speichern.
 total files	filemanager	de	Gesamtanzahl Dateien
-ui mode	filemanager	de	Benutzeroberfläche
 under directory	filemanager	de	unter dem Ordner
 unlock	filemanager	de	Entsperren
 unmount	filemanager	de	Unmount

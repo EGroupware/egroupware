@@ -41,7 +41,6 @@ cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zon
 cannot create directory because it begins or ends in a space	filemanager	nl	Kan de directory niet aanmaken omdat de naam met en spatie begint of eindigt
 cautiously rejecting to remove folder '%1'!	filemanager	nl	Geweigerd (voorzorg) om map te verwijderen %1!
 check virtual filesystem	common	nl	Controleer het virtueel bestandsysteem
-classic	filemanager	nl	Standaard werkbalk
 clear search	filemanager	nl	zoekcriteria leegmaken
 clipboard is empty!	filemanager	nl	Klembord is leeg
 comment	filemanager	nl	Commentaar
@@ -206,7 +205,6 @@ no files in this directory.	filemanager	nl	Geen bestanden in deze directory.
 no preview available	filemanager	nl	Geen afdrukvoorbeeld beschikbaar
 no version history for this file/directory	filemanager	nl	Geen versie historie voor dit bestand/deze directory
 noone	filemanager	nl	Geen
-notebookbar	filemanager	nl	Getabd
 older versions or deleted files	filemanager	nl	Oude versiers of verwijderde bestanden
 only owner can rename or delete the content	filemanager	nl	Alleen de eigenaar kan de inhoud hernoemen of verwijderen
 open	filemanager	nl	open

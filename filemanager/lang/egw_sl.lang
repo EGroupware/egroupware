@@ -48,7 +48,6 @@ cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranje
 cannot create directory because it begins or ends in a space	filemanager	sl	Mapa ne more biti ustvarjena, ker se začne ali konča s presledkom.
 cautiously rejecting to remove folder '%1'!	filemanager	sl	Ne morem odstraniti mape '%1'!
 check virtual filesystem	common	sl	Preverite virtualni datotečni sistem
-classic	filemanager	sl	Standardna orodna vrstica
 clear search	filemanager	sl	Izbriši iskanje
 clipboard is empty!	filemanager	sl	Odložišče je prazno!
 comment	filemanager	sl	Komentar
@@ -223,7 +222,6 @@ no files in this directory.	filemanager	sl	V tej mapi ni datotek
 no preview available	filemanager	sl	Predogled ni na voljo
 no version history for this file/directory	filemanager	sl	Ni zgodovine različic za to datoteko/mapo.
 noone	filemanager	sl	Nihče
-notebookbar	filemanager	sl	Zavihek
 older versions or deleted files	filemanager	sl	Starejše različice ali izbrisane datoteke
 only owner can rename or delete the content	filemanager	sl	Samo lastnik sme preimenovati ali izbrisati vsebino
 open	filemanager	sl	Odpri
@@ -315,7 +313,6 @@ there's already a file with that name!	filemanager	sl	Datoteka s tem imenom že 
 tile view	filemanager	sl	Pogled na ploščico
 to overwrite the existing file store again.	filemanager	sl	Če želite prepisati obstoječo datoteko, shranite še enkrat.
 total files	filemanager	sl	Vseh datotek
-ui mode	filemanager	sl	Standardna orodna vrstica
 under directory	filemanager	sl	pod imenikom
 unlock	filemanager	sl	Odklepanje
 unmount	filemanager	sl	Odklopi

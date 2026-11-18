@@ -17,7 +17,6 @@ and all it's childeren	filemanager	zh	并且全部是自文件夹
 applications	common	zh	应用程序
 cancel editing %1 without saving	filemanager	zh	取消编辑%1， 不保存
 cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
-classic	filemanager	zh	标准工具栏
 clear search	filemanager	zh	清除搜索
 comment	filemanager	zh	注释
 configuration changed.	filemanager	zh	配置已更改。
@@ -137,7 +136,6 @@ no access	filemanager	zh	无访问
 no files in this directory.	filemanager	zh	该目录为空。
 no version history for this file/directory	filemanager	zh	该文件/目录夹无版本历史记录
 noone	filemanager	zh	没有人
-notebookbar	filemanager	zh	标签
 open	filemanager	zh	待决事项
 open documents with collabora, if permissions are given	filemanager	zh	如果有权限，使用 Collabora Online 打开文档
 operation	filemanager	zh	操作

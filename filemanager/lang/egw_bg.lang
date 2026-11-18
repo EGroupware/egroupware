@@ -45,7 +45,6 @@ cancel editing %1 without saving	filemanager	bg	Изход от редактир
 cannot create directory because it begins or ends in a space	filemanager	bg	Неуспешно създаване на директория, защото името й започва или завършва с интервал
 cautiously rejecting to remove folder '%1'!	filemanager	bg	Деликатно отказва да премахне папката '% 1'!
 check virtual filesystem	common	bg	Проверете виртуалната файлова система
-classic	filemanager	bg	Стандартна лента с инструменти
 clear search	filemanager	bg	Изтрий търсенето
 clipboard is empty!	filemanager	bg	Клипборда е празен!
 comment	filemanager	bg	Коментар
@@ -218,7 +217,6 @@ no files in this directory.	filemanager	bg	В тази директория ня
 no preview available	filemanager	bg	Няма възможност за преглед
 no version history for this file/directory	filemanager	bg	За този файл/директория няма история на версиите
 noone	filemanager	bg	Никой (я)
-notebookbar	filemanager	bg	Таблици
 older versions or deleted files	filemanager	bg	По-стари версии или изтрити файлове
 only owner can rename or delete the content	filemanager	bg	Само Собственикът може да преименува или изтрива съдържанието
 open	filemanager	bg	Отвори
@@ -307,7 +305,6 @@ there's already a directory with that name!	filemanager	bg	Вече има ди�
 there's already a file with that name!	filemanager	bg	Вече има файл с това име!
 to overwrite the existing file store again.	filemanager	bg	Дава възможност да презапишете съществуващия файл отново
 total files	filemanager	bg	Общо файлове
-ui mode	filemanager	bg	Стандартна лента с инструменти
 under directory	filemanager	bg	под директория
 unmount	filemanager	bg	Демонтиране/ Спиране
 unused space	filemanager	bg	Неизползвано пространство

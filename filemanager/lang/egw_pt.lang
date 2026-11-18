@@ -13,7 +13,6 @@ applications	common	pt	Aplicações
 cancel editing %1 without saving	filemanager	pt	Cancelar edição de %1 sem guardar
 cannot create directory because it begins or ends in a space	filemanager	pt	Não é possível criar a directoria porque seu nome inicia ou termina com um espaço em branco
 check all	filemanager	pt	Marcar todas
-classic	filemanager	pt	Barra de ferramentas padrão
 comment	filemanager	pt	Comentário
 copied %1 to %2	filemanager	pt	Copiado %1 para %2
 copy to	filemanager	pt	Copiar para
@@ -131,7 +130,6 @@ moved %1 to %2	filemanager	pt	Movido de %1 para %2
 no access	filemanager	pt	sem acesso
 no files in this directory.	filemanager	pt	Nenhum ficheiro nesta directoria.
 no version history for this file/directory	filemanager	pt	Sem histórico de versão para este ficheiro/directoria
-notebookbar	filemanager	pt	Tabulado
 open	filemanager	pt	Abrir
 open documents with collabora, if permissions are given	filemanager	pt	Abrir documentos com Collabora Online, se as permissões forem dadas
 operation	filemanager	pt	Operação

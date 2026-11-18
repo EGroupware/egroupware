@@ -50,9 +50,9 @@ cannot create symlink: %1 and %2 would create a loop!	filemanager	en	Cannot crea
 cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
 check virtual filesystem	common	en	Check virtual filesystem
-classic	filemanager	en	Standard Toolbar
 clear search	filemanager	en	Clear search
 clipboard is empty!	filemanager	en	Clipboard is empty!
+collabora online preferences	filemanager	en	Collabora Online preferences
 comment	filemanager	en	Comment
 configuration changed.	filemanager	en	Configuration changed.
 confirm final delete	filemanager	en	Confirm final delete
@@ -229,7 +229,6 @@ no files in this directory.	filemanager	en	No files in this folder.
 no preview available	filemanager	en	No preview available.
 no version history for this file/directory	filemanager	en	No version history for this file/folder.
 noone	filemanager	en	Noone
-notebookbar	filemanager	en	Tabbed
 older versions or deleted files	filemanager	en	Older versions or deleted files
 only owner can rename or delete the content	filemanager	en	Only owner can rename or delete the content.
 open	filemanager	en	Open
@@ -322,7 +321,6 @@ there's already a file with that name!	filemanager	en	There's already a file wit
 tile view	filemanager	en	Tile view
 to overwrite the existing file store again.	filemanager	en	To overwrite the existing file store again
 total files	filemanager	en	Total files
-ui mode	filemanager	en	Standard Toolbar
 under directory	filemanager	en	under folder
 unlock	filemanager	en	Unlock
 unmount	filemanager	en	Unmount

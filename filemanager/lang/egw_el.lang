@@ -11,7 +11,6 @@ all types	filemanager	el	Όλοι οι τύποι
 applications	common	el	Εφαρμογές
 cancel editing %1 without saving	filemanager	el	Ακύρωση επεξεργασίας %1 χωρίς αποθήκευση
 cannot create directory because it begins or ends in a space	filemanager	el	Δεν μπορεί να δημιουργηθεί ο φάκελος γιατί ξεκινά ή τελειώνει με κενό
-classic	filemanager	el	Τυπική γραμμή εργαλείων
 clear search	filemanager	el	καθαρισμός αναζήτησης
 comment	filemanager	el	Σχόλιο
 copied %1 to %2	filemanager	el	Αντιγράφηκε το %1 στο %2
@@ -136,7 +135,6 @@ no access	filemanager	el	Χωρίς πρόσβαση
 no files in this directory.	filemanager	el	Κενός κατάλογος
 no preview available	filemanager	el	Δεν υπάρχει διαθέσιμη προ-επισκόπηση
 no version history for this file/directory	filemanager	el	Δεν υπάρχει ιστορικό έκδοσης για αυτλο το αρχείο/κατάλογος
-notebookbar	filemanager	el	Καρτέλες
 open	filemanager	el	Άνοιγμα
 open documents with collabora, if permissions are given	filemanager	el	Άνοιγμα εγγράφων με το Collabora Online, εάν έχουν δοθεί δικαιώματα
 operation	filemanager	el	Λειτουργία

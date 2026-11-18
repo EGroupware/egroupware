@@ -48,7 +48,6 @@ cancel editing %1 without saving	filemanager	km	បោះបង់ការក�
 cannot create directory because it begins or ends in a space	filemanager	km	មិន​អាច​បង្កើត​ថត​បាន​ទេ ព្រោះ​វា​ចាប់​ផ្តើម ឬ​បញ្ចប់​ក្នុង​ចន្លោះ។
 cautiously rejecting to remove folder '%1'!	filemanager	km	បដិសេធដោយប្រុងប្រយ័ត្នដើម្បីលុបថត '%1'!
 check virtual filesystem	common	km	ពិនិត្យប្រព័ន្ធឯកសារនិម្មិត
-classic	filemanager	km	របារឧបករណ៍ស្តង់ដារ
 clear search	filemanager	km	ជម្រះការស្វែងរក
 clipboard is empty!	filemanager	km	ក្តារតម្បៀតខ្ទាស់ទទេ!
 comment	filemanager	km	មតិយោបល់
@@ -213,7 +212,6 @@ no files in this directory.	filemanager	km	គ្មានឯកសារនៅ�
 no preview available	filemanager	km	មិនមានការមើលជាមុនទេ។
 no version history for this file/directory	filemanager	km	មិនមានប្រវត្តិកំណែសម្រាប់ឯកសារ/ថតឯកសារនេះទេ។
 noone	filemanager	km	គ្មាន​នរណា​ម្នាក់
-notebookbar	filemanager	km	ផ្ទាំង
 older versions or deleted files	filemanager	km	កំណែចាស់ ឬឯកសារដែលបានលុប
 only owner can rename or delete the content	filemanager	km	មានតែម្ចាស់ទេដែលអាចប្តូរឈ្មោះ ឬលុបខ្លឹមសារបាន។
 open	filemanager	km	បើក
@@ -301,7 +299,6 @@ there's already a file with that name!	filemanager	km	មាន​ឯកសា�
 tile view	filemanager	km	ទិដ្ឋភាពក្រឡាក្បឿង
 to overwrite the existing file store again.	filemanager	km	ដើម្បីសរសេរជាន់លើកន្លែងផ្ទុកឯកសារដែលមានស្រាប់ម្តងទៀត
 total files	filemanager	km	ឯកសារសរុប
-ui mode	filemanager	km	របារឧបករណ៍ស្តង់ដារ
 under directory	filemanager	km	នៅក្រោមថត
 unlock	filemanager	km	ដោះសោ
 unmount	filemanager	km	មិនម៉ោន

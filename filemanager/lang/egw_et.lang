@@ -5,7 +5,6 @@
 %1 failed, %2 succeded	filemanager	et	%1 ebaõnnestus, %2 õnnestus.
 %1 files unlocked.	filemanager	et	%1 failid on lukustamata.
 applications	common	et	Rakendused
-classic	filemanager	et	Standardne tööriistariba
 comment	filemanager	et	Kommentaar
 could not install async job	filemanager	et	Asünkroonset tööd ei õnnestunud installida
 created	filemanager	et	Tehtud
@@ -78,7 +77,6 @@ mountpoints	filemanager	et	Mountpoints
 move	filemanager	et	liiguta
 move file to	filemanager	et	Liiguta fail
 noone	filemanager	et	Mittekeegi
-notebookbar	filemanager	et	Tabbed
 open	filemanager	et	avatud
 open documents with collabora, if permissions are given	filemanager	et	Dokumentide avamine Collabora Online'iga, kui õigused on antud
 password for webdav and smb, use $pass for password of logged in user	filemanager	et	Parool WebDAVi ja SMB jaoks, kasutage $pass sisselogitud kasutaja parooliks.

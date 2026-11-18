@@ -49,7 +49,6 @@ cannot create directory because it begins or ends in a space	filemanager	cs	Nemo
 cautiously rejecting to remove folder '%1'!	filemanager	cs	Opatrně odmítám odstranit složku '%1'!
 check all	filemanager	cs	Označit vše
 check virtual filesystem	common	cs	Kontrola virtuálního souborového systému
-classic	filemanager	cs	Standardní panel nástrojů
 clear search	filemanager	cs	Nové hledání
 clipboard is empty!	filemanager	cs	Schránka je prázdná!
 comment	filemanager	cs	Komentář
@@ -224,7 +223,6 @@ no files in this directory.	filemanager	cs	V tomto adresáři nejsou soubory.
 no preview available	filemanager	cs	Náhled není k dispozici
 no version history for this file/directory	filemanager	cs	Pro tento soubor/adresář neexistuje historie verzí
 noone	filemanager	cs	Nikdo
-notebookbar	filemanager	cs	Záložka
 older versions or deleted files	filemanager	cs	Starší verze nebo smazané soubory
 only owner can rename or delete the content	filemanager	cs	Jen vlastník smí přejmenovávat nebo mazat obsah
 open	filemanager	cs	Otevřít
@@ -316,7 +314,6 @@ there's already a file with that name!	filemanager	cs	Soubor s tímto názvem ji
 tile view	filemanager	cs	Zobrazení dlaždic
 to overwrite the existing file store again.	filemanager	cs	Pro přepsání stávajícího souboru uložte znovu.
 total files	filemanager	cs	Celkem souborů
-ui mode	filemanager	cs	Standardní panel nástrojů
 under directory	filemanager	cs	pod složkou
 unlock	filemanager	cs	Odemknout
 unmount	filemanager	cs	Odpojit

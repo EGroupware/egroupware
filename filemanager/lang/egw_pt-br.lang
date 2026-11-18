@@ -37,7 +37,6 @@ cancel editing %1 without saving	filemanager	pt-br	Cancelar edição de %1 sem s
 cannot create directory because it begins or ends in a space	filemanager	pt-br	Não foi possível criar o diretório em razão do nome começar ou terminar com um espaço
 cautiously rejecting to remove folder '%1'!	filemanager	pt-br	Cautelosamente rejeitando para remover a pasta '% 1'!
 check virtual filesystem	common	pt-br	Verifique o sistema de arquivos virtual
-classic	filemanager	pt-br	Barra de ferramentas padrão
 clear search	filemanager	pt-br	limpar pesquisa
 clipboard is empty!	filemanager	pt-br	Clipboard está vazio!
 comment	filemanager	pt-br	Comentário
@@ -197,7 +196,6 @@ no files in this directory.	filemanager	pt-br	Nenhum arquivo neste diretório
 no preview available	filemanager	pt-br	Pré-visualização indisponível
 no version history for this file/directory	filemanager	pt-br	Nenhum histórico de versões para este arquivo/diretório
 noone	filemanager	pt-br	Ninguém
-notebookbar	filemanager	pt-br	Com guias
 older versions or deleted files	filemanager	pt-br	As versões mais antigas ou arquivos apagados
 only owner can rename or delete the content	filemanager	pt-br	Apenas o proprietário pode renomear ou remover o conteúdo
 open	filemanager	pt-br	abrir

@@ -9,7 +9,6 @@ administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
 cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
 cannot create directory because it begins or ends in a space	filemanager	lv	Nevar izveidot mapi jo tās nosaukums sākas vai beidzas ar atstarpi
-classic	filemanager	lv	Standarta rīkjosla
 comment	filemanager	lv	Komentārs
 copied %1 to %2	filemanager	lv	Pārkopēja %1 uz %2
 copy to	filemanager	lv	Kopēt Uz:
@@ -111,7 +110,6 @@ move to	filemanager	lv	Pārvietot Uz:
 moved %1 to %2	filemanager	lv	Pārvietoja %1 uz %2
 no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.
 no version history for this file/directory	filemanager	lv	Nav vēstures par šo datni vai direktoriju
-notebookbar	filemanager	lv	Cilnē
 open	filemanager	lv	atvērt
 open documents with collabora, if permissions are given	filemanager	lv	Atvērt dokumentus ar Collabora Online, ja ir piešķirtas atļaujas
 operation	filemanager	lv	Operācija

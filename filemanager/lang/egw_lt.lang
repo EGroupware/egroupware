@@ -4,7 +4,6 @@
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	lt	%1 klaidos trinant, %2 katalogai ir %3 failai ištrinti!
 %1 failed, %2 succeded	filemanager	lt	%1 nepavyko, %2 pavyko.
 %1 files unlocked.	filemanager	lt	%1 failai atrakinti.
-classic	filemanager	lt	Standartinė įrankių juosta
 could not install async job	filemanager	lt	Nepavyko įdiegti asinchroninio darbo
 creationdate of file	filemanager	lt	Failo sukūrimo data
 custom fields	filemanager	lt	Pasirinktiniai laukai
@@ -67,7 +66,6 @@ modified between	filemanager	lt	Pakeista tarp
 mount permanently	filemanager	lt	Nuolatinis prijungimas
 mountpoints	filemanager	lt	Montavimo taškai
 move file to	filemanager	lt	Perkelti failą į
-notebookbar	filemanager	lt	Skirtukas
 open documents with collabora, if permissions are given	filemanager	lt	Atidaryti dokumentus su Collabora Online, jei suteiktos teisės
 password for webdav and smb, use $pass for password of logged in user	filemanager	lt	WebDAV ir SMB slaptažodis, naudokite $pass prisijungusio naudotojo slaptažodį
 path and query-parameters, smb: share and optional path (with /)	filemanager	lt	Kelias ir užklausos parametrai, SMB: bendroji dalis ir neprivalomas kelias (su /)

@@ -48,7 +48,6 @@ cancel editing %1 without saving	filemanager	ja	保存せずに %1 の編集を�
 cannot create directory because it begins or ends in a space	filemanager	ja	空白文字で開始/終端する名前でディレクトリを作成することはできません。
 cautiously rejecting to remove folder '%1'!	filemanager	ja	フォルダ '%1' の削除が拒否されました!
 check virtual filesystem	common	ja	仮想ファイルシステムをチェック
-classic	filemanager	ja	標準ツールバー
 clear search	filemanager	ja	検索をクリア
 clipboard is empty!	filemanager	ja	クリップボードが空です!
 comment	filemanager	ja	コメント
@@ -223,7 +222,6 @@ no files in this directory.	filemanager	ja	ファイルがありません。
 no preview available	filemanager	ja	プリビュー無し
 no version history for this file/directory	filemanager	ja	バージョン履歴がありません。
 noone	filemanager	ja	禁止
-notebookbar	filemanager	ja	タブ
 older versions or deleted files	filemanager	ja	古いバージョン、または削除済みファイル
 only owner can rename or delete the content	filemanager	ja	所有者だけが名称変更したり内容変更/削除できます。
 open	filemanager	ja	開く

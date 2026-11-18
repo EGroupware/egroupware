@@ -9,7 +9,6 @@ administrators	filemanager	da	administratorer
 applications	common	da	Applikationer
 cancel editing %1 without saving	filemanager	da	annullere redigéring af %1 uden at gemme
 cannot create directory because it begins or ends in a space	filemanager	da	Kan ikke oprette biblioteket fordi den begynder eller slutter med et mellemrum
-classic	filemanager	da	Standard værktøjslinje
 comment	filemanager	da	Kommentar
 copied %1 to %2	filemanager	da	Kopieret %1 til %2
 copy to	filemanager	da	Kopier til
@@ -110,7 +109,6 @@ move to	filemanager	da	Flyt til
 moved %1 to %2	filemanager	da	Flyttede %1 til %2
 no files in this directory.	filemanager	da	Ingen filer i dette bibliotek.
 no version history for this file/directory	filemanager	da	Ingen versions historie for denne fil/bibliotek
-notebookbar	filemanager	da	Faneblad
 open	filemanager	da	åben
 open documents with collabora, if permissions are given	filemanager	da	Åbn dokumenter med Collabora Online, hvis der er givet tilladelse til det
 operation	filemanager	da	Operation
@@ -156,7 +154,6 @@ superuser (root)	filemanager	da	Superbruger (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	da	Dokumentet kan indeholde pladsholdere som {{%3}}, der skal erstattes med data (%1fuld liste over pladsholdernavne%2).
 the requested path %1 is not available.	filemanager	da	Den anmodede sti %1 er ikke tilgængelig!
 total files	filemanager	da	Antal filer
-ui mode	filemanager	da	Standard værktøjslinje
 unused space	filemanager	da	Ubrugt plads
 up	filemanager	da	Op
 updated comment for %1	filemanager	da	Opdaterede %1 kommentaren

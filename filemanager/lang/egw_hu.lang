@@ -27,7 +27,6 @@ basedirectory	filemanager	hu	Alapkönyvtár
 can't open directory %1!	filemanager	hu	%1 mappa nem nyitható meg!
 cancel editing %1 without saving	filemanager	hu	%1 szerkesztésének megszakítása, mentés nélkül
 cannot create directory because it begins or ends in a space	filemanager	hu	Könyvtár létrehozása nem lehetséges, mert a név elején/végén 'fehér' karakter szerepel (space).
-classic	filemanager	hu	Standard eszköztár
 clear search	filemanager	hu	keresés eredményének törlése
 comment	filemanager	hu	Megjegyzés
 copied	filemanager	hu	másolva
@@ -169,7 +168,6 @@ no files in this directory.	filemanager	hu	Nincs állomány ebben a könyvtárba
 no preview available	filemanager	hu	Előnézet nem áll rendelkezésre
 no version history for this file/directory	filemanager	hu	Nincs elérhető verzió történet ehhez az állományhoz/könyvtárhoz
 noone	filemanager	hu	Senki
-notebookbar	filemanager	hu	Tabbed
 only owner can rename or delete the content	filemanager	hu	Csak a tulajdonos tudja átnevezni és törölni a tartalmat
 open	filemanager	hu	Megnyit
 open documents with collabora, if permissions are given	filemanager	hu	Dokumentumok megnyitása a Collabora Online segítségével, ha a jogosultságok meg vannak adva.

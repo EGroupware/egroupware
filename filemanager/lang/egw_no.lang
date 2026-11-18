@@ -8,7 +8,6 @@ administrators	filemanager	no	administratorer
 applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
 cannot create directory because it begins or ends in a space	filemanager	no	Kan ikke opprette mappe fordi den begynner eller slutter med mellomrom
-classic	filemanager	no	Standard verktøylinje
 comment	filemanager	no	Kommentar
 copied %1 to %2	filemanager	no	Kopiert %1 til %2
 copy to	filemanager	no	Kopier til
@@ -108,7 +107,6 @@ move to	filemanager	no	Flytt til
 moved %1 to %2	filemanager	no	Flyttet %1 til %2
 no files in this directory.	filemanager	no	Ingen filer i mappen
 no version history for this file/directory	filemanager	no	Ingen versjon for denne filen/mappen
-notebookbar	filemanager	no	Feltet
 open	filemanager	no	åpen
 open documents with collabora, if permissions are given	filemanager	no	Åpne dokumenter med Collabora Online, hvis tillatelser er gitt
 operation	filemanager	no	Operasjon

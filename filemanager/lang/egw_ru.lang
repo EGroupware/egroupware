@@ -40,7 +40,6 @@ cancel editing %1 without saving	filemanager	ru	Редактирование п�
 cannot create directory because it begins or ends in a space	filemanager	ru	Невозможно создание каталога в связи с отсутствием дискового пространства.
 cautiously rejecting to remove folder '%1'!	filemanager	ru	Отказано в перемещении папки %1
 check virtual filesystem	common	ru	Проверить файловую систему
-classic	filemanager	ru	Стандартная панель инструментов
 clear search	filemanager	ru	Очистить результаты поиска
 clipboard is empty!	filemanager	ru	Буфер обмена пуст!
 comment	filemanager	ru	Комментарий
@@ -200,7 +199,6 @@ no files in this directory.	filemanager	ru	Нет файлов в этом ка�
 no preview available	filemanager	ru	Предварительный просмотр невозможен.
 no version history for this file/directory	filemanager	ru	Нет истории версий для этого файла/каталога.
 noone	filemanager	ru	Никто
-notebookbar	filemanager	ru	Вкладка
 older versions or deleted files	filemanager	ru	Старые версии или удалённые файлы
 only owner can rename or delete the content	filemanager	ru	Только владелец может переименовать или удалить содержимое.
 open	filemanager	ru	Открыть

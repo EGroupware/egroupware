@@ -10,7 +10,6 @@ applications	common	sv	Applikationer
 cancel editing %1 without saving	filemanager	sv	Avbryt ändring av %1 utan att spara
 cannot create directory because it begins or ends in a space	filemanager	sv	Kan inte skapa katalog eftersom namnet börjar eller slutar med ett mellanslag
 check all	filemanager	sv	Markera alla
-classic	filemanager	sv	Standardverktygsfält
 clear search	filemanager	sv	Rensa sökning
 comment	filemanager	sv	Kommentar
 configuration changed.	filemanager	sv	Konfigurationen ändrad
@@ -124,7 +123,6 @@ moved %1 to %2	filemanager	sv	Flyttade %1 till %2
 no files in this directory.	filemanager	sv	Inga filer i katalogen
 no version history for this file/directory	filemanager	sv	Ingen versionshistorik för filen/katalogen
 noone	filemanager	sv	Ingen
-notebookbar	filemanager	sv	Flikad
 open	filemanager	sv	Öppen
 open documents with collabora, if permissions are given	filemanager	sv	Öppna dokument med Collabora Online, om behörigheter ges
 operation	filemanager	sv	Åtgärd

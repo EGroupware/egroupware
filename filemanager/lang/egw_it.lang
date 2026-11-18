@@ -48,7 +48,6 @@ cancel editing %1 without saving	filemanager	it	Annulla modifiche di %1 senza sa
 cannot create directory because it begins or ends in a space	filemanager	it	Non posso creare la directory perché inizia o finisce con uno spazio
 cautiously rejecting to remove folder '%1'!	filemanager	it	Eliminazione della cartella %1 rigettata per precauzione!
 check virtual filesystem	common	it	Controlla il filesystem virtuale
-classic	filemanager	it	Barra degli strumenti predefinita
 clear search	filemanager	it	Reimposta la ricerca
 clipboard is empty!	filemanager	it	Gli appunti sono vuoti!
 comment	filemanager	it	Commento
@@ -223,7 +222,6 @@ no files in this directory.	filemanager	it	Nessun File in questa directory.
 no preview available	filemanager	it	L'anteprima non è disponibile
 no version history for this file/directory	filemanager	it	Nessuna cronologia versioni per questo file/directory
 noone	filemanager	it	Nessuno
-notebookbar	filemanager	it	A schede
 older versions or deleted files	filemanager	it	Versioni vecchie o file eliminati
 only owner can rename or delete the content	filemanager	it	Solo il proprietario può rinominare o eliminare il contenuto
 open	filemanager	it	Apri
@@ -315,7 +313,6 @@ there's already a file with that name!	filemanager	it	Esiste già un file con qu
 tile view	filemanager	it	Vista affiancata
 to overwrite the existing file store again.	filemanager	it	Per sovrascrivere l'esistente salva di nuovo
 total files	filemanager	it	File totali
-ui mode	filemanager	it	Barra degli strumenti predefinita
 under directory	filemanager	it	sotto la cartella
 unlock	filemanager	it	Sbloccare
 unmount	filemanager	it	Smonta
