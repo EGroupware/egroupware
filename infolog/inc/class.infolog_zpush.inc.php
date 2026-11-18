@@ -246,13 +246,21 @@ class infolog_zpush implements activesync_plugin_write
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		// date_format='object' - info_startdate/info_enddate/info_datecompleted come back as
-		// real Api\DateTime objects (tagged in the user's timezone), assigned straight onto
-		// SyncTask's date properties below. z-push's own Streamer::Encode() already special-cases
-		// "instanceof \DateTime" property values and converts them via Api\DateTime::user2server()
-		// before wire-encoding - the same mechanism calendar_zpush.inc.php relies on for
-		// SyncAppointment - so this needs no per-field conversion here, unlike the old
-		// date_format='server' raw-int approach ChangeMessage() below used to require careful,
-		// easy-to-get-wrong $user2server bookkeeping to stay consistent with.
+		// real Api\DateTime objects (tagged in the user's timezone). Streamer::Encode() DOES
+		// special-case an "instanceof \DateTime" property and convert it via
+		// Api\DateTime::user2server($v, 'ts') before wire-encoding (streamer.php:249-251) - but
+		// that only covers the actual wire-encoding path. SyncTask->Check() (synctask.php:165,
+		// called on the raw object *before* any encoding, eg. from DeviceManager::
+		// DoNotStreamMessage() during export/loop-detection) does `$this->duedate % ...`
+		// directly on these same properties - a real forum report (26.10.20261030, "TypeError
+		// in Utils::getDayStartOfTimestamp() (EGroupware\Api\DateTime % int (0))") confirmed
+		// this crashes on every task export with a due date. calendar_zpush.inc.php's identical
+		// SyncAppointment pattern escapes this only because SyncAppointment->Check() gates its
+		// one bit of date arithmetic behind flags===SYNC_NEWMESSAGE, which never applies on
+		// export - SyncTask->Check() has no such gate. So the info_startdate/info_enddate/
+		// info_datecompleted cases below convert via the identical Api\DateTime::user2server($v,
+		// 'ts') call Encode() would have made, keeping the wire value unchanged while making
+		// Check() see the same ints it always expected.
 		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'object')))
 		{
 			error_log(__METHOD__."('$folderid',$id,...) Folder wrong (type=$type, account=$account) or contact not existing (read($id)=".array2string($infolog).")! returning false");
@@ -303,8 +311,13 @@ class infolog_zpush implements activesync_plugin_write
 					if (!empty($infolog['info_startdate']) && (empty($infolog['info_enddate']) ||
 						$infolog['info_startdate'] <= $infolog['info_enddate']))
 					{
-						$message->$key = $infolog[$attr];
+						$message->$key = Api\DateTime::user2server($infolog[$attr], 'ts');
 					}
+					break;
+
+				case 'info_enddate':
+				case 'info_datecompleted':
+					if (!empty($infolog[$attr])) $message->$key = Api\DateTime::user2server($infolog[$attr], 'ts');
 					break;
 
 				case 'info_priority':

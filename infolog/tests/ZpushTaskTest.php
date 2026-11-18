@@ -16,10 +16,15 @@
  * consumer with no defensive date-handling logic of its own - it trusts
  * infolog_bo's read()/write() date contract completely.
  *
- * Updated 2026-08-22: infolog_zpush now uses date_format='object'
- * (Api\DateTime objects) instead of date_format='server' (raw ints),
- * mirroring calendar_zpush.inc.php's existing pattern - see the migration
- * doc's z-push modernization section.
+ * Updated 2026-08-22: infolog_zpush reads via date_format='object'
+ * (Api\DateTime objects) instead of date_format='server' (raw ints) -
+ * see the migration doc's z-push modernization section. Updated again
+ * 2026-11-18: GetMessage() converts those objects back to raw
+ * server-timestamp ints before assigning them onto SyncTask (via the same
+ * Api\DateTime::user2server() call z-push's own Streamer::Encode() applies
+ * at wire-encoding time) - SyncObject->Check() runs arithmetic directly on
+ * these properties BEFORE any encoding happens and TypeErrors on a
+ * DateTime object; see infolog_zpush.inc.php::GetMessage()'s comment.
  *
  * @link http://www.egroupware.org
  * @package infolog
@@ -125,21 +130,24 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 
 	/**
 	 * GetMessage() must map info_startdate/info_enddate onto SyncTask's
-	 * startdate/duedate as real Api\DateTime objects - infolog_bo::read($id,
-	 * true, 'object') is now what GetMessage() uses (2026-08-22 modernization,
-	 * see doc/ai/projects/infolog-storage-migration.md's z-push section),
-	 * mirroring calendar_zpush.inc.php's existing pattern for SyncAppointment.
-	 * z-push's own Streamer::Encode() special-cases "instanceof \DateTime"
-	 * property values and converts them via Api\DateTime::user2server()
-	 * immediately before wire-encoding, so infolog_zpush itself needs no
-	 * manual int conversion any more.
+	 * startdate/duedate as raw server-timestamp ints, NOT Api\DateTime
+	 * objects - see the comment above infolog_zpush.inc.php::GetMessage()'s
+	 * date-field cases for why: z-push's SyncObject->Check() (eg.
+	 * SyncTask::Check(), synctask.php:165) runs `$this->duedate % ...`
+	 * directly on these properties BEFORE any wire-encoding, so leaving a
+	 * DateTime object here throws a TypeError (reported live as a forum bug
+	 * on 26.10.20261030, ActiveSync InfoLog sync of any task with a due date
+	 * aborting with "TypeError ... Utils::getDayStartOfTimestamp() ...
+	 * EGroupware\Api\DateTime % int"). GetMessage() converts via the exact
+	 * same Api\DateTime::user2server($v, 'ts') call z-push's own
+	 * Streamer::Encode() would have applied at wire-encoding time
+	 * (streamer.php:249-251), so the wire value is unchanged.
 	 *
-	 * Pass criteria: SyncTask::$startdate/$duedate are Api\DateTime instances
-	 * representing the exact same real instant as
-	 * infolog_bo::read($id, true, 'object')'s objects for the same entry
-	 * (compared via getTimestamp(), which is representation/timezone-agnostic).
+	 * Pass criteria: SyncTask::$startdate/$duedate are plain ints equal to
+	 * Api\DateTime::user2server(...)'s result for the same
+	 * infolog_bo::read($id, true, 'object') entry.
 	 */
-	public function testGetMessageMapsDatesAsDateTimeObjects()
+	public function testGetMessageMapsDatesAsServerTimestamps()
 	{
 		$this->setTimezones('UTC', 'Europe/Berlin');
 
@@ -159,12 +167,15 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 		$message = $this->zpush->GetMessage('folder', $info_id, $this->makeContentParameters());
 
 		$this->assertInstanceOf(\SyncTask::class, $message);
-		$this->assertInstanceOf(Api\DateTime::class, $message->startdate);
-		$this->assertInstanceOf(Api\DateTime::class, $message->duedate);
-		$this->assertSame($expected['info_startdate']->getTimestamp(), $message->startdate->getTimestamp(),
-			'SyncTask::$startdate must represent the same real instant as read(..., "object")');
-		$this->assertSame($expected['info_enddate']->getTimestamp(), $message->duedate->getTimestamp(),
-			'SyncTask::$duedate must represent the same real instant as read(..., "object")');
+		$this->assertIsInt($message->startdate, 'SyncTask::$startdate must be a raw int, or SyncTask::Check() TypeErrors');
+		$this->assertIsInt($message->duedate, 'SyncTask::$duedate must be a raw int, or SyncTask::Check() TypeErrors');
+		$this->assertSame(Api\DateTime::user2server($expected['info_startdate'], 'ts'), $message->startdate,
+			'SyncTask::$startdate must be the same server-timestamp Streamer::Encode() would have produced');
+		$this->assertSame(Api\DateTime::user2server($expected['info_enddate'], 'ts'), $message->duedate,
+			'SyncTask::$duedate must be the same server-timestamp Streamer::Encode() would have produced');
+
+		// the SyncTask::Check() call that originally crashed on this (reproduces the forum bug if unfixed)
+		$this->assertTrue($message->Check(true), 'SyncTask::Check() must not TypeError/fail on a GetMessage() result');
 	}
 
 	/**
@@ -250,10 +261,12 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 		// the real instant GetMessage() actually handed the device - NOT the
 		// original user-format $start/$end literal used to create the fixture,
 		// which would be the same instant but isn't what's being round-tripped
-		// here - getTimestamp() is representation/timezone-agnostic, so this
-		// comparison can't be fooled by a display-timezone difference alone.
-		$given_start = $this->lastMessage->startdate->getTimestamp();
-		$given_end = $this->lastMessage->duedate->getTimestamp();
+		// here. $this->lastMessage->startdate/duedate are already raw
+		// server-timestamp ints (GetMessage() converts via
+		// Api\DateTime::user2server($v, 'ts'), the same z-push's own
+		// Streamer::Encode() would apply), so no further conversion is needed.
+		$given_start = $this->lastMessage->startdate;
+		$given_end = $this->lastMessage->duedate;
 
 		$stat = $this->zpush->ChangeMessage('folder', $info_id, $this->lastMessage, $this->makeContentParameters());
 		$this->assertNotFalse($stat, 'ChangeMessage() rejected an unmodified round trip');
@@ -271,16 +284,12 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 	 * correctly under the new object-based representation - guards against a
 	 * fix that merely made the no-op case pass by coincidence.
 	 *
-	 * $this->lastMessage->startdate is set to a raw int here, not an
-	 * Api\DateTime object, deliberately: this file exercises infolog_zpush's
-	 * OWN methods directly (see class docblock), not the real WBXML wire
-	 * layer, and the real wire layer's Decode() never produces DateTime
-	 * objects (only Encode() does, via the instanceof-\DateTime special case
-	 * this test isn't exercising) - so a raw int is what ChangeMessage() must
-	 * actually be able to handle from a real device, and is the accurate
-	 * simulation here. Api\DateTime::user2server() derives that int from the
-	 * current SyncTask value the same way z-push's own Streamer::Encode()
-	 * would have when originally putting it on the wire.
+	 * $this->lastMessage->startdate is already a raw server-timestamp int
+	 * (GetMessage() now converts it via Api\DateTime::user2server($v, 'ts'),
+	 * the same conversion z-push's own Streamer::Encode() applies at
+	 * wire-encoding time) - exactly the kind of value a real device would
+	 * receive over the wire and, for an edit, send back modified. ChangeMessage()
+	 * must handle that raw int from a real device, which this simulates.
 	 */
 	public function testEditedRoundTripAppliesTheChange()
 	{
@@ -288,7 +297,7 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 
 		list($info_id) = $this->writeAndGetMessage();
 
-		$new_start_ts = Api\DateTime::user2server($this->lastMessage->startdate, 'ts') + 3600;	// move start 1h later
+		$new_start_ts = $this->lastMessage->startdate + 3600;	// move start 1h later
 		$this->lastMessage->startdate = $new_start_ts;
 
 		$stat = $this->zpush->ChangeMessage('folder', $info_id, $this->lastMessage, $this->makeContentParameters());
