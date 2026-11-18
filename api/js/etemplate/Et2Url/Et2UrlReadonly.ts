@@ -17,6 +17,20 @@ import {Et2Url} from "./Et2Url";
  */
 export class Et2UrlReadonly extends Et2Description
 {
+	constructor()
+	{
+		super();
+		/*
+		 * Never render markdown: our value is a URL, email address or phone number, not prose.
+		 *
+		 * The user's markdown preference ("on") switches markdown on for every Et2Description,
+		 * and markdown linkifies the value into a real <a href="mailto:...">.
+		 * A click then ran our own onclick (compose in EGroupware) AND the anchor's default action,
+		 * so the OS mailto handler opened as well.
+		 */
+		this.noMarkdown = true;
+	}
+
 	static get styles()
 	{
 		return [
@@ -57,7 +71,7 @@ export class Et2UrlReadonly extends Et2Description
 	 * @returns {TemplateResult<1>}
 	 * @protected
 	 */
-	protected render() : TemplateResult
+	render() : TemplateResult<1>
 	{
 		if(this.label && !this.href && this.value)
 		{

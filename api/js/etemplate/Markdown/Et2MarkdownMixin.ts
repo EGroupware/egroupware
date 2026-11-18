@@ -62,6 +62,12 @@ export const Et2MarkdownMixin = dedupeMixin(<T extends Constructor<LitElement>>(
 		@property({type: Boolean, reflect: true})
 		markdown = false;
 
+		/**
+		 * template can opt out of markdown no matter the preference.
+		 */
+		@property({type:Boolean})
+		noMarkdown=false;
+
 		protected _markdownController = new MarkdownController(this);
 
 		connectedCallback()
@@ -89,10 +95,15 @@ export const Et2MarkdownMixin = dedupeMixin(<T extends Constructor<LitElement>>(
 			const preference = typeof egw?.preference === "function" ?
 							   egw.preference(MARKDOWN_PREFERENCE, "common") : null;
 
-			if(preference === "on" || preference === "off")
+			if(preference === "on")
 			{
-				this.markdown = preference === "on";
+				this.markdown = true;
 			}
+			if(preference === "off")
+			{
+				this.markdown = false;
+			}
+			if(this.noMarkdown) this.markdown = false;
 
 			// static styles above only reach markdown rendered into our own shadow DOM.  A host
 			// that renders it into its light DOM (Et2Description) is styled by the tree it sits

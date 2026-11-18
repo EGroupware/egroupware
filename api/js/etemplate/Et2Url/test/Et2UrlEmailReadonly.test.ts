@@ -137,4 +137,24 @@ describe("Et2UrlEmailReadonly", () =>
 			assert.isFalse(element.classList.contains("et2_clickable"));
 		});
 	});
+
+	/**
+	 * Contract: the address is never rendered as markdown, even when markdown is on
+	 * (template attribute or the user's "markdown = on" preference).
+	 * Markdown linkifies it into a real <a href="mailto:">, whose default action opened the OS
+	 * mailto handler (e.g. Thunderbird) next to our own compose.
+	 * Pass: markdown is reset and no anchor is rendered.
+	 */
+	it("never renders markdown, so there is no mailto: anchor to follow", async() =>
+	{
+		const element = await fixture<Et2UrlEmailReadonly>(html`
+            <et2-url-email_ro emailDisplay="email" markdown></et2-url-email_ro>
+		`);
+		element.value = "test@example.com";
+		await element.updateComplete;
+
+		assert.isFalse(element.markdown);
+		assert.isNull(element.querySelector("a"));
+		assert.include(element.textContent, "test@example.com");
+	});
 });
