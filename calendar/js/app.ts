@@ -1513,13 +1513,52 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * open the freetime search popup
+	 * Open the freetime search as a dialog inside the edit-event popup, not as a separate
+	 * real popup window.
+	 *
+	 * This used to open a second real popup window (this.egw.open_link(...)). That broke
+	 * freetime_select() below silently (reported live: forum thread 80044, "selecting a
+	 * free time slot not doing anything" - no error, no log): every popup in this app
+	 * shares one single globally-shared `egw` singleton, whose window.open() calls always
+	 * physically execute from the one top-level framework window (its `_wnd` is captured
+	 * once, permanently, at bootstrap - see api/js/jsapi/egw.js's
+	 * `window.egw = window.opener.top.egw`), so window.opener of ANY popup - even one
+	 * opened from another popup - is always the top window, never "whichever window
+	 * logically opened me". On top of that, each popup loads its own separate etemplate2
+	 * module instance, so even window.opener.etemplate2 could never see a template that
+	 * lives in a different popup's own document. Rendering the search as a dialog in THIS
+	 * same window/document sidesteps both problems entirely - see freetime_select().
+	 *
+	 * this.openDialog() (EgwApp's own, not egw.openDialog()) is the one that works from
+	 * inside an already-open popup - verified live, does not hit the known Lit
+	 * "Sharing constructed stylesheets in multiple documents" crash that a *different*
+	 * same-window-dialog mechanism (EgwFramework.openPopup()'s narrow-viewport branch) is
+	 * specifically guarded against for popups.
 	 *
 	 * @param {string} _link
 	 */
 	freetime_search_popup(_link)
 	{
-		this.egw.open_link(_link,'ft_search','700x500') ;
+		this.openDialog(_link);
+	}
+
+	/**
+	 * Close the freetime-search dialog opened by freetime_search_popup() above - used by
+	 * both its "Cancel" button (freetimesearch.xet) and freetime_select() below.
+	 */
+	freetime_close()
+	{
+		const dialog = <Et2Dialog>this.et2.closest('et2-dialog');
+		if (dialog)
+		{
+			dialog.close();
+		}
+		else
+		{
+			// defensive fallback only - should not be reachable, freetime_search_popup() above
+			// always opens this as a dialog now
+			window.close();
+		}
 	}
 
 	/**
@@ -1878,20 +1917,20 @@ export class CalendarApp extends EgwApp
 
 			const sTime = <Et2Select><unknown>this.et2.getWidgetById(selectedId + 'start');
 
-			//check the parent window is still open before to try to access it
-			if (window.opener && sTime)
+			// The freetime-search dialog now lives in the SAME window/document as the
+			// edit-event popup (see freetime_search_popup() above), so the edit form's
+			// template is simply the sibling 'calendar-edit' entry in THIS window's own
+			// etemplate2 registry - no window.opener involved any more.
+			const editWindowObj = etemplate2.getById('calendar-edit');
+			if (editWindowObj && sTime)
 			{
-				const editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
-				if (typeof editWindowObj != "undefined")
+				const startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
+				const endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
+				if (startTime && endTime)
 				{
-					const startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
-					const endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
-					if (startTime && endTime)
-					{
-						startTime.set_value(sTime.get_value());
-						endTime.set_value(sTime.get_value());
-						endTime.set_value('+'+content['duration']);
-					}
+					startTime.set_value(sTime.get_value());
+					endTime.set_value(sTime.get_value());
+					endTime.set_value('+'+content['duration']);
 				}
 			}
 			else
@@ -1899,7 +1938,7 @@ export class CalendarApp extends EgwApp
 				alert(this.egw.lang('The original calendar edit popup is closed!'));
 			}
 		}
-		egw(window).close();
+		this.freetime_close();
 	}
 
 	/**

@@ -78,7 +78,7 @@
 					<et2-button  label="New search" id="search" statustext="new search with the above parameters"></et2-button>
 					<et2-hbox>
 						<et2-select  id="search_window" statustext="how far to search (from startdate)" noLang="1"></et2-select>
-						<et2-button  id="cancel" label="Cancel" statustext="Close the window" onclick="window.close();"></et2-button>
+						<et2-button  id="cancel" label="Cancel" statustext="Close the window" onclick="app.calendar.freetime_close"></et2-button>
 					</et2-hbox>
 				</row>
 				<row>
