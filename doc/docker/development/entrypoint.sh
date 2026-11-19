@@ -47,6 +47,11 @@ git config --global user.email || git config --global user.email "you@example.co
 [ -f /var/www/egroupware/header.inc.php ] || {
   # not all our requirements already support 8.x officially, but what we use from them works with 8.1
   [[ $PHP_VERSION  =~ ^8\..* ]] && COMPOSER_EXTRA=--ignore-platform-reqs || true
+	# egroupware.cron is system-crontab format (needs a USER field for /etc/cron.d/); Alpine's
+	# busybox crond uses PER-USER crontabs (/etc/crontabs/<user>) which must NOT have one - a
+	# leftover "apache"/"www-data" token here becomes the command name crond execs, failing
+	# silently with "www-data: command not found" (exit 127) on every run
+	# (comment must stay outside the backslash-continued chain below, or bash breaks it)
 	cd /var/www \
 	&& ln -sf egroupware/api/templates/default/images/favicon.ico \
 	&& composer.phar create-project --prefer-source --keep-vcs --no-scripts $COMPOSER_EXTRA egroupware/egroupware:$VERSION \
@@ -54,10 +59,6 @@ git config --global user.email || git config --global user.email "you@example.co
 	&& mkdir chunks \
 	&& ./install-cli.php \
 	&& ln -sf /var/lib/egroupware/header.inc.php \
-	# egroupware.cron is system-crontab format (needs a USER field for /etc/cron.d/); Alpine's
-	# busybox crond uses PER-USER crontabs (/etc/crontabs/<user>) which must NOT have one - a
-	# leftover "apache"/"www-data" token here becomes the command name crond execs, failing
-	# silently with "www-data: command not found" (exit 127) on every run
 	&& sed -e 's/\tapache\t/\t/' -e 's|/usr/share|/var/www|g' doc/rpm-build/egroupware.cron > /etc/crontabs/www-data
 }
 
