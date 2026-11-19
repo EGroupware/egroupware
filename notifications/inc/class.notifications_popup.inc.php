@@ -255,15 +255,16 @@ class notifications_popup implements notifications_iface
 			if($link->popup && empty($GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient']))
 			{
 				$data = array(
-					"data-app = '{$link->app}'",
-					"data-id = '{$link->id}'",
-					"data-url = '$url'",
-					"data-popup = '{$link->popup}'"
+					'data-app="'.Api\Html::htmlspecialchars($link->app).'"',
+					'data-id="'.Api\Html::htmlspecialchars($link->id).'"',
+					'data-url="'.Api\Html::htmlspecialchars($url).'"',
+					'data-popup="'.Api\Html::htmlspecialchars($link->popup).'"'
 				);
 
-				$rendered_links[] = Api\Html::div($image.$link->text,implode(' ',$data),'link');
+				// the link's text is plain text, eg. the title of the entry
+				$rendered_links[] = Api\Html::div($image.Api\Html::htmlspecialchars($link->text),implode(' ',$data),'link');
 			} else {
-				$rendered_links[] = Api\Html::div('<a href="'.$url.'" target="_blank">'.$image.$link->text.'</a>','','link');
+				$rendered_links[] = Api\Html::div('<a href="'.Api\Html::htmlspecialchars($url).'" target="_blank">'.$image.Api\Html::htmlspecialchars($link->text).'</a>','','link');
 			}
 
 		}
@@ -306,8 +307,9 @@ class notifications_popup implements notifications_iface
 		$newline = "<br />";
 
 		$sender = $this->sender->account_fullname ? $this->sender->account_fullname : $this->sender_account_email;
-		$infos[] = Api\Translation::translate_as($this->recipient->account_id, 'Message from').': '.$sender;
-		if(!empty($_subject)) { $infos[] = Api\Html::bold($_subject); }
+		// sender and subject are plain text, eg. a ticket's title, and must not inject html into the popup
+		$infos[] = Api\Translation::translate_as($this->recipient->account_id, 'Message from').': '.Api\Html::htmlspecialchars($sender);
+		if(!empty($_subject)) { $infos[] = Api\Html::bold(Api\Html::htmlspecialchars($_subject)); }
 		return implode($newline,$infos);
 	}
 
