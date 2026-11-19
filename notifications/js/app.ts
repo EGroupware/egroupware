@@ -484,7 +484,8 @@ export class NotificationsApp extends EgwApp
 						button.style.backgroundImage = 'url(' + icon + ')';
 					}
 					button.textContent = action.caption;
-					button.addEventListener('click', () => func.call(this, message));
+					// onExecute gets the message node and the click event as arguments[0] and [1]
+					button.addEventListener('click', (e) => func.call(this, message, e));
 					actionsContainer.insertBefore(button, actionsContainer.firstChild);
 				}
 				message.appendChild(actionsContainer);
@@ -556,9 +557,9 @@ export class NotificationsApp extends EgwApp
 	/**
 	 * Reposition the expanded message back in the list & removes the clone node
 	 */
-	collapseMessage(_node : HTMLElement, _event : Event)
+	collapseMessage(_node : HTMLElement, _event? : Event)
 	{
-		_event.stopPropagation();
+		_event?.stopPropagation();
 		const cloned = _node.previousElementSibling;
 		if(cloned && cloned.id == _node.id + '_expanded')
 		{
@@ -752,6 +753,40 @@ export class NotificationsApp extends EgwApp
 		}
 		_node.remove();
 		this.bell('inactive');
+	}
+
+	/**
+	 * Called by a message's action once it's done, eg. after answering a meeting request:
+	 * deletes the message incl. all notifications of the same entry and closes the message,
+	 * and the popup too, if no other notifications are left
+	 */
+	actionDone(_node: HTMLElement, _event?: Event)
+	{
+		_event?.stopPropagation();
+		const id = _node.id.replace(/egwpopup_message_/ig, '');
+		const notification = this.notifymessages[id];
+		if(notification)
+		{
+			// app_ids makes the server delete all notifications of that entry, not just this one
+			const app_ids: { [app: string]: (string | number)[] } = {};
+			if(notification.data?.id) app_ids[notification.data.app] = [notification.data.id];
+			this.egw.request("notifications.notifications_ajax.delete_message", [[id], app_ids]);
+
+			delete this.notifymessages[id];
+			this.total -= 1;
+			this.counterUpdate();
+		}
+		this.collapseMessage(_node);
+		// remove the time label (eg. "Today") too, if this was its only message
+		const label = _node.previousElementSibling;
+		if(label?.classList.contains('egwpopup_time_label') &&
+			(!_node.nextElementSibling || _node.nextElementSibling.classList.contains('egwpopup_time_label')))
+		{
+			label.remove();
+		}
+		_node.remove();
+		this.bell('inactive');
+		if(this.popupOpen && !Object.keys(this.notifymessages).length) this.toggle();
 	}
 
 	/**

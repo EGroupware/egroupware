@@ -44,7 +44,7 @@ if ($GLOBALS['egw_info']['user']['apps']['notifications'])
 		'" data-mail-check-interval="'.$mail_check_interval.
 		'" data-langRequire="'. htmlspecialchars(json_encode($langRequire)).'"></div>';
 	echo '
-		<div id="egwpopup" style="display: none; z-index: 999;">
+		<div id="egwpopup" style="display: none;">
 			<div id="egwpopup_header">'.lang('Notifications').
 			'<span class="button_right_toggle"></span><span class="egwpopup_seenall" title="'. lang('mark all as read').'"></span>'.
 			'<span class="egwpopup_deleteall" title="'.lang('delete all messages').'"></span></div>

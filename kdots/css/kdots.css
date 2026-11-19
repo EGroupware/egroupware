@@ -402,6 +402,7 @@ iframe pre {
   border-top: none;
   border-bottom: none;
   padding: 1em;
+  z-index: calc(var(--sl-z-index-toast) - 1);
   /*Button*/
 }
 #egwpopup input#egwpopup_ok_button,

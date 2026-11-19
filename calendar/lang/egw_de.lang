@@ -21,6 +21,7 @@ a party crasher in someone who is not invited to the meeting but somehow got the
 accept	calendar	de	Zusagen
 accept or reject an invitation	calendar	de	Einladung zusagen oder ablehnen
 accepted	calendar	de	Zugesagt
+accepted calendar invite	calendar	de	Termineinladung zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert!
 access to calendar of %1 denied!	calendar	de	Zugriff auf den Kalender von %1 verweigert!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: hinzugefügt, storniert, zugesagt, abgelehnt
@@ -501,6 +502,7 @@ recurring event	calendar	de	Wiederholender Termin
 regular edit	calendar	de	Reguläres Bearbeiten
 reject	calendar	de	Ablehnen
 rejected	calendar	de	Abgelehnt
+rejected calendar invite	calendar	de	Termineinladung abgelehnt
 removes the event from my calendar	calendar	de	Entfernt diesen Termin aus meinem Kalender
 repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchem Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
@@ -611,6 +613,7 @@ sun	calendar	de	So
 sync now	calendar	de	Jetzt synchronisieren
 tag to mark positions for address labels	calendar	de	Kennzeichnet die Position für Adress-Aufkleber
 tentative	calendar	de	Vorläufige Zusage
+tentatively accepted calendar invite	calendar	de	Termineinladung vorläufig zugesagt
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an).
 the apple ical apps use this color to display events from this calendar.	calendar	de	Die Apple iCal-Anwendung benutzt diese Farbe zur Anzeige von Terminen dieses Kalenders.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die durch die Daten ersetzt werden sollen.
