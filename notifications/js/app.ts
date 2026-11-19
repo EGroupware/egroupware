@@ -195,6 +195,14 @@ export class NotificationsApp extends EgwApp
 			);
 		});
 		document.querySelector('#egwpopup .egwpopup_seenall')?.addEventListener('click', () => this.mark_all_seen());
+		// a click on the backdrop (#egwpopup's ::before) targets #egwpopup itself: collapse the expanded message(s)
+		document.getElementById('egwpopup')?.addEventListener('click', (_ev) =>
+		{
+			if(_ev.target === _ev.currentTarget && (<HTMLElement>_ev.currentTarget).classList.contains('egwpopup_has_expanded'))
+			{
+				document.querySelectorAll<HTMLElement>('#egwpopup_list .egwpopup_expanded').forEach((item) => this.collapseMessage(item, _ev));
+			}
+		});
 
 		// Push dropping is the one transition we can't just wait for the next scheduled poll to
 		// notice - run_notifications() itself skips polling outright while push is available (see
@@ -528,6 +536,8 @@ export class NotificationsApp extends EgwApp
 
 		// re-pop messages that were expanded before this re-render
 		popped.forEach((id) => document.getElementById('egwpopup_message_' + id)?.dispatchEvent(new MouseEvent('click', {bubbles: true})));
+		// an expanded message might be gone now
+		this.updateBackdrop();
 
 		this.counterUpdate();
 	}
@@ -568,7 +578,19 @@ export class NotificationsApp extends EgwApp
 		_node.classList.remove('egwpopup_expanded');
 		_node.style.zIndex = '0';
 		this.checkNavButtonStatus();
-		this.egw.loading_prompt('popup_notifications', false);
+		this.updateBackdrop();
+	}
+
+	/**
+	 * Show the backdrop while a message is expanded: it blocks the page and the tray, only the expanded message is clickable
+	 *
+	 * The backdrop is #egwpopup.egwpopup_has_expanded::before (see kdots/css/src/header.less),
+	 * it has to be inside #egwpopup's stacking context to go between the tray and the expanded message.
+	 */
+	updateBackdrop()
+	{
+		document.getElementById('egwpopup')?.classList.toggle('egwpopup_has_expanded',
+			!!document.querySelector('#egwpopup_list .egwpopup_expanded'));
 	}
 
 	/**
@@ -585,17 +607,12 @@ export class NotificationsApp extends EgwApp
 		clone.classList.add('egwpopup_message_clone');
 		_node.parentNode.insertBefore(clone, _node);
 
+		// above the backdrop, which has z-index 1
 		const zindex = document.querySelectorAll('.egwpopup_expanded').length;
 		_node.classList.add('egwpopup_expanded');
-		_node.style.zIndex = String(zindex + 1);
+		_node.style.zIndex = String(zindex + 2);
 		this.checkNavButtonStatus();
-
-		const popup = document.getElementById('egwpopup');
-		if(popup && getComputedStyle(popup).display !== 'none' &&
-			!(typeof egwIsMobile == "function" && egwIsMobile()))
-		{
-			this.egw.loading_prompt('popup_notifications', true);
-		}
+		this.updateBackdrop();
 	}
 
 	nav_button(_node : HTMLElement, _direction : 'prev' | 'next', _event : Event)
@@ -718,7 +735,7 @@ export class NotificationsApp extends EgwApp
 		this.total = 0;
 		this.counterUpdate();
 		document.getElementById('egwpopup_list')?.replaceChildren();
-		this.egw.loading_prompt('popup_notifications', false);
+		this.updateBackdrop();
 		this.bell('inactive');
 	}
 
@@ -736,21 +753,15 @@ export class NotificationsApp extends EgwApp
 		this.egw.request("notifications.notifications_ajax.delete_message", [[id], app_ids]);
 
 		const next = _node.nextElementSibling as HTMLElement;
-		let keepLoadingPrompt = false;
 		delete this.notifymessages[id];
 		this.total -= 1;
 		this.counterUpdate();
 		if(next && /egwpopup_message_/.test(next.id) && _node.classList.contains('egwpopup_expanded'))
 		{
 			next.click();
-			keepLoadingPrompt = true;
 		}
 		// try to close the dialog if expanded before hiding it
 		this.collapseMessage(_node, _event);
-		if(keepLoadingPrompt && !(typeof egwIsMobile == "function" && egwIsMobile()))
-		{
-			this.egw.loading_prompt('popup_notifications', true);
-		}
 		_node.remove();
 		this.bell('inactive');
 	}
@@ -1034,16 +1045,13 @@ export class NotificationsApp extends EgwApp
 					this.filter = '';
 					this.popupOpen = false;
 					popup.style.display = 'none';
-					this.egw.loading_prompt('popup_notifications', false);
 				}
 			};
 			document.body.addEventListener('click', outsideClick);
-			this.egw.loading_prompt('popup_notifications', document.querySelectorAll('#egwpopup_list .egwpopup_expanded').length > 0);
 		}
 		else
 		{
 			this.filter = '';
-			this.egw.loading_prompt('popup_notifications', false);
 			if(_stat) return;
 		}
 
