@@ -472,6 +472,7 @@ iframe pre {
   height: 63px;
   overflow: hidden;
   contain: layout paint;
+  overflow-wrap: anywhere;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
   max-width: 60em;
@@ -526,14 +527,17 @@ iframe pre {
   position: fixed;
   top: 85px;
   height: calc(100% - 130px);
-  left: 20vw;
-  width: 60vw;
+  left: 23vw;
+  width: 54vw;
   box-shadow: 0 0 40px var(--sl-color-neutral-500);
   overflow: auto;
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container {
   height: calc(100% - 62px);
   overflow: auto;
+}
+#egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_message_inner_container .egwNotification {
+  max-width: none !important;
 }
 #egwpopup #egwpopup_list .egwpopup_message.egwpopup_expanded .egwpopup_collapse {
   float: right;

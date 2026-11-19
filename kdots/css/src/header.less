@@ -269,6 +269,8 @@
 		overflow: hidden;
 		// a message's position:fixed or absolute must not cover the window, they are relative to and clipped by us
 		contain: layout paint;
+		// long words, eg. a pasted url, must not make a message (table) wider than the popup
+		overflow-wrap: anywhere;
 
 		a {
 		  max-width: 60em;
@@ -332,14 +334,17 @@
 	  position: fixed;
 	  top: 85px;
 	  height: ~"calc(100% - 130px)";
-	  left: 20vw;
-	  width: 60vw;
+	  left: 23vw;
+	  width: 54vw;
 	  box-shadow: 0 0 40px var(--sl-color-neutral-500);
 	  overflow: auto;
 
 	  .egwpopup_message_inner_container {
 		height: ~"calc(100% - 62px)";
 		overflow: auto;
+		.egwNotification{
+			max-width: none !important;
+		}
 	  }
 
 	  .egwpopup_collapse {
