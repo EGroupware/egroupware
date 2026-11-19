@@ -74,6 +74,37 @@ it - which is how InfoLog keeps an entry from being offered as its own parent:
 <et2-link-entry id="info_id_parent" onlyApp="infolog" query="app.infolog.parent_query"></et2-link-entry>
 ```
 
+### Only entries linked to another entry
+
+A `linked` filter in `searchOptions` limits the search to entries linked to one other entry - the
+InfoLogs of a project, say. It names that entry as `"app:id"`, and is set from JavaScript, as the
+entry usually depends on what is being edited:
+
+```js
+const parent = <Et2LinkEntry>this.et2.getWidgetById("info_id_parent");
+parent.searchOptions = {filter: {linked: "projectmanager:" + projectId}};
+```
+
+`linked` can also be a list of entries, to offer what is linked to any of them - a project and
+some of its sub-projects, for example. An entry of the list that does not exist, or the user has no
+access to, adds nothing:
+
+```js
+parent.searchOptions = {filter: {linked: ["projectmanager:" + projectId, "projectmanager:" + subProjectId]}};
+```
+
+Assign a new object to change or remove the filter, the widget does not notice a change made
+inside the one it already has. Without a project, leave `linked` out: a filter naming no entry, or
+one the user has no access to, finds nothing rather than everything.
+
+The server looks up which entries are linked and hands their ids to the application's own link
+search, to search only those with whatever the user typed - see `Api\Link::query()`. Currently
+only InfoLog's search supports that. Any other application ignores the filter and offers all its
+matches, as it does without it.
+
+The filter narrows what the search offers. It is not checked when the value is saved, and an entry
+already selected stays selected when the filter changes.
+
 ### Change events
 
 The widget fires a plain bubbling `change` event when an entry is selected or cleared, so

@@ -47,4 +47,6 @@ For the same reason it does not validate: there is no option list to check the v
 
 `searchOptions` is passed to the server with the search, and the `query` callback gets the request
 before it is sent and can return false to cancel it. Both are usually set through the surrounding
-`<et2-link-entry>` rather than here.
+`<et2-link-entry>` rather than here. A `linked` filter in `searchOptions` limits the search to the
+entries linked to one other entry, see
+[`<et2-link-entry>`](/components/et2-link-entry/#only-entries-linked-to-another-entry).
