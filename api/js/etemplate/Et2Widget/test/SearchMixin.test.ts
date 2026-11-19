@@ -378,6 +378,97 @@ describe("SearchMixin remote search", () =>
 	});
 });
 
+describe("SearchMixin failed search", () =>
+{
+	let message : sinon.SinonSpy;
+	beforeEach(() => { message = sinon.fake(); (<any>window.egw).message = message; });
+	afterEach(() =>
+	{
+		window.egw.request = egwStub.request;
+		delete (<any>window.egw).message;
+	});
+
+	it("stops searching and tells the user when the search fails", async() =>
+	{
+		window.egw.request = sinon.fake.returns(Promise.reject({statusText: "Server error"}));
+
+		const element = await makeWidget();
+		element.searchUrl = "test";
+		await search(element, "anything");
+
+		assert.isFalse(element.searching, "Still searching after a failed search");
+		assert.deepEqual(resultValues(element), []);
+		assert.isTrue(message.calledOnce, "User was not told the search failed");
+		assert.include(message.firstCall.args[0], "Server error");
+		assert.equal(message.firstCall.args[1], "warning");
+		assert.include(element.shadowRoot.textContent, "no results match", "No 'no results' shown");
+	});
+
+	it("still shows local matches when only the remote search fails", async() =>
+	{
+		window.egw.request = sinon.fake.returns(Promise.reject(new Error("broken")));
+
+		const element = await makeWidget();
+		element.localOptions = [{value: "local", label: "Local"}];
+		element.searchUrl = "test";
+		await search(element, "local");
+
+		assert.isFalse(element.searching);
+		assert.isTrue(message.calledOnce);
+	});
+
+	it("gives up on a search that never answers", async() =>
+	{
+		window.egw.request = sinon.fake.returns(new Promise(() => {}));
+
+		const element = await makeWidget();
+		element.searchUrl = "test";
+		(<any>element).remoteSearchTimeout = 10;
+		await search(element, "anything");
+
+		assert.isFalse(element.searching, "Still searching after the timeout");
+		assert.isTrue(message.calledOnce, "User was not told the search timed out");
+		assert.include(message.firstCall.args[0], "Search timed out");
+	});
+
+	it("handles an app. searchUrl that throws instead of rejecting", async() =>
+	{
+		(<any>window.egw).applyFunc = sinon.fake.throws(new Error("no such method"));
+
+		const element = await makeWidget();
+		element.searchUrl = "app.myapp.missing";
+		await search(element, "anything");
+
+		assert.isFalse(element.searching);
+		assert.include(message.firstCall.args[0], "no such method");
+
+		delete (<any>window.egw).applyFunc;
+	});
+
+	it("stays quiet when a superseded search fails", async() =>
+	{
+		let rejectFirst : (reason : any) => void;
+		const request = sinon.stub();
+		request.onCall(0).returns(new Promise((_resolve, reject) => { rejectFirst = reject; }));
+		request.onCall(1).returns(Promise.resolve({results: [{value: "second", label: "Second"}], total: 1}));
+		window.egw.request = request;
+
+		const element = await makeWidget();
+		element.searchUrl = "test";
+		(<any>element).shadowRoot.querySelector("#search").value = "first";
+		await element.startSearch();
+		const firstSearchPromise = (<any>element)._searchPromise;
+
+		await search(element, "second");
+		rejectFirst(new Error("late failure"));
+		await firstSearchPromise;
+		await element.updateComplete;
+
+		assert.isTrue(message.notCalled, "Reported the failure of a search the user no longer sees");
+		assert.deepEqual(resultValues(element), ["second"], "Newer search's results were cleared");
+	});
+});
+
 describe("SearchMixin bad response shape", () =>
 {
 	let warnSpy : sinon.SinonSpy;

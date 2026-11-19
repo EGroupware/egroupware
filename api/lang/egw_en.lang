@@ -1254,10 +1254,12 @@ scheduling outbox	common	en	Scheduling outbox
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search accounts	common	en	Search accounts
+search failed	common	en	Search failed
 search for '%1'	common	en	Search for '%1'
 search letter	common	en	Search letter
 search or select accounts	common	en	Search or select accounts
 search or type to add...	common	en	Search or type to add ...
+search timed out	common	en	Search timed out
 search...	common	en	Search ...
 searchreplace	common	en	Searchreplace
 second	common	en	second

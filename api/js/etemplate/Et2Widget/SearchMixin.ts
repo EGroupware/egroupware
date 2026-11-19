@@ -153,6 +153,18 @@ type Constructor<T = {}> = new (...args : any[]) => T;
 
 
 /**
+ * A remote search did not answer within SearchMixin's remoteSearchTimeout
+ */
+export class SearchTimeoutError extends Error
+{
+	constructor()
+	{
+		super("Search timed out");
+		this.name = "SearchTimeoutError";
+	}
+}
+
+/**
  * @summary Strongly typed mixin for asking the server for values that match a string the user types in and displaying those
  * matches for the user to choose from.
  *
@@ -227,6 +239,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		// results are stale (and not append them) once a newer search has already reset _searchResults
 		protected _searchGeneration : number = 0;
 
+		// How long a remote search may take before we give up on it, in ms.  A search that never
+		// answers (eg. a request the server rejected without an error the caller sees, or a hung
+		// connection) would otherwise leave the spinner up forever.
+		protected remoteSearchTimeout : number = 20000;
+
 		// Input where user types to filter
 		protected get _searchNode() : HTMLInputElement { return this.shadowRoot.querySelector("#search");}
 
@@ -263,10 +280,18 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			this.requestUpdate("searching");
 
 			// Start the searches
+			const generation = this._searchGeneration;
 			this._searchPromise = Promise.all([
 				this.localSearch(this._searchNode?.value ?? "", this.searchOptions),
-				this.remoteSearch(this._searchNode?.value ?? "", this.searchOptions)
-			]).then(async() =>
+				this.limitSearchTime(() => this.remoteSearch(this._searchNode?.value ?? "", this.searchOptions))
+			]).catch((error) =>
+			{
+				// A newer search has already taken over, its own outcome is what the user sees
+				if(generation === this._searchGeneration)
+				{
+					this.searchFailed(error);
+				}
+			}).then(async() =>
 			{
 				this.searching = false;
 				this.requestUpdate("searching", true);
@@ -282,6 +307,47 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 
 				return this._searchResults;
 			});
+		}
+
+		/**
+		 * Run a remote search, but reject once remoteSearchTimeout has passed without an answer.
+		 *
+		 * A search throwing synchronously (eg. an "app." searchUrl naming a missing method) is
+		 * turned into a rejection too, so both end up in searchFailed().
+		 */
+		protected limitSearchTime<T>(search : () => Promise<T>) : Promise<T>
+		{
+			let timer : number;
+			const timeout = new Promise<never>((_resolve, reject) =>
+			{
+				timer = window.setTimeout(() => reject(new SearchTimeoutError()), this.remoteSearchTimeout);
+			});
+			let running : Promise<T>;
+			try
+			{
+				running = Promise.resolve(search());
+			}
+			catch(e)
+			{
+				running = Promise.reject(e);
+			}
+			return Promise.race([running, timeout]).finally(() => clearTimeout(timer));
+		}
+
+		/**
+		 * A search failed or timed out: tell the user, instead of leaving them watching a spinner.
+		 * The (now empty) results show "no results match".
+		 */
+		protected searchFailed(error : any)
+		{
+			console.warn(this.localName + ": search failed", error);
+			this._searchResults = [];
+			this._totalResults = 0;
+			const reason = error instanceof SearchTimeoutError ? "" :
+				(error?.statusText || error?.message || (typeof error === "string" ? error : ""));
+			this.egw().message(
+				this.egw().lang(error instanceof SearchTimeoutError ? "Search timed out" : "Search failed") +
+				(reason ? ": " + reason : ""), "warning");
 		}
 
 		/**

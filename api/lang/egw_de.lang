@@ -1256,10 +1256,12 @@ scheduling outbox	common	de	Postausgang Terminplanung
 search	common	de	Suche
 search %1 '%2'	common	de	Suche %1 '%2'
 search accounts	common	de	Benutzer suchen
+search failed	common	de	Suche fehlgeschlagen
 search for '%1'	common	de	Suche nach '%1'
 search letter	common	de	Suche nach Buchstaben
 search or select accounts	common	de	Suchen und auswählen von Benutzern
 search or type to add...	common	de	Suchen oder zum Hinzufügen eingeben ...
+search timed out	common	de	Zeitüberschreitung bei der Suche
 search...	common	de	Suchen ...
 searchreplace	common	de	Suchen und ersetzen
 second	common	de	Sekunden
