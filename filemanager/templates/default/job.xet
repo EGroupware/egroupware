@@ -3,10 +3,10 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<et2-template  id="filemanager.job.general" template="" lang="" group="0" version="1.9.002" layout="2-column">
-		<et2-select label="Type" hidden="!@app=infolog"  id="info_type" onchange="1"></et2-select>
-		<et2-select-account label="Owner" hidden="!@app=infolog"  id="info_owner" accountType="both" emptyLabel="Select one..."></et2-select-account>
-		<et2-select-account label="Responsible" hidden="!@app=infolog"  id="info_responsible" accountType="both" multiple="true"></et2-select-account>
-		<et2-select-cat label="Category" hidden="!@app=infolog"  id="info_cat" application="infolog"></et2-select-cat>
+		<et2-select label="Type" hidden="!@app=infolog" disabled="!@app=infolog"  id="info_type" onchange="1"></et2-select>
+		<et2-select-account label="Owner" hidden="!@app=infolog" disabled="!@app=infolog"  id="info_owner" accountType="both" emptyLabel="Select one..."></et2-select-account>
+		<et2-select-account label="Responsible" hidden="!@app=infolog" disabled="!@app=infolog"  id="info_responsible" accountType="both" multiple="true"></et2-select-account>
+		<et2-select-cat label="Category" hidden="!@app=infolog" disabled="!@app=infolog"  id="info_cat" application="infolog"></et2-select-cat>
 		<et2-select hidden="@no_cfs" disabled="@no_cfs" label="Creationdate of file"  id="file_created" emptyLabel="Startdate"></et2-select>
 		<et2-vfs-path label="Move file to"  id="target_dir" statustext="leave empty to delete the file after attaching"></et2-vfs-path>
 	</et2-template>
