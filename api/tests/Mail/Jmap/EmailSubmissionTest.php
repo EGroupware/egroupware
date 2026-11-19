@@ -185,12 +185,10 @@ class EmailSubmissionTest extends \PHPUnit\Framework\TestCase
 				['EmailSubmission/set', 1] => ['notCreated' => ['s1' => ['type' => 'overQuota']]],
 				['EmailSubmission/query', 2] => ['ids' => ['old1']],
 				['EmailSubmission/get', 3] => ['list' => [['id' => 'old1', 'sendAt' => '2000-01-01T00:00:00Z']]],
+				// a page smaller than the batch size is already the last page - no re-query
 				['EmailSubmission/set', 4] => ['destroyed' => ['old1']],
-				// the whole (one-object) page was stale, so destroyStaleSubmissions() re-queries
-				// once more to check for further pages before giving up
-				['EmailSubmission/query', 5] => ['ids' => []],
-				['EmailSubmission/set', 6] => ['created' => ['s1' => ['id' => 'sub1']]],
-				['EmailSubmission/set', 7] => ['destroyed' => ['sub1']],	// submit()'s own self-cleanup
+				['EmailSubmission/set', 5] => ['created' => ['s1' => ['id' => 'sub1']]],
+				['EmailSubmission/set', 6] => ['destroyed' => ['sub1']],	// submit()'s own self-cleanup
 				default => throw new \RuntimeException("unexpected call #$n: $method"),
 			};
 		});
@@ -200,7 +198,7 @@ class EmailSubmissionTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame(['id' => 'sub1'], $result, 'must succeed after the self-heal retry');
 		$this->assertSame(['old1'], $session->calls[3][1]['destroy'], 'must have purged the stale backlog');
-		$this->assertSame(['emailId' => 'email1', 'identityId' => 'ident1'], $session->calls[5][1]['create']['s1'],
+		$this->assertSame(['emailId' => 'email1', 'identityId' => 'ident1'], $session->calls[4][1]['create']['s1'],
 			'the retry must resend the exact same create');
 	}
 
@@ -284,5 +282,53 @@ class EmailSubmissionTest extends \PHPUnit\Framework\TestCase
 		$destroyed = $es->destroyStaleSubmissions();
 
 		$this->assertSame(0, $destroyed, 'an object with no sendAt at all must never be purged');
+	}
+
+	/**
+	 * Regression test for the actual live bug (2026-11-19, Birgit/pole.egroupware.org): an
+	 * earlier version passed a `sort` by sendAt to EmailSubmission/query, assuming the server
+	 * supports it. Api\Jmap::call() never throws on a JMAP-level method error, it just returns
+	 * that error object as-is (RFC 8620 S3.6.2) - an unsupported sort silently came back with no
+	 * 'ids' key, `?? []` turned that into an empty list, and the purge destroyed NOTHING on every
+	 * single overQuota retry, even against a genuine, long-standing backlog. Never send a sort
+	 * argument at all any more - walk plain, unsorted pages instead.
+	 */
+	public function testDestroyStaleSubmissionsNeverSendsASortArgument()
+	{
+		$session = $this->fakeSession('acc1', fn() => ['ids' => []]);
+		$es = new EmailSubmission($session);
+
+		$es->destroyStaleSubmissions();
+
+		$this->assertArrayNotHasKey('sort', $session->calls[0][1]);
+	}
+
+	public function testDestroyStaleSubmissionsWalksMultiplePagesCompensatingForWhatItJustDestroyed()
+	{
+		$old = gmdate('Y-m-d\TH:i:s\Z', time() - 3600);
+		$session = $this->fakeSession('acc1', function($method, $args, $n) use ($old) {
+			return match([$method, $n]) {
+				// first page (position 0, batch-sized): both stale
+				['EmailSubmission/query', 1] => ['ids' => ['old1', 'old2']],
+				['EmailSubmission/get', 2] => ['list' => [
+					['id' => 'old1', 'sendAt' => $old], ['id' => 'old2', 'sendAt' => $old],
+				]],
+				['EmailSubmission/set', 3] => ['destroyed' => ['old1', 'old2']],
+				// both of the first page were destroyed, so the next page is queried from
+				// position 0 again (0 + 2 - 2), not position 2 - otherwise this would skip
+				// whatever shifted down into positions 0-1 after the destroy
+				['EmailSubmission/query', 4] => ['ids' => ['old3']],
+				['EmailSubmission/get', 5] => ['list' => [['id' => 'old3', 'sendAt' => $old]]],
+				['EmailSubmission/set', 6] => ['destroyed' => ['old3']],
+				// a page smaller than the batch size ends the walk
+				default => throw new \RuntimeException("unexpected call #$n: $method"),
+			};
+		});
+		$es = new EmailSubmission($session);
+
+		$destroyed = $es->destroyStaleSubmissions(120, 2);
+
+		$this->assertSame(3, $destroyed);
+		$this->assertSame(0, $session->calls[3][1]['position'] ?? 0);
 	}
 }
