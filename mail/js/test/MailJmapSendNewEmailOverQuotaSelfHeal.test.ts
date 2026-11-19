@@ -145,7 +145,8 @@ describe("MailJmap.sendNewEmail()'s overQuota self-heal", () =>
 				if (call === 4)
 				{
 					// purgeStaleEmailSubmissions(): query+get combined via $ref in ONE requestMany,
-					// one stale backlog entry
+					// one stale backlog entry - a page smaller than the batch size (500) ends the
+					// walk right here, no re-query
 					return [buildFn({
 						EmailSubmission : {
 							query : () => ({$ref : (_path : string) => ({})}),
@@ -160,16 +161,6 @@ describe("MailJmap.sendNewEmail()'s overQuota self-heal", () =>
 				}
 				if (call === 6)
 				{
-					// purgeStaleEmailSubmissions(): next page's combined query+get - nothing left, loop ends
-					return [buildFn({
-						EmailSubmission : {
-							query : () => ({$ref : (_path : string) => ({})}),
-							get : () => ({list : []}),
-						},
-					})];
-				}
-				if (call === 7)
-				{
 					// the retry: succeeds this time
 					return [buildFn({
 						EmailSubmission : {
@@ -177,7 +168,7 @@ describe("MailJmap.sendNewEmail()'s overQuota self-heal", () =>
 						},
 					})];
 				}
-				if (call === 8)
+				if (call === 7)
 				{
 					// the retry's own self-cleanup destroy
 					return [buildFn({EmailSubmission : {set : (args : any) => { setCalls.push(args); return {destroyed : args.destroy}; }}})];
@@ -267,5 +258,85 @@ describe("MailJmap.sendNewEmail()'s overQuota self-heal", () =>
 
 		assert.isTrue(threw);
 		assert.strictEqual(call, 3, "no purge, no retry for a non-overQuota error");
+	});
+});
+
+/**
+ * Regression coverage for the actual live bug (2026-11-19, Birgit/pole.egroupware.org): an
+ * earlier version sorted EmailSubmission/query by sendAt, assuming the server supports it. A
+ * JMAP-level method error for an unsupported sort (RFC 8621 S7.3 does not require sendAt to be
+ * sortable) resolves as ordinary data here, not a rejection, so it silently came back with no
+ * usable `list` and purgeStaleEmailSubmissions() destroyed NOTHING, every single time, even
+ * against a genuine, long-standing backlog - mirrors the identical fix/tests for
+ * Api\Mail\Jmap\EmailSubmission::destroyStaleSubmissions() on the PHP side.
+ */
+describe("MailJmap.purgeStaleEmailSubmissions()", () =>
+{
+	it("never sends a sort argument to EmailSubmission/query", async() =>
+	{
+		let queryArgs : any = null;
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) => [buildFn({
+				EmailSubmission : {
+					query : (args : any) => { queryArgs = args; return {$ref : (_path : string) => ({})}; },
+					get : () => ({list : []}),
+				},
+			})],
+		};
+		const jmap = createJmap();
+
+		await (jmap as any).purgeStaleEmailSubmissions(client, 'acc1');
+
+		assert.isNotNull(queryArgs);
+		assert.isUndefined(queryArgs.sort);
+	});
+
+	it("walks multiple pages, compensating the next position for what it just destroyed", async() =>
+	{
+		const old = new Date(Date.now() - 3600_000).toISOString();
+		const queryPositions : number[] = [];
+		let call = 0;
+		const client = {
+			requestMany : async(buildFn : (t : any) => any) =>
+			{
+				call++;
+				if (call === 1)
+				{
+					// first page (position 0, batch-sized 2): both stale
+					return [buildFn({
+						EmailSubmission : {
+							query : (args : any) => { queryPositions.push(args.position); return {$ref : (_path : string) => ({})}; },
+							get : () => ({list : [{id : 'old1', sendAt : old}, {id : 'old2', sendAt : old}]}),
+						},
+					})];
+				}
+				if (call === 2)
+				{
+					return [buildFn({EmailSubmission : {set : (args : any) => ({destroyed : args.destroy})}})];
+				}
+				if (call === 3)
+				{
+					// both of the first page were destroyed, so the next page is queried from
+					// position 0 again (0 + 2 - 2), not position 2 - otherwise this would skip
+					// whatever shifted down into positions 0-1 after the destroy
+					return [buildFn({
+						EmailSubmission : {
+							query : (args : any) => { queryPositions.push(args.position); return {$ref : (_path : string) => ({})}; },
+							get : () => ({list : [{id : 'old3', sendAt : old}]}),
+						},
+					})];
+				}
+				if (call === 4)
+				{
+					return [buildFn({EmailSubmission : {set : (args : any) => ({destroyed : args.destroy})}})];
+				}
+				throw new Error(`unexpected call #${call}`);
+			},
+		};
+		const jmap = createJmap();
+
+		await (jmap as any).purgeStaleEmailSubmissions(client, 'acc1', 120, 2);
+
+		assert.deepEqual(queryPositions, [0, 0]);
 	});
 });

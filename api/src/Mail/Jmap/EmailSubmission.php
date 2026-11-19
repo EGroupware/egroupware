@@ -137,44 +137,55 @@ class EmailSubmission extends Type
 	 * a split-second away from reaching its own post-success destroy() must never get raced by
 	 * this cleanup destroying it first.
 	 *
-	 * RFC 8621 §7.3's EmailSubmission/query FilterCondition has no date-range property, so this
-	 * sorts by sendAt instead and fetches just enough pages to find the age boundary, rather than
-	 * filtering every existing object's sendAt client-side.
+	 * Does NOT sort by sendAt (an earlier version did, assuming an ascending EmailSubmission/query
+	 * sort would let it stop at the first non-stale page) - found live 2026-11-19 against a real,
+	 * long-standing backlog (Stalwart production, pole.egroupware.org/Birgit): the purge
+	 * destroyed NOTHING, every single time, including on the very FIRST overQuota ever hit, not
+	 * just during a burst. Api\Jmap::call() never throws on a JMAP-level method error (RFC 8620
+	 * §3.6.2 "error" response) - it just returns that error object as-is - so an unsupported
+	 * `sort` property on EmailSubmission/query (RFC 8621 §7.3 does not require sendAt to be
+	 * sortable) silently came back with no 'ids' key, `?? []` turned that into an empty list, and
+	 * destroyStaleSubmissions() looked like it ran clean while actually never inspecting a single
+	 * real object. Walking plain, unsorted pages instead needs more round-trips for a huge
+	 * backlog, but cannot be defeated by a server not supporting a particular sort.
 	 *
 	 * @param int $olderThanSeconds
 	 * @param int $batch max ids to fetch/destroy per JMAP round-trip
 	 * @param int $maxBatches safety cap - never loop forever against a server that keeps
-	 *  reporting more stale ids than we just destroyed
+	 *  reporting more pages than we've walked
 	 * @return int number of objects actually destroyed
 	 */
 	public function destroyStaleSubmissions(int $olderThanSeconds=120, int $batch=500, int $maxBatches=20) : int
 	{
 		$threshold = time() - $olderThanSeconds;
-		$sort = [['property' => 'sendAt', 'isAscending' => true]];
 		$destroyed = 0;
+		$position = 0;
 		for ($n = 0; $n < $maxBatches; $n++)
 		{
-			$ids = $this->query([], $sort, 0, $batch)['ids'] ?? [];
+			$ids = $this->query([], [], $position, $batch)['ids'] ?? [];
 			if (!$ids) break;
 
 			$list = $this->get($ids, ['sendAt'])['list'] ?? [];
-			// Foo/get does not guarantee preserving the id order of $ids (RFC 8620 §5.1) - the
-			// ascending sendAt order from query() above is not reliable here, sort again ourselves
-			usort($list, static fn($a, $b) => strtotime($a['sendAt'] ?? '') <=> strtotime($b['sendAt'] ?? ''));
-
 			$stale = [];
 			foreach ($list as $submission)
 			{
 				$sendAt = isset($submission['sendAt']) ? strtotime($submission['sendAt']) : false;
-				if ($sendAt === false || $sendAt >= $threshold) break;	// reached the age boundary
-				$stale[] = $submission['id'];
+				if ($sendAt !== false && $sendAt < $threshold)
+				{
+					$stale[] = $submission['id'];
+				}
 			}
-			if (!$stale) break;
+			if ($stale)
+			{
+				$this->set([], [], $stale);
+				$destroyed += count($stale);
+			}
 
-			$this->set([], [], $stale);
-			$destroyed += count($stale);
+			if (count($ids) < $batch) break;	// last page
 
-			if (count($stale) < count($ids)) break;	// boundary was within this very page
+			// destroying some of THIS page shifts every later position down by that many - correct
+			// for it, instead of advancing by the full page size and silently skipping entries
+			$position += count($ids) - count($stale);
 		}
 		return $destroyed;
 	}

@@ -7332,43 +7332,48 @@ export class MailJmap
 	 * concurrent send from elsewhere (another tab, a mail-merge batch, ...) a split-second away
 	 * from reaching its own post-success cleanup must never get raced by this destroying it first.
 	 *
-	 * RFC 8621 S7.3's EmailSubmission/query FilterCondition has no date-range property, so this
-	 * sorts by sendAt instead and stops as soon as it hits the age boundary within a page, mirroring
-	 * Api\Mail\Jmap\EmailSubmission::destroyStaleSubmissions() on the PHP side.
+	 * Does NOT sort by sendAt (an earlier version did, assuming an ascending EmailSubmission/query
+	 * sort would let it stop at the first non-stale page) - found live 2026-11-19 against a real,
+	 * long-standing backlog (Stalwart production, pole.egroupware.org/Birgit) in the PHP-side twin
+	 * of this method (Api\Mail\Jmap\EmailSubmission::destroyStaleSubmissions()): the purge
+	 * destroyed NOTHING, every single time, including on the very first overQuota ever hit - a
+	 * JMAP-level method error for an unsupported `sort` property (RFC 8621 S7.3 does not require
+	 * sendAt to be sortable) resolves as ordinary data here, not a rejection, so it silently came
+	 * back with no usable `list` and this loop thought there was nothing left to clean. Walking
+	 * plain, unsorted pages instead needs more round-trips for a huge backlog, but cannot be
+	 * defeated by a server not supporting a particular sort.
 	 */
-	private async purgeStaleEmailSubmissions(client : JamWebSocketClient, accountId : string, olderThanSeconds = 120) : Promise<void>
+	private async purgeStaleEmailSubmissions(client : JamWebSocketClient, accountId : string, olderThanSeconds = 120,
+		batch = 500, maxBatches = 20) : Promise<void>
 	{
 		const threshold = Date.now() - olderThanSeconds * 1000;
 		try
 		{
-			for (let n = 0; n < 20; n++)
+			for (let position = 0, n = 0; n < maxBatches; n++)
 			{
-				const [{ids, submissions}] = await client.requestMany((t) =>
+				const [{submissions}] = await client.requestMany((t) =>
 				{
-					const ids = t.EmailSubmission.query({
-						accountId,
-						sort: [{property: 'sendAt', isAscending: true}],
-						position: 0,
-						limit: 500,
-					});
+					const ids = t.EmailSubmission.query({accountId, position, limit: batch});
 					const submissions = t.EmailSubmission.get({accountId, ids: ids.$ref('/ids'), properties: ['sendAt']});
 					return {ids, submissions};
 				});
 				const list = (submissions.list || []) as {id : string, sendAt? : string}[];
 				if (!list.length) break;
 
-				list.sort((a, b) => Date.parse(a.sendAt ?? '') - Date.parse(b.sendAt ?? ''));
-				const stale : string[] = [];
-				for (const submission of list)
+				const stale = list
+					.filter((submission) => submission.sendAt && Date.parse(submission.sendAt) < threshold)
+					.map((submission) => submission.id);
+				if (stale.length)
 				{
-					const sendAt = submission.sendAt ? Date.parse(submission.sendAt) : NaN;
-					if (isNaN(sendAt) || sendAt >= threshold) break;	// reached the age boundary
-					stale.push(submission.id);
+					await client.requestMany((t) => ({destroyed: t.EmailSubmission.set({accountId, destroy: stale})}));
 				}
-				if (!stale.length) break;
 
-				await client.requestMany((t) => ({destroyed: t.EmailSubmission.set({accountId, destroy: stale})}));
-				if (stale.length < list.length) break;	// boundary was within this very page
+				if (list.length < batch) break;	// last page
+
+				// destroying some of THIS page shifts every later position down by that many -
+				// correct for it, instead of advancing by the full page size and silently
+				// skipping entries
+				position += list.length - stale.length;
 			}
 		}
 		catch (e)
