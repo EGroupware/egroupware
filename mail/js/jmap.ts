@@ -2280,7 +2280,12 @@ export class MailJmap
 					accountId: token.accountId,
 					filter,
 				});
+				// "ids" must stay a property of the returned object - jmap-jam's requestMany() only
+				// sends invocations it finds there, so dropping it leaves Mailbox/get's #ids
+				// back-reference dangling and Stalwart rejects the whole request
+				// ("missing field `resultOf`")
 				const result : Record<string, any> = {
+					ids,
 					mailboxes: t.Mailbox.get({
 						accountId: token.accountId,
 						ids: ids.$ref('/ids'),
