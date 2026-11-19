@@ -471,6 +471,7 @@ iframe pre {
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container {
   height: 63px;
   overflow: hidden;
+  contain: layout paint;
 }
 #egwpopup #egwpopup_list .egwpopup_message .egwpopup_message_inner_container a {
   max-width: 60em;

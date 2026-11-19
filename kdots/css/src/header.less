@@ -267,6 +267,8 @@
 	  .egwpopup_message_inner_container {
 		height: 63px;
 		overflow: hidden;
+		// a message's position:fixed or absolute must not cover the window, they are relative to and clipped by us
+		contain: layout paint;
 
 		a {
 		  max-width: 60em;
