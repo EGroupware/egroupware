@@ -141,19 +141,36 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 			// Additional separate preference for mobile
 			if(typeof egwIsMobile == "function" && egwIsMobile())
 			{
-				this._preference = <ToolbarPreference>this.egw()?.preference(this.preferenceId + "_mobile", this.preferenceApp) ||
-					<ToolbarPreference>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+				this._preference = this._readPreference(this.preferenceId + "_mobile") ||
+					this._readPreference(this.preferenceId) || {};
 				this.preferenceId += "_mobile";
 			}
 			else
 			{
-				this._preference = <ToolbarPreference>this.egw()?.preference(this.preferenceId, this.preferenceApp) || {};
+				this._preference = this._readPreference(this.preferenceId) || {};
 			}
 		}
 		if(!this._actionsParsed)
 		{
 			this._parseActions(this.actions);
 		}
+	}
+
+	/**
+	 * Read what the user stored about which of our actions go in the menu
+	 *
+	 * A stored value that is not a map of action ID to "in the menu" - a string or a list, for
+	 * example - can not be used, so it counts as nothing stored: every action gets its default
+	 * place, and the next change the user makes stores a usable preference over it.
+	 *
+	 * @param preferenceId name the preference is stored under
+	 * @returns the stored preference, or null if there is none we can use
+	 */
+	protected _readPreference(preferenceId : string) : ToolbarPreference | null
+	{
+		const preference = this.egw()?.preference(preferenceId, this.preferenceApp);
+
+		return preference && typeof preference == "object" && !Array.isArray(preference) ? <ToolbarPreference>preference : null;
 	}
 
 	firstUpdated(changedProperties : PropertyValueMap<any>)
@@ -829,8 +846,15 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 		if(value.reset || value.default)
 		{
 			// Admin change preferences for all
+			// The server stores the actions as the preference, so they go in the form we read it in:
+			// action ID => in the menu, where the dialog gives us the list of IDs to show
+			const preference : ToolbarPreference = {};
+			this.settingsOptions().forEach(option =>
+			{
+				preference[option.value] = !value.actions.includes(option.value);
+			});
 			this.egw().json('EGroupware\\Api\\Etemplate\\Widget\\Toolbar::ajax_setAdminSettings',
-				[value, this.preferenceId, this.preferenceApp], (_result) =>
+				[{...value, actions: preference}, this.preferenceId, this.preferenceApp], (_result) =>
 				{
 					this.egw().message(_result);
 				}).sendRequest(true);

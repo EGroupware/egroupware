@@ -212,6 +212,89 @@ describe("et2-toolbar", () =>
 		});
 	});
 
+	/**
+	 * A stored preference the toolbar can not use must not stop it from rendering
+	 *
+	 * Contract: the preference is a map of action ID to "in the menu".  Anything else stored under
+	 * that name (here the comma joined string a flattened map turns into) counts as nothing stored.
+	 * Setup: egw.preference() is stubbed to return that string for every preference.
+	 * Pass: every action is rendered as a button in the toolbar itself, where an action without a
+	 * preference goes.  A failure here with a TypeError from the update means the toolbar tried to
+	 * add to the stored value.
+	 */
+	it("renders its actions when the stored preference is not a map", async() =>
+	{
+		const originalPreference = (window as any).egw.preference;
+		(window as any).egw.preference = () => "1,,1,,,1";
+		try
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar></et2-toolbar>`);
+			el.id = "unusablePreferenceTest";
+			el.actions = {
+				save: {id: "save", caption: "Save"},
+				cancel: {id: "cancel", caption: "Cancel"},
+			};
+			await el.updateComplete;
+
+			assert.equal(el.querySelectorAll("et2-button").length, 2, "both actions rendered");
+			assert.equal(el.querySelector("#save").slot, "", "in the toolbar, not the menu");
+			assert.equal(el.querySelector("#cancel").slot, "", "in the toolbar, not the menu");
+		}
+		finally
+		{
+			(window as any).egw.preference = originalPreference;
+		}
+	});
+
+	/**
+	 * "Set as default" in the toolbar settings must store the preference in the form it is read in
+	 *
+	 * Contract: the preference is a map of action ID to "in the menu".  The settings dialog hands
+	 * back the list of action IDs to show, and the server stores whatever it is sent as the default
+	 * preference, so the list has to be turned into the map before it is sent.
+	 * Setup: egw.json() is stubbed to capture the request, then the dialog's close handler is
+	 * called as if "save" was chosen with "Set as default", showing only "save".
+	 * Pass: the request carries {save: false, cancel: true}.  A list here means every user without
+	 * their own preference gets a default the toolbar can not read.
+	 */
+	it("sends the default preference as a map of action ID to in-menu", async() =>
+	{
+		const originals = {
+			json: (window as any).egw.json,
+			set_preference: (window as any).egw.set_preference,
+			preference: (window as any).egw.preference
+		};
+		let sent : any = null;
+		(window as any).egw.json = (_method, params) =>
+		{
+			sent = params;
+			return {sendRequest: () => {}};
+		};
+		(window as any).egw.set_preference = () => {};
+		(window as any).egw.preference = () => ({});
+		try
+		{
+			const el = await fixture<any>(html`
+                <et2-toolbar></et2-toolbar>`);
+			el.id = "setDefaultTest";
+			el.actions = {
+				save: {id: "save", caption: "Save"},
+				cancel: {id: "cancel", caption: "Cancel"},
+			};
+			await el.updateComplete;
+
+			el.handleSettingsClose(1 /* Et2Dialog.OK_BUTTON */, {actions: ["save"], default: true}, null);
+
+			assert.deepEqual(sent[0].actions, {save: false, cancel: true});
+			assert.isTrue(sent[0].default, "the rest of the dialog's value is still sent");
+		}
+		finally
+		{
+			Object.assign((window as any).egw, originals);
+		}
+	});
+
 	it('hides controls based on preference', async() =>
 	{
 		// Stub egw().preference
