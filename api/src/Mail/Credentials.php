@@ -364,6 +364,77 @@ class Credentials
 	}
 
 	/**
+	 * Build the IMAP/SMTP username for a given acc_imap_logintype from a (account_id, account_lid,
+	 * account_email) triple - shared by from_session() (triple taken from the CURRENT/live
+	 * $GLOBALS['egw_info']['user']) and usernameForAccount() (triple resolved for an EXPLICIT
+	 * account_id, no live session required/used)
+	 *
+	 * @param string $logintype one of acc_imap_logintype's values
+	 * @param int|string|null $acc_id for the 'admin' logintype's exception message only
+	 * @param ?string $acc_domain
+	 * @param ?int $account_id
+	 * @param ?string $account_lid
+	 * @param ?string $account_email
+	 * @return string
+	 */
+	private static function imapUsernameFor(string $logintype, $acc_id, ?string $acc_domain,
+		?int $account_id, ?string $account_lid, ?string $account_email)
+	{
+		switch($logintype)
+		{
+			case 'standard':
+				return $account_lid;
+
+			case 'vmailmgr':
+				return $account_lid.'@'.$acc_domain;
+
+			case 'email':
+				return $account_email;
+
+			case 'uidNumber':
+				return 'u'.$account_id.'@'.$acc_domain;
+
+			case 'domain/username':
+				return $acc_domain.'/'.$account_lid;
+
+			case 'admin':
+				// data should have been stored in credentials table
+				throw new Api\Exception\AssertionFailed('data[acc_imap_logintype]=admin and no stored username/password for data[acc_id]='.$acc_id.'!');
+
+			default:
+				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($logintype).'!');
+		}
+	}
+
+	/**
+	 * Resolve the IMAP/SMTP username for a GIVEN account_id, without requiring (or using) any
+	 * live/matching session - eg. for a cron or push-subscription-callback call acting on a
+	 * specific $called_for account outside any interactive request, which never had a session
+	 * password to use anyway and only needs to know WHO to bake into an admin-impersonation
+	 * master-login string (see Account::__construct()'s acc_admin_use_without_pw handling)
+	 *
+	 * Found live 2026-11-18/19 (ticket #128191): Jmap::pushCallback()'s "session expired, try to
+	 * unsubscribe" cleanup path left acc_imap_username unset for exactly this reason (no matching
+	 * session to pull it from via from_session()), which then failed Horde_Imap_Client_Base's
+	 * "requires a username" check further down - a storm of that exception across many accounts,
+	 * NOT a silent cross-account mixup (the exception fires before any network/IMAP activity).
+	 *
+	 * @param int $account_id
+	 * @param string $logintype one of acc_imap_logintype's values
+	 * @param ?string $acc_domain
+	 * @return ?string null if $account_id does not resolve to a real account
+	 */
+	public static function usernameForAccount(int $account_id, string $logintype, ?string $acc_domain)
+	{
+		if (!($account_lid = Api\Accounts::id2name($account_id)))
+		{
+			return null;
+		}
+		return self::imapUsernameFor($logintype, null, $acc_domain, $account_id, $account_lid,
+			Api\Accounts::id2name($account_id, 'account_email', true));
+	}
+
+	/**
 	 * Generate username according to acc_imap_logintype and fetch password from session
 	 *
 	 * @param array $data values for acc_imap_logintype and acc_domain
@@ -379,35 +450,9 @@ class Credentials
 		{
 			$data['acc_imap_logintype'] = 'email';
 		}
-		switch($data['acc_imap_logintype'])
-		{
-			case 'standard':
-				$username = $GLOBALS['egw_info']['user']['account_lid'];
-				break;
-
-			case 'vmailmgr':
-				$username = $GLOBALS['egw_info']['user']['account_lid'].'@'.$data['acc_domain'];
-				break;
-
-			case 'email':
-				$username = $GLOBALS['egw_info']['user']['account_email'];
-				break;
-
-			case 'uidNumber':
-				$username = 'u'.$GLOBALS['egw_info']['user']['account_id'].'@'.$data['acc_domain'];
-				break;
-
-			case 'domain/username':
-				$username = $data['acc_domain'].'/'.$GLOBALS['egw_info']['user']['account_lid'];
-				break;
-
-			case 'admin':
-				// data should have been stored in credentials table
-				throw new Api\Exception\AssertionFailed('data[acc_imap_logintype]=admin and no stored username/password for data[acc_id]='.$data['acc_id'].'!');
-
-			default:
-				throw new Api\Exception\WrongParameter("Unknown data[acc_imap_logintype]=".array2string($data['acc_imap_logintype']).'!');
-		}
+		$username = self::imapUsernameFor($data['acc_imap_logintype'], $data['acc_id'] ?? null, $data['acc_domain'] ?? null,
+			$GLOBALS['egw_info']['user']['account_id'] ?? null, $GLOBALS['egw_info']['user']['account_lid'] ?? null,
+			$GLOBALS['egw_info']['user']['account_email'] ?? null);
 		$password = $GLOBALS['egw']->session->passwd ?? null;
 		// if session password is a token, do NOT use it, but also do NOT throw, just return NULL for the password(s)
 		if ($password && Api\Auth\Token::isToken($password))

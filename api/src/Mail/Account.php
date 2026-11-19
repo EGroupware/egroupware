@@ -311,18 +311,33 @@ class Account implements \ArrayAccess
 			{
 				$params += Notifications::read($params['acc_id'], $called_for ? array(0, $called_for) : $called_for);
 			}
-			if (!empty($params['acc_imap_logintype']) && empty($params['acc_imap_username']) &&
-				!empty($GLOBALS['egw_info']['user']['account_id']) &&
-				(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
+			if (!empty($params['acc_imap_logintype']) && empty($params['acc_imap_username']))
 			{
-				// get username/password from current user, let it overwrite credentials for all/no session
-				$params = Credentials::from_session(
-						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params,
-						$replace_placeholders && !isset($called_for)
-					) + $params;
+				if (!empty($GLOBALS['egw_info']['user']['account_id']) &&
+					(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
+				{
+					// get username/password from current user, let it overwrite credentials for all/no session
+					$params = Credentials::from_session(
+							(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params,
+							$replace_placeholders && !isset($called_for)
+						) + $params;
+				}
+				elseif (isset($called_for) && !empty($params['acc_admin_use_without_pw']))
+				{
+					// no live session matching $called_for (eg. a push-subscription-callback cleanup
+					// or cron call acting on a specific account outside any interactive request) -
+					// there was never a session-password to use anyway, so resolve just WHO to
+					// impersonate from $called_for's own account data instead of leaving
+					// acc_imap_username unset, which fails Horde_Imap_Client_Base's "requires a
+					// username" check further down - found live 2026-11-18/19 (ticket #128191), a
+					// storm of exactly that exception from Jmap::pushCallback()'s cleanup path
+					$params['acc_imap_username'] = Credentials::usernameForAccount(
+						$called_for, $params['acc_imap_logintype'], $params['acc_domain'] ?? null);
+				}
 
 				// check if we should use admin-credentials, if no session password exists, eg. SSO without password
-				if (!empty($params['acc_admin_use_without_pw']) && empty($params['acc_imap_password']))
+				if (!empty($params['acc_admin_use_without_pw']) && empty($params['acc_imap_password']) &&
+					!empty($params['acc_imap_username']))
 				{
 					// master-user separator: Dovecot uses "*", JMAP/Stalwart impersonation "%" (Imap\Jmap::MASTER_SEPARATOR)
 					$class = $params['acc_imap_type'] ?? null;

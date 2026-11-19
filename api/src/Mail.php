@@ -7091,6 +7091,18 @@ class Mail
 			{
 				$jmap = $this->icServer->jmapClient();
 				$mailboxId = $jmap->mailbox->getMailboxId($_folderName);
+				// TEMPORARY diagnostic instrumentation for ticket #128191 (a message physically
+				// appended into an unrelated account's Sent folder, root cause not yet confirmed) -
+				// logs WHO we're actually connected/impersonating as at the exact moment of a real
+				// write, vs. which acc_id/folder it's targeted at, so the NEXT occurrence can be
+				// pinned down from the log instead of reconstructed after the fact. Remove once the
+				// root cause is confirmed (see doc/ai/projects/ or the ticket for status).
+				error_log(__METHOD__."() TEMP-DIAG-128191 acc_id={$this->icServer->acc_id} ".
+					"isAdminConnection=".array2string($this->icServer->isAdminConnection).' '.
+					"acc_imap_username={$this->icServer->acc_imap_username} ".
+					"account_id=".($GLOBALS['egw_info']['user']['account_id'] ?? 'none').' '.
+					"folder=$_folderName mailboxId=".array2string($mailboxId).' '.
+					"backtrace=".function_backtrace());
 				if (!$mailboxId)
 				{
 					throw new Exception\WrongUserinput(lang("Destination Folder %1 does not exist.", $_folderName));
