@@ -1274,6 +1274,19 @@ abstract class Tracking
 			$lines[] = ['type' => $detail['type'] ?? null, 'modified' => $modified, 'label' => $detail['label'] ?? '',
 				'value' => $detail['value'] ?? null, 'name' => $name];
 		}
+		// drop section headings without content, eg. "Custom fields" when all of them are empty
+		for($n = count($lines)-1, $empty = true; $n >= $header_lines; --$n)
+		{
+			if (self::is_section_heading($lines[$n]))
+			{
+				if ($empty) array_splice($lines, $n, 1);
+				$empty = true;
+			}
+			else
+			{
+				$empty = false;
+			}
+		}
 		if ($html_email)
 		{
 			$body = $this->get_html_body(array_slice($lines, 0, $header_lines), array_slice($lines, $header_lines),
@@ -1485,7 +1498,7 @@ abstract class Tracking
 			$value = $line['value'];
 
 			// section headings
-			if ($type === 'summary' && $label === '' || $type === 'reply' && $line['name'] === 'custom')
+			if (self::is_section_heading($line))
 			{
 				$new_section($this->html_label(rtrim(trim($value), ':')));
 			}
@@ -1564,6 +1577,17 @@ abstract class Tracking
 			$body .= '<tr><td class="egwNotificationSection" style="'.$s['section'].($n ? $s['section_border'] : '').'">'."\n".$section."</td></tr>\n";
 		}
 		return $body."</table>\n";
+	}
+
+	/**
+	 * Check a line of the notification starts a new section: a summary without label, or the custom fields heading
+	 *
+	 * @param array $line values for keys 'type', 'label' and 'name'
+	 * @return bool
+	 */
+	protected static function is_section_heading(array $line) : bool
+	{
+		return $line['type'] === 'summary' && (string)$line['label'] === '' || $line['type'] === 'reply' && $line['name'] === 'custom';
 	}
 
 	/**

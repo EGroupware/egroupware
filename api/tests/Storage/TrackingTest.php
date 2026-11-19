@@ -188,4 +188,33 @@ class TrackingTest extends LoggedInTest
 		$text = $tracking->get_body(false, $data, $old, false);
 		$this->assertStringContainsString("New line\nOld line (".lang('changed').")\n", $text);
 	}
+
+	/**
+	 * Test a section heading without content, eg. custom fields which are all empty, is left out
+	 */
+	public function testEmptySectionHeadingDropped()
+	{
+		$tracking = new TestTracking(self::APP);
+		$tracking->details = array(
+			'status'  => array('label' => 'Status', 'value' => 'Open'),
+			array('value' => 'Description', 'type' => 'summary'),
+			'custom'  => array('value' => 'Custom fields:', 'type' => 'reply'),
+			'#empty'  => array('label' => 'Empty field', 'value' => ''),
+		);
+		$data = array('t_id' => 1, 'status' => 'open');
+
+		$body = $tracking->get_body(true, $data, null, false);
+		$this->assertStringContainsString('>Open</td>', $body);
+		$this->assertStringNotContainsString('Custom fields', $body);
+		$this->assertStringNotContainsString('Description', $body);
+
+		$text = $tracking->get_body(false, $data, null, false);
+		$this->assertStringNotContainsString('Custom fields', $text);
+		$this->assertStringNotContainsString('Description', $text);
+
+		// a custom field with a value keeps the heading
+		$data['#empty'] = 'x';
+		$tracking->details['#empty']['value'] = 'x';
+		$this->assertStringContainsString('Custom fields', $tracking->get_body(true, $data, null, false));
+	}
 }
