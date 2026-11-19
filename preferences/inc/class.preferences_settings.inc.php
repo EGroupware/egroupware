@@ -353,7 +353,9 @@ class preferences_settings
 
 			if (isset($value) && $value !== '' && $value !== '**NULL**' && $value !== array())
 			{
-				if (is_array($value) && !$settings[$var]['no_sel_options']) $value = implode(',',$value);	// multiselect
+				// multiselect: only what the form submitted is joined, verifying gets the stored preferences, where
+				// an array is a preference other code keeps as one (eg. the actions a toolbar shows in its menu)
+				if (is_array($value) && !$only_verify && !$settings[$var]['no_sel_options']) $value = implode(',',$value);
 
 				$prefs[$var] = $value;
 
