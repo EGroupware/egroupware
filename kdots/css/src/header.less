@@ -191,6 +191,17 @@
   border-bottom: none;
   padding: 1em;
   z-index: calc(var(--sl-z-index-toast) - 1);
+
+  // backdrop while a message is expanded: blocks the page and the tray, only the expanded message (z-index 2+) is clickable
+  // it has to be inside our stacking context, an element outside (eg. egw.loading_prompt()) can only cover all or nothing of us
+  &.egwpopup_has_expanded::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	background-color: var(--sl-color-neutral-100);
+	opacity: .3;
+  }
   /*Button*/
 
   input#egwpopup_ok_button,

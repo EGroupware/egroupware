@@ -405,6 +405,14 @@ iframe pre {
   z-index: calc(var(--sl-z-index-toast) - 1);
   /*Button*/
 }
+#egwpopup.egwpopup_has_expanded::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background-color: var(--sl-color-neutral-100);
+  opacity: 0.3;
+}
 #egwpopup input#egwpopup_ok_button,
 #egwpopup button#desktop_perms {
   padding: 0 5px;
