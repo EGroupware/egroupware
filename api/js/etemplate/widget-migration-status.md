@@ -10,7 +10,7 @@ the current set of Lit-based `Et2*` webcomponents (`api/js/etemplate/Et2*/`, reg
 | State | Meaning |
 |---|---|
 | **1a – shim** | A webcomponent exists. The `et2_*.ts` file's class is trivial — it only extends/re-exports the webcomponent for backwards compatibility (old `type="..."`/class-name still resolves, but there's no real legacy code left to remove other than the file itself). |
-| **1a – generated** | Same as 1a-shim, but the file itself has been deleted (2026-09-03). The trivial re-export is synthesized at build/type-check/test time from a single manifest — see [`rollup-legacy-widget-shim.mjs`](./rollup-legacy-widget-shim.mjs) (wired into `rollup.config.js`), a `.d.ts` in [`legacy-shims/`](./legacy-shims/) for `tsc`/IDEs (only where a real consumer still imports the class by name - `toolbar`/`portlet` needed none), and [`webtest-legacy-widget-shim.mjs`](./webtest-legacy-widget-shim.mjs) (wired into `web-test-runner.config.mjs`) for the browser-test dev server. `et2_widget_dialog.ts` stayed a real 1a-shim file — it has actual behaviour beyond a bare re-export. |
+| **1a – generated** | Same as 1a-shim, but the file itself has been deleted (2026-09-03). The trivial re-export is synthesized at build/type-check/test time from a single manifest — see [`rollup-legacy-widget-shim.mjs`](./rollup-legacy-widget-shim.mjs) (wired into `rollup.config.mjs`), a `.d.ts` in [`legacy-shims/`](./legacy-shims/) for `tsc`/IDEs (only where a real consumer still imports the class by name - `toolbar`/`portlet` needed none), and [`webtest-legacy-widget-shim.mjs`](./webtest-legacy-widget-shim.mjs) (wired into `web-test-runner.config.mjs`) for the browser-test dev server. `et2_widget_dialog.ts` stayed a real 1a-shim file — it has actual behaviour beyond a bare re-export. |
 | **1b – kept for a dependent** | A webcomponent exists, but the legacy file still holds real implementation code, because at least one *other still-legacy* file imports/extends it. |
 | **1c – orphaned legacy** | A webcomponent exists (as a fully independent re-implementation), the legacy file still holds real implementation code, but nothing else in the legacy tree imports it any more — only `etemplate2.ts`'s bulk bundle import keeps it alive/registered. Safe-ish to remove once nothing renders `type="<old-name>"` any more. |
 | **2 – not migrated** | No webcomponent equivalent exists yet. |
@@ -259,7 +259,7 @@ If you searched for one of these filenames and found no file - it's not missing,
 deliberately deleted as part of the "1a — generated" cleanup (2026-09-03). It still "exists" at
 build/type-check/test time:
 
-- **`rollup.config.js`** synthesizes the trivial `class et2_X extends Et2Y {}` re-export on the fly
+- **`rollup.config.mjs`** synthesizes the trivial `class et2_X extends Et2Y {}` re-export on the fly
   via [`rollup-legacy-widget-shim.mjs`](./rollup-legacy-widget-shim.mjs)'s `SHIM_MANIFEST`, for any
   real code that still imports the old name (`api/js/etemplate/et2_extension_nextmatch.ts`,
   `filemanager/js/filemanager.ts`, `calendar/js/app.ts`, etc.).

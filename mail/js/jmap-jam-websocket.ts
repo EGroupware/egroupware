@@ -870,7 +870,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	 * to the browser's own network stack to eventually surface.
 	 *
 	 * Deliberately NOT declared `async` (just returns a Promise from one of two branches) - this
-	 * repo's real Babel build (see rollup.config.js: preset-env + @babel/plugin-transform-class-
+	 * repo's real Babel build (see rollup.config.mjs: preset-env + @babel/plugin-transform-class-
 	 * properties) has two distinct miscompilation bugs for an *async* method combined with private
 	 * class elements, found while testing this live:
 	 *   1. An async method that both calls super.xxx() *and* references any #privateField/#privateMethod
