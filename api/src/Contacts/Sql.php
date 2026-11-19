@@ -821,14 +821,17 @@ class Sql extends Api\Storage
 	 *
 	 * @internal
 	 * @param int|array|string $cats
-	 * @return array of sql-strings to be OR'ed or AND'ed together
+	 * @return Api\Db\SqlFragment[] sql fragments to be OR'ed or AND'ed together
 	 */
 	function _cat_search($cats)
 	{
 		$cat_filter = array();
 		foreach(is_array($cats) ? $cats : (is_numeric($cats) ? array($cats) : explode(',',$cats)) as $cat)
 		{
-			if (is_numeric($cat)) $cat_filter[] = $this->db->concat("','", 'cat_id', "','")." LIKE '%,$cat,%'";
+			if (is_numeric($cat))
+			{
+				$cat_filter[] = Api\Db\SqlFragment::raw($this->db->concat("','", 'cat_id', "','")." LIKE '%,".(int)$cat.",%'");
+			}
 		}
 		return $cat_filter;
 	}

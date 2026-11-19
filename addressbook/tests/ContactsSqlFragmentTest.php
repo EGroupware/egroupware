@@ -65,6 +65,28 @@ class ContactsSqlFragmentTest extends LoggedInTest
 		$GLOBALS['egw']->categories->delete($cat_id);
 	}
 
+	/**
+	 * cat_id as search criteria (not filter) takes a different path than the filter above, and is
+	 * what the delete_category hook uses to find the contacts of a category being deleted
+	 */
+	public function testSearchWithCatIdCriteriaFindsContact()
+	{
+		$cats = new Api\Categories('', 'addressbook');
+		$cat_id = $cats->add(['name' => 'ContactsSqlFragmentTest-'.uniqid()]);
+		$id = $this->saveContact(['cat_id' => $cat_id]);
+
+		$bo = new Api\Contacts();
+		$rows = $bo->search(['cat_id' => $cat_id], false);
+
+		$this->assertIsArray($rows);
+		$this->assertEquals([$id], array_column($rows, 'id'));
+
+		// deleting the category runs the delete_category hook, which removes it from the contact
+		$cats->delete($cat_id);
+
+		$this->assertEmpty($bo->read($id)['cat_id']);
+	}
+
 	public function testSearchWithOwnAddressbookOwnerFilterDoesNotThrow()
 	{
 		$id = $this->saveContact();
