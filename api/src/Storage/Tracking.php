@@ -207,7 +207,7 @@ abstract class Tracking
 	 * Mail clients without <style> support only get these, html_dark_style() overrides them by class in dark mode.
 	 */
 	const HTML_STYLES = [
-		'card'           => "max-width:640px;background-color:#ffffff;color:#1d2430;border:1px solid #dde2e8;border-radius:8px;border-collapse:separate;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;",
+		'card'           => "max-width:640px;background-color:#ffffff;color:#1d2430;border:1px solid #dde2e8;border-radius:8px;border-collapse:separate;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;overflow-wrap:anywhere;word-break:break-word;",
 		'header'         => 'background-color:#e9eef4;padding:14px 20px;border-bottom:1px solid #dde2e8;border-radius:8px 8px 0 0;',
 		'h1'             => 'margin:0;font-size:17px;font-weight:600;line-height:1.35;',
 		'header_line'    => 'margin:0 0 6px;',

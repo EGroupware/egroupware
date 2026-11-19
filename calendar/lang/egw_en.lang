@@ -21,6 +21,7 @@ a party crasher in someone who is not invited to the meeting but somehow got the
 accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
+accepted calendar invite	calendar	en	Accepted calendar invite
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1!
 access to calendar of %1 denied!	calendar	en	Access to calendar of %1 denied!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
@@ -503,6 +504,7 @@ recurring event	calendar	en	Recurring event
 regular edit	calendar	en	Regular edit
 reject	calendar	en	Reject
 rejected	calendar	en	Rejected
+rejected calendar invite	calendar	en	Rejected calendar invite
 removes the event from my calendar	calendar	en	Removes the event from my calendar
 repeat days	calendar	en	Repeat days
 repeat the event until which date (empty means unlimited)	calendar	en	Repeat the event until which date (Empty for unlimited)
@@ -613,6 +615,7 @@ sun	calendar	en	Sun
 sync now	calendar	en	Sync now
 tag to mark positions for address labels	calendar	en	Tag to mark positions for address labels
 tentative	calendar	en	Tentative
+tentatively accepted calendar invite	calendar	en	Tentatively accepted calendar invite
 test import (show importable records <u>only</u> in browser)	calendar	en	Test import, show importable records <u>only</u> in browser.
 the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this colour to display events from this calendar.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	en	The document can contain placeholder like {{%1}}, to be replaced with the data.

@@ -312,6 +312,96 @@ describe("NotificationsApp.update_message_status()", () =>
 	});
 });
 
+describe("NotificationsApp.actionDone()", () =>
+{
+	let message: HTMLElement;
+
+	beforeEach(() =>
+	{
+		message = document.createElement('div');
+		message.id = 'egwpopup_message_1';
+		message.classList.add('egwpopup_expanded');
+		document.body.appendChild(message);
+	});
+
+	afterEach(() => message.remove());
+
+	it("deletes the message incl. all notifications of its entry, and closes the message and the popup, if it was the last one", () =>
+	{
+		const request = sinon.spy(), toggle = sinon.spy(), bell = sinon.spy();
+		const app = createFakeApp({
+			notifymessages: {"1": {status: "DISPLAYED", created: '', current: {date: ''}, extra_data: {app: "calendar"}, data: {app: "calendar", id: 42}}},
+			total: 2, popupOpen: true, toggle, bell, egw: {request, loading_prompt: sinon.spy()}
+		});
+		const event = new MouseEvent('click');
+		const stopPropagation = sinon.spy(event, 'stopPropagation');
+
+		app.actionDone(message, event);
+
+		assert.isTrue(request.calledOnceWith("notifications.notifications_ajax.delete_message", [["1"], {calendar: [42]}]));
+		assert.isUndefined((<any>app).notifymessages["1"]);
+		assert.equal((<any>app).total, 1);
+		assert.isNull(document.getElementById('egwpopup_message_1'));
+		assert.isTrue(toggle.calledOnce, "popup closed");
+		assert.isTrue(stopPropagation.called);
+	});
+
+	it("keeps the popup open, if other notifications are left", () =>
+	{
+		const toggle = sinon.spy();
+		const app = createFakeApp({
+			notifymessages: {
+				"1": {status: "DISPLAYED", created: '', current: {date: ''}, extra_data: {app: "calendar"}, data: {app: "calendar", id: 42}},
+				"2": {status: "DISPLAYED", created: '', current: {date: ''}, extra_data: {app: "infolog"}, data: {app: "infolog", id: 7}}
+			},
+			total: 2, popupOpen: true, toggle, bell: sinon.spy(), egw: {request: sinon.spy(), loading_prompt: sinon.spy()}
+		});
+
+		app.actionDone(message, new MouseEvent('click'));
+
+		assert.isNull(document.getElementById('egwpopup_message_1'));
+		assert.deepEqual(Object.keys((<any>app).notifymessages), ["2"]);
+		assert.isFalse(toggle.called);
+	});
+
+	it("removes the time label of the message too, if it was its only message", () =>
+	{
+		const today = document.createElement('div'), yesterday = document.createElement('div'), other = document.createElement('div');
+		today.className = yesterday.className = 'egwpopup_time_label';
+		other.id = 'egwpopup_message_2';
+		message.before(today);
+		message.after(yesterday);
+		yesterday.after(other);
+		const app = createFakeApp({
+			notifymessages: {
+				"1": {status: "SEEN", created: '', current: {date: ''}, extra_data: {app: "calendar"}, data: {app: "calendar", id: 42}},
+				"2": {status: "SEEN", created: '', current: {date: ''}, extra_data: {app: "infolog"}, data: {app: "infolog", id: 7}}
+			},
+			total: 2, popupOpen: true, toggle: sinon.spy(), bell: sinon.spy(), egw: {request: sinon.spy(), loading_prompt: sinon.spy()}
+		});
+
+		app.actionDone(message);
+
+		assert.isFalse(today.isConnected, "empty label removed");
+		assert.isTrue(yesterday.isConnected, "label with a message kept");
+		[yesterday, other].forEach(node => node.remove());
+	});
+
+	it("works without an event and leaves an already closed popup closed", () =>
+	{
+		const toggle = sinon.spy();
+		const app = createFakeApp({
+			notifymessages: {"1": {status: "SEEN", created: '', current: {date: ''}, extra_data: {app: "calendar"}, data: {app: "calendar", id: 42}}},
+			total: 1, popupOpen: false, toggle, bell: sinon.spy(), egw: {loading_prompt: sinon.spy()}
+		});
+
+		app.actionDone(message);
+
+		assert.isNull(document.getElementById('egwpopup_message_1'));
+		assert.isFalse(toggle.called);
+	});
+});
+
 describe("NotificationsApp.tabToggle()", () =>
 {
 	it("returns true, sets the app filter and shows the popup when a matching notification exists", () =>

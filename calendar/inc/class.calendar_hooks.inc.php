@@ -936,28 +936,25 @@ END:VALARM';
 			}
 			return array();
 		}
-		if (!isset($params['data']['event_id'])) $params['data']['event_id'] = '';
-		if (!isset($params['data']['user_id'])) $params['data']['user_id'] = '';
-		return array(
-			array(
-				'id' => 'A',
-				'caption' => lang('Accept'),
-				'icon' => 'accepted',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"A"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
-			),
-			array(
-				'id' => 'R',
-				'caption' => lang('Reject'),
-				'icon' => 'rejected',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"R"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
-			),
-			array(
-				'id' => 'T',
-				'caption' => lang('Tentative'),
-				'icon' => 'tentative',
-				'onExecute' => 'egw().json("calendar.calendar_uiforms.ajax_status",['.$params['data']['event_id'].','.$params['data']['user_id'].','.'"T"'.']).sendRequest(true);this.button_delete(arguments[0], arguments[1]);'
-			)
-		);
+		$actions = [];
+		foreach([
+			'A' => ['Accept', 'accepted', 'Accepted calendar invite'],
+			'R' => ['Reject', 'rejected', 'Rejected calendar invite'],
+			'T' => ['Tentative', 'tentative', 'Tentatively accepted calendar invite'],
+		] as $status => [$caption, $icon, $message])
+		{
+			$actions[] = [
+				'id' => $status,
+				'caption' => lang($caption),
+				'icon' => $icon,
+				// answer and confirm it, deleting the notifications of the event and closing the popup
+				'onExecute' => 'egw().request("calendar.calendar_uiforms.ajax_status",'.
+					json_encode([$params['data']['event_id'] ?? '', $params['data']['user_id'] ?? '', $status]).
+					').then(() => egw().message('.json_encode(lang($message)).', "success"));'.
+					'this.actionDone(arguments[0], arguments[1]);',
+			];
+		}
+		return $actions;
 	}
 
 	/**
