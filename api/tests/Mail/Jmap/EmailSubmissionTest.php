@@ -139,4 +139,150 @@ class EmailSubmissionTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame(['notCreated' => null], $result);
 	}
+
+	// --- submit()'s post-success destroy ($destroySubmission) ---
+
+	public function testSubmitDestroysTheJustCreatedSubmissionBySelfByDefault()
+	{
+		$session = $this->fakeSession('acc1', fn() => ['created' => ['s1' => ['id' => 'sub1']]]);
+		$es = new EmailSubmission($session);
+
+		$es->submit('email1', 'ident1');
+
+		$this->assertCount(2, $session->calls, 'create + self-cleanup destroy');
+		$this->assertSame(['sub1'], $session->calls[1][1]['destroy']);
+	}
+
+	public function testSubmitSkipsTheSelfCleanupDestroyWhenDestroySubmissionIsFalse()
+	{
+		$session = $this->fakeSession('acc1', fn() => ['created' => ['s1' => ['id' => 'sub1']]]);
+		$es = new EmailSubmission($session);
+
+		$es->submit('email1', 'ident1', null, null, false, false);
+
+		$this->assertCount(1, $session->calls, 'no destroy call at all');
+	}
+
+	public function testSubmitSwallowsAFailureToDestroyTheJustCreatedSubmission()
+	{
+		$session = $this->fakeSession('acc1', function($method, $args, $n) {
+			if ($n === 1) return ['created' => ['s1' => ['id' => 'sub1']]];
+			throw new \RuntimeException('destroy failed');
+		});
+		$es = new EmailSubmission($session);
+
+		$result = $es->submit('email1', 'ident1');
+
+		$this->assertSame(['id' => 'sub1'], $result, 'the successful submission result must still be returned');
+	}
+
+	// --- submit()'s overQuota self-heal retry ---
+
+	public function testSubmitPurgesStaleSubmissionsAndRetriesOnceOnOverQuota()
+	{
+		$session = $this->fakeSession('acc1', function($method, $args, $n) {
+			return match([$method, $n]) {
+				['EmailSubmission/set', 1] => ['notCreated' => ['s1' => ['type' => 'overQuota']]],
+				['EmailSubmission/query', 2] => ['ids' => ['old1']],
+				['EmailSubmission/get', 3] => ['list' => [['id' => 'old1', 'sendAt' => '2000-01-01T00:00:00Z']]],
+				['EmailSubmission/set', 4] => ['destroyed' => ['old1']],
+				// the whole (one-object) page was stale, so destroyStaleSubmissions() re-queries
+				// once more to check for further pages before giving up
+				['EmailSubmission/query', 5] => ['ids' => []],
+				['EmailSubmission/set', 6] => ['created' => ['s1' => ['id' => 'sub1']]],
+				['EmailSubmission/set', 7] => ['destroyed' => ['sub1']],	// submit()'s own self-cleanup
+				default => throw new \RuntimeException("unexpected call #$n: $method"),
+			};
+		});
+		$es = new EmailSubmission($session);
+
+		$result = $es->submit('email1', 'ident1');
+
+		$this->assertSame(['id' => 'sub1'], $result, 'must succeed after the self-heal retry');
+		$this->assertSame(['old1'], $session->calls[3][1]['destroy'], 'must have purged the stale backlog');
+		$this->assertSame(['emailId' => 'email1', 'identityId' => 'ident1'], $session->calls[5][1]['create']['s1'],
+			'the retry must resend the exact same create');
+	}
+
+	public function testSubmitReturnsTheOverQuotaErrorWhenItPersistsAfterTheRetry()
+	{
+		$session = $this->fakeSession('acc1', function($method, $args, $n) {
+			return match([$method, $n]) {
+				['EmailSubmission/set', 1] => ['notCreated' => ['s1' => ['type' => 'overQuota']]],
+				['EmailSubmission/query', 2] => ['ids' => []],	// nothing stale enough to purge
+				['EmailSubmission/set', 3] => ['notCreated' => ['s1' => ['type' => 'overQuota']]],
+				default => throw new \RuntimeException("unexpected call #$n: $method"),
+			};
+		});
+		$es = new EmailSubmission($session);
+
+		$result = $es->submit('email1', 'ident1');
+
+		$this->assertSame(['notCreated' => ['type' => 'overQuota']], $result);
+		$this->assertCount(3, $session->calls, 'must give up after exactly one retry, no self-cleanup destroy on failure');
+	}
+
+	public function testSubmitDoesNotRetryForAnyOtherNotCreatedErrorType()
+	{
+		$session = $this->fakeSession('acc1', fn() => ['notCreated' => ['s1' => ['type' => 'invalidProperties']]]);
+		$es = new EmailSubmission($session);
+
+		$result = $es->submit('email1', 'ident1');
+
+		$this->assertSame(['notCreated' => ['type' => 'invalidProperties']], $result);
+		$this->assertCount(1, $session->calls);
+	}
+
+	// --- destroyStaleSubmissions() ---
+
+	public function testDestroyStaleSubmissionsDestroysOnlyTheOnesOlderThanTheThreshold()
+	{
+		$old = gmdate('Y-m-d\TH:i:s\Z', time() - 3600);
+		$recent = gmdate('Y-m-d\TH:i:s\Z', time() - 1);
+		$session = $this->fakeSession('acc1', function($method, $args, $n) use ($old, $recent) {
+			return match([$method, $n]) {
+				['EmailSubmission/query', 1] => ['ids' => ['old1', 'old2', 'recent1']],
+				['EmailSubmission/get', 2] => ['list' => [
+					['id' => 'old1', 'sendAt' => $old],
+					['id' => 'old2', 'sendAt' => $old],
+					['id' => 'recent1', 'sendAt' => $recent],
+				]],
+				['EmailSubmission/set', 3] => ['destroyed' => ['old1', 'old2']],
+				default => throw new \RuntimeException("unexpected call #$n: $method"),
+			};
+		});
+		$es = new EmailSubmission($session);
+
+		$destroyed = $es->destroyStaleSubmissions();
+
+		$this->assertSame(2, $destroyed);
+		$this->assertEqualsCanonicalizing(['old1', 'old2'], $session->calls[2][1]['destroy']);
+	}
+
+	public function testDestroyStaleSubmissionsStopsAsSoonAsNoneAreStale()
+	{
+		$session = $this->fakeSession('acc1', fn() => ['ids' => []]);
+		$es = new EmailSubmission($session);
+
+		$destroyed = $es->destroyStaleSubmissions();
+
+		$this->assertSame(0, $destroyed);
+		$this->assertCount(1, $session->calls, 'must not call get()/set() when query() already found nothing');
+	}
+
+	public function testDestroyStaleSubmissionsTreatsAMissingSendAtAsNotStale()
+	{
+		$session = $this->fakeSession('acc1', function($method, $args, $n) {
+			return match([$method, $n]) {
+				['EmailSubmission/query', 1] => ['ids' => ['nodate1']],
+				['EmailSubmission/get', 2] => ['list' => [['id' => 'nodate1']]],
+				default => throw new \RuntimeException("unexpected call #$n: $method"),
+			};
+		});
+		$es = new EmailSubmission($session);
+
+		$destroyed = $es->destroyStaleSubmissions();
+
+		$this->assertSame(0, $destroyed, 'an object with no sendAt at all must never be purged');
+	}
 }
