@@ -7325,6 +7325,58 @@ export class MailJmap
 	 * equivalent and has been removed entirely, see plan).
 	 */
 	/**
+	 * Self-heal for EmailSubmission/set's "overQuota" SetError on a real-JMAP (Stalwart) account -
+	 * see sendNewEmail()'s own docblock for why the backlog exists in the first place.
+	 *
+	 * Only ever purges objects older than a couple of minutes, never "everything" - a genuinely
+	 * concurrent send from elsewhere (another tab, a mail-merge batch, ...) a split-second away
+	 * from reaching its own post-success cleanup must never get raced by this destroying it first.
+	 *
+	 * RFC 8621 S7.3's EmailSubmission/query FilterCondition has no date-range property, so this
+	 * sorts by sendAt instead and stops as soon as it hits the age boundary within a page, mirroring
+	 * Api\Mail\Jmap\EmailSubmission::destroyStaleSubmissions() on the PHP side.
+	 */
+	private async purgeStaleEmailSubmissions(client : JamWebSocketClient, accountId : string, olderThanSeconds = 120) : Promise<void>
+	{
+		const threshold = Date.now() - olderThanSeconds * 1000;
+		try
+		{
+			for (let n = 0; n < 20; n++)
+			{
+				const [{ids, submissions}] = await client.requestMany((t) =>
+				{
+					const ids = t.EmailSubmission.query({
+						accountId,
+						sort: [{property: 'sendAt', isAscending: true}],
+						position: 0,
+						limit: 500,
+					});
+					const submissions = t.EmailSubmission.get({accountId, ids: ids.$ref('/ids'), properties: ['sendAt']});
+					return {ids, submissions};
+				});
+				const list = (submissions.list || []) as {id : string, sendAt? : string}[];
+				if (!list.length) break;
+
+				list.sort((a, b) => Date.parse(a.sendAt ?? '') - Date.parse(b.sendAt ?? ''));
+				const stale : string[] = [];
+				for (const submission of list)
+				{
+					const sendAt = submission.sendAt ? Date.parse(submission.sendAt) : NaN;
+					if (isNaN(sendAt) || sendAt >= threshold) break;	// reached the age boundary
+					stale.push(submission.id);
+				}
+				if (!stale.length) break;
+
+				await client.requestMany((t) => ({destroyed: t.EmailSubmission.set({accountId, destroy: stale})}));
+				if (stale.length < list.length) break;	// boundary was within this very page
+			}
+		}
+		catch (e)
+		{
+			console.error('MailJmap.purgeStaleEmailSubmissions(): failed to purge stale EmailSubmission objects', e);
+		}
+	}
+	/**
 	 * Send a brand-new message via JMAP Email/set + EmailSubmission/set - Step 1 of
 	 * doc/ai/projects/mail-compose-jmap-migration.md: plain new-message compose only, no
 	 * reply/forward context, no attachments, no S/MIME yet.
@@ -7441,23 +7493,40 @@ export class MailJmap
 			// visibly) - so it still needs onSuccessUpdateEmail embedded in THIS call, unchanged.
 			// A real-JMAP (Stalwart) account doesn't need or get that special handling below - see
 			// the separate explicit Email/set call just past the success check for why.
-			const [{submission}] = await client.requestMany((t) => ({
-				submission: t.EmailSubmission.set({
-					accountId: token.accountId,
-					create: {sub1: {emailId, identityId: submissionIdentityId}},
-					...(token.isLocal ? {
-						onSuccessUpdateEmail: {
-							'#sub1': {
-								[`mailboxIds/${draftsId}`]: null,
-								[`mailboxIds/${sentId}`]: true,
-								...extraFolderIds,
-								'keywords/$draft': null,
-								'keywords/$seen': true,
-							},
+			const submissionArgs = {
+				accountId: token.accountId,
+				create: {sub1: {emailId, identityId: submissionIdentityId}},
+				...(token.isLocal ? {
+					onSuccessUpdateEmail: {
+						'#sub1': {
+							[`mailboxIds/${draftsId}`]: null,
+							[`mailboxIds/${sentId}`]: true,
+							...extraFolderIds,
+							'keywords/$draft': null,
+							'keywords/$seen': true,
 						},
-					} : {}),
-				}),
-			}));
+					},
+				} : {}),
+			};
+			let [{submission}] = await client.requestMany((t) => ({submission: t.EmailSubmission.set(submissionArgs)}));
+
+			// Stalwart (and presumably other real-JMAP servers) enforce a hard per-account QUOTA
+			// on how many EmailSubmission objects they keep (RFC 8621 S7.1 allows but doesn't
+			// require indefinite retention) - nothing here, or on the server-side PHP
+			// Horde_Mail_Transport send path (Api\Mail\Jmap\EmailSubmission::submit(), which got
+			// this same fix first), ever polls deliveryStatus afterwards, so every submission
+			// that's never destroyed permanently burns one slot. Found live 2026-11-19 (Birgit,
+			// Stalwart production, pole.egroupware.org): the PHP-only fix did NOT cover this -
+			// THIS client-side send path (real-JMAP accounts only; token.isLocal is the IMAP-
+			// shim's own entirely separate code path/backend, with no such quota) talks to
+			// Stalwart directly from the browser, never through that PHP class at all. Self-heal
+			// instead of failing the send: purge the backlog and retry ONCE, rather than making
+			// the user (or an admin on their behalf) manually clean up before they can send again.
+			if (!token.isLocal && submission.notCreated?.sub1?.type === 'overQuota')
+			{
+				await this.purgeStaleEmailSubmissions(client, token.accountId);
+				[{submission}] = await client.requestMany((t) => ({submission: t.EmailSubmission.set(submissionArgs)}));
+			}
 			if (!submission.created?.sub1)
 			{
 				// ralf, 2026-11-04: this specific, structured, well-known case (EmailSubmission/set's
@@ -7474,6 +7543,23 @@ export class MailJmap
 						'This message is too large for the mail server to accept - switch one or more attachments to a download link and try again'));
 				}
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
+			}
+			if (!token.isLocal)
+			{
+				// best-effort self-cleanup, mirroring Api\Mail\Jmap\EmailSubmission::submit()'s own
+				// $destroySubmission default - nothing here ever polls deliveryStatus afterwards, so
+				// the object is dead weight the moment this succeeds; never let a cleanup failure
+				// affect the (already successful) send
+				try
+				{
+					await client.requestMany((t) => ({
+						destroyed: t.EmailSubmission.set({accountId: token.accountId, destroy: [submission.created.sub1.id]}),
+					}));
+				}
+				catch (e)
+				{
+					console.error('MailJmap.sendNewEmail(): failed to self-clean the just-created EmailSubmission object', e);
+				}
 			}
 			// ticket #125092 (Ingo/Birgit Becker): the classic, now-deleted
 			// mail_compose::compose()'s own LastSignatureIDUsed write-back (0fcea2103a) never got
