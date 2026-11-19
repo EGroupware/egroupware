@@ -487,7 +487,12 @@ class admin_customfields
 
 		if($cf_id)
 		{
-			$content = array_merge($content, $this->so->read($cf_id));
+			if (!($field = $this->so->read($cf_id)))
+			{
+				// eg. the field was deleted in the meantime
+				Framework::window_close(lang('Entry not found!'));
+			}
+			$content = array_merge($content, $field);
 			$this->appname = $content['cf_app'];
 			if($content['cf_private'])
 			{
