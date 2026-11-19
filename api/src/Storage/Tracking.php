@@ -226,6 +226,8 @@ abstract class Tracking
 		'badge_new'      => 'float:right;margin-left:8px;padding:0 6px;border:1px solid #e3f4e8;border-radius:3px;background-color:#e3f4e8;color:#1d6b3a;font-size:11px;font-weight:bold;line-height:1.6;letter-spacing:0.04em;text-transform:uppercase;',
 		'text'           => 'padding:6px 0;',
 		'description'    => 'margin:4px 0;padding:12px 16px;font-size:16px;line-height:1.6;background-color:#f6f8fa;border:1px solid #dde2e8;border-left:4px solid #0b5cad;border-radius:6px;',
+		'description_modified' => 'background-color:#fdf3d8;border-left-color:#d9a521;',
+		'text_modified'  => 'background-color:#fdf3d8;border-left:4px solid #d9a521;padding-left:10px;',
 		'button_table'   => 'margin-top:14px;border-collapse:separate;',
 		'button'         => 'background-color:#0b5cad;border-radius:6px;',
 		'button_link'    => 'display:inline-block;padding:10px 18px;color:#ffffff;font-weight:600;text-decoration:none;',
@@ -253,6 +255,7 @@ abstract class Tracking
 		'.egwNotificationText'            => 'background-color:#2a2e35;border-color:#383d45;border-left-color:#8cbcff',
 		'tr.egwNotificationModified > *'  => 'background-color:#3b3018',
 		'tr.egwNotificationModified > th' => 'color:#ffd27a;border-left-color:#b8892a',
+		'div.egwNotificationModified'     => 'background-color:#3b3018;border-left-color:#b8892a',
 		'.egwNotificationBadge'           => 'color:#ffd27a;border-color:#b8892a',
 		'.egwNotificationComment'         => 'background-color:#2a2e35',
 		'.egwNotificationComment h3'      => 'color:#a4abb7',
@@ -1445,7 +1448,7 @@ abstract class Tracking
 		$sections = [];
 		$section = $rows = '';
 		$comment = null;	// open comment: values for keys 'header', 'modified' and 'body'
-		$news_rows = $news_comments = '';	// modified rows and new comments for the "What changed" section
+		$news_rows = $news_texts = $news_comments = '';	// modified rows, texts and new comments for the "What changed" section
 		$close_rows = static function() use (&$section, &$rows, $s)
 		{
 			if ($rows !== '')
@@ -1498,13 +1501,19 @@ abstract class Tracking
 				$close_comment();
 				$comment = ['header' => $this->html_label($type === 'message' ? $label : $value), 'modified' => $line['modified'], 'body' => ''];
 			}
-			// free text
+			// free text, eg. InfoLog's description, a modified one is marked like a modified row
 			elseif ($label === '')
 			{
 				$close_rows();
 				$close_comment();
-				$section .= ($type === 'multiline' ? '<div class="egwNotificationText" style="'.$s['description'].'">' : '<div style="'.$s['text'].'">').
-					$this->html_value($type, $value)."</div>\n";
+				$modified = $line['modified'];
+				$class = trim(($type === 'multiline' ? 'egwNotificationText' : '').($modified ? ' egwNotificationModified' : ''));
+				$html = '<div'.($class !== '' ? ' class="'.$class.'"' : '').' style="'.
+					($type === 'multiline' ? $s['description'].($modified ? $s['description_modified'] : '') :
+						$s['text'].($modified ? $s['text_modified'] : '')).'">'.
+					($modified ? $this->html_badge(false) : '').$this->html_value($type, $value)."</div>\n";
+				$section .= $html;
+				if ($modified) $news_texts .= $html;
 			}
 			// row of the details table
 			else
@@ -1528,11 +1537,11 @@ abstract class Tracking
 
 		// "What changed" section and button to open the entry, before the whole entry
 		$news = '';
-		if ($news_rows !== '' || $news_comments !== '')
+		if ($news_rows !== '' || $news_texts !== '' || $news_comments !== '')
 		{
 			$news = '<h2 class="egwNotificationHeading" style="'.$s['heading'].'">'.Api\Html::htmlspecialchars(lang('What changed'))."</h2>\n".
 				($news_rows !== '' ? '<table class="egwNotificationDetails" width="100%" cellspacing="0" cellpadding="0" border="0" style="'.$s['details'].'">'.$news_rows."</table>\n" : '').
-				$news_comments;
+				$news_texts.$news_comments;
 		}
 		if ($link)
 		{

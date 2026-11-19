@@ -161,4 +161,31 @@ class TrackingTest extends LoggedInTest
 		$this->assertStringContainsString('&lt;b&gt;Comment&lt;/b&gt;', $body);
 		$this->assertFalse($tracking->html_content_allow);
 	}
+
+	/**
+	 * Test a modified description without label, like InfoLog's, is marked and repeated in "What changed"
+	 */
+	public function testHtmlModifiedDescription()
+	{
+		$tracking = new TestTracking(self::APP);
+		$tracking->details = array(
+			'status'      => array('label' => 'Status', 'value' => 'Open'),
+			'description' => array('value' => "New line\nOld line", 'type' => 'multiline'),
+		);
+		$data = array('t_id' => 1, 'status' => 'open', 'description' => "New line\nOld line");
+		$old = array('t_id' => 1, 'status' => 'open', 'description' => 'Old line');
+
+		$body = $tracking->get_body(true, $data, $old, false);
+
+		$sections = explode('<td class="egwNotificationSection"', $body);
+		$this->assertStringContainsString('>'.lang('What changed').'</h2>', $sections[1]);
+		$modified = '#<div class="egwNotificationText egwNotificationModified" style="[^"]*background-color:\#fdf3d8;[^"]*">'.
+			'<span class="egwNotificationBadge"[^>]*>'.lang('changed').'</span>New line<br />\s*Old line</div>#';
+		$this->assertMatchesRegularExpression($modified, $sections[1]);
+		$this->assertMatchesRegularExpression($modified, $sections[2]);
+		$this->assertEquals(2, substr_count(substr($body, strlen(Tracking::html_dark_style())), 'egwNotificationModified'));
+
+		$text = $tracking->get_body(false, $data, $old, false);
+		$this->assertStringContainsString("New line\nOld line (".lang('changed').")\n", $text);
+	}
 }

@@ -3467,6 +3467,11 @@ html[data-darkmode="1"] .egwpopup_message tr.egwNotificationModified > th,
   color: #ffd27a !important;
   border-left-color: #b8892a !important;
 }
+html[data-darkmode="1"] .egwpopup_message div.egwNotificationModified,
+.sl-theme-dark .egwpopup_message div.egwNotificationModified {
+  background-color: #3b3018 !important;
+  border-left-color: #b8892a !important;
+}
 html[data-darkmode="1"] .egwpopup_message .egwNotificationBadge,
 .sl-theme-dark .egwpopup_message .egwNotificationBadge {
   color: #ffd27a !important;
