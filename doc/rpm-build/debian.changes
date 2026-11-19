@@ -1,3 +1,16 @@
+egroupware-docker (26.11.20261119) hardy; urgency=low
+
+  * SECURITY: multiple security updates in EGroupware and PHP 8.5.13, everyone is strongly advised to update to this release!
+  * SECURITY: there is also a critical Nginx security update, which requires you to install security updates on the Linux system!
+  * Addressbook: extended search no longer opens the name details on load, they covered the fields below the name
+  * Api: notifications mark a changed InfoLog description as changed again
+  * Api: Nextmatch "Select All" could act on other rows than the list showed in some circumstances
+  * Mail: saving any identity-related change silently fails once an account has a second identity
+  * Notifications: improved styling in the UI
+  * Notifications: meeting request notification is removed after answering it
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 19 Nov 2026 22:03:49 +0100
+
 egroupware-docker (26.11.20261112) hardy; urgency=low
 
   * SECURITY: multiple critical security updates in EGroupware, everyone is strongly advised to update to this release!
