@@ -2214,7 +2214,8 @@ class infolog_bo
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string $pattern pattern to search
-	 * @param array $options Array of options for the search
+	 * @param array $options Array of options for the search, "ids" searches only these entries
+	 *	(none, if it is empty)
 	 * @return array with info_id - title pairs of the matching entries
 	 */
 	function link_query($pattern, Array &$options = array())
@@ -2225,6 +2226,23 @@ class infolog_bo
 			'num_rows'	=>	$options['num_rows'],
 			'subs'   => true,
 		);
+		if (isset($options['ids']))
+		{
+			if (!$options['ids'])
+			{
+				$options['total'] = 0;
+				return array();
+			}
+			$query['col_filter']['info_id'] = $options['ids'];
+			// A fulltext or RAG search only ever considers its best matches among all entries,
+			// which need not include any of the few asked for: search those directly instead.
+			// Only that search knows the prefix, without it the pattern is searched as it is.
+			if ((string)$pattern !== '' && class_exists('EGroupware\\Rag\\Embedding') &&
+				!preg_match('/^(fulltext|hybrid|rag|legacy):/', $pattern))
+			{
+				$query['search'] = 'legacy:'.$pattern;
+			}
+		}
 		$ids = $this->search($query);
 		$options['total'] = $query['total'];
 		$content = array();

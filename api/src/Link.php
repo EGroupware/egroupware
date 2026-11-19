@@ -861,9 +861,17 @@ class Link extends Link\Storage
 	/**
 	 * Searches for a $pattern in the entries of $app
 	 *
+	 * $options['filter']['linked'] limits the search to entries linked to one other entry, eg.
+	 * "projectmanager:123" (or ['app' => 'projectmanager', 'id' => 123]) for the entries of a
+	 * project. A list of such entries limits it to what is linked to any of them. It never
+	 * reaches the callback as a filter: the ids of the linked entries are passed in
+	 * $options['ids'] instead, for the callback to search only those. They are an empty array
+	 * for a filter naming no entry, or none the user has access to, which then has to find
+	 * nothing. A callback not supporting ids ignores them, and searches all its entries.
+	 *
 	 * @param string $app app to search
 	 * @param string $pattern pattern to search
-	 * @param array& $options passed to callback: type, start, num_rows, filter, exclude; on return value for "total"
+	 * @param array& $options passed to callback: type, start, num_rows, filter, exclude, ids; on return value for "total"
 	 * @return array with $id => $title pairs of matching entries of app
 	 */
 	static function query($app, $pattern, &$options = array())
@@ -896,6 +904,14 @@ class Link extends Link\Storage
 			$options['filter'] = array_filter($options['filter'], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 		}
 
+		// ids only ever come from a linked filter, never from the caller
+		unset($options['ids']);
+		if (isset($options['filter']) && is_array($options['filter']) && array_key_exists('linked', $options['filter']))
+		{
+			$options['ids'] = self::linkedIds($app, $options['filter']['linked']);
+			unset($options['filter']['linked']);
+		}
+
 		$result = self::exec($method, array($pattern, &$options));
 
 		// An app that pages itself has to report how many matches there are, as that can no
@@ -920,6 +936,52 @@ class Link extends Link\Storage
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Ids of the entries of $app linked to one or more other entries
+	 *
+	 * With several entries, the ids are those linked to any of them. An entry that does not
+	 * exist, or the user has no access to, adds nothing.
+	 *
+	 * @param string $app app of the entries to return
+	 * @param string|array $linked entry they have to be linked to: "app:id" or array with keys
+	 *	app and id, or a list of such entries
+	 * @return array ids in $app, empty if $linked names no entry the user has access to
+	 */
+	protected static function linkedIds($app, $linked)
+	{
+		// one entry, unless it is a list of them
+		if (!is_array($linked) || isset($linked['app']) || isset($linked['id']))
+		{
+			$linked = array($linked);
+		}
+		$ids = array();
+		foreach($linked as $entry)
+		{
+			$linked_app = $linked_id = null;
+			if (is_string($entry))
+			{
+				list($linked_app, $linked_id) = explode(':', $entry, 2)+array(null, null);
+			}
+			elseif (is_array($entry))
+			{
+				$linked_app = $entry['app'] ?? null;
+				$linked_id = $entry['id'] ?? null;
+			}
+			if (empty($linked_app) || !is_string($linked_app) || !isset(self::$app_register[$linked_app]) ||
+				empty($linked_id) || !is_scalar($linked_id) ||
+				// false: no access to the entry, so not to what is linked to it either
+				self::title($linked_app, $linked_id) === false)
+			{
+				continue;
+			}
+			foreach(Link\Storage::get_links($linked_app, (string)$linked_id, $app) as $id)
+			{
+				$ids[$id] = $id;
+			}
+		}
+		return array_values($ids);
 	}
 
 	/**
