@@ -459,13 +459,14 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		return this.egw().request("home.home_ui.ajax_set_properties", [this.id, [], settings, this.settings ? this.settings.group : false])
 			.then((data) =>
 			{
+				// The request is over, whether it worked (a failed one answers with nothing) or not
+				this.classList.remove("loading");
+
 				// This section not for us
 				if(!data || typeof data.attributes == 'undefined')
 				{
 					return false;
 				}
-
-				this.classList.remove("loading");
 
 				this.transformAttributes(data.attributes);
 

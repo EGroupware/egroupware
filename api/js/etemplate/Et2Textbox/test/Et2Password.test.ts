@@ -176,6 +176,45 @@ describe("Password widget", () =>
 			assert.equal(promptInput.type, "password", "Login password would have been typed in clear");
 		});
 
+		/**
+		 * The server answers a wrong login password with an empty value, while a request that
+		 * failed has no answer at all.  Both tests answer the authentication prompt and stub
+		 * egw.request() with one of the two; they pass when the validation message shown names the
+		 * right problem and the value stays masked.
+		 */
+		const authenticate = async(answer : any) =>
+		{
+			(<any>window.egw).request = sinon.fake.returns(Promise.resolve(answer));
+			sinon.stub(element, "getInstanceManager").returns(<any>{etemplate_exec_id: "exec"});
+			const message = sinon.stub(element, "set_validation_error");
+
+			element.shadowRoot.querySelector<HTMLButtonElement>(".input__password-toggle").click();
+			await elementUpdated(element);
+			prompt.firstCall.args[0](Et2Dialog.OK_BUTTON, "login password");
+			await new Promise(resolve => setTimeout(resolve, 0));
+
+			delete (<any>window.egw).request;
+			return message;
+		};
+
+		it('says the password is invalid when the server refuses it', async() =>
+		{
+			const message = await authenticate("");
+
+			assert.equal(message.firstCall.args[0], "invalid password*");
+			assert.equal(element.shadowRoot.querySelector("input").type, "password");
+		});
+
+		it('says the request failed, not that the password is invalid, when there is no answer', async() =>
+		{
+			const message = await authenticate(undefined);
+
+			assert.isTrue(message.calledOnce, "User was not told");
+			assert.notInclude(message.firstCall.args[0], "invalid password");
+			assert.include(message.firstCall.args[0], "returned with an error");
+			assert.equal(element.shadowRoot.querySelector("input").type, "password");
+		});
+
 		it('asks for nothing to show what the user typed', async() =>
 		{
 			const input = element.shadowRoot.querySelector("input");

@@ -168,6 +168,11 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 		let request = egw.request("EGroupware\\Api\\Etemplate\\Widget\\Password::ajax_suggest", [this.suggest])
 			.then(suggestion =>
 			{
+				// No answer means the request failed (the user was told): keep what is there
+				if(!suggestion)
+				{
+					return;
+				}
 				this.encrypted = false;
 				this.value = suggestion;
 
@@ -222,6 +227,12 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 					"EGroupware\\Api\\Etemplate\\Widget\\Password::ajax_decrypt",
 					[user_password, this.value, this.getInstanceManager().etemplate_exec_id]).then(decrypted =>
 				{
+					// The server answers a wrong password with an empty value.  No answer at all
+					// means the request failed, which is not the user's password being wrong.
+					if(typeof decrypted === "undefined")
+					{
+						throw new Error("No response");
+					}
 					if (decrypted)
 					{
 						this.encrypted = false;
@@ -236,6 +247,13 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 							this.set_validation_error(false);
 						}, 2000);
 					}
+				}).catch(() =>
+				{
+					this.set_validation_error(this.egw().lang("A request to the EGroupware server returned with an error"));
+					window.setTimeout(() =>
+					{
+						this.set_validation_error(false);
+					}, 5000);
 				});
 			},
 			this.egw().lang("Enter your password"),

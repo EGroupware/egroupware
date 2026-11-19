@@ -99,6 +99,10 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * it and its (now obsolete) answer can be discarded when it arrives.
 	 */
 	protected _loadingRequest = "";
+
+	// How long the server may take to answer with the links before we give up on it, in ms.  A
+	// request that never answers would otherwise leave the loading placeholder up forever.
+	protected loadTimeout : number = 20000;
 	/**
 	 * Identifies the entry _link_list was collected for, so links from a previous entry are
 	 * not kept when this widget gets re-used for another one.
@@ -382,7 +386,12 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		this._loading = true;
 		this._loadingRequest = request;
 
-		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
+		let timer : number;
+		const timeout = new Promise<never>((_resolve, reject) =>
+		{
+			timer = window.setTimeout(() => reject(new Error("Timed out")), this.loadTimeout);
+		});
+		const loading = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
 				if(this._loadingRequest !== request)
@@ -410,7 +419,24 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				this._loading = false;
 				this.requestUpdate();
 				return this._link_list;
+			});
+
+		// A request that failed or never answers must not leave the loading placeholder up, nor
+		// block asking again: show the links we have.  An answer that still arrives after we gave
+		// up is added by the handler above.  Deliberately no message to the user, a list has one
+		// of these per row.
+		this._loadingPromise = Promise.race([loading, timeout])
+			.catch((error) =>
+			{
+				if(this._loadingRequest === request)
+				{
+					console.warn(this.localName + ": loading links failed", error);
+					this._loading = false;
+					this.requestUpdate();
+				}
+				return this._link_list;
 			})
+			.finally(() => clearTimeout(timer));
 	}
 
 	/**

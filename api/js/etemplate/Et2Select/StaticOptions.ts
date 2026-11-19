@@ -286,6 +286,16 @@ export const StaticOptions = new class StaticOptionsType
 					// Need to clean the options because file may be key=>value, may have option list, may be mixed
 					cache_owner[file] = intoCacheRealm(cleanSelectOptions(options) ?? []);
 					return cache_owner[file];
+				})
+				.catch((error) =>
+				{
+					// Do not keep the failure: it would be handed to every later widget until the
+					// page is reloaded.  The next one asks again.
+					if(cache_owner[file] === cache)
+					{
+						delete cache_owner[file];
+					}
+					throw error;
 				});
 		}
 		else if(cache && typeof cache.then === "undefined")

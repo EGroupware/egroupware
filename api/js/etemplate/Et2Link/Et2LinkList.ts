@@ -738,13 +738,18 @@ export class Et2LinkList extends Et2LinkString
 		remark.classList.add("loading");
 		egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_comment",
 			[link.link_id, comment, this.getInstanceManager().etemplate_exec_id]).sendRequest()
-			.then(() =>
+			.then((response) =>
 			{
 				if(remark)
 				{
-					// Append "" to make sure it's a string, not undefined
 					remark.classList.remove("loading");
-					// Update internal data
+					// No response means the request failed (the user was told): the comment was
+					// not saved, so do not show it as if it was
+					if(!response)
+					{
+						return;
+					}
+					// Update internal data.  Append "" to make sure it's a string, not undefined
 					link.remark = comment + "";
 					// Update link widget
 					remark.value = link;

@@ -128,6 +128,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	private _lazyLoadPending = new Set<string>();
 
 	/**
+	 * How long loading a node's children may take before we give up on it, in ms.  A request that
+	 * never answers would otherwise leave the node's spinner up forever, and the node could not be
+	 * asked for again.
+	 */
+	protected lazyLoadTimeout : number = 20000;
+
+	/**
 	 * get the first selected node using attributes on the shadow root elements
 	 */
 	private get selected(){
@@ -1238,7 +1245,33 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 		this._lazyLoadPending.add(key);
 
-		this.lazyLoading = this.handleLazyLoading(selectOption).then((result) =>
+		// Loading that fails, throws or never answers is told to the user and then treated like an
+		// answer without children: the spinner stops and the node closes.
+		let timer : number;
+		const timeout = new Promise<never>((_resolve, reject) =>
+		{
+			timer = window.setTimeout(() => reject(new Error(
+				this.egw().lang("Could not contact server. Operation timed out!"))), this.lazyLoadTimeout);
+		});
+		let loading : Promise<TreeItemData>;
+		try
+		{
+			loading = this.handleLazyLoading(selectOption);
+		}
+		catch(e)
+		{
+			loading = Promise.reject(e);
+		}
+		this.lazyLoading = Promise.race([loading, timeout]).catch((error) =>
+		{
+			console.warn(this.localName + ": loading children of " + key + " failed", error);
+			const reason = error?.statusText || error?.message || (typeof error === "string" ? error : "");
+			this.egw().message(this.egw().lang("Loading failed") + (reason ? ": " + reason : ""), "warning");
+			// An answer that still arrives after we gave up is merged into the node by
+			// handleLazyLoading(), it just needs showing
+			loading.then(() => this.requestUpdate("_selectOptions"), () => {});
+			return undefined;
+		}).finally(() => clearTimeout(timer)).then((result) =>
 		{
 			// TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
 			const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.value, this._selectOptions, 'value', 'children');

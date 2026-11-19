@@ -580,6 +580,12 @@ export class Et2VfsSelectDialog
 			this.egw().request('EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_create_dir', [dir, this.path])
 				.then((msg) =>
 				{
+					// No answer means the request failed (the user was told): there is no new
+					// directory to change into
+					if(!msg)
+					{
+						return;
+					}
 					this.egw().message(msg);
 					this.setPath(this.path + '/' + dir);
 				});

@@ -1672,6 +1672,17 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 								await updateUi(value.type == "data" ? value.data : value, index + 1);
 							}
 						}
+						else
+						{
+							// No answer means the request failed.  Say so now, and wait for the
+							// user to choose retry or skip, instead of moving on to the next item
+							// and logging this one when its timeout runs out.
+							clearTimeout(timeout_id);
+							await updateUi({
+								type: 'error',
+								data: dialog.egw().lang("failed") + " " + JSON.stringify(parameters)
+							}, index + 1);
+						}
 					})
 					.catch(async(response) =>
 					{

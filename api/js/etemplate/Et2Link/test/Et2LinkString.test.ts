@@ -227,4 +227,64 @@ describe("Et2LinkString", () =>
 			});
 		});
 	});
+
+	/**
+	 * A request for the links that is rejected, or never answered at all, must not leave the
+	 * loading placeholder up for good.  Each test stubs jsonq() with the outcome it is about and
+	 * passes when the placeholder is gone, and the widget is ready to be asked again.
+	 */
+	describe("when loading the links fails", () =>
+	{
+		const settled = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
+		const withRequest = async(jsonq : () => Promise<any>) =>
+		{
+			const element = await fixture<any>(html`
+                <et2-link-string application="timesheet"></et2-link-string>`);
+			element.egw = () => Object.assign(Object.create(window.egw()), {jsonq: jsonq});
+			return element;
+		};
+		const origWarn = console.warn;
+		beforeEach(() => { console.warn = () => {}; });
+		afterEach(() => { console.warn = origWarn; });
+
+		it("stops loading when the request is rejected", async() =>
+		{
+			const element = await withRequest(() => Promise.reject(new Error("broken")));
+
+			element.entryId = "12";
+			await settled();
+			await element.updateComplete;
+
+			assert.isFalse(element._loading, "still loading after the request failed");
+			assertNoElement(element.shadowRoot.querySelector(".search__loading"));
+		});
+
+		it("gives up on a request that never answers", async() =>
+		{
+			const element = await withRequest(() => new Promise(() => {}));
+			element.loadTimeout = 10;
+
+			element.entryId = "12";
+			await settled(50);
+			await element.updateComplete;
+
+			assert.isFalse(element._loading, "still loading after the timeout");
+			assertNoElement(element.shadowRoot.querySelector(".search__loading"));
+		});
+
+		it("still shows an answer that arrives after it gave up", async() =>
+		{
+			let answer : (links : any) => void;
+			const element = await withRequest(() => new Promise(resolve => { answer = resolve; }));
+			element.loadTimeout = 10;
+
+			element.entryId = "12";
+			await settled(50);
+			answer({1: {app: "infolog", id: "1", link_id: 1}});
+			await settled();
+			await element.updateComplete;
+
+			assert.deepEqual(element._link_list.map(l => l.id), ["1"]);
+		});
+	});
 });

@@ -317,6 +317,8 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		}
 		else
 		{
+			// Nothing was linked, but we are done waiting for it
+			this.loading = false;
 			this.validators.push(new ManualMessage(this.egw().lang("failed")));
 		}
 		this.dispatchEvent(new CustomEvent('link.et2_link_to', {bubbles: true, detail: success}));

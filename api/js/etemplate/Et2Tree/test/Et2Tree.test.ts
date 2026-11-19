@@ -152,4 +152,69 @@ describe("Et2Tree", () =>
 
 		assert.equal(changes, 1, "selecting a node has to fire exactly one change event");
 	});
+
+	/**
+	 * Loading a node's children that is rejected, or never answered at all, must not leave the
+	 * node's spinner up for good.  autoloading is a callback here, so each test decides the
+	 * outcome; it passes when the user was told, the node stopped loading and it can be asked
+	 * for again (it is no longer pending).
+	 */
+	describe("when loading a node's children fails", () =>
+	{
+		let messages : any[][];
+		const origWarn = console.warn;
+		beforeEach(() =>
+		{
+			messages = [];
+			console.warn = () => {};
+			(<any>window.egw).message = (...args) => messages.push(args);
+			(<any>window.egw).lang = (l : string) => l;
+		});
+		afterEach(() =>
+		{
+			console.warn = origWarn;
+			delete (<any>window.egw).message;
+			delete (<any>window.egw).lang;
+		});
+
+		const lazyLoad = async(autoloading : () => Promise<any>, timeout? : number) =>
+		{
+			const tree : any = await fixture(html`<et2-tree></et2-tree>`);
+			tree.egw = () => window.egw;
+			tree.select_options = [{id: "a", text: "A", item: [], child: true}];
+			await tree.updateComplete;
+			tree.autoloading = autoloading;
+			if(timeout)
+			{
+				tree.lazyLoadTimeout = timeout;
+			}
+			const node = tree.getDomNode("a");
+			node.loading = true;
+			node.dispatchEvent(new CustomEvent("sl-lazy-load"));
+			await new Promise(resolve => setTimeout(resolve, 50));
+			await tree.updateComplete;
+			return tree;
+		};
+
+		it("stops the spinner and tells the user when loading is rejected", async() =>
+		{
+			const tree = await lazyLoad(() => Promise.reject(new Error("broken")));
+
+			assert.lengthOf(messages, 1, "user was not told");
+			assert.include(messages[0][0], "broken");
+			assert.equal(messages[0][1], "warning");
+			assert.isNotTrue(tree.getDomNode("a").loading, "node is still loading");
+			assert.equal(tree._lazyLoadPending.size, 0);
+		});
+
+		it("gives up on loading that never answers", async() =>
+		{
+			const tree = await lazyLoad(() => new Promise(() => {}), 10);
+
+			assert.lengthOf(messages, 1, "user was not told");
+			assert.include(messages[0][0], "timed out");
+			assert.isNotTrue(tree.getDomNode("a").loading, "node is still loading");
+			assert.equal(tree._lazyLoadPending.size, 0);
+		});
+	});
 });

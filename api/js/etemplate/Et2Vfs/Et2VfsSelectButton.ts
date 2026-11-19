@@ -199,6 +199,14 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 				// UI update now that we're done
 				this.requestUpdate();
 				return {success: true};
+			},
+			(error) =>
+			{
+				// Without this the button stayed readonly behind its spinner
+				console.warn(this.localName + ": " + this.method + " failed", error);
+				this.processingPromise = null;
+				this.requestUpdate();
+				return {success: false};
 			}
 		);
 
