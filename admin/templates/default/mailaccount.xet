@@ -13,8 +13,8 @@
 			<et2-button  label="Placeholders" id="button[placeholders]" image="question-circle" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements&amp;nonavbar=1'),'_blank','dependent=yes,width=860,height=620,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 		</et2-hbox>
 		<et2-textbox  label="Organisation" id="ident_org" maxlength="128"></et2-textbox>
-		<et2-url-email  label="EMail address" id="ident_email" maxlength="128" hidden="@select_ident_mail"></et2-url-email>
-		<et2-select  label="EMail address" id="ident_email_alias" hidden="!@select_ident_mail"></et2-select>
+		<et2-url-email  label="EMail address" id="ident_email" maxlength="128" hidden="@select_ident_mail" disabled="@select_ident_mail"></et2-url-email>
+		<et2-select  label="EMail address" id="ident_email_alias" hidden="!@select_ident_mail" disabled="!@select_ident_mail"></et2-select>
 		<et2-ai  span="all"><et2-htmlarea  id="ident_signature" imageUpload="@signature_image_upload_url"></et2-htmlarea></et2-ai>
 	</et2-template>
 	<et2-template  id="admin.mailaccount.imap" template="" lang="" group="0" version="1.9.001" layout="2-column" style="--label-width:13em; --column-min-width:100%">
@@ -104,11 +104,11 @@
 			<et2-description  value="Alternate email address" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
 			<et2-email  style="flex:1" id="mailAlternateAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
 		</et2-hbox>
-		<et2-hbox  hidden="@no_forward_available">
+		<et2-hbox  hidden="@no_forward_available" disabled="@no_forward_available">
 			<et2-description  value="Forward email's to" style="width:var(--label-width, 13em); margin-right:var(--sl-spacing-medium)"></et2-description>
 			<et2-email  style="flex:1" id="mailForwardingAddress" multiple="true" searchUrl="" emailDisplay="email"></et2-email>
 		</et2-hbox>
-		<et2-hbox  class="emailadmin_wrap_row" hidden="@no_forward_available" style="margin-inline-start:calc(var(--label-width, 13em) + var(--sl-spacing-medium)); margin-block-start:var(--sl-spacing-x-small)">
+		<et2-hbox  class="emailadmin_wrap_row" hidden="@no_forward_available" disabled="@no_forward_available" style="margin-inline-start:calc(var(--label-width, 13em) + var(--sl-spacing-medium)); margin-block-start:var(--sl-spacing-x-small)">
 			<et2-checkbox  label="Forward only" id="deliveryMode" onchange="if (widget.getValue()) Et2Dialog.alert('Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.','Forward only');" selectedValue="forwardOnly"></et2-checkbox>
 			<et2-checkbox  label="Allow users to change forwards" id="acc_user_forward"></et2-checkbox>
 		</et2-hbox>

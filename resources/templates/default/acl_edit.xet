@@ -9,7 +9,7 @@
 		</et2-hbox>
 		<et2-ai  span="all"><et2-textarea  label="Description" class="et2-label-fixed" id="description" rows="5" cols="50" readonly="true"></et2-textarea></et2-ai>
 		<et2-select-account  label="Category admin" span="all" id="admin" multiple="true" placeholder="Choose category admin" accountType="accounts"></et2-select-account>
-		<et2-checkbox  label="Locations / rooms" span="all" id="location" hidden="@no_private"></et2-checkbox>
+		<et2-checkbox  label="Locations / rooms" span="all" id="location" hidden="@no_private" disabled="@no_private"></et2-checkbox>
 		<et2-hbox  span="all">
 			<grid width="100%" class="permissions">
 				<columns>
