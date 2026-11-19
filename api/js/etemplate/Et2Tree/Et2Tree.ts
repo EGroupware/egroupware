@@ -1746,7 +1746,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
  * lazy-load merge already does for its fetched results.
  *
  * Done as a plain Object.defineProperty() on the prototype, deliberately NOT a class-body
- * get/set pair with a @property() decorator: this project's actual production build (rollup.config.js,
+ * get/set pair with a @property() decorator: this project's actual production build (rollup.config.mjs,
  * @babel/core with the legacy decorators transform) silently dropped an accessor pair declared
  * that way from the compiled output entirely - both with and without the decorator - even though
  * it compiled and worked correctly under the plain TS/esbuild path this repo's own *tests* run

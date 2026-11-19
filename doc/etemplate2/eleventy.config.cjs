@@ -479,7 +479,7 @@ module.exports = async function (eleventyConfig)
 	// URL it is actually served at here.
 	//
 	// Rollup no longer writes an entry to its own source path: every entry is emitted as a
-	// content-hashed chunk under chunks/ (rollup.config.js `entryFileNames`), and the logical ->
+	// content-hashed chunk under chunks/ (rollup.config.mjs `entryFileNames`), and the logical ->
 	// hashed mapping is recorded in api/js/build-manifest.json. The unhashed api/js/**/*.js files
 	// are pre-hashing leftovers - untracked, and no build rewrites them - so linking one serves a
 	// module whose own `../../../chunks/<old hash>.js` imports 404. Nothing throws and no request

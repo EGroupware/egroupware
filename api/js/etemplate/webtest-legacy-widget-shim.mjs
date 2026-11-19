@@ -2,7 +2,7 @@
  * @web/test-runner (dev-server) counterpart to rollup-legacy-widget-shim.mjs.
  *
  * web-test-runner resolves/serves modules through its own esbuild dev-server
- * pipeline, completely separate from rollup.config.js, so the rollup plugin alone
+ * pipeline, completely separate from rollup.config.mjs, so the rollup plugin alone
  * doesn't help test files that transitively import one of the "1a-shim"
  * et2_widget_*.ts specifiers (eg. et2_extension_nextmatch.ts -> et2_widget_selectbox).
  * This synthesizes the same virtual module via the dev-server's resolveImport/serve
