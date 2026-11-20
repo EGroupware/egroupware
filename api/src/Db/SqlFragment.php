@@ -137,6 +137,25 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	}
 
 	/**
+	 * Build a "$column (I)LIKE $value" comparison that matches $value literally, case-insensitively
+	 *
+	 * Several call-sites needed a case-insensitive *equals* (account_lid lookups, mostly) and used
+	 * Db::CAPABILITY_CASE_INSENSITIV_LIKE's LIKE/ILIKE operator to get that, passing $value straight
+	 * to $db->quote() without escaping LIKE's own special characters first, so $value could act as a
+	 * wildcard pattern instead of matching only itself. This escapes $value via
+	 * Db::escapeLikeValue() first, so it only ever matches literally.
+	 *
+	 * @param Db $db
+	 * @param string $column (table.)column name, see compare()
+	 * @param string $value value to match literally (case-insensitively)
+	 */
+	public static function caseInsensitiveEquals(Db $db, string $column, string $value) : self
+	{
+		return new self($column.' '.$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.
+			$db->quote(Db::escapeLikeValue($value)).' ESCAPE '.$db->quote('\\'));
+	}
+
+	/**
 	 * Build zero, one or two SqlFragments for an inclusive [$from, $to] range filter on $column
 	 *
 	 * A falsy bound (null, '', 0) is treated as not given - the same convention every existing

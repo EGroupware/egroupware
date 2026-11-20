@@ -647,7 +647,7 @@ class Sql
 				// check if we need to treat username case-insensitive
 				if ($which === 'account_lid' && empty($GLOBALS['egw_info']['server']['case_sensitive_username']))	// = is case sensitiv eg. on postgres, but not on mysql!
 				{
-					$where[] = Api\Db\SqlFragment::raw('account_lid '.$this->db->capabilities[Api\Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($where['account_lid']));
+					$where[] = Api\Db\SqlFragment::caseInsensitiveEquals($this->db, 'account_lid', $where['account_lid']);
 					unset($where['account_lid']);
 				}
 		}
