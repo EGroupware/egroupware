@@ -7,6 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
+use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use EGroupware\Mail\Ui;
 use EGroupware\Mail\Ui\MessageDisplayHandler;
@@ -160,6 +161,49 @@ class ResolveAttachmentBytesTest extends TestCase
 			'an unresolvable smime: blobId must fall through to the classic fetch, same as any other unresolvable blobId');
 		$this->assertSame(['uid123', 'INBOX', '2', false], $handler->classicFetchArgs);
 	}
+
+	/**
+	 * Tickets #127731/#128281 (Dovecot-to-Stalwart migration): opening a PDF attachment took ~20s
+	 * because getAttachment() read $hA['msgUID']/$hA['folder'] unconditionally, BEFORE even knowing
+	 * blobId would let it skip the classic fetch entirely - for a Stalwart opaque-id row those are
+	 * RowIdParts' lazy keys, so reading them always paid for a real raw IMAP EMAILID search
+	 * (Imap\Jmap::emailId2uid()) regardless. $hA is now passed through instead and must only be
+	 * read when $uid/$mailbox are still null AND the blobId fast path didn't already return - a
+	 * successful blobId fetch must never invoke $hA's resolver at all.
+	 */
+	public function testSuccessfulBlobIdNeverInvokesTheLazyRowIdPartsResolver() : void
+	{
+		$handler = $this->handler();
+		$blobId = $this->writeUploadFixture('resolveAttachmentBytes test content');
+		$resolverCalled = false;
+		$hA = (new Mail\RowIdParts(['profileID' => '1'], function() use (&$resolverCalled) {
+			$resolverCalled = true;
+			return ['folder' => 'INBOX', 'msgUID' => 'uid123'];
+		}));
+
+		$result = $handler->resolveAttachmentBytes('1', null, null, null, false,
+			$blobId, 'real-name.txt', 'text/plain', $hA);
+
+		$this->assertSame('resolveAttachmentBytes test content', $result['attachment']);
+		$this->assertFalse($handler->classicFetchCalled);
+		$this->assertFalse($resolverCalled,
+			'a successful blobId fetch must never pay for RowIdParts\' lazy real-IMAP-EMAILID-search resolver');
+	}
+
+	/** The fallback-to-classic path must still resolve $uid/$mailbox from $hA when it actually needs them. */
+	public function testOrphanedBlobFallsThroughAndResolvesUidMailboxFromRowIdParts() : void
+	{
+		$handler = $this->handler();
+		$blobId = 'upload:'.bin2hex(random_bytes(16));
+		$hA = new Mail\RowIdParts(['profileID' => '1'], fn() => ['folder' => 'INBOX', 'msgUID' => 'uid123']);
+
+		$result = $handler->resolveAttachmentBytes('1', null, null, '2', false,
+			$blobId, 'name.txt', 'text/plain', $hA);
+
+		$this->assertTrue($handler->classicFetchCalled);
+		$this->assertSame(['uid123', 'INBOX', '2', false], $handler->classicFetchArgs);
+		$this->assertSame($handler->classicFetchReturn, $result);
+	}
 }
 
 /**
@@ -188,8 +232,8 @@ class ResolveAttachmentBytesTestFixtureHandler extends MessageDisplayHandler
 
 	/** resolveAttachmentBytes() is `protected` (an internal implementation detail, not a real API surface) - this test-only public wrapper reaches it without widening that. */
 	public function resolveAttachmentBytes(?string $icServerID, ?string $uid, ?string $mailbox, ?string $part,
-		$is_winmail, ?string $blobId, ?string $name, ?string $type) : array
+		$is_winmail, ?string $blobId, ?string $name, ?string $type, ?Mail\RowIdParts $hA = null) : array
 	{
-		return parent::resolveAttachmentBytes($icServerID, $uid, $mailbox, $part, $is_winmail, $blobId, $name, $type);
+		return parent::resolveAttachmentBytes($icServerID, $uid, $mailbox, $part, $is_winmail, $blobId, $name, $type, $hA);
 	}
 }
