@@ -343,7 +343,9 @@ class Stalwart extends Sql
 		$prefs = (new Api\Preferences($_uidnumber))->read_repository();
 		// ToDo: make sure combination of language and country is a valid local BEFORE sending it to Stalwart
 		[$lang, $country] = explode('-', $prefs['common']['lang'])+[null, null];
-		$locale = $lang.'_'.strtoupper($country ?: $prefs['common']['country']);
+		// Stalwart's locale is a BCP 47 tag (eg. "en-US"), NOT a POSIX one ("en_US") - a hyphen, not
+		// an underscore, and Stalwart now rejects the POSIX form outright (used to tolerate it)
+		$locale = $lang.'-'.strtoupper($country ?: $prefs['common']['country']);
 		$account = array_filter([
 			'@type' => 'User',
 			'name' => self::name2stalwart($account_lid),
@@ -425,8 +427,8 @@ class Stalwart extends Sql
 					if ($response['methodResponses'][0][1]['notUpdated'][$accountId]['type'] === 'invalidPatch' &&
 						in_array('locale', $response['methodResponses'][0][1]['notUpdated'][$accountId]['properties']))
 					{
-						// use to currently set one in Stalwart or "en_US" if nothing is set
-						$fallback = $userData['stalwart']['locale'] ?? 'en_US';
+						// use to currently set one in Stalwart or "en-US" if nothing is set
+						$fallback = $userData['stalwart']['locale'] ?? 'en-US';
 						if (($diff['locale'] ?? null) === $fallback)
 						{
 							unset($diff['locale']);    // fallback is rejected too --> do not change the locale at all
@@ -492,8 +494,8 @@ class Stalwart extends Sql
 				// check given locale is invalid (EGroupware language and country are independent!)
 				if (in_array('locale', $response['methodResponses'][0][1]['notCreated']['new1']['properties'] ?? []))
 				{
-					// use "en_US" as fallback
-					$account['locale'] = 'en_US';
+					// use "en-US" as fallback
+					$account['locale'] = 'en-US';
 					continue;
 				}
 				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
