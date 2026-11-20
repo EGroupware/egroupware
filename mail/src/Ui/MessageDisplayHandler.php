@@ -108,14 +108,24 @@ class MessageDisplayHandler
 	{
 		if(!empty($_GET['id']))
 		{
+			// do NOT read $hA['msgUID']/$hA['folder'] here - for a Stalwart opaque-id row that
+			// triggers RowIdParts' lazy resolver, ie. a real raw IMAP EMAILID search
+			// (Imap\Jmap::emailId2uid()) - found live 2026-11-20 (tickets #127731/#128281, Dovecot
+			// to Stalwart migration): opening a PDF attachment took ~20s, entirely BEFORE this
+			// method's own blobId fast path (resolveAttachmentBytes()) even started, because these
+			// two unconditional reads resolved $uid/$mailbox up front even though the fast path
+			// never ends up using them at all. Leave $hA's lazy keys untouched here and let
+			// resolveAttachmentBytes() resolve them itself, only if/when it actually falls through
+			// to the classic fetch - same class of bug already fixed for
+			// MessageActionHandler::flagMessages()/mail_integration::get_integrate_data() (ticket
+			// #127361/#127441), just not yet applied to this call site.
 			$hA = Mail::splitRowID($_GET['id']);
-			$uid = $hA['msgUID'] ?? null;
-			$mailbox = $hA['folder'] ?? null;
 			$icServerID = $hA['profileID'] ?? null;
 		}
 		else
 		{
-			$uid = $mailbox = $icServerID = null;
+			$hA = null;
+			$icServerID = null;
 		}
 		$rememberServerID = $this->ui->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->ui->mail_bo->profileID)
@@ -125,8 +135,8 @@ class MessageDisplayHandler
 		$part		= $_GET['part'] ?? null;
 		$is_winmail = $_GET['is_winmail'] ?? 0;
 
-		$attachment = $this->resolveAttachmentBytes($icServerID, $uid, $mailbox, $part, $is_winmail,
-			$_GET['blobId'] ?? null, $_GET['name'] ?? null, $_GET['type'] ?? null);
+		$attachment = $this->resolveAttachmentBytes($icServerID, null, null, $part, $is_winmail,
+			$_GET['blobId'] ?? null, $_GET['name'] ?? null, $_GET['type'] ?? null, $hA);
 		$this->ui->mail_bo->closeConnection();
 		if ($rememberServerID != $this->ui->mail_bo->profileID)
 		{
@@ -229,10 +239,13 @@ class MessageDisplayHandler
 	 * @param ?string $blobId JMAP blobId, when known (AttachmentJmap::createAttachmentBlock() sets it)
 	 * @param ?string $name real attachment filename, when known
 	 * @param ?string $type real attachment mime type, when known
+	 * @param ?Mail\RowIdParts $hA lazy source for $uid/$mailbox when the caller left them null (see
+	 *  getAttachment()) - only read if/when actually falling through to the classic fetch below, so
+	 *  a Stalwart row's blobId fast path never pays for its real-IMAP-EMAILID-search lazy resolver
 	 * @return array {attachment, name, filename, type, charset} shape Api\Mail::getAttachment() already returns
 	 */
 	protected function resolveAttachmentBytes(?string $icServerID, ?string $uid, ?string $mailbox, ?string $part,
-		$is_winmail, ?string $blobId, ?string $name, ?string $type) : array
+		$is_winmail, ?string $blobId, ?string $name, ?string $type, ?Mail\RowIdParts $hA = null) : array
 	{
 		if (!empty($blobId))
 		{
@@ -248,6 +261,11 @@ class MessageDisplayHandler
 					'charset'    => 'utf-8',
 				];
 			}
+		}
+		if ($hA !== null)
+		{
+			$uid ??= $hA['msgUID'] ?? null;
+			$mailbox ??= $hA['folder'] ?? null;
 		}
 		return $this->classicAttachmentFetch($uid, $mailbox, $part, $is_winmail);
 	}
