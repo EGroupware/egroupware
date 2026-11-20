@@ -150,10 +150,11 @@ export function parseEmail(address : string) : { lname : string, fname : string,
 
 	if(matches = address.match(/^\"?'?(.*?)'?\"?\s+<([^<>'\"]+)>$/))
 	{
-		if((parts = matches[1].split(/[, ]+/)))
+		// emoji can not be used as initials, ignore them (a name consisting only of emoji falls back to the email)
+		if((parts = stripEmoji(matches[1]).split(/[, ]+/).filter(part => part)).length)
 		{
 			// if we have a usual title prefixing the name, skip it
-			while(parts[0].match(/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/))
+			while(parts.length > 1 && parts[0].match(/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/))
 			{
 				parts.shift();
 			}
@@ -171,6 +172,19 @@ export function parseEmail(address : string) : { lname : string, fname : string,
 		parsed.label = address;
 	}
 	return parsed;
+}
+
+/**
+ * Remove emoji from a name, as they can not be used as initials
+ *
+ * Removes pictographs including their modifiers (variation-selectors, skin-tones, zero-width-joiners), flags and keycaps.
+ *
+ * @param {string} name
+ * @returns {string} name without emoji, surrounding whitespace is trimmed
+ */
+export function stripEmoji(name : string) : string
+{
+	return (name ?? "").replace(/[0-9#*]\uFE0F?\u20E3|[\p{Extended_Pictographic}\uFE0F\u200D\u20E3\u{1F3FB}-\u{1F3FF}\u{1F1E6}-\u{1F1FF}\u{E0020}-\u{E007F}]+/gu, "").trim();
 }
 
 /**

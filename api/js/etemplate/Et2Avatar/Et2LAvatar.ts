@@ -12,7 +12,7 @@ import {Et2Avatar} from "./Et2Avatar";
 import shoelace from "../Styles/shoelace";
 import {css} from "lit";
 import {property} from "lit/decorators/property.js";
-import {parseEmail} from "../Et2Email/utils";
+import {parseEmail, stripEmoji} from "../Et2Email/utils";
 import {egw} from "../../jsapi/egw_global";
 
 /**
@@ -79,7 +79,7 @@ export class Et2LAvatar extends Et2Avatar
 		{
 			if(changedProperties.has("contactId") && this.contactId.startsWith("email:") && this.contactId.includes("<"))
 			{
-				let parsed = parseEmail(this.contactId.substr(6));
+				let parsed = parseEmail(this.contactId.substring(6));
 				this.lname = this.lname || parsed.lname;
 				this.fname = this.fname || parsed.fname;
 				this.statustext = parsed.label;
@@ -154,7 +154,9 @@ export class Et2LAvatar extends Et2Avatar
 		};
 		let bg = getBgColor(str);
 		let count = egw.preference("avatar_display", "common") ?? 0;
-		let text = (_fname ? _fname[0].toUpperCase() : "")+(_lname ? _lname[0].toUpperCase() : "");
+		// Emoji can not be used as initials, ignore them.  Take a whole character, not half of a surrogate pair.
+		const initial = (name) => (Array.from(stripEmoji(String(name ?? "")))[0] ?? "").toUpperCase();
+		let text = initial(_fname) + initial(_lname);
 		if(count > 0 && _id && _id.startsWith("account:"))
 		{
 			const account_id = _id.split(":").pop();

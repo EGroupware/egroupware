@@ -208,16 +208,16 @@ export class Et2Avatar extends CachedQueueMixin(Et2Widget(SlAvatar)) implements 
 		{
 			parsedId = null;
 		}
-		else if(_contactId.substr(0, 8) === 'account:')
+		else if(_contactId.startsWith('account:'))
 		{
 			id = 'account_id';
-			parsedId = _contactId.substr(8);
+			parsedId = _contactId.substring(8);
 		}
-		else if(_contactId.substr(0, 6) === 'email:')
+		else if(_contactId.startsWith('email:'))
 		{
 			id = 'email';
 			const matches = Et2Avatar.RFC822EMAIL.exec(_contactId);
-			parsedId = matches ? matches[1] : _contactId.substr(6);
+			parsedId = matches ? matches[1] : _contactId.substring(6);
 		}
 		else
 		{
