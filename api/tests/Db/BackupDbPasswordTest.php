@@ -223,7 +223,16 @@ class BackupDbPasswordTest extends TestCase
 		]));
 		$this->assertTrue($backup->dbPasswordChanged($file));
 		$this->assertTrue($backup->checkDbPassword($file, 'the old DB password'));
-		$this->assertFalse($backup->checkDbPassword($file, 'not the old password'));
+		// this legacy probe only checks AES padding, not plaintext shape (Credentials::decryptWithKey()'s
+		// printable=false path, since the probed credential may be a binary S/MIME key), so a wrong
+		// password can by chance still look valid about 1 in 256 times - retry with a second,
+		// independent wrong password before concluding the check itself is broken
+		$wrongPasswordAccepted = $backup->checkDbPassword($file, 'not the old password '.bin2hex(random_bytes(8)));
+		if ($wrongPasswordAccepted)
+		{
+			$wrongPasswordAccepted = $backup->checkDbPassword($file, 'not the old password '.bin2hex(random_bytes(8)));
+		}
+		$this->assertFalse($wrongPasswordAccepted);
 
 		$file = $this->writeBackup($this->legacyBackup([
 			1 => [Credentials::encryptWithKey('imap password', $this->dbPassword()), Credentials::SYSTEM_AES],
