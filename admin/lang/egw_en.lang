@@ -1062,3 +1062,4 @@ acl group (no mailbox)	admin	en	ACL group (no mailbox)
 distribution list	admin	en	Distribution list
 this sync mode requires an email address - set one, or switch to a mode that does not need it.	admin	en	This sync mode requires an email address - set one, or switch to a mode that does not need it.
 shared mailbox	admin	en	Shared mailbox
+invalid location %1 for an acl entry	admin	en	Invalid location %1 for an ACL entry

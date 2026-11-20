@@ -286,6 +286,20 @@ class admin_acl
 	}
 
 	/**
+	 * Check a posted location is a value the ACL editor's account selector can actually produce
+	 *
+	 * @param string $location
+	 * @throws Api\Exception\WrongUserinput if $location is neither 'run' nor an account/group id
+	 */
+	private static function checkValidLocation($location)
+	{
+		if ($location !== 'run' && !preg_match('/^-?\d+$/', (string)$location))
+		{
+			throw new Api\Exception\WrongUserinput(lang('Invalid location %1 for an ACL entry', $location));
+		}
+	}
+
+	/**
 	 * Check if current user has access to ACL setting of a given location
 	 *
 	 * @param int $account_id numeric account-id
@@ -350,6 +364,7 @@ class admin_acl
 			{
 				list($app, $account_id, $location) = explode(':', $id, 3);
 
+				self::checkValidLocation($location);
 				self::check_access($account_id, $location);	// throws exception, if no rights
 
 				$acl = $GLOBALS['egw']->acl;
