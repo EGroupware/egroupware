@@ -1494,6 +1494,22 @@ class Db
 	}
 
 	/**
+	 * Escape LIKE/ILIKE special characters in $value, so it can be used in an (I)LIKE comparison
+	 * that must only ever match $value literally (eg. a case-insensitive *equals*, not a pattern
+	 * search)
+	 *
+	 * Without this, a value containing '_' (matches any single character) or '%' (matches any
+	 * sequence) is treated as a wildcard pattern instead of literal text.
+	 *
+	 * @param string $value
+	 * @return string $value with backslash, '%' and '_' each escaped with a backslash
+	 */
+	public static function escapeLikeValue(string $value) : string
+	{
+		return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
+	}
+
+	/**
 	* Escape values before sending them to the database - prevents SQL injection and SQL errors ;-)
 	*
 	* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
