@@ -97,6 +97,11 @@ class MergeDateTest extends LoggedInTest
 			Api\DateTime::$user_timeformat = $this->saved_formats['timeformat'];
 			$this->saved_formats = null;
 		}
+		if($this->saved_lang !== false)
+		{
+			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $this->saved_lang;
+			$this->saved_lang = false;
+		}
 		parent::tearDown();
 	}
 
@@ -106,6 +111,24 @@ class MergeDateTest extends LoggedInTest
 	 * @param string $dateformat date format, one of self::DATE_FORMATS
 	 * @param string $timeformat '24' or '12'
 	 */
+	/**
+	 * @var string|null|false language preference as found, false if not changed
+	 */
+	protected $saved_lang = false;
+
+	/**
+	 * Set the user's language preference, restored in tearDown()
+	 */
+	protected function setUserLanguage(string $lang) : void
+	{
+		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		if($this->saved_lang === false)
+		{
+			$this->saved_lang = $prefs['lang'] ?? null;
+		}
+		$prefs['lang'] = $lang;
+	}
+
 	protected function setUserFormat(string $dateformat, string $timeformat) : void
 	{
 		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
@@ -479,5 +502,104 @@ class MergeDateTest extends LoggedInTest
 		$date_time = $when->format(Api\DateTime::$user_dateformat . ', ' . Api\DateTime::$user_timeformat);
 		$this->assertSame($date_time, $replacements['$$created$$'] ?? null, 'Created');
 		$this->assertSame($date_time, $replacements['$$modified$$'] ?? null, 'Modified');
+	}
+
+	/**
+	 * Names of weekdays and months are in the user's language: {{field:FORMAT}}, {{field/date}}
+	 * with a date format holding the month's name, and the field itself, which apps format with
+	 * an English month.  D and M are the first three letters of the name.
+	 *
+	 * Setup: user language German, date format d-M-Y, 2026-03-15 (a Sunday in March).
+	 */
+	public function testDateNamesInUserLanguage()
+	{
+		$this->setUserFormat('d-M-Y', '24');
+		$this->setUserLanguage('de');
+
+		$result = $this->mergeDate('[{{due:l, j. F Y}}][{{due:D M}}][{{due/date}}][{{due}}][{{due:\\l}}]',
+			Api\DateTime::to(new Api\DateTime(self::WHEN)), 'text/plain');
+
+		$this->assertSame('[Sonntag, 15. März 2026][Son Mär][15-Mär-2026][15-Mär-2026, 14:30][l]', $result);
+	}
+
+	/**
+	 * English stays English, and a DateTime object gets the same names
+	 */
+	public function testDateNamesInEnglish()
+	{
+		$this->setUserFormat('d-M-Y', '24');
+		$this->setUserLanguage('en');
+
+		$result = $this->mergeDate('[{{due:l, j. F Y}}][{{due:D M}}][{{due/date}}]', new Api\DateTime(self::WHEN), 'text/plain');
+
+		$this->assertSame('[Sunday, 15. March 2026][Sun Mar][15-Mar-2026]', $result);
+	}
+
+	/**
+	 * A document naming its language gets the names in that language, not the user's
+	 */
+	public function testDateNamesInDocumentLanguage()
+	{
+		$this->setUserFormat('d-M-Y', '24');
+		$this->setUserLanguage('de');
+		(new \ReflectionProperty($this->merge, 'document_lang'))->setValue($this->merge, 'fr');
+
+		$result = $this->mergeDate('<text:p>{{due:l j F Y}} {{due/date}}</text:p>', new Api\DateTime(self::WHEN),
+			'application/vnd.oasis.opendocument.text');
+
+		$this->assertSame('<text:p>Dimanche 15 Mars 2026 15-Mar-2026</text:p>', $result);
+	}
+
+	/**
+	 * The language a document names in its default style resp. document defaults, as EGroupware
+	 * language: with country if EGroupware has that, without if not, none if it has neither.
+	 */
+	public static function documentLanguageProvider() : array
+	{
+		$odt = 'application/vnd.oasis.opendocument.text';
+		$docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+		return [
+			'ODF German'           => [$odt, 'de', 'DE', 'de'],
+			'ODF Brazilian'        => [$odt, 'pt', 'BR', 'pt-br'],
+			'ODF English'          => [$odt, 'en', 'CA', 'en'],
+			'ODF unknown'          => [$odt, 'xx', 'XX', null],
+			'ODF none'             => [$odt, null, null, null],
+			'Word German'          => [$docx, 'de', 'DE', 'de'],
+			'Word Spanish (Spain)' => [$docx, 'es', 'ES', 'es-es'],
+			'Word French'          => [$docx, 'fr', null, 'fr'],
+			'Word none'            => [$docx, null, null, null],
+		];
+	}
+
+	#[\PHPUnit\Framework\Attributes\DataProvider('documentLanguageProvider')]
+	public function testDocumentLanguage(string $mimetype, ?string $language, ?string $country, ?string $expected)
+	{
+		$archive = tempnam(sys_get_temp_dir(), 'merge-lang') . '.zip';
+		$zip = new \ZipArchive();
+		$zip->open($archive, \ZipArchive::CREATE);
+		if(str_contains($mimetype, 'opendocument'))
+		{
+			$zip->addFromString('styles.xml', '<office:document-styles><office:styles>' .
+				'<style:default-style style:family="graphic"><style:text-properties fo:language="it" fo:country="IT"/></style:default-style>' .
+				'<style:default-style style:family="paragraph"><style:paragraph-properties fo:orphans="2"/>' .
+				'<style:text-properties style:font-name="Liberation Serif"' .
+				($language ? ' fo:language="' . $language . '"' : '') . ($country ? ' fo:country="' . $country . '"' : '') .
+				'/></style:default-style></office:styles></office:document-styles>');
+		}
+		else
+		{
+			$zip->addFromString('word/styles.xml', '<w:styles><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Liberation Serif"/>' .
+				($language ? '<w:lang w:val="' . $language . ($country ? '-' . $country : '') . '" w:eastAsia="zh-CN" w:bidi="hi-IN"/>' : '') .
+				'</w:rPr></w:rPrDefault></w:docDefaults><w:style w:type="paragraph"><w:rPr><w:lang w:val="it-IT"/></w:rPr></w:style></w:styles>');
+		}
+		$zip->close();
+		try
+		{
+			$this->assertSame($expected, (new \ReflectionMethod($this->merge, 'document_language'))->invoke(null, $archive, $mimetype));
+		}
+		finally
+		{
+			unlink($archive);
+		}
 	}
 }

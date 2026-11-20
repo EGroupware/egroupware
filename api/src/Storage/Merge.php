@@ -85,6 +85,21 @@ abstract class Merge
 	var $date_fields = [];
 
 	/**
+	 * Language of the document being merged, eg. "de" or "pt-br", null if it has none: names of weekdays
+	 * and months are in this language, or the user's.
+	 *
+	 * @var string|null
+	 */
+	protected $document_lang = null;
+
+	/**
+	 * Translated names of weekdays and months, by language and English name
+	 *
+	 * @var array<string,array<string,string>>
+	 */
+	protected static $date_names = [];
+
+	/**
 	 * Fields that are numeric, for special numeric handling
 	 * Do not include placeholders in field list
 	 */
@@ -315,7 +330,8 @@ abstract class Merge
 				case 'modified':
 					if($value)
 					{
-						$value = Api\DateTime::to($value);
+						$value = $this->format_date(Api\DateTime::createFromUserFormat($value),
+							Api\DateTime::$user_dateformat . ', ' . Api\DateTime::$user_timeformat);
 					}
 					break;
 				case 'bday':
@@ -324,7 +340,7 @@ abstract class Merge
 						try
 						{
 							// stored as Y-m-d: parse that, not the user's date format
-							$value = Api\DateTime::to(new Api\DateTime($value), true);
+							$value = $this->format_date(new Api\DateTime($value), Api\DateTime::$user_dateformat);
 						}
 						catch (\Exception $e)
 						{
@@ -1125,20 +1141,38 @@ abstract class Merge
 			}
 
 		}
+		// Text documents can not hold their whole body twice, so several entries need $$pagerepeat$$ (or labels)
+		$word_mimetypes = array('application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+								'application/vnd.ms-word.document.macroenabled.12');
+		if(in_array($mimetype, array_merge($word_mimetypes, array('application/vnd.oasis.opendocument.text',
+																  'application/vnd.oasis.opendocument.text-template'))) &&
+			count($ids) > 1 && strpos($content, '$$pagerepeat$$') === false && strpos($content, '$$label$$') === false)
+		{
+			$err = lang('for more than one contact in a document use the tag pagerepeat!');
+			$ret = false;
+			return $ret;
+		}
+		// labels without $$pagerepeat$$ repeat the content of the whole body, one page of labels at a time
+		$whole_body = false;
 		if(in_array($mimetype, array('application/vnd.oasis.opendocument.text',
 									 'application/vnd.oasis.opendocument.text-template')) && count($ids) > 1)
 		{
 			if(strpos($content, '$$pagerepeat') === false)
 			{
-				//for odt files we have to split the content and add a style for page break to  the style area
-				list($contentstart, $contentrepeat, $contentend) = preg_split('/office:body>/', $content, -1, PREG_SPLIT_NO_EMPTY);           //get differt parts of document, seperatet by Pagerepeat
-				$contentstart = substr($contentstart, 0, strlen($contentstart) - 1);                                                          //remove "<"
-				$contentrepeat = substr($contentrepeat, 0, strlen($contentrepeat) - 2);                                                       //remove "</";
-				// need to add page-break style to the style list
-				list($stylestart, $stylerepeat, $styleend) = preg_split('/<\/office:automatic-styles>/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document style sheets
-				$contentstart = $stylestart . '<style:style style:name="P200" style:family="paragraph" style:parent-style-name="Standard"><style:paragraph-properties fo:break-before="page"/></style:style></office:automatic-styles>';
-				$contentstart .= '<office:body>';
+				// everything in front of the body (styles, fonts, ...) and its declarations are written once
+				list($contentstart, $contentrepeat, $contentend) = preg_split('/office:body>/', $content, -1, PREG_SPLIT_NO_EMPTY);
+				$contentstart = substr($contentstart, 0, strlen($contentstart) - 1) . '<office:body>';    // "<" of "<office:body>"
+				$contentrepeat = substr($contentrepeat, 0, strlen($contentrepeat) - 2);    // "</" of "</office:body>"
 				$contentend = '</office:body></office:document-content>';
+				$head = null;
+				if(preg_match('#^<office:text\b[^>]*>(?:<(office:forms|text:tracked-changes|text:[a-z-]+-decls|text:alphabetical-index-auto-mark-file)\b(?:[^>]*/>|.*?</\1>))*#s',
+						$contentrepeat, $head) && str_ends_with($contentrepeat, '</office:text>'))
+				{
+					$contentstart .= $head[0];
+					$contentrepeat = substr($contentrepeat, strlen($head[0]), -strlen('</office:text>'));
+					$contentend = '</office:text>' . $contentend;
+					$whole_body = true;
+				}
 			}
 			else
 			{
@@ -1146,8 +1180,8 @@ abstract class Merge
 				list($contentstart, $contentrepeat, $contentend) = preg_split('/\$\$pagerepeat\$\$/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get different parts of document, seperated by pagerepeat
 			}
 		}
-		if(in_array($mimetype, array('application/vnd.ms-word.document.macroenabled.12',
-									 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) && count($ids) > 1)
+		// labels without $$pagerepeat$$ use the whole body, with $$pagerepeat$$ only the part between the tags is repeated
+		if(in_array($mimetype, $word_mimetypes) && count($ids) > 1 && strpos($content, '$$pagerepeat$$') === false)
 		{
 			//for Word 2007 XML files we have to split the content and add a style for page break to  the style area
 			list($contentstart, $contentrepeat, $contentend) = preg_split('/w:body>/', $content, -1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
@@ -1155,6 +1189,14 @@ abstract class Merge
 			$contentrepeat = substr($contentrepeat, 0, strlen($contentrepeat) - 2);                                         //remove "</";
 			$contentstart .= '<w:body>';
 			$contentend = '</w:body></w:document>';
+			// the section properties of the body have to stay its last element, and there only once
+			$section = null;
+			if(preg_match('#<w:sectPr\b(?:[^>]*/>|[^>]*>(?:(?!<w:sectPr\b).)*</w:sectPr>)\s*$#s', $contentrepeat, $section))
+			{
+				$contentrepeat = substr($contentrepeat, 0, -strlen($section[0]));
+				$contentend = $section[0] . $contentend;
+				$whole_body = true;
+			}
 		}
 		list($Labelstart, $Labelrepeat, $Labeltend) = preg_split('/\$\$label\$\$/', $contentrepeat, -1, PREG_SPLIT_NO_EMPTY) + [null,
 																																null,
@@ -1202,10 +1244,11 @@ abstract class Merge
 				case 'application/xml':
 				case 'text/html':
 				case 'text/csv':
-					$joiner = '';
-					break;
+				// $$pagerepeat$$ is text, the repeated part starts and ends inside a <w:t>, where a <w:br> is not allowed
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.ms-word.document.macroenabled.12':
+					$joiner = '';
+					break;
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 					$joiner = '<w:br w:type="page" />';
@@ -1320,6 +1363,9 @@ abstract class Merge
 		}
 		if($Labelrepeat)
 		{
+			// the page around the labels can hold the current date, time and user, like the letterhead of a serial letter
+			$Labelstart = $this->merge_without_entry($Labelstart, $mimetype, $mso_application_progid, $charset);
+			$Labeltend = $this->merge_without_entry($Labeltend, $mimetype, $mso_application_progid, $charset);
 			$countpage = 0;
 			$count = 0;
 			$contentrepeatpages[$countpage] = $Labelstart . $Labeltend;
@@ -1343,8 +1389,38 @@ abstract class Merge
 					$ret = $contentstart . implode('\\par \\page\\pard\\plain', $contentrepeatpages) . $contentend;
 					break;
 				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.text-template':
+					$first_style = null;
+					if($whole_body && preg_match('#^\s*<(?:text:p|text:h|table:table)\b[^>]*?\b(?:text|table):style-name="([^"]+)"#', $Labelstart, $first_style) &&
+						preg_match('#<style:style\b[^>]*\bstyle:name="' . preg_quote($first_style[1], '#') . '"[^>]*\bstyle:master-page-name="[^"]+"#', $contentstart))
+					{
+						// the page starts with a page style of its own, which already starts a new page
+						$ret = $contentstart . implode('', $contentrepeatpages) . $contentend;
+						break;
+					}
+					if($whole_body)
+					{
+						// every further page of labels starts with a (nearly) invisible paragraph breaking the page
+						$style = '<style:style style:name="EGroupwareLabelPageBreak" style:family="paragraph">' .
+							'<style:paragraph-properties fo:break-before="page" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:line-height="0.035cm"/>' .
+							'<style:text-properties fo:font-size="1pt"/></style:style>';
+						if(str_contains($contentstart, '<office:automatic-styles/>'))
+						{
+							$contentstart = str_replace('<office:automatic-styles/>', '<office:automatic-styles>' . $style . '</office:automatic-styles>', $contentstart);
+						}
+						elseif(str_contains($contentstart, '</office:automatic-styles>'))
+						{
+							$contentstart = str_replace('</office:automatic-styles>', $style . '</office:automatic-styles>', $contentstart);
+						}
+						else
+						{
+							$contentstart = str_replace('<office:body>', '<office:automatic-styles>' . $style . '</office:automatic-styles><office:body>', $contentstart);
+						}
+						$ret = $contentstart . implode('<text:p text:style-name="EGroupwareLabelPageBreak"/>', $contentrepeatpages) . $contentend;
+						break;
+					}
+					// fall through: inside the paragraph of $$pagerepeat$$
+				case 'application/vnd.oasis.opendocument.presentation':
 				case 'application/vnd.oasis.opendocument.presentation-template':
 					$ret = $contentstart . implode('<text:line-break />', $contentrepeatpages) . $contentend;
 					break;
@@ -1354,6 +1430,13 @@ abstract class Merge
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.ms-word.document.macroenabled.12':
+					$ret = $contentstart . implode($whole_body ?
+							// every further page of labels starts with a (nearly) invisible paragraph on a new page
+							'<w:p><w:pPr><w:pageBreakBefore/><w:spacing w:before="0" w:after="0" w:line="20" w:lineRule="exact"/>' .
+							'<w:rPr><w:sz w:val="2"/></w:rPr></w:pPr></w:p>' :
+							// inside the text of $$pagerepeat$$
+							'</w:t></w:r><w:r><w:br w:type="page"/></w:r><w:r><w:t>', $contentrepeatpages) . $contentend;
+					break;
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				case 'application/vnd.ms-excel.sheet.macroenabled.12':
 					$ret = $contentstart . implode('<w:br w:type="page" />', $contentrepeatpages) . $contentend;
@@ -1421,9 +1504,10 @@ abstract class Merge
 			$replacements += $this->contact_replacements($user, 'user', false, $content);
 			$replacements['$$user/primary_group$$'] = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'], 'account_primary_group'));
 		}
-		$replacements['$$date$$'] = Api\DateTime::to('now', true);
-		$replacements['$$datetime$$'] = Api\DateTime::to('now');
-		$replacements['$$time$$'] = Api\DateTime::to('now', false);
+		$now = new Api\DateTime('now');
+		$replacements['$$date$$'] = $this->format_date($now, Api\DateTime::$user_dateformat);
+		$replacements['$$datetime$$'] = $this->format_date($now, Api\DateTime::$user_dateformat . ', ' . Api\DateTime::$user_timeformat);
+		$replacements['$$time$$'] = $this->format_date($now, Api\DateTime::$user_timeformat);
 
 		return $replacements;
 	}
@@ -1634,17 +1718,22 @@ abstract class Merge
 					{
 						$time = Api\DateTime::createFromUserFormat($value);
 					}
-					$replacements['$$' . $field . '/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat) : '';
-					$replacements['$$' . $field . '/time$$'] = $time ? $time->format(Api\DateTime::$user_timeformat) : '';
+					$replacements['$$' . $field . '/date$$'] = $time ? $this->format_date($time, Api\DateTime::$user_dateformat) : '';
+					$replacements['$$' . $field . '/time$$'] = $time ? $this->format_date($time, Api\DateTime::$user_timeformat) : '';
+					// apps format the field itself in the user's date format, with an English month for "M"
+					if($time && is_string($value) && str_contains(Api\DateTime::$user_dateformat, 'M'))
+					{
+						$replacements['$$' . $field . '$$'] = str_replace($time->format('M'), $this->format_date($time, 'M'), $value);
+					}
 				}
 				// any date() format, eg. "m/d/Y", "H:i" or "jS \o\f F", but no XML markup or entities
 				$format_matches = [];
 				preg_match_all('/\$\$(' . preg_quote($field, '/') . '):(?<format>[^$<>&]*)\$\$/', $content, $format_matches);
 				foreach(array_unique($format_matches['format']) as $format)
 				{
-					// Api\DateTime::format() also takes types like "ts" or "array", use only what is text
-					$formatted = $time ? $time->format($format) : '';
-					$replacements['$$' . $field . ':' . $format . '$$'] = is_scalar($formatted) ? (string)$formatted : '';
+					// no format: date and time in the user's formats
+					$replacements['$$' . $field . ':' . $format . '$$'] = !$time ? '' : $this->format_date($time,
+						$format === '' ? Api\DateTime::$user_dateformat . ', ' . Api\DateTime::$user_timeformat : $format);
 				}
 			}
 		}
@@ -2509,6 +2598,7 @@ abstract class Merge
 			return $error;
 		}
 		$content_url = Api\Vfs::PREFIX . $document;
+		$this->document_lang = null;
 		switch(($mimetype = Api\Vfs::mime_content_type($document)))
 		{
 			case 'message/rfc822':
@@ -2609,6 +2699,10 @@ abstract class Merge
 				copy($content_url, $archive);
 				$content_url = 'zip://' . $archive . '#' . ($content_file = 'xl/sharedStrings.xml');
 				break;
+		}
+		if(isset($archive))
+		{
+			$this->document_lang = static::document_language($archive, $mimetype);
 		}
 		$err = null;
 		if(!($merged =& $this->merge($content_url, $ids, $err, $mimetype, $fix)))
@@ -3526,6 +3620,128 @@ abstract class Merge
 	public static function get_file_extensions()
 	{
 		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml', 'eml');
+	}
+
+	/**
+	 * Language a document is written in, as EGroupware language code, eg. "de" or "pt-br"
+	 *
+	 * OpenDocument keeps it in the default paragraph style, Word in the document defaults, both in their styles.
+	 *
+	 * @param string $archive path of the document's zip file
+	 * @param string $mimetype
+	 * @return string|null null if the document names none, or one EGroupware has no translations for
+	 */
+	protected static function document_language(string $archive, string $mimetype) : ?string
+	{
+		$defaults = $matches = null;
+		if(str_starts_with($mimetype, 'application/vnd.oasis.opendocument.'))
+		{
+			if(!($styles = @file_get_contents('zip://' . $archive . '#styles.xml')) ||
+				!preg_match('#<style:default-style\b[^>]*style:family="paragraph".*?</style:default-style>#s', $styles, $defaults) ||
+				!preg_match('/fo:language="([a-z]{2,3})"/i', $defaults[0], $matches))
+			{
+				return null;
+			}
+			$language = $matches[1];
+			$country = preg_match('/fo:country="([a-z]{2})"/i', $defaults[0], $matches) ? $matches[1] : null;
+		}
+		elseif(in_array($mimetype, ['application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+									'application/vnd.ms-word.document.macroenabled.12']))
+		{
+			if(!($styles = @file_get_contents('zip://' . $archive . '#word/styles.xml')) ||
+				!preg_match('#<w:docDefaults>.*?</w:docDefaults>#s', $styles, $defaults) ||
+				!preg_match('/<w:lang\b[^>]*\bw:val="([a-z]{2,3})(?:-([a-z]{2}))?"/i', $defaults[0], $matches))
+			{
+				return null;
+			}
+			$language = $matches[1];
+			$country = $matches[2] ?? null;
+		}
+		else
+		{
+			return null;
+		}
+		foreach(array_filter([$country ? "$language-$country" : null, $language]) as $lang)
+		{
+			$lang = strtolower($lang);
+			if(file_exists(Api\Translation::get_lang_file('api', $lang)))
+			{
+				return $lang;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Name of a weekday or month in the document's language, or the user's
+	 *
+	 * @param string $english eg. "Tuesday" or "May"
+	 * @return string
+	 */
+	protected function date_name(string $english) : string
+	{
+		$lang = $this->document_lang ?: ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] ?? null);
+		if(!$lang || $lang === 'en')
+		{
+			return $english;
+		}
+		if(!isset(self::$date_names[$lang]))
+		{
+			if(!is_array($phrases = Api\Cache::getTree(Api\Translation::class, 'common:' . $lang)))
+			{
+				$phrases = Api\Translation::load_app_files('common', $lang);
+			}
+			self::$date_names[$lang] = [];
+			foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+					 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+					 'October', 'November', 'December'] as $name)
+			{
+				self::$date_names[$lang][$name] = $phrases[strtolower($name)] ?? $name;
+			}
+		}
+		return self::$date_names[$lang][$english] ?? $english;
+	}
+
+	/**
+	 * Format a date like date() does, with the names of weekdays (l, D) and months (F, M) translated
+	 *
+	 * D and M are the first three letters of the translated name.
+	 *
+	 * @param \DateTimeInterface $time
+	 * @param string $format date() format
+	 * @return string
+	 */
+	protected function format_date(\DateTimeInterface $time, string $format) : string
+	{
+		// plain date() letters: Api\DateTime::format() takes eg. "ts" or "array" as a type
+		$date = \DateTimeImmutable::createFromInterface($time);
+		if(!preg_match('/[DlMF]/', $format))
+		{
+			return $date->format($format);
+		}
+		$formatted = '';
+		for($i = 0, $length = strlen($format); $i < $length; $i++)
+		{
+			switch($char = $format[$i])
+			{
+				case '\\':
+					$formatted .= $format[++$i] ?? '';
+					break;
+				case 'l':
+				case 'F':
+					$formatted .= $this->date_name($date->format($char));
+					break;
+				case 'D':
+					$formatted .= mb_substr($this->date_name($date->format('l')), 0, 3);
+					break;
+				case 'M':
+					$formatted .= mb_substr($this->date_name($date->format('F')), 0, 3);
+					break;
+				default:
+					$formatted .= $date->format($char);
+			}
+		}
+		return $formatted;
 	}
 
 	/**

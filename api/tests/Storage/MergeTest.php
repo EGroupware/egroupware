@@ -727,6 +727,229 @@ class MergeTest extends LoggedInTest
 	}
 
 	/**
+	 * content.xml of an ODF text document as LibreOffice writes it, with an empty
+	 * <office:automatic-styles/> as in a document without any direct formatting
+	 */
+	private static function odtContent(string $body) : string
+	{
+		return '<?xml version="1.0" encoding="UTF-8"?>' .
+			'<office:document-content xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" ' .
+			'xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" ' .
+			'xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" ' .
+			'xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" office:version="1.3">' .
+			'<office:automatic-styles/><office:body><office:text><text:sequence-decls>' .
+			'<text:sequence-decl text:display-outline-level="0" text:name="Text"/></text:sequence-decls>' .
+			implode('', array_map(static fn($p) => "<text:p>$p</text:p>", $body === '' ? [] : explode("\n", $body))) .
+			'</office:text></office:body></office:document-content>';
+	}
+
+	/**
+	 * word/document.xml of a Word document as LibreOffice writes it, one paragraph per line
+	 */
+	private static function docxContent(string $body) : string
+	{
+		return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' .
+			'<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' .
+			implode('', array_map(static fn($p) => "<w:p><w:r><w:t>$p</w:t></w:r></w:p>", explode("\n", $body))) .
+			'<w:sectPr><w:pgSz w:w="12240" w:h="15840"/></w:sectPr></w:body></w:document>';
+	}
+
+	/**
+	 * Load merged XML, failing the test if it is not well-formed
+	 */
+	private function assertWellFormed(string $xml) : \DOMXPath
+	{
+		$dom = new \DOMDocument();
+		$previous = libxml_use_internal_errors(true);
+		$loaded = $dom->loadXML($xml);
+		$messages = array_map(static fn($e) => trim($e->message), libxml_get_errors());
+		libxml_clear_errors();
+		libxml_use_internal_errors($previous);
+		$this->assertTrue($loaded && !$messages, 'Merged document is not well-formed XML: ' . implode('; ', $messages));
+
+		$xpath = new \DOMXPath($dom);
+		$xpath->registerNamespace('office', 'urn:oasis:names:tc:opendocument:xmlns:office:1.0');
+		$xpath->registerNamespace('text', 'urn:oasis:names:tc:opendocument:xmlns:text:1.0');
+		$xpath->registerNamespace('style', 'urn:oasis:names:tc:opendocument:xmlns:style:1.0');
+		$xpath->registerNamespace('w', 'http://schemas.openxmlformats.org/wordprocessingml/2006/main');
+		return $xpath;
+	}
+
+	public static function textDocumentProvider() : array
+	{
+		return [
+			'ODF text'          => ['application/vnd.oasis.opendocument.text', 'odtContent'],
+			'ODF text template' => ['application/vnd.oasis.opendocument.text-template', 'odtContent'],
+			'Word'              => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'docxContent'],
+			'Word with macros'  => ['application/vnd.ms-word.document.macroenabled.12', 'docxContent'],
+		];
+	}
+
+	/**
+	 * Several entries into a text document without {{pagerepeat}} (or labels): ODF and Word can not
+	 * hold their whole body twice, so instead of an invalid document, the user gets told to use
+	 * {{pagerepeat}}.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('textDocumentProvider')]
+	public function testSeveralEntriesWithoutPagerepeatAreRejected(string $mimetype, string $content)
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+
+		$result = $this->merge->merge_string(self::$content('Name: {{name}}'), [1, 2], $errors, $mimetype);
+
+		$this->assertFalse($result, 'Several entries merged without {{pagerepeat}}');
+		$this->assertEquals(lang('for more than one contact in a document use the tag pagerepeat!'), $errors);
+	}
+
+	/**
+	 * A single entry still needs no {{pagerepeat}}
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('textDocumentProvider')]
+	public function testSingleEntryNeedsNoPagerepeat(string $mimetype, string $content)
+	{
+		$errors = [];
+		$this->merge->setReplacements(['$$name$$' => 'Alice']);
+
+		$result = $this->merge->merge_string(self::$content('Name: {{name}}'), [1], $errors, $mimetype);
+
+		$this->assertEmpty($errors, 'Errors when merging');
+		$this->assertStringContainsString('Name: Alice', $this->assertWellFormed($result)->document->textContent);
+	}
+
+	/**
+	 * Several entries with {{pagerepeat}} in a paragraph of its own, as users type it: the letterhead
+	 * and footer once, the part between the tags for every entry, and still a valid document.
+	 * Word documents used to ignore the tags and repeat their whole body, a page break directly in
+	 * the body between the copies.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('textDocumentProvider')]
+	public function testPagerepeatInTextDocument(string $mimetype, string $content)
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+
+		$result = $this->merge->merge_string(self::$content("Letterhead\n{{pagerepeat}}\nName: {{name}}\n{{pagerepeat}}\nFooter"),
+											 [1, 2], $errors, $mimetype);
+
+		$this->assertEmpty($errors, 'Errors when merging');
+		$xpath = $this->assertWellFormed($result);
+		$this->assertEquals('LetterheadName: AliceName: BobFooter', $xpath->document->textContent);
+		if($content === 'docxContent')
+		{
+			$this->assertEquals(1, $xpath->query('//w:body')->length);
+			$this->assertEquals(1, $xpath->query('//w:sectPr')->length, 'Section properties repeated');
+			$this->assertEquals(0, $xpath->query('//w:t/*')->length, 'Markup inside a text run');
+		}
+		else
+		{
+			$this->assertEquals(1, $xpath->query('//office:text')->length, 'Body repeated');
+		}
+	}
+
+	/**
+	 * Address labels in an ODF text document without any direct formatting, whose
+	 * <office:automatic-styles/> is empty: used to put the whole document in front of the body a
+	 * second time.
+	 */
+	public function testOdtLabelsWithEmptyAutomaticStyles()
+	{
+		$errors = [];
+		$this->merge->setReplacementsForId(1, ['$$name$$' => 'Alice']);
+		$this->merge->setReplacementsForId(2, ['$$name$$' => 'Bob']);
+
+		$result = $this->merge->merge_string(
+			self::odtContent("Labels\n{{label}}Label {{name}}{{label}}\nA: {{labelplacement}}\nB: {{labelplacement}}\nEnd"),
+			[1, 2], $errors, 'application/vnd.oasis.opendocument.text');
+
+		$this->assertEmpty($errors, 'Errors when merging');
+		$xpath = $this->assertWellFormed($result);
+		$this->assertEquals(1, $xpath->query('//office:automatic-styles')->length, 'Document head repeated');
+		$this->assertEquals(1, $xpath->query('//office:text')->length, 'Body repeated');
+		$this->assertEquals('LabelsA: Label AliceB: Label BobEnd', $xpath->document->textContent);
+	}
+
+	public static function labelDocumentProvider() : array
+	{
+		return [
+			'ODF text' => ['application/vnd.oasis.opendocument.text', 'odtContent'],
+			'Word'     => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'docxContent'],
+		];
+	}
+
+	/**
+	 * More labels than fit on one page: every page of labels repeats the content of the body, but
+	 * not the body itself (or Word's section properties), each further page starting on a new page
+	 * with one (nearly invisible) paragraph.  The current date around the labels is filled in on every page.
+	 *
+	 * Setup: 3 entries, 2 labels per page.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('labelDocumentProvider')]
+	public function testLabelsOnSeveralPages(string $mimetype, string $content)
+	{
+		$errors = [];
+		foreach([1 => 'Alice', 2 => 'Bob', 3 => 'Carol'] as $id => $name)
+		{
+			$this->merge->setReplacementsForId($id, ['$$name$$' => $name]);
+		}
+		$date = Api\DateTime::to('now', true);
+
+		$result = $this->merge->merge_string(
+			self::$content("Labels {{date}}\n{{label}}Label {{name}}{{label}}\nA: {{labelplacement}}\nB: {{labelplacement}}\nEnd"),
+			[1, 2, 3], $errors, $mimetype);
+
+		$this->assertEmpty($errors, 'Errors when merging');
+		$xpath = $this->assertWellFormed($result);
+		$this->assertEquals("Labels {$date}A: Label AliceB: Label BobEnd" . "Labels {$date}A: Label CarolB: End",
+			$xpath->document->textContent);
+		if($content === 'docxContent')
+		{
+			$this->assertEquals(1, $xpath->query('//w:body')->length, 'Body repeated');
+			$this->assertEquals(1, $xpath->query('//w:body/w:sectPr[last()]')->length, 'Section properties not last');
+			$this->assertEquals(1, $xpath->query('//w:sectPr')->length, 'Section properties repeated');
+			$this->assertEquals(1, $xpath->query('//w:p[w:pPr/w:pageBreakBefore]')->length, 'Page breaks');
+			$this->assertEquals(0, $xpath->query('//w:body/w:br')->length, 'Break outside a paragraph');
+		}
+		else
+		{
+			$this->assertEquals(1, $xpath->query('//office:text')->length, 'Body repeated');
+			$this->assertEquals(1, $xpath->query('//office:text/text:sequence-decls')->length, 'Declarations repeated');
+			$this->assertEquals(1, $xpath->query('//text:p[@text:style-name="EGroupwareLabelPageBreak"]')->length, 'Page breaks');
+			$this->assertEquals(1, $xpath->query('//office:automatic-styles/style:style[@style:name="EGroupwareLabelPageBreak"]' .
+				'/style:paragraph-properties[@fo:break-before="page"]')->length, 'Page break style');
+			$this->assertEquals(0, $xpath->query('//text:line-break')->length, 'Line break between pages');
+		}
+	}
+
+	/**
+	 * Labels whose page starts with a paragraph of a style with a page style of its own: that already
+	 * starts a new page, a page break in front of it would leave an empty page.
+	 */
+	public function testOdtLabelPagesStartingWithPageStyle()
+	{
+		$errors = [];
+		foreach([1 => 'Alice', 2 => 'Bob', 3 => 'Carol'] as $id => $name)
+		{
+			$this->merge->setReplacementsForId($id, ['$$name$$' => $name]);
+		}
+		$content = str_replace(
+			['<office:automatic-styles/>', '<text:p>Labels'],
+			['<office:automatic-styles><style:style style:name="P1" style:family="paragraph" style:master-page-name="Standard"/>' .
+				'</office:automatic-styles>', '<text:p text:style-name="P1">Labels'],
+			self::odtContent("Labels\n{{label}}Label {{name}}{{label}}\nA: {{labelplacement}}\nB: {{labelplacement}}\nEnd"));
+
+		$result = $this->merge->merge_string($content, [1, 2, 3], $errors, 'application/vnd.oasis.opendocument.text');
+
+		$this->assertEmpty($errors, 'Errors when merging');
+		$xpath = $this->assertWellFormed($result);
+		$this->assertEquals('LabelsA: Label AliceB: Label BobEnd' . 'LabelsA: Label CarolB: End', $xpath->document->textContent);
+		$this->assertEquals(2, $xpath->query('//text:p[@text:style-name="P1"]')->length, 'Pages');
+		$this->assertEquals(0, $xpath->query('//text:p[@text:style-name="EGroupwareLabelPageBreak"]')->length, 'Extra page break');
+	}
+
+	/**
 	 * Replacing the entry-independent placeholders of the header must not stop text/plain from
 	 * detecting a template where everything in front of the tag IS the content to repeat: any
 	 * placeholder of the entry there still means there is no header (see
@@ -780,11 +1003,8 @@ class MergeTest extends LoggedInTest
 	 *     testPagerepeatRepeatsContentPerIdForTextPlain() above for that same auto-detection
 	 *     used deliberately).
 	 * Together these mean no text/plain input reaches the guard: either short-circuited before
-	 * it, or auto-repeated instead of erroring. The guard likely still fires for other mimetypes
-	 * (ODF/OOXML), whose own pagerepeat-splitting code (a few lines above, split on
-	 * "office:body>"/"w:body>") has no equivalent "nohead" fallback - but exercising that would
-	 * need a real zip/XML document fixture, out of scope for this text/plain-only pass (see
-	 * doc/ai/projects/storage-test-coverage.md).
+	 * it, or auto-repeated instead of erroring. ODF and Word text documents do reject several
+	 * entries without the tag, see testSeveralEntriesWithoutPagerepeatAreRejected().
 	 */
 	public function testPagerepeatMissingTagErrorIsUnreachableForTextPlainDeferred()
 	{
