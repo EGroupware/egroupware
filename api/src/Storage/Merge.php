@@ -323,7 +323,8 @@ abstract class Merge
 					{
 						try
 						{
-							$value = Api\DateTime::to($value, true);
+							// stored as Y-m-d: parse that, not the user's date format
+							$value = Api\DateTime::to(new Api\DateTime($value), true);
 						}
 						catch (\Exception $e)
 						{
@@ -1287,6 +1288,11 @@ abstract class Merge
 			}
 			if($this->is_xml)
 			{
+				// Keep date objects, escaping would turn them into strings, which replace() has to parse back
+				$date_objects = array_filter($replacements, static function($value)
+				{
+					return $value instanceof \DateTimeInterface;
+				});
 				// Replace & with &amp; but don't touch other entities
 				$replacements = preg_replace('/&(?![a-zA-Z]+;|#\d+;|#x[0-9a-fA-F]+;)/', '&amp;', $replacements);
 				$replacements = str_replace(
@@ -1294,6 +1300,7 @@ abstract class Merge
 					array('&amp;', '&lt;', '&gt;', ''),
 					$replacements
 				);
+				$replacements = array_replace($replacements, $date_objects);
 			}
 			$content = $this->replace($this->process_commands($content, $replacements), $replacements, $mimetype, $mso_application_progid, $charset);
 
@@ -1607,12 +1614,17 @@ abstract class Merge
 			$replacements = Api\Translation::convert($replacements, Api\Translation::charset(), $charset);
 		}
 
-		// Date only placeholders for timestamps
+		// Date fields: {{field/date}}, {{field/time}} and {{field:FORMAT}} for every type of document
 		if(is_array($this->date_fields))
 		{
 			foreach($this->date_fields as $field)
 			{
-				if(($value = $replacements['$$' . $field . '$$'] ?? null))
+				if(!array_key_exists('$$' . $field . '$$', $replacements))
+				{
+					continue;
+				}
+				$time = null;
+				if(($value = $replacements['$$' . $field . '$$']))
 				{
 					if (is_a($value, '\DateTime'))
 					{
@@ -1620,11 +1632,19 @@ abstract class Merge
 					}
 					else
 					{
-						$time = Api\DateTime::createFromFormat('+' . Api\DateTime::$user_dateformat . '*' . Api\DateTime::$user_timeformat . '*', $value) ?:
-							new Api\DateTime($value, Api\DateTime::$user_timezone);
+						$time = Api\DateTime::createFromUserFormat($value);
 					}
 					$replacements['$$' . $field . '/date$$'] = $time ? $time->format(Api\DateTime::$user_dateformat) : '';
 					$replacements['$$' . $field . '/time$$'] = $time ? $time->format(Api\DateTime::$user_timeformat) : '';
+				}
+				// any date() format, eg. "m/d/Y", "H:i" or "jS \o\f F", but no XML markup or entities
+				$format_matches = [];
+				preg_match_all('/\$\$(' . preg_quote($field, '/') . '):(?<format>[^$<>&]*)\$\$/', $content, $format_matches);
+				foreach(array_unique($format_matches['format']) as $format)
+				{
+					// Api\DateTime::format() also takes types like "ts" or "array", use only what is text
+					$formatted = $time ? $time->format($format) : '';
+					$replacements['$$' . $field . ':' . $format . '$$'] = is_scalar($formatted) ? (string)$formatted : '';
 				}
 			}
 		}
@@ -1677,6 +1697,11 @@ abstract class Merge
 				if(is_array($value))
 				{
 					$value = '';
+					continue;
+				}
+				// keep date objects, cleaning them would turn them into a string, format_spreadsheet_dates() has to parse back
+				if($value instanceof \DateTimeInterface)
+				{
 					continue;
 				}
 				// decode html entities back to utf-8
@@ -1808,13 +1833,6 @@ abstract class Merge
 					if(!array_key_exists($raw_placeholder, $replacements))
 					{
 						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
-					}
-					// Check for format
-					$format_matches = [];
-					preg_match_all("\$($fieldname):(?<format>[a-zA-Z\-\. ,]*)\$", $content, $format_matches);
-					foreach($format_matches['format'] as $format)
-					{
-						$replacements[$this->prefix("", $fieldname . ':' . $format, '$')] = Api\DateTime::to($replacements[$raw_placeholder], $format);
 					}
 				}
 				$this->format_spreadsheet_dates($content, $names, $replacements, $mimetype . $mso_application_progid);
@@ -2010,7 +2028,8 @@ abstract class Merge
 			$field = preg_quote($field, '/');
 			if (!empty($values[$key]))
 			{
-				$date = Api\DateTime::createFromUserFormat($values[$key]);
+				$date = $values[$key] instanceof \DateTimeInterface ? $values[$key] :
+					Api\DateTime::createFromUserFormat($values[$key]);
 				if($mimetype == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
 					$mimetype == 'application/vnd.ms-excel.sheet.macroenabled.12')//Excel WTF
 				{

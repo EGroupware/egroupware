@@ -153,6 +153,78 @@ class TimesheetMergeTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Every date format of the preferences x 24 and 12 hour time
+	 */
+	public static function userFormatProvider(): array
+	{
+		$data = array();
+		foreach (array('d.m.Y', 'Y-m-d', 'm/d/Y', 'm-d-Y', 'm.d.Y', 'Y/d/m', 'Y-d-m', 'Y.d.m', 'Y/m/d', 'Y.m.d',
+					 'd/m/Y', 'd-m-Y', 'd-M-Y') as $dateformat)
+		{
+			foreach (array('24', '12') as $timeformat)
+			{
+				$data["$dateformat {$timeformat}h"] = array($dateformat, $timeformat);
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * Date placeholders of a real app, for every date and time format a user can pick.
+	 *
+	 * Timesheet hands Merge its date-times as strings importexport already formatted in the user's
+	 * format (with seconds), which Merge parses back for {{ts_start/date}}, {{ts_start/time}} and
+	 * {{ts_start:FORMAT}}.  Merged into an ODF text document, where all of these are available.
+	 *
+	 * Setup: a timesheet starting 2026-03-15 14:30 (a day > 12, so swapping day and month can not
+	 * go unnoticed), lasting 90 minutes, merged with the date and time format set in the
+	 * preferences and Api\DateTime.
+	 *
+	 * Pass criteria: the merge reports no error and throws no exception, {{ts_start}} and {{ts_end}}
+	 * are formatted like importexport formats them, their /date and /time parts in the user's
+	 * date and time format, and {{ts_start:d.m.Y H.i}} in the given format.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('userFormatProvider')]
+	public function testDatePlaceholdersForUserFormat(string $dateformat, string $timeformat)
+	{
+		$prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		$prefs['dateformat'] = $dateformat;
+		$prefs['timeformat'] = $timeformat;
+		EGroupware\Api\DateTime::setUserPrefs(EGroupware\Api\DateTime::$user_timezone->getName(), $dateformat, $timeformat);
+
+		$start = strtotime('2026-03-15 14:30:00');
+		$duration = 90;    // minutes
+		$ts_id = $this->createTimesheet($start, $duration);
+		$end = $start + 60 * $duration;
+
+		$merge = new timesheet_merge();
+		$err = null;
+		try
+		{
+			$result = $merge->merge_string(
+				'<text:p>[{{ts_start}}][{{ts_start/date}}][{{ts_start/time}}][{{ts_start:d.m.Y H.i}}]</text:p>'.
+				'<text:p>[{{ts_end}}][{{ts_end/date}}][{{ts_end/time}}]</text:p>',
+				array($ts_id), $err, 'application/vnd.oasis.opendocument.text');
+		}
+		catch (\Throwable $e)
+		{
+			$this->fail("Merging with date format '$dateformat' failed with ".get_class($e).': '.$e->getMessage());
+		}
+
+		$this->assertEmpty($err, 'Errors when merging');
+		$this->assertSame(
+			'<text:p>['.$this->formatDateTime($start).']'.
+			'['.date(EGroupware\Api\DateTime::$user_dateformat, $start).']'.
+			'['.date(EGroupware\Api\DateTime::$user_timeformat, $start).']'.
+			'['.date('d.m.Y H.i', $start).']</text:p>'.
+			'<text:p>['.$this->formatDateTime($end).']'.
+			'['.date(EGroupware\Api\DateTime::$user_dateformat, $end).']'.
+			'['.date(EGroupware\Api\DateTime::$user_timeformat, $end).']</text:p>',
+			$result
+		);
+	}
+
+	/**
 	 * Pass criteria: 'ts_end' is registered in the placeholder picker list, so users
 	 * composing a document actually see {{ts_end}} as an available option.
 	 */

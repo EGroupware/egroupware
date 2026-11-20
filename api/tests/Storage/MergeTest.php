@@ -847,17 +847,16 @@ class MergeTest extends LoggedInTest
 
 	/**
 	 * NOT covered here, documented as deliberately deferred: the ":decimals,thousands$$" numeric
-	 * placeholder variant and the ":FORMAT$$" date placeholder variant (Merge.php's
-	 * numeric_fields/date_fields custom-format block) only run when Merge::replace()'s $is_xml
+	 * placeholder variant (Merge.php's numeric_fields custom-format block) only runs when Merge::replace()'s $is_xml
 	 * flag is true (XML-based document mimetypes, or text/html) - that whole block sits inside
 	 * `if(!empty($is_xml)) { ... }`. This test file intentionally sticks to "text/plain" targets
 	 * (matching the rest of this file's convention, and avoiding the "text/html" merge path,
 	 * which testTextToHtml() above documents as unreliable outside a real browser/CI
-	 * environment), so those two placeholder variants are not reachable from here. They would
-	 * need either a real XML-ish document fixture or a dedicated text/html-based test accepting
-	 * that fragility - left for a later phase (see doc/ai/projects/storage-test-coverage.md).
+	 * environment), so that placeholder variant is not reachable from here. It would need an
+	 * XML-ish target, like MergeDateTest uses for the ":FORMAT$$" date variant - left for a later
+	 * phase (see doc/ai/projects/storage-test-coverage.md).
 	 */
-	public function testDecimalsAndDateFormatPlaceholderVariantsAreXmlOnlyDeferred()
+	public function testDecimalsPlaceholderVariantIsXmlOnlyDeferred()
 	{
 		$this->assertTrue(true);
 	}
