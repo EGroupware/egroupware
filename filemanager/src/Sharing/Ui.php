@@ -47,6 +47,17 @@ class Ui
 
 		$token = $content['token'] ?: $_GET['token'];
 
+		// same check share.php itself runs before ever redirecting here
+		$share = array();
+		try
+		{
+			Sharing::check_token(true, $share, $token);
+		}
+		catch (Api\Exception $e)
+		{
+			return;
+		}
+
 		$share = Sharing::so()->read(['share_token' => $token]);
 
 		// This should already have been done, but we want the correct share root
