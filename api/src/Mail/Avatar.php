@@ -62,6 +62,7 @@ class Avatar
 	 * - "'Becker, Ralf' <rb@egroupware.org> --> dito
 	 * - "ralf.becker@egroupware.org" --> dito
 	 * - "rb@egroupware.org" --> ["fname" --> "r", "lname" => "b"]
+	 * - "📦 DHL Paketankündigung <noreply@dhl.de>" --> ["fname" => "DHL", "lname" => "Paketankündigung"], starts with package emoji - emoji are ignored
 	 */
 	static function getLavatar(?string $address=null) : array
 	{
@@ -71,10 +72,11 @@ class Avatar
 		}
 		if (preg_match("/^\"?'?(.*?)'?\"?\s+<([^<>'\"]+)>$/", $address, $matches))
 		{
-			if (($parts = preg_split('/[, ]+/', $matches[1])))
+			// emoji can not be used as initials, ignore them (a name consisting only of emoji falls back to the email)
+			if (($parts = preg_split('/[, ]+/', self::stripEmoji($matches[1]), -1, PREG_SPLIT_NO_EMPTY)))
 			{
 				// if we have a usual title prefixing the name, skip it
-				while (preg_match('/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/', $parts[0]))
+				while (count($parts) > 1 && preg_match('/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/', $parts[0]))
 				{
 					array_shift($parts);
 				}
@@ -87,5 +89,18 @@ class Avatar
 			return ['fname' => array_shift($parts), 'lname' => array_pop($parts), 'label' => $address];
 		}
 		return ['fname' => $address[0], 'lname' => $address[1], 'label' => $address];
+	}
+
+	/**
+	 * Remove emoji from a name, as they can not be used as initials
+	 *
+	 * Removes pictographs incl. their modifiers (variation-selectors, skin-tones, zero-width-joiners), flags and keycaps.
+	 *
+	 * @param string $name
+	 * @return string name without emoji, surrounding whitespace is trimmed
+	 */
+	static function stripEmoji(string $name) : string
+	{
+		return trim(preg_replace('/[0-9#*]\x{FE0F}?\x{20E3}|[\p{Extended_Pictographic}\x{FE0F}\x{200D}\x{20E3}\x{1F3FB}-\x{1F3FF}\x{1F1E6}-\x{1F1FF}\x{E0020}-\x{E007F}]+/u', '', $name) ?? $name);
 	}
 }
