@@ -134,6 +134,12 @@ class calendar_uilist extends calendar_ui
 			);
 		}
 		$content['nm']['favorites'] = false;
+		// The stored query still has the start and end it was last run with, as timestamps.  The
+		// calendar state the list is loaded with does not keep them, so the filters must not show them.
+		unset($content['nm']['startdate'], $content['nm']['enddate']);
+		// participant is set by the owner selection in the sidebox, there is no widget submitting it,
+		// and status_filter is not one of the filters a nextmatch knows about
+		$content['nm']['extra_attributes'] = ['col_filter[participant]', 'status_filter'];
 		$content['nm']['actions'] = $this->get_actions();
 
 		// Skip first load if view is not listview
@@ -172,6 +178,7 @@ class calendar_uilist extends calendar_ui
 			unset($_REQUEST['keywords']);
 		}
 		$sel_options['filter'] = &$this->date_filters;
+		$this->filter_settings($content['nm'], $sel_options);
 
 		// Send categories for row styling - calendar uses no_cat, so they don't go automatically
 		$sel_options['category'] = array('' => lang('all')) + Etemplate\Widget\Select::typeOptions('select-cat', ',,calendar');

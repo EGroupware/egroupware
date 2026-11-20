@@ -93,6 +93,8 @@
 		     legacy grid widget also can not adopt a web component as a child at all
 		     ("Legacy widget grid[#] could not handle adding a child (ET2-NEXTMATCH)"). -->
 		<et2-html  id="css" disabled="!@css"></et2-html>
-		<et2-nextmatch  id="nm" template="calendar.list.rows" filter_template=""/>
+		<!-- calendar.filter holds the filters of all views, not only the list: the nextmatch shows
+		     them in the app's filter drawer, and the server validates their values with its widgets. -->
+		<et2-nextmatch  id="nm" template="calendar.list.rows" filterTemplate="calendar.filter"/>
 	</et2-template>
 </overlay>

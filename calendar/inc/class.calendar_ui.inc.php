@@ -555,19 +555,17 @@ class calendar_ui
 	}
 
 	/**
-	 * Makes the sidebox content with etemplate, after hook is processed
+	 * Options and content of the filters in calendar.filter
+	 *
+	 * The filters are shown by the nextmatch of the list, as its filter template, and apply to
+	 * all views. They are therefore part of the list's request, which is also what their values
+	 * are validated against.
+	 *
+	 * @param array &$nm content of the list's nextmatch, "integration" and what other apps need for their filters gets set
+	 * @param array &$sel_options "status_filter", "cat_id" and "filter" get set
 	 */
-	function sidebox_etemplate($content = array())
+	protected function filter_settings(array &$nm, array &$sel_options)
 	{
-		$cont = $this->cal_prefs['saved_states'];
-		if (!is_array($cont)) $cont = array();
-		$cont['view'] = $this->view ? $this->view : 'week';
-		$cont['date'] = $this->date ? $this->date : new Api\DateTime();
-		$cont['owner'] = $this->owner ? (is_array($this->owner) ? $this->owner : explode(',',$this->owner) ) : $cont['owner'];
-
-		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
-
-		$readonlys = array();
 		$sel_options['status_filter'] = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
 			array('value' => 'accepted',    'label' => lang('Accepted'), 'title' => lang('Show only accepted events')),
@@ -592,6 +590,63 @@ class calendar_ui
 		);
 		$sel_options['filter'] = &$this->date_filters;
 
+
+		unset($nm['integration']);
+		// filters other apps add for their entries shown in the calendar
+		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
+		foreach($integration_data as $app => $app_hooks)
+		{
+			foreach($app_hooks as $data)
+			{
+				// App might have multiple hooks, let it specify something else
+				$app = $data['selects']['app'] ?: $app;
+
+				if (is_array($data) && array_key_exists('sidebox_template', $data))
+				{
+					$nm['integration'][] = ['template' => $data['sidebox_template'], 'app' => $app];
+				}
+			}
+		}
+
+		// Apps fill what their filters need when calendar.filter is about to be shown.  It is no
+		// longer run as a template of its own, so ask them here, as Etemplate::exec() would.
+		$filter_template = new Etemplate('calendar.filter');
+		foreach(Api\Hooks::process([
+				'hook_location'   => 'etemplate2_before_exec',
+				'location_name'   => 'calendar.filter',
+				'location_object' => &$filter_template,
+				'sel_options'     => $sel_options,
+			] + $nm) as $extras)
+		{
+			foreach($extras && count(array_filter(array_keys($extras), 'is_int')) ? $extras : [$extras] as $extra)
+			{
+				if (!empty($extra['data']) && is_array($extra['data']))
+				{
+					$nm = Etemplate::complete_array_merge($nm, $extra['data']);
+				}
+				if (!empty($extra['sel_options']) && is_array($extra['sel_options']))
+				{
+					$sel_options = Etemplate::complete_array_merge($sel_options, $extra['sel_options']);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Makes the sidebox content with etemplate, after hook is processed
+	 */
+	function sidebox_etemplate($content = array())
+	{
+		$cont = $this->cal_prefs['saved_states'];
+		if (!is_array($cont)) $cont = array();
+		$cont['view'] = $this->view ? $this->view : 'week';
+		$cont['date'] = $this->date ? $this->date : new Api\DateTime();
+		$cont['owner'] = $this->owner ? (is_array($this->owner) ? $this->owner : explode(',',$this->owner) ) : $cont['owner'];
+
+		$cont['year'] = (int)Api\DateTime::to($cont['date'],'Y');
+
+		$readonlys = $sel_options = array();
+
 		// Merge print
 		try
 		{
@@ -608,32 +663,11 @@ class calendar_ui
 			// ignore failed discovery
 			unset($e);
 		}
-		// Add integration UI into sidemenu
-		$integration_data = Api\Hooks::process(array('location' => 'calendar_search_union'));
-		foreach($integration_data as $app => $app_hooks)
-		{
-			foreach($app_hooks as $data)
-			{
-				// App might have multiple hooks, let it specify something else
-				$app = $data['selects']['app'] ?: $app;
-
-				if (is_array($data) && array_key_exists('sidebox_template', $data))
-				{
-					$cont['integration'][] = ['template' => $data['sidebox_template'], 'app' => $app];
-				}
-			}
-		}
-
 		// developer-tools scanning for phrases --> return and do NOT execute eTemplate
 		if (str_starts_with($_GET['menuaction']??'', 'developer.'))
 		{
 			return;
 		}
-
-		// Filters
-		Etemplate::reset_request();
-		$tmpl = new Etemplate('calendar.filter');
-		$tmpl->exec('calendar_uiviews::index', $cont, $sel_options, $readonlys);
 
 		// Sidebox?
 		Etemplate::reset_request();

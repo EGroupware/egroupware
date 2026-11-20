@@ -325,10 +325,6 @@ export class CalendarApp extends EgwApp
 					this.state.date = parseDate(this.state.date, "Ymd");
 				}
 				break;
-			case 'calendar.filter':
-				this._setupFilterTemplate(_et2);
-				break;
-
 			case 'calendar.add':
 				this.et2.getWidgetById('title').focus();
 			// Fall through to get all the edit stuff too
@@ -374,6 +370,7 @@ export class CalendarApp extends EgwApp
 				this.set_enddate_visibility();
 				break;
 			case 'calendar.list':
+				this._hookListFilters(_et2);
 				// Wait until _et2_view_init is done
 				window.setTimeout(() => {
 					this.filter_change();
@@ -1040,6 +1037,16 @@ export class CalendarApp extends EgwApp
 		{
 			callback = () => {};
 		}
+		// The list gets its entries from the server, which goes by the preference
+		const done = callback;
+		callback = () =>
+		{
+			done();
+			if(this.state.view == 'listview')
+			{
+				this.listNextmatch?.refresh(undefined);
+			}
+		};
 
 		egw.set_preference("calendar","integration_toggle",integration_preference, callback);
 	}
@@ -1949,7 +1956,7 @@ export class CalendarApp extends EgwApp
 	filter_change()
 	{
 		const nm = this.listNextmatch;
-		// The date range filter lives in calendar.filter (the app's own filterbox), not in the
+		// The date range filter lives in calendar.filter (the nextmatch's filter template), not in the
 		// nextmatch header, so read the value the nextmatch is actually querying with.
 		const filter = nm ? nm.activeFilters.filter : null;
 
@@ -2647,6 +2654,12 @@ export class CalendarApp extends EgwApp
 		{
 			state.state = {view: 'week'};
 		}
+		// No status filter is "not rejected", as the filter shows it.  Left out, the server would
+		// take it as every status, rejected ones included.
+		if(!state.state.status_filter)
+		{
+			state.state.status_filter = 'default';
+		}
 		// States with no name (favorites other than No filters) default to
 		// today.  Applying a favorite should keep the current date.
 		if(!state.state.date)
@@ -3136,6 +3149,17 @@ export class CalendarApp extends EgwApp
 				}
 				if(!state.state.filter)
 				{
+					// A date of the list changed, so the range is worked out from the dates.  "after"
+					// only has a start and "before" only an end, whatever the other date still holds.
+					if(this.state.view === 'listview' && this.state.filter === 'after')
+					{
+						state.state.enddate = null;
+						delete state.state.end_date;
+					}
+					else if(this.state.view === 'listview' && this.state.filter === 'before')
+					{
+						state.state.startdate = null;
+					}
 					switch(true)
 					{
 						case Boolean(state.state.startdate && state.state.enddate):
@@ -3155,9 +3179,19 @@ export class CalendarApp extends EgwApp
 							break;
 					}
 				}
-				else if(["month", "week"].includes(state.state.filter))
+				else if(state.state.filter !== 'custom')
 				{
-					state.state.startdate = state.state.enddate = null;
+					// Only a selected range has both dates, "after" just a start and "before" just
+					// an end.  Every other date range brings its own.
+					if(state.state.filter !== 'after')
+					{
+						state.state.startdate = null;
+					}
+					if(state.state.filter !== 'before')
+					{
+						state.state.enddate = null;
+						delete state.state.end_date;
+					}
 				}
 
 				state.state.col_filter = {participant: state.state.owner};
@@ -3355,6 +3389,7 @@ export class CalendarApp extends EgwApp
 				this.sidebox_hooked_templates.splice(j, 1, 0);
 				continue;
 			}
+			const emptied : any = {};
 			sidebox.iterateOver(widget =>
 			{
 				if(widget.id == 'filter')
@@ -3367,6 +3402,12 @@ export class CalendarApp extends EgwApp
 						sidebox.getWidgetById('startdate').value = ''
 						sidebox.getWidgetById('enddate').value = ''
 					}
+				}
+				else if((widget.id == 'startdate' || widget.id == 'enddate') && state.state.view != 'listview')
+				{
+					// Only the list is filtered by a date range.  The other views show their own,
+					// whatever the list was last filtered by.
+					widget.value = (widget.id == 'startdate' ? state.state.first : state.state.last) || '';
 				}
 				else if(widget.id == 'keywords')
 				{
@@ -3388,9 +3429,40 @@ export class CalendarApp extends EgwApp
 				else if(widget.id && typeof widget.set_value == "function" && typeof state.state[widget.id] == 'undefined')
 				{
 					// No value, clear it
+					const value = widget.getValue();
 					widget.set_value('');
+					if(!this._isEmptyFilter(value) && widget.closest?.('et2-filterbox'))
+					{
+						emptied[widget.id] = Array.isArray(value) ? [] : '';
+						// a filter another app added to the drawer, in a template with the app as its content
+						if(widget.closest('et2-template')?.content)
+						{
+							this._filterEmptied(widget);
+						}
+					}
 				}
 			}, this, et2_IInput);
+
+			// The filter drawer shows what its list filters by, and the list only gets the filters
+			// the state has - so empty the ones it no longer has there too, or they come back
+			if(Object.keys(emptied).length)
+			{
+				sidebox.nextmatch?.applyFilters?.(emptied);
+			}
+
+			// Start and end are shown for the date ranges using them: both for a selected range,
+			// the start for "after" and the end for "before".  They limit each other while the
+			// other one shows a date.
+			const start = sidebox.getWidgetById('startdate');
+			const end = sidebox.getWidgetById('enddate');
+			if(start && end)
+			{
+				const range = sidebox.getWidgetById('filter')?.value;
+				start.hidden = !['custom', 'after'].includes(range);
+				end.hidden = !['custom', 'before'].includes(range);
+				start.max = end.value || '';
+				end.min = start.value || '';
+			}
 		}
 	}
 
@@ -4218,21 +4290,150 @@ export class CalendarApp extends EgwApp
 
 	}
 
-	_setupFilterTemplate(_et2)
+	/**
+	 * Is a filter value the same as no filter
+	 */
+	private _isEmptyFilter(value) : boolean
 	{
-		this.sidebox_hooked_templates.push(_et2.widgetContainer);
+		return value === null || typeof value == "undefined" || value === "" ||
+			Array.isArray(value) && !value.filter(v => v !== "" && v !== null).length;
+	}
 
-		// Hook the filter into the nextmatch
-		let filterbox;
-		const listTemplate = etemplate2.getByTemplate("calendar.list")[0]?.widgetContainer;
-		if((filterbox = _et2.widgetContainer.querySelector("et2-filterbox")) && filterbox && listTemplate)
+	/**
+	 * A filter in the drawer was emptied without the user touching it: run its own change handler
+	 *
+	 * Every filter keeps the state, or whatever else it filters by (eg. the projects projectmanager
+	 * keeps in a preference), up to date from its change handler.  Clearing all filters at once, or
+	 * applying a favourite without that filter, sets the widget directly and fires no change event,
+	 * so nothing would notice.  Fire it once the widget has taken the empty value.
+	 *
+	 * Not before the state has been loaded: until then no filter is in it, and every one would
+	 * look emptied.
+	 */
+	private _filterEmptied(widget)
+	{
+		if(!this.sidebox_et2 || this._emptiedFilters.has(widget))
 		{
-			// Wait until the list is done loading
-			listTemplate.updateComplete.then(() =>
-			{
-				filterbox.nextmatch = listTemplate.getWidgetById("nm");
-			});
+			return;
 		}
+		this._emptiedFilters.add(widget);
+		(widget.updateComplete ?? Promise.resolve()).then(() =>
+			widget.dispatchEvent(new Event('change', {bubbles: true}))
+		);
+	}
+
+	/** Filters whose change handler was run for being emptied, until they have a value again */
+	private _emptiedFilters = new WeakSet();
+
+	/**
+	 * The filter drawer applied its filters: catch the ones that were emptied all at once
+	 *
+	 * That is what its "clear filters" button does.  An emptied filter is no longer part of what
+	 * the drawer applies, so it shows as a widget without a value for a filter the state still has.
+	 * Those are emptied in the state too, which the list and the other views follow.
+	 */
+	private _drawerFiltersApplied(filterbox)
+	{
+		const emptied : any = {};
+		const widgets = [];
+		filterbox.iterateOver(widget =>
+		{
+			if(!widget.id || typeof widget.getValue != "function")
+			{
+				return;
+			}
+			const state = this.state[widget.id];
+			const stateEmpty = this._isEmptyFilter(state) || widget.id == 'status_filter' && state == 'default';
+			if(!this._isEmptyFilter(widget.getValue()) || stateEmpty)
+			{
+				// has a value again, or its handler is done
+				this._emptiedFilters.delete(widget);
+			}
+			else if(!this._emptiedFilters.has(widget))
+			{
+				emptied[widget.id] = widget.id == 'status_filter' ? 'default' : (Array.isArray(state) ? [] : '');
+				widgets.push(widget);
+			}
+		}, this, et2_IInput);
+
+		if(widgets.length && this.sidebox_et2)
+		{
+			// All at once, as the filters' own handlers do one by one: updating the state puts
+			// it back into every widget, which would refill the ones still waiting their turn
+			this.update_state(emptied);
+			// the list only follows the state while it is the view shown, but the drawer shows what
+			// the list filters by in every view
+			filterbox.nextmatch?.applyFilters?.(emptied);
+			// a filter another app added to the drawer, in a template with the app as its content,
+			// may keep more than the state
+			widgets.filter(widget => widget.closest('et2-template')?.content)
+				.forEach(widget => this._filterEmptied(widget));
+		}
+	}
+
+	/**
+	 * Keep the filters in the filter drawer up to date as the state changes
+	 *
+	 * The filters are calendar.filter, the filter template of the list's nextmatch.  The nextmatch
+	 * puts them in a filterbox of its own in the app's filter drawer once it has rendered, which
+	 * _updateWidgets() then treats like the sidebox.
+	 */
+	private _hookListFilters(_et2)
+	{
+		const nm = _et2.widgetContainer.getWidgetById('nm');
+		nm?.updateComplete?.then(() =>
+		{
+			const filterbox = <HTMLElement>Array.from(nm.closest('egw-app')?.querySelectorAll('et2-filterbox') ?? [])
+				.find((box : any) => box.nextmatch === nm);
+			if(!filterbox || this.sidebox_hooked_templates.includes(filterbox))
+			{
+				return;
+			}
+			this.sidebox_hooked_templates.push(filterbox);
+			// The filterbox takes over the list's filters whenever those are applied.  In the other
+			// views it shows theirs, eg. the dates of the view and not the list's range, so put
+			// them back once it is done.
+			nm.addEventListener('et2-filter', () =>
+			{
+				if(this.state.view != 'listview')
+				{
+					(<any>filterbox).updateComplete.then(() => this._updateWidgets({state: this.state}));
+				}
+			});
+			// the filterbox's own change event, not the ones of its widgets bubbling through it
+			filterbox.addEventListener('change', (event) =>
+			{
+				if(event.target === filterbox)
+				{
+					this._drawerFiltersApplied(filterbox);
+				}
+			});
+
+			// The filters are shared by all views, but start with what the server last queried the
+			// list with.  Once the filterbox has added its template, show the list's own filters
+			// only if the list is the current view, and then the state of the current view.
+			const showListFilters = () =>
+			{
+				const template = <any>filterbox.querySelector(':scope > et2-template');
+				if(template)
+				{
+					(template.updateComplete ?? Promise.resolve()).then(() =>
+					{
+						if(this.state.view === 'listview')
+						{
+							(<any>filterbox).value = nm.activeFilters;
+						}
+						this._updateWidgets({state: this.state});
+					});
+				}
+				return !!template;
+			};
+			if(!showListFilters())
+			{
+				const observer = new MutationObserver(() => showListFilters() && observer.disconnect());
+				observer.observe(filterbox, {childList: true});
+			}
+		});
 	}
 
 	/**

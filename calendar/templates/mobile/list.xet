@@ -42,7 +42,7 @@
 		     can not constrain its child's height, so et2-datagrid would have no bounded box to
 		     scroll inside.  The legacy grid widget also can not adopt a web component at all. -->
 		<et2-html  id="css" disabled="!@css"></et2-html>
-		<et2-nextmatch  id="nm" template="calendar.list.rows" filter_template="">
+		<et2-nextmatch  id="nm" template="calendar.list.rows" filterTemplate="calendar.filter">
 			<et2-template  id="calendar.list.add" slot="header"></et2-template>
 		</et2-nextmatch>
 		<et2-description  align="center" id="msg" class="message" noLang="1"></et2-description>
