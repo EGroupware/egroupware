@@ -1060,3 +1060,4 @@ acl group (no mailbox)	admin	de	ACL-Gruppe (ohne Postfach)
 distribution list	admin	de	Verteilerliste
 this sync mode requires an email address - set one, or switch to a mode that does not need it.	admin	de	Dieser Synchronisations-Modus benötigt eine E-Mail-Adresse - bitte eine eintragen oder einen Modus wählen, der keine benötigt.
 shared mailbox	admin	de	Gemeinsames Postfach
+invalid location %1 for an acl entry	admin	de	Ungültiger Ort %1 für einen ACL-Eintrag
