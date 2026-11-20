@@ -91,7 +91,30 @@ class Saml implements BackendSSO
 		$as = new SimpleSAML\Auth\Simple(self::$auth_source);
 		$as->requireAuth();
 
-		return true;
+		return $this->isAssertedAccount($username, (array)$as->getAttributes());
+	}
+
+	/**
+	 * Check if the current SAML session was asserted for the given username
+	 *
+	 * @param string $username username to authenticate
+	 * @param array $attrs attributes of the current SAML session, as returned by getAttributes()
+	 * @return boolean true if the SAML session was asserted for $username
+	 */
+	private function isAssertedAccount($username, array $attrs)
+	{
+		$asserted = self::samlAttr(null, $attrs);
+		if (is_array($asserted) || empty($asserted))
+		{
+			return false;
+		}
+		// apply the same username replacement login() applies to the asserted identity, so an
+		// account matched that way is recognised here too
+		if (($replaced = $this->checkReplaceUsername($asserted)) !== null)
+		{
+			$asserted = $replaced;
+		}
+		return strcasecmp($asserted, (string)$username) === 0;
 	}
 
 	/**
@@ -247,6 +270,12 @@ class Saml implements BackendSSO
 	 */
 	private function checkJoin($login, $password, $username)
 	{
+		// saml_join requires auth_type to not be 'saml' itself, see doc/UCS-SAML-SSO.md
+		if (($GLOBALS['egw_info']['server']['auth_type'] ?: 'sql') === 'saml')
+		{
+			return null;
+		}
+
 		// check SAML username is stored in account_description and we have a matching account
 		if ($GLOBALS['egw_info']['server']['saml_join'] === 'description' &&
 			($account_id = $GLOBALS['egw']->accounts->name2id($username, 'account_description', 'u')))

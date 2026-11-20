@@ -173,4 +173,16 @@ class SamlJoinThrottleTest extends LoggedInTest
 		$this->assertSame($login, $result,
 			'a correct password with no prior failed guesses must still be accepted');
 	}
+
+	public function testIgnoredWhenAuthTypeIsSaml()
+	{
+		$login = $this->makeUser();
+		$this->applySamlTestServerConfig();
+		$GLOBALS['egw_info']['server']['auth_type'] = 'saml';
+
+		$result = $this->checkJoin($login, self::PASSWORD);
+
+		$this->assertNull($result,
+			'saml_join must be ignored when auth_type=saml, even with the correct password');
+	}
 }
