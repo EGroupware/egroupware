@@ -32,7 +32,7 @@ $starttime = microtime(true);
  */
 function check_access(&$account)
 {
-	if (isset($_GET['auth']))
+	if (isset($_GET['auth']) && !Api\Header\Authenticate::hasWebServerIdentity())
 	{
 		list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) = explode(':',base64_decode($_GET['auth']),2);
 	}
