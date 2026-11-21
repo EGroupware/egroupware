@@ -151,7 +151,9 @@ class Authenticate
 	{
 		$server ??= $_SERVER;
 
-		return !empty($server['PHP_AUTH_USER']) || !empty($server['REMOTE_USER']) || !empty($server['PHP_AUTH_DIGEST']);
+		return !empty($server['PHP_AUTH_USER']) || !empty($server['REMOTE_USER']) ||
+			!empty($server['REDIRECT_REMOTE_USER']) || !empty($server['PHP_AUTH_DIGEST']) ||
+			!empty($server['SSL_CLIENT_S_DN']);
 	}
 
 	/**

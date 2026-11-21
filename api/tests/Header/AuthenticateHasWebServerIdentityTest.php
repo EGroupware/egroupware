@@ -23,16 +23,21 @@ class AuthenticateHasWebServerIdentityTest extends TestCase
 			'nothing' => [false, []],
 			'PHP_AUTH_USER' => [true, ['PHP_AUTH_USER' => 'alice']],
 			'REMOTE_USER' => [true, ['REMOTE_USER' => 'alice']],
+			'REDIRECT_REMOTE_USER' => [true, ['REDIRECT_REMOTE_USER' => 'alice']],
 			'PHP_AUTH_DIGEST' => [true, ['PHP_AUTH_DIGEST' => 'username="alice", realm="x"']],
+			'SSL_CLIENT_S_DN' => [true, ['SSL_CLIENT_S_DN' => '/CN=alice/O=Example']],
 			'empty PHP_AUTH_USER' => [false, ['PHP_AUTH_USER' => '']],
 			'empty REMOTE_USER' => [false, ['REMOTE_USER' => '']],
+			'empty REDIRECT_REMOTE_USER' => [false, ['REDIRECT_REMOTE_USER' => '']],
 			'empty PHP_AUTH_DIGEST' => [false, ['PHP_AUTH_DIGEST' => '']],
+			'empty SSL_CLIENT_S_DN' => [false, ['SSL_CLIENT_S_DN' => '']],
 			'unrelated server vars' => [false, ['HTTP_USER_AGENT' => 'curl/8']],
 		];
 	}
 
 	/**
-	 * Pass criteria: only PHP_AUTH_USER, REMOTE_USER or PHP_AUTH_DIGEST count, and only non-empty
+	 * Pass criteria: only PHP_AUTH_USER, REMOTE_USER, REDIRECT_REMOTE_USER, PHP_AUTH_DIGEST or
+	 * SSL_CLIENT_S_DN count, and only non-empty
 	 */
 	#[DataProvider('providerIdentity')]
 	public function testHasWebServerIdentity(bool $expected, array $server)
