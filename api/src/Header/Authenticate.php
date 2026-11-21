@@ -138,6 +138,23 @@ class Authenticate
 	}
 
 	/**
+	 * Does the request already carry an identity the web server itself authenticated?
+	 *
+	 * Used by remote.php/webdav.php/files/webdav.php/xerox-scan.php to decide whether their ?auth=
+	 * query parameter fallback applies: it is meant for clients that cannot send credentials any
+	 * other way, never to replace an identity the web server already established.
+	 *
+	 * @param ?array $server default $_SERVER
+	 * @return bool
+	 */
+	static public function hasWebServerIdentity(?array $server=null) : bool
+	{
+		$server ??= $_SERVER;
+
+		return !empty($server['PHP_AUTH_USER']) || !empty($server['REMOTE_USER']) || !empty($server['PHP_AUTH_DIGEST']);
+	}
+
+	/**
 	 * Get basic auth credentials from an Authorization header
 	 *
 	 * @param ?array $server default $_SERVER

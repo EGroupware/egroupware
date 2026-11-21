@@ -35,7 +35,7 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'filemanager',
 		'autocreate_session_callback' => static function(&$account)
 		{
-			if (isset($_GET['auth']))
+			if (isset($_GET['auth']) && !Api\Header\Authenticate::hasWebServerIdentity())
 			{
 				list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', base64_decode($_GET['auth']), 2);
 			}
