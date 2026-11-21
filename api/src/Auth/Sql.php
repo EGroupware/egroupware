@@ -101,6 +101,11 @@ class Sql implements Backend
 		/* Auth via crypted password. NOTE: mail needs cleartext password to authenticate against mailserver! */
 		else
 		{
+			// an empty password is never a valid credential, same as the text branch above
+			if (!isset($passwd) || $passwd === '')
+			{
+				return false;
+			}
 			$where['account_pwd'] = $passwd;
 			if (!($row = $this->db->select($this->table,'account_lid,account_lastlogin',$where,__LINE__,__FILE__)->fetch()) ||
 				$GLOBALS['egw_info']['server']['case_sensitive_username'] && $row['account_lid'] != $username)
