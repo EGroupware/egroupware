@@ -54,7 +54,33 @@ class Sqlssl extends Sql
 			# if we're not doing SSL authentication, behave like auth_sql
 			return Api\Auth::compare_password($passwd, $row['account_pwd'], 'md5', strtolower($username));
 		}
-		return True;
+		// the certificate authenticates only the account its own Email attribute asserts, not
+		// whatever username this call happened to be made with
+		return self::isAssertedAccount($username, $_SERVER['SSL_CLIENT_S_DN']);
+	}
+
+	/**
+	 * Does an X.509 subject DN (as mod_ssl sets it in SSL_CLIENT_S_DN) assert the given username?
+	 *
+	 * The DN's Email attribute is what login.php itself derives the username from
+	 * (eg. "CN=john.doe/OU=Department/O=Company/C=xx/Email=john@company.tld/L=City/").
+	 *
+	 * @param string $username
+	 * @param string $dn
+	 * @return bool
+	 */
+	private static function isAssertedAccount($username, $dn)
+	{
+		foreach (explode('/', $dn) as $rdn)
+		{
+			if (!str_contains($rdn, '=')) continue;
+			list($key, $val) = explode('=', $rdn, 2);
+			if (strcasecmp($key, 'Email') === 0)
+			{
+				return strcasecmp($val, $username) === 0;
+			}
+		}
+		return false;
 	}
 
 	/**
