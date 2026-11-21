@@ -144,8 +144,12 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 	 * (streamer.php:249-251), so the wire value is unchanged.
 	 *
 	 * Pass criteria: SyncTask::$startdate/$duedate are plain ints equal to
-	 * Api\DateTime::user2server(...)'s result for the same
-	 * infolog_bo::read($id, true, 'object') entry.
+	 * $v->format('ts') (the object's OWN, user-timezone digits - NOT
+	 * Api\DateTime::user2server($v, 'ts'), which does a real timezone
+	 * conversion; see the 'info_startdate' case comment in
+	 * infolog_zpush.inc.php::GetMessage() and
+	 * testGetMessageDueBeforeOneAmLocalDoesNotShiftADayEarly() below for why)
+	 * for the same infolog_bo::read($id, true, 'object') entry.
 	 */
 	public function testGetMessageMapsDatesAsServerTimestamps()
 	{
@@ -169,13 +173,50 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 		$this->assertInstanceOf(\SyncTask::class, $message);
 		$this->assertIsInt($message->startdate, 'SyncTask::$startdate must be a raw int, or SyncTask::Check() TypeErrors');
 		$this->assertIsInt($message->duedate, 'SyncTask::$duedate must be a raw int, or SyncTask::Check() TypeErrors');
-		$this->assertSame(Api\DateTime::user2server($expected['info_startdate'], 'ts'), $message->startdate,
-			'SyncTask::$startdate must be the same server-timestamp Streamer::Encode() would have produced');
-		$this->assertSame(Api\DateTime::user2server($expected['info_enddate'], 'ts'), $message->duedate,
-			'SyncTask::$duedate must be the same server-timestamp Streamer::Encode() would have produced');
+		$this->assertSame($expected['info_startdate']->format('ts'), $message->startdate,
+			'SyncTask::$startdate must preserve the user-timezone wall-clock digits (no real timezone shift)');
+		$this->assertSame($expected['info_enddate']->format('ts'), $message->duedate,
+			'SyncTask::$duedate must preserve the user-timezone wall-clock digits (no real timezone shift)');
 
 		// the SyncTask::Check() call that originally crashed on this (reproduces the forum bug if unfixed)
 		$this->assertTrue($message->Check(true), 'SyncTask::Check() must not TypeError/fail on a GetMessage() result');
+	}
+
+	/**
+	 * Regression test for a second, distinct bug reported in the same forum thread
+	 * (help.egroupware.org/t/.../80180, posts #10-12, found only AFTER the TypeError above
+	 * was already fixed): z-push's SyncTask->Check() (synctask.php:165-169) ALWAYS truncates
+	 * duedate (and startdate, if needed) to a day boundary via
+	 * Utils::getDayStartOfTimestamp() - a plain UTC floor ($ts - $ts % 86400) of whatever int
+	 * it is given, since ActiveSync Tasks carry no time-of-day on the wire, only a date.
+	 * GetMessage() used to hand it Api\DateTime::user2server($v, 'ts') - a REAL timezone
+	 * conversion from the user's timezone into server_timezone - which, whenever the two
+	 * offsets differ (eg. server_timezone=UTC, user tz=Europe/Berlin/+1h in November), pushes
+	 * any due time before 01:00 local into the PREVIOUS day in UTC terms; the day-floor then
+	 * lands one day too early, and the device displays the task a day before its real due
+	 * date. Fixed by using $v->format('ts') directly (keeps the user-timezone wall-clock
+	 * digits, no real shift) for startdate/enddate instead of user2server().
+	 */
+	public function testGetMessageDueBeforeOneAmLocalDoesNotShiftADayEarly()
+	{
+		$this->setTimezones('UTC', 'Europe/Berlin');
+
+		// 00:15 CET (Europe/Berlin is UTC+1 in November, well outside DST) - the exact window
+		// (local due/start times before 01:00) the forum report pinpointed
+		$due = Api\DateTime::to('2026-11-18 00:15:00', 'ts');
+
+		$info = array(
+			'info_type' => 'task',
+			'info_subject' => 'ZpushTaskTest '.$this->name(),
+			'info_enddate' => $due,
+		);
+		$this->info_ids[] = $info_id = $this->bo->write($info, true, true, true, true);
+
+		$message = $this->zpush->GetMessage('folder', $info_id, $this->makeContentParameters());
+
+		$this->assertTrue($message->Check(true), 'SyncTask::Check() must not fail');
+		$this->assertSame('2026-11-18', gmdate('Y-m-d', $message->duedate),
+			"a task due at 00:15 local time must not be shifted to the previous day by SyncTask::Check()'s day-floor");
 	}
 
 	/**

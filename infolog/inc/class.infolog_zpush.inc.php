@@ -257,10 +257,14 @@ class infolog_zpush implements activesync_plugin_write
 		// this crashes on every task export with a due date. calendar_zpush.inc.php's identical
 		// SyncAppointment pattern escapes this only because SyncAppointment->Check() gates its
 		// one bit of date arithmetic behind flags===SYNC_NEWMESSAGE, which never applies on
-		// export - SyncTask->Check() has no such gate. So the info_startdate/info_enddate/
-		// info_datecompleted cases below convert via the identical Api\DateTime::user2server($v,
-		// 'ts') call Encode() would have made, keeping the wire value unchanged while making
-		// Check() see the same ints it always expected.
+		// export - SyncTask->Check() has no such gate. So all three date cases below convert
+		// eagerly to raw ints before assigning onto SyncTask, so Check() never sees a DateTime
+		// object. info_startdate/info_enddate use $v->format('ts') (object's own, user-timezone
+		// digits, no real tz conversion), NOT user2server($v, 'ts') - see the comment on the
+		// 'info_startdate' case below for why: a later, separate forum report (same thread,
+		// posts #10-12) showed user2server()'s real timezone shift can push the day-floor
+		// SyncTask->Check() always applies onto the wrong calendar day. info_datecompleted isn't
+		// day-floored by Check(), so it keeps the real-instant user2server() conversion.
 		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'object')))
 		{
 			error_log(__METHOD__."('$folderid',$id,...) Folder wrong (type=$type, account=$account) or contact not existing (read($id)=".array2string($infolog).")! returning false");
@@ -307,16 +311,39 @@ class infolog_zpush implements activesync_plugin_write
 					break;
 
 				case 'info_startdate':
+					// startdate/enddate (--> SyncTask startdate/duedate) are ALWAYS truncated to a
+					// day boundary by z-push's own SyncTask->Check() (synctask.php:165-169,
+					// unconditional - Tasks have no time-of-day on the wire, only a date), via
+					// Utils::getDayStartOfTimestamp(): $ts - $ts % 86400, ie. a plain UTC-day floor
+					// of whatever int we hand it - so the calendar day must already be right in
+					// that same literal-digit sense. Api\DateTime::user2server($v, 'ts') does a
+					// REAL timezone conversion (user tz -> server tz) before encoding, which can
+					// shift the wall-clock across midnight whenever the two timezones' offsets
+					// differ (eg. server_timezone=UTC, user tz=CET: a 00:xx CET due time becomes
+					// 23:xx UTC the PREVIOUS day) - the day-floor then lands on the wrong day
+					// (reported live: help.egroupware.org thread 80180, posts #10-12, tasks due
+					// before 01:00 local showing a day early on the device). format('ts') without
+					// going through user2server()'s setServer() step keeps the object's OWN current
+					// (user-timezone) wall-clock digits, matching calendar_zpush.inc.php's identical
+					// "all-day-events ... with time=00:00 in user- and not server-timezone" approach
+					// for its own day-only (whole-day) dates (class.calendar_bo.inc.php:1259-1262).
+
 					// only export startdate, if <= enddate, as eg. Outlook crashes, if startdate > enddate
 					if (!empty($infolog['info_startdate']) && (empty($infolog['info_enddate']) ||
 						$infolog['info_startdate'] <= $infolog['info_enddate']))
 					{
-						$message->$key = Api\DateTime::user2server($infolog[$attr], 'ts');
+						$message->$key = $infolog[$attr]->format('ts');
 					}
 					break;
 
 				case 'info_enddate':
+					// see 'info_startdate' case above for why format('ts') instead of user2server()
+					if (!empty($infolog[$attr])) $message->$key = $infolog[$attr]->format('ts');
+					break;
+
 				case 'info_datecompleted':
+					// NOT day-floored by z-push (no equivalent Check() truncation), so the real
+					// completion instant is wanted here, unlike startdate/enddate above.
 					if (!empty($infolog[$attr])) $message->$key = Api\DateTime::user2server($infolog[$attr], 'ts');
 					break;
 
