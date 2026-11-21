@@ -76,6 +76,15 @@ class SqlEmptyPasswordTest extends LoggedInTest
 	}
 
 	/**
+	 * Write a literal value into account_pwd directly, bypassing save()'s hashing - the only way
+	 * a non-empty, non-hash value (eg. whitespace) ends up stored
+	 */
+	protected function setStoredPassword(string $lid, string $value) : void
+	{
+		$GLOBALS['egw']->db->update('egw_accounts', array('account_pwd' => $value), array('account_lid' => $lid), __LINE__, __FILE__);
+	}
+
+	/**
 	 * An account with no local password refuses an empty password on every passwd_type
 	 */
 	public function testEmptyStoredPasswordRefusesEmptyPassword()
@@ -88,6 +97,26 @@ class SqlEmptyPasswordTest extends LoggedInTest
 		$this->assertFalse($backend->authenticate($lid, '', 'md5'), 'an empty stored password authenticated an empty md5 password');
 		$this->assertFalse($backend->authenticate($lid, '', ''), 'an empty stored password authenticated an empty password');
 		$this->assertFalse($backend->authenticate($lid, '', 'text'), 'an empty stored password authenticated on the text branch');
+	}
+
+	/**
+	 * An account whose stored password is whitespace-only (never produced by the admin dialog,
+	 * which hashes any typed password - only reachable by writing account_pwd directly) refuses a
+	 * whitespace-only posted password too, not just a strictly empty one
+	 */
+	public function testWhitespaceStoredPasswordRefusesWhitespacePassword()
+	{
+		$lid = 'wspwd'.uniqid();
+		$this->createAccount($lid, '');
+		$this->setStoredPassword($lid, ' ');
+		$this->assertSame(' ', $this->storedPassword($lid), 'the account was not stored with a whitespace-only password');
+		$backend = new Sql();
+		$this->assertFalse($backend->authenticate($lid, ' ', 'md5'), 'a single-space stored password authenticated a single-space md5 password');
+
+		$lid2 = 'wspwd'.uniqid();
+		$this->createAccount($lid2, '');
+		$this->setStoredPassword($lid2, "\t");
+		$this->assertFalse($backend->authenticate($lid2, "\t", 'md5'), 'a tab-only stored password authenticated a tab-only md5 password');
 	}
 
 	/**

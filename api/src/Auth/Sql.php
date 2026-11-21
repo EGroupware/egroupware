@@ -101,8 +101,8 @@ class Sql implements Backend
 		/* Auth via crypted password. NOTE: mail needs cleartext password to authenticate against mailserver! */
 		else
 		{
-			// an empty password is never a valid credential, same as the text branch above
-			if (!isset($passwd) || $passwd === '')
+			// a blank (empty or whitespace-only) password is never a valid credential, same as the text branch above
+			if (!isset($passwd) || trim((string)$passwd) === '')
 			{
 				return false;
 			}
