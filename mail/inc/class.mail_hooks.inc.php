@@ -982,7 +982,9 @@ class mail_hooks
 		$sources = ['blob:'];
 		foreach (Mail\Account::search(true, 'params') as $params)
 		{
-			if (($params['acc_imap_type'] ?? null) !== Mail\Imap\Stalwart::class ||
+			// Stalwart class or a subclass of it, eg. hosting's managementserver_stalwart: the browser talks to Stalwart directly
+			// and is blocked by this CSP otherwise, without any error on the server ("Failed to fetch" in the mail UI)
+			if (!is_a($params['acc_imap_type'] ?? '', Mail\Imap\Stalwart::class, true) ||
 				empty($params['acc_imap_host']) ||
 				in_array($params['acc_imap_host'], ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true))
 			{
