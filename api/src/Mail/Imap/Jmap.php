@@ -1393,7 +1393,6 @@ class Jmap extends Mail\Imap
 	 *
 	 * @return void
 	 * @throws Api\Exception
-	 * @throws Api\Exception\NotFound
 	 * @throws \JsonException
 	 */
 	public static function pushCallback()
@@ -1401,7 +1400,12 @@ class Jmap extends Mail\Imap
 		$data = json_decode(file_get_contents('php://input'), true, 10, JSON_THROW_ON_ERROR);
 		if (!($client_data = self::jmapClientId($_GET['acc_id'], $_GET['account_id'])))
 		{
-			throw new Api\Exception\NotFound('deviceClientId not found!');
+			// unknown client (its cache entry is gone): there is no session to verify and nothing to unsubscribe with, so tell
+			// Stalwart the callback is gone (410), instead of an exception, which ended in an error page for a request without
+			// session (and a fatal TypeError in Auth::check_password_change() without user) on every push of a dead subscription
+			error_log(__METHOD__."() unknown push client for acc_id=".(int)$_GET['acc_id'].', account_id='.(int)$_GET['account_id'].', answering 410 Gone');
+			http_response_code(410);
+			return;
 		}
 		if (empty($client_data['sessionid']))
 		{
