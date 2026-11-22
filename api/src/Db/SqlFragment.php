@@ -147,10 +147,15 @@ class SqlFragment implements \Stringable, \ArrayAccess
 	 *
 	 * @param Db $db
 	 * @param string $column (table.)column name, see compare()
-	 * @param string $value value to match literally (case-insensitively)
+	 * @param ?string $value value to match literally (case-insensitively), null matches nothing: as the "LIKE NULL" this
+	 *  replaced, eg. a lookup of the username of a request without session must come back empty, not throw
 	 */
-	public static function caseInsensitiveEquals(Db $db, string $column, string $value) : self
+	public static function caseInsensitiveEquals(Db $db, string $column, ?string $value) : self
 	{
+		if ($value === null)
+		{
+			return new self('0=1');
+		}
 		return new self($column.' '.$db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.
 			$db->quote(Db::escapeLikeValue($value)).' ESCAPE '.$db->quote('\\'));
 	}
