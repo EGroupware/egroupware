@@ -1872,6 +1872,13 @@ abstract class Framework extends Framework\Extra
 			error_log(__METHOD__.'('.substr(json_encode([$app, $name]), 0, 200).', ...) is not a preference, ignored');
 			return;
 		}
+		// preferences only ever meant to be set server-side (e.g. VFS mounts set via Vfs::mount()'s
+		// own persistent-mount handling), never from client-side JS
+		if ($app === 'common' && $name === 'vfs_fstab')
+		{
+			error_log(__METHOD__.'('.substr(json_encode([$app, $name]), 0, 200).', ...) is not settable via ajax, ignored');
+			return;
+		}
 		$GLOBALS['egw']->preferences->read_repository();
 		if (!is_array($value) && (string)$value === '')
 		{
