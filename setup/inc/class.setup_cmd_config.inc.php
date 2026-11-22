@@ -179,7 +179,7 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'acc_sieve_host'),
 			'acc_sieve_port',
 			'acc_sieve_enabled',
-			array('name' => 'acc_sieve_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
+			array('name' => 'acc_sieve_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls',6,'jmap',6,'jmap-https',4,'jmap-http')),
 		),
 		'--smtp' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
@@ -187,7 +187,7 @@ class setup_cmd_config extends setup_cmd
 		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[auth session user/pw],[no|starttls|ssl|tls],[user editable],[further identities]
 			'acc_smtp_host','acc_smtp_port','acc_smtp_username','acc_smtp_passwd','acc_smtp_auth_session',
-			array('name' => 'acc_smtp_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
+			array('name' => 'acc_smtp_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls',6,'jmap',6,'jmap-https',4,'jmap-http')),
 			'acc_user_editable','acc_further_identities',
 		),
 		'--account-auth' => array(
