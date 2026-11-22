@@ -322,6 +322,16 @@ function gd_image_load($file,$maxw,$maxh)
 		{
 			return $image;
 		}
+		if (in_array($image_type, array('png', 'jpeg', 'gif', 'bmp')) && !gd_memory_available($file))
+		{
+			// decoding this image would exceed memory_limit: PHP's "Allowed memory size
+			// exhausted" fatal error is NOT a catchable \Throwable (unlike most other fatals
+			// since PHP 7), so gd_image_thumbnail()'s try/catch can never stop it - found live
+			// 2026-11-22 (www.gymnasium-geretsried.de, imagecreatefromjpeg() on a large photo).
+			// Skipping the decode is the only way to avoid crashing the whole php-fpm worker.
+			error_log(__FUNCTION__."('$file') skipped, image too large to decode within memory_limit");
+			return false;
+		}
 		switch ($image_type)
 		{
 			case 'png':
@@ -397,6 +407,57 @@ function gd_image_load($file,$maxw,$maxh)
 		return $thumb;
 	}
 	return false;
+}
+
+/**
+ * Estimate whether GD has enough memory left to decode $file without hitting memory_limit
+ *
+ * @param string $file
+ * @return bool true if there's (probably) enough memory, or dimensions couldn't be determined
+ */
+function gd_memory_available($file)
+{
+	if (!($info = @getimagesize($file)))
+	{
+		return true;	// let gd_image_load() itself fail/handle it
+	}
+	[$width, $height] = $info;
+	$bits = $info['bits'] ?? 8;
+	$channels = $info['channels'] ?? 4;
+
+	// formula from the getimagesize() manual page: GD decodes into an uncompressed truecolor
+	// buffer, plus some decoder overhead (64k) and a safety margin (tweak factor 1.65)
+	$needed = ($width * $height * ($bits / 8) * $channels + 65536) * 1.65;
+
+	$limit = gd_parse_memory_limit(ini_get('memory_limit'));
+	if ($limit <= 0)	// -1 (or 0): no limit configured
+	{
+		return true;
+	}
+	return memory_get_usage(true) + $needed < $limit;
+}
+
+/**
+ * Parse a php.ini memory_limit value (eg. "256M") into bytes
+ *
+ * @param string $limit
+ * @return int bytes, or -1 for "no limit"
+ */
+function gd_parse_memory_limit($limit)
+{
+	$limit = trim($limit);
+	if ($limit === '' || (int)$limit == -1)
+	{
+		return -1;
+	}
+	$bytes = (int)$limit;
+	switch (strtoupper(substr($limit, -1)))
+	{
+		case 'G': $bytes *= 1024;
+		case 'M': $bytes *= 1024;
+		case 'K': $bytes *= 1024;
+	}
+	return $bytes;
 }
 
 /**
