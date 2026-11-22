@@ -568,6 +568,13 @@ class SharingBase extends LoggedInTest
 	 */
 	public function createShare($path, $mode, $extra = array())
 	{
+		// a trailing slash makes Vfs::basename($share_path) empty, which collapses
+		// Sharing::setup_share()'s share_root to the parent "shares" directory itself
+		if ($path !== '/')
+		{
+			$path = rtrim($path, '/');
+		}
+
 		// Every test turns its share into a link, and share2link() resolves the host through
 		// Http::host(true), which prefers a configured hostname over HTTP_HOST - so on any
 		// install that has one the link points at that install instead of the webserver the
