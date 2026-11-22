@@ -1027,6 +1027,93 @@ class StreamWrapper extends Base implements StreamWrapperIface
 	}
 
 	/**
+	 * Drop vfs_fstab entries asserting a user other than its own owner, unless a current share
+	 * backs them up
+	 *
+	 * A regular mount is of the owner's own files. The one legitimate exception is an accepted
+	 * share (filemanager.Sharing.Ui::handle_share_received()), which mounts the share owner's
+	 * files read through Vfs\Sharing\StreamWrapper::share2url() - itself fixed to the share's own
+	 * root, so it can never be used to reach outside what was actually shared. Preferences are
+	 * otherwise unvalidated user input (any logged in user can set their own vfs_fstab preference
+	 * to whatever they like, eg. via Framework::ajax_set_preference(), which itself already
+	 * refuses to set this particular one - this is the defence in depth for whatever else might
+	 * still write one), so anything else asserting another user is not trusted for ACL purposes.
+	 *
+	 * Result is cached in the session, keyed by a hash of the raw preference, to avoid hitting
+	 * the database again on every request when nothing has changed.
+	 *
+	 * @param array $fstab raw vfs_fstab preference value
+	 * @param int $owner account_id the preference belongs to
+	 * @return array filtered fstab, safe to merge into self::$fstab
+	 */
+	protected static function validatedFstab(array $fstab, $owner)
+	{
+		$hash = md5(json_encode($fstab));
+		if (($cache = $_SESSION[Api\Session::EGW_INFO_CACHE]['vfs_fstab_validated'][$owner] ?? null) &&
+			$cache['hash'] === $hash)
+		{
+			return $cache['valid'];
+		}
+
+		$owner_lid = Api\Accounts::id2name($owner);
+		$valid = array();
+		foreach ($fstab as $path => $url)
+		{
+			$asserted = is_string($url) ? Vfs::parse_url($url, PHP_URL_USER) : null;
+			if (empty($asserted) || strcasecmp($asserted, (string)$owner_lid) === 0 ||
+				self::isAssertedShareMount($asserted, $url))
+			{
+				$valid[$path] = $url;
+			}
+			else
+			{
+				error_log(__METHOD__."() vfs_fstab entry '$path' => '$url' of user #$owner asserts a different user '$asserted', but no matching share exists - ignored");
+			}
+		}
+
+		$_SESSION[Api\Session::EGW_INFO_CACHE]['vfs_fstab_validated'][$owner] = array('hash' => $hash, 'valid' => $valid);
+
+		return $valid;
+	}
+
+	/**
+	 * Check if $url is exactly what an accepted, still current share of $asserted_lid mounts
+	 *
+	 * Deliberately compares against the share owner's account_lid via Accounts::id2name() - the
+	 * same static call Vfs\Sharing\StreamWrapper::share2url() itself uses to build the URL in the
+	 * first place - rather than resolving $asserted_lid to an account_id via Accounts::name2id().
+	 * The latter is an instance method through Accounts::getInstance()'s singleton, which has a
+	 * documented history of a stale/uninitialised backend across repeated user switches within a
+	 * single CLI (eg. PHPUnit) process; id2name() doesn't have that failure mode here and keeps
+	 * this check symmetric with how the URL was produced.
+	 *
+	 * @param string $asserted_lid account_lid the URL asserts
+	 * @param string $url raw vfs_fstab target URL
+	 * @return bool
+	 */
+	protected static function isAssertedShareMount($asserted_lid, $url)
+	{
+		$path = rtrim((string)Vfs::parse_url($url, PHP_URL_PATH), '/');
+		if ((string)$asserted_lid === '' || $path === '')
+		{
+			return false;
+		}
+
+		$db = $GLOBALS['egw']->db;
+		foreach($db->select(Api\Sharing::TABLE, array('share_owner', 'share_path'), array(
+			Api\Db\SqlFragment::raw('(share_expires IS NULL OR share_expires > '.$db->quote(time(), 'date').')'),
+		), __LINE__, __FILE__, false, '', Api\Db::API_APPNAME) as $row)
+		{
+			if (strcasecmp((string)Api\Accounts::id2name($row['share_owner']), $asserted_lid) === 0 &&
+				rtrim((string)Vfs::parse_url($row['share_path'], PHP_URL_PATH), '/') === $path)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Init our static properties and register this wrapper
 	 *
 	 * Must be called when Vfs::$user is changed!
@@ -1059,7 +1146,7 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		}
 		if (!empty($vfs_fstab) && is_array($vfs_fstab))
 		{
-			self::$fstab += $vfs_fstab;
+			self::$fstab += self::validatedFstab($vfs_fstab, Vfs::$user);
 		}
 
 		// set default context for our schema ('vfs') with current user

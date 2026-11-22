@@ -186,4 +186,18 @@ class AjaxSetPreferenceTest extends LoggedInTest
 
 		$this->assertSame(['v' => 1], $this->stored($this->ownId())['user'][$app][$name] ?? null, 'the preference was not stored');
 	}
+
+	/**
+	 * common.vfs_fstab is only ever meant to be set server-side (eg. Vfs::mount()'s own
+	 * persistent-mount handling, when a share is accepted) - never via this ajax entry point
+	 */
+	public function testRefusesVfsFstab() : void
+	{
+		$before = $this->stored($this->ownId());
+		// (not an exception, which the user would be shown as an error: same contract as
+		// testIgnoresWhatCanNotBeAPreference() for other things the client is not meant to set)
+		Framework::ajax_set_preference('common', 'vfs_fstab', ['/home/x/mnt' => 'vfs://someone-else@default/home/someone-else']);
+
+		$this->assertSame($before, $this->stored($this->ownId()), 'common.vfs_fstab was stored via ajax_set_preference');
+	}
 }
