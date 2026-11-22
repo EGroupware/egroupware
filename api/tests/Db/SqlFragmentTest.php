@@ -294,6 +294,26 @@ class SqlFragmentTest extends TestCase
 		SqlFragment::compare(self::$db, 't_modifier', '>=', ['5 OR 1=1-- ']);
 	}
 
+	/**
+	 * A null value (eg. the username of a request without session, Auth\Sql::getLastPwdChange() from the exception
+	 * handler of a push callback) must not throw a TypeError: it matches nothing, like the "LIKE NULL" it replaced
+	 */
+	public function testCaseInsensitiveEqualsWithNullMatchesNothing()
+	{
+		$fragment = SqlFragment::caseInsensitiveEquals(self::$db, 'account_lid', null);
+
+		$this->assertSame('0=1', (string)$fragment);
+		$this->assertStringContainsString('WHERE 0=1', self::$db->select('egw_test', '*', [$fragment], false, false));
+	}
+
+	public function testCaseInsensitiveEqualsEscapesLikeWildcards()
+	{
+		$sql = (string)SqlFragment::caseInsensitiveEquals(self::$db, 'account_lid', 'a%_b');
+
+		$this->assertStringNotContainsString('a%_b', $sql, 'wildcards of the value must be escaped, not act as a pattern');
+		$this->assertStringContainsString('ESCAPE', $sql);
+	}
+
 	public function testRangeWithBothBoundsReturnsTwoFragments()
 	{
 		$fragments = SqlFragment::range(self::$db, 't_modifier', 2, 10);
