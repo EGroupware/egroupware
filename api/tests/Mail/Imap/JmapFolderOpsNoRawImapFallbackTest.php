@@ -273,6 +273,48 @@ class JmapFolderOpsNoRawImapFallbackTest extends \EGroupware\Api\AppTest
 		$this->assertSame(0, $status['highestmodseq']);
 	}
 
+	/**
+	 * Regression test (live crash, 2026-11-21): Api\Mail\Imap::examineMailbox() - inherited
+	 * un-overridden, called eg. from Api\Mail::getSortedList() for every ActiveSync mail sync
+	 * (mail_zpush) - always requests STATUS_FLAGS|STATUS_PERMFLAGS and then unconditionally does
+	 * implode('', $status['flags']), which TypeErrors if status() doesn't return those two keys.
+	 * JMAP keywords are arbitrary strings with no server-side restriction, so this is reported as
+	 * always supported via Horde's own "\*" permanent-flag wildcard.
+	 */
+	public function testStatusWithFlagsRequestedIncludesFlagsAndPermflags()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
+
+		$status = $jmap->status('INBOX', \Horde_Imap_Client::STATUS_ALL |
+			\Horde_Imap_Client::STATUS_FLAGS | \Horde_Imap_Client::STATUS_PERMFLAGS);
+
+		$this->assertSame([], $status['flags']);
+		$this->assertSame(['\\*'], $status['permflags']);
+	}
+
+	public function testStatusWithoutFlagsRequestedOmitsFlagsAndPermflags()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
+
+		$status = $jmap->status('INBOX');
+
+		$this->assertArrayNotHasKey('flags', $status);
+		$this->assertArrayNotHasKey('permflags', $status);
+	}
+
+	/**
+	 * End-to-end regression test for the live crash itself: examineMailbox() (Api\Mail\Imap,
+	 * not overridden here) must not TypeError for a JMAP account.
+	 */
+	public function testExamineMailboxDoesNotTypeErrorOnMissingFlags()
+	{
+		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
+
+		$status = $jmap->examineMailbox('INBOX');
+
+		$this->assertSame(42, $status['MESSAGES']);
+	}
+
 	public function testStatusThrowsForMultipleMailboxesWithoutRawImapFallback()
 	{
 		$jmap = $this->jmapWithClient($this->fakeClient($this->mailboxes()));
