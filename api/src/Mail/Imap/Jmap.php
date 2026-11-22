@@ -1052,6 +1052,18 @@ class Jmap extends Mail\Imap
 		{
 			$ret['highestmodseq'] = 0;
 		}
+		if ($flags & (\Horde_Imap_Client::STATUS_FLAGS|\Horde_Imap_Client::STATUS_PERMFLAGS))
+		{
+			// JMAP keywords are arbitrary strings, no server-side restriction (unlike classic
+			// IMAP, which needs a dedicated extension for custom keywords) - mirror that via
+			// Horde's own "\*" permanent-flag wildcard, so a generic caller going through
+			// Api\Mail\Imap::examineMailbox() (eg. Api\Mail::getSortedList(), called from
+			// mail_zpush for ActiveSync) sees custom-keyword support as always available,
+			// instead of missing these two keys entirely (examineMailbox() unconditionally
+			// does implode('', $status['flags']), which TypeErrors on a missing/null value).
+			$ret['flags'] = [];
+			$ret['permflags'] = ['\\*'];
+		}
 		return $ret;
 	}
 
