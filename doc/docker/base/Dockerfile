@@ -28,23 +28,39 @@ ENV PHP_VERSION=$PHP_VERSION
 RUN sed -i 's/^www-data:x:82:82:/www-data:x:33:33:/' /etc/passwd \
 	&& sed -i 's/^www-data:x:82:/www-data:x:33:/' /etc/group
 
+# PIE (PHP Installer for Extensions, https://github.com/php/pie) replaces pecl: the official php images no
+# longer contain pecl/pear from PHP 8.6 on. It is only used while building this image and removed again.
+COPY --from=ghcr.io/php/pie:1.5.5-bin /pie /usr/bin/pie
+
 RUN set -e \
 	# apk upgrade: security fixes of the Alpine packages since the official php image was built (build.sh checks for upgradable packages, so a rebuild actually removes them)
 	&& apk upgrade --no-cache \
+	# git, unzip and libtool are needed by PIE (download of the sources, libtoolize)
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		zlib-dev \
+		git \
+		unzip \
+		libtool \
 	&& docker-php-ext-install -j$(nproc) mysqli pdo_mysql \
-	# pecl.php.net's REST metadata is intermittently flaky ("does not have REST info xml
-	# available"), unrelated to this Dockerfile - retry rather than fail the whole build
-	&& (for i in 1 2 3 4 5; do pecl install igbinary && exit 0; sleep 5; done; exit 1) \
-	&& (for i in 1 2 3 4 5; do pecl install redis && exit 0; sleep 5; done; exit 1) \
-	&& apk add --no-cache --virtual .build-deps2 libmemcached-dev cyrus-sasl-dev \
-	&& apk add --no-cache libmemcached \
-	&& (for i in 1 2 3 4 5; do pecl install memcached && exit 0; sleep 5; done; exit 1) \
-	&& docker-php-ext-enable igbinary redis memcached \
+	# PHP 8.6 (so far only a development snapshot): igbinary 3.2.17RC1 and phpredis 6.3.0 do not compile yet
+	# (zval_dtor() removed, PG(unserialize_callback_func) is a zend_string now), so the extensions are skipped there
+	# until upstream supports it, the image then only has mysqli and pdo_mysql
+	# igbinary is pinned to 3.2.17RC1, the only version with PIE support (pecl installed 3.2.16), PIE only installs stable versions by default
+	# packagist/GitHub are intermittently flaky (pecl.php.net was too), unrelated to this Dockerfile - retry rather than fail the whole build
+	&& case "$PHP_VERSION" in \
+		8.[6-9]*|9.*) echo "PHP $PHP_VERSION: igbinary, redis and memcached are not installed (no support yet)" ;; \
+		*) apk add --no-cache --virtual .build-deps2 libmemcached-dev cyrus-sasl-dev \
+			&& apk add --no-cache libmemcached \
+			&& for ext in igbinary/igbinary:3.2.17RC1 phpredis/phpredis php-memcached/php-memcached; do \
+				ok=; for i in 1 2 3 4 5; do pie install $ext && ok=1 && break; sleep 5; done; [ -n "$ok" ] || exit 1; \
+			done ;; \
+	esac \
+	&& rm -rf /usr/bin/pie /root/.pie /root/.cache /root/.config \
 	&& docker-php-source delete \
-	&& apk del .build-deps .build-deps2 \
+	# .build-deps2 only exists if the extensions were built
+	&& apk del .build-deps \
+	&& (apk del .build-deps2 2>/dev/null || true) \
 	# use production php.ini as starting point, like Debian/ondrej's package does
 	&& cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
 	# activate OpenSSL's "legacy" provider (present on disk, inactive by default since the

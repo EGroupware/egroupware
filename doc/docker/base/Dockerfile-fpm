@@ -16,6 +16,9 @@
 ARG BASE_IMAGE=quay.io/egroupware/php:base-latest
 
 FROM ${BASE_IMAGE}
+
+# PIE (PHP Installer for Extensions) replaces pecl, which the official php images no longer contain from PHP 8.6 on
+COPY --from=ghcr.io/php/pie:1.5.5-bin /pie /usr/bin/pie
 LABEL maintainer="rb@egroupware.org"
 
 ARG PHP_VERSION=8.5
@@ -35,7 +38,7 @@ RUN set -e \
 		openldap-dev \
 		samba-dev \
 	&& apk add --no-cache \
-		freetype libjpeg-turbo libpng libwebp \
+		freetype libjpeg-turbo libpng libwebp libwebpdemux libwebpmux \
 		libxslt \
 		libbz2 \
 		libzip \
@@ -46,13 +49,24 @@ RUN set -e \
 		ca-certificates \
 	&& docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 	&& docker-php-ext-install -j$(nproc) gd xsl bz2 zip tidy gmp bcmath ldap \
-	# pecl.php.net's REST metadata is intermittently flaky ("does not have REST info xml
-	# available"), unrelated to this Dockerfile - retry rather than fail the whole build
-	&& (for i in 1 2 3 4 5; do printf '\n' | pecl install apcu && exit 0; sleep 5; done; exit 1) \
-	&& (for i in 1 2 3 4 5; do pecl install smbclient && exit 0; sleep 5; done; exit 1) \
-	&& docker-php-ext-enable apcu smbclient \
+	# PHP 8.6 (final release, ZTS): no stable apcu/xdebug for it yet in PIE, smbclient is not verified, so they are skipped there
+	# apcu is installed with PIE (replacement of pecl, not part of the official php images from 8.6 on), PIE is only used while building
+	# smbclient is not on Packagist (PIE can not install it), so the latest stable release is downloaded from pecl.php.net and built with phpize
+	# packagist and pecl.php.net are intermittently flaky, unrelated to this Dockerfile - retry rather than fail the whole build
+	&& case "$PHP_VERSION" in \
+		8.[6-9]*|9.*) echo "PHP $PHP_VERSION: apcu and smbclient are not installed (no support yet)" ;; \
+		*) apk add --no-cache --virtual .build-deps2 git unzip libtool \
+			&& ok=; for i in 1 2 3 4 5; do pie install apcu/apcu && ok=1 && break; sleep 5; done; [ -n "$ok" ] || exit 1 \
+			&& ok=; for i in 1 2 3 4 5; do wget -q -O /tmp/smbclient.tgz https://pecl.php.net/get/smbclient && ok=1 && break; sleep 5; done; [ -n "$ok" ] || exit 1 \
+			&& mkdir /tmp/smbclient && tar -xzf /tmp/smbclient.tgz -C /tmp/smbclient --strip-components=1 \
+			&& (cd /tmp/smbclient && phpize && ./configure && make -j$(nproc) && make install) \
+			&& rm -rf /tmp/smbclient /tmp/smbclient.tgz \
+			&& docker-php-ext-enable smbclient ;; \
+	esac \
+	&& rm -rf /usr/bin/pie /root/.pie /root/.cache /root/.config \
 	&& docker-php-source delete \
 	&& apk del .build-deps \
+	&& (apk del .build-deps2 2>/dev/null || true) \
 	# fpm pool settings, generic production baseline - downstream images may override
 	&& sed -e 's/^;\?listen \?=.*/listen = 9000/g' \
 		-e '/allowed_clients/d' \
@@ -99,7 +113,7 @@ RUN set -e \
 		-e 's|^mysqli.default_socket \?=.*|mysqli.default_socket = /var/run/mysqld/mysqld.sock|g' \
 		-i /usr/local/etc/php/php.ini \
 	# create a 20-apcu.ini conf.d entry under the path entrypoint.sh expects to find/patch
-	&& mv /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini /usr/local/etc/php/conf.d/20-apcu.ini \
+	&& ( [ ! -f /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini ] || mv /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini /usr/local/etc/php/conf.d/20-apcu.ini ) \
 	# entrypoint.sh (shared with the CE/development images) hardcodes Debian-style
 	# /etc/php/$PHP_VERSION/{fpm,cli}/... paths - symlink them onto the real,
 	# single shared php.ini/pool.d of the official Alpine image, so it runs
