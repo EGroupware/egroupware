@@ -798,6 +798,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// wrap in try and catch in case videoconference throws exceptions. e.g. BBB server exceptions
 			try {
 				$link = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
+					'title' => $event['title'],
 					'name' => Api\Accounts::username($user),
 					'email' => Api\Accounts::id2name($user, 'account_email'),
 					'avatar' => (string)$avatar,
