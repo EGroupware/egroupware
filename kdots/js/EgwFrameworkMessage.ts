@@ -77,6 +77,8 @@ export class EgwFrameworkMessage extends LitElement
 	private static TYPE_MAP = {info: "success", warning: "warning", error: "danger"};
 
 	private __alert: SlAlert;
+	// Pending toast() while this message is shown as a toast, null otherwise
+	private __toast: Promise<void> = null;
 
 	// Handle some HTML in the message, like links & newlines
 	// You can create & toast the egw-message directly for more flexibility
@@ -153,12 +155,23 @@ export class EgwFrameworkMessage extends LitElement
 	 */
 	public toast(): Promise<void>
 	{
+		// Already shown as a toast, eg. the framework returned this still showing message for a
+		// repeated text and the caller toasts it again: sl-alert.toast() would register a second
+		// sl-after-hide handler, and the second one throws removing the alert from the toast stack.
+		if(this.__toast)
+		{
+			return this.__toast;
+		}
 		this.__alert = this.alert;
 		this.updateComplete.then(() =>
 		{
 			this.remove();
 		})
-		return this.alert.toast();
+		this.__toast = this.alert.toast().finally(() =>
+		{
+			this.__toast = null;
+		});
+		return this.__toast;
 	}
 
 	/**
