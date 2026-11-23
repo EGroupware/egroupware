@@ -588,6 +588,85 @@ class MergeTest extends LoggedInTest
 	}
 
 	/**
+	 * Custom field names may contain anything but $ / : { } < > " & ~ (see Customfields::NAME_INVALID_CHARS),
+	 * eg. dots, umlauts, parentheses or commas. NELF, NENVLF, IF and LETTERPREFIXCUSTOM accept such
+	 * names like any other placeholder.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('fieldNameProvider')]
+	public function testCommandsAcceptAnyValidFieldName(string $name)
+	{
+		$errors = [];
+		$this->merge->setReplacements(['$$' . $name . '$$' => 'ja', '$$n_family$$' => 'Miller']);
+
+		$result = $this->merge->merge_string("A{{NELF $name}}B", [1], $errors, "text/plain");
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals("A\njaB", $result);
+
+		$result = $this->merge->merge_string("A{{NENVLF $name}}B", [1], $errors, "text/plain");
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals("A\nB", $result);
+
+		$result = $this->merge->merge_string("{{IF $name~ja~Yes~No}}", [1], $errors, "text/plain");
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals('Yes', $result);
+
+		if (strpos($name, ' ') === false)	// LETTERPREFIXCUSTOM takes a space-separated list of names
+		{
+			$result = $this->merge->merge_string("{{LETTERPREFIXCUSTOM $name n_family}}", [1], $errors, "text/plain");
+			$this->assertEmpty($errors, "Errors when merging");
+			$this->assertEquals('ja Miller', $result);
+		}
+	}
+
+	public static function fieldNameProvider() : array
+	{
+		return [
+			'dot and spaces' => ['#Mittagstisch Schulhalbjahr ab Kl. 5'],
+			'umlaut'         => ['#Größe'],
+			'cyrillic'       => ['#Размер'],
+			'cjk'            => ['#尺寸'],
+			'emoji'          => ['#Mittag🍽'],
+			'parentheses'    => ['#Länge(cm)'],
+			'comma'          => ['#a,b'],
+			'with prefix'    => ['contact/#Kl.5'],
+			'filemanager trailing slash' => ['#multiple_files/'],
+			'filemanager subdirectory'   => ['#docs/contracts/'],
+		];
+	}
+
+	/**
+	 * A filemanager field's name may end in "/" (multiple files), its placeholder {{#name/}} is
+	 * replaced like any other, not taken as a sub-placeholder of a field "name".
+	 */
+	public function testPlaceholderOfFieldNameWithTrailingSlash()
+	{
+		$errors = [];
+		$this->merge->setReplacements(['$$#multiple_files/$$' => 'a.pdf, b.pdf']);
+
+		$result = $this->merge->merge_string('A{{#multiple_files/}}B', [1], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals('Aa.pdf, b.pdfB', $result);
+	}
+
+	/**
+	 * Number format placeholder {{field:decimals}} of a numeric field whose name contains regex
+	 * special characters, eg. parentheses: the name is matched literally.
+	 */
+	public function testNumberFormatOfFieldNameWithRegexCharacters()
+	{
+		$errors = [];
+		(fn($fields) => $this->numeric_fields = $fields)->call($this->merge, ['#Länge(cm)', '#Kl. 5']);
+		$this->merge->setReplacements(['$$#Länge(cm)$$' => 1234.5, '$$#Kl. 5$$' => 2.25, '$$#Kl:5$$' => 'other']);
+
+		$result = $this->merge->merge_string('<text:p>[{{#Länge(cm):1}}][{{#Kl. 5:1}}]</text:p>', [1], $errors,
+			'application/vnd.oasis.opendocument.text');
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals('<text:p>[1,234.5][2.3]</text:p>', $result);
+	}
+
+	/**
 	 * $$LETTERPREFIX$$ expands to $$LETTERPREFIXCUSTOM n_prefix title n_family$$, which joins
 	 * only the non-empty fields with a single space (avoiding a double space when eg. title is
 	 * empty, per the method's own docblock example).
