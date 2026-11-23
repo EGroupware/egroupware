@@ -388,6 +388,11 @@ class admin_customfields
 						$content['cf_name'] = '';
 						break;
 					}
+					if(!$cf_id && ($invalid = Api\Storage\Customfields::invalid_name_chars((string)$content['cf_name'], $content['cf_type'] ?? null)))
+					{
+						Api\Etemplate::set_validation_error('cf_name', lang('Name contains %1, which is not allowed', implode(' ', $invalid)));
+						break;
+					}
 					if(empty($content['cf_label']))
 					{
 						$content['cf_label'] = $content['cf_name'];

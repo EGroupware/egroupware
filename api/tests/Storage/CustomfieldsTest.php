@@ -270,15 +270,15 @@ class CustomfieldsTest extends LoggedInTest
 	}
 
 	/**
-	 * Certain characters (&, ", etc.) will break our XML templates.
-	 * Make sure they get stripped out.
+	 * Certain characters (&, ", etc.) will break our XML templates, others ($, /, {, }) merge
+	 * placeholders and widget ids. Make sure they get stripped out.
 	 */
 	public function testInvalidName()
 	{
 		// Create
 		$field = $this->simple_field;
-		$this->customfields[] = $invalid_name = $field['name'] = '<Invalid> & "TEST"';
-		$this->customfields[] = $valid_name = 'Invalid  TEST';
+		$this->customfields[] = $invalid_name = $field['name'] = '<Invalid> & "TEST" {$a/b~:} Kl. 5🍽';
+		$this->customfields[] = $valid_name = 'Invalid  TEST ab Kl. 5';
 
 		Customfields::update($field);
 
@@ -295,6 +295,101 @@ class CustomfieldsTest extends LoggedInTest
 		// Clean
 		unset($fields[$invalid_name], $fields[$saved_field['name']]);
 		Customfields::save(self::APP, $fields);
+	}
+
+	/**
+	 * Non-ASCII names survive update() unchanged (the invalid characters are all ASCII, so stripping
+	 * them never touches multibyte UTF-8) and are read back under the same name.
+	 */
+	public function testNonAsciiNameIsSavedUnchanged()
+	{
+		$field = $this->simple_field;
+		$this->customfields[] = $field['name'] = 'Größe Размер 尺寸';
+
+		Customfields::update($field);
+
+		$this->assertArrayHasKey($field['name'], Customfields::get(self::APP, true));
+	}
+
+	/**
+	 * update() keeps the relative path of a new filemanager field incl. its trailing "/" (multiple
+	 * files), removing only empty, "." and ".." parts, but strips the "/" from other types.
+	 */
+	public function testTrailingSlashKeptForFilemanagerOnly()
+	{
+		$field = $this->simple_field;
+		$field['type'] = 'filemanager';
+		$this->customfields[] = $field['name'] = 'test_files/';
+		Customfields::update($field);
+
+		$field = $this->simple_field;
+		$field['name'] = 'test_text/';
+		$this->customfields[] = 'test_text';
+		Customfields::update($field);
+
+		$field = $this->simple_field;
+		$field['type'] = 'filemanager';
+		$field['name'] = '/test_dir/../test_sub//';
+		$this->customfields[] = 'test_dir/test_sub/';
+		Customfields::update($field);
+
+		$fields = Customfields::get(self::APP, true);
+		$this->assertArrayHasKey('test_files/', $fields);
+		$this->assertArrayHasKey('test_dir/test_sub/', $fields, "empty and '..' path parts were not removed");
+		$this->assertArrayHasKey('test_text', $fields);
+		$this->assertArrayNotHasKey('test_text/', $fields);
+	}
+
+	/**
+	 * invalid_name_chars() returns each character at fault once, in the order they occur, and
+	 * honours the exceptions of a filemanager field.
+	 */
+	public function testInvalidNameChars()
+	{
+		$this->assertSame([], Customfields::invalid_name_chars('Größe (cm) Kl. 5'));
+		$this->assertSame(['/', '{', '}'], Customfields::invalid_name_chars('a/b{c}/d'));
+		$this->assertSame(['🍽'], Customfields::invalid_name_chars('Mittag🍽'));
+		$this->assertSame(['/'], Customfields::invalid_name_chars('multiple_files/'));
+		$this->assertSame([], Customfields::invalid_name_chars('multiple_files/', 'filemanager'));
+		$this->assertSame([':'], Customfields::invalid_name_chars('infolog:123:docs', 'filemanager'));
+		$this->assertSame([], Customfields::invalid_name_chars('a/b/', 'filemanager'));
+		$this->assertSame(['/', '..'], Customfields::invalid_name_chars('/a/../b//', 'filemanager'));
+	}
+
+	/**
+	 * valid_name() rejects the characters update() strips, everything else (dots, spaces,
+	 * umlauts, #) is allowed.
+	 */
+	public function testValidName()
+	{
+		$this->assertTrue(Customfields::valid_name('Mittagstisch Schulhalbjahr ab Kl. 5'));
+		$this->assertTrue(Customfields::valid_name('Größe (cm) #1'));
+		$this->assertTrue(Customfields::valid_name('Размер 尺寸'));
+		$this->assertFalse(Customfields::valid_name('Mittag🍽'), "Emoji (4-byte UTF-8) was allowed");
+		$this->assertFalse(Customfields::valid_name('Größe/尺寸'), "'/' between non-ASCII was allowed");
+
+		// a filemanager field may end in a single "/" for multiple files, other types may not
+		$this->assertTrue(Customfields::valid_name('multiple_files/', 'filemanager'));
+		$this->assertTrue(Customfields::valid_name('multiple_files', 'filemanager'));
+		$this->assertFalse(Customfields::valid_name('multiple_files/', 'text'));
+		$this->assertFalse(Customfields::valid_name('multiple_files/'));
+		$this->assertFalse(Customfields::valid_name('a//', 'filemanager'), "two trailing slashes were allowed");
+
+		// a filemanager field is a relative path: subdirectories, but nothing leaving the entry's directory
+		$this->assertTrue(Customfields::valid_name('docs/contracts/', 'filemanager'));
+		$this->assertTrue(Customfields::valid_name('docs/contract.pdf', 'filemanager'));
+		$this->assertTrue(Customfields::valid_name('Kl. 5/...txt', 'filemanager'));
+		$this->assertFalse(Customfields::valid_name('docs/contracts/', 'text'));
+		$this->assertFalse(Customfields::valid_name('/docs', 'filemanager'), "leading '/' was allowed");
+		$this->assertFalse(Customfields::valid_name('/', 'filemanager'), "'/' alone was allowed");
+		$this->assertFalse(Customfields::valid_name('../docs', 'filemanager'), "'..' was allowed");
+		$this->assertFalse(Customfields::valid_name('docs/../../x', 'filemanager'), "'..' was allowed");
+		$this->assertFalse(Customfields::valid_name('./docs', 'filemanager'), "'.' was allowed");
+		$this->assertFalse(Customfields::valid_name('infolog:123:docs', 'filemanager'), "':' was allowed");
+		foreach(str_split(Customfields::NAME_INVALID_CHARS) as $char)
+		{
+			$this->assertFalse(Customfields::valid_name("a{$char}b"), "'$char' was allowed");
+		}
 	}
 
 	/**
