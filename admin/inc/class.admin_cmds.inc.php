@@ -32,7 +32,11 @@ class admin_cmds
 	 */
 	static function get_rows(array $query,&$rows,&$readonlys)
 	{
-		Api\Cache::setSession('admin', 'cmds', $query);
+		// a refresh of single rows or an export is no new state of the list, it would replace the one restored on the next visit
+		if (empty($query['csv_export']))
+		{
+			Api\Cache::setSession('admin', 'cmds', $query);
+		}
 
 		// show also old api
 		if ($query['col_filter']['app'] === 'api')
