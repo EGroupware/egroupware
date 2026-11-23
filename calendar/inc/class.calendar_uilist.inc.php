@@ -137,9 +137,9 @@ class calendar_uilist extends calendar_ui
 		// The stored query still has the start and end it was last run with, as timestamps.  The
 		// calendar state the list is loaded with does not keep them, so the filters must not show them.
 		unset($content['nm']['startdate'], $content['nm']['enddate']);
-		// participant is set by the owner selection in the sidebox, there is no widget submitting it,
-		// and status_filter is not one of the filters a nextmatch knows about
-		$content['nm']['extra_attributes'] = ['col_filter[participant]', 'status_filter'];
+		// participant is set by the owner selection in the sidebox, there is no widget submitting it.
+		// status_filter needs no registration: its select in calendar.filter validates it.
+		$content['nm']['extra_attributes'] = ['col_filter[participant]'];
 		$content['nm']['actions'] = $this->get_actions();
 
 		// Skip first load if view is not listview
