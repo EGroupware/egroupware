@@ -2158,6 +2158,10 @@ class addressbook_ui extends addressbook_bo
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
+		if (!empty($query['advanced_search']))
+		{
+			$query['advanced_search'] = $this->validAdvancedSearch($query['advanced_search']);
+		}
 
 		// Make sure old lettersearch filter doesn't stay - current letter filter will be added later
 		foreach($query['col_filter'] as $key => $col_filter)
@@ -3778,6 +3782,51 @@ class addressbook_ui extends addressbook_bo
 		if (strpos($email,'@') == false) return '';
 
 		return 'mailto:' . $email;
+	}
+
+	/**
+	 * Reduce an advanced search to what the advanced search dialog (extSearch()) creates
+	 *
+	 * The list sends the advanced search back with every request, and it ends up in the SQL query:
+	 * each name is used as column, the operator to combine them. So only names of contact fields
+	 * and custom fields are kept, with a value or list of values, the operator only if it is AND
+	 * or OR, and the method only if it is "%" (contains).
+	 *
+	 * @param mixed $advanced_search as sent by the client
+	 * @return array
+	 */
+	protected function validAdvancedSearch($advanced_search) : array
+	{
+		if (!is_array($advanced_search))
+		{
+			return [];
+		}
+		$fields = array_diff($this->get_contact_columns(), ['n_fn']);
+		$valid = [];
+		foreach($advanced_search as $name => $value)
+		{
+			if (!is_string($name) || !in_array($name, $fields, true))
+			{
+				continue;
+			}
+			if (is_array($value))
+			{
+				$value = array_values(array_filter($value, 'is_scalar'));
+			}
+			if (is_scalar($value) && (string)$value !== '' || is_array($value) && $value)
+			{
+				$valid[$name] = $value;
+			}
+		}
+		if (in_array($advanced_search['operator'] ?? null, ['AND', 'OR'], true))
+		{
+			$valid['operator'] = $advanced_search['operator'];
+		}
+		if (($advanced_search['meth_select'] ?? null) === '%')
+		{
+			$valid['meth_select'] = '%';
+		}
+		return $valid;
 	}
 
 	/**
