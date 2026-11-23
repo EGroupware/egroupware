@@ -16,7 +16,9 @@
 	</et2-template>
 	<et2-template  id="admin.customfield_edit" template="" lang="" group="0" version="1.9.001" layout="edit" style="--label-width:8em">
 		<et2-hbox  class="dialogHeader">
-			<et2-textbox  label="Name" class="et2-label-fixed" style="flex:1; margin-right:3.5em" statustext="internal name max. 64 chars" id="cf_name" maxlength="64" required="true"></et2-textbox>
+			<et2-textbox  label="Name" class="et2-label-fixed" style="flex:1; margin-right:3.5em" statustext="internal name max. 64 chars" id="cf_name" maxlength="64" required="true" validator="/^[^${}&lt;&gt;&quot;&amp;~]*$/">
+				<et2-image src="info-circle" slot="suffix" statustext="Not allowed: $ / : &lt; &gt; &quot; &amp; ~, curly brackets and emoji. A file field is a path in the entry's directory: it may contain / for subdirectories and end in / to allow multiple files."></et2-image>
+			</et2-textbox>
 			<et2-appicon  style="position:absolute; top:0; right:0; width:3.2em; height:3.2em"></et2-appicon>
 		</et2-hbox>
 		<et2-tabbox  id="tabs" class="et2_nowrap" tabHeight="auto">

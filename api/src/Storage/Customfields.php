@@ -58,6 +58,114 @@ class Customfields implements \IteratorAggregate
 	const PUSH_APP = 'api-cf';
 
 	/**
+	 * Characters not allowed in a custom field name
+	 *
+	 * The name is used as placeholder in merge documents ($$#name$$, {{#name}}, "/" separates a prefix
+	 * or format, ":" a date or number format, "~" the arguments of {{IF}}), as widget id / index into
+	 * the content array and inside XML templates, so these characters would break them.
+	 * The label can contain anything.
+	 */
+	const NAME_INVALID_CHARS = '$/{}<>"&~:';
+
+	/**
+	 * Characters outside the Basic Multilingual Plane (emoji and some rare CJK characters) are not
+	 * allowed in a custom field name either: they take 4 bytes in UTF-8, which the utf8mb3 column
+	 * cf_name can not store, so the field would be saved under a different name.
+	 */
+	const NAME_INVALID_PREG = '/[\x{10000}-\x{10FFFF}]/u';
+
+	/**
+	 * Split a name into the parts the invalid characters apply to
+	 *
+	 * The name of a filemanager field is its upload path relative to the entry's directory:
+	 * - "/" separates subdirectories, but there must be no empty, "." or ".." part, so the path
+	 *   can not leave the entry's directory
+	 * - it may end in a single "/": a directory allows multiple files, without it the field holds a single file
+	 *
+	 * @param string $name
+	 * @param ?string $type field type
+	 * @return array [string[] $parts, string $slash] parts to join with "/", trailing slash to append
+	 */
+	private static function name_parts(string $name, ?string $type) : array
+	{
+		if ($type !== 'filemanager')
+		{
+			return [[$name], ''];
+		}
+		$slash = '';
+		if (str_ends_with($name, '/'))
+		{
+			$name = substr($name, 0, -1);
+			$slash = '/';
+		}
+		return [explode('/', $name), $slash];
+	}
+
+	/**
+	 * Check a custom field name contains none of the invalid characters
+	 *
+	 * @param string $name
+	 * @param ?string $type field type, for the exceptions of a filemanager field, see name_parts()
+	 * @return bool
+	 */
+	public static function valid_name(string $name, ?string $type=null) : bool
+	{
+		return !self::invalid_name_chars($name, $type);
+	}
+
+	/**
+	 * Get the characters of a custom field name, which are not allowed
+	 *
+	 * For a filemanager field also "/" for an empty path part (leading "/" or "//"), and "." or ".."
+	 * for such a path part.
+	 *
+	 * @param string $name
+	 * @param ?string $type field type, for the exceptions of a filemanager field, see name_parts()
+	 * @return string[] not allowed characters in the order they occur, each only once
+	 */
+	public static function invalid_name_chars(string $name, ?string $type=null) : array
+	{
+		[$parts] = self::name_parts($name, $type);
+		$invalid = [];
+		foreach($parts as $part)
+		{
+			if ($type === 'filemanager' && in_array($part, ['', '.', '..'], true))
+			{
+				$invalid[] = $part === '' ? '/' : $part;
+				continue;
+			}
+			preg_match_all('/[' . preg_quote(self::NAME_INVALID_CHARS, '/') . ']|[\x{10000}-\x{10FFFF}]/u', $part, $matches);
+			$invalid = array_merge($invalid, $matches[0]);
+		}
+		return array_values(array_unique($invalid));
+	}
+
+	/**
+	 * Remove the characters not allowed in a custom field name
+	 *
+	 * For a filemanager field also empty, "." and ".." path parts.
+	 *
+	 * @param string $name
+	 * @param ?string $type field type, for the exceptions of a filemanager field, see name_parts()
+	 * @return string
+	 */
+	public static function sanitize_name(string $name, ?string $type=null) : string
+	{
+		[$parts, $slash] = self::name_parts($name, $type);
+		foreach($parts as $n => &$part)
+		{
+			$part = str_replace(str_split(self::NAME_INVALID_CHARS), '', $part);
+			$part = preg_replace(self::NAME_INVALID_PREG, '', $part) ?? $part;
+			if ($type === 'filemanager' && in_array($part, ['', '.', '..'], true))
+			{
+				unset($parts[$n]);
+			}
+		}
+		$name = implode('/', $parts);
+		return $name === '' ? '' : $name . $slash;
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app
@@ -402,7 +510,7 @@ class Customfields implements \IteratorAggregate
 		if(!$cf['id'])
 		{
 			// Make sure name is safe
-			$cf['name'] = str_replace(array(">", "<", '"', "&"), "", $cf['name']);
+			$cf['name'] = self::sanitize_name($cf['name'], $cf['type'] ?? null);
 			$cfs[$cf['name']] = $cf;
 		}
 

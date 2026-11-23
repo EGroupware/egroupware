@@ -649,6 +649,7 @@ month	admin	en	Month
 more secure	admin	en	More secure
 mount backup directory to %1	admin	en	Mount backup directory to %1
 must change password upon next login	admin	en	Must change password upon next login
+name contains %1, which is not allowed	admin	en	Name contains %1, which is not allowed
 name must not be empty !!!	admin	en	Name must not be empty!
 name of account	admin	en	Name of account
 name of organisation	admin	en	Name of organization
@@ -679,6 +680,7 @@ no profile defined for user %1	admin	en	No profile defined for user %1
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	en	No Sieve support detected, either fix configuration manually or leave it switched off.
 no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
+not allowed: $ / : < > " & ~, curly brackets and emoji. a file field is a path in the entry's directory: it may contain / for subdirectories and end in / to allow multiple files.	admin	en	Not allowed: $ / : < > " & ~, curly brackets and emoji. A file field is a path in the entry's directory: it may contain / for subdirectories and end in / to allow multiple files.
 not enabled	admin	en	Not enabled
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with Curl support.
 notification mail	admin	en	Notification mail
