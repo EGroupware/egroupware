@@ -195,6 +195,13 @@ EOF;
 			{
 				$attrs = parseAttrs($match[3]);
 				$widget = $attrs['widgetType'] ?? 'et2-select';
+				// type the application gave the filter-header for the request, in place of the template's
+				$header_type = $_GET['header_type'][$attrs['id'] ?? ''] ?? null;
+				if (is_string($header_type) && preg_match('/^(?:et2-)?nextmatch-([a-z-]+)$/', $header_type, $type_matches) &&
+					!in_array($type_matches[1], ['header', 'sortheader']))
+				{
+					$match[2] = $type_matches[1];
+				}
 				switch ($match[2])
 				{
 					case 'header-customfields':

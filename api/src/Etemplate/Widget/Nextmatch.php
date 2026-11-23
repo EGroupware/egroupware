@@ -418,6 +418,17 @@ class Nextmatch extends Etemplate\Widget
 					$url .= '&' . $key . '=' . urlencode((string)$val);
 				}
 			}
+			// a filter-header the application gave another type for this request, eg. an account
+			// selection in place of a selectbox with too many options, has to become the widget of
+			// that type in the filter-template too, which is generated from the unchanged template
+			foreach(is_object(self::$request) ? (array)self::$request->modifications : [] as $id => $modification)
+			{
+				if (is_array($modification) && is_string($modification['type'] ?? null) &&
+					preg_match('/^(et2-)?nextmatch-[a-z-]+$/', $modification['type']))
+				{
+					$url .= '&header_type['.urlencode($id).']='.urlencode($modification['type']);
+				}
+			}
 		}
 		else
 		{
