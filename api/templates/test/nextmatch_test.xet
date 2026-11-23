@@ -10,7 +10,63 @@
 	<et2-template id="api.nextmatch_test.extra_tab" template="" lang="" group="0" version="17.1">
 		<et2-nextmatch id="tab_nm" lazy="true"/>
 	</et2-template>
+	<!-- rows- and filter-template of "filter_nm", for validating its filters by their widgets -->
+	<et2-template id="api.nextmatch_test.rows" template="" lang="" group="0" version="17.1">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<et2-nextmatch-header-filter id="status" emptyLabel="Status">
+						<option value="open">Open</option>
+						<option value="done">Done</option>
+					</et2-nextmatch-header-filter>
+					<et2-nextmatch-header-custom id="country" widgetType="select-country" emptyLabel="Country"></et2-nextmatch-header-custom>
+					<et2-nextmatch-sortheader label="Title" id="title"/>
+					<et2-nextmatch-header-entry id="contact" onlyApp="addressbook"></et2-nextmatch-header-entry>
+				</row>
+				<row>
+					<et2-description id="${row}[status]"></et2-description>
+					<et2-description id="${row}[country]"></et2-description>
+					<et2-description id="${row}[title]"></et2-description>
+					<et2-description id="${row}[contact]"></et2-description>
+				</row>
+			</rows>
+		</grid>
+	</et2-template>
+	<et2-template id="api.nextmatch_test.filter" template="" lang="" group="0" version="17.1">
+		<et2-select id="col_filter[type]" label="Type">
+			<option value="task">Task</option>
+			<option value="note">Note</option>
+		</et2-select>
+		<et2-date id="startdate" label="Start"></et2-date>
+		<et2-select id="state" label="State">
+			<option value="active">Active</option>
+			<option value="archived">Archived</option>
+		</et2-select>
+	</et2-template>
+	<et2-template id="api.nextmatch_test.header" template="" lang="" group="0" version="17.1">
+		<et2-select id="filter">
+			<option value="mine">Mine</option>
+			<option value="all">All</option>
+		</et2-select>
+	</et2-template>
+	<et2-template id="api.nextmatch_test.filters" template="" lang="" group="0" version="17.1">
+		<et2-nextmatch id="filter_nm" lazy="true" template="api.nextmatch_test.rows" filterTemplate="api.nextmatch_test.filter">
+			<!-- filters slotted into the nextmatch itself: a reference to a template, and a widget -->
+			<et2-template id="api.nextmatch_test.header" slot="header"></et2-template>
+			<et2-select id="col_filter[footer_choice]" slot="footer">
+				<option value="one">One</option>
+				<option value="two">Two</option>
+			</et2-select>
+		</et2-nextmatch>
+	</et2-template>
 	<template id="api.nextmatch_test" template="" lang="" group="0" version="17.1">
+		<et2-template id="api.nextmatch_test.filters"/>
 		<historylog id="history"/>
 		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
 		<!-- bare reference tag, as a lazy-loaded tab-panel uses: NOT expanded while this template is parsed -->

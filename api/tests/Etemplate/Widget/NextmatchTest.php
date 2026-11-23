@@ -712,6 +712,239 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 			'content without any allow-listed filter key must still produce nothing');
 	}
 
+	// --- filters are validated by the widgets of the nextmatch ---
+
+	/**
+	 * Fetch rows of "filter_nm", and return what was logged about its filters
+	 *
+	 * @param array $col_filter col_filter the client sends
+	 * @param array $filters further filters the client sends
+	 * @param mixed $mode value of the nm_filter_validation server setting: 'enforce', 'report' or false, null to leave it unset
+	 * @param bool $report value of the nm_filter_validation_report server setting
+	 * @param array $rendered col_filter the nextmatch was rendered with
+	 * @return string[] lines logged about the filters
+	 */
+	private function filterLog(array $col_filter, array $filters=array(), $mode=null, bool $report=false, array $rendered=array()) : array
+	{
+		$exec_id = $this->templateRequest(array('filter_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'num_rows' => 0,
+		)+($rendered ? array('col_filter' => $rendered) : array())));
+		self::$mock_get_rows_params = null;
+
+		$log = tempnam(sys_get_temp_dir(), 'nm_report');
+		$old_log = ini_set('error_log', $log);
+		if ($mode !== null) $GLOBALS['egw_info']['server']['nm_filter_validation'] = $mode;
+		if ($report) $GLOBALS['egw_info']['server']['nm_filter_validation_report'] = true;
+		try
+		{
+			Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10),
+				array('col_filter' => $col_filter)+$filters, 'filter_nm');
+		}
+		finally
+		{
+			unset($GLOBALS['egw_info']['server']['nm_filter_validation'], $GLOBALS['egw_info']['server']['nm_filter_validation_report']);
+			ini_set('error_log', (string)$old_log);
+			$lines = file($log, FILE_IGNORE_NEW_LINES) ?: array();
+			unlink($log);
+		}
+		return array_values(array_filter($lines, static fn($line) => str_contains($line, 'Nextmatch filter validation')));
+	}
+
+	/**
+	 * Values a filter-header, the widget a custom filter-header stands for, or a widget of the
+	 * filter-template accepts reach get_rows, and nothing is logged.
+	 */
+	public function testFiltersAWidgetAcceptsArePassedOn()
+	{
+		$col_filter = array(
+			'status'  => 'open',	// option of the et2-nextmatch-header-filter
+			'country' => 'DE',		// et2-nextmatch-header-custom with widgetType="select-country"
+			'type'    => 'note',	// option of the select in the filter-template
+		);
+		$lines = $this->filterLog($col_filter, array(), null, true);
+
+		$this->assertSame(array(), $lines);
+		$this->assertSame($col_filter, self::$mock_get_rows_params['col_filter'] ?? null);
+	}
+
+	/**
+	 * When enforcing, a value the filter's widget does not offer, and a filter without any widget,
+	 * do not reach get_rows and are logged. No validation error is left behind for the client.
+	 */
+	public function testFiltersNoWidgetAcceptsAreDropped()
+	{
+		$lines = implode("\n", $this->filterLog(array(
+			'status'  => 'bogus',
+			'country' => 'not-a-country',
+			'type'    => 'note',
+			'nowhere' => 'x',
+		), array(), 'enforce'));
+
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[status\]="bogus": rejected by et2-nextmatch-header-filter/', $lines);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[country\]="not-a-country": rejected by et2-select-country/', $lines);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[nowhere\]="x": no widget validates it/', $lines);
+		$this->assertStringNotContainsString('col_filter[type]', $lines);
+
+		$this->assertSame(array('type' => 'note'), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertFalse(Etemplate\Widget::validation_errors(),
+			'validating the filters must not leave validation errors behind');
+	}
+
+	/**
+	 * A filter no widget stands for is passed on, if it is the value the server rendered the
+	 * nextmatch with - but not with another value.
+	 */
+	public function testFilterTheNextmatchWasRenderedWithIsPassedOn()
+	{
+		$this->filterLog(array('nowhere' => '5'), array(), 'enforce', false, array('nowhere' => 5));
+		$this->assertSame(array('nowhere' => '5'), self::$mock_get_rows_params['col_filter'] ?? null);
+
+		$this->filterLog(array('nowhere' => '6'), array(), 'enforce', false, array('nowhere' => 5));
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+	}
+
+	/**
+	 * A filter only this nextmatch has, outside of col_filter, is passed on if a widget of the
+	 * filter-template accepts it.
+	 */
+	public function testOtherFilterAWidgetAcceptsIsPassedOn()
+	{
+		$this->filterLog(array(), array('state' => 'archived'));
+		$this->assertSame('archived', self::$mock_get_rows_params['state'] ?? null);
+
+		$this->filterLog(array(), array('state' => 'bogus'));
+		$this->assertArrayNotHasKey('state', self::$mock_get_rows_params);
+	}
+
+	/**
+	 * Widgets inside the nextmatch, which it shows in its header or footer slot, validate its
+	 * filters too: a template referenced there with the standard filter, and a widget itself.
+	 */
+	public function testFiltersSlottedIntoTheNextmatchAreValidated()
+	{
+		$this->filterLog(array('footer_choice' => 'two'), array('filter' => 'all'), 'enforce');
+		$this->assertSame('all', self::$mock_get_rows_params['filter'] ?? null);
+		$this->assertSame(array('footer_choice' => 'two'), self::$mock_get_rows_params['col_filter'] ?? null);
+
+		$lines = implode("\n", $this->filterLog(array('footer_choice' => 'three'), array('filter' => 'bogus'), 'enforce'));
+		$this->assertArrayNotHasKey('filter', self::$mock_get_rows_params);
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertMatchesRegularExpression('/dropped: .* filter="bogus": rejected by et2-select/', $lines);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[footer_choice\]="three": rejected by et2-select/', $lines);
+	}
+
+	/**
+	 * An entry-search accepts whatever it is given, so the nextmatch checks itself that the
+	 * value is an entry the user can read.
+	 */
+	public function testEntryFilterHasToBeAReadableEntry()
+	{
+		$contact_id = $GLOBALS['egw_info']['user']['person_id'] ?? null;
+		if (!$contact_id || (string)Api\Link::title('addressbook', $contact_id) === '')
+		{
+			$this->markTestSkipped('test user has no contact of its own to filter by');
+		}
+		$this->filterLog(array('contact' => (string)$contact_id), array(), 'enforce');
+		$this->assertSame(array('contact' => (string)$contact_id), self::$mock_get_rows_params['col_filter'] ?? null);
+
+		$lines = implode("\n", $this->filterLog(array('contact' => '999999999'), array(), 'enforce'));
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[contact\]="999999999": et2-link-entry: no entry the user can read/', $lines);
+
+		// not an id at all
+		$this->filterLog(array('contact' => array('id' => array('nested' => array('x')))), array(), 'enforce');
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+	}
+
+	/**
+	 * A custom field accepts as filter what its own widget accepts: an option of a select, a
+	 * date, a number. It leaves neither a validation error nor its options behind.
+	 */
+	public function testCustomFieldAcceptsOnlyValuesOfItsType()
+	{
+		$request = new \ReflectionProperty(Etemplate\Widget::class, 'request');
+		$request_before = $request->getValue();
+		$request->setValue(null, Etemplate\Request::read());
+		$sel_options_before = $request->getValue()->sel_options;
+		$cf = new Etemplate\Widget\Customfields('<et2-customfields/>');
+
+		$select = array('type' => 'select', 'needed' => true, 'rows' => 1, 'values' => array('a' => 'A', 'b' => 'B'));
+		$this->assertTrue($cf->acceptsValue('choice', $select, 'b'));
+		$this->assertFalse($cf->acceptsValue('choice', $select, 'c'));
+
+		$date = array('type' => 'date', 'needed' => false, 'values' => array());
+		$this->assertTrue($cf->acceptsValue('when', $date, '2026-11-20'));
+		$this->assertFalse($cf->acceptsValue('when', $date, 'not-a-date'));
+
+		$int = array('type' => 'int', 'needed' => false, 'values' => array());
+		$this->assertTrue($cf->acceptsValue('count', $int, '12'));
+		$this->assertFalse($cf->acceptsValue('count', $int, 'abc'));
+
+		$this->assertFalse(Etemplate\Widget::validation_errors(), 'no validation error must be left behind');
+		$sel_options_after = $request->getValue()->sel_options;
+		$request->setValue(null, $request_before);
+		$this->assertSame($sel_options_before, $sel_options_after, 'the options of the request must be unchanged');
+	}
+
+	/**
+	 * With the report switched on, filters outside of col_filter which get_rows never receives
+	 * are logged too: a date no widget of the filter-template stands for, and a filter of the
+	 * application. A date its widget accepts, and the parts of the value which are no filter,
+	 * are not.
+	 */
+	public function testFilterReportNamesOtherFiltersNoWidgetAccepts()
+	{
+		$lines = implode("\n", $this->filterLog(array(), array(
+			'startdate'     => '2026-11-20T00:00:00Z',	// et2-date of the filter-template
+			'enddate'       => '2026-11-21T00:00:00Z',	// no widget
+			'status_filter' => 'deleted',				// no widget, and not registered as extra attribute
+			'sort'          => 'ASC',
+			'order'         => 'title',
+			'search'        => 'something',
+		), null, true));
+
+		$this->assertMatchesRegularExpression('/ enddate="2026-11-21T00:00:00Z": no widget validates it$/m', $lines);
+		$this->assertMatchesRegularExpression('/ status_filter="deleted": no widget validates it, and it is not passed on to get_rows$/m', $lines);
+		foreach(array('startdate', 'sort', 'order', 'search') as $name)
+		{
+			$this->assertStringNotContainsString(" $name=", $lines);
+		}
+		$this->assertArrayNotHasKey('status_filter', self::$mock_get_rows_params);
+	}
+
+	/**
+	 * By default nothing is dropped: what enforcing would drop is passed on, logged as "would
+	 * drop" and sent as warning to the console of the browser.
+	 */
+	public function testFilterValidationOnlyReportsByDefault()
+	{
+		$col_filter = array('status' => 'bogus', 'nowhere' => 'x', 'type' => 'note');
+		$lines = implode("\n", $this->filterLog($col_filter));
+
+		$this->assertMatchesRegularExpression('/would drop: .* col_filter\[status\]="bogus": rejected by et2-nextmatch-header-filter/', $lines);
+		$this->assertMatchesRegularExpression('/would drop: .* col_filter\[nowhere\]="x": no widget validates it/', $lines);
+		$this->assertStringNotContainsString('col_filter[type]', $lines);
+		$this->assertSame($col_filter, self::$mock_get_rows_params['col_filter'] ?? null);
+
+		$warnings = array_filter($this->ajax_response->returnResult(), static fn($command) =>
+			$command['type'] === 'apply' && $command['data']['func'] === 'egw.debug');
+		$this->assertCount(2, $warnings, 'each filter which would be dropped is a warning in the console of the browser');
+		$this->assertStringContainsString('would drop', json_encode($warnings));
+	}
+
+	/**
+	 * nm_filter_validation = false switches the check off: everything is passed on, nothing logged.
+	 */
+	public function testFilterValidationCanBeSwitchedOff()
+	{
+		$col_filter = array('status' => 'bogus', 'nowhere' => 'x');
+		$lines = $this->filterLog($col_filter, array(), false);
+
+		$this->assertSame(array(), $lines);
+		$this->assertSame($col_filter, self::$mock_get_rows_params['col_filter'] ?? null);
+	}
+
 	/**
 	 * Callback supplied as untrusted client input.  No test may dispatch here.
 	 */

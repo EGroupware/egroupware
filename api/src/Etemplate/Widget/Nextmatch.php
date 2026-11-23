@@ -1794,6 +1794,40 @@ class Nextmatch extends Etemplate\Widget
 		}
 		unset($value['nm_col_preference']);
 
+		// A filter is valid if a widget of this nextmatch validates it, the application registered
+		// it as extra attribute, or it is what the nextmatch was rendered with. What happens with
+		// the others depends on $GLOBALS['egw_info']['server']['nm_filter_validation']:
+		// - 'report' (default): they are passed on as before, and logged as "would drop"
+		// - 'enforce': they are dropped and logged
+		// - false: nothing is checked
+		$mode = $GLOBALS['egw_info']['server']['nm_filter_validation'] ?? 'report';
+		$enforce = $mode === 'enforce';
+		$report = !empty($GLOBALS['egw_info']['server']['nm_filter_validation_report']);
+		$rejected = $accepted = [];
+		$failed = false;
+		if ($mode || $report)
+		{
+			try
+			{
+				$rejected = $this->unvalidatedFilters($form_name, $content, $value, (array)$content_value, $accepted);
+			}
+			catch(\Throwable $e)
+			{
+				// without knowing which filters are valid, none but the registered ones is passed on
+				error_log(__METHOD__."() validating the filters of $form_name failed: ".$e->getMessage());
+				$failed = true;
+			}
+		}
+		$extra_attributes = $content_value['extra_attributes'] ?? [];
+		$dropped = static function(string $name, $val) use ($enforce, $failed, $rejected, $extra_attributes) : bool
+		{
+			if (!$enforce || self::isEmptyFilter($val) || in_array($name, $extra_attributes, true))
+			{
+				return false;
+			}
+			return $failed || isset($rejected[$name]);
+		};
+
 		// we should NOT pass on everything, individual widget validation is run and should add/validate their values
 		foreach(
 			// individual attributes explicitly requested by the application
@@ -1808,7 +1842,8 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if (!isset($validated[$form_name][$attr])) $validated[$form_name][$attr] = [];
 				// and use += to not overwrite regular validated filters
-				$validated[$form_name][$attr] += array_filter($value[$attr]??null?:[], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+				$validated[$form_name][$attr] += array_filter($value[$attr]??null?:[],
+					fn($val, $key) => !is_int($key) && !($attr === 'col_filter' && $dropped("col_filter[$key]", $val)), ARRAY_FILTER_USE_BOTH);
 			}
 			// start- and enddate need to use date-widget validation to use the correct user-timezone
 			elseif ($attr === 'startdate' || $attr === 'enddate')
@@ -1818,6 +1853,10 @@ class Nextmatch extends Etemplate\Widget
 			// regular attribute
 			elseif (substr($attr, -1) !== ']')
 			{
+				if (in_array($attr, self::STANDARD_FILTERS, true) && $dropped($attr, $value[$attr] ?? null))
+				{
+					continue;
+				}
 				if (array_key_exists($attr, $value) || $attr === 'search')  // otherwise a removed search is not propagated
 				{
 					$validated[$form_name][$attr] = $value[$attr] ?? null;
@@ -1831,6 +1870,502 @@ class Nextmatch extends Etemplate\Widget
 				$validate = $val;
 			}
 		}
+
+		// a filter only this application has is passed on too, if a widget of the filter-template accepted it
+		if ($mode)
+		{
+			foreach($accepted as $name => $val)
+			{
+				if (!str_contains($name, '[') && !array_key_exists($name, $validated[$form_name] ?? []))
+				{
+					$validated[$form_name][$name] = $val;
+				}
+			}
+		}
+		$this->logUnvalidatedFilters($form_name, $value, (array)$content_value, $rejected, $enforce, $report);
+	}
+
+	/**
+	 * Standard filters of a nextmatch, which have a widget of their own in its filter-template
+	 */
+	const STANDARD_FILTERS = ['filter', 'filter2', 'cat_id'];
+
+	/**
+	 * Parts of the value of a nextmatch which are no filter, and therefore need no widget of the
+	 * filter-template to validate them
+	 */
+	const NO_FILTERS = ['sort', 'order', 'search', 'search_type', 'selected', 'select_all', 'checkboxes',
+		'searchletter', 'rows', 'selectcols', 'favorite', 'csv_export', 'nm_col_preference', 'nm_autorefresh',
+		'num_rows', 'start'];
+
+	/**
+	 * Log the filters the client sent, which no widget of this nextmatch validates
+	 *
+	 * A standard filter or col_filter is always logged: as "dropped" if validate() did not pass
+	 * it on, as "would drop" if it only reports. It is written to the PHP error-log and, for a
+	 * JSON request, as warning to the console of the browser, so it can be seen without access
+	 * to the server.
+	 *
+	 * Setting $GLOBALS['egw_info']['server']['nm_filter_validation_report'] in header.inc.php
+	 * also logs the filters which are not passed on anyway, and - given the path of a file instead
+	 * of true - appends to that file instead of the PHP error-log. As the server settings are
+	 * kept in the session, it only applies to sessions started after it was set. Each finding is
+	 * logged once per request.
+	 *
+	 * @param string $form_name full name of this nextmatch
+	 * @param array $value value the client sent for this nextmatch
+	 * @param array $content_value settings this nextmatch was rendered with
+	 * @param string[] $rejected filter name relative to the nextmatch => why no widget validates it
+	 * @param bool $enforce true: the filters validate() passes on were dropped, false: they are passed on nevertheless
+	 * @param bool $report true: also log the filters which are not passed on anyway
+	 */
+	protected function logUnvalidatedFilters(string $form_name, array $value, array $content_value, array $rejected, bool $enforce, bool $report) : void
+	{
+		static $logged = [];
+		$log_file = $GLOBALS['egw_info']['server']['nm_filter_validation_report'] ?? null;
+		$passed_on = array_merge(self::STANDARD_FILTERS, ['startdate', 'enddate']);
+		$template = $content_value['template'] ?? $this->attrs['template'] ?? '';
+		foreach($rejected as $filter => $reason)
+		{
+			// filters validate() decides about: the standard ones and each col_filter
+			$decided = str_starts_with($filter, 'col_filter[') || in_array($filter, self::STANDARD_FILTERS, true);
+			if (!$decided && !$report)
+			{
+				continue;
+			}
+			if (!str_contains($filter, '[') && !in_array($filter, $passed_on, true))
+			{
+				$reason .= ', and it is not passed on to get_rows';
+			}
+			$line = 'Nextmatch filter validation '.(!$decided ? 'report' : ($enforce ? 'dropped' : 'would drop')).": $template $form_name $filter=".
+				substr(json_encode(self::get_array($value, $filter)), 0, 100).": $reason";
+			if (isset($logged[$line]))
+			{
+				continue;
+			}
+			$logged[$line] = true;
+			is_string($log_file) ? error_log(date('c ').$line."\n", 3, $log_file) : error_log($line);
+
+			if ($decided && Api\Json\Response::isJSONResponse())
+			{
+				Api\Json\Response::get()->apply('egw.debug', ['warn', $line]);
+			}
+		}
+	}
+
+	/**
+	 * Which of the filters the client sent would not be validated by a widget of this nextmatch
+	 *
+	 * A filter value is only trustworthy if the widget the user picked it in checks it, eg. a
+	 * selectbox that it is one of its options. Such widgets are in the filter-template and in the
+	 * column-headers of the rows-template, neither of which is run when the nextmatch is validated.
+	 * This runs them, without changing what validate() returns or raising a validation error, and
+	 * reports every filter the client sent for which that fails: the standard filters, each
+	 * col_filter, and everything else in the value which is not one of self::NO_FILTERS, eg. the
+	 * start- and enddate of a date-range or a filter only this application has.
+	 *
+	 * Where more than one widget stands for the same filter, it is enough if one of them accepts
+	 * the value. A date widget accepting a value is enough too, as it returns the date converted.
+	 * A value the nextmatch was rendered with needs no widget: the server set it itself. What
+	 * an entry-search gives has to be an entry the user can read. A custom-field filter needs a
+	 * widget or column-header for custom-fields, and a value the widget of that custom field
+	 * accepts, or for a field linking to an entry one the user can read. Filters the application
+	 * registered via the extra_attributes setting are not reported.
+	 *
+	 * @param string $form_name full name of this nextmatch
+	 * @param array $content content as given to validate()
+	 * @param array $value value the client sent for this nextmatch
+	 * @param array $content_value settings this nextmatch was rendered with
+	 * @param array|null &$accepted =null on return: filter name relative to the nextmatch => value, for every filter a widget accepted
+	 * @return string[] filter name relative to the nextmatch, eg. "col_filter[owner]" => why it would not be validated
+	 */
+	protected function unvalidatedFilters(string $form_name, array $content, array $value, array $content_value, ?array &$accepted=null) : array
+	{
+		$accepted = [];
+		// filters the client sent: everything non-empty in the value which is not known to be something else,
+		// and col_filter with string keys
+		$sent = [];
+		$no_filters = array_merge(self::NO_FILTERS, ['col_filter', $content_value['action_var'] ?? 'action']);
+		foreach($value as $name => $val)
+		{
+			if (!is_int($name) && !in_array($name, $no_filters, true) && !self::isEmptyFilter($val)) $sent[$name] = $val;
+		}
+		foreach(is_array($value['col_filter'] ?? null) ? $value['col_filter'] : [] as $name => $val)
+		{
+			if (!is_int($name) && !self::isEmptyFilter($val)) $sent["col_filter[$name]"] = $val;
+		}
+		foreach($content_value['extra_attributes'] ?? [] as $name)
+		{
+			unset($sent[$name]);
+		}
+		// what the server rendered the nextmatch with needs no widget to be valid
+		foreach($sent as $name => $val)
+		{
+			if (self::sameFilterValue($val, self::get_array($content_value, $name)))
+			{
+				unset($sent[$name]);
+			}
+		}
+		if (!$sent)
+		{
+			return [];
+		}
+		// Widgets look up their options for the current application, eg. its categories, and
+		// the objects they use for it are kept for the rest of the request: so they have to see
+		// the application get_rows is called for, which is only made the current one later.
+		$currentapp = $GLOBALS['egw_info']['flags']['currentapp'] ?? null;
+		[$app] = explode('.', (string)(self::$request->method ?? ''));
+		if (!$app) [$app] = explode('::', (string)(self::$request->method ?? ''));
+		if ($app && isset($GLOBALS['egw_info']['apps'][$app]))
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+		}
+		$report = [];
+		$errors_backup = self::$validation_errors;
+		try
+		{
+			$candidates = $this->filterValidators($form_name, $content, $content_value);
+
+			foreach($sent as $name => $val)
+			{
+				// custom-fields are filtered via a single widget for all of them
+				if (str_starts_with($name, 'col_filter[#') && isset($candidates['col_filter[#]']))
+				{
+					if (!isset($custom_fields))
+					{
+						[$app] = explode('.', (string)($content_value['template'] ?? $this->attrs['template'] ?? ''));
+						$custom_fields = $app ? (array)Api\Storage\Customfields::get($app) : [];
+					}
+					$field = $custom_fields[$fname = substr($name, strlen('col_filter[#'), -1)] ?? null;
+					if (!is_array($field))
+					{
+						$report[$name] = 'no such custom field';
+					}
+					// a field linking to an entry: of the application it is named after, or of any
+					elseif ($field['type'] === 'link-entry' || isset(Api\Link::app_list()[$field['type']]))
+					{
+						if (!self::isEntryFilter($val, $field['type'] === 'link-entry' ? null : $field['type']))
+						{
+							$report[$name] = "no $field[type] entry the user can read";
+						}
+					}
+					else
+					{
+						$cf_widget ??= new Customfields('<et2-customfields/>');
+						// each value has to be one the widget of the custom field accepts
+						foreach(is_array($val) ? $val : [$val] as $single)
+						{
+							if (!$cf_widget->acceptsValue($fname, $field, $single))
+							{
+								$report[$name] = "rejected by custom field of type $field[type]";
+								break;
+							}
+						}
+					}
+					continue;
+				}
+				$reasons = [];
+				foreach($candidates[$name] ?? [] as [$widget, $cname, $expand])
+				{
+					$validated = [];
+					self::$validation_errors = [];
+					$widget->validate($cname, $expand, $content, $validated);
+					$path = self::form_name($form_name, $name);
+					$got = self::get_array($validated, $path);
+					if (!empty(self::$validation_errors[$path]))
+					{
+						$reasons[] = "rejected by $widget->type: ".self::$validation_errors[$path];
+					}
+					elseif ($got === null)
+					{
+						$reasons[] = "$widget->type returned no value";
+					}
+					// an entry-search accepts whatever it is given: it has to be an entry the user can read
+					elseif (in_array($widget->type, ['et2-link-entry', 'link-entry', 'et2-nextmatch-header-entry', 'nextmatch-entryheader'], true) &&
+						!self::isEntryFilter($val, $widget->attrs['onlyApp'] ?? $widget->attrs['only_app'] ?? $widget->attrs['application'] ?? null))
+					{
+						$reasons[] = "$widget->type: no entry the user can read";
+					}
+					elseif ($got != $val && !($widget instanceof Date))
+					{
+						$reasons[] = "$widget->type changed it to ".substr(json_encode($got), 0, 100);
+					}
+					else
+					{
+						$accepted[$name] = $val;
+						continue 2;	// one widget accepting the value is enough
+					}
+				}
+				$report[$name] = $reasons ? implode(', ', $reasons) : 'no widget validates it';
+			}
+		}
+		finally
+		{
+			self::$validation_errors = $errors_backup;
+			$GLOBALS['egw_info']['flags']['currentapp'] = $currentapp;
+		}
+		return $report;
+	}
+
+	/**
+	 * Is a filter value the client sent the one the nextmatch was rendered with
+	 *
+	 * @param mixed $sent
+	 * @param mixed $rendered
+	 * @return bool
+	 */
+	protected static function sameFilterValue($sent, $rendered) : bool
+	{
+		if (is_scalar($sent) && is_scalar($rendered))
+		{
+			return (string)$sent === (string)$rendered;
+		}
+		if (is_array($sent) && is_array($rendered) && count($sent) === count($rendered))
+		{
+			foreach($sent as $key => $val)
+			{
+				if (!array_key_exists($key, $rendered) || !self::sameFilterValue($val, $rendered[$key]))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Is a filter value picked in an entry-search an entry the user can read
+	 *
+	 * The value is an id, a list of ids, "$app:$id" or ['app' => $app, 'id' => $id]. An entry
+	 * counts as readable, if it has a title for the user.
+	 *
+	 * @param mixed $value
+	 * @param ?string $app application the search is limited to, null if the value has to name it
+	 * @return bool
+	 */
+	protected static function isEntryFilter($value, ?string $app) : bool
+	{
+		if (is_array($value) && array_key_exists('id', $value))
+		{
+			if (!$app && is_string($value['app'] ?? null)) $app = $value['app'];
+			$value = $value['id'];
+		}
+		$ids = is_array($value) ? $value : [$value];
+		if (!$ids)
+		{
+			return false;
+		}
+		foreach($ids as $id)
+		{
+			if (!is_scalar($id))
+			{
+				return false;
+			}
+			$entry_app = $app;
+			if (!$entry_app && preg_match('/^([a-z0-9_-]+):(.+)$/i', (string)$id, $matches))
+			{
+				[, $entry_app, $id] = $matches;
+			}
+			if (!$entry_app || !isset($GLOBALS['egw_info']['apps'][$entry_app]) || (string)Api\Link::title($entry_app, $id) === '')
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Is a filter value the same as no filter
+	 *
+	 * @param mixed $value
+	 * @return bool
+	 */
+	protected static function isEmptyFilter($value) : bool
+	{
+		return $value === null || $value === '' || $value === false || $value === [];
+	}
+
+	/**
+	 * Widgets able to validate the filters of this nextmatch
+	 *
+	 * They come from the filter-template, from the widgets inside the nextmatch, which it shows
+	 * in its header or footer slot, and from the filter-headers of the rows-template. For a
+	 * filter-template generated from the rows-template, the widgets it would contain are built
+	 * here: one for each standard filter it shows, and the one each filter-header becomes in it.
+	 *
+	 * @param string $form_name full name of this nextmatch
+	 * @param array $content content as given to validate()
+	 * @param array $content_value settings this nextmatch was rendered with
+	 * @return array[] filter name relative to the nextmatch => list of [Widget, $cname, $expand] to call its validate() with,
+	 *  "col_filter[#]" stands for all custom-field filters
+	 */
+	protected function filterValidators(string $form_name, array $content, array $content_value) : array
+	{
+		$candidates = [];
+		$expand = ['cont' => $content];
+		$prefix_len = strlen($form_name);
+
+		// the filter-template as resolved when the nextmatch was sent to the client, not what the client claims
+		$resolved = self::$request->modifications[$this->id]['filterTemplate'] ??
+			self::$request->modifications[$form_name]['filterTemplate'] ?? null;
+		// a template with a file of its own is resolved to the url of that file, which also replaces the attribute
+		$tpl = null;
+		foreach([$resolved, $content_value['filter_template'] ?? null, $this->attrs['filterTemplate'] ?? null,
+			$this->attrs['filter_template'] ?? null] as $name)
+		{
+			// url of a template with a file of its own: ".../api/etemplate.php/$app/templates/$set/$rest.xet?..." --> "$app.$rest"
+			if (is_string($name) && preg_match('#/api/etemplate\.php/([^/]+)/templates/[^/]+/([^/?]+)\.xet#', $name, $matches))
+			{
+				$name = $matches[1].'.'.$matches[2];
+			}
+			if ($name && is_string($name) && !str_contains($name, '/') && ($tpl = Template::instance($name, quiet: true)))
+			{
+				break;
+			}
+		}
+
+		// widgets of a template inside the namespace of the nextmatch
+		$collect = static function($cname, $expand, $widget) use (&$candidates, $form_name, $prefix_len)
+		{
+			if ($widget->type === 'et2-customfields-filters')
+			{
+				$candidates['col_filter[#]'] = [];
+				return;
+			}
+			if (!$widget->id || !method_exists($widget, 'validate')) return;
+
+			$path = self::form_name($cname, $widget->id, $expand);
+			// only widgets inside the namespace of the nextmatch can stand for one of its filters
+			if (str_starts_with($path, $form_name.'['))
+			{
+				// "nm[col_filter][owner]" --> "col_filter[owner]"
+				$name = preg_replace('/^\[([^]]*)]/', '$1', substr($path, $prefix_len));
+				$candidates[$name][] = [$widget, $cname, $expand];
+			}
+		};
+
+		if (is_string($resolved) && str_contains($resolved, '/api/filter-template.php'))
+		{
+			// generated: it shows the standard filters named in its url
+			parse_str((string)parse_url($resolved, PHP_URL_QUERY), $query);
+			foreach(self::STANDARD_FILTERS as $name)
+			{
+				if (isset($query[$name]))
+				{
+					$type = $name === 'cat_id' && empty($query['cat_is_select']) ? 'et2-select-cat' : 'et2-select';
+					$candidates[$name][] = [self::factory($type, "<$type id=\"$name\"/>", $name), $form_name, $expand];
+				}
+			}
+			// with the filter it also shows the date-range of the application: "$app.$rest.dates"
+			if (isset($query['filter']) &&
+				preg_match('#/api/filter-template\.php/([^/]+)/templates/[^/]+/([^/?]+)\.xet#', $resolved, $matches) &&
+				($dates = Template::instance($matches[1].'.'.$matches[2].'.dates', quiet: true)))
+			{
+				$dates->run($collect, [$form_name, $expand]);
+			}
+		}
+		elseif ($tpl)
+		{
+			$tpl->run($collect, [$form_name, $expand]);
+		}
+
+		// widgets inside the nextmatch itself, which it shows in its header or footer slot
+		foreach($this->children as $child)
+		{
+			$child->run($collect, [$form_name, $expand]);
+		}
+
+		// filter-headers of the rows-template
+		$rows_template = $content_value['template'] ?? $this->attrs['template'] ?? $this->attrs['options'] ?? null;
+		if ($rows_template && is_string($rows_template) && ($tpl = Template::instance($rows_template, quiet: true)))
+		{
+			$col_filter = self::form_name($form_name, 'col_filter');
+			foreach(self::filterHeaders($tpl) as $widget)
+			{
+				// the application can give a filter-header another type for the request
+				preg_match('/^(?:et2-)?nextmatch-(.+)$/', is_string($widget->attrs['type'] ?? null) &&
+					preg_match('/^(et2-)?nextmatch-[a-z-]+$/', $widget->attrs['type']) ? $widget->attrs['type'] : $widget->type, $matches);
+				if (in_array($matches[1], ['customfields', 'header-customfields']))
+				{
+					$candidates['col_filter[#]'] = [];
+					continue;
+				}
+				if (!$widget->id) continue;
+
+				if (($type = self::filterHeaderWidgetType($matches[1], $widget->attrs)))
+				{
+					$xml = "<$type";
+					foreach(['id' => $widget->id]+$widget->attrs as $attr => $val)
+					{
+						if (is_scalar($val) && !in_array($attr, ['type', 'widgetType', 'widget_type', 'options', 'class']) &&
+							preg_match('/^[a-z_][a-z0-9_]*$/i', $attr))
+						{
+							$xml .= ' '.$attr.'="'.htmlspecialchars((string)$val, ENT_XML1|ENT_QUOTES, 'UTF-8').'"';
+						}
+					}
+					$widget = self::factory($type, $xml.'/>', $widget->id);
+					// a type the application set for the filter-header's id is applied to this widget too
+					$widget->attrs['type'] = $type;
+				}
+				$candidates["col_filter[$widget->id]"][] = [$widget, $col_filter, $expand];
+			}
+		}
+		return $candidates;
+	}
+
+	/**
+	 * Filter-headers below a widget of the rows-template
+	 *
+	 * Walks the children itself instead of using run(): a filter-header without a class of its own
+	 * is an instance of this class, whose run() does not call anything for it.
+	 *
+	 * @param Etemplate\Widget $parent
+	 * @return Etemplate\Widget[] all widgets of a "(et2-)nextmatch-*" type, but plain and sort-headers
+	 */
+	protected static function filterHeaders(Etemplate\Widget $parent) : array
+	{
+		$headers = [];
+		foreach($parent->children as $child)
+		{
+			if (preg_match('/^(?:et2-)?nextmatch-(.+)$/', (string)$child->type, $matches) &&
+				!in_array($matches[1], ['header', 'sortheader', 'columnselection']))
+			{
+				$headers[] = $child;
+			}
+			$headers = array_merge($headers, self::filterHeaders($child));
+		}
+		return $headers;
+	}
+
+	/**
+	 * Type of the widget a filter-header of the rows-template stands for
+	 *
+	 * @param string $header type of the filter-header without its "(et2-)nextmatch-" prefix, eg. "header-custom"
+	 * @param array $attrs attributes of the filter-header
+	 * @return string|null type of the widget to validate with, or null to use the filter-header itself
+	 */
+	protected static function filterHeaderWidgetType(string $header, array $attrs) : ?string
+	{
+		switch($header)
+		{
+			case 'header-entry':
+				$type = 'link-entry';
+				break;
+			case 'accountfilter':
+			case 'header-account':
+				$type = 'select-account';
+				break;
+			case 'customfilter':
+			case 'header-custom':
+				// legacy "options" are "<type>[,<options>]"
+				[$type] = explode(',', (string)($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options'] ?? '' ?:
+					$attrs['type'] ?? 'select'));
+				break;
+			default:
+				return null;
+		}
+		return str_starts_with($type, 'et2-') ? $type : 'et2-'.$type;
 	}
 
 	/**

@@ -455,6 +455,54 @@ class Customfields extends Transformer
 	}
 
 	/**
+	 * Does a custom field accept a value, eg. one given to filter by it
+	 *
+	 * Runs the validation of the widget implementing the custom field, with the options a select
+	 * reads from a file, without leaving a validation error or changed options behind. The field
+	 * does not have to be filled, whatever its definition requires for saving an entry.
+	 *
+	 * @param string $fname name of the custom field without prefix
+	 * @param array $field_settings definition of the custom field
+	 * @param mixed $value a single value
+	 * @return bool
+	 */
+	public function acceptsValue(string $fname, array $field_settings, $value) : bool
+	{
+		$id = self::$prefix.$fname;
+		// building and running the widget fills in options for the field and its namespace
+		$options_backup = self::$request->sel_options;
+		$errors_backup = self::$validation_errors;
+		try
+		{
+			$widget = $this->_widget($fname, ['needed' => false]+$field_settings);
+			// widget has no validate method, eg. is only displaying stuff --> nothing it could accept
+			if (!method_exists($widget, 'validate'))
+			{
+				return false;
+			}
+			// a select searching its options in a file needs them here to validate
+			if ($widget instanceof Select && !empty($field_settings['values']['@']))
+			{
+				$file_bits = explode("/webdav.php", Api\Vfs::parse_url($field_settings['values']['@'], PHP_URL_PATH));
+				self::$request->sel_options[$id] = (array)Api\Storage\Customfields::get_options_from_file(array_pop($file_bits)) +
+					(array)(self::$request->sel_options[$id] ?? []);
+			}
+			$namespace = 'custom_field_value';
+			$content = [$namespace => [$id => $value]];
+			$validated = [];
+			self::$validation_errors = [];
+			$widget->validate($namespace, ['cont' => $content[$namespace]], $content, $validated);
+
+			return !self::$validation_errors && isset($validated[$namespace][$id]) && $validated[$namespace][$id] !== '';
+		}
+		finally
+		{
+			self::$validation_errors = $errors_backup;
+			self::$request->sel_options = $options_backup;
+		}
+	}
+
+	/**
 	 * Perform any needed data manipulation on each row
 	 * before sending it to client.
 	 *
