@@ -208,6 +208,9 @@ class Nextmatch extends Etemplate\Widget
 			}
 			if($favorite && $favorite['state'])
 			{
+				// get_rows is always decided by the server, never a stored favorite
+				unset($favorite['state']['get_rows']);
+
 				$send_value = array_merge($value, $favorite['state']);
 
 				// Ajax call can handle the saved sort here, but this can't

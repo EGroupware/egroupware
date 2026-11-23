@@ -15,6 +15,7 @@
 		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
 		<!-- bare reference tag, as a lazy-loaded tab-panel uses: NOT expanded while this template is parsed -->
 		<et2-template id="api.nextmatch_test.sub_template"/>
+		<et2-nextmatch id="favorite_nm" lazy="true" template="api.nextmatch_test.sub_template"/>
 		<!-- tabs added by the server via extraTabs, as Preferences' "Security &amp; Password" popup does -->
 		<et2-tabbox id="tabs">
 			<tabs>
