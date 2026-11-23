@@ -659,11 +659,12 @@ class MergeTest extends LoggedInTest
 		(fn($fields) => $this->numeric_fields = $fields)->call($this->merge, ['#Länge(cm)', '#Kl. 5']);
 		$this->merge->setReplacements(['$$#Länge(cm)$$' => 1234.5, '$$#Kl. 5$$' => 2.25, '$$#Kl:5$$' => 'other']);
 
-		$result = $this->merge->merge_string('<text:p>[{{#Länge(cm):1}}][{{#Kl. 5:1}}]</text:p>', [1], $errors,
+		// separators given explicitly (decimal ",", thousands "."), to not depend on the user's number format
+		$result = $this->merge->merge_string('<text:p>[{{#Länge(cm):1,.}}][{{#Kl. 5:1,.}}]</text:p>', [1], $errors,
 			'application/vnd.oasis.opendocument.text');
 
 		$this->assertEmpty($errors, "Errors when merging");
-		$this->assertEquals('<text:p>[1,234.5][2.3]</text:p>', $result);
+		$this->assertEquals('<text:p>[1.234,5][2,3]</text:p>', $result);
 	}
 
 	/**
