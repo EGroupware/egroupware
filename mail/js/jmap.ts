@@ -511,6 +511,31 @@ export function isTooLargeProblem(problem : any) : boolean
 }
 
 /**
+ * True if `problem` is/contains Stalwart's "a blobId this Email/set create referenced no longer
+ * exists" SetError - found live 2026-11-23/24 (tickets #128171 and others, multiple Stalwart-
+ * migrated instances): a plain `invalidProperties` SetError with no dedicated JMAP-spec type of
+ * its own (unlike "forbidden"/"tooLarge" above), description text "One or more blobIds do not
+ * exist on this server." Root cause: resolveOutgoingInlineImages()'s own `inlineImageUploads`
+ * cache (see its docblock) is keyed by the body's literal `src` string and lives for as long as
+ * this MailJmap instance does (effectively the whole browser tab, not one compose session) - an
+ * HTML signature with an embedded (`data:`/`blob:`) logo image re-inserts the SAME src on every
+ * brand-new compose, so after the FIRST send/autosave ever uploads it, every later one just
+ * replays that same cached blobId, with no freshness check - eventually Stalwart's own blob-store
+ * GC reclaims it (RFC 8620 S6 gives Upload no guaranteed indefinite lifetime once not freshly
+ * referenced) and every subsequent send fails, until the compose is switched to plain text
+ * (bypassing resolveOutgoingInlineImages() entirely) or the tab is reloaded (dropping the cache).
+ * Matched on description text, not `.type`, since Stalwart doesn't give this its own type.
+ */
+function isBlobNotFoundProblem(problem : any) : boolean
+{
+	if (Array.isArray(problem)) return problem.some(isBlobNotFoundProblem);
+	if (problem instanceof Error && (problem as any).cause) return isBlobNotFoundProblem((problem as any).cause);
+	if (!problem || typeof problem !== 'object') return false;
+	const text = (problem.description || problem.detail || '').toString();
+	return problem.type === 'invalidProperties' && /\bblobid/i.test(text) && /\bexist/i.test(text);
+}
+
+/**
  * Build a user-facing message for a failed write against a SHARED (someone else's) mailbox or
  * message - almost always means the owner hasn't granted the specific ACL right this action
  * needs, not a generic JMAP failure (ralf, 2026-10-30: "it's important that these operations ...
@@ -8656,8 +8681,13 @@ export class MailJmap
 	 * deliberately NOT re-uploaded/re-fetched on every later send/autosave of this same compose
 	 * session (the live body keeps referencing the same original src unchanged; only a COPY built
 	 * for the outgoing payload gets rewritten to cid: here).
+	 *
+	 * @param forceReupload bypass the inlineImageUploads cache and upload fresh blobs instead -
+	 *  createDraftEmail()'s self-heal retry for isBlobNotFoundProblem() (see its own docblock):
+	 *  the cache can otherwise hand back a blobId Stalwart has already garbage-collected
 	 */
-	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string, isHtml : boolean) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string, isHtml : boolean,
+		forceReupload = false) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
 	{
 		// a plain-text body is never HTML, however much a `src="...data:image..."`-shaped
 		// substring it happens to literally contain looks like one (eg. copy-pasted HTML source,
@@ -8690,7 +8720,7 @@ export class MailJmap
 		let index = 0;
 		await Promise.all(Array.from(urls).map(async(url) =>
 		{
-			const cached = this.inlineImageUploads.get(url);
+			const cached = !forceReupload && this.inlineImageUploads.get(url);
 			if (cached)
 			{
 				cidByUrl.set(url, cached.cid);
@@ -8845,34 +8875,50 @@ export class MailJmap
 		autocryptHeader? : string | null) :
 		Promise<string>
 	{
-		const {body, inlineImages} = bodyOverride ?
-			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
-			await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml);
-		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages, autocryptHeader);
-		if (bodyOverride)
+		const buildAndCreate = async(forceReupload : boolean) =>
 		{
-			delete properties.bodyValues;
-			delete properties.textBody;
-			delete properties.htmlBody;
-			// bodyOverride is already the exact bodyStructure shape - a flat {type,blobId} single
-			// opaque part for S/MIME, or a {type,subParts} multipart/encrypted tree for PGP
-			// (pgpEncryptBody()) - no reconstruction needed
-			properties.bodyStructure = bodyOverride;
-		}
-		const [{emailSet}] = await client.requestMany((t) => ({
-			emailSet: t.Email.set({
-				accountId: token.accountId,
-				create: {
-					s1: {
-						mailboxIds: {[draftsId]: true},
-						// classic mail_compose always saved drafts as '\Seen \Draft' (never left
-						// unread) - match that here too, for both real-JMAP and shim backends
-						keywords: {'$draft': true, '$seen': true},
-						...properties,
+			const {body, inlineImages} = bodyOverride ?
+				{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
+				await this.resolveOutgoingInlineImages(token, client, email.body ?? '', !!email.isHtml, forceReupload);
+			const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages, autocryptHeader);
+			if (bodyOverride)
+			{
+				delete properties.bodyValues;
+				delete properties.textBody;
+				delete properties.htmlBody;
+				// bodyOverride is already the exact bodyStructure shape - a flat {type,blobId} single
+				// opaque part for S/MIME, or a {type,subParts} multipart/encrypted tree for PGP
+				// (pgpEncryptBody()) - no reconstruction needed
+				properties.bodyStructure = bodyOverride;
+			}
+			return client.requestMany((t) => ({
+				emailSet: t.Email.set({
+					accountId: token.accountId,
+					create: {
+						s1: {
+							mailboxIds: {[draftsId]: true},
+							// classic mail_compose always saved drafts as '\Seen \Draft' (never left
+							// unread) - match that here too, for both real-JMAP and shim backends
+							keywords: {'$draft': true, '$seen': true},
+							...properties,
+						},
 					},
-				},
-			}),
-		}));
+				}),
+			}));
+		};
+
+		let [{emailSet}] = await buildAndCreate(false);
+
+		// Self-heal for isBlobNotFoundProblem() (see its own docblock) - resolveOutgoingInlineImages()'s
+		// cache handed back an inline-image blobId Stalwart has since garbage-collected. Only
+		// worth retrying when this create could actually have hit that cache at all - bodyOverride's
+		// S/MIME/PGP path never calls resolveOutgoingInlineImages(), so a failure there is something
+		// else. Same "detect specific error, self-heal, retry once" shape as sendNewEmail()'s own
+		// overQuota handling just below.
+		if (!bodyOverride && !emailSet.created?.s1 && isBlobNotFoundProblem(emailSet.notCreated?.s1))
+		{
+			[{emailSet}] = await buildAndCreate(true);
+		}
 		if (!emailSet.created?.s1)
 		{
 			throw new JmapUserError(describeSetError(emailSet.notCreated) ?? this.egw.lang('Failed to create message'));
