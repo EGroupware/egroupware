@@ -243,4 +243,50 @@ class SelectTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		// Nothing comes back, even though edited since it's readonly
 		$this->assertEquals(array(), $content);
 	}
+
+	/**
+	 * Regression test (live bug, ticket #126961): a template still using the legacy
+	 * <taglist-account> tag (pre-dating the et2- webcomponent conversion, eg. an app not yet
+	 * converted, or a lagging 3rd-party/addon package) must still validate account values the
+	 * same way <et2-select-account> does, not fall through to the generic "not in allowed list"
+	 * validation (which has no sel_options for account widgets, and so rejects every value).
+	 */
+	public function testLegacyTaglistAccountTagStillValidatesAccounts()
+	{
+		$etemplate = new Etemplate();
+		$etemplate->read('api.select_legacy_taglist_account_test', 'test');
+
+		// the logged-in test session's own account - guaranteed to exist and be a valid value,
+		// which is exactly what the broken code path rejected unconditionally regardless
+		$account_id = (string)$GLOBALS['egw_info']['user']['account_id'];
+		$result = $this->mockedExec($etemplate, ['permissions' => ['READ' => [$account_id]]], [], [], []);
+
+		$data = [];
+		foreach($result as $command)
+		{
+			if($command['type'] == 'et2_load')
+			{
+				$data = $command['data'];
+				break;
+			}
+		}
+		Etemplate::ajax_process_content($data['data']['etemplate_exec_id'], $data['data']['content'], false);
+		static::$mocked_exec_result = [];
+
+		$response = $this->ajax_response->returnResult();
+		$errors = [];
+		foreach($response as $command)
+		{
+			if($command['type'] == 'et2_validation_error')
+			{
+				$errors = $command['data'];
+			}
+		}
+
+		// the old bug rejected it with "'1' is NOT allowed ('')!" (empty allow-list) - that must
+		// no longer happen, regardless of whether account 1 turns out valid or not
+		$this->assertArrayNotHasKey('permissions[READ]', $errors,
+			"legacy <taglist-account> must not fall through to the generic validation: ".
+			json_encode($errors));
+	}
 }
