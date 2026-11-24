@@ -163,6 +163,42 @@ class TrackingTest extends LoggedInTest
 	}
 
 	/**
+	 * Test allowing html content only applies to free text, eg. the description or a comment
+	 *
+	 * Labels and all other values are plain text, eg. the title of a ticket,
+	 * and must not add html to the notification, which the notification popup renders as is.
+	 */
+	public function testHtmlContentOnlyInFreeText()
+	{
+		$tracking = new TestTracking(self::APP);
+		$tracking->html_content_allow = true;
+		$tracking->message = array('Modified by <b>User</b>');
+		$tracking->details = array(
+			'title'   => array('label' => '<b>Summary</b>', 'value' => '<b>Title</b>', 'type' => 'summary'),
+			'cc'      => array('label' => 'CC', 'value' => '<img src="/logout.php">'),
+			array('value' => '<b>Description</b>', 'type' => 'summary'),
+			'description' => array('value' => '<p><i>Formatted</i> description</p>', 'type' => 'multiline'),
+			array('value' => 'Comment by <b>Admin</b>:', 'type' => 'reply'),
+			array('value' => '<p><u>Formatted</u> comment</p>', 'type' => 'multiline'),
+		);
+
+		$body = $tracking->get_body(true, array('t_id' => 1), null, false);
+
+		// free text keeps its html
+		$this->assertStringContainsString('<p><i>Formatted</i> description</p>', $body);
+		$this->assertStringContainsString('<p><u>Formatted</u> comment</p>', $body);
+		// everything else is escaped
+		$this->assertStringNotContainsString('<b>', $body);
+		$this->assertStringNotContainsString('<img', $body);
+		$this->assertStringContainsString('Modified by &lt;b&gt;User&lt;/b&gt;', $body);
+		$this->assertStringContainsString('&lt;b&gt;Summary&lt;/b&gt;', $body);
+		$this->assertStringContainsString('&lt;b&gt;Title&lt;/b&gt;', $body);
+		$this->assertStringContainsString('&lt;img src=&quot;/logout.php&quot;&gt;', $body);
+		$this->assertStringContainsString('&lt;b&gt;Description&lt;/b&gt;', $body);
+		$this->assertStringContainsString('Comment by &lt;b&gt;Admin&lt;/b&gt;:', $body);
+	}
+
+	/**
 	 * Test a modified description without label, like InfoLog's, is marked and repeated in "What changed"
 	 */
 	public function testHtmlModifiedDescription()
