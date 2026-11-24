@@ -204,6 +204,46 @@ class Tree extends Etemplate\Widget
 	}
 
 	/**
+	 * Values of the options of a tree, which can be selected
+	 *
+	 * Options are value => label pairs, or arrays with their value as "value" or "id" and their
+	 * children as "children" or "item". An option marked as "unselectable" only holds its children.
+	 *
+	 * @param array $options
+	 * @return string[]
+	 */
+	public static function optionValues(array $options) : array
+	{
+		$values = [];
+		foreach($options as $key => $option)
+		{
+			if (!is_array($option))
+			{
+				$values[] = (string)$key;
+				continue;
+			}
+			$value = $option[self::ID] ?? $option['id'] ?? null;
+			if (is_scalar($value))
+			{
+				if (empty($option[self::UNSELECTABLE])) $values[] = (string)$value;
+			}
+			foreach([self::CHILDREN, 'item'] as $children)
+			{
+				if (is_array($option[$children] ?? null))
+				{
+					$values = array_merge($values, self::optionValues($option[$children]));
+				}
+			}
+			// a group of options: label => options
+			if (!is_scalar($value) && !isset($option[self::CHILDREN]) && !isset($option['item']))
+			{
+				$values = array_merge($values, self::optionValues($option));
+			}
+		}
+		return $values;
+	}
+
+	/**
 	 * Check if given $id is cat_id attribute of one of given array members
 	 *
 	 * @param int $id
@@ -257,7 +297,10 @@ class Tree extends Etemplate\Widget
 						continue;
 					}
 					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !self::in_cats($val, $allowed) ||
-						$this->type == 'tree' && !self::in_tree($val, $allowed))
+						$this->type == 'tree' && !self::in_tree($val, $allowed) ||
+						// a tree-dropdown is given its options nested: a value has to be one of them, if there are any
+						$this->type == 'tree-dropdown' && (string)$val !== '' && ($offered ??= self::optionValues($allowed)) &&
+							!in_array((string)$val, $offered, true))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
 																   $this->type == 'tree-cat' ? " ('" . implode("','", array_column($allowed, 'value')) . ')' : ''

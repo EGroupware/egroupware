@@ -2233,7 +2233,13 @@ class Nextmatch extends Etemplate\Widget
 			{
 				if (isset($query[$name]))
 				{
+					// the widget the generator uses for the filter
 					$type = $name === 'cat_id' && empty($query['cat_is_select']) ? 'et2-select-cat' : 'et2-select';
+					if ($type === 'et2-select' && is_string($query[$name.'_widget'] ?? null) &&
+						preg_match('/^et2-[a-z-]+$/', $query[$name.'_widget']))
+					{
+						$type = $query[$name.'_widget'];
+					}
 					$candidates[$name][] = [self::factory($type, "<$type id=\"$name\"/>", $name), $form_name, $expand];
 				}
 			}

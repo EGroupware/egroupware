@@ -642,6 +642,53 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * A filter shown as tree-dropdown offers its options nested, eg. distribution lists below a
+	 * node which itself can not be selected. The tree widget accepts the options of all levels,
+	 * and nothing else as long as it has options.
+	 */
+	public function testTreeDropdownValidatesAgainstItsNestedOptions()
+	{
+		$options = array(
+			array('value' => '', 'label' => 'No distribution list'),
+			array('value' => 'lists', 'label' => 'Distribution lists', 'unselectable' => true, 'children' => array(
+				array('value' => '12', 'label' => 'Friends'),
+				array('value' => 14, 'label' => 'Family', 'children' => array(array('value' => '15', 'label' => 'Kids'))),
+			)),
+			array('id' => '-408', 'text' => 'A group', 'item' => array(array('id' => '-2', 'text' => 'Admins'))),
+			'plain' => 'Plain option',
+		);
+		$this->assertSame(array('', '12', '14', '15', '-408', '-2', 'plain'), Etemplate\Widget\Tree::optionValues($options));
+
+		$request = new \ReflectionProperty(Etemplate\Widget::class, 'request');
+		$request_before = $request->getValue();
+		$request->setValue(null, Etemplate\Request::read());
+		try
+		{
+			$accepts = static function($value, array $sel_options) use ($request)
+			{
+				$request->getValue()->sel_options = $sel_options;
+				$tree = Etemplate\Widget::factory('et2-tree-dropdown', '<et2-tree-dropdown id="filter2"/>', 'filter2');
+				$validated = array();
+				$tree->validate('nm', array(), array('nm' => array('filter2' => $value)), $validated);
+				$errors = Etemplate\Widget::validation_errors();
+				// forget the error for the next call
+				(new \ReflectionProperty(Etemplate\Widget::class, 'validation_errors'))->setValue(null, array());
+				return !$errors && ($validated['nm']['filter2'] ?? null) == $value;
+			};
+			$this->assertTrue($accepts('12', array('filter2' => $options)), 'a nested option');
+			$this->assertTrue($accepts('15', array('filter2' => $options)), 'an option two levels down');
+			$this->assertTrue($accepts('-2', array('filter2' => $options)));
+			$this->assertFalse($accepts('99999', array('filter2' => $options)), 'no option');
+			$this->assertFalse($accepts('lists', array('filter2' => $options)), 'a node which can not be selected');
+			$this->assertTrue($accepts('anything', array()), 'without options there is nothing to check against');
+		}
+		finally
+		{
+			$request->setValue(null, $request_before);
+		}
+	}
+
+	/**
 	 * With the report switched on, filters outside of col_filter which get_rows never receives
 	 * are logged too: a date no widget of the filter-template stands for, and a filter of the
 	 * application. A date its widget accepts, and the parts of the value which are no filter,
