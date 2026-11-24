@@ -930,7 +930,8 @@ END:VALARM';
 						'id' => 'J',
 						'caption' => lang('Join'),
 						'icon' => 'accept_call',
-						'onExecute' => 'app.status.openCall("'.$params['data']['videoconference'].'");'
+						// the url contains the room id of the event, which is set by whoever created it
+						'onExecute' => 'app.status.openCall('.json_encode($params['data']['videoconference']).');'
 					)
 				];
 			}
