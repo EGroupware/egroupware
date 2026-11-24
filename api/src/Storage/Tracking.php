@@ -171,6 +171,9 @@ abstract class Tracking
 	/**
 	 * Should the class allow html content (for notifications)
 	 *
+	 * Only applies to free text, ie. details of type 'multiline' or 'reply' like a description or a comment.
+	 * Labels and all other values are always plain text.
+	 *
 	 * @var boolean
 	 */
 	var $html_content_allow = false;
@@ -1591,14 +1594,17 @@ abstract class Tracking
 	}
 
 	/**
-	 * Escape a label or heading of the html notification, unless html content is allowed
+	 * Escape a label or heading of the html notification
+	 *
+	 * Labels and headings are plain text, even if html content is allowed:
+	 * they contain eg. the name of the user or the title of the entry.
 	 *
 	 * @param string $label
 	 * @return string
 	 */
 	protected function html_label($label) : string
 	{
-		return $this->html_content_allow ? (string)$label : Api\Html::htmlspecialchars($label);
+		return Api\Html::htmlspecialchars($label);
 	}
 
 	/**
@@ -1620,13 +1626,17 @@ abstract class Tracking
 			// the link is often too long for html boxes chunk-split allows to break lines if needed
 			return Api\Html::a_href(chunk_split(rawurldecode($value),40,'&#8203;'),$value,'','target="_blank"');
 		}
+		// html content is only allowed in free text, eg. the description or a comment,
+		// all other values are plain text, eg. the title of the entry
+		$html = $this->html_content_allow && in_array($type, ['multiline', 'reply'], true);
+
 		// Only Convert nl2br on non-html content
 		if ($type === 'multiline' && strpos((string)$value, '<br') === false)
 		{
 			// already escaped, must NOT do htmlspecialchars again, but only for this value
-			return Api\Html::activate_links(nl2br($this->html_content_allow ? (string)$value : Api\Html::htmlspecialchars($value)));
+			return Api\Html::activate_links(nl2br($html ? (string)$value : Api\Html::htmlspecialchars($value)));
 		}
-		return $this->html_content_allow ? Api\Html::activate_links((string)$value) : Api\Html::htmlspecialchars($value);
+		return $html ? Api\Html::activate_links((string)$value) : Api\Html::htmlspecialchars($value);
 	}
 
 	/**
