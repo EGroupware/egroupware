@@ -35,9 +35,22 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 	@property()
 	path : string
 
+	/**
+	 * Only one entry is being merged
+	 *
+	 * Merging one entry does not end in a download or a sent email: an email template is opened in
+	 * compose, and a single document is opened (in Collabora, if available).
+	 */
+	@property({type: Boolean})
+	singleEntry = false;
+
 	// Can't merge "& send" if no email template selected
 	@state()
 	canEmail = false;
+
+	// Number of selected files, a single entry merged into exactly one document gets opened
+	@state()
+	fileCount = 0;
 
 	private get dialog() : Et2VfsSelectDialog
 	{
@@ -106,6 +119,7 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 		let canPDF = false;
 		const oldCanEmail = this.canEmail;
 		this.canEmail = false;
+		this.fileCount = this.dialog.value.length;
 
 		this.dialog.value.forEach(path =>
 		{
@@ -131,11 +145,32 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 	}
 
 
+	/**
+	 * The merge button, labelled with what will happen
+	 */
+	protected mergeButtonTemplate()
+	{
+		let label = "Merge";
+		let image = "etemplate/merge";
+		if(this.canEmail)
+		{
+			label = this.singleEntry ? "Merge & open" : "Merge & send";
+			image = "mail";
+		}
+		else if(this.singleEntry && this.fileCount == 1)
+		{
+			label = "Merge & open";
+		}
+		return html`
+            <et2-button slot="footer" id="send" label=${this.egw().lang(label)} image=${image}
+                        noSubmit="true"></et2-button>`;
+	}
+
 	render()
 	{
 		return html`
             <et2-vfs-select-dialog
-                    class=egw_app_merge_document"
+                    class="egw_app_merge_document"
                     path=${this.path}
                     multiple="true"
                     buttonLabel=${this.egw().lang("Download")}
@@ -143,14 +178,7 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
                     .open=${true}
                     @et2-select=${this.handleFileSelect}
             >
-                ${this.canEmail ?
-                  html`
-                      <et2-button slot="footer" id="send" label=${this.egw().lang("Merge & send")} image="mail"
-                                  noSubmit="true"></et2-button> ` :
-                  html`
-                      <et2-button slot="footer" id="send" label=${this.egw().lang("Merge")} image="etemplate/merge"
-                                  noSubmit="true"></et2-button>`
-                }
+                ${this.mergeButtonTemplate()}
                 <et2-details>
                     <span slot="summary">${this.egw().lang("Merge options")}</span>
                     <et2-checkbox label=${this.egw().lang("Save as PDF")} id="pdf"></et2-checkbox>

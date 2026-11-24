@@ -1528,7 +1528,8 @@ export abstract class EgwApp
 
 		let fileSelect = <Et2MergeDialog><unknown>loadWebComponent('et2-merge-dialog', {
 			application: this.appname,
-			path: dirs.pop() || ""
+			path: dirs.pop() || "",
+			singleEntry: selected?.length == 1 && !this._isMergeSelectAll(action)
 		}, et2?.widgetContainer ?? null);
 		if(!et2)
 		{
@@ -1561,6 +1562,24 @@ export abstract class EgwApp
 	}
 
 	/**
+	 * Check if the merge action runs on "select all" of the list it came from
+	 *
+	 * @param action merge action, the list is found on it or one of its parents
+	 * @protected
+	 */
+	protected _isMergeSelectAll(action? : EgwAction) : boolean
+	{
+		for(let a = action; a; a = a.parent)
+		{
+			if(a.data?.nextmatch?.getSelection()?.all)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Check if a merged document could be linked to at least one of the selected entries
 	 *
 	 * Linking needs edit rights on the entry, which lists flag per row with the "rowNoEdit" class.
@@ -1574,12 +1593,9 @@ export abstract class EgwApp
 	 */
 	protected _canLinkMergedDocument(action? : EgwAction, selected? : EgwActionObject[]) : boolean
 	{
-		for(let a = action; a; a = a.parent)
+		if(this._isMergeSelectAll(action))
 		{
-			if(a.data?.nextmatch?.getSelection()?.all)
-			{
-				return true;
-			}
+			return true;
 		}
 		const noEdit = (row : EgwActionObject) => (<any>this.egw.dataGetUIDdata(row.id))?.data?.class?.includes?.("rowNoEdit");
 		return !selected?.length || !selected.every(noEdit);
