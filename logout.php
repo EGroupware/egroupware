@@ -12,6 +12,15 @@
 
 use EGroupware\Api;
 
+// Logging out is a navigation: a link, a redirect or the frame of a single logout.
+// An embedded resource requesting it, eg. an image in the html of a mail or a notification, must not log out who looks at it.
+// Browsers not sending the header and other clients are not restricted.
+if (!in_array($_SERVER['HTTP_SEC_FETCH_DEST'] ?? 'document', ['document', 'iframe', 'frame', 'empty'], true))
+{
+	http_response_code(403);
+	exit;
+}
+
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'disable_Template_class' => True,
