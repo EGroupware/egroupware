@@ -47,8 +47,20 @@ class Transport extends \Horde_Mail_Transport
 	 * everything else - no duplicate authentication, no separate credential story to maintain.
 	 * Otherwise (a genuinely different submission server/account) opens its own connection from
 	 * the acc_smtp_* fields.
+	 *
+	 * $asUser (the From address we're actually sending as) only matters when the account's own
+	 * password is Mail\Credentials::UNAVAILABLE - eg. a personal password encrypted with the
+	 * user's session password, read in an async/cron context (no session), or the hosting
+	 * farm's shared "every instance has one" account, which never has credentials of its own at
+	 * all (relying entirely on admin/impersonation). In that case we ask imapServer() for an
+	 * ADMIN connection impersonating $asUser instead of the (unusable) regular one - for
+	 * Mail\Imap\Jmap/Mail\Imap\Stalwart that's the same Dovecot-style master login
+	 * ("$asUser%$admin") already used for interactive admin access to another mailbox; the
+	 * hosting-specific managementserver_stalwart subclass further resolves that into a real,
+	 * short-lived per-mailbox token from the MServer (ticket #127951, calendar-alarm
+	 * notifications sent via cron previously crashed here with a null $secret).
 	 */
-	protected function jmapClient() : Http
+	protected function jmapClient(?string $asUser=null) : Http
 	{
 		if (!isset($this->jmap))
 		{
@@ -61,7 +73,17 @@ class Transport extends \Horde_Mail_Transport
 				($params['acc_smtp_host'] === $params['acc_imap_host'] &&
 					(empty($params['acc_smtp_username']) ||
 						$params['acc_smtp_username'] === $params['acc_imap_username']));
-			$imap = $sameServer ? $this->account->imapServer() : null;
+			// no usable password of its own: either Credentials::UNAVAILABLE (a personal password
+			// encrypted with the user's session password, read in an async/cron context without
+			// one - see Credentials::read()) or simply empty (the hosting farm's shared "every
+			// instance has one" account, which never has credentials of its own at all) - but only
+			// worth trying if there's an actual admin credential (real password or, on the hosting
+			// farm, a tenant-admin API key) configured to impersonate with in the first place: an
+			// install without one would otherwise still reach JmapHttp with a null $secret, just one
+			// step later (acc_imap_admin_password itself unset) - exactly the crash we're avoiding
+			$impersonate = $asUser && !empty($params['acc_imap_admin_password']) &&
+				(empty($params['acc_imap_password']) || $params['acc_imap_password'] === Mail\Credentials::UNAVAILABLE);
+			$imap = $sameServer ? $this->account->imapServer($impersonate ? $asUser : false) : null;
 
 			if ($imap && is_a($imap, ImapJmap::class))
 			{
@@ -109,13 +131,14 @@ class Transport extends \Horde_Mail_Transport
 
 	private function sendJmap($recipients, array $headers, $body) : void
 	{
-		$jmap = $this->jmapClient();
-
+		// resolve the From address BEFORE opening the connection: jmapClient() needs it to
+		// impersonate the right mailbox when our own credentials are unavailable (see its docblock)
 		[$fromAddr, $textHeaders] = $this->prepareHeaders($headers) ?: [null, null];
 		if (!$fromAddr)
 		{
 			throw new \Horde_Mail_Exception('No From address provided.');
 		}
+		$jmap = $this->jmapClient($fromAddr);
 
 		$header = static function(string $name) use ($headers)
 		{

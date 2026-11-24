@@ -232,17 +232,27 @@ class Credentials
 					$on_login = array(__CLASS__.'::migrate', $acc_id);
 				}
 			}
-			// do NOT attempt to use credentials encrypted with user password in an async context (where user password is not available)
-			// otherwise an s/mime certificate or user specific password will stall sending notification, even if no smtp authentication required
+			// do NOT attempt to DECRYPT credentials encrypted with the user's session password in an
+			// async context (where that password is not available) - but still fall through and
+			// populate the row below with password=UNAVAILABLE, do NOT skip it outright: skipping it
+			// left acc_*_pw_enc completely unset, which defeated Account::get_default()'s own
+			// Credentials::isUser($account->acc_smtp_pw_enc) safety check (it can't detect "session-
+			// only credential" on a pw_enc it never received), so it wrongly picked this account for
+			// async notification sending anyway - crashing JmapHttp::__construct()'s non-nullable
+			// string $secret param with null (ticket #127951, live 2026-11-16/24 on cron-triggered
+			// calendar-alarm notifications)
 			if (!empty($GLOBALS['egw_info']['flags']['async-service']) && in_array($row['cred_pw_enc'], [self::USER_AES, self::USER]))
 			{
-				continue;
-			}
-			try {
-				$password = self::decrypt($row);
-			}
-			catch (NoSessionPassword $e) {
 				$password = self::UNAVAILABLE;
+			}
+			else
+			{
+				try {
+					$password = self::decrypt($row);
+				}
+				catch (NoSessionPassword $e) {
+					$password = self::UNAVAILABLE;
+				}
 			}
 
 			// Remove special x chars added to both ends as a \0 trimming escape: decrypt_openssl_aes()
