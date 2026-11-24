@@ -2258,10 +2258,23 @@ class Nextmatch extends Etemplate\Widget
 
 		// filter-headers of the rows-template
 		$rows_template = $content_value['template'] ?? $this->attrs['template'] ?? $this->attrs['options'] ?? null;
+		$headers = [];
 		if ($rows_template && is_string($rows_template) && ($tpl = Template::instance($rows_template, quiet: true)))
 		{
+			$headers = self::filterHeaders($tpl);
+		}
+		// A generated filter-template is made from the file named in its url, which is another one
+		// than the rows-template shown, eg. for a mobile device the one of the desktop: it offers
+		// the filter-headers of that file.
+		if (is_string($resolved) && is_string($rows_template) &&
+			preg_match('#/api/filter-template\.php(/[^/]+/templates/[^/]+/[^/?]+\.xet)#', $resolved, $matches))
+		{
+			$headers = array_merge($headers, self::filterHeadersOfFile(Template::rel2path($matches[1]), $rows_template));
+		}
+		if ($headers)
+		{
 			$col_filter = self::form_name($form_name, 'col_filter');
-			foreach(self::filterHeaders($tpl) as $widget)
+			foreach($headers as $widget)
 			{
 				// the application can give a filter-header another type for the request
 				preg_match('/^(?:et2-)?nextmatch-(.+)$/', is_string($widget->attrs['type'] ?? null) &&
@@ -2315,6 +2328,60 @@ class Nextmatch extends Etemplate\Widget
 			}
 			$headers = array_merge($headers, self::filterHeaders($child));
 		}
+		return $headers;
+	}
+
+	/**
+	 * Filter-headers of a template in a template file
+	 *
+	 * Reads the file itself instead of using Template::instance(): that gives the template of the
+	 * current device, and would replace it by the one read here.
+	 *
+	 * @param string $path path of the file
+	 * @param string $template name of the template in the file, all of the file is used if it is not in it
+	 * @return Etemplate\Widget[] all widgets of a "(et2-)nextmatch-*" type, but plain and sort-headers
+	 */
+	protected static function filterHeadersOfFile(string $path, string $template) : array
+	{
+		$headers = [];
+		$reader = new \XMLReader();
+		if (!$path || !is_readable($path) || !@$reader->open($path))
+		{
+			return $headers;
+		}
+		// first the given template, if the file has none of that name everything in it
+		foreach([$template, null] as $only)
+		{
+			$inside = $only === null ? 0 : null;	// depth of the template we are in, null outside of it
+			while(@$reader->read())
+			{
+				if ($reader->nodeType === \XMLReader::END_ELEMENT)
+				{
+					if ($only !== null && $inside !== null && $reader->depth === $inside) $inside = null;
+					continue;
+				}
+				if ($reader->nodeType !== \XMLReader::ELEMENT) continue;
+
+				if ($only !== null && $inside === null)
+				{
+					if (in_array($reader->name, ['template', 'et2-template'], true) && $reader->getAttribute('id') === $only &&
+						!$reader->isEmptyElement)
+					{
+						$inside = $reader->depth;
+					}
+					continue;
+				}
+				if (preg_match('/^(?:et2-)?nextmatch-(.+)$/', $reader->name, $matches) &&
+					!in_array($matches[1], ['header', 'sortheader', 'columnselection']))
+				{
+					$headers[] = self::factory($reader->name, $reader->readOuterXml(), $reader->getAttribute('id'));
+				}
+			}
+			if ($headers) break;
+			$reader->close();
+			if (!@$reader->open($path)) break;
+		}
+		$reader->close();
 		return $headers;
 	}
 

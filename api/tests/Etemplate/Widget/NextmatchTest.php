@@ -621,6 +621,27 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
+	 * A generated filter-template is made from a template file, which for a mobile device is not the
+	 * one the rows are shown with: its filter-headers are read from that file, of the template
+	 * asked for or - if the file has none of that name - of all of it.
+	 */
+	public function testFilterHeadersAreReadFromATemplateFile()
+	{
+		$this->templateRequest(array('filter_nm' => array('get_rows' => __CLASS__.'::mock_get_rows', 'num_rows' => 0)));
+		$method = new \ReflectionMethod(Nextmatch::class, 'filterHeadersOfFile');
+		$file = EGW_SERVER_ROOT.'/api/templates/test/nextmatch_test.xet';
+		$ids = static fn(array $headers) => array_map(static fn($widget) => $widget->type.'#'.$widget->id, $headers);
+
+		$expected = array('et2-nextmatch-header-filter#status', 'et2-nextmatch-header-custom#country', 'et2-nextmatch-header-entry#contact');
+		$this->assertSame($expected, $ids($method->invoke(null, $file, 'api.nextmatch_test.rows')));
+		$this->assertSame($expected, $ids($method->invoke(null, $file, 'api.nextmatch_test.no_such_template')));
+		$this->assertSame(array(), $method->invoke(null, $file.'.missing', 'api.nextmatch_test.rows'));
+
+		// reading the file must not replace the templates already loaded
+		$this->assertNotNull(Etemplate\Widget\Template::instance('api.nextmatch_test.rows', quiet: true));
+	}
+
+	/**
 	 * With the report switched on, filters outside of col_filter which get_rows never receives
 	 * are logged too: a date no widget of the filter-template stands for, and a filter of the
 	 * application. A date its widget accepts, and the parts of the value which are no filter,
