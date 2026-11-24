@@ -32,7 +32,7 @@ const MIME = {
  * @param selected selected paths
  * @param closedWith button the file dialog gets closed with
  */
-function mergeDialog(selected : string[], closedWith : number | null = null)
+function mergeDialog(selected : string[], closedWith : number | null = null, singleEntry = false)
 {
 	const download = {disabled: false, statustext: ""};
 	const pdf = {disabled: false};
@@ -49,7 +49,9 @@ function mergeDialog(selected : string[], closedWith : number | null = null)
 		updateComplete: {value: Promise.resolve(true)},
 		egw: {value: () => ({lang: (s : string) => s})},
 		requestUpdate: {value: () => {}},
-		canEmail: {value: false, writable: true}
+		canEmail: {value: false, writable: true},
+		fileCount: {value: 0, writable: true},
+		singleEntry: {value: singleEntry, writable: true}
 	});
 	return {dialog, fileDialog, download, pdf};
 }
@@ -121,5 +123,38 @@ describe("Et2MergeDialog: an email template can not be downloaded", () =>
 
 		assert.deepEqual(result.documents.map(d => d.path), ["/templates/Letter.odt", "/templates/Letter.eml"]);
 		assert.isFalse(result.options.download);
+	});
+});
+
+/**
+ * The merge button says what is going to happen: one entry is opened (email in compose, a single
+ * document in the editor), several entries are merged, or merged & sent for an email template.
+ */
+describe("Et2MergeDialog: merge button label", () =>
+{
+	const label = (selected : string[], singleEntry : boolean) =>
+	{
+		const {dialog} = mergeDialog(selected, null, singleEntry);
+		dialog.handleFileSelect({});
+		return dialog.mergeButtonTemplate().values[0];
+	};
+
+	it("is Merge & send for an email template and several entries", () =>
+	{
+		assert.strictEqual(label(["/templates/Letter.eml"], false), "Merge & send");
+	});
+	it("is Merge & open for an email template and one entry", () =>
+	{
+		assert.strictEqual(label(["/templates/Letter.eml"], true), "Merge & open");
+		assert.strictEqual(label(["/templates/Letter.odt", "/templates/Letter.eml"], true), "Merge & open");
+	});
+	it("is Merge & open for one document and one entry", () =>
+	{
+		assert.strictEqual(label(["/templates/Letter.odt"], true), "Merge & open");
+	});
+	it("is Merge for several documents or several entries", () =>
+	{
+		assert.strictEqual(label(["/templates/Letter.odt", "/templates/Sheet.ods"], true), "Merge");
+		assert.strictEqual(label(["/templates/Letter.odt"], false), "Merge");
 	});
 });
