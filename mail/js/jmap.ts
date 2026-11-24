@@ -4319,20 +4319,25 @@ export class MailJmap
 				return null;
 			}
 
-			const htmlParts : any[] = email.htmlBody || [];
 			const textParts : any[] = email.textBody || [];
 			// RFC 8621 §4.1.4: a message with NO real HTML part still gets a non-empty `htmlBody` -
 			// the server (confirmed live 2026-09-03 against Stalwart) echoes the plain-text part
-			// into it as a fallback "best attempt at an HTML rendition", so `htmlParts.length > 0`
+			// into it as a fallback "best attempt at an HTML rendition", so a non-empty `htmlBody`
 			// alone is true for almost every message, not just genuinely HTML ones - found live
 			// investigating "reply to a plain-text mail opens as HTML, ignoring the 'same format as
 			// original' preference" (ralf's own repro: a single-part text/plain message, `htmlBody`
 			// STILL came back non-empty, echoing that exact same part). Only a part whose own `type`
 			// is really `text/html` counts.
-			const htmlPart = htmlParts.find((p) => p.type === 'text/html');
-			const useHtml = !!htmlPart;
-			const part = useHtml ? htmlPart : textParts[0];
-			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
+			const htmlParts : any[] = (email.htmlBody || []).filter((p) => p.type === 'text/html');
+			const useHtml = htmlParts.length > 0;
+			// Apple Mail can split ONE logical body into several sibling text/plain or text/html
+			// parts with an inline attachment placed in between them (eg. a file inserted
+			// mid-message on iOS/iPadOS/macOS Mail) - a spec-compliant JMAP server returns every
+			// one of them in textBody/htmlBody (RFC 8621), so take ALL of them, not just the
+			// first, same fix as Api\Mail\Jmap\Imap::emailBodyFields() applies server-side for the
+			// classic/shimmed-IMAP path (tickets #128441/#128091).
+			const parts = useHtml ? htmlParts : textParts;
+			const raw = parts.map((p) => email.bodyValues?.[p.partId]?.value || '').join('');
 			// ticket #126181 (Birgit, relaying a customer): an ERP-generated report email's own
 			// <style> block (table borders/colours) vanished not just from the message VIEW
 			// (assembleBodyHtml(), fixed separately) but from a REPLY's quoted copy too, for the
@@ -5337,16 +5342,21 @@ export class MailJmap
 	 */
 	private assembleBodyHtml(email : any, htmlOptions? : string) : string
 	{
-		const htmlParts : any[] = email.htmlBody || [];
 		const textParts : any[] = email.textBody || [];
 		// same RFC 8621 §4.1.4 fallback-echo gotcha as fetchForReply() above - `htmlBody` is
 		// non-empty even for a plain-text-only message (Stalwart echoes the text/plain part into
 		// it), so only a part genuinely typed `text/html` counts as "this message has HTML".
-		const htmlPart = htmlParts.find((p) => p.type === 'text/html');
-		const useHtml = !!htmlPart && htmlOptions !== 'only_if_no_text';
-		const part = useHtml ? htmlPart : (textParts[0] || htmlPart);
-		const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
-		const isHtml = !!part && (useHtml || !textParts.length);
+		const htmlParts : any[] = (email.htmlBody || []).filter((p) => p.type === 'text/html');
+		const useHtml = htmlParts.length > 0 && htmlOptions !== 'only_if_no_text';
+		// Apple Mail can split ONE logical body into several sibling text/plain or text/html
+		// parts with an inline attachment placed in between them (eg. a file inserted
+		// mid-message on iOS/iPadOS/macOS Mail) - a spec-compliant JMAP server returns every one
+		// of them in textBody/htmlBody (RFC 8621), so take ALL of them, not just the first, same
+		// fix as Api\Mail\Jmap\Imap::emailBodyFields() applies server-side for the classic/
+		// shimmed-IMAP path (tickets #128441/#128091).
+		const parts = useHtml ? htmlParts : (textParts.length ? textParts : htmlParts);
+		const raw = parts.map((p) => email.bodyValues?.[p.partId]?.value || '').join('');
+		const isHtml = parts.length > 0 && (useHtml || !textParts.length);
 
 		let body : string;
 		if (isHtml)
