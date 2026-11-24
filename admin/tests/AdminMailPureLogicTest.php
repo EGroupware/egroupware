@@ -205,12 +205,31 @@ class AdminMailPureLogicTest extends \PHPUnit\Framework\TestCase
 			'acc_smtp_type' => 'SomeLdapBackedSmtpClass',
 			'ident_email_alias' => 'alias@example.org',
 			'ident_email' => 'primary@example.org',
+			'select_ident_mail' => true,
 		);
 		$result = $this->callPrivateStatic('normalizeAccountType', array($content, true));
 
 		$this->assertSame('SomeLdapBackedImapClass', $result['acc_imap_type']);
 		$this->assertSame('SomeLdapBackedSmtpClass', $result['acc_smtp_type']);
 		$this->assertSame('alias@example.org', $result['ident_email']);
+	}
+
+	/**
+	 * When the alias select is not shown (no select_ident_mail), it is readonly and eTemplate
+	 * returns its preserved value from page load: it must not overwrite the ident_email the
+	 * user just edited in the plain text field.
+	 */
+	public function testNormalizeAccountTypeIgnoresReadonlyAliasSelect()
+	{
+		$content = array(
+			'acc_imap_type' => 'SomeLdapBackedImapClass',
+			'acc_smtp_type' => 'SomeLdapBackedSmtpClass',
+			'ident_email_alias' => 'old@example.orh',
+			'ident_email' => 'new@example.org',
+		);
+		$result = $this->callPrivateStatic('normalizeAccountType', array($content, true));
+
+		$this->assertSame('new@example.org', $result['ident_email']);
 	}
 
 	/**
