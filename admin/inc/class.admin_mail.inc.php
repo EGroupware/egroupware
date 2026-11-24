@@ -3160,8 +3160,11 @@ class admin_mail
 			unset($content['acc_smtp_auth_session']);
 			unset($content['notify_use_default']);
 		}
-		// copy ident_email_alias selectbox back to regular name
-		elseif (isset($content['ident_email_alias']) && !empty ($content['ident_email_alias']))
+		// copy ident_email_alias selectbox back to regular name - but only when that select was the
+		// field actually shown (select_ident_mail, preserved from the render that was submitted).
+		// Otherwise it is readonly, so eTemplate hands back the preserved value from page load, which
+		// would overwrite the ident_email the user just typed with the identity's previous address.
+		elseif (!empty($content['select_ident_mail']) && !empty($content['ident_email_alias']))
 		{
 			$content['ident_email'] = $content['ident_email_alias'];
 		}
