@@ -57,6 +57,10 @@ class StalwartAliasDomainTest extends TestCase
 			{
 				return $this->aliasObjects($addresses, $primary);
 			}
+			public function primary(string $primary, array $account, array $aliases) : array
+			{
+				return $this->primaryAndAliases($primary, $account, $aliases);
+			}
 		};
 		$stalwart->defaultDomain = 'main.example';
 		$stalwart->jmapStandIn = $jmap;
@@ -135,5 +139,64 @@ class StalwartAliasDomainTest extends TestCase
 
 		$this->assertSame([], $aliases);
 		$this->assertSame([], Stalwart::$warnings);
+	}
+
+	private const ACCOUNT = ['name' => 'shinkel', 'emailAddress' => 'shinkel@main.example'];
+
+	public function testPrimaryEmailFromTheAddressbookOnAnAliasDomainWithAnOtherNamePart()
+	{
+		// s.hinkel@meissen-inklusiv.de is the addressbook email of the account shinkel: primary, Stalwart's address becomes an alias
+		[$email, $aliases] = $this->stalwart()->primary('s.hinkel@meissen-inklusiv.de', self::ACCOUNT, ['j.havekost@main.example']);
+
+		$this->assertSame('s.hinkel@meissen-inklusiv.de', $email);
+		$this->assertEqualsCanonicalizing(['j.havekost@main.example', 'shinkel@main.example'], $aliases);
+	}
+
+	public function testPrimaryEmailWhichIsAlreadyAnAliasOnTheMainDomainIsNotListedTwice()
+	{
+		[$email, $aliases] = $this->stalwart()->primary('s.hinkel@main.example', self::ACCOUNT, ['s.hinkel@main.example', 'j.havekost@main.example']);
+
+		$this->assertSame('s.hinkel@main.example', $email);
+		$this->assertEqualsCanonicalizing(['j.havekost@main.example', 'shinkel@main.example'], $aliases);
+
+		// the alias-domain form of the same alias: also only once
+		[$email, $aliases] = $this->stalwart()->primary('s.hinkel@meissen-inklusiv.de', self::ACCOUNT, ['s.hinkel@main.example']);
+		$this->assertSame('s.hinkel@meissen-inklusiv.de', $email);
+		$this->assertSame(['shinkel@main.example'], $aliases);
+	}
+
+	public function testPrimaryEmailWhichIsTheMailboxAddressNeedsNoAlias()
+	{
+		foreach(['shinkel@main.example', 'shinkel@meissen-inklusiv.de'] as $primary)
+		{
+			[$email, $aliases] = $this->stalwart()->primary($primary, self::ACCOUNT, ['j.havekost@main.example']);
+
+			$this->assertSame($primary, $email);
+			$this->assertSame(['j.havekost@main.example'], $aliases, "$primary is the account's own address");
+		}
+	}
+
+	public function testExternalPrimaryEmailSurvivesWithoutBeingAnAlias()
+	{
+		[$email, $aliases] = $this->stalwart()->primary('rmunser@elsewhere.example', self::ACCOUNT, ['x@main.example', 'rmunser@elsewhere.example']);
+
+		$this->assertSame('rmunser@elsewhere.example', $email);
+		$this->assertSame(['x@main.example'], $aliases);
+	}
+
+	public function testNoAddressbookEmailLeavesTheAccountsOwnAddress()
+	{
+		$this->assertSame(['', ['a@main.example']], $this->stalwart()->primary('', self::ACCOUNT, ['a@main.example']));
+	}
+
+	public function testMailingListIncludesTheMailboxHoldingItsAddressAsPrimaryEmail()
+	{
+		// user "pr" has the address of the list personalrat@ as primary email: the list is not a recipient of itself, pr's mailbox is
+		$recipients = Stalwart::listRecipients(['A@main.example', 'personalrat@main.example', 'b@main.example', 'a@main.example'],
+			'Personalrat@main.example', 'PR@main.example');
+
+		$this->assertSame(['a@main.example', 'b@main.example', 'pr@main.example'], $recipients);
+		$this->assertSame(['a@main.example', 'b@main.example'], Stalwart::listRecipients(['a@main.example', 'personalrat@main.example', 'b@main.example'], 'personalrat@main.example'));
+		$this->assertSame(['pr@main.example'], Stalwart::listRecipients([], 'personalrat@main.example', 'pr@main.example'));
 	}
 }
