@@ -1440,6 +1440,38 @@ class Stalwart extends Sql
 	}
 
 	/**
+	 * Sieve connection to the scripts of an account
+	 *
+	 * A tenant admin can NOT access the Sieve scripts of other accounts via JMAP (accountNotFound: it has no "impersonate"
+	 * permission), so we use an admin connection of the account's IMAP class, which impersonates the mailbox, eg.
+	 * managementserver_stalwart gets a token from the MServer for it. Without an account or an IMAP class, which can
+	 * impersonate, we fall back to the admin JMAP client.
+	 *
+	 * @param string $accountId Stalwart id of the account
+	 * @return Api\Mail\Sieve\Jmap
+	 */
+	protected function sieveConnection(string $accountId) : Api\Mail\Sieve\Jmap
+	{
+		if (!empty($this->account) && $this->account instanceof Api\Mail\Account)
+		{
+			try {
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/get', ['ids' => [$accountId], 'properties' => ['emailAddress']], 'a'],
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+				if (($mailbox = current($response['methodResponses'][0][1]['list'] ?? [])['emailAddress'] ?? null) &&
+					($imap = $this->account->imapServer($mailbox)) instanceof Api\Mail\Imap\Jmap)
+				{
+					return new Api\Mail\Sieve\Jmap($imap);
+				}
+			}
+			catch (\Throwable $e) {
+				error_log(__METHOD__."('$accountId') no impersonated Sieve connection: ".get_class($e).': '.$e->getMessage());
+			}
+		}
+		return new Api\Mail\Sieve\Jmap($this->jmapClient(), $accountId);
+	}
+
+	/**
 	 * Read or set the forward of an account, which is a Sieve rule "Forward mail to ..." (see Sieve\Forward)
 	 *
 	 * Reading never fails (an unreadable or not EGroupware script gives no forward), setting does, if the requested forward
@@ -1453,7 +1485,7 @@ class Stalwart extends Sql
 	 */
 	protected function forward(string $accountId, ?array $addresses=null, bool $keep=false)
 	{
-		$sieve = new Api\Mail\Sieve\Jmap($this->jmapClient(), $accountId);
+		$sieve = $this->sieveConnection($accountId);
 		if ($addresses === null)
 		{
 			return Api\Mail\Sieve\Forward::get($sieve);
