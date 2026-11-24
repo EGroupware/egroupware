@@ -139,6 +139,9 @@ class resources_ui
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(Acl::READ);
 		$content['nm']['options-filter2'] = resources_bo::$filter_options;
+		// "accessories of" a resource puts its id in the filter, which is no option of it:
+		// resources_bo::get_rows() checks the value
+		$content['nm']['extra_attributes'] = ['filter2'];
 		if(!$content['nm']['filter2'])
 		{
 			$content['nm']['filter2'] = key(resources_bo::$filter_options);

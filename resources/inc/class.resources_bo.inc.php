@@ -58,6 +58,35 @@ class resources_bo
 		// Accessories of a resource added when resource selected
 	);
 
+	/**
+	 * Value of the filter for resources and accessories, as get_rows() uses it
+	 *
+	 * The list sets the filter itself to show the accessories of a resource, so no filter widget
+	 * checks it. It is one of self::$filter_options, self::DELETED if deleted resources are kept,
+	 * or the id of the resource to show the accessories of - everything else gives the first option.
+	 *
+	 * @param mixed $filter value the list sent
+	 * @return int|string
+	 */
+	public static function accessoryFilter($filter)
+	{
+		if (is_scalar($filter))
+		{
+			if ($filter === self::DELETED)
+			{
+				if (!empty(Api\Config::read('resources')['history']))
+				{
+					return self::DELETED;
+				}
+			}
+			elseif ((string)(int)$filter === (string)$filter && ((int)$filter > 0 || isset(self::$filter_options[(int)$filter])))
+			{
+				return (int)$filter;
+			}
+		}
+		return key(self::$filter_options);
+	}
+
 	public static $field2label = array(
 		'res_id'	=> 'Resource ID',
 		'name'		=> 'name',
@@ -125,6 +154,7 @@ class resources_bo
 		// Sub-query to get the count of accessories
 		$acc_join = "LEFT JOIN (SELECT accessory_of AS accessory_id, count(res_id) as acc_count FROM {$this->so->table_name} GROUP BY accessory_of) AS acc ON acc.accessory_id = {$this->so->table_name}.res_id ";
 
+		$query['filter2'] = self::accessoryFilter($query['filter2'] ?? null);
 		switch($query['filter2'])
 		{
 			case -1:
