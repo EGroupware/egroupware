@@ -105,6 +105,8 @@ class ContentSecurityPolicy
 		'frame-src'   => null,	// NOT array(), to call the hook
 		'manifest-src'=> ["'self'"],
 		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other than self / clickjacking protection
+		// not covered by default-src: a <base> in user content would resolve all relative urls of the page against another server
+		'base-uri'    => ["'self'"],
 		'media-src'   => ["data:"],
 		'img-src'     => ["data:", "https:", "blob:"],
 		'font-src'    => ["'self'"],
