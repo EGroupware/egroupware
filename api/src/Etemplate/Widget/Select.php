@@ -174,6 +174,16 @@ class Select extends Etemplate\Widget
 		{
 			$widget_type = substr($widget_type, 4);
 		}
+		// backward compat: a template still using the legacy <taglist-account> tag (pre-dating
+		// the et2- webcomponent conversion) is not prefixed "et2-", so it's not caught above.
+		// The former Widget\Taglist class (merged into this one) had its own dedicated check for
+		// this exact string; without this alias it silently falls through to the generic
+		// 'default' validation below, which has no sel_options for account widgets and so
+		// rejects every submitted value.
+		elseif ($widget_type === 'taglist-account')
+		{
+			$widget_type = 'select-account';
+		}
 		$multiple = $this->attrs['multiple'] || self::getElementAttribute($form_name, 'multiple') ||
 			self::getElementAttribute($form_name, 'rows') > 1;
 		$allowFreeEntries = $this->attrs['allowFreeEntries'] || self::getElementAttribute($form_name, 'allowFreeEntries') ||

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.select_legacy_taglist_account_test" template="" lang="" group="0" version="16.1">
+		<grid id="permissions" width="100%">
+			<rows>
+				<row>
+					<description for="READ" value="Usage"/>
+					<taglist-account id="READ" account_type="both"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
