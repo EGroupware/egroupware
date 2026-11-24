@@ -289,6 +289,15 @@ class Stalwart extends Sql
 	{
 		if (!empty($this->debug)) error_log(__METHOD__ . "($_uidnumber, " . array2string($_mailAlternateAddress) . ', ' . array2string($_mailForwardingAddress) . ", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=" . array2string($_forwarding_only) . ') ' . function_backtrace());
 
+		// only the forwards (saveSMTPForwarding(), eg. a user changing his own forward): that's just the Sieve rule of the account
+		if ($_forwarding_only)
+		{
+			if (($stalwartId = $this->getUserData($_uidnumber)['stalwart']['id'] ?? null))
+			{
+				$this->forward($stalwartId, $_mailForwardingAddress, $_deliveryMode !== self::FORWARD_ONLY);
+			}
+			return true;
+		}
 		if (empty($_mailLocalAddress)) return;
 
 		$account_lid = $this->accounts->id2name($_uidnumber) ?? throw new \Exception("Invalid user #$_uidnumber!");
