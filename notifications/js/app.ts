@@ -81,6 +81,127 @@ interface NotifyRow
 }
 
 /**
+ * Elements removed from a message: they run or load something, change the page or ask the user for input
+ *
+ * A <style> would apply to the whole window, eg. the dark mode of html notifications following the operating system,
+ * kdots' dark theme styles them instead.
+ */
+const FORBIDDEN_ELEMENTS = 'script,style,meta,base,link,form,input,button,textarea,select,option,iframe,frame,frameset,' +
+	'object,embed,applet,svg,math,audio,video,source,track,picture,template,dialog';
+
+/**
+ * Attributes of a linked entry, as rendered by the server (notifications_popup::render_links())
+ */
+const LINK_ATTRIBUTES = ['data-app', 'data-id', 'data-url', 'data-popup'];
+
+/**
+ * Parse the html of a message and remove everything it must not do in our window
+ *
+ * A message contains content from whoever caused the notification, eg. the html description of a ticket
+ * or the headers of a mail, so it is treated like the html of a foreign mail:
+ * - no elements from FORBIDDEN_ELEMENTS and no event handlers
+ * - no data attributes, they trigger our own click handlers,
+ *   only the linked entries the server appends at the top level of the message keep theirs
+ * - no images from other servers, they tell the server when and from where the message was read
+ * - no styles loading something or taking the content out of the message
+ * - links only to web or mail addresses, opening in a new window
+ *
+ * The message is parsed in a template: nothing is loaded or run, before it is cleaned.
+ *
+ * @param _message html of the message
+ * @return content to append to the popup
+ */
+export function sanitizeMessage(_message: string): DocumentFragment
+{
+	const template = document.createElement('template');
+	template.innerHTML = _message ?? '';
+	const content = template.content;
+
+	content.querySelectorAll(FORBIDDEN_ELEMENTS).forEach((element) => element.remove());
+
+	content.querySelectorAll<HTMLElement>('*').forEach((element) =>
+	{
+		const linkedEntry = element.parentNode === content && element.localName === 'div';
+		for(const attribute of Array.from(element.attributes))
+		{
+			const name = attribute.name.toLowerCase();
+			if(name.startsWith('on') || ['background', 'srcset', 'ping', 'formaction', 'srcdoc'].includes(name) ||
+				name.startsWith('data-') && !(linkedEntry && LINK_ATTRIBUTES.includes(name)))
+			{
+				element.removeAttribute(attribute.name);
+			}
+		}
+		// the parsed style, as escapes could hide something from a check of the attribute
+		if(element.style?.length)
+		{
+			element.style.removeProperty('position');
+			for(const property of Array.from(element.style))
+			{
+				if(/url\(|image\(|image-set\(|expression\(/i.test(element.style.getPropertyValue(property)))
+				{
+					element.style.removeProperty(property);
+				}
+			}
+		}
+		if(element.localName === 'img')
+		{
+			if(!isLocalUrl(element.getAttribute('src'), ['data:', 'blob:']))
+			{
+				element.replaceWith(document.createTextNode(element.getAttribute('alt') ?? ''));
+			}
+		}
+		else if(element.hasAttribute('href'))
+		{
+			if(element.localName !== 'a' || !isAllowedLink(element.getAttribute('href')))
+			{
+				element.removeAttribute('href');
+			}
+			else
+			{
+				element.setAttribute('target', '_blank');
+				element.setAttribute('rel', 'noopener noreferrer');
+			}
+		}
+		else if(element.hasAttribute('src'))
+		{
+			element.removeAttribute('src');
+		}
+	});
+	return content;
+}
+
+/**
+ * Check an url is from our own server, or uses one of the given protocols
+ */
+function isLocalUrl(_url: string | null, _protocols: string[] = []): boolean
+{
+	try
+	{
+		const url = new URL(_url ?? '', window.location.href);
+		return !!_url && (url.origin === window.location.origin || _protocols.includes(url.protocol));
+	}
+	catch(e)
+	{
+		return false;
+	}
+}
+
+/**
+ * Check a link goes to a web or mail address, or a phone number
+ */
+function isAllowedLink(_url: string | null): boolean
+{
+	try
+	{
+		return ['http:', 'https:', 'mailto:', 'tel:'].includes(new URL(_url ?? '', window.location.href).protocol);
+	}
+	catch(e)
+	{
+		return false;
+	}
+}
+
+/**
  * Client-side of the notifications app - polls (or gets pushed, see egw.pushAvailable() and
  * run_notifications() below) for pending messages and renders the navbar bell + popup list.
  *
@@ -384,19 +505,16 @@ export class NotificationsApp extends EgwApp
 
 			const inner = document.createElement('div');
 			inner.className = 'egwpopup_message_inner_container';
-			inner.innerHTML = notification.message;
+			inner.append(sanitizeMessage(notification.message));
 			if(notification.children)
 			{
 				const childIds = Object.keys(notification.children);
 				childIds.forEach((c, index) =>
 				{
 					if(index < childIds.length - 2) return;
-					inner.innerHTML += notification.children[c].message;
+					inner.append(sanitizeMessage(notification.children[c].message));
 				});
 			}
-			// a message's <style> would apply to the whole window, eg. the dark mode of html notifications
-			// following the operating system, kdots' dark theme styles them instead
-			inner.querySelectorAll('style').forEach(style => style.remove());
 			message.appendChild(inner);
 
 			const moreInfo = document.createElement('div');
@@ -454,8 +572,8 @@ export class NotificationsApp extends EgwApp
 				mark.addEventListener('click', (e) => this.message_seen(message, e));
 			}
 
-			// Activate links rendered into the message by the server
-			message.querySelectorAll('div[data-id],div[data-url]').forEach((link : HTMLElement) =>
+			// Activate links rendered into the message by the server, sanitizeMessage() removed all others
+			inner.querySelectorAll(':scope > div[data-id],:scope > div[data-url]').forEach((link : HTMLElement) =>
 			{
 				link.classList.add('et2_link');
 				link.addEventListener('click', () =>
@@ -986,13 +1104,12 @@ export class NotificationsApp extends EgwApp
 	 */
 	getData(_message : string, _extra_data? : { [key : string] : any }) : NotifyMessage['data']
 	{
-		const dom = new DOMParser().parseFromString(_message, 'text/html');
-		// a <style> is no text of the message
-		dom.querySelectorAll('style').forEach(style => style.remove());
-		const link = dom.querySelector<HTMLElement>('div[data-id],div[data-url]');
+		// only the linked entries rendered by the server are left, see sanitizeMessage()
+		const content = sanitizeMessage(_message);
+		const link = content.querySelector<HTMLElement>('div[data-id],div[data-url]');
 
 		const data : NotifyMessage['data'] = {
-			message: dom.body.textContent,
+			message: content.textContent,
 			title: link?.textContent,
 			icon: link?.querySelector('img')?.getAttribute('src')
 		};

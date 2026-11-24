@@ -29,7 +29,7 @@
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
 import "./NotificationsAppTestSetup";
-import {NotificationsApp, NotifyMessage} from "../app";
+import {NotificationsApp, NotifyMessage, sanitizeMessage} from "../app";
 
 /**
  * Build a minimal fake `this` for calling NotificationsApp methods directly, without going
@@ -94,6 +94,132 @@ describe("NotificationsApp.getTimeLabel()", () =>
 	it("falls back to '' for an entry more than a month old", () =>
 	{
 		assert.equal(NotificationsApp.prototype.getTimeLabel.call(null, "2026-01-01 08:00:00", current), '');
+	});
+});
+
+/**
+ * A message contains content from whoever caused the notification, eg. the html description of a ticket
+ * or the headers of a mail: it must not run or load anything, change the page or trigger our click handlers.
+ */
+describe("sanitizeMessage()", () =>
+{
+	const html = (_message: string): string =>
+	{
+		// serialized in a template, to not load its images
+		const template = document.createElement('template');
+		template.content.append(sanitizeMessage(_message));
+		return template.innerHTML;
+	};
+
+	it("keeps the formatting of a message", () =>
+	{
+		const message = '<table class="egwNotification" style="width: 100%;"><tbody><tr><td><b>Title</b><br>Text</td></tr></tbody></table>';
+
+		assert.equal(html(message), message);
+	});
+
+	it("removes elements which redirect, rebase or style the page, or ask for input", () =>
+	{
+		const result = html('before<meta http-equiv="refresh" content="0;url=https://example.invalid/">' +
+			'<base href="https://example.invalid/"><style>body { display: none }</style>' +
+			'<link rel="stylesheet" href="https://example.invalid/x.css"><script>window.injected = 1;<\/script>' +
+			'<form action="https://example.invalid/"><input name="password"><button>Login</button></form>' +
+			'<iframe src="https://example.invalid/"></iframe><svg><a href="https://example.invalid/">x</a></svg>after');
+
+		assert.equal(result, 'beforeafter');
+	});
+
+	it("removes event handlers", () =>
+	{
+		assert.equal(html('<b onclick="window.injected = 1" onmouseover="window.injected = 1">text</b>'), '<b>text</b>');
+	});
+
+	it("removes images from other servers, but keeps our own and inline ones", () =>
+	{
+		assert.equal(html('<img src="https://example.invalid/pixel.png" alt="logo">'), 'logo');
+		assert.equal(html('<img src="//example.invalid/pixel.png">'), '');
+		assert.equal(html('<img srcset="https://example.invalid/pixel.png 1x">'), '');
+		assert.equal(html('<img src="api/templates/default/images/navbar.svg">'), '<img src="api/templates/default/images/navbar.svg">');
+		assert.equal(html('<img src="data:image/png;base64,AAAA">'), '<img src="data:image/png;base64,AAAA">');
+	});
+
+	it("removes styles loading something or taking the content out of the message", () =>
+	{
+		assert.equal(html('<div style="color: red; position: fixed; background-image: url(https://example.invalid/pixel.png)">x</div>'),
+			'<div style="color: red;">x</div>');
+		// escapes must not hide the url
+		assert.notInclude(html('<div style="background: u\\72l(https://example.invalid/pixel.png)">x</div>'), 'example.invalid');
+		assert.equal(html('<table background="https://example.invalid/pixel.png"></table>'), '<table></table>');
+	});
+
+	it("only allows links to web and mail addresses, opening in a new window", () =>
+	{
+		assert.equal(html('<a href="https://example.invalid/">link</a>'),
+			'<a href="https://example.invalid/" target="_blank" rel="noopener noreferrer">link</a>');
+		assert.equal(html('<a href="mailto:user@example.invalid">mail</a>'),
+			'<a href="mailto:user@example.invalid" target="_blank" rel="noopener noreferrer">mail</a>');
+		assert.equal(html('<a href="javascript:window.injected = 1">link</a>'), '<a>link</a>');
+		assert.equal(html('<a href="data:text/html,x">link</a>'), '<a>link</a>');
+	});
+
+	it("keeps the data attributes of a linked entry at the top level only", () =>
+	{
+		const link = '<div class="link" data-app="infolog" data-id="42" data-url="/index.php" data-popup="800x600">Entry</div>';
+
+		assert.equal(html(link), link);
+		// a link inside the content of the message would trigger our click handler
+		assert.equal(html('<blockquote><div class="link" data-app="infolog" data-id="42" data-url="https://example.invalid/">Entry</div></blockquote>'),
+			'<blockquote><div class="link">Entry</div></blockquote>');
+		assert.equal(html('<p><span data-id="42">Entry</span></p>'), '<p><span>Entry</span></p>');
+		// other data attributes would set values of the notification, eg. its actions
+		assert.equal(html('<div data-id="42" data-actions="x" data-egw_pr_notify="1">Entry</div>'), '<div data-id="42">Entry</div>');
+	});
+});
+
+describe("NotificationsApp.display()", () =>
+{
+	let popup: HTMLElement;
+
+	beforeEach(() =>
+	{
+		popup = document.createElement('div');
+		popup.id = 'egwpopup';
+		popup.innerHTML = '<div id="egwpopup_list"></div>';
+		document.body.append(popup);
+	});
+
+	afterEach(() => popup.remove());
+
+	it("renders a message without the content it must not have, and only activates the linked entries of the server", () =>
+	{
+		const open = sinon.spy();
+		const open_link = sinon.spy();
+		const app = createFakeApp({egw: {open, open_link}});
+		const now = new Date().toISOString();
+		app.append([{
+			id: "1", status: "SEEN", created: now, current: {date: now}, extra_data: {},
+			message: 'Message from: User<hr>' +
+				'<table><tr><td><meta http-equiv="refresh" content="0;url=https://example.invalid/">' +
+				'<div id="injected_link" data-url="https://example.invalid/">Open</div>' +
+				'<img src="https://example.invalid/pixel.png"></td></tr></table>' +
+				'<hr><b>Linked entries:</b><br><div class="link" data-app="infolog" data-id="42">Entry</div>'
+		}], false, 1);
+		app.display();
+
+		const message = document.getElementById('egwpopup_message_1');
+		assert.isNotNull(message);
+		assert.isNull(message.querySelector('meta,img'));
+
+		// the notification belongs to the entry linked by the server
+		assert.equal((<any>app).notifymessages["1"].data.id, "42");
+		assert.isUndefined((<any>app).notifymessages["1"].data.url);
+
+		(<HTMLElement>message.querySelector('#injected_link')).click();
+		assert.isFalse(open.called);
+		assert.isFalse(open_link.called);
+
+		(<HTMLElement>message.querySelector('div.link')).click();
+		assert.isTrue(open.calledOnceWith("42", "infolog"));
 	});
 });
 
