@@ -415,4 +415,19 @@ class ViewFilterValidationTest extends Etemplate\WidgetBaseTest
 		$this->assertSame(['order' => [], 'data' => [], 'total' => 0], $data[0]['data'] ?? null);
 		$this->assertNotEmpty(array_filter($response, static fn($command) => $command['type'] === 'apply' && $command['data']['func'] === 'egw.message'));
 	}
+
+	/**
+	 * get_rows keeps the query of the views in the session, from which the list is rendered the next
+	 * time it is loaded: the query has to name the callback, or the list has nothing to fetch its rows with.
+	 */
+	public function testViewsFetchKeepsTheCallbackOfTheList()
+	{
+		Api\Cache::unsetSession('calendar', 'calendar_list');
+		$this->ajax_response->initResponseArray();
+		\calendar_uiviews::ajax_get_rows(self::sideboxRequest(), ['start' => 0, 'num_rows' => 5], self::query());
+
+		$stored = Api\Cache::getSession('calendar', 'calendar_list');
+		$this->assertIsArray($stored, 'the views store their query for the list');
+		$this->assertSame('calendar.calendar_uilist.get_rows', $stored['get_rows'] ?? null);
+	}
 }

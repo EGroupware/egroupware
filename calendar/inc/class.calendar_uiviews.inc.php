@@ -275,6 +275,9 @@ class calendar_uiviews extends calendar_ui
 			'total'         => &$total,
 		], [], true);
 
+		// get_rows() keeps the query in the session, from which the list is rendered the next
+		// time: it has to name the callback the list fetches its rows with
+		$query['get_rows'] = $get_rows;
 		$total = (new calendar_uilist())->get_rows($query, $raw_rows, $readonlys);
 
 		Api\Hooks::process([

@@ -133,6 +133,8 @@ class calendar_uilist extends calendar_ui
 				'placeholder_actions' => array('add')
 			);
 		}
+		// the callback is the server's to decide, whatever the stored query holds
+		$content['nm']['get_rows'] = 'calendar.calendar_uilist.get_rows';
 		$content['nm']['favorites'] = false;
 		// The stored query still has the start and end it was last run with, as timestamps.  The
 		// calendar state the list is loaded with does not keep them, so the filters must not show them.
