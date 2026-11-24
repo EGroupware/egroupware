@@ -484,7 +484,9 @@ class calendar_uiviews extends calendar_ui
 		{
 			$query['order'] = '';
 		}
-		$query['sort'] = 'ASC';
+		// no direction: the planner's "participants" and "categories" are no columns, and are only
+		// recognised as the order to sort by with nothing appended to them
+		$query['sort'] = '';
 		$query['start'] = (int)($queriedRange['start'] ?? 0);
 		$query['num_rows'] = (int)($queriedRange['num_rows'] ?? 0) ?: Etemplate\Widget\Nextmatch::INITIAL_ROWS;
 

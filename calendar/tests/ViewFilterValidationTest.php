@@ -430,4 +430,20 @@ class ViewFilterValidationTest extends Etemplate\WidgetBaseTest
 		$this->assertIsArray($stored, 'the views store their query for the list');
 		$this->assertSame('calendar.calendar_uilist.get_rows', $stored['get_rows'] ?? null);
 	}
+
+	/**
+	 * The planner asks for its rows ordered by "participants" or "categories", which are no columns:
+	 * they are only recognised with no sort direction appended.
+	 */
+	public function testPlannerOrdersByParticipantsAndCategories()
+	{
+		foreach(['participants', 'categories'] as $order)
+		{
+			$this->ajax_response->initResponseArray();
+			\calendar_uiviews::ajax_get_rows(self::sideboxRequest(), ['start' => 0, 'num_rows' => 5],
+				self::query(['startdate' => '2000-01-01T00:00:00Z', 'enddate' => '2040-12-31T23:59:59Z', 'order' => $order]));
+			$data = array_values(array_filter($this->ajax_response->returnResult(), static fn($command) => $command['type'] === 'data'));
+			$this->assertIsInt($data[0]['data']['total'] ?? null, "rows ordered by $order");
+		}
+	}
 }
