@@ -212,7 +212,7 @@ describe("MailJmap.buildFilter() - text search dispatch by cat_id", () =>
 		const termFilter = filter.conditions[1];
 
 		assert.equal(termFilter.operator, 'OR');
-		assert.sameDeepMembers(termFilter.conditions, [{subject : 'hello'}, {from : 'hello'}, {to : 'hello'}]);
+		assert.sameDeepMembers(termFilter.conditions, [{subject : 'hello*'}, {from : 'hello*'}, {to : 'hello*'}]);
 	});
 
 	it("'quickwithcc' additionally includes cc", () =>
@@ -221,7 +221,7 @@ describe("MailJmap.buildFilter() - text search dispatch by cat_id", () =>
 		const filter : any = buildFilter(jmap, {search : 'hello', cat_id : 'quickwithcc'});
 
 		assert.sameDeepMembers(filter.conditions[1].conditions,
-			[{subject : 'hello'}, {from : 'hello'}, {to : 'hello'}, {cc : 'hello'}]);
+			[{subject : 'hello*'}, {from : 'hello*'}, {to : 'hello*'}, {cc : 'hello*'}]);
 	});
 
 	it("a single-field cat_id (e.g. 'subject') searches only that field, unwrapped (no OR)", () =>
@@ -229,14 +229,14 @@ describe("MailJmap.buildFilter() - text search dispatch by cat_id", () =>
 		const jmap = new MailJmap(createFakeApp());
 		const filter : any = buildFilter(jmap, {search : 'hello', cat_id : 'subject'});
 
-		assert.deepEqual(filter.conditions[1], {subject : 'hello'});
+		assert.deepEqual(filter.conditions[1], {subject : 'hello*'});
 	});
 
 	it("'body'/'text' cat_id map to their own single-field search", () =>
 	{
 		const jmap = new MailJmap(createFakeApp());
-		assert.deepEqual((buildFilter(jmap, {search : 'x', cat_id : 'body'}) as any).conditions[1], {body : 'x'});
-		assert.deepEqual((buildFilter(jmap, {search : 'x', cat_id : 'text'}) as any).conditions[1], {text : 'x'});
+		assert.deepEqual((buildFilter(jmap, {search : 'xy', cat_id : 'body'}) as any).conditions[1], {body : 'xy*'});
+		assert.deepEqual((buildFilter(jmap, {search : 'xy', cat_id : 'text'}) as any).conditions[1], {text : 'xy*'});
 	});
 
 	it("an empty search string adds no text condition at all", () =>
@@ -265,7 +265,7 @@ describe("MailJmap.buildTokenizedFilter() - via buildFilter()'s default text sea
 		const filter = tokenizedFilter(jmap, 'foo bar');
 
 		assert.equal(filter.operator, 'OR');
-		assert.deepEqual(filter.conditions, [{subject : 'foo'}, {subject : 'bar'}]);
+		assert.deepEqual(filter.conditions, [{subject : 'foo*'}, {subject : 'bar*'}]);
 	});
 
 	it("the literal 'and' keyword between two tokens ANDs them instead", () =>
@@ -282,7 +282,7 @@ describe("MailJmap.buildTokenizedFilter() - via buildFilter()'s default text sea
 		const filter = tokenizedFilter(jmap, 'foo -bar');
 
 		assert.equal(filter.operator, 'AND');
-		assert.deepEqual(filter.conditions[1], {operator : 'NOT', conditions : [{subject : 'bar'}]});
+		assert.deepEqual(filter.conditions[1], {operator : 'NOT', conditions : [{subject : 'bar*'}]});
 	});
 
 	it("a '+' prefix keeps the term positive but still forces AND with its neighbour", () =>
@@ -291,12 +291,63 @@ describe("MailJmap.buildTokenizedFilter() - via buildFilter()'s default text sea
 		const filter = tokenizedFilter(jmap, 'foo +bar');
 
 		assert.equal(filter.operator, 'AND');
-		assert.deepEqual(filter.conditions[1], {subject : 'bar'});
+		assert.deepEqual(filter.conditions[1], {subject : 'bar*'});
 	});
 
 	it("a whitespace-only search string produces no text condition", () =>
 	{
 		const jmap = new MailJmap(createFakeApp());
 		assert.deepEqual(buildFilter(jmap, {search : '   ', cat_id : 'subject'}), {inMailbox : 'mbx-inbox'});
+	});
+});
+
+describe("MailJmap.buildTokenizedFilter() - '*' suffix, so words starting with the search term are found too", () =>
+{
+	function term(search : string)
+	{
+		const jmap = new MailJmap(createFakeApp());
+		return ((buildFilter(jmap, {search, cat_id : 'text'}) as any)).conditions[1].text;
+	}
+
+	it("a word of letters gets a '*' suffix, incl. umlauts, accents and other scripts", () =>
+	{
+		for (const word of ['beck', 'Müller', 'Straße', 'réunion', 'café', 'Änderung', 'Москва', 'ab'])
+		{
+			assert.equal(term(word), word + '*', word);
+		}
+	});
+
+	it("partial email addresses and domains get it too", () =>
+	{
+		for (const word of ['rb@egroupware', 'rb@egroupware.o', 'rb@egroupware.org', 'egroupware.org', '@egroupware', 'a@b.de'])
+		{
+			assert.equal(term(word), word + '*', word);
+		}
+	});
+
+	it("words with digits, other punctuation or an own '*' are left alone", () =>
+	{
+		for (const word of ['ER-4613', '2024', 'Rechnung2024', "O'Brien", 'Müller-Schmidt', 'beck*', 'rb@', 'rb@egroupware.', '#', '№', 'x', '*stell*', 'a?b'])
+		{
+			assert.equal(term(word), word, word);
+		}
+	});
+
+	it("a quoted phrase is never changed, also not if it is a single word", () =>
+	{
+		assert.equal(term('"beck"'), 'beck');
+		assert.equal(term("'hello world'"), 'hello world');
+	});
+
+	it("every word of several gets its own suffix, and/or keywords and +/- prefixes are not part of the word", () =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const filter : any = (buildFilter(jmap, {search : 'Angebot and Becker -Müller 2024', cat_id : 'text'}) as any).conditions[1];
+		const flat = JSON.stringify(filter);
+		assert.include(flat, '"text":"Angebot*"');
+		assert.include(flat, '"text":"Becker*"');
+		assert.include(flat, '"operator":"NOT","conditions":[{"text":"Müller*"}]');
+		assert.include(flat, '"text":"2024"');
+		assert.notInclude(flat, '"and*"');
 	});
 });

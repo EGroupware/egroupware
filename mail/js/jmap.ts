@@ -6808,6 +6808,23 @@ export class MailJmap
 	}
 
 	/**
+	 * A word, which gets a "*" suffix to also find words starting with it: letters of any script (incl. combining
+	 * accents), optionally joined by "@" or ".", so partial addresses and domains work too ("rb@egroupware", "egroupware.o"),
+	 * at least 2 characters. Words with digits, other punctuation or an own "*" are left alone, as are quoted phrases.
+	 */
+	private static readonly PREFIX_WORD = /^@?[\p{L}\p{M}][\p{L}\p{M}]+(?:[@.][\p{L}\p{M}]+)*$|^@?[\p{L}\p{M}](?:[@.][\p{L}\p{M}]+)+$/u;
+
+	/**
+	 * Stalwart's full-text search finds whole words only, ("beck" does not find "becker"), but "beck*" matches as prefix:
+	 * https://support.stalw.art/t/2106 (staff: "A term ending in * matches as a prefix"), measured +10-45ms per word on a
+	 * mailbox with 460000 mails. Dovecot's FTS found words starting with the search term, so users expect that.
+	 */
+	private static prefixTerm(word : string) : string
+	{
+		return MailJmap.PREFIX_WORD.test(word) ? word + '*' : word;
+	}
+
+	/**
 	 * Tokenize a free-text search string the same way Mail::parseSearchTokens() does
 	 * (quoted phrases as single tokens), and combine per-token OR-of-$fields conditions
 	 * into a single filter tree, mirroring Mail::buildTokenizedSearch()'s and/or/+/- syntax.
@@ -6819,7 +6836,7 @@ export class MailJmap
 		{
 			return null;
 		}
-		const tokens : string[] = [];
+		const tokens : { text : string, quoted : boolean }[] = [];
 		const re = /"([^"]*)"|'([^']*)'|(\S+)/gu;
 		let m : RegExpExecArray;
 		while ((m = re.exec(str)) !== null)
@@ -6827,7 +6844,7 @@ export class MailJmap
 			const tok = m[1] ?? m[2] ?? m[3];
 			if (tok)
 			{
-				tokens.push(tok);
+				tokens.push({text: tok, quoted: m[3] === undefined});
 			}
 		}
 		if (!tokens.length)
@@ -6837,21 +6854,22 @@ export class MailJmap
 
 		const items : { op : 'and' | 'or', term : string, not : boolean }[] = [];
 		let nextOp : 'and' | 'or' = 'or';
-		for (let tok of tokens)
+		for (const {text, quoted} of tokens)
 		{
+			let tok = text;
 			const lower = tok.toLowerCase();
-			if (lower === 'and')
+			if (!quoted && lower === 'and')
 			{
 				nextOp = 'and';
 				continue;
 			}
-			if (lower === 'or')
+			if (!quoted && lower === 'or')
 			{
 				nextOp = 'or';
 				continue;
 			}
 			let not = false;
-			if (tok.length > 1 && (tok[0] === '+' || tok[0] === '-'))
+			if (!quoted && tok.length > 1 && (tok[0] === '+' || tok[0] === '-'))
 			{
 				not = tok[0] === '-';
 				tok = tok.substring(1);
@@ -6861,7 +6879,7 @@ export class MailJmap
 			{
 				continue;
 			}
-			items.push({op: nextOp, term: tok, not});
+			items.push({op: nextOp, term: quoted ? tok : MailJmap.prefixTerm(tok), not});
 			nextOp = 'or';
 		}
 		if (!items.length)
