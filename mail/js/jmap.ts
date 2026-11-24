@@ -6808,20 +6808,48 @@ export class MailJmap
 	}
 
 	/**
-	 * A word, which gets a "*" suffix to also find words starting with it: letters of any script (incl. combining
-	 * accents), optionally joined by "@" or ".", so partial addresses and domains work too ("rb@egroupware", "egroupware.o"),
-	 * at least 2 characters. Words with digits, other punctuation or an own "*" are left alone, as are quoted phrases.
+	 * Words which get a "*" suffix (see prefixTerm()): "L" is a letter of any script or a combining accent, "A" additionally a digit.
 	 */
-	private static readonly PREFIX_WORD = /^@?[\p{L}\p{M}][\p{L}\p{M}]+(?:[@.][\p{L}\p{M}]+)*$|^@?[\p{L}\p{M}](?:[@.][\p{L}\p{M}]+)+$/u;
+	private static readonly PREFIX_WORDS : RegExp[] = [
+		// plain word: letters only, optionally dotted parts (domains), at least 2 characters: Müller, réunion, egroupware.org
+		/^[\p{L}\p{M}]{2,}(?:\.[\p{L}\p{M}]+)*$/u,
+		// (partial) email address: local part with . _ + - and digits, "@", domain part with . - and digits, starting and ending with a letter or digit:
+		// rb@egroupware, no-reply@github, ralf.becker@egroupware.o, notifications+x@github, info2@egro
+		/^[\p{L}\p{N}\p{M}](?:[\p{L}\p{N}\p{M}._+-]*[\p{L}\p{N}\p{M}])?@[\p{L}\p{N}\p{M}](?:[\p{L}\p{N}\p{M}.-]*[\p{L}\p{N}\p{M}])?$/u,
+		// domain only, at least 2 characters: @egroupware, @egroupware.o
+		/^@[\p{L}\p{N}\p{M}]{2}(?:[\p{L}\p{N}\p{M}.-]*[\p{L}\p{N}\p{M}])?$/u,
+	];
 
 	/**
-	 * Stalwart's full-text search finds whole words only, ("beck" does not find "becker"), but "beck*" matches as prefix:
-	 * https://support.stalw.art/t/2106 (staff: "A term ending in * matches as a prefix"), measured +10-45ms per word on a
-	 * mailbox with 460000 mails. Dovecot's FTS found words starting with the search term, so users expect that.
+	 * Add a "*" suffix to a search word, so words starting with it are found too.
+	 *
+	 * Stalwart's full-text search finds whole words only ("beck" does not find "becker"), but "beck*" matches as prefix:
+	 * https://support.stalw.art/t/2106 (staff: "A term ending in * matches as a prefix"). Measured on a mailbox with 460000 mails:
+	 * +10-45ms per word. Dovecot's FTS found words starting with the search term, so users expect that.
+	 * Called per word by buildTokenizedFilter(), which has already split the search string and removed the and/or keywords
+	 * and the "+"/"-" prefixes, and never calls it for quoted phrases.
+	 *
+	 * Gets the suffix (PREFIX_WORDS):
+	 * - words of letters of any script, incl. umlauts and accents, at least 2: beck, Müller, Straße, réunion, Москва
+	 * - such words joined by dots (domains): egroupware.org -> egroupware.org*
+	 * - (partial) email addresses: letters, digits and . _ + - around ONE "@", starting and ending with a letter or digit:
+	 *   rb@egroupware, no-reply@github, ralf.becker@egroupware.o, notifications+x@github, info2@egro, a@b.de
+	 * - a domain with leading "@", at least 2 characters: @egroupware
+	 *
+	 * Stays unchanged:
+	 * - words with digits or other punctuation, but no "@": ER-4613, 2024, Rechnung2024, O'Brien, Müller-Schmidt, mail-01.example.org
+	 * - words with an own "*" or "?": beck*, *stell*, a?b (Stalwart supports no wildcard at the start or inside of a word)
+	 * - words only of punctuation: #, №, - (they would match nothing and so make the whole AND search fail)
+	 * - single characters: x
+	 * - incomplete addresses: rb@, rb@egroupware. (ending with punctuation), a@@b, rb@-egroupware
+	 * - quoted phrases (they are matched as phrase and never reach this method)
+	 *
+	 * @param word one unquoted search word
+	 * @return string word + "*" or word unchanged
 	 */
 	private static prefixTerm(word : string) : string
 	{
-		return MailJmap.PREFIX_WORD.test(word) ? word + '*' : word;
+		return MailJmap.PREFIX_WORDS.some(re => re.test(word)) ? word + '*' : word;
 	}
 
 	/**
