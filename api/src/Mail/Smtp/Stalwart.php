@@ -256,14 +256,17 @@ class Stalwart extends Sql
 			// a primary email on a domain Stalwart does not know (eg. an external email of an external account) can not be
 			// an alias in Stalwart, but it must survive as primary email in EGroupware
 			$primary = strtolower($userData['mailLocalAddress'] ?? '');
-			$external_primary = strpos($primary, '@') !== false && !$this->domainId(explode('@', $primary)[1]);
+			$external_primary = strpos($primary, '@') !== false && !$this->domainIdOrAliasDomain(explode('@', $primary)[1]);
 			// check if EGroupware's primary email is just an alias for Stalwart --> preserve it
 			if ($external_primary)
 			{
 				$email = $primary;
 				$aliases = array_values(array_diff($aliases, [$primary]));
 			}
-			elseif (($key = array_search($primary, $aliases)) !== false)
+			elseif (($key = array_search($primary, $aliases)) !== false ||
+				// primary on an alias-domain (name-part of an alias on the main domain): Stalwart has it as alias of the main domain
+				(strpos($primary, '@') !== false && in_array(explode('@', $primary)[1], $this->aliasDomains(), true) &&
+					($key = array_search(explode('@', $primary)[0].'@'.strtolower($this->defaultDomain), $aliases)) !== false))
 			{
 				$email = $primary;
 				$aliases[] = $account['emailAddress'];
@@ -312,34 +315,7 @@ class Stalwart extends Sql
 		{
 			array_unshift($_mailAlternateAddress, $_mailLocalAddress);
 		}
-		$aliases = [];
-		foreach(array_unique($_mailAlternateAddress) as $alias)
-		{
-			[$name, $domain] = explode('@', strtolower($alias));
-			if (!($domainId = $this->domainId($domain)))
-			{
-				// the primary email of an external account can be on a domain not hosted by Stalwart: it is neither created
-				// nor sent to Stalwart, but stays in EGroupware (parent::setUserData() stores it in SQL)
-				if (strtolower($alias) === strtolower($_mailLocalAddress))
-				{
-					continue;
-				}
-				// an alias must be on an existing domain or alias-domain (created via mserver or the migration), domains are never created here
-				$msg = lang('Domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!', $domain, $alias);
-				if (!self::$skipTakenAliases)
-				{
-					throw new \Exception($msg, 422);    // 422 Unprocessable Content for the REST API
-				}
-				self::$warnings[] = $msg.' '.lang('Skipped.');
-				continue;
-			}
-			$aliases[] = [
-				'enable' => true,    // Stalwart 0.16 used 'enabled', 1.0 rejects it with invalidPatch
-				'name' => self::name2stalwart($name),
-				'domainId' => $domainId,
-				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
-			];
-		}
+		$aliases = $this->aliasObjects($_mailAlternateAddress, $_mailLocalAddress);
 		$prefs = (new Api\Preferences($_uidnumber))->read_repository();
 		// ToDo: make sure combination of language and country is a valid local BEFORE sending it to Stalwart
 		[$lang, $country] = explode('-', $prefs['common']['lang'])+[null, null];
@@ -1465,6 +1441,52 @@ class Stalwart extends Sql
 	protected static $domainIds;
 
 	/**
+	 * Alias objects of Stalwart for a list of email addresses
+	 *
+	 * An address on an alias-domain of the account's domain (full alias-domain: it has the same name-parts as the main domain) is an alias
+	 * of the same name-part on the main domain, see domainIdOrAliasDomain(). That is how a primary email on an alias-domain (eg. s.hinkel@meissen-inklusiv.de
+	 * for the account shinkel@lebenshilfe-meissen.de) is created as alias, EGroupware and the old Postfix maps treated it as the user's address.
+	 *
+	 * @param string[] $addresses email addresses (aliases and the primary email, if it differs from the account name)
+	 * @param string $mailLocalAddress primary email, an external one (domain unknown to Stalwart) is skipped silently
+	 * @return array[] alias objects with name, domainId, enable and description, without duplicates
+	 * @throws \Exception 422 for an address on an unknown domain, unless self::$skipTakenAliases
+	 */
+	protected function aliasObjects(array $addresses, string $mailLocalAddress) : array
+	{
+		$aliases = [];
+		foreach(array_unique($addresses) as $alias)
+		{
+			[$name, $domain] = explode('@', strtolower($alias));
+			if (!($domainId = $this->domainIdOrAliasDomain($domain)))
+			{
+				// the primary email of an external account can be on a domain not hosted by Stalwart: it is neither created
+				// nor sent to Stalwart, but stays in EGroupware (parent::setUserData() stores it in SQL)
+				if (strtolower($alias) === strtolower($mailLocalAddress))
+				{
+					continue;
+				}
+				// an alias must be on an existing domain or alias-domain (created via mserver or the migration), domains are never created here
+				$msg = lang('Domain %1 of alias %2 is neither a domain nor an alias-domain of the mail server, it must be created first!', $domain, $alias);
+				if (!self::$skipTakenAliases)
+				{
+					throw new \Exception($msg, 422);    // 422 Unprocessable Content for the REST API
+				}
+				self::$warnings[] = $msg.' '.lang('Skipped.');
+				continue;
+			}
+			// the same name-part on the main domain and on its alias-domain is only one alias
+			$aliases[$name.'@'.$domainId] = [
+				'enable' => true,    // Stalwart 0.16 used 'enabled', 1.0 rejects it with invalidPatch
+				'name' => self::name2stalwart($name),
+				'domainId' => $domainId,
+				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
+			];
+		}
+		return array_values($aliases);
+	}
+
+	/**
 	 * Get the domainId of the given domain
 	 *
 	 * @param string $domain
@@ -1491,6 +1513,55 @@ class Stalwart extends Sql
 			}
 		}
 		return self::$domainIds[$domain];
+	}
+
+	protected static $aliasDomains = [];
+
+	/**
+	 * Names of the alias-domains of a domain
+	 *
+	 * Stalwart knows an alias-domain only as key of the "aliases" map of its main domain, never as domain of its own: x:Domain/query by its name
+	 * finds nothing, so domainId() returns null for it.
+	 *
+	 * @param ?string $domain =null main domain, default the account's domain (self::$defaultDomain)
+	 * @return string[] lower-case domain names
+	 */
+	function aliasDomains(?string $domain=null) : array
+	{
+		$domain = strtolower($domain ?? $this->defaultDomain ?? '');
+		$key = (isset($this->account) ? $this->account->acc_smtp_host : '').'|'.$domain;
+		if (!isset(self::$aliasDomains[$key]))
+		{
+			self::$aliasDomains[$key] = [];
+			if ($domain && ($domainId = $this->domainId($domain)))
+			{
+				$response = $this->jmapClient()->jmapCall([
+					['x:Domain/get', [
+						'ids' => [$domainId],
+						'properties' => ['aliases'],
+					], 'a'],
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+				self::$aliasDomains[$key] = array_map('strtolower', array_keys((array)($response['methodResponses'][0][1]['list'][0]['aliases'] ?? [])));
+			}
+		}
+		return self::$aliasDomains[$key];
+	}
+
+	/**
+	 * Get the domainId of a domain, which can also be an alias-domain of the account's own domain
+	 *
+	 * Only the alias-domains of $this->defaultDomain count, an alias-domain of an other hosted domain does not (its name-parts are not the account's).
+	 *
+	 * @param string $domain
+	 * @return string|null domainId of the domain, or of the main domain for one of its alias-domains
+	 */
+	function domainIdOrAliasDomain(string $domain) : ?string
+	{
+		if (($domainId = $this->domainId($domain)))
+		{
+			return $domainId;
+		}
+		return in_array(strtolower($domain), $this->aliasDomains(), true) ? $this->domainId($this->defaultDomain) : null;
 	}
 
 	function domain(string $domainId) : ?string
