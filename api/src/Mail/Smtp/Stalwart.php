@@ -251,14 +251,16 @@ class Stalwart extends Sql
 				$aliases = array_values(array_unique(array_map('strtolower', array_merge($userData['mailAlternateAddress'] ?? [], $aliases))));
 			}
 			[$email, $aliases] = $this->primaryAndAliases($this->primaryEmail($account_id ?? $user), $account, $aliases);
+			// forwards are a Sieve rule "Forward mail to ..." of the account (see Sieve\Forward), other scripts are ignored
+			$forward = $this->forward($account['id']);
 			$userData = [
 				'mailLocalAddress' =>  $email ?: $account['emailAddress'],   // the primary email of the addressbook
 				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : ($sqlQuota ?: null), // MB
 				'quotaUsed' => isset($account['usedDiskQuota']) ? $account['usedDiskQuota']>>20 : null, // MB
 				'uid' => [$account['name']],
 				'mailAlternateAddress' => array_values(array_unique($aliases)),
-				'mailForwardingAddress' => [],
-				//'forwardOnly' => false,
+				'mailForwardingAddress' => $forward['addresses'] ?? [],
+				'deliveryMode' => $forward && !$forward['keep'] ? self::FORWARD_ONLY : null,
 				'accountStatus' => $account['id'],
 				'stalwart' => $account,
 				'mailingLists' => $lists,
@@ -460,6 +462,11 @@ class Stalwart extends Sql
 				}
 				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 			}
+		}
+		// forwards are stored as Sieve rule in the account's script, throws if there is a script we do not understand
+		if ($accountId ??= $userData['stalwart']['id'] ?? null)
+		{
+			$this->forward($accountId, $_mailForwardingAddress, $_deliveryMode !== self::FORWARD_ONLY);
 		}
 		// updating the SQL table too for now
 		parent::setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode,
@@ -1421,6 +1428,36 @@ class Stalwart extends Sql
 			}
 		}
 		return $this->jmap;
+	}
+
+	/**
+	 * Read or set the forward of an account, which is a Sieve rule "Forward mail to ..." (see Sieve\Forward)
+	 *
+	 * Reading never fails (an unreadable or not EGroupware script gives no forward), setting does, if the requested forward
+	 * differs from the current one and the account has a Sieve script we do not understand, as we would overwrite it.
+	 *
+	 * @param string $accountId Stalwart id of the account
+	 * @param string[]|null $addresses =null read, otherwise forward addresses to set, empty to remove the forward
+	 * @param bool $keep =false only to set: keep a copy of the mails in the mailbox, false: "Forward only"
+	 * @return array|null|true read: array with keys "addresses" and "keep" or null, set: true if changed
+	 * @throws \Exception
+	 */
+	protected function forward(string $accountId, ?array $addresses=null, bool $keep=false)
+	{
+		$sieve = new Api\Mail\Sieve\Jmap($this->jmapClient(), $accountId);
+		if ($addresses === null)
+		{
+			return Api\Mail\Sieve\Forward::get($sieve);
+		}
+		$current = Api\Mail\Sieve\Forward::get($sieve);
+		$wanted = array_values(array_unique(array_filter(array_map('trim', $addresses))));
+		// nothing to do, also not for a not understood script, if we neither have a forward nor are asked to set one
+		if (!$wanted && !$current ||
+			$current && $wanted && array_map('strtolower', $current['addresses']) == array_map('strtolower', $wanted) && $current['keep'] === $keep)
+		{
+			return false;
+		}
+		return Api\Mail\Sieve\Forward::set($sieve, $wanted, $keep);
 	}
 
 	protected static $domainIds;

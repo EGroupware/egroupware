@@ -41,13 +41,26 @@ class Jmap implements Connection
 	const USING = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:sieve"];
 
 	/**
+	 * JMAP accountId the scripts belong to
+	 *
+	 * @var string
+	 */
+	protected $accountId;
+
+	/**
 	 * Constructor
 	 *
-	 * @param array|Mail\Imap\Jmap $params =[] JMAP object or params array to instantiate it
+	 * @param array|Mail\Imap\Jmap|Mail\Jmap\Http $params =[] JMAP object or params array to instantiate it,
+	 *  or a JMAP client, eg. an admin one, together with $accountId of the account, which scripts to use
+	 * @param string|null $accountId =null default accountId of the JMAP client
 	 */
-	function __construct($params=[])
+	function __construct($params=[], ?string $accountId=null)
 	{
-		if (is_a($params, Mail\Imap\Jmap::class))
+		if (is_a($params, Mail\Jmap\Http::class))
+		{
+			$this->jmap = $params;
+		}
+		elseif (is_a($params, Mail\Imap\Jmap::class))
 		{
 			$this->jmap = $params->jmapClient();
 		}
@@ -55,6 +68,7 @@ class Jmap implements Connection
 		{
 			$this->jmap = (new Mail\Imap\Jmap($params))->jmapClient();
 		}
+		$this->accountId = $accountId ?? $this->jmap->accountId;
 		$this->displayCharset	= Translation::charset();
 	}
 
@@ -75,7 +89,7 @@ class Jmap implements Connection
 		{
 			$response = $this->jmap->jmapCall([
 				['SieveScript/get', [
-					'accountId' => $this->jmap->accountId,
+					'accountId' => $this->accountId,
 				], "0"],
 			], self::USING);
 			$list = $response['methodResponses'][0][1]['list'];
@@ -168,7 +182,7 @@ class Jmap implements Connection
 			throw new \Exception('Script '.$scriptname.' not found');
 		}
 		$url = strtr($this->jmap->downloadUrl, [
-			'{accountId}' => $this->jmap->accountId,
+			'{accountId}' => $this->accountId,
 			'{name}' => $scriptname,
 			'{blobId}' => $script['blobId'],
 			'{type}' => 'application/sieve',
@@ -191,7 +205,7 @@ class Jmap implements Connection
 
 		// upload script
 		$response = $this->jmap->api(strtr($this->jmap->uploadUrl, [
-			'{accountId}' => $this->jmap->accountId,
+			'{accountId}' => $this->accountId,
 		]), 'POST', $script, [
 			'Content-Type' => 'application/sieve',
 			'Content-Length' => strlen($script),
@@ -201,7 +215,7 @@ class Jmap implements Connection
 		{
 			$response2 = $this->jmap->jmapCall([
 				['SieveScript/set', [
-					'accountId' => $this->jmap->accountId,
+					'accountId' => $this->accountId,
 					$op='create' => [
 						'A' => [
 							'name' => $scriptname,
@@ -223,7 +237,7 @@ class Jmap implements Connection
 		{
 			$response2 = $this->jmap->jmapCall([
 				['SieveScript/set', [
-					'accountId' => $this->jmap->accountId,
+					'accountId' => $this->accountId,
 					$op='update' => [
 						$found['id'] => [
 							'blobId' => $response['blobId'] ?? throw new \Exception("Upload of script '$scriptname' did NOT return blobId"),
@@ -258,11 +272,11 @@ class Jmap implements Connection
 		{
 			$this->jmap->jmapCall([
 				['SieveScript/set', [
-					'accountId' => $this->jmap->accountId,
+					'accountId' => $this->accountId,
 					'onSuccessDeactivateScript' => true
 				], '5'],
 				['SieveScript/set', [
-					'accountId' => $this->jmap->accountId,
+					'accountId' => $this->accountId,
 					'destroy' => $script['blobId']
 				], '6'],
 			], self::USING);
