@@ -810,20 +810,10 @@ class mail_hooks
 						// save notification status
 						$notified_mail_uidsCache[$activeProfile][$recent_message['folder']][] = Ui::generateRowID($activeProfile, $recent_message['folder'], $recent_message['uid'], $_prependApp=false);
 					}
-					foreach ($values as &$mail)
-					{
-						if ($mail['mail_from'])
-						{
-							$notification_message .=	"<br/><strong>".lang("From").':</strong>'. $mail["mail_from"].
-														"<br/><strong>".lang("To").':</strong>'. $mail["mail_to"].
-														"<br/><strong>".lang ("subject"). ':</strong>' . $mail["mail_subject"].
-														"<br/><br/> -------------------------------------------------------- </br>";
-						}
-					}
 					// send notification
 					$notification = new notifications();
 					$notification->set_receivers(array($currentRecipient->account_id));
-					$notification->set_message($notification_message);
+					$notification->set_message(self::newMailNotificationMessage($values), 'html');
 					$notification->set_sender($currentRecipient->account_id);
 					$notification->set_subject($notification_subject);
 					$notification->set_skip_backends(array('email'));
@@ -837,6 +827,31 @@ class mail_hooks
 		}
 		Api\Cache::setCache(Api\Cache::INSTANCE,'email','mailNotifyLastRun'.trim($GLOBALS['egw_info']['user']['account_id']),time(), $expiration=60*60*24*2);
 		return true;
+	}
+
+	/**
+	 * Html message of the notification about new mails
+	 *
+	 * From, To and Subject are headers of the received mails, ie. set by their senders,
+	 * and must not add html to the message.
+	 *
+	 * @param array $mails values for keys "mail_from", "mail_to" and "mail_subject"
+	 * @return string
+	 */
+	public static function newMailNotificationMessage(array $mails) : string
+	{
+		$message = '';
+		foreach($mails as $mail)
+		{
+			if (!empty($mail['mail_from']))
+			{
+				$message .= "<br/><strong>".lang("From").':</strong>'.Api\Html::htmlspecialchars($mail["mail_from"]).
+					"<br/><strong>".lang("To").':</strong>'.Api\Html::htmlspecialchars($mail["mail_to"] ?? '').
+					"<br/><strong>".lang("subject").':</strong>'.Api\Html::htmlspecialchars($mail["mail_subject"] ?? '').
+					"<br/><br/> -------------------------------------------------------- <br/>";
+			}
+		}
+		return $message;
 	}
 
 	/**
