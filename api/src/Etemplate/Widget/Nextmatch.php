@@ -444,21 +444,6 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
-	 * form_names that intentionally have NO backing nextmatch/historylog widget in
-	 * the current template, mapped to their trusted get_rows callback.
-	 *
-	 * Some apps use egw.dataFetch() directly (not via a real nextmatch/historylog
-	 * widget) for views that render their own rows client-side, eg. calendar's
-	 * day/week/month/planner views, passing the app name as form_name. Since there
-	 * is no widget to resolve $form_name against, the get_rows callback for those
-	 * has to come from this server-side allowlist instead - it is NEVER taken from
-	 * the client, same as for widget-backed form_names.
-	 */
-	protected static $raw_form_names = array(
-		'calendar' => 'calendar.calendar_uilist.get_rows',
-	);
-
-	/**
 	 * Find a row-source widget in a tab added through a tabbox's extraTabs
 	 *
 	 * Such a tab is only attached to the template inside Tabbox::run(), so getElementById()
@@ -562,8 +547,7 @@ class Nextmatch extends Etemplate\Widget
 		// get_rows must always come from server-side widget content, never the client
 		unset($filters['get_rows']);
 
-		// require the referenced widget to actually resolve before trusting any of its filters,
-		// unless form_name is a registered non-widget "raw" data-fetch, see self::$raw_form_names
+		// require the referenced widget to actually resolve before trusting any of its filters
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
@@ -607,10 +591,6 @@ class Nextmatch extends Etemplate\Widget
 			// writes nothing when the client sent no permitted filter, rather than writing an
 			// empty/null entry - so the key is not guaranteed to exist.
 			$filters = $valid_filters[$form_name] ?? [];
-		}
-		elseif (isset(self::$raw_form_names[$form_name]))
-		{
-			$filters['get_rows'] = self::$raw_form_names[$form_name];
 		}
 		else
 		{
@@ -1072,7 +1052,7 @@ class Nextmatch extends Etemplate\Widget
 	 * @param array $row
 	 * @return array
 	 */
-	private static function run_beforeSendToClient(array $row)
+	public static function run_beforeSendToClient(array $row)
 	{
 		$timestamps = self::get_timestamps();
 

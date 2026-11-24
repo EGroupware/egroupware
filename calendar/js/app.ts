@@ -229,6 +229,13 @@ export class CalendarApp extends EgwApp
 		}
 		Object.assign(this.state, this.egw.preference('saved_states', 'calendar'));
 
+		// The views fetch their events from calendar_uiviews::ajax_get_rows(), see _fetchViewRows().
+		// Not from a popup: it shares the data registry with the window that opened it.
+		if(!this.egw.is_popup())
+		{
+			this.egw.dataRegisterFetch(this.appname, this._viewsFetchCallback, this);
+		}
+
 		// Set custom color for events without category
 		if(this.egw.preference('no_category_custom_color', 'calendar'))
 		{
@@ -255,6 +262,12 @@ export class CalendarApp extends EgwApp
 			delete window.top.app.calendar;
 		}
 		this.sidebox_hooked_templates = [];
+
+		// only if we are the window that registered it, see constructor
+		if(!this.egw.is_popup())
+		{
+			this.egw.dataUnregisterFetch(this.appname, this._viewsFetchCallback);
+		}
 
 		egw_unregisterGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false);
 		egw_unregisterGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false);
@@ -3714,6 +3727,38 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
+	 * This instance's egw.dataRegisterFetch() callback, see _fetchViewRows()
+	 */
+	private readonly _viewsFetchCallback = (...args : Parameters<CalendarApp['_fetchViewRows']>) => this._fetchViewRows(...args);
+
+	/**
+	 * egw.dataRegisterFetch() callback: fetch the events of the day, week, month and planner views
+	 *
+	 * They show their events without a nextmatch, so they are fetched from calendar_uiviews::ajax_get_rows()
+	 * instead of the nextmatch's ajax_get_rows.  Fetches of the list's nextmatch share the prefix, but
+	 * not the widget id, and are left to the nextmatch.
+	 *
+	 * @param _execId eTemplate request of the page, eg. of the sidebox
+	 * @param _queriedRange {start, num_rows} or {refresh: [...]}
+	 * @param _filters query of the views, see _fetch_data()
+	 * @param _widgetId this.appname for the views
+	 * @param _knownUids unused: the views always get the data of all rows
+	 * @param _lastModification unused
+	 * @return false for fetches not of the views, otherwise a Promise of {order, data, total, rows}
+	 */
+	_fetchViewRows(_execId : string, _queriedRange : any, _filters : any, _widgetId : string,
+		_knownUids? : string[], _lastModification? : number) : Promise<any> | false
+	{
+		if(_widgetId !== this.appname)
+		{
+			return false;
+		}
+		// always answer, so a failed request does not fall back to the nextmatch's ajax_get_rows
+		return this.egw.request('calendar_uiviews::ajax_get_rows', [_execId, _queriedRange, _filters])
+			.then(result => result && result.order ? result : {order: [], data: {}, total: 0}, () => ({order: [], data: {}, total: 0}));
+	}
+
+	/**
 	 * Use the egw.data system to get data from the calendar list for the
 	 * selected time span.
 	 *
@@ -3748,7 +3793,6 @@ export class CalendarApp extends EgwApp
 		if (cat_id && typeof cat_id == 'string' && cat_id != "0") cat_id = cat_id.split(',');
 
 		const query : any = Object.assign({}, {
-			get_rows: 'calendar.calendar_uilist.get_rows',
 			row_id:'row_id',
 			startdate:state.first ||  state.date,
 			enddate:state.last,

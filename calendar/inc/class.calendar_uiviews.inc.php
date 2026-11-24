@@ -237,6 +237,527 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
+	 * Fetch the events of the day, week, month and planner views
+	 *
+	 * The views show their events without a nextmatch: CalendarApp._fetchViewRows() answers their
+	 * egw.dataFetch() with this.  The client has to name the eTemplate request of a page of ours it
+	 * shows, any part of it, as json.php has no CSRF protection of its own.
+	 *
+	 * The query is built from what the views send, each part checked, see self::viewsQuery().  The
+	 * rows are processed as for a nextmatch: get_rows runs between the etemplate2_before_get_rows and
+	 * etemplate2_after_get_rows hooks, by which other apps change the query (eg. the project filter of
+	 * the ProjectManager integration), and dates are sent in the format the client expects.
+	 *
+	 * @param string $exec_id eTemplate request of the page showing the views, eg. of the sidebox
+	 * @param array $queriedRange values for keys "start" and "num_rows", or "refresh" with row ids to fetch
+	 * @param array $filters query of the views, see CalendarApp._fetch_data()
+	 */
+	public static function ajax_get_rows($exec_id, array $queriedRange, array $filters)
+	{
+		$response = Api\Json\Response::get();
+		if (!Etemplate\Widget\Nextmatch::validateExecId($exec_id) ||
+			($query = self::viewsQuery($filters, $queriedRange)) === null)
+		{
+			$response->data(['order' => [], 'data' => [], 'total' => 0]);
+			return;
+		}
+		Api\Translation::add_app('calendar');
+
+		$get_rows = 'calendar.calendar_uilist.get_rows';
+		$rows = $raw_rows = $readonlys = [];
+		$total = null;
+		Api\Hooks::process([
+			'hook_location' => 'etemplate2_before_get_rows',
+			'get_rows'      => $get_rows,
+			'value'         => &$query,
+			'rows'          => &$rows,
+			'readonlys'     => &$readonlys,
+			'total'         => &$total,
+		], [], true);
+
+		$total = (new calendar_uilist())->get_rows($query, $raw_rows, $readonlys);
+
+		Api\Hooks::process([
+			'hook_location' => 'etemplate2_after_get_rows',
+			'get_rows'      => $get_rows,
+			'value'         => &$query,
+			'rows'          => &$rows,
+			'readonlys'     => &$readonlys,
+			'total'         => &$total,
+		], [], true);
+
+		$result = [
+			'total'            => $total,
+			'order'            => [],
+			'data'             => [],
+			'readonlys'        => $readonlys,
+			'lastModification' => Api\DateTime::to('now', 'ts')-1,
+		];
+		// as for a nextmatch: rows are numbered from the queried start, and once a row has no row_id
+		// (eg. the empty row for a calendar the user has no rights for), rows are identified by their number
+		$first = $total ? null : 0;
+		$row_id = 'row_id';
+		foreach($raw_rows as $n => $row)
+		{
+			if (is_int($n))
+			{
+				if (is_null($first)) $first = $n;
+				$n = $n - $first + $query['start'];
+				if (!$row) continue;
+
+				$row = Etemplate\Widget\Nextmatch::run_beforeSendToClient($row);
+				if ($row_id && !isset($row[$row_id])) $row_id = null;
+				$id = $row_id ? $row[$row_id] : $n;
+				$result['order'][] = $id;
+				$result['data'][$id] = $row;
+			}
+			elseif (!is_int($n))	// not a row, eg. options of the sidebox's owner selection
+			{
+				if ($n === 'sel_options')
+				{
+					foreach($row as &$options)
+					{
+						Etemplate\Widget\Select::fix_encoded_options($options, true);
+					}
+					unset($options);
+				}
+				$result['rows'][$n] = $row;
+			}
+		}
+		$response->data($result);
+	}
+
+	/**
+	 * Query for calendar_uilist::get_rows() from what the views sent
+	 *
+	 * The views send the filters of calendar.filter - startdate, enddate, status_filter and cat_id -,
+	 * the shown calendars as col_filter[participant] and selected_owners, col_filter[include_videocalls]
+	 * and the order of the planner. Each is checked:
+	 * - startdate and enddate have to be dates
+	 * - status_filter an option of the status filter
+	 * - cat_id categories the category filter offers, or "0" for none
+	 * - participants and selected owners plain ids: calendar_bo::search() only shows calendars the user has rights for
+	 * - include_videocalls a single value
+	 * - order "participants" or "categories"
+	 * - filter "custom", row_id "row_id" and csv_export empty, which is what the views send
+	 * - anything else as the widget of calendar.filter for it, see self::templateFilterCheck()
+	 *
+	 * An invalid value, and anything else the client sent, is logged as "would drop" and sent as warning to
+	 * the console of the browser.  Depending on $GLOBALS['egw_info']['server']['nm_filter_validation']:
+	 * - "report" (default): everything is passed on, as the client sent it
+	 * - "enforce": only what is valid is passed on, an invalid date gives no events at all
+	 * - false: nothing is checked, everything is passed on
+	 * get_rows, start and num_rows never come from the filters, a search only as a string, and order only if
+	 * it is a column name, as for a nextmatch.
+	 *
+	 * @param array $filters as sent by the client
+	 * @param array $queriedRange values for keys "start" and "num_rows", or "refresh" with row ids to fetch
+	 * @return array|null null if a date is invalid and validation is enforced
+	 */
+	protected static function viewsQuery(array $filters, array $queriedRange) : ?array
+	{
+		$mode = $GLOBALS['egw_info']['server']['nm_filter_validation'] ?? 'report';
+		$enforce = $mode === 'enforce';
+
+		// never from the client, as for a nextmatch
+		unset($filters['get_rows']);
+		// as for a nextmatch: a search has to be a string
+		if (isset($filters['search']) && !is_string($filters['search']))
+		{
+			unset($filters['search']);
+		}
+		// integer keys of col_filter would be used as SQL fragments
+		if (isset($filters['col_filter']) && is_array($filters['col_filter']))
+		{
+			$filters['col_filter'] = array_filter($filters['col_filter'], static fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
+		}
+		$valid = $invalid = [];
+		if ($mode)
+		{
+			$is_ids = static fn($ids) => is_scalar($ids) || is_array($ids) && count(array_filter($ids, 'is_scalar')) === count($ids);
+			foreach($filters as $name => $value)
+			{
+				$reason = null;
+				switch($name)
+				{
+					case 'startdate':
+					case 'enddate':
+						if (!is_scalar($value))
+						{
+							$reason = 'not a date';
+						}
+						elseif ((string)$value !== '')
+						{
+							try {
+								new Api\DateTime($value);
+							}
+							catch (\Exception $e) {
+								$reason = 'not a date';
+							}
+						}
+						break;
+					case 'status_filter':
+						if (!is_scalar($value) || (string)$value !== '' &&
+							!in_array((string)$value, array_column(calendar_ui::status_filter_options(), 'value'), true))
+						{
+							$reason = 'not an option of the status filter';
+						}
+						break;
+					case 'cat_id':
+						if (!empty($value)) $reason = self::invalidCategories($value);
+						break;
+					case 'col_filter':
+						foreach(is_array($value) ? $value : ['' => $value] as $col => $val)
+						{
+							if ($col === 'participant')
+							{
+								$col_reason = $is_ids($val) ? null : 'not a list of ids';
+							}
+							elseif ($col === 'include_videocalls')
+							{
+								$col_reason = is_scalar($val) ? null : 'not a single value';
+							}
+							else
+							{
+								$col_reason = self::templateFilterCheck("col_filter[$col]", $val);
+							}
+							if ($col_reason)
+							{
+								$invalid["col_filter[$col]"] = [$val, $col_reason];
+							}
+							else
+							{
+								$valid['col_filter'][$col] = $val;
+							}
+						}
+						continue 2;
+					case 'selected_owners':
+						if (!$is_ids($value)) $reason = 'not a list of ids';
+						break;
+					case 'order':
+						if (!in_array($value, ['', 'participants', 'categories'], true)) $reason = 'not an order of the views';
+						break;
+					case 'filter':
+						if ($value !== 'custom') $reason = 'the views only use "custom"';
+						break;
+					case 'row_id':
+						if ($value !== 'row_id') $reason = 'the views only use "row_id"';
+						break;
+					case 'csv_export':
+						if (!empty($value)) $reason = 'the views do not export';
+						break;
+					default:
+						// another filter of calendar.filter, eg. one added to a customised template
+						$reason = self::templateFilterCheck($name, $value);
+						break;
+				}
+				if ($reason)
+				{
+					$invalid[$name] = [$value, $reason];
+				}
+				else
+				{
+					$valid[$name] = $value;
+				}
+			}
+			self::logInvalidFilters($invalid, $enforce);
+
+			if ($enforce && (isset($invalid['startdate']) || isset($invalid['enddate'])))
+			{
+				return null;
+			}
+		}
+		$query = $enforce ? $valid : $filters;
+		$query['filter'] = $query['filter'] ?? 'custom';
+		$query['row_id'] = $query['row_id'] ?? 'row_id';
+
+		// Avoid empty arrays, they cause problems with db filtering
+		foreach((array)($query['col_filter'] ?? []) as $col => $val)
+		{
+			if (is_array($val) && !$val) unset($query['col_filter'][$col]);
+		}
+		// as for a nextmatch: order has to be a column name
+		if (!preg_match('/^(#[a-z0-9 _]+|[a-z0-9_]+)$/i', (string)($query['order'] ?? '')))
+		{
+			$query['order'] = '';
+		}
+		$query['sort'] = 'ASC';
+		$query['start'] = (int)($queriedRange['start'] ?? 0);
+		$query['num_rows'] = (int)($queriedRange['num_rows'] ?? 0) ?: Etemplate\Widget\Nextmatch::INITIAL_ROWS;
+
+		// If specific rows are requested, just fetch them
+		if (!empty($queriedRange['refresh']))
+		{
+			$query['col_filter'][$query['row_id']] = $queriedRange['refresh'];
+			$query['csv_export'] = 'refresh';
+		}
+		return $query;
+	}
+
+	/**
+	 * Template with the filters of the views: its name, or the path of a .xet file whose first template is used
+	 *
+	 * @var string
+	 */
+	protected static $views_filter_template = 'calendar.filter';
+
+	/**
+	 * Filters of the template, once read: id => ['type' => tag of the widget, 'attrs' => its attributes, 'options' => values of its <option>s]
+	 *
+	 * @var array[]|null
+	 */
+	protected static $views_filter_widgets;
+
+	/**
+	 * Options of the filters of the views, once read, see calendar_ui::filter_settings()
+	 *
+	 * @var array|null
+	 */
+	protected static $views_filter_options;
+
+	/**
+	 * Why a value is not one the widget of calendar.filter for that filter accepts
+	 *
+	 * For filters without a check of their own in self::viewsQuery(), eg. one added to a customised
+	 * calendar.filter. Checked by the type of the widget:
+	 * - select: one of its options, from the template or calendar_ui::filter_settings(), or of its type, eg. select-country
+	 * - select-cat: a category the category filter offers
+	 * - select-account: an existing account
+	 * - date: a date
+	 * - number, integer or float: a number
+	 * - searchbox, textbox, checkbox or switch: a single value
+	 * A filter of any other type is reported, as there is no check for it.
+	 *
+	 * @param string $name eg. "search" or "col_filter[priority]"
+	 * @param mixed $value as sent by the client
+	 * @return string|null null if it is valid
+	 */
+	protected static function templateFilterCheck(string $name, $value) : ?string
+	{
+		if (!($widget = self::viewsFilterWidgets()[$name] ?? null))
+		{
+			return 'not a filter of the views';
+		}
+		$tag = is_string($widget['attrs']['type'] ?? null) ? $widget['attrs']['type'] : $widget['type'];
+		$type = preg_replace('/^et2-/', '', $tag);
+		$values = is_array($value) ? $value : [$value];
+		if (count(array_filter($values, static fn($v) => is_scalar($v) || is_null($v))) !== count($values))
+		{
+			return "not a value of $tag";
+		}
+		$values = array_filter($values, static fn($v) => (string)$v !== '');
+		switch(true)
+		{
+			case $type === 'select-cat':
+				return $values ? self::invalidCategories(array_values($values)) : null;
+
+			case $type === 'select-account':
+				foreach($values as $v)
+				{
+					if (!$GLOBALS['egw']->accounts->exists($v)) return "account $v does not exist";
+				}
+				return null;
+
+			case str_starts_with($type, 'select'):
+				$options = self::viewsFilterOptions();
+				$offered = array_merge($widget['options'], Etemplate\Widget\Select::optionValues((array)($options[$name] ??
+					Etemplate\Widget\Select::get_array($options, $name) ?? [])));
+				if ($type !== 'select')
+				{
+					try {
+						$offered = array_merge($offered, Etemplate\Widget\Select::optionValues(
+							(array)Etemplate\Widget\Select::typeOptions($type, (string)($widget['attrs']['options'] ?? ''))));
+					}
+					catch (\Throwable $e) {
+						return "options of $tag: ".$e->getMessage();
+					}
+				}
+				$offered = array_map('strval', $offered);
+				foreach($values as $v)
+				{
+					if (!in_array((string)$v, $offered, true)) return "not an option of $tag";
+				}
+				return null;
+
+			case str_starts_with($type, 'date'):
+				foreach($values as $v)
+				{
+					try {
+						new Api\DateTime($v);
+					}
+					catch (\Exception $e) {
+						return 'not a date';
+					}
+				}
+				return null;
+
+			case in_array($type, ['number', 'integer', 'int', 'float'], true):
+				foreach($values as $v)
+				{
+					if (!is_numeric($v)) return 'not a number';
+				}
+				return null;
+
+			case in_array($type, ['searchbox', 'textbox', 'checkbox', 'switch'], true):
+				return is_array($value) ? "not a single value of $tag" : null;
+		}
+		return "no check for a filter of type $tag";
+	}
+
+	/**
+	 * Filters of the template with the filters of the views, by their id
+	 *
+	 * The template is the one Template::instance() resolves, so a customised one is used, and it is read
+	 * from its file: running it needs an eTemplate request, which a request of the views does not have.
+	 * Every element with an id is a filter, but layout and display ones, and so is every one of a
+	 * template it includes.  An id with "$" or "@" is expanded by content, those belong to other apps'
+	 * integration and set no filter of the views.
+	 *
+	 * @return array[] id => ['type' => tag of the widget, 'attrs' => its attributes, 'options' => values of its <option>s]
+	 */
+	protected static function viewsFilterWidgets() : array
+	{
+		if (!isset(self::$views_filter_widgets))
+		{
+			self::$views_filter_widgets = [];
+			if (str_ends_with(self::$views_filter_template, '.xet'))
+			{
+				self::readFilterTemplate(self::$views_filter_template, null);
+			}
+			elseif (($template = Etemplate\Widget\Template::instance(self::$views_filter_template, null, '', '', true)))
+			{
+				self::readFilterTemplate(Etemplate\Widget\Template::rel2path($template->rel_path), $template->id);
+			}
+		}
+		return self::$views_filter_widgets;
+	}
+
+	/**
+	 * Add the filters of a template from a .xet file to self::$views_filter_widgets
+	 *
+	 * @param string $path of the .xet file
+	 * @param ?string $name of the template in it, null for the first one
+	 * @param int $depth of included templates
+	 */
+	protected static function readFilterTemplate(string $path, ?string $name, int $depth=0) : void
+	{
+		$reader = new \XMLReader();
+		if ($depth > 5 || !$reader->open($path)) return;
+
+		$in_template = false;
+		$in_template_depth = $select = null;
+		while($reader->read())
+		{
+			if ($reader->nodeType === \XMLReader::END_ELEMENT && $in_template && $reader->depth === $in_template_depth)
+			{
+				break;
+			}
+			if ($reader->nodeType !== \XMLReader::ELEMENT) continue;
+
+			$tag = $reader->name;
+			$id = $reader->getAttribute('id');
+			if (!$in_template)
+			{
+				if (in_array($tag, ['template', 'et2-template'], true) && (!isset($name) || $id === $name))
+				{
+					$in_template = true;
+					$in_template_depth = $reader->depth;
+				}
+				continue;
+			}
+			if ($tag === 'option')
+			{
+				if ($select) self::$views_filter_widgets[$select]['options'][] = (string)$reader->getAttribute('value');
+				continue;
+			}
+			$select = null;
+			if (!$id || preg_match('/[$@]/', $id)) continue;
+
+			// an included template
+			if (in_array($tag, ['template', 'et2-template'], true))
+			{
+				if (($included = Etemplate\Widget\Template::instance($reader->getAttribute('template') ?: $id, null, '', '', true)))
+				{
+					self::readFilterTemplate(Etemplate\Widget\Template::rel2path($included->rel_path), $included->id, $depth+1);
+				}
+				continue;
+			}
+			// layout and display widgets are no filters
+			if (preg_match('/^(et2-)?(box|vbox|hbox|grid|columns|column|rows|row|iframe|description|label|button.*|image|details|tabbox|tabs|tab|tabpanels|tabpanel|groupbox|caption|hrule|styles|split)$/', $tag))
+			{
+				continue;
+			}
+			$attrs = [];
+			while($reader->moveToNextAttribute()) $attrs[$reader->name] = $reader->value;
+			$reader->moveToElement();
+			self::$views_filter_widgets[$id] = ['type' => $tag, 'attrs' => $attrs, 'options' => []];
+			if (str_contains($tag, 'select')) $select = $id;
+		}
+		$reader->close();
+	}
+
+	/**
+	 * Options of the filters of the views, as calendar.filter is rendered with them
+	 *
+	 * @return array
+	 */
+	protected static function viewsFilterOptions() : array
+	{
+		if (!isset(self::$views_filter_options))
+		{
+			$ui = new calendar_uilist();
+			$nm = [];
+			self::$views_filter_options = ['filter' => $ui->date_filters];
+			$ui->filter_settings($nm, self::$views_filter_options);
+		}
+		return self::$views_filter_options;
+	}
+
+	/**
+	 * Why categories are not ones the category filter of the views offers
+	 *
+	 * @param mixed $cat_id one or more ids, an array or comma-separated, "0" for no category
+	 * @return string|null null if they are valid
+	 */
+	protected static function invalidCategories($cat_id) : ?string
+	{
+		$ids = is_array($cat_id) ? $cat_id : (is_scalar($cat_id) ? explode(',', (string)$cat_id) : null);
+		if (!isset($ids) || count(array_filter($ids, 'is_scalar')) !== count($ids))
+		{
+			return 'not a list of category ids';
+		}
+		// the options the et2-select-cat of calendar.filter gets
+		$offered = Etemplate\Widget\Select::optionValues(Etemplate\Widget\Select::typeOptions('select-cat', ',,calendar'));
+		foreach($ids as $id)
+		{
+			if ((string)$id !== '0' && !in_array((string)$id, $offered, true))
+			{
+				return "category $id is not offered by the category filter";
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Log filters of the views, which are invalid, to the PHP error-log and as warning to the console of the browser
+	 *
+	 * Same lines as for the filters of a nextmatch, so both can be found the same way.
+	 *
+	 * @param array[] $invalid name => [value as sent, why it is invalid]
+	 * @param bool $enforce true: they are dropped, false: they are passed on nevertheless
+	 */
+	protected static function logInvalidFilters(array $invalid, bool $enforce) : void
+	{
+		foreach($invalid as $name => [$value, $reason])
+		{
+			$line = 'Nextmatch filter validation '.($enforce ? 'dropped' : 'would drop').": calendar.filter calendar $name=".
+				substr(json_encode($value), 0, 100).": $reason";
+			error_log($line);
+			Api\Json\Response::get()->apply('egw.debug', ['warn', $line]);
+		}
+	}
+
+	/**
 	 * Generate the calendar toolbar actions
 	 */
 	protected function getToolbarActions()

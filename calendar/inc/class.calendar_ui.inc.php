@@ -555,18 +555,13 @@ class calendar_ui
 	}
 
 	/**
-	 * Options and content of the filters in calendar.filter
+	 * Options of the status filter, shown in calendar.filter for all views
 	 *
-	 * The filters are shown by the nextmatch of the list, as its filter template, and apply to
-	 * all views. They are therefore part of the list's request, which is also what their values
-	 * are validated against.
-	 *
-	 * @param array &$nm content of the list's nextmatch, "integration" and what other apps need for their filters gets set
-	 * @param array &$sel_options "status_filter", "cat_id" and "filter" get set
+	 * @return array[] with keys "value", "label" and "title"
 	 */
-	protected function filter_settings(array &$nm, array &$sel_options)
+	public static function status_filter_options() : array
 	{
-		$sel_options['status_filter'] = array(
+		$options = array(
 			array('value' => 'default',     'label' => lang('Not rejected'), 'title' => lang('Show all status, but rejected')),
 			array('value' => 'accepted',    'label' => lang('Accepted'), 'title' => lang('Show only accepted events')),
 			array('value' => 'unknown',     'label' => lang('Invitations'), 'title' => lang('Show only invitations, not yet accepted or rejected')),
@@ -580,10 +575,28 @@ class calendar_ui
 			array('value' => 'no-enum-groups', 'label' => lang('only group-events'),'title' => lang('Do not include events of group members')),
 			array('value' => 'not-unknown', 'label' => lang('No meeting requests'),'title' => lang('Show all status, but unknown')),
 		);
-		$sel_options['status_filter'][] = array(
+		$options[] = array(
 			'value' => 'deleted', 'label' => lang('Deleted'),
 			'title' => lang('Show events that have been deleted')
 		);
+
+		return $options;
+	}
+
+	/**
+	 * Options and content of the filters in calendar.filter
+	 *
+	 * The filters are shown by the nextmatch of the list, as its filter template, and apply to
+	 * all views. They are therefore part of the list's request, which is also what the list
+	 * validates their values against. The other views send them to calendar_uiviews::ajax_get_rows(),
+	 * which checks them itself.
+	 *
+	 * @param array &$nm content of the list's nextmatch, "integration" and what other apps need for their filters gets set
+	 * @param array &$sel_options "status_filter", "cat_id" and "filter" get set
+	 */
+	protected function filter_settings(array &$nm, array &$sel_options)
+	{
+		$sel_options['status_filter'] = self::status_filter_options();
 
 		$sel_options['cat_id'] = array(
 			['value' => '0', 'label' => lang('None')]

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- Test fixture: a customised calendar.filter, with filters calendar_uiviews has no check of its own for -->
+<overlay>
+	<template id="calendar.views_filter_test" template="" lang="" group="0" version="26.0">
+		<et2-searchbox id="search" label="Search"></et2-searchbox>
+		<et2-vbox>
+			<et2-select id="col_filter[priority]" label="Priority">
+				<option value="1">Low</option>
+				<option value="2">Normal</option>
+				<option value="3">High</option>
+			</et2-select>
+			<et2-select-country id="country" label="Country"></et2-select-country>
+		</et2-vbox>
+		<et2-select-cat id="col_filter[cat2]" label="Category" multiple="true"></et2-select-cat>
+		<et2-select-account id="col_filter[creator]" label="Creator"></et2-select-account>
+		<et2-date id="col_filter[due]" label="Due"></et2-date>
+		<et2-number id="limit" label="Limit"></et2-number>
+		<et2-checkbox id="only_mine" label="Only mine"></et2-checkbox>
+		<et2-link-entry id="col_filter[link]" label="Linked to"></et2-link-entry>
+		<et2-iframe id="iframe" disabled="true"></et2-iframe>
+	</template>
+</overlay>
