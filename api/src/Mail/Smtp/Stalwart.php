@@ -246,34 +246,13 @@ class Stalwart extends Sql
 			if ($userData && !isset($userData['accountStatus']))
 			{
 				$sqlQuota = $userData['quotaLimit'] ?? null;    // MB, like the quota from Stalwart below
-				$aliases = array_merge($userData['mailAlternateAddress'] ?? [], $aliases);
-				foreach(array_map('strtolower', array_filter([$userData['mailLocalAddress'] ?? null])) as $primary)
-				{
-					if (!in_array($primary, $aliases) && $primary !== strtolower($account['emailAddress'])) $aliases[] = $primary;
-				}
-				$aliases = array_values(array_unique(array_map('strtolower', $aliases)));
+				// NOT $userData['mailLocalAddress']: mail_type=5 of the SQL backend is the storage location of the mailbox, which never changes,
+				// the primary email is the one of the addressbook, see primaryAndAliases()
+				$aliases = array_values(array_unique(array_map('strtolower', array_merge($userData['mailAlternateAddress'] ?? [], $aliases))));
 			}
-			// a primary email on a domain Stalwart does not know (eg. an external email of an external account) can not be
-			// an alias in Stalwart, but it must survive as primary email in EGroupware
-			$primary = strtolower($userData['mailLocalAddress'] ?? '');
-			$external_primary = strpos($primary, '@') !== false && !$this->domainIdOrAliasDomain(explode('@', $primary)[1]);
-			// check if EGroupware's primary email is just an alias for Stalwart --> preserve it
-			if ($external_primary)
-			{
-				$email = $primary;
-				$aliases = array_values(array_diff($aliases, [$primary]));
-			}
-			elseif (($key = array_search($primary, $aliases)) !== false ||
-				// primary on an alias-domain (name-part of an alias on the main domain): Stalwart has it as alias of the main domain
-				(strpos($primary, '@') !== false && in_array(explode('@', $primary)[1], $this->aliasDomains(), true) &&
-					($key = array_search(explode('@', $primary)[0].'@'.strtolower($this->defaultDomain), $aliases)) !== false))
-			{
-				$email = $primary;
-				$aliases[] = $account['emailAddress'];
-				unset($aliases[$key]);
-			}
+			[$email, $aliases] = $this->primaryAndAliases($this->primaryEmail($account_id ?? $user), $account, $aliases);
 			$userData = [
-				'mailLocalAddress' =>  $email ?? $account['emailAddress'],   // preserve EGroupware's primary mail address
+				'mailLocalAddress' =>  $email ?: $account['emailAddress'],   // the primary email of the addressbook
 				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : ($sqlQuota ?: null), // MB
 				'quotaUsed' => isset($account['usedDiskQuota']) ? $account['usedDiskQuota']>>20 : null, // MB
 				'uid' => [$account['name']],
@@ -311,11 +290,16 @@ class Stalwart extends Sql
 		if (empty($_mailLocalAddress)) return;
 
 		$account_lid = $this->accounts->id2name($_uidnumber) ?? throw new \Exception("Invalid user #$_uidnumber!");
-		if (self::name2stalwart($_mailLocalAddress) !== self::name2stalwart($account_lid.'@'.$this->defaultDomain))
+		// a primary email, which is the address of a mailing-list, can not be an alias: the list has it and includes the mailbox, see archiveMailbox()
+		if (self::name2stalwart($_mailLocalAddress) !== self::name2stalwart($account_lid.'@'.$this->defaultDomain) &&
+			!$this->isMailingListAddress($_mailLocalAddress))
 		{
 			array_unshift($_mailAlternateAddress, $_mailLocalAddress);
 		}
 		$aliases = $this->aliasObjects($_mailAlternateAddress, $_mailLocalAddress);
+		// the mailbox address of the account itself is no alias (primary email on the alias-domain, or the mailbox address listed as alias)
+		$own = ['name' => self::name2stalwart($account_lid), 'domainId' => $this->domainId($this->defaultDomain)];
+		$aliases = array_values(array_filter($aliases, static fn($a) => $a['name'] !== $own['name'] || $a['domainId'] !== $own['domainId']));
 		$prefs = (new Api\Preferences($_uidnumber))->read_repository();
 		// ToDo: make sure combination of language and country is a valid local BEFORE sending it to Stalwart
 		[$lang, $country] = explode('-', $prefs['common']['lang'])+[null, null];
@@ -963,8 +947,9 @@ class Stalwart extends Sql
 		// update mailing list, if required
 		if (!empty($account_email) && !$is_shared_mailbox)
 		{
-			$this->mailingList($account_email, array_values(array_filter(array_map(fn($account_id) => Api\Accounts::id2name($account_id, 'account_email'),
-					Api\Accounts::getInstance()->members($account_id, true)))), null, [], lang('Group').' '.$account_lid);
+			$this->mailingList($account_email, self::listRecipients(array_map(fn($account_id) => Api\Accounts::id2name($account_id, 'account_email'),
+					Api\Accounts::getInstance()->members($account_id, true)), $account_email, $this->archiveMailbox($account_email)),
+				null, [], lang('Group').' '.$account_lid);
 		}
 		// remove evtl. existing mailing-list
 		else
@@ -1439,6 +1424,109 @@ class Stalwart extends Sql
 	}
 
 	protected static $domainIds;
+
+	/**
+	 * Primary email of an account: the one of the addressbook (account_email)
+	 *
+	 * NOT mail_type=5 of the SQL backend (mailLocalAddress): that is the storage location of the mailbox, which never changes (and
+	 * can be on an old domain), so it must be ignored for Stalwart.
+	 *
+	 * @param int|string $user numerical account-id or account-name
+	 * @return string lower-case email address, empty if there is none
+	 */
+	protected function primaryEmail(int|string $user) : string
+	{
+		$account_id = is_numeric($user) ? (int)$user : $this->accounts->name2id($user, 'account_lid', 'u');
+		return $account_id ? strtolower(trim((string)Api\Accounts::id2name($account_id, 'account_email'))) : '';
+	}
+
+	/**
+	 * Primary email and aliases of an account, as EGroupware shows them, from the account in Stalwart
+	 *
+	 * The primary email is the one of the addressbook, EGroupware sends with it. Stalwart has the mailbox address (<account name>@<domain>)
+	 * and aliases, so a primary email with an other name-part has to become an alias: setUserData() creates it from the primary email,
+	 * also if it is on an alias-domain (domainIdOrAliasDomain()). The mailbox address then is listed as one of the aliases.
+	 *
+	 * @param string $primary primary email from primaryEmail(), can be empty
+	 * @param array $account Stalwart account with values for keys name and emailAddress
+	 * @param string[] $aliases lower-case aliases (and lists) of the account as email addresses
+	 * @return array [string primary email or '' for the account's own address, string[] aliases]
+	 */
+	protected function primaryAndAliases(string $primary, array $account, array $aliases) : array
+	{
+		if ($primary === '' || strpos($primary, '@') === false)
+		{
+			return ['', $aliases];
+		}
+		[$name, $domain] = explode('@', $primary, 2);
+		// a primary email on a domain Stalwart does not know (eg. an external email of an external account) can not be
+		// an alias in Stalwart, but it must survive as primary email in EGroupware
+		if (!$this->domainIdOrAliasDomain($domain))
+		{
+			return [$primary, array_values(array_diff($aliases, [$primary]))];
+		}
+		// the same name-part on the main domain is the same alias, do not list it twice
+		$aliases = array_values(array_diff($aliases, [$primary, $name.'@'.strtolower($this->defaultDomain)]));
+		// the mailbox address stays an alias, unless the primary email is it (on the main or an alias-domain)
+		if (self::name2stalwart($name) !== $account['name'])
+		{
+			$aliases[] = strtolower($account['emailAddress']);
+		}
+		return [$primary, array_values(array_unique($aliases))];
+	}
+
+	/**
+	 * Is an email address the address of a mailing-list
+	 */
+	protected function isMailingListAddress(string $email) : bool
+	{
+		foreach($this->getMailingListByRecipient($email, false, true) as $list)
+		{
+			if (strtolower($list['emailAddress']) === strtolower($email))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Mailbox of the user, whose primary email is the address of a mailing-list: it is a recipient of the list too (eg. an archive mailbox "pr" for the
+	 * list personalrat@), as an account and a list can not have the same address
+	 *
+	 * @param string $list_email address of the list
+	 * @return ?string address of the mailbox, null: nobody has the address as primary email, or it is his mailbox address (the user wins, no list)
+	 */
+	protected function archiveMailbox(string $list_email) : ?string
+	{
+		if (!($account_id = $this->accounts->name2id($list_email, 'account_email', 'u')) || !($lid = Api\Accounts::id2name($account_id)))
+		{
+			return null;
+		}
+		$name = self::name2stalwart($lid);
+		return $name !== self::name2stalwart(explode('@', $list_email)[0]) ? $name.'@'.strtolower($this->defaultDomain) : null;
+	}
+
+	/**
+	 * Recipients of the mailing-list of a group
+	 *
+	 * @param string[] $emails email addresses of the members
+	 * @param string $list_email address of the list
+	 * @param ?string $mailbox mailbox address from archiveMailbox(): replaces the list's own address, if a member has it as primary email, and is a recipient
+	 * @return string[] lower-case, without duplicates
+	 */
+	public static function listRecipients(array $emails, string $list_email, ?string $mailbox=null) : array
+	{
+		$list_email = strtolower($list_email);
+		$emails = array_filter(array_map(static fn($e) => strtolower(trim((string)$e)), $emails));
+		// a list can not have itself as recipient
+		$emails = array_values(array_diff($emails, [$list_email]));
+		if ($mailbox)
+		{
+			$emails[] = strtolower($mailbox);
+		}
+		return array_values(array_unique($emails));
+	}
 
 	/**
 	 * Alias objects of Stalwart for a list of email addresses
