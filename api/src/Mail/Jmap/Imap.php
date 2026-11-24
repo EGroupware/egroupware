@@ -3984,8 +3984,24 @@ class Imap extends Jmap\Base
 	 */
 	public static function emailBodyFields(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure) : array
 	{
-		$textId = $structure->findBody('plain');
-		$htmlId = $structure->findBody('html');
+		// Horde_Mime_Part::findBody() returns only the FIRST matching text/plain (resp. text/html)
+		// part in the whole tree - fine for the common "one plain + one html alternative" message,
+		// but Apple Mail (iOS/iPadOS/macOS Mail) can split ONE logical body into several sibling
+		// text/plain or text/html parts with an inline (non-alternative) attachment placed in
+		// between them, whenever the user inserts a file mid-message. findBody()'s first-match-only
+		// then silently drops every OTHER body fragment into $attachments instead (named
+		// "Unknown_PartX.Y..." by bodyPartToJmap()/mime2ext(), see AttachmentJmap.php) - found live
+		// 2026-11-24, tickets #128441 (body appeared completely blank, the real text having become
+		// an "attachment" while the empty first fragment was shown as "the" body) and #128091
+		// (extra text/html fragments shown as separate downloadable "PartX.Y.htm" attachments
+		// instead of being part of the message). Collect ALL matches instead, then concatenate them
+		// in document order - mirrors Api\Mail::getMultipartMixed()'s own per-type $bodyPart[]
+		// accumulation for the classic (non-JMAP) rendering path.
+		$textIds = self::findBodyParts($structure, 'plain');
+		$htmlIds = self::findBodyParts($structure, 'html');
+		$textId = $textIds[0] ?? null;
+		$htmlId = $htmlIds[0] ?? null;
+		$bodyIds = array_flip(array_merge($textIds, $htmlIds));
 
 		$attachments = [];
 		// a message/rfc822 attachment (eg. forward-as-attachment) is ONE opaque attachment - its
@@ -4004,7 +4020,7 @@ class Imap extends Jmap\Base
 			{
 				continue;
 			}
-			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
+			if ($part->getPrimaryType() === 'multipart' || isset($bodyIds[$id]))
 			{
 				continue;
 			}
@@ -4022,9 +4038,13 @@ class Imap extends Jmap\Base
 		}
 
 		$bodyValues = [];
-		foreach (array_unique(array_filter([$textId, $htmlId])) as $partId)
+		if ($textId !== null)
 		{
-			$bodyValues[$partId] = self::fetchBodyValue($imap, $mailbox, $uid, $structure, $partId);
+			$bodyValues[$textId] = self::concatBodyValues($imap, $mailbox, $uid, $structure, $textIds);
+		}
+		if ($htmlId !== null)
+		{
+			$bodyValues[$htmlId] = self::concatBodyValues($imap, $mailbox, $uid, $structure, $htmlIds);
 		}
 
 		return [
@@ -4033,6 +4053,61 @@ class Imap extends Jmap\Base
 			'htmlBody' => $htmlId !== null ? [self::bodyPartToJmap($structure->getPart($htmlId), $mailbox, $uid)] : [],
 			'attachments' => $attachments,
 			'bodyValues' => $bodyValues,
+		];
+	}
+
+	/**
+	 * All non-attachment text/$subtype part-ids in document order (see emailBodyFields()'s
+	 * docblock for why this exists instead of just using Horde_Mime_Part::findBody())
+	 *
+	 * @param \Horde_Mime_Part $structure
+	 * @param string $subtype 'plain' or 'html'
+	 * @return string[] mime-ids, document order, possibly empty
+	 */
+	private static function findBodyParts(\Horde_Mime_Part $structure, string $subtype) : array
+	{
+		$ids = [];
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			if ($part->getPrimaryType() === 'text' && $part->getSubType() === $subtype &&
+				$part->getDisposition() !== 'attachment')
+			{
+				$ids[] = $part->getMimeId();
+			}
+		}
+		return $ids;
+	}
+
+	/**
+	 * Fetch + concatenate (in document order) one or more same-type body part-ids into a single
+	 * RFC 8621 EmailBodyValue - the "same text/html document repeated" concern a naive concat
+	 * might raise does not apply here: Api\Mail::getdisplayableBody() (the classic rendering path)
+	 * already concatenates multiple sibling body parts' raw content the exact same way, "nested"
+	 * <html> tags and all, and renders fine in practice (browsers are forgiving of that).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part $structure
+	 * @param string[] $partIds document order, at least one
+	 * @return array {value: string, isEncodingProblem: bool, isTruncated: bool}
+	 */
+	private static function concatBodyValues(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure, array $partIds) : array
+	{
+		$value = '';
+		$isEncodingProblem = $isTruncated = false;
+		foreach ($partIds as $partId)
+		{
+			$fetched = self::fetchBodyValue($imap, $mailbox, $uid, $structure, $partId);
+			$value .= $fetched['value'];
+			$isEncodingProblem = $isEncodingProblem || $fetched['isEncodingProblem'];
+			$isTruncated = $isTruncated || $fetched['isTruncated'];
+		}
+		return [
+			'value' => $value,
+			'isEncodingProblem' => $isEncodingProblem,
+			'isTruncated' => $isTruncated,
 		];
 	}
 
