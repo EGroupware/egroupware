@@ -3965,7 +3965,13 @@ export class CalendarApp extends EgwApp
 		{
 			this._group_query_cache[cache_key] = this.egw.request("calendar.calendar_owner_etemplate_widget.ajax_owner", [groups]).then((data) =>
 			{
-				options = option_owner.select_options.concat(Object.values(data));
+				// The owner widget's select_options getter also returns its current search results,
+				// grouped by app (option groups with an array value).  Writing those back would make
+				// them permanent options, and every later search then fails matching against them
+				// before it sends any request.  The owner list itself is plain options, so skip groups.
+				options = option_owner.select_options
+					.filter((o) => !Array.isArray(o.value) && !Array.isArray((<any>o).children))
+					.concat(Object.values(data));
 				option_owner.select_options = options;
 			}).finally(() =>
 			{
