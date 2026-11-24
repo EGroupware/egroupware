@@ -400,6 +400,32 @@ class infolog_ui
 	}
 
 	/**
+	 * Value of the filter for the parent of sub-entries, as get_rows() uses it
+	 *
+	 * The list sets the filter itself, so no filter widget checks it. It is the id of an entry,
+	 * or a list of them. Which sub-entries are returned is still a matter of the ACL.
+	 *
+	 * @param mixed $parent value the list sent
+	 * @return string|int[]|null id, list of ids for a list, or null if there is no id in it
+	 */
+	public static function parentFilter($parent)
+	{
+		$ids = array();
+		foreach((array)$parent as $id)
+		{
+			if (is_scalar($id) && (string)(int)$id === (string)$id && (int)$id >= 0)
+			{
+				$ids[] = (int)$id;
+			}
+		}
+		if (!$ids)
+		{
+			return null;
+		}
+		return is_array($parent) ? $ids : (string)$ids[0];
+	}
+
+	/**
 	 * Callback for nextmatch widget
 	 *
 	 * @param array &$query
@@ -410,6 +436,12 @@ class infolog_ui
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
 		//error_log(__METHOD__."() query[csv_export]=".array2string($query['csv_export']).", query[filter]=".array2string($query['filter']).", query[col_filter]=".array2string(array_diff($query['col_filter'],array('',0))).' '.function_backtrace());
+		// the parent of the sub-entries to show has no filter widget checking it
+		if (isset($query['col_filter']['info_id_parent']) && $query['col_filter']['info_id_parent'] !== '' &&
+			($query['col_filter']['info_id_parent'] = self::parentFilter($query['col_filter']['info_id_parent'])) === null)
+		{
+			unset($query['col_filter']['info_id_parent']);
+		}
 		if (empty($query['csv_export']))
 		{
 			unset($query['no_actions']);
@@ -1159,8 +1191,9 @@ class infolog_ui
 		$values['nm']['parent_id'] = 'info_id_parent';
 		$values['nm']['is_parent'] = 'info_anz_subs';
 		$values['nm']['action_var'] = 'multi_action';    // as 'action' is already used in infolog
-		// the entry the list shows the linked or sub-entries of, a favorite sets or resets it
-		$values['nm']['extra_attributes'] = ['action', 'action_id'];
+		// the entry the list shows the linked or sub-entries of, a favorite sets or resets it,
+		// and the parent of the sub-entries, which the list sets itself: get_rows() checks it
+		$values['nm']['extra_attributes'] = ['action', 'action_id', 'col_filter[info_id_parent]'];
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
 		$values['nm']['filter_onchange'] = "app.infolog.filter_change";
