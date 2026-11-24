@@ -317,19 +317,30 @@ describe("MailJmap.buildTokenizedFilter() - '*' suffix, so words starting with t
 		}
 	});
 
-	it("partial email addresses and domains get it too", () =>
+	it("partial email addresses and domains get it too, also with . _ + - and digits", () =>
 	{
-		for (const word of ['rb@egroupware', 'rb@egroupware.o', 'rb@egroupware.org', 'egroupware.org', '@egroupware', 'a@b.de'])
+		for (const word of ['rb@egroupware', 'rb@egroupware.o', 'rb@egroupware.org', 'egroupware.org', '@egroupware', 'a@b.de',
+			'no-reply@github', 'ralf.becker@egroupware', 'info2@egroupware', 'notifications+x@github', 'a-b_c@exa', 'x@y'])
 		{
 			assert.equal(term(word), word + '*', word);
 		}
 	});
 
-	it("words with digits, other punctuation or an own '*' are left alone", () =>
+	it("words with digits or other punctuation but no '@', or an own wildcard, are left alone", () =>
 	{
-		for (const word of ['ER-4613', '2024', 'Rechnung2024', "O'Brien", 'Müller-Schmidt', 'beck*', 'rb@', 'rb@egroupware.', '#', '№', 'x', '*stell*', 'a?b'])
+		for (const word of ['ER-4613', '2024', 'Rechnung2024', "O'Brien", 'Müller-Schmidt', 'mail-01.example.org', 'beck*', '*stell*', 'a?b', 'x'])
 		{
 			assert.equal(term(word), word, word);
+		}
+	});
+
+	it("punctuation-only words and incomplete or invalid addresses are left alone", () =>
+	{
+		// prefixTerm() directly: buildTokenizedFilter() treats a leading "+" or "-" as operator, before it gets the word
+		const prefixTerm = (word : string) => (MailJmap as any).prefixTerm(word);
+		for (const word of ['#', '№', '--', '@', '@e', 'rb@', 'rb@egroupware.', 'rb@-egroupware', 'a@@b', 'a@b@c', '+x@github', '.x@github', 'rb@egroupware-'])
+		{
+			assert.equal(prefixTerm(word), word, word);
 		}
 	});
 
