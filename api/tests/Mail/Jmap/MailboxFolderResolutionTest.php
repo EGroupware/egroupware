@@ -70,11 +70,11 @@ class MailboxFolderResolutionTest extends \PHPUnit\Framework\TestCase
 		$this->assertCount(1, $session->calls, "all segments are sent as one chained batch, not one jmapCall() per segment");
 		$methodCalls = $session->calls[0];
 		$this->assertCount(4, $methodCalls, "2 segments x (Mailbox/query + Mailbox/get) = 4 calls");
-		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'INBOX']], 'q0'], $methodCalls[0]);
+		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'INBOX'], 'limit' => 50], 'q0'], $methodCalls[0]);
 		$this->assertSame('Mailbox/get', $methodCalls[1][0]);
 		$this->assertSame(['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => 'q0'], $methodCalls[1][1]['#ids'],
 			"the Mailbox/get verifying segment 0's candidates must back-reference segment 0's own query");
-		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'Sub']], 'q1'], $methodCalls[2]);
+		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'Sub'], 'limit' => 50], 'q1'], $methodCalls[2]);
 	}
 
 	/**

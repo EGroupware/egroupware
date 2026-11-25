@@ -55,6 +55,18 @@ class Mailbox extends Type
 			$methodCalls[] = ['Mailbox/query', [
 				'accountId' => $accountId,
 				'filter' => ['name' => $part],
+				// RFC 8621 §2's "name" filter is a substring match (see this method's own
+				// docblock) - an account with many mailboxes sharing a common substring (or, worse,
+				// an empty $part from eg. a stray trailing delimiter) could return far more
+				// candidate ids than before this method ever did a follow-up Mailbox/get at all.
+				// Without a cap here, that Mailbox/get's own 'ids' count can exceed the server's
+				// maxObjectsInGet, which the server (correctly) rejects outright as "requestTooLarge"
+				// rather than truncating (live-reproduced 2026-11-25, Mail Compose: "The number of
+				// ids requested by the client exceeds the maximum ... in a single method call").
+				// A real name collision is always a small, fixed handful of siblings (Nordenham's
+				// own Fälle/Sterbefälle case was 2) - 50 is generous headroom, never a realistic
+				// bottleneck for genuine disambiguation.
+				'limit' => 50,
 			], $queryId];
 			$methodCalls[] = ['Mailbox/get', [
 				'accountId' => $accountId,
