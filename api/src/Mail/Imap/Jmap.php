@@ -988,6 +988,47 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * Recurse from a mailbox name down through its children - overridden only to special-case the
+	 * account root ('INBOX', the sentinel getUserMailboxString() always returns when called with
+	 * no folder name - see its own docblock): on Stalwart, Sent/Trash/Drafts/Junk/Templates/... are
+	 * TOP-LEVEL siblings of INBOX, not its children (unlike classic/Dovecot, where they were nested
+	 * under INBOX, eg. INBOX.Sent - recursing from INBOX there already covered the whole account).
+	 * Without this, mail_acl's "recursive / incl. subfolders" option starting from the account root
+	 * only ever touched INBOX itself (parent::getMailBoxesRecursive() correctly finds INBOX has no
+	 * JMAP children at all and stops there - not a bug in that method, just the real Stalwart tree
+	 * shape), and mail_acl::ajax_folders()'s folder-picker (same getSubfolders() call, same 'INBOX'
+	 * default when nothing is selected yet) listed nothing below the root either. Found live
+	 * 2026-11-25 (Nordenham/Birgit: setting ACLs recursively on INBOX for a function mailbox left
+	 * Sent/Trash/Drafts/Junk/Templates completely untouched).
+	 *
+	 * Only the TOP-level call needs this - JmapMailbox::listAll() is already scoped to this
+	 * session's own accountId alone (never a mail:share-shared account's mailboxes), so no extra
+	 * filtering is needed to keep shared-account folders out of this expansion. Every deeper
+	 * recursion step (reclevel>0) is unchanged: parent::getMailBoxesRecursive()'s own per-level
+	 * walk already works correctly via this class's listMailboxes() override (the 2026-11-09 fix
+	 * this method's own docblock references), it just never got a chance to start walking from
+	 * anywhere but INBOX itself before.
+	 *
+	 * @inheritDoc
+	 */
+	function getMailBoxesRecursive($_mailbox, $delimiter, $prefix, $reclevel=0)
+	{
+		if ($_mailbox !== 'INBOX' || $reclevel !== 0)
+		{
+			return parent::getMailBoxesRecursive($_mailbox, $delimiter, $prefix, $reclevel);
+		}
+		$allMailboxes = [];
+		foreach ((new JmapMailbox($this->jmapClient()))->listAll() as $path => $mailbox)
+		{
+			if (empty($mailbox['parentId']))
+			{
+				$allMailboxes = array_merge($allMailboxes, parent::getMailBoxesRecursive($path, $delimiter, $prefix, 1));
+			}
+		}
+		return $allMailboxes;
+	}
+
+	/**
 	 * JMAP-native status() - one Mailbox/get call instead of IMAP STATUS, for an account with no
 	 * real IMAP connection behind it. Api\Mail\Imap::getStatus()/getMailboxCounters() (neither
 	 * overridden - both call this) are the real consumers, via Api\Mail::getFolderStatus() ->
