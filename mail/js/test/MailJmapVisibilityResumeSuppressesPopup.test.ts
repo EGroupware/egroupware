@@ -57,8 +57,13 @@ function createFailingClient()
 		{
 			const t = {
 				Mailbox: {
-					query: (_args : any) => ({ids: ["mbox1"]}),
-					get: (_args : any) => ({list: [{role: null}]}),
+					query: (_args : any) => ({ids: ["mbox1"], $ref: (_p : string) => ({})}),
+					// serves both mailboxId()'s own candidate-verification Mailbox.get (properties
+					// id/name/parentId) and mailboxRole()'s separate one (properties: ['role']) -
+					// told apart by which properties were actually requested
+					get: (args : any) => args.properties?.includes('role')
+						? {list: [{role: null}]}
+						: {list: [{id: "mbox1", name: "INBOX", parentId: null}]},
 				},
 				Email: {
 					query: (_args : any) : any => { throw new TypeError("Failed to fetch"); },
