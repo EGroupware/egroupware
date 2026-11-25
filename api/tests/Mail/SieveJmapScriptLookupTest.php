@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class SieveJmapScriptLookupHttp extends Http
 {
 	public array $sets = [];
-	public array $scripts = [
+	public ?array $scripts = [
 		['id' => 'b', 'name' => 'sieve', 'isActive' => false, 'blobId' => 'B1'],
 		['id' => 'c', 'name' => 'EGW18', 'isActive' => true, 'blobId' => 'B2'],
 		['id' => 'd', 'name' => 'felamimail', 'isActive' => false, 'blobId' => 'B3'],
@@ -75,6 +75,26 @@ class SieveJmapScriptLookupTest extends TestCase
 	public function testInstallCreatesMissingScript()
 	{
 		$http = SieveJmapScriptLookupHttp::create();
+		$sieve = new SieveJmap($http, 'byl');
+
+		$sieve->installScript('other', '# script', true);
+
+		$this->assertSame('other', $http->sets[0]['create']['A']['name']);
+	}
+
+	/**
+	 * Regression test (found live 2026-11-25, admin "edit vacation notice" for a fresh account with
+	 * no sieve script yet): RFC 8620 §5.1 Get's "list" is supposed to always be an array, even
+	 * empty, but a real JMAP server can still send back a JSON `null` instead - a bare
+	 * `foreach (null as ...)` only ever emits a PHP WARNING, not a Throwable, so
+	 * Jmap::listScripts()'s own "ignore not existing script" catch block never fired, and `null`
+	 * reached installScript()'s/getScript()'s own array_filter() calls, which don't accept null and
+	 * fatal with "array_filter(): Argument #1 ($array) must be of type array, null given".
+	 */
+	public function testInstallCreatesMissingScriptWhenServerSendsNullInsteadOfAnEmptyList()
+	{
+		$http = SieveJmapScriptLookupHttp::create();
+		$http->scripts = null;
 		$sieve = new SieveJmap($http, 'byl');
 
 		$sieve->installScript('other', '# script', true);
