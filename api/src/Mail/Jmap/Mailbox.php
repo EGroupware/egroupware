@@ -39,6 +39,25 @@ class Mailbox extends Type
 	 * the only check that can't be fooled by a substring collision, since JMAP mailbox names are
 	 * case-insensitive unique per parent.
 	 *
+	 * Each segment's own Mailbox/query filter ALSO includes the previous segment's already-resolved
+	 * parentId (RFC 8621 §2.3 - an explicit parentId condition, narrowing the search to children of
+	 * that mailbox) - not just belt-and-suspenders for a real JMAP server, but REQUIRED for the
+	 * local plain-IMAP shim (`Mail\Jmap\Imap::mailboxQuery()`): that emulation does no real
+	 * search at all for a name-only filter, it just concatenates filter.parentId's own path +
+	 * filter.name and returns that ONE synthesized id - omitting parentId there collapses every
+	 * segment beyond the first to a bogus TOP-LEVEL path (eg. "Trash" instead of "INBOX/Trash",
+	 * "fm" instead of "user/fm"), which the candidate-net/exact-match check below then correctly
+	 * rejects as "no match", surfacing as "Folder 'INBOX/Trash' not found" - found live 2026-11-25,
+	 * ticket #128691 (Dovecot/shim accounts only; a real-JMAP/Stalwart account was never affected,
+	 * since its own genuine substring search needs no parentId hint to find the right candidates in
+	 * the first place - this was a regression from the Fälle/Sterbefälle fix above, which dropped
+	 * the parentId filter this method used to always pass). This is why each segment now needs its
+	 * OWN jmapCall() round trip (one segment's resolved id is needed to build the NEXT segment's
+	 * own filter) rather than batching every segment into one request as before - the same
+	 * per-segment-round-trip structure mail/js/jmap.ts's own mailboxId() already uses, same reason
+	 * (that one also can't know a later segment's parentId before an earlier segment's own response
+	 * comes back).
+	 *
 	 * @param string $folder folder-path
 	 * @param string|null $accountId
 	 * @return string|null null = not found
@@ -46,50 +65,47 @@ class Mailbox extends Type
 	public function getMailboxId(string $folder, ?string $accountId=null) : ?string
 	{
 		$accountId = $accountId ?: $this->jmap->accountId;
-		$parts = explode('/', $folder);
-
-		$methodCalls = [];
-		foreach ($parts as $key => $part)
-		{
-			$queryId = 'q'.$key;
-			$methodCalls[] = ['Mailbox/query', [
-				'accountId' => $accountId,
-				'filter' => ['name' => $part],
-				// RFC 8621 §2's "name" filter is a substring match (see this method's own
-				// docblock) - an account with many mailboxes sharing a common substring (or, worse,
-				// an empty $part from eg. a stray trailing delimiter) could return far more
-				// candidate ids than before this method ever did a follow-up Mailbox/get at all.
-				// Without a cap here, that Mailbox/get's own 'ids' count can exceed the server's
-				// maxObjectsInGet, which the server (correctly) rejects outright as "requestTooLarge"
-				// rather than truncating (live-reproduced 2026-11-25, Mail Compose: "The number of
-				// ids requested by the client exceeds the maximum ... in a single method call").
-				// A real name collision is always a small, fixed handful of siblings (Nordenham's
-				// own Fälle/Sterbefälle case was 2) - 50 is generous headroom, never a realistic
-				// bottleneck for genuine disambiguation.
-				'limit' => 50,
-			], $queryId];
-			$methodCalls[] = ['Mailbox/get', [
-				'accountId' => $accountId,
-				'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => $queryId],
-				'properties' => ['id', 'name', 'parentId'],
-			], 'g'.$key];
-		}
-		$response = $this->jmap->jmapCall($methodCalls);
-
-		$candidatesByKey = [];
-		foreach ($response['methodResponses'] as [$name, $args, $callId])
-		{
-			if ($name === 'Mailbox/get' && preg_match('/^g(\d+)$/', $callId, $matches))
-			{
-				$candidatesByKey[(int)$matches[1]] = $args['list'] ?? [];
-			}
-		}
 
 		$parentId = null;
-		foreach ($parts as $key => $part)
+		foreach (explode('/', $folder) as $part)
 		{
+			$response = $this->jmap->jmapCall([
+				['Mailbox/query', [
+					'accountId' => $accountId,
+					'filter' => ['name' => $part, 'parentId' => $parentId],
+					// RFC 8621 §2's "name" filter is a substring match (see this method's own
+					// docblock) - an account with many mailboxes sharing a common substring (or,
+					// worse, an empty $part from eg. a stray trailing delimiter) could return far
+					// more candidate ids than before this method ever did a follow-up Mailbox/get
+					// at all. Without a cap here, that Mailbox/get's own 'ids' count can exceed the
+					// server's maxObjectsInGet, which the server (correctly) rejects outright as
+					// "requestTooLarge" rather than truncating (live-reproduced 2026-11-25, Mail
+					// Compose: "The number of ids requested by the client exceeds the maximum ...
+					// in a single method call"). A real name collision is always a small, fixed
+					// handful of siblings sharing the SAME parent (Nordenham's own Fälle/
+					// Sterbefälle case was 2, both top-level) - 50 is generous headroom, never a
+					// realistic bottleneck for genuine disambiguation.
+					'limit' => 50,
+				], 'q'],
+				['Mailbox/get', [
+					'accountId' => $accountId,
+					'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => 'q'],
+					'properties' => ['id', 'name', 'parentId'],
+				], 'g'],
+			]);
+
+			$candidates = [];
+			foreach ($response['methodResponses'] as [$name, $args, $callId])
+			{
+				if ($name === 'Mailbox/get' && $callId === 'g')
+				{
+					$candidates = $args['list'] ?? [];
+					break;
+				}
+			}
+
 			$match = null;
-			foreach ($candidatesByKey[$key] ?? [] as $candidate)
+			foreach ($candidates as $candidate)
 			{
 				if (mb_strtolower($candidate['name'], 'UTF-8') === mb_strtolower($part, 'UTF-8') &&
 					($candidate['parentId'] ?? null) === $parentId)

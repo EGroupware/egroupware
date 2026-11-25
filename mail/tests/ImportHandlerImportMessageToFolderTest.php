@@ -34,18 +34,32 @@ require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');
 class ImportHandlerImportMessageToFolderTest extends Api\LoggedInTest
 {
 	/**
-	 * @param ?string $mailboxId what Mailbox::getMailboxId()'s own chained jmapCall() batch
-	 *  should resolve to for ANY folder path - null simulates "folder not found"
+	 * @param ?string $mailboxId what Mailbox::getMailboxId()'s own per-segment jmapCall() round
+	 *  trips should resolve the LAST segment to - null simulates "folder not found"
 	 * @param callable $callResponder handles the single Email/import call() (and any other
 	 *  direct call() a test wants to inject a failure for)
+	 * @param int $totalSegments number of '/'-separated segments in the folder path this fake
+	 *  will be asked to resolve (every test here uses a 2-segment "INBOX/X" path except the
+	 *  trailing-delimiter one, already normalized down to a bare 1-segment "INBOX" by the time
+	 *  getMailboxId() is ever called) - needed because getMailboxId() now issues one jmapCall()
+	 *  round trip PER segment (ticket #128691: a later segment's own query needs an earlier
+	 *  segment's already-resolved id as its filter.parentId - the local shim's mailboxQuery()
+	 *  requires this to do anything beyond a bogus top-level-only path synthesis, see
+	 *  Mailbox.php's own docblock), so this fake can no longer tell "is this the last segment"
+	 *  from a single batch's own size the way it used to.
 	 */
-	private function fakeHttp(?string $mailboxId, callable $callResponder) : Http
+	private function fakeHttp(?string $mailboxId, callable $callResponder, int $totalSegments=2) : Http
 	{
-		return new class($mailboxId, $callResponder) extends Http
+		return new class($mailboxId, $callResponder, $totalSegments) extends Http
 		{
 			public array $calls = [];
 			public array $uploadedBlobs = [];
-			public function __construct(private ?string $mailboxId, private $callResponder) { $this->accountId = 'acc1'; }
+			private int $segmentCalls = 0;
+			private ?string $parentId = null;
+			public function __construct(private ?string $mailboxId, private $callResponder, private int $totalSegments)
+			{
+				$this->accountId = 'acc1';
+			}
 			public function call(string $method, array $args) : array
 			{
 				$this->calls[] = [$method, $args];
@@ -56,31 +70,44 @@ class ImportHandlerImportMessageToFolderTest extends Api\LoggedInTest
 				// Mailbox::getMailboxId()'s per-segment Mailbox/query+get pair (2026-11-25, RFC 8621's
 				// "name" filter is a substring match, so query is only ever a candidate net - a chained
 				// Mailbox/get verifies exact name+parentId before a match is accepted, see its own
-				// docblock): when $this->mailboxId is set, the LAST segment's candidate resolves to it;
-				// every earlier (intermediate) segment resolves to an arbitrary-but-consistent
-				// placeholder id, chained via parentId so the whole path verifies. When
-				// $this->mailboxId is null, every segment's Mailbox/get comes back empty (not found).
-				$responses = [];
-				$parentId = null;
-				for ($i = 0; $i < count($methodCalls); $i += 2)
+				// docblock), one segment's own round trip per jmapCall() invocation (ticket #128691
+				// follow-up - see this method's own @param totalSegments): when $this->mailboxId is
+				// set, the LAST segment's candidate resolves to it; every earlier (intermediate)
+				// segment resolves to an arbitrary-but-consistent placeholder id, chained via parentId
+				// so the whole path verifies. When $this->mailboxId is null, every segment's
+				// Mailbox/get comes back empty (not found).
+				[$queryName, $queryArgs, $queryCallId] = $methodCalls[0];
+				[$getName, , $getCallId] = $methodCalls[1];
+				// ImportHandler::importMessageToFolder() resolves the folder itself BEFORE ever
+				// calling Email::emailImport() - which then resolves the SAME folder path a second,
+				// entirely independent time internally (its own existence check). An explicit
+				// filter.parentId===null marks the first segment of a NEW resolution (this method's
+				// own getMailboxId() always passes the real, already-resolved parentId for every
+				// later segment, never null again) - reset the per-resolution counters there so the
+				// second resolution starts fresh instead of carrying over the first one's state.
+				if (($queryArgs['filter']['parentId'] ?? null) === null)
 				{
-					[$queryName, $queryArgs, $queryCallId] = $methodCalls[$i];
-					[$getName, , $getCallId] = $methodCalls[$i + 1];
-					if ($this->mailboxId === null)
-					{
-						$responses[] = [$queryName, ['ids' => []], $queryCallId];
-						$responses[] = [$getName, ['list' => []], $getCallId];
-						continue;
-					}
-					$isLastSegment = ($i + 2) >= count($methodCalls);
-					$id = $isLastSegment ? $this->mailboxId : 'ancestor-'.$i;
-					$responses[] = [$queryName, ['ids' => [$id]], $queryCallId];
-					$responses[] = [$getName, ['list' => [[
-						'id' => $id, 'name' => $queryArgs['filter']['name'], 'parentId' => $parentId,
-					]]], $getCallId];
-					$parentId = $id;
+					$this->segmentCalls = 0;
+					$this->parentId = null;
 				}
-				return ['methodResponses' => $responses];
+				$this->segmentCalls++;
+				if ($this->mailboxId === null)
+				{
+					return ['methodResponses' => [
+						[$queryName, ['ids' => []], $queryCallId],
+						[$getName, ['list' => []], $getCallId],
+					]];
+				}
+				$isLastSegment = $this->segmentCalls >= $this->totalSegments;
+				$id = $isLastSegment ? $this->mailboxId : 'ancestor-'.$this->segmentCalls;
+				$response = ['methodResponses' => [
+					[$queryName, ['ids' => [$id]], $queryCallId],
+					[$getName, ['list' => [[
+						'id' => $id, 'name' => $queryArgs['filter']['name'], 'parentId' => $this->parentId,
+					]]], $getCallId],
+				]];
+				$this->parentId = $id;
+				return $response;
 			}
 			public function uploadBlob(string $raw, string $type='message/rfc822') : string
 			{
@@ -164,7 +191,7 @@ class ImportHandlerImportMessageToFolderTest extends Api\LoggedInTest
 
 	public function testNormalizesABareInboxWithTrailingDelimiterBeforeResolvingTheFolder()
 	{
-		$jmap = $this->fakeHttp('inbox-id', fn() => ['created' => ['x' => ['id' => 'e1']]]);
+		$jmap = $this->fakeHttp('inbox-id', fn() => ['created' => ['x' => ['id' => 'e1']]], totalSegments: 1);
 		$folder = 'INBOX/';
 
 		$this->handler($this->fakeMailBo($this->fakeJmapIcServer($jmap), '/'))
