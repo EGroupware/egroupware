@@ -304,6 +304,11 @@ class MessageActionHandler
 					$this->ui->changeProfile($uidA['profileID']);
 				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				// raw, un-resolved folderID (may carry Mail::SHARED_ACCOUNTS_ROOT_ID's encoding for
+				// a mail:share-shared mailbox, unlike 'folder' above) - Mail::flagMessages() needs
+				// this to find the real owning accountId, see its own docblock (ticket Nordenham/
+				// irimod01, 2026-11-25: "Email/set update failed: {id:{type:notFound}}")
+				$folderID = $uidA['folderID'];
 			}
 			if (!$alreadyFlagged)
 			{
@@ -321,7 +326,8 @@ class MessageActionHandler
 				$this->ui->mail_bo->flagMessages(
 					$_flag,
 					((isset($_messageList['all']) && $_messageList['all']) ? 'all' : $messageList),
-					$folder
+					$folder,
+					$folderID ?? null
 				);
 			}
 		}
@@ -466,6 +472,10 @@ class MessageActionHandler
 					$this->ui->changeProfile($uidA['profileID']);
 				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+				// raw, un-resolved folderID (may carry Mail::SHARED_ACCOUNTS_ROOT_ID's encoding for
+				// a mail:share-shared mailbox, unlike 'folder' above) - Mail::deleteMessages() needs
+				// this to find the real owning accountId, see its own docblock
+				$folderID = $uidA['folderID'];
 				foreach ($_messageList['msg'] as $rowID)
 				{
 					$hA = Mail::splitRowID($rowID);
@@ -473,7 +483,7 @@ class MessageActionHandler
 				}
 				try
 				{
-					$this->ui->mail_bo->deleteMessages($messageList, $folder, (empty($_forceDeleteMethod) ? 'no' : $_forceDeleteMethod));
+					$this->ui->mail_bo->deleteMessages($messageList, $folder, (empty($_forceDeleteMethod) ? 'no' : $_forceDeleteMethod), $folderID);
 				}
 				catch (Api\Exception $e)
 				{

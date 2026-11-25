@@ -126,21 +126,33 @@ class Http extends Jmap
 	}
 
 	/** @see Email::emailDestroy() */
-	public function emailDestroy(array $ids) : void
+	public function emailDestroy(array $ids, ?string $accountId=null) : void
 	{
-		$this->email->emailDestroy($ids);
+		$this->email->emailDestroy($ids, $accountId);
 	}
 
 	/** @see Email::emailSetKeywords() */
-	public function emailSetKeywords(array $ids, array $patch) : void
+	public function emailSetKeywords(array $ids, array $patch, ?string $accountId=null) : void
 	{
-		$this->email->emailSetKeywords($ids, $patch);
+		$this->email->emailSetKeywords($ids, $patch, $accountId);
 	}
 
 	/** @see Email::emailMove() */
-	public function emailMove(array $ids, string $targetFolder) : void
+	public function emailMove(array $ids, string $targetFolder, ?string $accountId=null) : void
 	{
-		$this->email->emailMove($ids, $targetFolder);
+		$this->email->emailMove($ids, $targetFolder, $accountId);
+	}
+
+	/** @see Email::emailCopy() */
+	public function emailCopy(string $fromAccountId, array $ids, string $targetMailboxId, array $keywordsById=[]) : array
+	{
+		return $this->email->emailCopy($fromAccountId, $ids, $targetMailboxId, $keywordsById);
+	}
+
+	/** @see Email::emailKeywords() */
+	public function emailKeywords(string $accountId, array $ids) : array
+	{
+		return $this->email->emailKeywords($accountId, $ids);
 	}
 
 	/** @see Mailbox::getMailboxId() */

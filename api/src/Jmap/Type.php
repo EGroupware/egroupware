@@ -90,12 +90,16 @@ abstract class Type
 	 * @param array<string,array> $create id => properties
 	 * @param array<string,array> $update id => PatchObject
 	 * @param string[] $destroy ids
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly to mutate an id belonging to a mail:share-shared account (same reasoning as
+	 *  get()'s own accountId handling / Mailbox::folderId2path()'s docblock): the server rejects
+	 *  (or worse, silently mutates an unrelated same-id record in) the wrong account otherwise.
 	 * @return array{created?: array, updated?: array, destroyed?: string[], notCreated?: array, notUpdated?: array, notDestroyed?: array}
 	 */
-	public function set(array $create=[], array $update=[], array $destroy=[]) : array
+	public function set(array $create=[], array $update=[], array $destroy=[], ?string $accountId=null) : array
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/set', array_filter([
-			'accountId' => $this->jmap->accountId,
+			'accountId' => $accountId ?: $this->jmap->accountId,
 			'create' => $create ?: null,
 			'update' => $update ?: null,
 			'destroy' => $destroy ?: null,

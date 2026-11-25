@@ -1858,9 +1858,18 @@ class Jmap extends Mail\Imap
 		// 'folder' just to pass it along to an already-JMAP-native call (reopen()/jmapFlagMessages())
 		// that never even uses it, forcing the search's full raw-IMAP-connection timeout against
 		// what is actually a JMAPS(443) endpoint for nothing.
+		//
+		// $folder may carry Api\Mail::SHARED_ACCOUNTS_ROOT_ID's encoding for a mail:share-shared
+		// mailbox (written client-side, MailJmap.decodeSharedMailboxId()'s own docblock,
+		// mail/js/jmap.ts) - folderId2path() MUST get the real owning accountId then, or it
+		// resolves nothing (empty path), not an error (Mailbox::folderId2path()'s own docblock,
+		// found live 2026-11-05 for push updates; found again live 2026-11-25, Nordenham, for this
+		// exact row-id path: an empty/wrong 'folder' here is what MessageActionHandler reads for
+		// every flag/delete toast and folder-status update on a shared mailbox's row).
+		$shared = Mail::decodeSharedMailboxId($folder);
 		return new Mail\RowIdParts(
 			['folderID' => $folder, 'emailID' => $uid, 'is_jmap' => true,
-				'folder' => $this->jmapClient()->folderId2path($folder)],
+				'folder' => $this->jmapClient()->folderId2path($shared['mailboxId'] ?? $folder, $shared['accountId'] ?? null)],
 			function() use ($folder, $uid)
 		{
 			$realFolder = null;

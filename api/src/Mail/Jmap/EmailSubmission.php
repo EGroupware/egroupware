@@ -36,17 +36,22 @@ class EmailSubmission extends Type
 	 * @param array<string,array> $create id => {emailId, identityId, envelope?}
 	 * @param array<string,array> $update id => PatchObject
 	 * @param string[] $destroy ids
+	 * @param string|null $accountId defaults to the session's own accountId, see Type::set()'s own
+	 *  docblock - not currently exercised for a shared account (sending as someone else isn't a
+	 *  use case today), kept at this exact position (matching the base method) for signature
+	 *  compatibility (PHP raises a FATAL "Declaration must be compatible" otherwise, see
+	 *  Type::get()'s own docblock)
 	 * @param array<string,array>|null $onSuccessUpdateEmail creation-id (`#id`) or id => PatchObject
 	 *  to apply to the Email after successful submission (eg. move it out of Drafts, add $sent)
 	 * @param string[]|null $onSuccessDestroyEmail creation-id (`#id`) or id list to destroy after
 	 *  successful submission (eg. delete a one-shot Drafts copy)
 	 * @return array{created?: array, updated?: array, destroyed?: string[], notCreated?: array, notUpdated?: array, notDestroyed?: array}
 	 */
-	public function set(array $create=[], array $update=[], array $destroy=[],
+	public function set(array $create=[], array $update=[], array $destroy=[], ?string $accountId=null,
 		?array $onSuccessUpdateEmail=null, ?array $onSuccessDestroyEmail=null) : array
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/set', array_filter([
-			'accountId' => $this->jmap->accountId,
+			'accountId' => $accountId ?: $this->jmap->accountId,
 			'create' => $create ?: null,
 			'update' => $update ?: null,
 			'destroy' => $destroy ?: null,
@@ -90,7 +95,7 @@ class EmailSubmission extends Type
 		$onSuccessUpdateEmail = $sentEmailPatch !== null ? ['#s1' => $sentEmailPatch] : null;
 		$onSuccessDestroyEmail = $destroySentEmail ? ['#s1'] : null;
 
-		$result = $this->set(['s1' => $create], [], [], $onSuccessUpdateEmail, $onSuccessDestroyEmail);
+		$result = $this->set(['s1' => $create], [], [], onSuccessUpdateEmail: $onSuccessUpdateEmail, onSuccessDestroyEmail: $onSuccessDestroyEmail);
 
 		// Stalwart (and presumably others) enforce a hard per-account QUOTA on how many
 		// EmailSubmission objects they keep (RFC 8621 §7.1 allows but doesn't require indefinite
@@ -105,7 +110,7 @@ class EmailSubmission extends Type
 		if (($result['notCreated']['s1']['type'] ?? null) === 'overQuota')
 		{
 			$this->destroyStaleSubmissions();
-			$result = $this->set(['s1' => $create], [], [], $onSuccessUpdateEmail, $onSuccessDestroyEmail);
+			$result = $this->set(['s1' => $create], [], [], onSuccessUpdateEmail: $onSuccessUpdateEmail, onSuccessDestroyEmail: $onSuccessDestroyEmail);
 		}
 
 		$created = $result['created']['s1'] ?? ['notCreated' => $result['notCreated']['s1'] ?? null];
