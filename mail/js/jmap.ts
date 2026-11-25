@@ -2443,7 +2443,8 @@ export class MailJmap
 				// only ever a candidate net; the verifying Mailbox/get + exact-match pick happens
 				// below, same as mailboxId() - a top-level mailbox whose name merely CONTAINS
 				// "INBOX" must never be mistaken for the real one.
-				const inboxCandidateIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}});
+				// limit: 50 - same maxObjectsInGet safety cap as mailboxId()'s own docblock explains
+				const inboxCandidateIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}, limit: 50});
 				const inboxCandidates = t.Mailbox.get({
 					accountId: token.accountId,
 					ids: inboxCandidateIds.$ref('/ids'),
@@ -6675,7 +6676,15 @@ export class MailJmap
 			{
 				const [{candidates}] = await client.requestMany((t) =>
 				{
-					const ids = t.Mailbox.query({accountId, filter: {name: part}});
+					// RFC 8621 §2's "name" filter is a substring match (see this method's own
+					// docblock) - cap the candidate net, or an account with many mailboxes sharing
+					// a common substring (or a stray empty $part) can return more ids than the
+					// server's maxObjectsInGet allows for the chained Mailbox.get below, which gets
+					// rejected outright as "requestTooLarge" rather than truncated (live-reproduced
+					// 2026-11-25, Mail Compose). A real collision is always a small handful of
+					// siblings (Fälle/Sterbefälle was 2) - 50 is generous headroom, never a
+					// realistic bottleneck for genuine disambiguation.
+					const ids = t.Mailbox.query({accountId, filter: {name: part}, limit: 50});
 					const candidates = t.Mailbox.get({accountId, ids: ids.$ref('/ids'), properties: ['id', 'name', 'parentId']});
 					return {ids, candidates};
 				}, {retryIdempotentOnClose: true});
