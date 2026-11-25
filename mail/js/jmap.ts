@@ -4396,20 +4396,16 @@ export class MailJmap
 			const inReplyTo = originalMessageId.length ? originalMessageId : null;
 			const references = originalMessageId.length ? [...(email.references || []), ...originalMessageId] : null;
 
-			// same filter as classic getForwardData(): a cid-referenced inline image is excluded
-			// unless it's ALSO explicitly marked disposition=attachment - everything else server-set
-			// `attachments` lists (RFC 8621 §4.1.4, already excludes the primary text/html body) is
-			// a real attachment.
-			//
-			// A part with NO name AND only a couple bytes of content is never a real attachment -
-			// it's Apple Mail's own multipart-boundary padding artifact (a stray blank line dropped
-			// between pasted inline images), live-confirmed 2026-09-15 (ralf): a real message
+			// same filter as classic getForwardData(), see isRealAttachmentPart()'s own docblock:
+			// a cid-referenced inline image is excluded unless it's ALSO explicitly marked
+			// disposition=attachment, and a nameless part of only a couple bytes is Apple Mail's own
+			// multipart-boundary padding artifact (a stray blank line dropped between pasted inline
+			// images), not a real attachment - live-confirmed 2026-09-15 (ralf): a real message
 			// carried 2 such 2-byte text/plain parts, which showed up as blank, unlabeled rows in
 			// the forward compose's attachment list. A genuine attachment is never both nameless AND
 			// this tiny, so this can't false-positive on real content.
 			const attachments : JmapAttachment[] = (email.attachments || [])
-				.filter((a : any) => !(a.cid && /^image\//i.test(a.type || '')) || a.disposition === 'attachment')
-				.filter((a : any) => a.name || (a.size || 0) >= MailJmap.NAMELESS_ARTIFACT_MAX_SIZE)
+				.filter((a : any) => MailJmap.isRealAttachmentPart(a))
 				.map((a : any) => ({
 					blobId: a.blobId,
 					name: a.name || this.namelessAttachmentFallbackName(a),
@@ -9673,6 +9669,39 @@ export class MailJmap
 	{
 		const t = (type || '').toLowerCase();
 		return t === 'application/pkcs7-signature' || t === 'application/x-pkcs7-signature';
+	}
+
+	/**
+	 * True when an RFC 8621 §4.1.4 EmailBodyPart (one of email.attachments) is a real, user-facing
+	 * attachment worth showing a paperclip for - same filter fetchForReply()'s own forward-
+	 * attachment-list building already applies (see its own docblock for why both checks exist): a
+	 * cid-referenced inline image is excluded unless it's ALSO explicitly marked
+	 * disposition=attachment, and a nameless part of only a couple bytes is Apple Mail's own
+	 * multipart-boundary padding artifact, not a real attachment.
+	 */
+	private static isRealAttachmentPart(a : any) : boolean
+	{
+		return (!(a?.cid && /^image\//i.test(a?.type || '')) || a?.disposition === 'attachment') &&
+			(a?.name || (a?.size || 0) >= MailJmap.NAMELESS_ARTIFACT_MAX_SIZE);
+	}
+
+	/**
+	 * Ticket #128441: Stalwart's own `hasAttachment` (RFC 8621 §4.1.6) is false whenever every
+	 * non-body part of a message is marked `Content-Disposition: inline` - eg. a PDF an iPad's Mail
+	 * app attaches inline, found live 2026-11 (RBZ Schützenpark: "Anhänge von Apple-Geräten werden
+	 * nicht angezeigt") - even though RFC 8621 still lists it in Email.attachments the same as any
+	 * other attachment; the flag is only a hint, a server is free to compute it however it likes.
+	 * `email2row()`'s own `hasAttachment` (the row-list paperclip / the gate that decides whether
+	 * MailApp.renderMessageInto() ever fetches the real attachmentsBlock at all) is built purely
+	 * from that flag, so such a message never showed its real attachment(s) anywhere. `attachments`
+	 * is never fetched for an ordinary list row (too expensive per-row, see this method's own
+	 * caller for where it IS available - MailJmap.fetchBody()'s result, already fetched once the
+	 * message is actually opened) - this only ever upgrades what's shown for a message already being
+	 * displayed, same scope MailApp.resolveSmimeAttachmentsBlock()'s existing S/MIME fast path has.
+	 */
+	static hasRealAttachment(attachments? : any[]) : boolean
+	{
+		return (attachments || []).some((a) => MailJmap.isRealAttachmentPart(a));
 	}
 
 	/**
