@@ -2213,14 +2213,21 @@ class Mail
 	 * per-UID IMAP STORE) for a non-Stalwart connection, a non-JMAP id (including 'all', which
 	 * this doesn't attempt to translate to a JMAP-wide operation), or an unrecognized flag name.
 	 *
+	 * @param string|null $_folderID RowIdParts::$folderID (raw, un-resolved) of the row(s) being
+	 *  flagged - decoded via Mail::decodeSharedMailboxId() to find the real owning accountId for a
+	 *  mail:share-shared mailbox. A JMAP Email id is only unique WITHIN its own account (no RFC
+	 *  8621 global-id guarantee), so without this, a shared mailbox's flag update either fails
+	 *  with "Email/set update failed: {id:{type:notFound}}" (ticket Nordenham/irimod01, 2026-11-25)
+	 *  or - worse - silently mutates an unrelated same-id message in the VIEWER's own account.
 	 * @return bool|null null = not applicable, use the classic path
 	 */
-	private function jmapFlagMessages($_flag, $_messageUID) : ?bool
+	private function jmapFlagMessages($_flag, $_messageUID, ?string $_folderID=null) : ?bool
 	{
 		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
 		{
 			return null;
 		}
+		$accountId = self::decodeSharedMailboxId($_folderID)['accountId'] ?? null;
 		if ($_flag === 'unlabel')
 		{
 			$patch = [];
@@ -2249,7 +2256,7 @@ class Mail
 		}
 		try
 		{
-			$this->icServer->jmapClient()->emailSetKeywords($ids, $patch);
+			$this->icServer->jmapClient()->emailSetKeywords($ids, $patch, $accountId);
 			return true;
 		}
 		catch (\Throwable $e)
@@ -2264,14 +2271,20 @@ class Mail
 	 * removal) - null (fall back to the classic per-UID IMAP COPY+STORE+EXPUNGE) for a
 	 * non-Stalwart connection or a non-JMAP id.
 	 *
+	 * @param string|null $_folderID RowIdParts::$folderID (raw, un-resolved) of the row(s) being
+	 *  deleted - see jmapFlagMessages()'s own docblock for why this is needed for a mail:share-
+	 *  shared mailbox. Non-null here always means a DIFFERENT (shared) account than the viewer's
+	 *  own - see MailJmap.decodeSharedMailboxId()'s docblock (mail/js/jmap.ts): the client only
+	 *  ever applies this encoding to a row that is NOT the viewer's own account.
 	 * @return bool|null null = not applicable, use the classic path
 	 */
-	private function jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod) : ?bool
+	private function jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod, ?string $_folderID=null) : ?bool
 	{
 		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
 		{
 			return null;
 		}
+		$accountId = self::decodeSharedMailboxId($_folderID)['accountId'] ?? null;
 		try
 		{
 			$deleteOptions = $_forceDeleteMethod !== 'no' && in_array($_forceDeleteMethod, ['move_to_trash', 'remove_immediately'], true)
@@ -2281,11 +2294,40 @@ class Mail
 			if ($deleteOptions === 'remove_immediately' ||
 				(!empty($trashFolder) && strtolower((string)$_folder) === strtolower($trashFolder)))
 			{
-				$jmap->emailDestroy($ids);
+				$jmap->emailDestroy($ids, $accountId);
 			}
 			elseif (!empty($trashFolder))
 			{
-				$jmap->emailMove($ids, $trashFolder);
+				if ($accountId !== null)
+				{
+					// shared mailbox -> the VIEWER's own Trash is always a cross-account move
+					// (decodeSharedMailboxId() only ever returns non-null for a different account,
+					// see this method's own docblock) - a plain Email/set mailboxIds patch can only
+					// reference mailboxes within ONE account (RFC 8620 §1.2), so this needs
+					// Email/copy (into the viewer's own Trash) + destroy-the-originals instead,
+					// same split MailJmap.moveOrCopyIds() already does client-side (mail/js/jmap.ts)
+					// - mirrored here for whatever reaches this PHP fallback path instead (eg.
+					// "select all matching filter", or any JS-side failure/fallback).
+					$targetMailboxId = $jmap->getMailboxId($trashFolder);
+					if ($targetMailboxId === null)
+					{
+						return null;	// can't resolve own Trash - let classic try (will likely also fail)
+					}
+					$keywordsById = $jmap->emailKeywords($accountId, $ids);
+					// copy first, destroy the originals only once every copy has succeeded - never
+					// destroy-then-copy (same ordering MailJmap.moveOrCopyIds() uses, same residual
+					// risk already accepted there: if destroy throws after a successful copy, eg.
+					// the viewer losing "remove" rights on the shared mailbox mid-operation, the
+					// caller's catch below reports failure even though a duplicate now exists in the
+					// viewer's own Trash - preferred over the alternative (destroy-then-copy), which
+					// could lose the message entirely on the same failure).
+					$jmap->emailCopy($accountId, $ids, $targetMailboxId, $keywordsById);
+					$jmap->emailDestroy($ids, $accountId);
+				}
+				else
+				{
+					$jmap->emailMove($ids, $trashFolder);
+				}
 			}
 			else
 			{
@@ -4517,13 +4559,15 @@ class Mail
 	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
 	 * @param string _folder foldername
 	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"remove_immediately"
+	 * @param string|null $_folderID RowIdParts::$folderID (raw, un-resolved) - see
+	 *  jmapDeleteMessages()'s own docblock; only needed for a mail:share-shared mailbox
 	 *
 	 * @return bool true, as we do not handle return values yet
 	 * @throws Exception
 	 */
-	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
+	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no', ?string $_folderID=null)
 	{
-		if (($jmapResult = $this->jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod)) !== null)
+		if (($jmapResult = $this->jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod, $_folderID)) !== null)
 		{
 			return $jmapResult;
 		}
@@ -4613,14 +4657,16 @@ class Mail
 	 * @param string _flag (readable name)
 	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
 	 * @param string _folder foldername
+	 * @param string|null $_folderID RowIdParts::$folderID (raw, un-resolved) - see
+	 *  jmapFlagMessages()'s own docblock; only needed for a mail:share-shared mailbox
 	 *
 	 * @todo handle handle icserver->setFlags returnValue
 	 *
 	 * @return bool true, as we do not handle icserver->setFlags returnValue
 	 */
-	function flagMessages($_flag, $_messageUID,$_folder=NULL)
+	function flagMessages($_flag, $_messageUID, $_folder=NULL, ?string $_folderID=null)
 	{
-		if (($jmapResult = $this->jmapFlagMessages($_flag, $_messageUID)) !== null)
+		if (($jmapResult = $this->jmapFlagMessages($_flag, $_messageUID, $_folderID)) !== null)
 		{
 			return $jmapResult;
 		}

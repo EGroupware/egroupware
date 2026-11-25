@@ -120,11 +120,13 @@ class Email extends Type
 	 * RFC 8620/8621 Email/set{destroy} - permanently delete messages by id.
 	 *
 	 * @param string[] $ids
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for ids belonging to a mail:share-shared account, see Type::set()'s own docblock
 	 * @throws Api\Exception
 	 */
-	public function emailDestroy(array $ids) : void
+	public function emailDestroy(array $ids, ?string $accountId=null) : void
 	{
-		$response = $this->set(destroy: $ids);
+		$response = $this->set(destroy: $ids, accountId: $accountId);
 		if (($notDestroyed = $response['notDestroyed'] ?? []))
 		{
 			throw new Api\Exception('Email/set destroy failed: '.json_encode($notDestroyed));
@@ -137,15 +139,17 @@ class Email extends Type
 	 *
 	 * @param string[] $ids JMAP Email ids
 	 * @param array<string,bool|null> $patch e.g. ['keywords/$seen' => true, 'keywords/$flagged' => null]
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for ids belonging to a mail:share-shared account, see Type::set()'s own docblock
 	 * @throws Api\Exception on any failure
 	 */
-	public function emailSetKeywords(array $ids, array $patch) : void
+	public function emailSetKeywords(array $ids, array $patch, ?string $accountId=null) : void
 	{
 		if (!$ids)
 		{
 			return;
 		}
-		$response = $this->set(update: array_fill_keys($ids, $patch));
+		$response = $this->set(update: array_fill_keys($ids, $patch), accountId: $accountId);
 		if (($notUpdated = $response['notUpdated'] ?? []))
 		{
 			throw new Api\Exception('Email/set update failed: '.json_encode($notUpdated));
@@ -153,15 +157,27 @@ class Email extends Type
 	}
 
 	/**
-	 * Move one or more Emails to a different mailbox - a full mailboxIds replace (RFC 8621:
-	 * moving is "set mailboxIds to just the target", unlike a mailboxIds/<id> patch which adds
-	 * without removing, see emailImport()'s sibling use of the patch form elsewhere).
+	 * Move one or more Emails to a different mailbox WITHIN THE SAME ACCOUNT - a full mailboxIds
+	 * replace (RFC 8621: moving is "set mailboxIds to just the target", unlike a mailboxIds/<id>
+	 * patch which adds without removing, see emailImport()'s sibling use of the patch form
+	 * elsewhere).
 	 *
-	 * @param string[] $ids JMAP Email ids
+	 * NOT for a cross-account move (eg. a mail:share-shared mailbox's message into the viewer's
+	 * OWN Trash) - an Email's mailboxIds patch can only ever reference mailboxes within its own
+	 * account (RFC 8620 §1.2's "Id" type is account-scoped), so a foreign-account $accountId here
+	 * combined with $targetFolder resolved in THIS session's own account would merely fail (or, if
+	 * the two accounts happen to share a colliding raw Mailbox id, mutate the wrong mailbox) -
+	 * use emailCopy() + emailDestroy() instead, see their own docblocks.
+	 *
+	 * @param string[] $ids JMAP Email ids, all within $accountId
 	 * @param string $targetFolder folder-path e.g. "INBOX/Trash" (resolved to a Mailbox id internally)
+	 * @param string|null $accountId defaults to the session's own accountId - MUST be given
+	 *  explicitly for ids belonging to a mail:share-shared account, see Type::set()'s own docblock.
+	 *  $targetFolder is always resolved in the session's OWN account regardless (see above) - this
+	 *  only overrides which account the source ids/mutation apply to.
 	 * @throws Api\Exception folder not found, or on any failure
 	 */
-	public function emailMove(array $ids, string $targetFolder) : void
+	public function emailMove(array $ids, string $targetFolder, ?string $accountId=null) : void
 	{
 		if (!$ids)
 		{
@@ -172,11 +188,89 @@ class Email extends Type
 		{
 			throw new Api\Exception("Folder '$targetFolder' not found");
 		}
-		$response = $this->set(update: array_fill_keys($ids, ['mailboxIds' => [$targetMailboxId => true]]));
+		$response = $this->set(update: array_fill_keys($ids, ['mailboxIds' => [$targetMailboxId => true]]), accountId: $accountId);
 		if (($notUpdated = $response['notUpdated'] ?? []))
 		{
 			throw new Api\Exception('Email/set move failed: '.json_encode($notUpdated));
 		}
+	}
+
+	/**
+	 * Copy one or more Emails from a DIFFERENT JMAP account (eg. a mail:share-shared mailbox) into
+	 * THIS session's own account, via RFC 8620 §5.4 Email/copy - the only JMAP mechanism for a
+	 * cross-account transfer (see emailMove()'s own docblock for why a plain mailboxIds patch
+	 * can't do this). PHP counterpart of MailJmap.copyEmailCrossAccount() (mail/js/jmap.ts), used
+	 * by Api\Mail::jmapDeleteMessages() for "move a shared mailbox's message to MY OWN Trash".
+	 *
+	 * @param string $fromAccountId source account (the shared mailbox's real owner)
+	 * @param string[] $ids source Email ids - all must live in $fromAccountId
+	 * @param string $targetMailboxId destination Mailbox id, already resolved in THIS session's
+	 *  own account (eg. via Mailbox::getMailboxId())
+	 * @param array<string,array<string,bool>> $keywordsById {sourceEmailId: keywords}, from
+	 *  emailKeywords(), to preserve on the copy - RFC 8620's Email/copy create object follows
+	 *  normal Email/set create semantics, where mailboxIds is the only property the RFC requires,
+	 *  but omitting keywords here would silently reset every flag (read/flagged/labels/...) on the
+	 *  new copy, which is not what a user-facing move/copy action should do.
+	 * @return array<string,string> new id, keyed by SOURCE id, for every id that copied successfully
+	 * @throws Api\Exception if any id failed to copy - callers should treat this as all-or-nothing,
+	 *  same as emailSetKeywords()/emailMove() already do
+	 */
+	public function emailCopy(string $fromAccountId, array $ids, string $targetMailboxId, array $keywordsById=[]) : array
+	{
+		if (!$ids)
+		{
+			return [];
+		}
+		$create = [];
+		foreach ($ids as $id)
+		{
+			$create[$id] = [
+				'id' => $id,
+				'mailboxIds' => [$targetMailboxId => true],
+				'keywords' => $keywordsById[$id] ?? new \stdClass(),
+			];
+		}
+		$response = $this->jmap->call('Email/copy', [
+			'fromAccountId' => $fromAccountId,
+			'accountId' => $this->jmap->accountId,
+			'create' => $create,
+		]);
+		if (($notCreated = $response['notCreated'] ?? []))
+		{
+			throw new Api\Exception('Email/copy failed: '.json_encode($notCreated));
+		}
+		$created = [];
+		foreach ($response['created'] ?? [] as $sourceId => $obj)
+		{
+			$created[$sourceId] = $obj['id'];
+		}
+		return $created;
+	}
+
+	/**
+	 * Batch-fetch {Email.id: keywords} for emailCopy()'s own flag-preservation.
+	 *
+	 * @param string $accountId account the ids live in
+	 * @param string[] $ids
+	 * @return array<string,array<string,bool>> empty map for an empty $ids
+	 */
+	public function emailKeywords(string $accountId, array $ids) : array
+	{
+		if (!$ids)
+		{
+			return [];
+		}
+		$response = $this->jmap->call('Email/get', [
+			'accountId' => $accountId,
+			'ids' => $ids,
+			'properties' => ['id', 'keywords'],
+		]);
+		$byId = [];
+		foreach ($response['list'] ?? [] as $email)
+		{
+			$byId[$email['id']] = $email['keywords'] ?? [];
+		}
+		return $byId;
 	}
 
 	/**

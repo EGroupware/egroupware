@@ -51,7 +51,7 @@ class EmailSubmissionTest extends \PHPUnit\Framework\TestCase
 		$session = $this->fakeSession('acc1', fn() => []);
 		$es = new EmailSubmission($session);
 
-		$es->set(['s1' => ['emailId' => 'e1', 'identityId' => 'i1']], [], [],
+		$es->set(['s1' => ['emailId' => 'e1', 'identityId' => 'i1']], [], [], null,
 			['#s1' => ['mailboxIds/DRAFTS' => null]], ['#s2']);
 
 		$args = $session->calls[0][1];

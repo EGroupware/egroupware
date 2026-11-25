@@ -61,8 +61,12 @@ class Identity extends Type
 	 * Identities are configured through EGroupware's own account/identity admin UI, not editable
 	 * via JMAP - decline everything explicitly rather than silently reaching Stalwart via `Type`'s
 	 * generic set() passthrough (which has no concept of them anyway).
+	 *
+	 * @param string|null $accountId ignored - same signature-compatibility reasoning as
+	 *  $fetchAllBodyValues/$mailboxId above (see Type::get()'s own docblock), for Type::set()'s own
+	 *  new $accountId parameter
 	 */
-	public function set(array $create=[], array $update=[], array $destroy=[]) : array
+	public function set(array $create=[], array $update=[], array $destroy=[], ?string $accountId=null) : array
 	{
 		$forbidden = static fn() => ['type' => 'forbidden'];
 		return [
