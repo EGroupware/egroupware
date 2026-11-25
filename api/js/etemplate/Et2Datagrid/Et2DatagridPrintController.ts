@@ -74,7 +74,6 @@ export class Et2DatagridPrintController
 			id: this.host.dataProvider?.normalizeRowId?.(rowId, true) || String(rowId)
 		}));
 		this.host.classList.add("print");
-		this._blockVirtualizer();
 		this.host.requestUpdate();
 		await this.host.updateComplete;
 		this.host._syncRowsMinHeight();
@@ -284,8 +283,6 @@ export class Et2DatagridPrintController
 			return;
 		}
 		this._rows = null;
-		this._blockedContainer?.removeEventListener("rangeChanged", Et2DatagridPrintController._stopRangeChanged, true);
-		this._blockedContainer = null;
 		this.host.fixedRowHeight = this._fixedRowHeight ?? this.host.fixedRowHeight;
 		this._fixedRowHeight = null;
 		const printContainers = this.host.shadowRoot?.querySelectorAll<HTMLElement>(".dg-body, .dg-body table");
