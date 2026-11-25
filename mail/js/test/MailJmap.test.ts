@@ -777,6 +777,42 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 		const result = await jmap.getRootFolders("nonexistent-profile");
 		assert.isNull(result);
 	});
+
+	/**
+	 * Regression (2026-11-25, live production break across every 26-branch install): the
+	 * inboxCandidateIds Mailbox.query invocation (added alongside inboxCandidates' Mailbox.get to
+	 * fix the Fälle/Sterbefälle substring-collision bug) was used via inboxCandidateIds.$ref('/ids')
+	 * but never itself returned as a property of the requestMany() callback - the exact same
+	 * jmap-jam contract violation already documented and regression-tested above for
+	 * getMailboxChildren() (see this file's very first describe block), just reintroduced in a
+	 * sibling function. A real JMAP server (Stalwart) rejected the resulting unresolvable "#ids"
+	 * reference with "missing field `resultOf`" - and since nothing checked the response for an
+	 * error shape before treating it as mailbox data, that raw error text rendered as a folder name
+	 * in the tree, for every account, on every affected instance.
+	 */
+	it("returns inboxCandidateIds (not just inboxCandidates) from the requestMany() callback", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { returned? : any } = {};
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				capture.returned = buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [{topMailboxes: {list: []}, inboxCandidates: {list: []}}];
+			},
+		};
+		primeLocalToken(jmap, "1", client);
+
+		await jmap.getRootFolders("1");
+
+		assert.property(capture.returned, "inboxCandidateIds",
+			"the Mailbox/query invocation must be a key of the returned object, or jmap-jam never " +
+			"sends it as part of the batch and inboxCandidates' '#ids' result-reference breaks");
+		assert.property(capture.returned, "topIds");
+		assert.property(capture.returned, "topMailboxes");
+		assert.property(capture.returned, "inboxCandidates");
+	});
 });
 
 /**

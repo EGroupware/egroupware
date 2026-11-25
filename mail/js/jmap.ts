@@ -2449,7 +2449,15 @@ export class MailJmap
 					ids: inboxCandidateIds.$ref('/ids'),
 					properties: ['id', 'name', 'parentId'],
 				});
-				return {topIds, topMailboxes, inboxCandidates};
+				// inboxCandidateIds (the Mailbox.query) must ALSO stay a property of the returned
+				// object, same established rule as topIds/topMailboxes above - jmap-jam's requestMany()
+				// only sends an invocation it finds referenced there; dropping it silently left
+				// inboxCandidates' #ids pointing at a Mailbox/query call that was NEVER actually sent,
+				// which the server (correctly) rejected as an invalidResultReference ("missing field
+				// `resultOf`") - live-reproduced 2026-11-25 right after this shipped: the whole folder
+				// tree broke, showing that raw JMAP error text in place of folder names, since nothing
+				// here checked the response for an error shape before treating it as mailbox data.
+				return {topIds, topMailboxes, inboxCandidateIds, inboxCandidates};
 			}, {retryIdempotentOnClose: true});
 
 			const top = topMailboxes.list || [];
