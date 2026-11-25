@@ -83,7 +83,24 @@ class MessageDisplayHandler
 
 		$this->ui->mail_bo->reopen($mailbox);
 
-		$attachment = $this->ui->mail_bo->getAttachmentByCID($uid, $cid, $partID, true);	// true get contents as stream
+		try
+		{
+			$attachment = $this->ui->mail_bo->getAttachmentByCID($uid, $cid, $partID, true);	// true get contents as stream
+		}
+		catch (\Throwable $e)
+		{
+			// a numeric (pre-JMAP-migration) $uid baked into some already-stored HTML (eg. an old
+			// mail_integration-imported Tracker/InfoLog entry) can never resolve against a
+			// real-JMAP/Stalwart account - jmapGetAttachmentByCID() correctly bails for it (it isn't
+			// a JMAP-native id), but the classic fallback then tries a REAL raw IMAP socket connect,
+			// which a JMAP-only account has no port for at all (Mail\Imap\Jmap::_connect()'s own
+			// last-resort net throws Horde_Imap_Client_Exception rather than silently returning
+			// nothing) - found live 2026-11-25, Nordenham, recurring every time the stale reference
+			// was displayed. Degrade to the same "image not found" response as a genuine miss below,
+			// instead of surfacing this as an uncaught, user-facing error.
+			_egw_log_exception($e);
+			$attachment = false;
+		}
 
 		$this->ui->mail_bo->closeConnection();
 
