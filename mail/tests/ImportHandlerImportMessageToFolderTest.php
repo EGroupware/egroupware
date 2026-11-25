@@ -53,11 +53,34 @@ class ImportHandlerImportMessageToFolderTest extends Api\LoggedInTest
 			}
 			public function jmapCall(array $methodCalls, $using=null, bool $emulate=false)
 			{
-				// Mailbox::getMailboxId()'s own chained-per-segment lookup only reads the LAST
-				// entry's 'ids' - every entry here is identical, so this is correct regardless of
-				// how many path segments the folder had
-				$ids = $this->mailboxId !== null ? [$this->mailboxId] : [];
-				return ['methodResponses' => array_map(fn($mc) => [$mc[0], ['ids' => $ids], $mc[2]], $methodCalls)];
+				// Mailbox::getMailboxId()'s per-segment Mailbox/query+get pair (2026-11-25, RFC 8621's
+				// "name" filter is a substring match, so query is only ever a candidate net - a chained
+				// Mailbox/get verifies exact name+parentId before a match is accepted, see its own
+				// docblock): when $this->mailboxId is set, the LAST segment's candidate resolves to it;
+				// every earlier (intermediate) segment resolves to an arbitrary-but-consistent
+				// placeholder id, chained via parentId so the whole path verifies. When
+				// $this->mailboxId is null, every segment's Mailbox/get comes back empty (not found).
+				$responses = [];
+				$parentId = null;
+				for ($i = 0; $i < count($methodCalls); $i += 2)
+				{
+					[$queryName, $queryArgs, $queryCallId] = $methodCalls[$i];
+					[$getName, , $getCallId] = $methodCalls[$i + 1];
+					if ($this->mailboxId === null)
+					{
+						$responses[] = [$queryName, ['ids' => []], $queryCallId];
+						$responses[] = [$getName, ['list' => []], $getCallId];
+						continue;
+					}
+					$isLastSegment = ($i + 2) >= count($methodCalls);
+					$id = $isLastSegment ? $this->mailboxId : 'ancestor-'.$i;
+					$responses[] = [$queryName, ['ids' => [$id]], $queryCallId];
+					$responses[] = [$getName, ['list' => [[
+						'id' => $id, 'name' => $queryArgs['filter']['name'], 'parentId' => $parentId,
+					]]], $getCallId];
+					$parentId = $id;
+				}
+				return ['methodResponses' => $responses];
 			}
 			public function uploadBlob(string $raw, string $type='message/rfc822') : string
 			{
