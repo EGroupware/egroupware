@@ -11,6 +11,7 @@
 
 namespace EGroupware\Api\Mail\Sieve;
 
+use EGroupware\Api;
 use EGroupware\Api\Translation;
 use EGroupware\Api\Mail;
 
@@ -29,6 +30,16 @@ use EGroupware\Api\Mail;
 class Jmap implements Connection
 {
 	use Logic;
+
+	/**
+	 * How often an upload answered with 401 is tried in total, see installScript()
+	 */
+	const UPLOAD_401_TRIES = 4;
+
+	/**
+	 * @var int microseconds to wait after a 401 before the next try, multiplied by the number of the failed try
+	 */
+	public static int $upload_401_delay_us = 1500000;
 
 	/**
 	 * @var Mail\Jmap\Http
@@ -204,14 +215,30 @@ class Jmap implements Connection
 		// array_filter() keeps the keys: [$found] = ... would only look at key 0 and miss a script, which is not the first one
 		$found = current(array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname)) ?: null;
 
-		// upload script
-		$response = $this->jmap->api(strtr($this->jmap->uploadUrl, [
-			'{accountId}' => $this->accountId,
-		]), 'POST', $script, [
-			'Content-Type' => 'application/sieve',
-			'Content-Length' => strlen($script),
-			'Accept' => 'application/json',
-		]);
+		// upload script: Stalwart answers the first upload with a token, which was just issued (impersonation token of the
+		// MServer), with 401, although the JMAP call before it was accepted, and the same upload works a moment later
+		// (seen live on bsz-stockach.de 2026-11-25 for 27 of 27 forward accounts), so retry a 401 a few times
+		for ($try = 1; ; ++$try)
+		{
+			try {
+				$response = $this->jmap->api(strtr($this->jmap->uploadUrl, [
+					'{accountId}' => $this->accountId,
+				]), 'POST', $script, [
+					'Content-Type' => 'application/sieve',
+					'Content-Length' => strlen($script),
+					'Accept' => 'application/json',
+				]);
+				break;
+			}
+			catch (Api\Exception\Http $e) {
+				if ($e->getCode() !== 401 || $try >= self::UPLOAD_401_TRIES)
+				{
+					throw $e;
+				}
+				error_log(__METHOD__."('$scriptname') upload answered 401, retry $try of ".(self::UPLOAD_401_TRIES-1));
+				usleep(static::$upload_401_delay_us * $try);
+			}
+		}
 		if (empty($found))
 		{
 			$response2 = $this->jmap->jmapCall([
