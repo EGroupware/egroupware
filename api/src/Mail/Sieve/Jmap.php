@@ -201,7 +201,8 @@ class Jmap implements Connection
 	 */
 	public function installScript($scriptname, $script, $makeactive = false)
 	{
-		[$found] = array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname);
+		// array_filter() keeps the keys: [$found] = ... would only look at key 0 and miss a script, which is not the first one
+		$found = current(array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname)) ?: null;
 
 		// upload script
 		$response = $this->jmap->api(strtr($this->jmap->uploadUrl, [
@@ -266,19 +267,16 @@ class Jmap implements Connection
 	 */
 	public function removeScript($scriptname)
 	{
-		[$script] = array_filter($this->listScripts()[3], fn($script) => $script['name'] == $scriptname);
+		// listScripts()[2] is the full list, there is no [3]; array_filter() keeps keys, so use current()
+		$script = current(array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname)) ?: null;
 
 		if (!empty($script))
 		{
 			$this->jmap->jmapCall([
 				['SieveScript/set', [
 					'accountId' => $this->accountId,
-					'onSuccessDeactivateScript' => true
-				], '5'],
-				['SieveScript/set', [
-					'accountId' => $this->accountId,
-					'destroy' => $script['blobId']
-				], '6'],
+					'destroy' => [$script['id']],
+				] + (!empty($script['isActive']) ? ['onSuccessDeactivateScript' => true] : []), '5'],
 			], self::USING);
 		}
 	}
