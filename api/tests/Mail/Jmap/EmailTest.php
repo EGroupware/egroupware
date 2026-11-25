@@ -43,20 +43,21 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * Builds the Mailbox/query+Mailbox/get method-response pairs Mailbox::getMailboxId() expects
-	 * per path segment (2026-11-25 rewrite - see MailboxFolderResolutionTest for the underlying
-	 * substring-collision fix this shape now verifies against). One entry per path segment, in
-	 * order; null means "no candidate found" for that segment.
+	 * getMailboxId() (2026-11-25, twice-rewritten - see MailboxFolderResolutionTest for both the
+	 * underlying substring-collision fix and the later ticket #128691 fix) now issues one jmapCall()
+	 * round trip PER PATH SEGMENT (a later segment's own query needs an earlier segment's already-
+	 * resolved id as its filter.parentId, which isn't known until that earlier round trip's own
+	 * response comes back) - this returns a callable $jmapCallResponder usable directly as
+	 * fakeSession()'s 3rd arg, answering call N with segment N-1's own response. One array entry
+	 * per path segment, in order; null means "no candidate found" for that segment.
 	 */
-	private function mailboxLookupResponses(array $segments) : array
+	private function mailboxLookupResponder(array $segments) : callable
 	{
-		$responses = [];
-		foreach ($segments as $key => $segment)
-		{
-			$responses[] = ['Mailbox/query', ['ids' => $segment ? [$segment['id']] : []], 'q'.$key];
-			$responses[] = ['Mailbox/get', ['list' => $segment ? [$segment] : []], 'g'.$key];
-		}
-		return $responses;
+		$responses = array_map(fn($segment) => ['methodResponses' => [
+			['Mailbox/query', ['ids' => $segment ? [$segment['id']] : []], 'q'],
+			['Mailbox/get', ['list' => $segment ? [$segment] : []], 'g'],
+		]], $segments);
+		return fn($methodCalls, $callNum) => $responses[$callNum - 1] ?? ['methodResponses' => []];
 	}
 
 	// --- emailGet() ---
@@ -100,7 +101,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	{
 		$session = $this->fakeSession('acc1',
 			fn() => ['ids' => ['e1', 'e2']],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])
 		);
 		$email = new Email($session);
 
@@ -116,7 +117,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
 	public function testEmailQueryThrowsAndNeverCallsEmailQueryWhenTheFolderIsNotFound()
 	{
-		$session = $this->fakeSession('acc1', null, fn() => ['methodResponses' => $this->mailboxLookupResponses([null])]);
+		$session = $this->fakeSession('acc1', null, $this->mailboxLookupResponder([null]));
 		$email = new Email($session);
 
 		try
@@ -134,7 +135,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailQueryThrowsOnAnUnexpectedResponseShape()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['somethingElse' => true],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]);
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]]));
 		$email = new Email($session);
 
 		$this->expectException(Api\Exception::class);
@@ -146,7 +147,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailImportPassesGivenKeywordsThrough()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['created' => ['x' => ['id' => 'new-e1']]],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]);
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]]));
 		$email = new Email($session);
 
 		$email->emailImport('blob1', 'INBOX', ['$seen' => true]);
@@ -157,7 +158,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailImportDefaultsKeywordsToAnEmptyObjectRatherThanAnEmptyArray()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['created' => ['x' => ['id' => 'new-e1']]],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]);
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]]));
 		$email = new Email($session);
 
 		$email->emailImport('blob1', 'INBOX', []);
@@ -169,7 +170,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailImportBuildsMailboxIdsAndReturnsTheNewId()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['created' => ['x' => ['id' => 'new-e1']]],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]);
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]]));
 		$email = new Email($session);
 
 		$id = $email->emailImport('blob1', 'INBOX');
@@ -181,7 +182,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
 	public function testEmailImportThrowsAndNeverCallsEmailImportWhenTheFolderIsNotFound()
 	{
-		$session = $this->fakeSession('acc1', null, fn() => ['methodResponses' => $this->mailboxLookupResponses([null])]);
+		$session = $this->fakeSession('acc1', null, $this->mailboxLookupResponder([null]));
 		$email = new Email($session);
 
 		try
@@ -199,7 +200,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailImportThrowsWithTheNotCreatedDetailOnFailure()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['notCreated' => ['x' => ['type' => 'invalidProperties']]],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]])]);
+			$this->mailboxLookupResponder([['id' => 'mbx1', 'name' => 'INBOX', 'parentId' => null]]));
 		$email = new Email($session);
 
 		try
@@ -294,7 +295,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailMoveReplacesMailboxIdsWithOnlyTheTargetFolder()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['notUpdated' => []],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'inbox-id', 'name' => 'INBOX', 'parentId' => null], ['id' => 'trash-id', 'name' => 'Trash', 'parentId' => 'inbox-id']])]);
+			$this->mailboxLookupResponder([['id' => 'inbox-id', 'name' => 'INBOX', 'parentId' => null], ['id' => 'trash-id', 'name' => 'Trash', 'parentId' => 'inbox-id']]));
 		$email = new Email($session);
 
 		$email->emailMove(['e1', 'e2'], 'INBOX/Trash');
@@ -306,7 +307,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
 	public function testEmailMoveThrowsAndNeverCallsEmailSetWhenTheTargetFolderIsNotFound()
 	{
-		$session = $this->fakeSession('acc1', null, fn() => ['methodResponses' => $this->mailboxLookupResponses([null])]);
+		$session = $this->fakeSession('acc1', null, $this->mailboxLookupResponder([null]));
 		$email = new Email($session);
 
 		$this->expectException(Api\Exception::class);
@@ -316,7 +317,7 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 	public function testEmailMoveThrowsWhenNotUpdatedIsNonEmpty()
 	{
 		$session = $this->fakeSession('acc1', fn() => ['notUpdated' => ['e1' => ['type' => 'notFound']]],
-			fn() => ['methodResponses' => $this->mailboxLookupResponses([['id' => 'inbox-id', 'name' => 'INBOX', 'parentId' => null], ['id' => 'trash-id', 'name' => 'Trash', 'parentId' => 'inbox-id']])]);
+			$this->mailboxLookupResponder([['id' => 'inbox-id', 'name' => 'INBOX', 'parentId' => null], ['id' => 'trash-id', 'name' => 'Trash', 'parentId' => 'inbox-id']]));
 		$email = new Email($session);
 
 		$this->expectException(Api\Exception::class);

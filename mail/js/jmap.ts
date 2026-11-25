@@ -6680,7 +6680,21 @@ export class MailJmap
 					// 2026-11-25, Mail Compose). A real collision is always a small handful of
 					// siblings (Fälle/Sterbefälle was 2) - 50 is generous headroom, never a
 					// realistic bottleneck for genuine disambiguation.
-					const ids = t.Mailbox.query({accountId, filter: {name: part}, limit: 50});
+					//
+					// filter.parentId (the already-resolved id of the PRECEDING segment, or null for
+					// the first one) isn't just belt-and-suspenders for a real JMAP server - it's
+					// REQUIRED for the local plain-IMAP shim (api/src/Mail/Jmap/Imap.php's own
+					// mailboxQuery()): that emulation does no real search at all for a name-only
+					// filter, it just concatenates filter.parentId's own path + filter.name and
+					// returns that ONE synthesized id. Omitting parentId here collapsed every segment
+					// beyond the first to a bogus TOP-LEVEL path (eg. "Trash" instead of
+					// "INBOX/Trash", "fm" instead of "user/fm") - the exact-match check below then
+					// correctly rejected it as "not found" - found live 2026-11-25, ticket #128691
+					// (Dovecot/shim accounts only; a real-JMAP/Stalwart account was never affected,
+					// since its own genuine substring search needs no parentId hint in the first
+					// place - this was a regression from the Fälle/Sterbefälle fix above, which
+					// dropped the parentId filter this method used to always pass).
+					const ids = t.Mailbox.query({accountId, filter: {name: part, parentId}, limit: 50});
 					const candidates = t.Mailbox.get({accountId, ids: ids.$ref('/ids'), properties: ['id', 'name', 'parentId']});
 					return {ids, candidates};
 				}, {retryIdempotentOnClose: true});
