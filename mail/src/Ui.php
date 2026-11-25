@@ -1998,6 +1998,49 @@ class Ui
 	 * shared with the preview panel and already resolving classic/local-shim/Stalwart row-ids
 	 * transparently via Mail::splitRowID().
 	 */
+	/**
+	 * Is a JMAP-native row's folder Drafts or Templates (RFC 8621 §2 "role"), ie. should opening
+	 * it redirect to compose instead of a read-only display - factored out of displayMessage()
+	 * so it's unit-testable without going through Egw::redirect_link()'s own exit().
+	 *
+	 * @param ?string $folderID JMAP Mailbox id (RowIdParts' own folderID, see Mail::splitRowID())
+	 * @param Mail\Imap\Jmap|Mail\Account $icServer
+	 * @param string $icServerID
+	 * @return array{0: bool, 1: bool} [isDraftOrTemplate, isDraft]
+	 */
+	protected function resolveJmapIsDraftOrTemplate(?string $folderID, $icServer, string $icServerID) : array
+	{
+		$role = null;
+		if (!empty($folderID))
+		{
+			if ($icServer instanceof ImapJmap)
+			{
+				$mailboxData = $icServer->jmapClient()->mailbox->get([$folderID], ['role', 'name'])['list'][0] ?? null;
+				$role = $mailboxData['role'] ?? null;
+				// A real JMAP server (Stalwart) never tags Templates/Outbox with a role at all - no
+				// IMAP SPECIAL-USE attribute or JMAP role exists for either (see mail/js/jmap.ts's
+				// own templatesFolder docblock and applyTemplateOutboxRoles(), which already works
+				// around this client-side the same way). Found live 2026-11-25 (Nordenham,
+				// addjan01/ralspe01): opening a message in the Templates folder always showed
+				// read-only instead of redirecting to compose, because $role was unconditionally
+				// null here for that folder - only 'drafts' (a real SPECIAL-USE/role) ever worked.
+				// Fall back to matching the account's own configured (or default) Templates folder
+				// NAME, case-insensitively, same convention classic roleFor()'s own accFolders
+				// fallback and applyTemplateOutboxRoles() both already use.
+				if ($role === null && !empty($mailboxData['name']) &&
+					strcasecmp($mailboxData['name'], $icServer->acc_folder_template ?: 'Templates') === 0)
+				{
+					$role = 'templates';
+				}
+			}
+			else
+			{
+				$role = JmapImap::mailboxGet((string)$icServerID, ['ids' => [$folderID]])['list'][0]['role'] ?? null;
+			}
+		}
+		return [in_array($role, ['drafts', 'templates'], true), $role === 'drafts'];
+	}
+
 	function displayMessage(?array $_requesteddata = null)
 	{
 		if (is_null($_requesteddata)) $_requesteddata = $_GET;
@@ -2040,16 +2083,7 @@ class Ui
 		}
 		else
 		{
-			$role = null;
-			if (!empty($hA['folderID']))
-			{
-				$icServer = $this->mail_bo->icServer;
-				$role = $icServer instanceof ImapJmap ?
-					($icServer->jmapClient()->mailbox->get([$hA['folderID']], ['role'])['list'][0]['role'] ?? null) :
-					(JmapImap::mailboxGet((string)$icServerID, ['ids' => [$hA['folderID']]])['list'][0]['role'] ?? null);
-			}
-			$isDraftOrTemplate = in_array($role, ['drafts', 'templates'], true);
-			$isDraft = $role === 'drafts';
+			[$isDraftOrTemplate, $isDraft] = $this->resolveJmapIsDraftOrTemplate($hA['folderID'] ?? null, $this->mail_bo->icServer, $icServerID);
 		}
 		if ($isDraft && $_requesteddata['mode'] == 'print')
 		{
