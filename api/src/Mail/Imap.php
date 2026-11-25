@@ -1702,11 +1702,51 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new (static::SIEVE_CLASS)($this, $_euser, $_scriptName);
+			$this->sieve = $this->newSieveConnection($_euser, $_scriptName);
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
 		}
 		return $this->setVacation($_vacation, $_scriptName);
+	}
+
+	/**
+	 * Construct static::SIEVE_CLASS for setVacationUser()/getVacationUser() - NOT the same
+	 * constructor shape for every SIEVE_CLASS:
+	 * - Sieve\ManageSieve speaks a wholly separate per-connection protocol with its own
+	 *   impersonation handshake, so its constructor genuinely needs `$_euser` as its own 2nd
+	 *   positional arg.
+	 * - Sieve\Jmap only ever accepts `($params, ?string $accountId=null)` - passing $_euser
+	 *   (a resolved mailbox USERNAME string) positionally there silently lands in $accountId
+	 *   instead (PHP drops extra/mismatched positional args rather than erroring), pointing
+	 *   EVERY SieveScript JMAP call at a bogus "account" that Stalwart happily treats as real
+	 *   but empty, auto-creating a fresh, throwaway script there each time (Script::
+	 *   retrieveRules()'s own "doesn't exist yet" fallback) - every re-open of the admin "edit
+	 *   vacation notice" dialog read back an empty vacation array (defaulting the status
+	 *   dropdown to "Active") regardless of what had actually been saved moments before. The
+	 *   REAL script (under this account's own correct, already-impersonated accountId) was
+	 *   written correctly the whole time via whichever OTHER already-constructed connection the
+	 *   same request's hasExtension()/__call() calls happened to reuse, so server-side vacation
+	 *   behaviour was never actually wrong, only the admin dialog's own re-display of it after a
+	 *   reopen. Found live 2026-11-25 (ralf): "whenever I open it, it says Active, I deactivate
+	 *   it and reopen it, and it's again Active" (admin only - the non-admin "edit my own
+	 *   vacation notice" path never goes through setVacationUser()/getVacationUser() at all, see
+	 *   mail_sieve::getVacation()'s own is_admin_vac branch).
+	 *
+	 * adminConnection($_euser) (called by both callers just above) already re-establishes the
+	 * correctly-impersonated underlying JMAP session for this euser (master-login) - Sieve\Jmap
+	 * just needs to default its own accountId from that session ($this->jmap->accountId) instead
+	 * of having it overridden with the euser string, exactly like the generic __call() proxy
+	 * above already does for every other Sieve method.
+	 *
+	 * @param string $_euser
+	 * @param ?string $_scriptName
+	 * @return Sieve\Connection
+	 */
+	private function newSieveConnection($_euser, $_scriptName)
+	{
+		return is_a(static::SIEVE_CLASS, Sieve\Jmap::class, true) ?
+			new (static::SIEVE_CLASS)($this) :
+			new (static::SIEVE_CLASS)($this, $_euser, $_scriptName);
 	}
 
 	/**
@@ -1728,7 +1768,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		if (is_null($this->sieve) || $this->isAdminConnection !== $_euser)
 		{
 			$this->adminConnection($_euser);
-			$this->sieve = new (static::SIEVE_CLASS)($this, $_euser, $_scriptName);
+			$this->sieve = $this->newSieveConnection($_euser, $_scriptName);
 			$this->error =& $this->sieve->error;
 			$this->scriptName =& $this->sieve->scriptName;
 		}
