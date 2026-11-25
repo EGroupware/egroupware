@@ -103,7 +103,13 @@ class Jmap implements Connection
 					'accountId' => $this->accountId,
 				], "0"],
 			], self::USING);
-			$list = $response['methodResponses'][0][1]['list'];
+			// RFC 8620 §5.1 Get's "list" is supposed to always be an array (even empty), but a real
+			// server can still send back a JSON `null` instead (found live 2026-11-25: a fatal
+			// `array_filter(): ... null given` in installScript()/getScript(), both of which trust
+			// listScripts()[2] to always be an array) - `foreach (null as ...)` only ever emits a
+			// PHP WARNING, not a Throwable, so it silently no-ops instead of tripping the catch
+			// block's own "ignore not existing script" safety net below; coalesce here instead.
+			$list = $response['methodResponses'][0][1]['list'] ?? [];
 			foreach ($list as $script)
 			{
 				$scripts[] = $script['name'];
