@@ -3896,6 +3896,35 @@ export class MailApp extends EgwApp
 	 * @param rowId
 	 * @param jmapAttachments RFC 8621 EmailBodyPart[], MailJmap.fetchBody()'s own smime attachments
 	 */
+	/**
+	 * Should loadMessageBody()'s fast-path result trigger resolveSmimeAttachmentsBlock() (ie. fetch
+	 * display metadata for fast.attachments and patch the row's paperclip in)? Factored out of
+	 * loadMessageBody() itself so it's unit-testable without the surrounding iframe/DOM machinery.
+	 *
+	 * True for the original S/MIME fast path (ticket #124661) unconditionally - that one already
+	 * knows (from decrypting) that these are real attachments. Also true (ticket #128441) for an
+	 * ORDINARY message whose hasAttachment flag came back false although MailJmap.fetchBody()'s own
+	 * fast.attachments genuinely contains one - a real JMAP server (eg. Stalwart) computes that flag
+	 * as false whenever every non-body part is marked Content-Disposition: inline (eg. a PDF an
+	 * iPad's Mail app attaches) - see MailJmap.hasRealAttachment()'s own docblock. The row's cached
+	 * data.attachments being already truthy is checked to avoid a redundant second fetch for the
+	 * common case (hasAttachment already true, handled by the ordinary resolveJmapAttachmentsBlock()
+	 * gate in renderMessageInto() instead) - fast.attachments lists every real attachment either way.
+	 */
+	private shouldRevealLateAttachments(rowId : string, fast : Extract<JmapBodyResult, { special : false }>) : boolean
+	{
+		if (!Array.isArray(fast.attachments) || !fast.attachments.length)
+		{
+			return false;
+		}
+		if (fast.smime)
+		{
+			return true;
+		}
+		const cachedRowAttachments = egw.dataGetUIDdata(rowId)?.data?.attachments;
+		return !cachedRowAttachments && MailJmap.hasRealAttachment(fast.attachments);
+	}
+
 	private resolveSmimeAttachmentsBlock(template : any, rowId : string, jmapAttachments : any[]) : void
 	{
 		this.egw.request('mail.EGroupware\\Mail\\Ui.ajax_fetchAttachments', [rowId, jmapAttachments]).then((_data) =>
@@ -3953,8 +3982,9 @@ export class MailApp extends EgwApp
 			// normal pre-load reset, same as the classic per-page-load path's own setSmimeFlags().
 			if (fast.smime) this.setSmimeFlags(fast.smime);
 			// see resolveSmimeAttachmentsBlock()'s own docblock for why this is NOT routed through
-			// preview()/setSmimeAttachments() (found live 2026-09-22, ticket #124661)
-			if (fast.smime && onSmimeAttachments && Array.isArray(fast.attachments) && fast.attachments.length)
+			// preview()/setSmimeAttachments() (found live 2026-09-22, ticket #124661) - and
+			// shouldRevealLateAttachments()'s own docblock for the ticket #128441 generalization.
+			if (onSmimeAttachments && this.shouldRevealLateAttachments(rowId, fast))
 			{
 				onSmimeAttachments(fast.attachments);
 			}
