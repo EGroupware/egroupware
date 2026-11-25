@@ -224,7 +224,9 @@ class Transport extends \Horde_Mail_Transport
 			'to' => $to,
 			'cc' => $cc,
 			'bcc' => $bcc,
-			'subject' => $header('Subject') ?? '',
+			// headers are MIME encoded and folded as they go on the wire, JMAP takes the text itself:
+			// otherwise the encoded words of special characters are stored as subject, eg. "=?utf-8?b?Z2XDpG5kZXJ0Og==?="
+			'subject' => \Horde_Mime::decode(preg_replace('/\r?\n(?=[ \t])/', '', (string)$header('Subject'))),
 			'bodyValues' => $bodyValues ?: null,
 			'textBody' => $textBody,
 			'htmlBody' => $htmlBody,

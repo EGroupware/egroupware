@@ -247,6 +247,53 @@ class TransportSendTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * The headers arrive MIME encoded, as they go on the wire, while JMAP takes the text itself:
+	 * a subject with special characters was stored with its encoded words,
+	 * eg. "Ticket =?utf-8?b?Z2XDpG5kZXJ0Og==?= ..." instead of "Ticket geändert: ...",
+	 * as reported for a notification mail. A long subject is folded too, which must not leave a line break.
+	 */
+	public function testSendJmapDecodesSubjectAndNamesWithSpecialCharacters()
+	{
+		$subject = 'Ticket geändert: Lange Betreffzeile eines Tickets mit Umlauten für die Prüfung der Übertragung';
+		$jmap = $this->fakeHttp($this->happyPathResponder());
+		$transport = $this->transport($jmap);
+		$mail = new \Horde_Mime_Mail();
+		$mail->addHeader('From', 'Sender Name <sender@example.org>');
+		$mail->addHeader('To', 'Jörg Müßig <to@example.org>, "Größer, Bärbel" <to2@example.org>');
+		$mail->addHeader('Cc', 'Æsop Çelik <cc@example.org>');
+		$mail->addHeader('Subject', $subject);
+		$mail->setBody('Hello world');
+
+		$this->buildAndSend($transport, $mail);
+
+		$create = $this->findCall($jmap, 'Email/set')[1]['create']['s1'];
+		$this->assertSame($subject, $create['subject']);
+		$this->assertSame([
+			['email' => 'to@example.org', 'name' => 'Jörg Müßig'],
+			['email' => 'to2@example.org', 'name' => 'Größer, Bärbel'],
+		], $create['to']);
+		$this->assertSame([['email' => 'cc@example.org', 'name' => 'Æsop Çelik']], $create['cc']);
+	}
+
+	/**
+	 * A subject without special characters is not changed, also if it looks like it contains an encoded word
+	 */
+	public function testSendJmapKeepsPlainSubject()
+	{
+		$jmap = $this->fakeHttp($this->happyPathResponder());
+		$transport = $this->transport($jmap);
+		$mail = new \Horde_Mime_Mail();
+		$mail->addHeader('From', 'Sender Name <sender@example.org>');
+		$mail->addHeader('To', 'to@example.org');
+		$mail->addHeader('Subject', 'Re: 5 = 2 + 3? Yes & no');
+		$mail->setBody('Hello world');
+
+		$this->buildAndSend($transport, $mail);
+
+		$this->assertSame('Re: 5 = 2 + 3? Yes & no', $this->findCall($jmap, 'Email/set')[1]['create']['s1']['subject']);
+	}
+
+	/**
 	 * Regression test for a real bug found live 2026-09-09 while writing this coverage:
 	 * Horde_Mime_Part::send()'s own toString(['stream' => true]) call - the actual mechanism that
 	 * builds $body for every real send - leaves the stream's pointer at its END (it was just
