@@ -7755,9 +7755,15 @@ export class MailApp extends EgwApp
 		const [profileID, parentPath] : [string, string] = parentTreeId.indexOf('::') !== -1 ?
 			parentTreeId.split('::', 2) as [string, string] : [parentTreeId, ''];
 
-		return this.jmap.createMailbox(profileID, parentPath, name).then(() =>
+		// Stalwart has no real nesting under INBOX - Sent/Trash/Drafts/... and migrated folders
+		// are all top-level siblings of it (see getRootFolders()'s parentId:null query) - creating
+		// "under Inbox" the way users used to in Dovecot must create a sibling instead, never a
+		// real child of Inbox
+		const effectiveParentPath = parentPath === 'INBOX' ? '' : parentPath;
+
+		return this.jmap.createMailbox(profileID, effectiveParentPath, name).then(() =>
 		{
-			return this.refreshFolderLevel(profileID, parentPath);
+			return this.refreshFolderLevel(profileID, effectiveParentPath);
 		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 

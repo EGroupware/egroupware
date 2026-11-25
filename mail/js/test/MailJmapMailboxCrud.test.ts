@@ -107,7 +107,7 @@ describe("MailJmap.createMailbox()", () =>
 
 		await jmap.createMailbox("1", "", "NewFolder");
 
-		assert.deepEqual(captured.mailboxSet[0].create, {c0 : {name : "NewFolder", parentId : null}});
+		assert.deepEqual(captured.mailboxSet[0].create, {c0 : {name : "NewFolder", parentId : null, isSubscribed : true}});
 	});
 
 	it("creates under a resolved parent when parentPath is non-empty", async() =>
@@ -119,7 +119,7 @@ describe("MailJmap.createMailbox()", () =>
 
 		await jmap.createMailbox("1", "Archive", "2026");
 
-		assert.deepEqual(captured.mailboxSet[0].create, {c0 : {name : "2026", parentId : "mbx-archive"}});
+		assert.deepEqual(captured.mailboxSet[0].create, {c0 : {name : "2026", parentId : "mbx-archive", isSubscribed : true}});
 	});
 
 	it("throws a JmapUserError (via describeSetError()) when the server reports notCreated", async() =>
