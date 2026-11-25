@@ -324,7 +324,10 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 				const invocation = () => ({$ref: (_path : string) => ({})});
 				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
 				return [[
-					{topMailboxes: {list: [{id: "a", name: "Leaf", role: "inbox"}]}, inboxIds: {ids: ["a"]}},
+					{
+						topMailboxes: {list: [{id: "a", name: "Leaf", role: "inbox"}]},
+						inboxCandidates: {list: [{id: "a", name: "INBOX", parentId: null}]},
+					},
 					{c0: {ids: []}},
 					{mailboxes: {list: []}},
 				][call++]];
@@ -695,7 +698,7 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 		const {client, calls} = createRootClient(
 			{
 				topMailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}, {id: "root2", name: "Archive"}]},
-				inboxIds: {ids: ["root1"]},
+				inboxCandidates: {list: [{id: "root1", name: "INBOX", parentId: null}]},
 			},
 			{mailboxes: {list: [{id: "child1", name: "Sub"}]}}
 		);
@@ -733,7 +736,7 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 				{
 					return [{
 						topMailboxes: {list: [{id: "root2", name: "Sent", role: "sent"}]},
-						inboxIds: {ids: ["root1"]},
+						inboxCandidates: {list: [{id: "root1", name: "INBOX", parentId: null}]},
 					}];
 				}
 				if (call === 2)
@@ -757,7 +760,7 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 	{
 		const jmap = new MailJmap(createFakeApp());
 		const {client, calls} = createRootClient(
-			{topMailboxes: {list: [{id: "root2", name: "Archive"}]}, inboxIds: {ids: []}},
+			{topMailboxes: {list: [{id: "root2", name: "Archive"}]}, inboxCandidates: {list: []}},
 			null
 		);
 		primeLocalToken(jmap, "1", client);
@@ -853,7 +856,10 @@ describe("MailJmap.getMailboxChildren()/getRootFolders() - subscribedOnly overri
 					}
 				});
 				return call === 1
-					? [{topMailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}]}, inboxIds: {ids: ["root1"]}}]
+					? [{
+						topMailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}]},
+						inboxCandidates: {list: [{id: "root1", name: "INBOX", parentId: null}]},
+					}]
 					: [{mailboxes: {list: []}}];
 			}
 		};
@@ -1166,9 +1172,13 @@ function invocationStub()
 /**
  * Stub JamClient.requestMany() for MailJmap.getThreadedRows()/getThreadMemberRows() (doc/ai/
  * projects/mail-threaded-view.md, Phase 1) - also has to answer mailboxId()'s own, earlier
- * Mailbox/query call (getRows()/getThreadMemberRows() both resolve the folder path before
+ * Mailbox/query+get pair (getRows()/getThreadMemberRows() both resolve the folder path before
  * branching into threading logic at all), so responses are picked by which entity/method the
- * production code actually invoked in a given call, not by call order.
+ * production code actually invoked in a given call, not by call order. mailboxId()'s own call
+ * (2026-11-25 substring-collision fix) invokes BOTH Mailbox.query AND Mailbox.get in the SAME
+ * requestMany() batch (to verify an exact name+parentId match, not just take ids[0] - see its own
+ * docblock), so it's disambiguated from mailboxRole()'s separate, Mailbox.get-only call by the
+ * RETURNED object's own key name ("candidates") rather than by which method fired.
  */
 function createThreadedFakeClient(representatives : any[], membersByThread : Record<string, any[]>,
 	threadGetCapture? : { returned? : any })
@@ -1176,12 +1186,13 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 	return {
 		requestMany: async(buildFn : (t : any) => any) =>
 		{
-			let calledMailboxQuery = false, calledMailboxGet = false, calledEmailQuery = false, calledThreadGet = false;
+			let calledMailboxGet = false, calledEmailQuery = false, calledThreadGet = false;
 			const t = {
 				Mailbox: {
-					query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); },
-					// mailboxRole() (getRows()'s flat, non-threaded branch) - none of this fake's
-					// callers assert on the resolved role, so a fixed non-special one is enough
+					query: (_args : any) => invocationStub(),
+					// mailboxRole() (getRows()'s flat, non-threaded branch) and mailboxId()'s own
+					// candidate-verification Mailbox.get both land here - see this function's own
+					// docblock for how they're told apart below
 					get: (_args : any) => { calledMailboxGet = true; return invocationStub(); },
 				},
 				Email: {
@@ -1191,13 +1202,15 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 				Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
 			};
 			const returned = buildFn(t);
+			if ('candidates' in returned)
+			{
+				// mailboxId()'s own Mailbox/query+get pair - a single, fixed top-level "mbox1"
+				// mailbox (name "INBOX") answers every folder path used across this file's fixtures
+				return [{candidates: {list: [{id: "mbox1", name: "INBOX", parentId: null}]}}];
+			}
 			if (calledMailboxGet)
 			{
 				return [{mailbox: {list: [{role: null}]}}];
-			}
-			if (calledMailboxQuery)
-			{
-				return [{ids: {ids: ["mbox1"]}}];
 			}
 			if (calledEmailQuery)
 			{
@@ -1301,16 +1314,16 @@ describe("Thread/get - local-only 'mailboxId' extension (Phase 2)", () =>
 		return {
 			requestMany: async(buildFn : (t : any) => any) =>
 			{
-				let calledMailboxQuery = false;
 				const t = {
-					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Mailbox: {query: (_args : any) => invocationStub(), get: (_args : any) => invocationStub()},
 					Thread: {get: (args : any) => { capture.threadArgs = args; return invocationStub(); }},
 					Email: {get: (_args : any) => invocationStub()},
 				};
-				buildFn(t);
-				if (calledMailboxQuery)
+				const returned = buildFn(t);
+				if ('candidates' in returned)
 				{
-					return [{ids: {ids: ["mbox1"]}}];
+					// mailboxId()'s own Mailbox/query+get pair - see createThreadedFakeClient()'s docblock
+					return [{candidates: {list: [{id: "mbox1", name: "INBOX", parentId: null}]}}];
 				}
 				return [{thread: {list: []}, emails: {list: []}}];
 			}
@@ -1387,19 +1400,20 @@ describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
 		const client = {
 			requestMany: async(buildFn : (t : any) => any) =>
 			{
-				let calledMailboxQuery = false, calledThreadGet = false;
+				let calledThreadGet = false;
 				const t = {
-					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Mailbox: {query: (_args : any) => invocationStub(), get: (_args : any) => invocationStub()},
 					Email: {
 						query: (args : any) => { sawCollapseThreads = !!args.collapseThreads; return invocationStub(); },
 						get: (_args : any) => invocationStub(),
 					},
 					Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
 				};
-				buildFn(t);
-				if (calledMailboxQuery)
+				const returned = buildFn(t);
+				if ('candidates' in returned)
 				{
-					return [{ids: {ids: ["mbox1"]}}];
+					// mailboxId()'s own Mailbox/query+get pair - see createThreadedFakeClient()'s docblock
+					return [{candidates: {list: [{id: "mbox1", name: "INBOX", parentId: null}]}}];
 				}
 				if (calledThreadGet)
 				{
@@ -1481,25 +1495,27 @@ describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
 		const client = {
 			requestMany: async(buildFn : (t : any) => any) =>
 			{
-				let calledMailboxQuery = false, calledMailboxGet = false;
+				let calledMailboxGet = false;
 				const t = {
 					Mailbox: {
-						query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); },
+						query: (_args : any) => invocationStub(),
 						// mailboxRole() (getRows()'s flat, non-threaded branch, since threading
-						// falls back here) - not asserted on, a fixed non-special role is enough
+						// falls back here) and mailboxId()'s own candidate-verification Mailbox.get
+						// both land here - see createThreadedFakeClient()'s docblock for how
+						// they're told apart below
 						get: (_args : any) => { calledMailboxGet = true; return invocationStub(); },
 					},
 					Email: {query: (_args : any) => invocationStub(), get: (_args : any) => invocationStub()},
 					Thread: {get: (_args : any) => { threadGetCalled = true; return invocationStub(); }},
 				};
-				buildFn(t);
+				const returned = buildFn(t);
+				if ('candidates' in returned)
+				{
+					return [{candidates: {list: [{id: "mbox1", name: "INBOX", parentId: null}]}}];
+				}
 				if (calledMailboxGet)
 				{
 					return [{mailbox: {list: [{role: null}]}}];
-				}
-				if (calledMailboxQuery)
-				{
-					return [{ids: {ids: ["mbox1"]}}];
 				}
 				return [{ids: {ids: [email.id], total: 1}, emails: {list: [email]}}];
 			}

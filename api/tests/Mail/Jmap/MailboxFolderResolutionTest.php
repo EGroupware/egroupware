@@ -20,6 +20,11 @@ use EGroupware\Api\Jmap\Base;
  * Api\Jmap - the only concrete Base subclass that actually implements jmapCall() - is enough to
  * test the request-shape/response-parsing logic in isolation.
  *
+ * getMailboxId()'s test cases were rewritten 2026-11-25 for the Mailbox/query+get+exact-match
+ * fix (Nordenham/stesie01 "Fälle" vs "Sterbefälle" substring-collision bug, see Mailbox.php's own
+ * docblock) - each segment is now one Mailbox/query (candidate net) + one Mailbox/get (name+
+ * parentId verification), all still sent as a single batched jmapCall().
+ *
  * folderId2path() caches its result in a function-static array keyed by folderId, for the
  * lifetime of the PHP process - every test here therefore uses its own never-reused folderId, to
  * stay independent of test execution order/count (see testFolderId2PathCachesItsResultAcrossCalls
@@ -40,13 +45,22 @@ class MailboxFolderResolutionTest extends \PHPUnit\Framework\TestCase
 		};
 	}
 
-	public function testGetMailboxIdChainsOneQueryPerPathSegmentViaParentIdBackReferences()
+	/** Builds a single-segment Mailbox/query+get response pair for query-call-id "q$key". */
+	private function segmentResponse(int $key, array $candidates) : array
+	{
+		return [
+			['Mailbox/query', ['ids' => array_column($candidates, 'id')], 'q'.$key],
+			['Mailbox/get', ['list' => $candidates], 'g'.$key],
+		];
+	}
+
+	public function testGetMailboxIdChainsOneQueryPlusGetPerPathSegmentInOneBatch()
 	{
 		$session = $this->fakeSession('acc1', function() {
-			return ['methodResponses' => [
-				['Mailbox/query', ['ids' => ['inbox-id']], '0'],
-				['Mailbox/query', ['ids' => ['sub-id']], '1'],
-			]];
+			return ['methodResponses' => array_merge(
+				$this->segmentResponse(0, [['id' => 'inbox-id', 'name' => 'INBOX', 'parentId' => null]]),
+				$this->segmentResponse(1, [['id' => 'sub-id', 'name' => 'Sub', 'parentId' => 'inbox-id']]),
+			)];
 		});
 		$mailbox = new Mailbox($session);
 
@@ -55,56 +69,92 @@ class MailboxFolderResolutionTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('sub-id', $id, "must return the LAST segment's own id, not an ancestor's");
 		$this->assertCount(1, $session->calls, "all segments are sent as one chained batch, not one jmapCall() per segment");
 		$methodCalls = $session->calls[0];
-		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'INBOX']], '0'], $methodCalls[0]);
-		$this->assertSame('Mailbox/query', $methodCalls[1][0]);
-		$this->assertSame('acc1', $methodCalls[1][1]['accountId']);
-		$this->assertSame(['name' => 'Sub'], $methodCalls[1][1]['filter']);
-		$this->assertSame(['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => '0'], $methodCalls[1][1]['#parentId'],
-			"the second segment's query must be scoped to the first segment's own result via a JMAP back-reference");
+		$this->assertCount(4, $methodCalls, "2 segments x (Mailbox/query + Mailbox/get) = 4 calls");
+		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'INBOX']], 'q0'], $methodCalls[0]);
+		$this->assertSame('Mailbox/get', $methodCalls[1][0]);
+		$this->assertSame(['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => 'q0'], $methodCalls[1][1]['#ids'],
+			"the Mailbox/get verifying segment 0's candidates must back-reference segment 0's own query");
+		$this->assertSame(['Mailbox/query', ['accountId' => 'acc1', 'filter' => ['name' => 'Sub']], 'q1'], $methodCalls[2]);
 	}
 
 	/**
-	 * Regression test for a bug found while writing this coverage (2026-09-09): each segment's
-	 * own #parentId.resultOf was referencing ITS OWN about-to-be-assigned call id instead of the
-	 * PRECEDING segment's id - a self-reference RFC 8620 §3.7 forbids (resultOf must name an
-	 * earlier method call), which would never actually resolve against a real JMAP server for any
-	 * folder path more than one segment deep. Three segments makes the off-by-one visible: a
-	 * naive "always reference call 0" fix would also pass the two-segment test above.
+	 * Regression test (2026-11-25, Nordenham/stesie01 live report): RFC 8621's Mailbox/query
+	 * "name" filter is a case-insensitive SUBSTRING match, so querying for 'Fälle' also returns
+	 * the sibling 'Sterbefälle'. Taking ids[0] picked whichever of the two the server happened to
+	 * list first - here 'Sterbefälle', so opening "Fälle" showed "Sterbefälle"'s messages. Both
+	 * are top-level (parentId=null), so a parentId filter can't disambiguate them either; only an
+	 * exact name-equality check (via the follow-up Mailbox/get) can.
 	 */
-	public function testGetMailboxIdEachSegmentReferencesTheImmediatelyPrecedingSegmentNotAlwaysTheFirst()
+	public function testGetMailboxIdPicksTheExactNameNotJustTheFirstSubstringMatch()
 	{
 		$session = $this->fakeSession('acc1', function() {
-			return ['methodResponses' => [
-				['Mailbox/query', ['ids' => ['a-id']], '0'],
-				['Mailbox/query', ['ids' => ['b-id']], '1'],
-				['Mailbox/query', ['ids' => ['c-id']], '2'],
-			]];
+			return ['methodResponses' => $this->segmentResponse(0, [
+				['id' => 'sterbefaelle-id', 'name' => 'Sterbefälle', 'parentId' => null],
+				['id' => 'faelle-id', 'name' => 'Fälle', 'parentId' => null],
+			])];
 		});
 		$mailbox = new Mailbox($session);
 
-		$mailbox->getMailboxId('A/B/C');
-
-		$methodCalls = $session->calls[0];
-		$this->assertSame('0', $methodCalls[1][1]['#parentId']['resultOf'], "segment 'B' must reference segment 'A' (call 0)");
-		$this->assertSame('1', $methodCalls[2][1]['#parentId']['resultOf'], "segment 'C' must reference segment 'B' (call 1), not call 0");
+		$this->assertSame('faelle-id', $mailbox->getMailboxId('Fälle'));
 	}
 
-	public function testGetMailboxIdSingleSegmentPathHasNoParentIdBackReference()
+	/** The reverse collision: querying for the longer name must not match the shorter sibling. */
+	public function testGetMailboxIdSubstringCollisionResolvesCorrectlyInEitherDirection()
 	{
 		$session = $this->fakeSession('acc1', function() {
-			return ['methodResponses' => [['Mailbox/query', ['ids' => ['inbox-id']], '0']]];
+			return ['methodResponses' => $this->segmentResponse(0, [
+				['id' => 'sterbefaelle-id', 'name' => 'Sterbefälle', 'parentId' => null],
+				['id' => 'faelle-id', 'name' => 'Fälle', 'parentId' => null],
+			])];
 		});
 		$mailbox = new Mailbox($session);
 
-		$mailbox->getMailboxId('INBOX');
+		$this->assertSame('sterbefaelle-id', $mailbox->getMailboxId('Sterbefälle'));
+	}
 
-		$this->assertArrayNotHasKey('#parentId', $session->calls[0][0][1]);
+	/**
+	 * A deeper path's final segment must also be checked against the CORRECT parentId, not just
+	 * matched by name - two same-named folders under different parents must not cross-resolve.
+	 */
+	public function testGetMailboxIdMatchesExactParentIdNotJustExactName()
+	{
+		$session = $this->fakeSession('acc1', function() {
+			return ['methodResponses' => array_merge(
+				$this->segmentResponse(0, [['id' => 'parent-a', 'name' => 'ParentA', 'parentId' => null]]),
+				$this->segmentResponse(1, [
+					// same leaf name under a DIFFERENT, unrelated parent - must be rejected
+					['id' => 'wrong-child', 'name' => 'Child', 'parentId' => 'parent-b'],
+					['id' => 'right-child', 'name' => 'Child', 'parentId' => 'parent-a'],
+				]),
+			)];
+		});
+		$mailbox = new Mailbox($session);
+
+		$this->assertSame('right-child', $mailbox->getMailboxId('ParentA/Child'));
+	}
+
+	public function testGetMailboxIdEachSegmentQueriesItsOwnPlainNameIndependently()
+	{
+		$session = $this->fakeSession('acc1', function() {
+			return ['methodResponses' => array_merge(
+				$this->segmentResponse(0, [['id' => 'a-id', 'name' => 'A', 'parentId' => null]]),
+				$this->segmentResponse(1, [['id' => 'b-id', 'name' => 'B', 'parentId' => 'a-id']]),
+				$this->segmentResponse(2, [['id' => 'c-id', 'name' => 'C', 'parentId' => 'b-id']]),
+			)];
+		});
+		$mailbox = new Mailbox($session);
+
+		$id = $mailbox->getMailboxId('A/B/C');
+
+		$this->assertSame('c-id', $id);
+		$methodCalls = $session->calls[0];
+		$this->assertSame(['name' => 'C'], $methodCalls[4][1]['filter'], "segment 'C' queries its own plain name, not scoped via a query-level parentId filter");
 	}
 
 	public function testGetMailboxIdUsesAnExplicitAccountIdOverTheSessionsOwnDefault()
 	{
 		$session = $this->fakeSession('session-default-acc', function() {
-			return ['methodResponses' => [['Mailbox/query', ['ids' => ['x']], '0']]];
+			return ['methodResponses' => $this->segmentResponse(0, [['id' => 'x', 'name' => 'INBOX', 'parentId' => null]])];
 		});
 		$mailbox = new Mailbox($session);
 
@@ -116,11 +166,28 @@ class MailboxFolderResolutionTest extends \PHPUnit\Framework\TestCase
 	public function testGetMailboxIdReturnsNullWhenTheFinalSegmentIsNotFound()
 	{
 		$session = $this->fakeSession('acc1', function() {
-			return ['methodResponses' => [['Mailbox/query', ['ids' => []], '0']]];
+			return ['methodResponses' => $this->segmentResponse(0, [])];
 		});
 		$mailbox = new Mailbox($session);
 
 		$this->assertNull($mailbox->getMailboxId('Nonexistent'));
+	}
+
+	/**
+	 * Even if a LATER segment's candidates would contain a name match, an unresolved EARLIER
+	 * segment must short-circuit to null rather than letting a later-segment match through.
+	 */
+	public function testGetMailboxIdReturnsNullWhenAnIntermediateSegmentIsNotFound()
+	{
+		$session = $this->fakeSession('acc1', function() {
+			return ['methodResponses' => array_merge(
+				$this->segmentResponse(0, []),
+				$this->segmentResponse(1, [['id' => 'sub-id', 'name' => 'Sub', 'parentId' => null]]),
+			)];
+		});
+		$mailbox = new Mailbox($session);
+
+		$this->assertNull($mailbox->getMailboxId('Missing/Sub'));
 	}
 
 	public function testFolderId2PathWalksUpToTheRootAccumulatingEachAncestorsName()

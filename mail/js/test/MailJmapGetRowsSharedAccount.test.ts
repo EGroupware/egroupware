@@ -65,10 +65,13 @@ function fakeClient(session : any, emails : any[]) : {client : any, captured : C
 		requestMany : async(buildFn : (t : any) => any) =>
 		{
 			captured.calls++;
-			let calledMailboxQuery = false, calledMailboxGet = false, calledEmailQuery = false;
+			let calledMailboxGet = false, calledEmailQuery = false;
 			const t = {
 				Mailbox : {
-					query : (args : any) => { calledMailboxQuery = true; captured.mailboxQueryAccountId = args.accountId; return invocationStub(); },
+					// mailboxId()'s own Mailbox/query+get pair (candidate net + exact-match
+					// verification, see its own docblock) and mailboxRole()'s separate Mailbox.get
+					// both land here - told apart below by the RETURNED object's own key name
+					query : (args : any) => { captured.mailboxQueryAccountId = args.accountId; return invocationStub(); },
 					get : (args : any) => { calledMailboxGet = true; captured.mailboxGetAccountId = args.accountId; return invocationStub(); },
 				},
 				Email : {
@@ -76,9 +79,9 @@ function fakeClient(session : any, emails : any[]) : {client : any, captured : C
 					get : (args : any) => { captured.emailGetAccountId = args.accountId; return invocationStub(); },
 				},
 			};
-			buildFn(t);
+			const returned = buildFn(t);
+			if ('candidates' in returned) return [{candidates : {list : [{id : "real-inbox-id", name : "INBOX", parentId : null}]}}];
 			if (calledMailboxGet) return [{mailbox : {list : [{role : null}]}}];
-			if (calledMailboxQuery) return [{ids : {ids : ["real-inbox-id"]}}];
 			if (calledEmailQuery) return [{ids : {ids : emails.map((e) => e.id), total : emails.length}, emails : {list : emails}}];
 			throw new Error("fakeClient(): unexpected requestMany() call shape");
 		},

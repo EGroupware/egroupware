@@ -79,6 +79,12 @@ function createFakeClient(session : any, handlers : {
 } = {}) : { client : any, captured : any }
 {
 	const captured : any = {mailboxSet : [], mailboxQuery : [], emailSet : [], emailGet : [], emailCopy : []};
+	// mailboxId()'s own Mailbox/query+get pair (candidate net + exact-match verification against
+	// name+parentId, see its own docblock) - this fake doesn't do real resultOf/$ref resolution,
+	// it just synthesizes an exact-match candidate for the query's own filter.name directly, since
+	// every folder path used in this file is a single segment (the "user/<name>" owner prefix is
+	// already stripped before mailboxId() ever sees it), so parentId is always null here
+	let lastMailboxQueryFilter : any = null;
 	const client = {
 		session,
 		requestMany : async(buildFn : (t : any) => any) =>
@@ -94,7 +100,15 @@ function createFakeClient(session : any, handlers : {
 					query : (args : any) =>
 					{
 						captured.mailboxQuery.push(args);
-						return handlers.mailboxQuery?.(args) ?? {ids : ["mbx-" + JSON.stringify(args.filter)]};
+						lastMailboxQueryFilter = args.filter;
+						return {
+							...(handlers.mailboxQuery?.(args) ?? {ids : ["mbx-" + JSON.stringify(args.filter)]}),
+							$ref : (_path : string) => ({}),
+						};
+					},
+					get : (_args : any) =>
+					{
+						return {list : [{id : "mbx-" + JSON.stringify(lastMailboxQueryFilter), name : lastMailboxQueryFilter?.name, parentId : null}]};
 					},
 				},
 				Email : {

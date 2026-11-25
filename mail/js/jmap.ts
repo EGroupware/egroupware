@@ -2424,22 +2424,32 @@ export class MailJmap
 			// retryIdempotentOnClose: true - THE primary fetch behind the live report that started
 			// this (2026-10-29, pole.egroupware.org "info@egroupware.org", 30 top-level mailboxes:
 			// missing INBOX, bogus expand carets, "random, some users have it, others don't"). This
-			// is a Mailbox/get for every top-level mailbox PLUS two Mailbox/query calls in one
-			// request - exactly the kind of size-scaling batch that can outlast the WebSocket's own
+			// is a Mailbox/get for every top-level mailbox PLUS a second Mailbox/query+get pair
+			// (added 2026-11-25) resolving the real INBOX id in one request - exactly the kind of
+			// size-scaling batch that can outlast the WebSocket's own
 			// heartbeat window (see resolveHasChildren()'s own docblock for the full mechanism/
 			// evidence - initially only THAT function was fixed, which turned out to be necessary
 			// but not sufficient: this earlier, larger batch is the more likely place to actually
 			// lose the race first for an account with many top-level folders).
-			const [{topMailboxes, inboxIds}] = await client.requestMany((t) =>
+			const [{topMailboxes, inboxCandidates}] = await client.requestMany((t) =>
 			{
 				const topIds = t.Mailbox.query({accountId: token.accountId, filter});
 				const topMailboxes = t.Mailbox.get({accountId: token.accountId, ids: topIds.$ref('/ids')});
-				// same plain name lookup mailboxId() already uses to resolve any single path
-				// segment - not role-based: this is the one mechanism already proven correct for
-				// both backends (getRows()' own folder resolution goes through it for INBOX too),
-				// and it's independent of the root query above, so it costs nothing extra here
-				const inboxIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}});
-				return {topIds, topMailboxes, inboxIds};
+				// same plain name lookup mailboxId() uses to resolve any single path segment - not
+				// role-based: this is the one mechanism already proven correct for both backends
+				// (getRows()' own folder resolution goes through it for INBOX too), and it's
+				// independent of the root query above, so it costs nothing extra here. Name filter
+				// is a substring match (RFC 8621 §2 - see mailboxId()'s own docblock), so this is
+				// only ever a candidate net; the verifying Mailbox/get + exact-match pick happens
+				// below, same as mailboxId() - a top-level mailbox whose name merely CONTAINS
+				// "INBOX" must never be mistaken for the real one.
+				const inboxCandidateIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}});
+				const inboxCandidates = t.Mailbox.get({
+					accountId: token.accountId,
+					ids: inboxCandidateIds.$ref('/ids'),
+					properties: ['id', 'name', 'parentId'],
+				});
+				return {topIds, topMailboxes, inboxCandidates};
 			}, {retryIdempotentOnClose: true});
 
 			const top = topMailboxes.list || [];
@@ -2453,7 +2463,8 @@ export class MailJmap
 			}
 			await this.injectSharedAccountsRoot(profileID, token, top);
 
-			const inboxId = inboxIds.ids?.[0] ?? null;
+			const inboxId = (inboxCandidates.list || []).find((m : any) =>
+				m.name?.toLowerCase() === 'inbox' && !m.parentId)?.id ?? null;
 			// A subscribedOnly top-level query can legitimately come back without INBOX: some
 			// real-world IMAP servers only ever report the auto-created special-use folders (Sent,
 			// Trash, ...) as \Subscribed via LSUB and never INBOX itself, even though INBOX is
@@ -6622,7 +6633,24 @@ export class MailJmap
 	/**
 	 * Resolve a "folder/path" (EGroupware convention) to a JMAP Mailbox id, walking parents
 	 * one level at a time and caching the result - client-side equivalent of the server's
-	 * Mail\Jmap::getMailboxId().
+	 * Mail\Jmap\Mailbox::getMailboxId().
+	 *
+	 * RFC 8621 §2 Mailbox/query's "name" filter condition is a case-insensitive SUBSTRING match,
+	 * NOT exact - eg. filtering for 'Fälle' also matches 'Sterbefälle'. Taking ids[0] therefore
+	 * silently resolved to the WRONG mailbox whenever one folder's name is contained in a
+	 * sibling's, with no reliable way to narrow it further at the query/filter level: a parentId
+	 * filter is no help when the colliding names share the same parent (confirmed live,
+	 * Nordenham/stesie01, 2026-11-25: opening "Fälle" showed "Sterbefälle"'s messages instead -
+	 * both top-level, "Sterbefälle" happened to sort first in the substring-matched result; adding
+	 * `parentId` to the filter did not help, since both candidates already share the same (null)
+	 * parentId). So each level's Mailbox/query is only ever used as a candidate net; a chained
+	 * Mailbox/get then fetches name+parentId for those candidates, and the actual match is picked
+	 * by exact (case-insensitive) name equality AND the correct parentId - the only check that
+	 * can't be fooled by a substring collision, since JMAP mailbox names are case-insensitive
+	 * unique per parent. Each level stays its own separate request (not batched together into one
+	 * requestMany() across every path segment) - see resolveHasChildren()'s own maxCallsInRequest
+	 * comment for why a deep-enough path batched into one request can HANG the connection outright
+	 * rather than erroring.
 	 */
 	private async mailboxId(client : JamWebSocketClient, accountId : string, profileID : string, folderPath : string) : Promise<string>
 	{
@@ -6633,21 +6661,23 @@ export class MailJmap
 		}
 		try
 		{
-			let parentId : string;
+			let parentId : string = null;
 			let id : string;
 			for (const part of folderPath.split('/'))
 			{
-				const [{ids}] = await client.requestMany((t) => ({
-					ids: t.Mailbox.query({
-						accountId,
-						filter: parentId ? {name: part, parentId} : {name: part},
-					}),
-				}), {retryIdempotentOnClose: true});
-				id = ids.ids?.[0];
-				if (!id)
+				const [{candidates}] = await client.requestMany((t) =>
+				{
+					const ids = t.Mailbox.query({accountId, filter: {name: part}});
+					const candidates = t.Mailbox.get({accountId, ids: ids.$ref('/ids'), properties: ['id', 'name', 'parentId']});
+					return {ids, candidates};
+				}, {retryIdempotentOnClose: true});
+				const match = (candidates.list || []).find((m : any) =>
+					m.name?.toLowerCase() === part.toLowerCase() && (m.parentId ?? null) === parentId);
+				if (!match)
 				{
 					throw new JmapUserError(this.egw.lang("Folder '%1' not found", folderPath));
 				}
+				id = match.id;
 				parentId = id;
 			}
 			return this.mailboxIds[cacheKey] = id;

@@ -25,38 +25,74 @@ class Mailbox extends Type
 	/**
 	 * Get id of a folder-path e.g. INBOX/folder/subfolder (id corresponds to subfolder in INBOX/folder!)
 	 *
+	 * RFC 8621 §2 Mailbox/query's "name" filter condition is a case-insensitive SUBSTRING match,
+	 * NOT exact - eg. filtering for 'Fälle' also matches 'Sterbefälle'. A plain Mailbox/query +
+	 * ids[0] therefore silently resolves to the WRONG mailbox whenever one folder's name is
+	 * contained in a sibling's (Fälle/Sterbefälle, but also Sent/"Sent Messages",
+	 * Draft/Drafts, ...), with no reliable way to narrow it further at the query/filter level: a
+	 * parentId filter is no help either when the colliding names share the same parent (eg. both
+	 * top-level, parentId=null - confirmed live, Nordenham/stesie01, 2026-11-25: opening "Fälle"
+	 * showed "Sterbefälle"'s messages instead, "Sterbefälle"'s id happened to sort first in the
+	 * substring-matched result). So each segment's Mailbox/query is only ever used here as a
+	 * candidate net; Mailbox/get then fetches name+parentId for those candidates, and the actual
+	 * segment is picked by exact (case-insensitive) name equality AND the correct parentId chain -
+	 * the only check that can't be fooled by a substring collision, since JMAP mailbox names are
+	 * case-insensitive unique per parent.
+	 *
 	 * @param string $folder folder-path
 	 * @param string|null $accountId
 	 * @return string|null null = not found
 	 */
 	public function getMailboxId(string $folder, ?string $accountId=null) : ?string
 	{
+		$accountId = $accountId ?: $this->jmap->accountId;
+		$parts = explode('/', $folder);
+
 		$methodCalls = [];
-		$key = 0;
-		foreach(explode('/', $folder) as $part)
+		foreach ($parts as $key => $part)
 		{
-			$query = [
-				'accountId' => $accountId ?: $this->jmap->accountId,
+			$queryId = 'q'.$key;
+			$methodCalls[] = ['Mailbox/query', [
+				'accountId' => $accountId,
 				'filter' => ['name' => $part],
-			];
-			if ($key)
-			{
-				$query['#parentId'] = [
-					'name' => 'Mailbox/query',
-					'path' => '/ids',
-					// the PRECEDING segment's own call id (RFC 8620 §3.7: resultOf must reference
-					// an earlier method call) - not $key itself, which is this segment's own
-					// about-to-be-assigned id (found 2026-09-09 while adding test coverage: every
-					// multi-segment lookup was self-referencing, never actually resolving via a
-					// real JMAP server)
-					'resultOf' => (string)($key - 1),
-				];
-			}
-			$methodCalls[] = ['Mailbox/query', $query, (string)$key++];
+			], $queryId];
+			$methodCalls[] = ['Mailbox/get', [
+				'accountId' => $accountId,
+				'#ids' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => $queryId],
+				'properties' => ['id', 'name', 'parentId'],
+			], 'g'.$key];
 		}
 		$response = $this->jmap->jmapCall($methodCalls);
-		$lastMethodResponse = array_pop($response['methodResponses']);
-		return $lastMethodResponse[1]['ids'][0] ?? null;
+
+		$candidatesByKey = [];
+		foreach ($response['methodResponses'] as [$name, $args, $callId])
+		{
+			if ($name === 'Mailbox/get' && preg_match('/^g(\d+)$/', $callId, $matches))
+			{
+				$candidatesByKey[(int)$matches[1]] = $args['list'] ?? [];
+			}
+		}
+
+		$parentId = null;
+		foreach ($parts as $key => $part)
+		{
+			$match = null;
+			foreach ($candidatesByKey[$key] ?? [] as $candidate)
+			{
+				if (mb_strtolower($candidate['name'], 'UTF-8') === mb_strtolower($part, 'UTF-8') &&
+					($candidate['parentId'] ?? null) === $parentId)
+				{
+					$match = $candidate;
+					break;
+				}
+			}
+			if (!$match)
+			{
+				return null;
+			}
+			$parentId = $match['id'];
+		}
+		return $parentId;
 	}
 
 	/**

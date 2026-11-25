@@ -65,11 +65,27 @@ function createFakeClient(identity : {id : string, email : string}, mailboxes : 
 				const t = {Email : {set : (_args : any) => ({created : {s1 : {id : 'draft-id'}}, notCreated : {}})}};
 				return [buildFn(t)];
 			}
-			// mailboxId()'s own per-path-segment Mailbox.query resolution for email.folder, if any
+			// mailboxId()'s own per-path-segment Mailbox.query+get resolution for email.folder, if
+			// any - query is only ever a candidate net (RFC 8621 §2's name filter is a substring
+			// match), so the matching candidate itself is synthesized by the chained Mailbox.get
+			// below, keyed off the SAME filter.name the query received (see mailboxId()'s own
+			// docblock); these test folders are single-segment, so parentId is always null
 			const name = Object.keys(folderQueryResults)[call - 3];
 			if (name !== undefined)
 			{
-				const t = {Mailbox : {query : (args : any) => ({ids : args.filter?.name === name ? [folderQueryResults[name]] : []})}};
+				// an undefined result means "this folder no longer resolves" (ids: [], no
+				// candidate at all) - a defined one is this segment's exact-match candidate
+				let found = false;
+				const t = {
+					Mailbox : {
+						query : (args : any) =>
+						{
+							found = args.filter?.name === name && folderQueryResults[name] !== undefined;
+							return {ids : found ? [folderQueryResults[name]] : [], $ref : (_p : string) => ({})};
+						},
+						get : (_args : any) => ({list : found ? [{id : folderQueryResults[name], name, parentId : null}] : []}),
+					},
+				};
 				return [buildFn(t)];
 			}
 			if (submitCalls.length === 0)
