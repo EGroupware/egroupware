@@ -2523,7 +2523,12 @@ class calendar_ical extends calendar_boupdate
 
 		$events = array();
 		$vcal = new Horde_Icalendar;
-		if ($charset && $charset != 'utf-8')
+		// The charset is the one of the mail part of a meeting request, which is often wrong:
+		// iCalendar is UTF-8 by default, but IMAP servers and JMAP report "us-ascii" for a part without charset,
+		// and some senders declare one not matching the content.
+		// Special characters forming valid UTF-8 are UTF-8, converting them shows eg. "BÃ¼ro" instead of "Büro".
+		if ($charset && strtolower($charset) != 'utf-8' &&
+			!(preg_match('/[\x80-\xff]/', $_vcalData) && mb_check_encoding($_vcalData, 'UTF-8')))
 		{
 			$_vcalData = Api\Translation::convert($_vcalData, $charset, 'utf-8');
 		}
