@@ -2797,7 +2797,7 @@ export class MailJmap
 			const parentId = await this.mailboxIdOrNull(client, owner.accountId, owner.cacheProfileID, owner.folder);
 
 			const [{result}] = await client.requestMany((t) => ({
-				result: t.Mailbox.set({accountId: owner.accountId, create: {c0: {name, parentId}}}),
+				result: t.Mailbox.set({accountId: owner.accountId, create: {c0: {name, parentId, isSubscribed: true}}}),
 			}));
 			if (!(result.created && result.created['c0']))
 			{
