@@ -104,7 +104,11 @@ class home_favorite_portlet extends home_portlet
 			$this->nm_settings['favorite'] = $this->context['favorite'];
 			if(is_string($context['favorite']) && is_array($favorites[$context['favorite']]['state']))
 			{
-				$this->nm_settings += $this->favorite['state'];
+				$state = $this->favorite['state'];
+				// get_rows must always come from server-side widget content, never a stored favorite -
+				// relying on every subclass to re-assert its own get_rows after this merge is fragile
+				unset($state['get_rows']);
+				$this->nm_settings += $state;
 			}
 		}
 		$this->nm_settings['columnselection_pref'] = "nextmatch-home.{$this->context['id']}";
