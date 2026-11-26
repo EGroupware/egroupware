@@ -66,6 +66,20 @@ class ContactsSqlFragmentTest extends LoggedInTest
 	}
 
 	/**
+	 * The duplicates view joins the contacts with themselves on the fields to compare, a condition
+	 * it builds as SQL itself: alone, and together with the filters of the list.
+	 */
+	public function testDuplicatesDoesNotThrow()
+	{
+		$bo = new Api\Contacts();
+		$base = ['start' => 0, 'num_rows' => 10, 'order' => 'n_family', 'sort' => 'ASC', 'search' => ''];
+
+		$this->assertIsArray($bo->duplicates(['col_filter' => []]+$base) ?: []);
+		$this->assertIsArray($bo->duplicates(['col_filter' => ['owner' => (string)$GLOBALS['egw_info']['user']['account_id'], 'tid' => 'n']]+$base) ?: []);
+		$this->assertIsArray($bo->duplicates(['col_filter' => ['cat_id' => '999999999'], 'cat_id' => '999999999']+$base) ?: []);
+	}
+
+	/**
 	 * cat_id as search criteria (not filter) takes a different path than the filter above, and is
 	 * what the delete_category hook uses to find the contacts of a category being deleted
 	 */

@@ -432,7 +432,8 @@ class Sql extends Api\Storage
 		$extra = Array(
 			implode('+', $extra) . ' AS match_count'
 		);
-		$join .= $this->db->column_data_implode(' OR ',$join_fields) . ')';
+		// the conditions are SQL built here from the checked field names in $group, not column => value pairs
+		$join .= implode(' OR ', $join_fields) . ')';
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] !== 'none')
 		{
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
