@@ -47,6 +47,10 @@ function createFakeEt2(initialContent : Record<string, any> = {})
 		// currentEmailFieldsReadsFilemodeViaValueWhileLocked below, the test this fix added.
 		get_value() { return this.disabled ? null : this.value; },
 		set_value(v : any) { this.value = v; },
+		// recomputeFilemodeLock() fires a real change event after set_value(), so the onchange
+		// (checkSharingFilemode()) inserts the download placeholder - recorded, not dispatched
+		dispatched : [] as string[],
+		dispatchEvent(ev : Event) { this.dispatched.push(ev.type); return true; },
 		// deliberately NO set_disabled() here - a real Et2Widget's own legacy set_disabled()
 		// is @deprecated precisely because it also sets .hidden (see recomputeFilemodeLock()'s
 		// own docblock) - this mock would need to replicate that mistake to hide the regression;
@@ -269,6 +273,8 @@ describe("MailCompose.uploadFinish() - JMAP mode merges a chunked (Tier-3) uploa
 		assert.isFalse(et2.filemodeWidget.hidden,
 			"the user must still SEE the selector (and its current 'link' value), just not be able to change it - "
 			+ "Et2Widget's own legacy set_disabled() sets .hidden too, which must NOT be used here");
+		assert.deepEqual(et2.filemodeWidget.dispatched, ["change"],
+			"set_value() fires no change event, but the onchange must run to insert the download placeholder");
 	});
 });
 
