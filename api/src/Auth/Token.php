@@ -64,12 +64,24 @@ class Token extends APi\Storage\Base
 		try {
 			$log_passwd = substr($token, 0, strlen(self::PREFIX)+1+strlen($matches[1]));
 			$log_passwd .= str_repeat('*', strlen($token)-strlen($log_passwd));
+			// never authenticate an empty username
+			if (trim($user) === '')
+			{
+				Api\Auth::log(__METHOD__."('$user', '$log_passwd', ...) returned false (empty username)");
+				return false;
+			}
+			$account_id = (int)Api\Accounts::getInstance()->name2id($user, 'account_lid', 'u');
+			// token owner and revocation are verified explicitly below
 			$data = self::getInstance()->read([
 				'token_id' => $matches[1],
-				'account_id' => [0, Api\Accounts::getInstance()->name2id($user)],
-				'token_revoked' => null,
 				Api\Db\SqlFragment::raw('(token_valid_until IS NULL OR token_valid_until > NOW())')
 			]);
+			if (!empty($data['token_revoked']) ||
+				!empty($data['account_id']) && (int)$data['account_id'] !== $account_id)
+			{
+				Api\Auth::log(__METHOD__."('$user', '$log_passwd', ...) returned false (token revoked or not for this user)");
+				return false;
+			}
 			if (!password_verify($matches[2], $data['token_hash']))
 			{
 				Api\Auth::log(__METHOD__."('$user', '$log_passwd', ...') returned false (no active token found)");

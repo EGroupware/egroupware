@@ -43,6 +43,12 @@ class Hooks
 	static function addAccount($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
+		// never act on an empty or invalid account_lid
+		if (!isset($data['account_lid']) || trim($data['account_lid']) === '' || strpos($data['account_lid'], '/') !== false)
+		{
+			error_log(__METHOD__.'(account_id='.array2string($data['account_id'] ?? null).') invalid account_lid, NOT creating a home-directory!');
+			return;
+		}
 		// create a user-dir
 		Api\Vfs::$is_root = true;
 		if (!empty($data['old_loginid']) && Api\Vfs::file_exists($dir='/home/'.$data['old_loginid']))
