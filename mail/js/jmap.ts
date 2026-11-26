@@ -22,12 +22,32 @@ import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
 import {JamWebSocketClient} from "./jmap-jam-websocket";
-import type {StateChange} from "./jmap-jam-websocket";
+import type {RetryableRequestOptions, StateChange} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {convert as htmlToText} from "html-to-text";
 import {defaultFontCssRule} from "../../api/js/etemplate/Et2HtmlArea/Et2HtmlAreaConfig";
+
+/**
+ * Bookkeeping of the client-side unread-counter sync of one real-JMAP mail profile,
+ * see MailJmap.requestCounterSync()
+ */
+interface CounterSyncState
+{
+	// JMAP accountId -> Mailbox state the folder-tree badges currently reflect
+	states: Record<string, string>;
+	// JMAP accountId -> Mailbox ids which had a folder-tree node at the last sync
+	mailboxes: Record<string, Set<string>>;
+	// the sync currently in flight, if any
+	running: Promise<void> | null;
+	// another sync was requested while one was in flight: run once more, when that one is done
+	again: boolean;
+	// the last sync failed: MailApp.push() uses the server-relayed counters again, until one succeeds
+	failed: boolean;
+	// ms epoch the last sync finished, see MailJmap.COUNTER_SYNC_MAX_AGE_MS
+	finished: number;
+}
 
 interface JmapToken
 {
@@ -753,6 +773,8 @@ export class MailJmap
 	// the baseline enableWsPush()'s onPush() callback diffs each new StateChange against, see
 	// processWsPushStates()
 	private wsPushStates : Record<string, Record<string, Record<string, string>>> = {};
+	// profileID -> bookkeeping of the client-side unread-counter sync, see requestCounterSync()
+	private counterSync: Record<string, CounterSyncState> = {};
 	// rowId -> verifyPgpSignature() result, or null if not PGP-signed at all; a key simply being
 	// absent means "never checked yet" (see peekPgpSignature()). Avoids re-doing the whole-message
 	// download + openpgp verify every time the same message is viewed again, and lets
@@ -889,6 +911,11 @@ export class MailJmap
 	private static readonly VISIBILITY_RESUME_GRACE_MS = 5000;
 	private recentlyResumedVisibilityAt = 0;
 
+	// A folder-tree badge of a real-JMAP account is never older than this, while the tab is visible:
+	// the safety net for a push which silently stopped (see syncCountersIfDue())
+	private static readonly COUNTER_SYNC_MAX_AGE_MS = 60000;
+	private static counterSyncTimerInstalled = false;
+
 	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
 	private static cspListenerInstalled = false;
 	// see onOnline()'s own docblock - installed once at window level, same pattern as the
@@ -920,12 +947,24 @@ export class MailJmap
 			MailJmap.onlineListenerInstalled = true;
 			window.addEventListener('online', () => MailJmap.current?.onOnline());
 		}
+		// see syncCountersIfDue()'s own docblock - one timer for whichever instance is current,
+		// same pattern as the window-level listeners above
+		if (!MailJmap.counterSyncTimerInstalled)
+		{
+			MailJmap.counterSyncTimerInstalled = true;
+			window.setInterval(() => MailJmap.current?.syncCountersIfDue(), MailJmap.COUNTER_SYNC_MAX_AGE_MS / 4);
+		}
 		// see VISIBILITY_RESUME_GRACE_MS's own docblock
 		document.addEventListener('visibilitychange', () =>
 		{
 			if (!document.hidden)
 			{
 				this.recentlyResumedVisibilityAt = Date.now();
+				// a hidden tab is not kept up to date (see syncCountersIfDue()), catch up right away
+				if (MailJmap.current === this)
+				{
+					this.syncCountersIfDue(0);
+				}
 			}
 		});
 	}
@@ -1271,7 +1310,7 @@ export class MailJmap
 			const at = full.indexOf('@');
 			return [id, at > 0 ? full.slice(0, at) : full, full];
 		}).filter(([, short]) => !short.toLowerCase().startsWith('noreply-'));
-		const counts : Record<string, number> = {};
+		const counts: Record<string, number> = {};
 		stripped.forEach(([, short]) => { counts[short] = (counts[short] || 0) + 1; });
 		return stripped.map(([id, short, full]) : [string, string] => [id, counts[short] > 1 ? full : short]);
 	}
@@ -1354,6 +1393,13 @@ export class MailJmap
 		// extra round trip), self-corrects on every fetch so switching to/from a
 		// (Phase 2+, not yet real) non-supporting profile always resolves to the right state
 		this.app.updateThreadingToggle?.(!!token.supportsThreading);
+		// A (re)load of the list is a good moment to check the unread counters too, in parallel:
+		// covers switching folders, a manual refresh and the autorefresh. Not for further pages
+		// fetched while scrolling.
+		if (!query.start)
+		{
+			this.requestCounterSync(profileID, Date.now());
+		}
 		const client = this.clients[profileID];
 
 		// shared-account folder ("user/<name>/...", see getSharedAccountPlaceholders()) - resolve
@@ -3194,7 +3240,10 @@ export class MailJmap
 	private enablePushOnce(selectedFolder : string) : void
 	{
 		const profileID = selectedFolder.split('::', 1)[0];
-		if (this.pushEnabled[profileID] || !this.tokens[profileID]?.enableWsPush)
+		const token = this.tokens[profileID];
+		// a real JMAP account always registers: its unread counters are kept current from the
+		// StateChange frames, independent of which way row updates arrive (see processWsPushStates())
+		if (this.pushEnabled[profileID] || !token || !token.enableWsPush && token.isLocal)
 		{
 			return;
 		}
@@ -3270,17 +3319,21 @@ export class MailJmap
 		// something to diff against - Foo/get's "state" reflects the current server-side state for
 		// that type regardless of which (if any) ids were actually requested, so an empty ids list
 		// is a cheap way to get it with no data transferred. Mirrors Api\Mail\Imap\Jmap::enablePush()
-		// calling getStates() upfront, for the same reason.
-		const [{emailState, mailboxState}] = await client.requestMany((t : any) => ({
-			emailState: t.Email.get({accountId: token.accountId, ids: []}),
-			mailboxState: t.Mailbox.get({accountId: token.accountId, ids: []})
-		}));
-		this.wsPushStates[profileID] = {
-			[token.accountId]: {
-				Email: emailState.state,
-				Mailbox: mailboxState.state
-			}
-		};
+		// calling getStates() upfront, for the same reason. Only needed to build row updates from
+		// the changes (token.enableWsPush), the unread counters keep their own baseline.
+		if (token.enableWsPush)
+		{
+			const [{emailState, mailboxState}] = await client.requestMany((t: any) => ({
+				emailState: t.Email.get({accountId: token.accountId, ids: []}),
+				mailboxState: t.Mailbox.get({accountId: token.accountId, ids: []})
+			}));
+			this.wsPushStates[profileID] = {
+				[token.accountId]: {
+					Email: emailState.state,
+					Mailbox: mailboxState.state
+				}
+			};
+		}
 
 		client.onPush((change : StateChange) => this.handleWsPush(profileID, change));
 	}
@@ -3305,6 +3358,21 @@ export class MailJmap
 	{
 		const client = this.clients[profileID];
 		if (!client)
+		{
+			return;
+		}
+		// The unread counters of a real JMAP account follow every change of the Mailbox state,
+		// unless it is the very state the badges already show (eg. our own change, whose counters
+		// came along with its answer). A StateChange without one - flagging a message changes
+		// just the Email state - has nothing to tell: asking what changed since the Mailbox state
+		// we have would return nothing.
+		if ('Mailbox' in states && states.Mailbox !== this.counterSync[profileID]?.states[accountId])
+		{
+			this.requestCounterSync(profileID);
+		}
+		// Row updates and new-mail notifications are only built here without a working push-server
+		// (see enablePushOnce()), otherwise they arrive server-relayed and would show up twice.
+		if (!this.tokens[profileID]?.enableWsPush)
 		{
 			return;
 		}
@@ -3333,6 +3401,328 @@ export class MailJmap
 
 		const pushPayload = await this.buildWsPushPayload(client, profileID, accountId, sinceStates);
 		pushPayload.forEach((pushData) => this.app.push(pushData));
+	}
+
+	/**
+	 * Does the browser itself keep the folder-tree's unread counters of $profileID current?
+	 *
+	 * True for a real JMAP account whose last counter sync worked. MailApp then ignores the
+	 * counters of server-relayed pushes for it: they took a longer way and could bring back
+	 * an older value. Never true for an IMAP account, their counters work as they always did.
+	 */
+	countersManaged(profileID: string): boolean
+	{
+		return this.tokens[profileID]?.isLocal === false && !this.counterSync[profileID]?.failed;
+	}
+
+	/**
+	 * Bring the folder-tree's unread counters of a real JMAP account up to date, directly from
+	 * the JMAP server (see syncCounters()). A no-op for every other account.
+	 *
+	 * Safe to call as often as something might have changed them: only one sync runs at a time
+	 * per profile, and calls made meanwhile are answered by a single further run afterwards.
+	 * As each run continues from the Mailbox state the last one ended on, a result can never be
+	 * applied out of order.
+	 *
+	 * Called because something changed, without $since:
+	 * - for a JMAP StateChange push (processWsPushStates()),
+	 * - after we changed messages ourselves, unless the counters came along with the answer
+	 *   already (counterBatch(), used by updateKeywords() and destroyIds()).
+	 *
+	 * Called just to be sure the counters are current, with $since - no reason to ask the server
+	 * again, if a sync is under way or was done in the meantime:
+	 * - when the first page of a message list is fetched (getRows()),
+	 * - when the tab becomes visible again, and if nothing else did for COUNTER_SYNC_MAX_AGE_MS
+	 *   (syncCountersIfDue()),
+	 * - by MailApp.queueRefreshFolderList(), instead of the server request an IMAP account needs.
+	 *
+	 * @param since ms epoch: do nothing, if a sync is running or finished since then
+	 * @return resolves once the counters are current, never rejects
+	 */
+	requestCounterSync(profileID: string, since?: number): Promise<void>
+	{
+		if (this.tokens[profileID]?.isLocal !== false)
+		{
+			return Promise.resolve();
+		}
+		const sync = this.counterSync[profileID] ??=
+			{states: {}, mailboxes: {}, running: null, again: false, failed: false, finished: 0};
+		if (since !== undefined && (sync.running || sync.finished >= since))
+		{
+			return sync.running ?? Promise.resolve();
+		}
+		if (sync.running)
+		{
+			sync.again = true;
+			return sync.running;
+		}
+		const run = async() =>
+		{
+			do
+			{
+				sync.again = false;
+				try
+				{
+					await this.syncCounters(profileID, sync);
+					sync.failed = false;
+				}
+				catch (e)
+				{
+					if (!sync.failed)
+					{
+						console.warn('MailJmap.requestCounterSync(): failed, using the pushed unread counters until it works again', e);
+					}
+					sync.failed = true;
+				}
+				sync.finished = Date.now();
+			}
+			while (sync.again);
+		};
+		return sync.running = run().finally(() => sync.running = null);
+	}
+
+	/**
+	 * Sync the unread counters of every real JMAP account whose last sync is older than $maxAge
+	 *
+	 * The safety net under the push: a StateChange which never arrives (connection silently
+	 * stalled, or no WebSocket at all) leaves a badge wrong for COUNTER_SYNC_MAX_AGE_MS at most.
+	 * Costs one tiny request per account, and only while the tab is visible - a hidden tab catches
+	 * up the moment it's shown again (see the visibilitychange listener in the constructor).
+	 *
+	 * @param maxAge in ms, defaults to what's due by the next timer tick
+	 */
+	private syncCountersIfDue(maxAge: number = MailJmap.COUNTER_SYNC_MAX_AGE_MS * 3 / 4): void
+	{
+		if (document.hidden)
+		{
+			return;
+		}
+		Object.keys(this.tokens).forEach((profileID) =>
+		{
+			if (Date.now() - (this.counterSync[profileID]?.finished ?? 0) >= maxAge)
+			{
+				this.requestCounterSync(profileID, Date.now());
+			}
+		});
+	}
+
+	/**
+	 * One counter sync: ask the JMAP server what changed since the Mailbox state the badges show,
+	 * and set the new unread counts on the folder-tree.
+	 *
+	 * Only mailboxes with a loaded folder-tree node matter, everything else gets its count when its
+	 * level is loaded. The folders of a shared account live in the same tree, but are a JMAP
+	 * account of their own with their own state, so each account is asked separately.
+	 *
+	 * @throws if the profile's own account could not be synced
+	 */
+	private async syncCounters(profileID: string, sync: CounterSyncState): Promise<void>
+	{
+		const token = this.tokens[profileID];
+		const client = this.clients[profileID];
+		const accounts = this.counterNodes(profileID);
+		if (!token || !client || !Object.keys(accounts).length)
+		{
+			return;
+		}
+		// from now on we want to hear about changes, not only once a folder of this account is viewed
+		this.enablePushOnce(profileID);
+
+		const status: Record<string, number> = {};
+		await Promise.all(Object.entries(accounts).map(async([accountId, mailboxes]) =>
+		{
+			const startState = sync.states[accountId];
+			try
+			{
+				const {state, counts} = await this.fetchCounters(client, accountId,
+					MailJmap.counterDeltaState(sync, accountId, mailboxes));
+				// A change of ours brought its counters along meanwhile (counterBatch()), ours might
+				// be older than these: drop them, and look again unless they are of the very same state.
+				if (sync.states[accountId] !== startState)
+				{
+					sync.again ||= sync.states[accountId] !== state;
+					return;
+				}
+				sync.states[accountId] = state;
+				sync.mailboxes[accountId] = new Set(Object.keys(mailboxes));
+				Object.entries(counts).forEach(([mailboxId, unread]) =>
+				{
+					if (mailboxes[mailboxId])
+					{
+						status[mailboxes[mailboxId]] = unread;
+					}
+				});
+			}
+			catch (e)
+			{
+				delete sync.states[accountId];
+				delete sync.mailboxes[accountId];
+				if (accountId === token.accountId)
+				{
+					throw e;
+				}
+				// a shared account we (no longer) have access to must not stop our own counters
+				console.warn('MailJmap.syncCounters(): failed for shared account ' + accountId, e);
+			}
+		}));
+		if (Object.keys(status).length)
+		{
+			this.app.setFolderStatus?.(status);
+		}
+	}
+
+	/**
+	 * The loaded folder-tree nodes of a profile which stand for a mailbox, by the JMAP account
+	 * owning it: the folders of a shared account live in the same tree, their node carries its
+	 * accountId (decodeSharedMailboxId()).
+	 *
+	 * @return JMAP accountId -> Mailbox id -> id of its folder-tree node
+	 */
+	private counterNodes(profileID: string): Record<string, Record<string, string>>
+	{
+		const token = this.tokens[profileID];
+		const nodes: Record<string, string> = this.app.folderNodesByJmapId?.(profileID) ?? {};
+		const accounts: Record<string, Record<string, string>> = {};
+		Object.entries(token ? nodes : {}).forEach(([jmapId, node]) =>
+		{
+			const decoded = MailJmap.decodeSharedMailboxId(jmapId);
+			// the "shared accounts" placeholder nodes are no mailboxes
+			if (decoded ? !decoded.mailboxId : jmapId.startsWith(MailJmap.SHARED_ACCOUNTS_ROOT_ID))
+			{
+				return;
+			}
+			(accounts[decoded?.accountId ?? token.accountId] ??= {})[decoded?.mailboxId ?? jmapId] = node;
+		});
+		return accounts;
+	}
+
+	/**
+	 * The Mailbox state to ask for changes since - or undefined, if all counts are needed.
+	 *
+	 * A node which appeared since the last sync got its count from its own, independent request:
+	 * a delta from our older state says nothing reliable about it, so everything is asked for once.
+	 *
+	 * @param mailboxes Mailbox id -> folder-tree node of this account, see counterNodes()
+	 */
+	private static counterDeltaState(sync: CounterSyncState, accountId: string,
+		mailboxes: Record<string, string>): string | undefined
+	{
+		const known = sync.mailboxes[accountId];
+		return known && Object.keys(mailboxes).every(id => known.has(id)) ? sync.states[accountId] : undefined;
+	}
+
+	/**
+	 * Let a request which changes messages bring the changed unread counters along, instead of
+	 * asking for them in a request of its own afterwards (requestCounterSync()) - every flag
+	 * change, move or delete would otherwise cost the JMAP server one or two further requests.
+	 *
+	 * The counter calls are optional calls of the batch (RetryableRequestOptions.optionalCalls):
+	 * should they fail, the batch still succeeds, just without counters. A change which worked
+	 * is never reported as failed because of them.
+	 *
+	 * Usage: add calls(t) to the batch, pass options, and hand all results to apply(). If there
+	 * is no batch to use, or apply() returns false, call requestCounterSync() instead.
+	 *
+	 * @return null if the counters can not come along: no real JMAP account, nothing synced yet
+	 *	to continue from, or not on the WebSocket (optional calls only exist there)
+	 */
+	private counterBatch(profileID: string, accountId: string): {
+		calls: (t: any) => Record<string, any>,
+		options: RetryableRequestOptions,
+		apply: (results: Record<string, any>) => boolean,
+	} | null
+	{
+		const sync = this.counterSync[profileID];
+		const sinceState = sync && MailJmap.counterDeltaState(sync, accountId, this.counterNodes(profileID)[accountId] ?? {});
+		if (!sinceState || this.tokens[profileID]?.isLocal !== false || this.clients[profileID]?.transport !== 'websocket')
+		{
+			return null;
+		}
+		const properties = ['id', 'unreadEmails'];
+		return {
+			calls: (t) =>
+			{
+				const counterChanges = t.Mailbox.changes({accountId, sinceState});
+				return {
+					counterChanges,
+					countersCreated: t.Mailbox.get({accountId, ids: counterChanges.$ref('/created'), properties}),
+					countersUpdated: t.Mailbox.get({accountId, ids: counterChanges.$ref('/updated'), properties}),
+				};
+			},
+			options: {optionalCalls: ['counterChanges', 'countersCreated', 'countersUpdated']},
+			apply: ({counterChanges, countersCreated, countersUpdated}) =>
+			{
+				// no (complete) answer, or the badges moved on from the state we asked about meanwhile
+				if (!counterChanges || !countersCreated || !countersUpdated || counterChanges.hasMoreChanges ||
+					sync.states[accountId] !== sinceState)
+				{
+					return false;
+				}
+				sync.states[accountId] = counterChanges.newState;
+				sync.finished = Date.now();
+				const mailboxes = this.counterNodes(profileID)[accountId] ?? {};
+				const status: Record<string, number> = {};
+				[...countersCreated.list, ...countersUpdated.list].forEach((mailbox) =>
+				{
+					if (mailboxes[mailbox.id])
+					{
+						status[mailboxes[mailbox.id]] = mailbox.unreadEmails || 0;
+					}
+				});
+				if (Object.keys(status).length)
+				{
+					this.app.setFolderStatus?.(status);
+				}
+				return true;
+			},
+		};
+	}
+
+	/**
+	 * Fetch the unread counts of one JMAP account: only the ones changed since $sinceState,
+	 * or all of them without one, or if the server can not tell what changed since then.
+	 *
+	 * @return state the Mailbox state the counts are from, counts unread emails by Mailbox id
+	 */
+	private async fetchCounters(client: JamWebSocketClient, accountId: string, sinceState?: string):
+		Promise<{ state: string, counts: Record<string, number> }>
+	{
+		const properties = ['id', 'unreadEmails'];
+		const counts: Record<string, number> = {};
+		const add = (list?: any[]) => (list || []).forEach(mailbox => counts[mailbox.id] = mailbox.unreadEmails || 0);
+		try
+		{
+			// more than a few rounds of "hasMoreChanges" are no small delta anymore
+			for (let round = 0; sinceState && round < 5; round++)
+			{
+				const [{changes, created, updated}] = await client.requestMany((t: any) =>
+				{
+					const changes = t.Mailbox.changes({accountId, sinceState});
+					return {
+						changes,
+						created: t.Mailbox.get({accountId, ids: changes.$ref('/created'), properties}),
+						updated: t.Mailbox.get({accountId, ids: changes.$ref('/updated'), properties}),
+					};
+				});
+				add(created?.list);
+				add(updated?.list);
+				sinceState = changes.newState;
+				if (!changes.hasMoreChanges)
+				{
+					return {state: sinceState, counts};
+				}
+			}
+		}
+		catch (e)
+		{
+			// "cannotCalculateChanges", or anything else going wrong with the delta:
+			// the full list below either works, or reports the real problem
+		}
+		const [{mailboxes}] = await client.requestMany((t: any) => ({
+			mailboxes: t.Mailbox.get({accountId, properties}),
+		}));
+		add(mailboxes.list);
+		return {state: mailboxes.state, counts};
 	}
 
 	/**
@@ -3618,6 +4008,44 @@ export class MailJmap
 		this.optimisticRows.delete(uid);
 		return markedAt !== undefined && Date.now() - markedAt < MailJmap.OPTIMISTIC_MAX_AGE ?
 			this.egw.dataGetUIDdata(uid)?.data ?? null : null;
+	}
+
+	/**
+	 * Does the list already show the message with exactly these keywords?
+	 *
+	 * A push about changed flags of a real JMAP account names all keywords the message has now.
+	 * For a change we made ourselves the row was patched before the server was even asked, so
+	 * the push tells nothing new: MailApp.push() then skips the row refresh, which would cost the
+	 * JMAP server an Email/get per flag change, per tab showing the folder.
+	 *
+	 * Compared as the flags a row is rendered from (keywordsToRowFlags()), as that is what both
+	 * a fetched and a locally patched row carry. Any doubt answers false, and the row is fetched.
+	 *
+	 * @param rowId row id as pushed, with or without the "mail::" prefix
+	 * @param keywords all keywords of the message, as pushed in acl.flags
+	 * @return false too for an IMAP account, or a message not in the list
+	 */
+	rowShowsKeywords(rowId: string, keywords: string[]): boolean
+	{
+		try
+		{
+			if (this.tokens[this.messageReference(rowId).profileID]?.isLocal !== false)
+			{
+				return false;
+			}
+			const shown = this.egw.dataGetUIDdata(this.toStorageUid(rowId))?.data?.flags;
+			if (!shown || !Array.isArray(keywords))
+			{
+				return false;
+			}
+			const pushed = this.keywordsToRowFlags(Object.fromEntries(keywords.map(keyword => [keyword, true]))).flags;
+			const set = (flags: Record<string, any>) => Object.keys(flags).filter(flag => flags[flag]).sort().join(' ');
+			return set(shown) === set(pushed);
+		}
+		catch (e)
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -7152,11 +7580,16 @@ export class MailJmap
 		{
 			args.mailboxId = decoded?.mailboxId ?? mailboxId;
 		}
+		// flags and moves change unread counters: the new ones come along with the answer
+		const counters = this.counterBatch(profileID, args.accountId);
+		let countersApplied = false;
 		try
 		{
-			const [{result}] = await this.clients[profileID].requestMany((t) => ({
+			const [{result, ...counterResults}] = await this.clients[profileID].requestMany((t) => ({
 				result: t.Email.set(args),
-			}));
+				...counters?.calls(t),
+			}), counters?.options);
+			countersApplied = !!counters?.apply(counterResults);
 			if (result?.notUpdated && Object.keys(result.notUpdated).length)
 			{
 				const fallback = describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages');
@@ -7174,6 +7607,14 @@ export class MailJmap
 			throw new JmapUserError(decoded
 				? describeSharedAccountError(this.egw, message, e)
 				: (message ?? this.egw.lang('Unable to connect to the mail server')));
+		}
+		finally
+		{
+			// no counters came along, or nothing came of it at all: ask for the real ones
+			if (!countersApplied)
+			{
+				this.requestCounterSync(profileID);
+			}
 		}
 	}
 
@@ -7430,6 +7871,11 @@ export class MailJmap
 			// tell a real "forbidden" apart from some other failure (eg. a stale target mailbox).
 			const fallback = e instanceof JmapUserError ? e.message : describeJmapError(e);
 			throw new JmapUserError(describeSharedAccountError(this.egw, fallback, e, (e as any)?.problems ?? []));
+		}
+		finally
+		{
+			// see updateKeywords()
+			this.requestCounterSync(profileID);
 		}
 		if (destroyOriginal)
 		{
@@ -9224,6 +9670,7 @@ export class MailJmap
 			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const decoded = MailJmap.decodeSharedMailboxId(mailboxId);
+		let countersApplied = false;
 		try
 		{
 			for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
@@ -9236,9 +9683,14 @@ export class MailJmap
 				{
 					args.mailboxId = decoded?.mailboxId ?? mailboxId;
 				}
-				const [{result}] = await this.clients[profileID].requestMany((t) => ({
+				// see updateKeywords()
+				const counters = this.counterBatch(profileID, args.accountId);
+				countersApplied = false;
+				const [{result, ...counterResults}] = await this.clients[profileID].requestMany((t) => ({
 					result: t.Email.set(args) as any,
-				}));
+					...counters?.calls(t),
+				}), counters?.options);
+				countersApplied = !!counters?.apply(counterResults);
 				if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
 				{
 					const fallback = describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages');
@@ -9256,6 +9708,14 @@ export class MailJmap
 			throw new JmapUserError(decoded
 				? describeSharedAccountError(this.egw, message, e)
 				: (message ?? this.egw.lang('Unable to connect to the mail server')));
+		}
+		finally
+		{
+			// see updateKeywords()
+			if (!countersApplied)
+			{
+				this.requestCounterSync(profileID);
+			}
 		}
 	}
 

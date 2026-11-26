@@ -464,6 +464,59 @@ describe("JamWebSocketClient.requestMany()", () =>
 		assert.deepEqual(error, [{type : "urn:ietf:params:jmap:error:invalidArguments"}]);
 	});
 
+	/**
+	 * RetryableRequestOptions.optionalCalls: a failing call riding along with the one that matters
+	 * (MailJmap.counterBatch(): unread counters fetched together with an Email/set) must not fail
+	 * the batch. Pass: the batch resolves, the wanted result is there, the failed optional calls
+	 * are undefined - while an error of a call NOT listed as optional still rejects as before.
+	 */
+	it("leaves a failed optional call out of the result instead of rejecting the batch", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const request = (optionalCalls : string[]) => client.requestMany((t : any) =>
+		{
+			const changes = t.Mailbox.changes({accountId : "acc1", sinceState : "too-old"});
+			return {
+				result : t.Email.set({accountId : "acc1", update : {e1 : {"keywords/$seen" : true}}}),
+				changes,
+				updated : t.Mailbox.get({accountId : "acc1", ids : changes.$ref("/updated")})
+			};
+		}, {optionalCalls});
+		const respond = async() =>
+		{
+			await flush();
+			const sentFrame = JSON.parse(socket.sent[socket.sent.length - 1]);
+			socket.simulateMessage({
+				"@type" : "Response",
+				requestId : sentFrame.id,
+				sessionState : "state1",
+				methodResponses : [
+					["Email/set", {updated : {e1 : null}}, "result"],
+					["error", {type : "cannotCalculateChanges"}, "changes"],
+					["error", {type : "invalidResultReference"}, "updated"]
+				]
+			});
+		};
+
+		const optional = request(["changes", "updated"]);
+		await respond();
+		const [result] = await optional;
+		assert.deepEqual(result, {result : {updated : {e1 : null}}});
+
+		const mandatory = request(["updated"]);
+		await respond();
+		const error : any = await mandatory.catch((e) => e);
+		assert.deepEqual(error, [{type : "cannotCalculateChanges"}]);
+	});
+
 	it("delegates to the inherited HTTP requestMany() when there is no websocket capability", async() =>
 	{
 		(globalThis as any).WebSocket = FakeWebSocket;
