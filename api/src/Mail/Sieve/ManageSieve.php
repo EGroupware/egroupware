@@ -93,4 +93,26 @@ class ManageSieve extends Horde\ManageSieve implements Connection
 				$this->_params['secure'] ?? false, "STARTTLS\r\n");
 		}
 	}
+
+	/**
+	 * Returns the list of scripts on the server.
+	 *
+	 * Horde\ManageSieve::listScripts() only returns the flat names array (its 2nd/3rd element,
+	 * the active script, comes from a separate internal _cmdListScripts() call instead) - normalize
+	 * here to the [names[], activeName, fullList[]] shape Jmap::listScripts() already returns and
+	 * the Connection interface documents, so callers reading index [0] as an array (Script::
+	 * retrieveRules(), Forward.php) don't get handed a bare script-name string instead. Found live
+	 * 2026-11-26: a regular, non-admin user activating the vacation notice on a standard
+	 * ManageSieve/dovecot account fataled in in_array() with "Argument #2 ($haystack) must be of
+	 * type array, string given" (ticket #128741).
+	 *
+	 * @throws \Horde\ManageSieve\Exception
+	 * @return array  [names[], activeName, []] - no richer per-script metadata available via ManageSieve
+	 */
+	public function listScripts()
+	{
+		[$scripts, $active] = $this->_cmdListScripts();
+
+		return [$scripts, $active, []];
+	}
 }
