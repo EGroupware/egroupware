@@ -1011,8 +1011,11 @@ export class MailApp extends EgwApp
 		const folder = acc_id+'::'+pushData.acl.folder;
 		this.push_active[acc_id] = true;
 
-		// update unseen counter in folder-tree (also for delete)
-		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
+		// update unseen counter in folder-tree (also for delete) - unless it's a real JMAP account,
+		// whose counters we fetch ourselves directly from the JMAP server (MailJmap.requestCounterSync()):
+		// a pushed one took the longer way, and could bring back an older value
+		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined' &&
+			!this.jmap?.countersManaged(acc_id))
 		{
 			const folder_id = {};
 			folder_id[folder] = pushData.acl.unseen;
@@ -1113,6 +1116,13 @@ export class MailApp extends EgwApp
 					{
 						pushData.type = 'delete';
 						return super.push(pushData);
+					}
+					// A real JMAP account pushes all keywords the message has now ("Flags"): nothing to
+					// fetch, if the row shows exactly these already - as it does for every change made
+					// in this window, which the server just reports back to us.
+					if (pushData.acl.event === 'Flags' && this.jmap?.rowShowsKeywords(id0, pushData.acl.flags))
+					{
+						break;
 					}
 					// fall through - a flag/keyword change is a plain in-place row refresh either way
 				case 'FlagsClear':
@@ -3381,7 +3391,7 @@ export class MailApp extends EgwApp
 		data['class'] = data['class'].split(' ')
 			.filter((className) => className != 'unseen' && className != 'recent').join(' ');
 		this.patchRow(rowId);
-		this.reduceCounterWithoutServerRoundtrip();
+		this.reduceCounterWithoutServerRoundtrip(rowId);
 
 		// A JMAP Email/get has no side effects, so persist $seen explicitly.  Non-JMAP rows
 		// fall back to the classic body request, which already marks the message read.
@@ -4704,11 +4714,57 @@ export class MailApp extends EgwApp
 	queueRefreshFolderList(_folders)
 	{
 		const self = this;
+		// The server has nothing to say about the folders of a real JMAP account
+		// (FolderHandler::setFolderStatus() returns right away for one), their counters come
+		// directly from the JMAP server instead - delayed like the request below, and only if
+		// nothing brought them meanwhile: the folder actions this is queued behind usually do
+		// (a flag change brings its counters along, switching folders syncs with the new list).
+		const queued = Date.now();
+		const jmapProfiles = new Set<string>();
+		_folders = (_folders || []).filter((folder) =>
+		{
+			const profileID = String(folder).split('::')[0];
+			if (!this.jmap?.countersManaged(profileID)) return true;
+			jmapProfiles.add(profileID);
+			return false;
+		});
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(() => {
+			jmapProfiles.forEach(profileID => this.jmap.requestCounterSync(profileID, queued));
+			if (!_folders.length)
+			{
+				self.unlockTree();
+				return;
+			}
 			egw.jsonq('mail.EGroupware\\Mail\\Ui.ajax_setFolderStatus',[_folders], () =>{self.unlockTree();});
 		}, 500);
+	}
+
+	/**
+	 * The loaded folder-tree nodes of one mail account, by the JMAP Mailbox id they stand for
+	 *
+	 * What MailJmap.requestCounterSync() needs to put an unread count on the right node. Read
+	 * from the tree itself each time, so a renamed, moved or freshly loaded folder is never missed.
+	 *
+	 * @param profileID
+	 * @return JMAP Mailbox id => id of the tree node ("profileID::path")
+	 */
+	folderNodesByJmapId(profileID: string): Record<string, string>
+	{
+		const ftree = this.et2?.getWidgetById(this.nm_index+'[foldertree]');
+		const nodes: Record<string, string> = {};
+		const collect = (items?: any[]) => (items || []).forEach((item) =>
+		{
+			const id = String(item.value ?? item.id ?? '');
+			if (item.jmapId && id.startsWith(profileID+'::'))
+			{
+				nodes[item.jmapId] = id;
+			}
+			collect(item.children);
+		});
+		collect(ftree?.select_options);
+		return nodes;
 	}
 
 	/**
@@ -5057,11 +5113,23 @@ export class MailApp extends EgwApp
 
 	/**
 	 * function to find (and reduce) unseen count from folder-name
+	 *
+	 * @param rowId row of the message just read. For a real JMAP account its own folder is
+	 *	reduced, which is not the selected one for a search over all folders - and the real
+	 *	counter follows right after the message got flagged (MailJmap.requestCounterSync()).
 	 */
-	reduceCounterWithoutServerRoundtrip()
+	reduceCounterWithoutServerRoundtrip(rowId?: string)
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		const _foldernode = ftree?.getSelectedItem();
+		let _foldernode = ftree?.getSelectedItem();
+		try
+		{
+			const reference = rowId ? this.jmap.messageReference(rowId) : null;
+			const node = reference && this.jmap.countersManaged(reference.profileID) ?
+				this.folderNodesByJmapId(reference.profileID)[reference.mailboxId] : null;
+			_foldernode = node && ftree.getNode(node) || _foldernode;
+		}
+		catch (e) { /* not a row we know the folder of: the selected one it is */ }
 		const counter = _foldernode?.badge;
 		let icounter = 0;
 		if (counter) icounter = parseInt(counter);

@@ -203,6 +203,17 @@ export class WebSocketClosedBeforeResponseError extends Error {}
 export interface RetryableRequestOptions extends RequestOptions
 {
 	retryIdempotentOnClose? : boolean;
+	/**
+	 * Keys of calls in the batch whose failure must not fail the batch: an "error" answer to one
+	 * of them is left out of the result (its key stays undefined), instead of rejecting everything.
+	 * For calls riding along with the one that matters, eg. MailJmap.counterBatch() fetching the
+	 * changed unread counters together with an Email/set - which must never be reported as failed,
+	 * just because the counters could not be read.
+	 *
+	 * WebSocket transport only: the inherited HTTP requestMany() knows nothing about it, and still
+	 * rejects for any error. Only add optional calls while `transport` is "websocket".
+	 */
+	optionalCalls?: string[];
 }
 
 export type JamWebSocketClientConfig = ClientConfig &
@@ -1008,7 +1019,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		await this.#acquireRequestSlot();
 		try
 		{
-			const {using = [], createdIds : createdIdsInput, retryIdempotentOnClose} = options;
+			const {using = [], createdIds : createdIdsInput, retryIdempotentOnClose, optionalCalls = []} = options;
 			const {methodCalls, methodNames} = buildRequestsFromDrafts(draftsFn);
 			const id = `R${this.#nextId++}`;
 			const frame : WebSocketRequestFrame =
@@ -1038,7 +1049,11 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 				throw e;
 			}
 
+			// see RetryableRequestOptions.optionalCalls: their errors neither reject, nor become a result
+			const isOptionalError = (invocation : Invocation) =>
+				optionalCalls.includes(invocation[2]) && getErrorFromInvocation(invocation) !== null;
 			const errors = response.methodResponses
+				.filter((invocation) => !isOptionalError(invocation))
 				.map((invocation) => getErrorFromInvocation(invocation))
 				.filter((error) : error is ProblemDetails => error !== null);
 			if (errors.length > 0)
@@ -1060,8 +1075,13 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			// unrequested extras, which no caller destructures by key anyway.
 			const requestedMethodByCallId = new Map(methodCalls.map(([method, , callId]) => [callId, method]));
 			const result : Record<string, any> = {};
-			for (const [method, data, callId] of response.methodResponses)
+			for (const invocation of response.methodResponses)
 			{
+				if (isOptionalError(invocation))
+				{
+					continue;
+				}
+				const [method, data, callId] = invocation;
 				if (!(callId in result) || requestedMethodByCallId.get(callId) === method)
 				{
 					result[callId] = data;
