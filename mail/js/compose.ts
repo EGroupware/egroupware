@@ -308,6 +308,8 @@ export class MailCompose
 			if (filemodeWidget.get_value() !== 'link')
 			{
 				filemodeWidget.set_value('link');
+				// set_value() fires no change event, but the onchange (checkSharingFilemode()) must run
+				filemodeWidget.dispatchEvent(new Event('change'));
 			}
 			// EGroupware's own deliberate, non-reversible auto-switch counts as "explicitly chosen"
 			// too - see explicitShareModeChosen's own docblock
@@ -530,6 +532,7 @@ export class MailCompose
 					forcedLink: true,
 				})), true);
 				this.recomputeFilemodeLock();
+				this.addAttachmentPlaceholder();
 				if (names.length)
 				{
 					this.egw.message(this.egw.lang(
@@ -2718,6 +2721,9 @@ export class MailCompose
 			// EGroupware's own deliberate auto-switch counts as "explicitly chosen" too - see
 			// explicitShareModeChosen's own docblock
 			this.explicitShareModeChosen = true;
+			// set_value() fires no change event, but the onchange (checkSharingFilemode()) must run:
+			// it updates the row icons and inserts the download placeholder
+			filemodeWidget?.dispatchEvent(new Event('change'));
 			this.egw.message(this.egw.lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', limitMb), 'warning');
 		}
 		else
