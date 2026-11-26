@@ -286,6 +286,8 @@ class addressbook_ui extends addressbook_bo
 			// use the state of the last session stored in the user prefs
 			if (($state = json_php_unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
 			{
+				// get_rows must always come from server-side widget content, never a user preference
+				unset($state['get_rows']);
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 			// Set main header
@@ -304,7 +306,10 @@ class addressbook_ui extends addressbook_bo
 
 		// Keep toolbar values
 		$content['main_header'] = $_content['main_header'];
-		$content['nm'] = array_merge($content['nm'], $_content['main_header']['toolbar'] ?? []);
+		$toolbar = $_content['main_header']['toolbar'] ?? [];
+		// get_rows must always come from server-side widget content, never a toolbar submission
+		unset($toolbar['get_rows']);
+		$content['nm'] = array_merge($content['nm'], $toolbar);
 
 		$sel_options['cat_id'] = array('' => lang('All categories'), '0' => lang('None'));
 
