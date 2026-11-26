@@ -541,6 +541,11 @@ class mail_sieve
 		return array(
 			'vacation' =>$vacation,
 			'aliases' => array_values($allAliases),
+			// set by Sieve\Jmap::retrieveRules()/Logic::retrieveRules() (via the already-wired
+			// $icServer->error reference) when reading the EXISTING script failed - a real
+			// read-failure must never look indistinguishable from "nothing configured yet"
+			// (found live 2026-11-26, Nordenham - see editVacation()'s own use of this)
+			'error' => $icServer->error ?? null,
 		);
 	}
 
@@ -617,6 +622,14 @@ class mail_sieve
 				$content['msg'] = lang('error').':'.lang('Serverside Vacationnotice (via Sieve) are not activated').'. '.
 					lang('Please contact your Administrator to validate if your Server supports Serverside Vacationmessages, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$icServer->ImapServerId);
 				$content['hideIfSieveDisabled']='mail_DisplayNone';
+			}
+			// a read failure (eg. a server-side bug) must never silently look like "nothing
+			// configured" - warn instead of staying quiet, same principle as the write-failure
+			// message further below (found live 2026-11-26, Nordenham)
+			elseif (!empty($vacRules['error']))
+			{
+				$content['msg'] = lang('Warning').': '.
+					lang('Could not read the existing vacation notice (%1) - showing defaults instead.', $vacRules['error']);
 			}
 			else
 			{

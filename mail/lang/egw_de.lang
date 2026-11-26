@@ -848,3 +848,5 @@ seen / write	mail	de	Gesehen / Schreiben
 this server ties the 'seen' and 'write' rights together - granting one grants both	mail	de	Dieser Server verknüpft die Rechte 'Gesehen' und 'Schreiben' - die Vergabe des einen vergibt automatisch auch das andere
 read & write	mail	de	Lesen & Schreiben
 allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).	mail	de	Erlaubt einem Benutzer das Postfach zu lesen und zu schreiben (dieser Server verknüpft das Merken von Gesehen/Ungesehen mit Schreibrechten).
+warning	mail	de	Warnung
+could not read the existing vacation notice (%1) - showing defaults instead.	mail	de	Die vorhandene Abwesenheitsnotiz konnte nicht gelesen werden (%1) - es werden Standardwerte angezeigt.

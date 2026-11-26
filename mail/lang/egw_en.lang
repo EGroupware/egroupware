@@ -859,3 +859,5 @@ seen / write	mail	en	Seen / Write
 this server ties the 'seen' and 'write' rights together - granting one grants both	mail	en	This server ties the 'Seen' and 'Write' rights together - granting one grants both
 read & write	mail	en	read & write
 allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).	mail	en	Allows a user to read and write the mailbox (this server ties keeping seen/unseen information to write access).
+warning	mail	en	Warning
+could not read the existing vacation notice (%1) - showing defaults instead.	mail	en	Could not read the existing vacation notice (%1) - showing defaults instead.

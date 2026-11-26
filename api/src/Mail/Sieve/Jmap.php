@@ -169,11 +169,25 @@ class Jmap implements Connection
 		}
 		$script = new Script($_scriptName);
 
+		// reset before the call below - $this->error is wired by Imap::__call()/newSieveConnection()
+		// as a reference into $icServer->error (the SAME property the write-failure path already
+		// surfaces to the admin, see mail_sieve::editVacation()), so a stale error from an earlier,
+		// unrelated call on this same connection must never linger and be misread as fresh.
+		$this->error = null;
 		try {
 			$script->retrieveRules($this);
 		}
 		catch (\Exception $e) {
-			unset($e);	// ignore not found script exception
+			// NOT silently ignored any more (found live 2026-11-26, Nordenham: getScript()'s own
+			// array_filter()/list-destructure bug threw "Script not found" HERE for any non-first
+			// script, which this catch swallowed completely - the admin vacation dialog then showed
+			// an empty/default vacation with NO indication anything had gone wrong, looking exactly
+			// like "nothing configured" instead of "failed to read what IS configured"). Still never
+			// let a read failure break the whole page (callers must keep working with whatever
+			// Script's own always-initialised empty defaults are), but log it and surface it via
+			// $this->error so mail_sieve::getVacation() can warn the admin instead of staying silent.
+			_egw_log_exception($e);
+			$this->error = $e->getMessage();
 		}
 		$this->script =& $script->script;
 		$this->rules =& $script->rules;
@@ -193,7 +207,16 @@ class Jmap implements Connection
 	 */
 	public function getScript($scriptname)
 	{
-		[$script] = array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname);
+		// array_filter() keeps the keys: [$script] = ... would only look at key 0 and miss a script,
+		// which is not the first one of the account - installScript()/removeScript() already got this
+		// fix (af05acf667, 2026-11-25), this third, identical call site was missed: getScript()
+		// silently threw "not found" for any non-first script, caught by retrieveRules()'s own
+		// "ignore not found" catch, so getVacation() always came back with an EMPTY vacation array -
+		// found live 2026-11-26 (Nordenham, account with 4 historical scripts, active one "EGW18"
+		// not first): the admin vacation dialog always showed status "Active" (the select's default
+		// when no value binds) and a generic site-wide default text instead of the real stored
+		// message, regardless of what was actually saved - the save itself was always correct.
+		$script = current(array_filter($this->listScripts()[2], fn($script) => $script['name'] == $scriptname)) ?: null;
 		if (empty($script))
 		{
 			throw new \Exception('Script '.$scriptname.' not found');
