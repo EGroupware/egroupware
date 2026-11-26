@@ -9,6 +9,7 @@
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {Et2Dialog} from '../../api/js/etemplate/Et2Dialog/Et2Dialog';
 import {trustedScript} from '../../api/js/jsapi/egw_trusted_types';
+import DOMPurify from '../../api/js/etemplate/Et2Image/dompurify-shim';
 // egw/app/framework are ambient globals (declare global {} in egw_global.d.ts, unconditionally
 // included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -81,13 +82,18 @@ interface NotifyRow
 }
 
 /**
- * Elements removed from a message: they run or load something, change the page or ask the user for input
+ * Elements DOMPurify allows by default, but a message must not contain: they ask the user for input or load something
  *
  * A <style> would apply to the whole window, eg. the dark mode of html notifications following the operating system,
  * kdots' dark theme styles them instead.
  */
-const FORBIDDEN_ELEMENTS = 'script,style,meta,base,link,form,input,button,textarea,select,option,iframe,frame,frameset,' +
-	'object,embed,applet,svg,math,audio,video,source,track,picture,template,dialog';
+const FORBIDDEN_ELEMENTS = ['style', 'form', 'input', 'button', 'textarea', 'select', 'option', 'optgroup', 'datalist',
+	'audio', 'video', 'source', 'track', 'picture', 'dialog'];
+
+/**
+ * Attributes DOMPurify allows by default, but which load something from another server
+ */
+const FORBIDDEN_ATTRIBUTES = ['background', 'srcset', 'ping', 'poster'];
 
 /**
  * Attributes of a linked entry, as rendered by the server (notifications_popup::render_links())
@@ -95,18 +101,20 @@ const FORBIDDEN_ELEMENTS = 'script,style,meta,base,link,form,input,button,textar
 const LINK_ATTRIBUTES = ['data-app', 'data-id', 'data-url', 'data-popup'];
 
 /**
- * Parse the html of a message and remove everything it must not do in our window
+ * Clean the html of a message from everything it must not do in our window
  *
  * A message contains content from whoever caused the notification, eg. the html description of a ticket
- * or the headers of a mail, so it is treated like the html of a foreign mail:
- * - no elements from FORBIDDEN_ELEMENTS and no event handlers
+ * or the headers of a mail, so it is treated like the html of a foreign mail.
+ *
+ * DOMPurify only keeps html known to be harmless: no scripts, event handlers, <meta>, <base> or frames.
+ * What it can not know about our popup is removed afterwards:
  * - no data attributes, they trigger our own click handlers,
  *   only the linked entries the server appends at the top level of the message keep theirs
  * - no images from other servers, they tell the server when and from where the message was read
  * - no styles loading something or taking the content out of the message
  * - links only to web or mail addresses, opening in a new window
  *
- * The message is parsed in a template: nothing is loaded or run, before it is cleaned.
+ * The cleaned message is parsed in a template: nothing is loaded, before the rules above are applied.
  *
  * @param _message html of the message
  * @return content to append to the popup
@@ -114,10 +122,12 @@ const LINK_ATTRIBUTES = ['data-app', 'data-id', 'data-url', 'data-popup'];
 export function sanitizeMessage(_message: string): DocumentFragment
 {
 	const template = document.createElement('template');
-	template.innerHTML = _message ?? '';
+	template.innerHTML = DOMPurify.sanitize(_message ?? '', {
+		USE_PROFILES: {html: true},	// no svg or mathml
+		FORBID_TAGS: FORBIDDEN_ELEMENTS,
+		FORBID_ATTR: FORBIDDEN_ATTRIBUTES,
+	});
 	const content = template.content;
-
-	content.querySelectorAll(FORBIDDEN_ELEMENTS).forEach((element) => element.remove());
 
 	content.querySelectorAll<HTMLElement>('*').forEach((element) =>
 	{
@@ -125,8 +135,7 @@ export function sanitizeMessage(_message: string): DocumentFragment
 		for(const attribute of Array.from(element.attributes))
 		{
 			const name = attribute.name.toLowerCase();
-			if(name.startsWith('on') || ['background', 'srcset', 'ping', 'formaction', 'srcdoc'].includes(name) ||
-				name.startsWith('data-') && !(linkedEntry && LINK_ATTRIBUTES.includes(name)))
+			if(name.startsWith('data-') && !(linkedEntry && LINK_ATTRIBUTES.includes(name)))
 			{
 				element.removeAttribute(attribute.name);
 			}
