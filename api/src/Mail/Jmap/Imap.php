@@ -1417,6 +1417,43 @@ class Imap extends Jmap\Base
 	const IMAP_TIMEOUT = 600;
 
 	/**
+	 * Whether the real server behind an already-connected IMAP client is genuinely Stalwart -
+	 * via the RFC 2971 ID command's "name" field, checked AFTER login/authentication (confirmed
+	 * live 2026-11-26 against mail.egroupware.org:993, sysop@bb-trunk.egroupware.de: the ID
+	 * response is {name: "Stalwart", version: ..., vendor: "Stalwart Labs LLC", ...}).
+	 *
+	 * Deliberately NOT based on how the account is configured (acc_imap_type) or which host it
+	 * connects to - a classic-IMAP-configured account can still be Stalwart underneath (eg. a
+	 * domain migrated to Stalwart but never reconfigured to the direct-JMAP account type), and
+	 * mail.egroupware.org's own Dovecot director only routes a connection to its real backend
+	 * (classic Dovecot, or Stalwart for a migrated domain) AFTER login - its own pre-auth
+	 * CAPABILITY never reveals this, only the post-login one does, which is why this must run
+	 * here (applyCondition()'s only caller, via emailQuery(), always calls this on an already-
+	 * authenticated $imap) rather than any earlier, pre-login point.
+	 *
+	 * Used by applyCondition() to decide whether to leave a literal "*" in a text-search term, or
+	 * strip it - see that method's own docblock for the regression this fixes.
+	 *
+	 * Horde caches the ID response for the lifetime of the connection (Socket::_getID()), and
+	 * imapServer() itself caches connections per request, so this costs at most one small extra
+	 * IMAP round trip per request, never per search.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap an already-connected (logged in) IMAP client
+	 */
+	public static function isStalwartServer(\Horde_Imap_Client_Socket $imap) : bool
+	{
+		try
+		{
+			return ($imap->getID()['name'] ?? null) === 'Stalwart';
+		}
+		// ID extension not supported at all - definitely not Stalwart, which always advertises it
+		catch (\Throwable $e)
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * Translate an EGroupware-canonical "/"-joined folder path to the account's real IMAP mailbox name
 	 *
 	 * With $calledFor set, the path is resolved under the impersonated user's own mailbox
@@ -1716,7 +1753,7 @@ class Imap extends Jmap\Base
 
 		$mailbox = self::hordeMailbox($imap, $folder);
 
-		$query = self::filterToQuery($filter);
+		$query = self::filterToQuery($filter, false, self::isStalwartServer($imap));
 		// JMAP never exposes messages with the IMAP \Deleted flag (RFC 8621 §4.1.1) - match that
 		$query->flag(\Horde_Imap_Client::FLAG_DELETED, false);
 
@@ -1794,9 +1831,10 @@ class Imap extends Jmap\Base
 	 *
 	 * @param array $filter
 	 * @param bool $negate
+	 * @param bool $isStalwart see applyCondition()'s docblock
 	 * @return \Horde_Imap_Client_Search_Query
 	 */
-	public static function filterToQuery(array $filter, bool $negate=false) : \Horde_Imap_Client_Search_Query
+	public static function filterToQuery(array $filter, bool $negate=false, bool $isStalwart=false) : \Horde_Imap_Client_Search_Query
 	{
 		$query = new \Horde_Imap_Client_Search_Query();
 		// Without an explicit charset, Horde defaults header/text search terms to US-ASCII-only
@@ -1817,7 +1855,7 @@ class Imap extends Jmap\Base
 			$effectiveAnd = $negate ? !$isAnd : $isAnd;
 			foreach ((array)$filter['conditions'] as $condition)
 			{
-				$sub = self::filterToQuery((array)$condition, $negate);
+				$sub = self::filterToQuery((array)$condition, $negate, $isStalwart);
 				$effectiveAnd ? $query->andSearch($sub) : $query->orSearch($sub);
 			}
 			return $query;
@@ -1825,21 +1863,41 @@ class Imap extends Jmap\Base
 
 		foreach ($filter as $key => $value)
 		{
-			self::applyCondition($query, (string)$key, $value, $negate);
+			self::applyCondition($query, (string)$key, $value, $negate, $isStalwart);
 		}
 		return $query;
 	}
 
+	/** Leaf filter keys carrying free-text search terms - see applyCondition()'s docblock */
+	const TEXT_SEARCH_KEYS = ['subject', 'from', 'to', 'cc', 'body', 'text'];
+
 	/**
 	 * Apply a single leaf filter condition (as sent by MailJmap.buildFilter()) to a search query
+	 *
+	 * MailJmap.prefixTerm() (mail/js/jmap.ts) appends a "*" to many search words client-side (and
+	 * a user can type their own "*"/"?") - Stalwart's full-text search treats that as an explicit
+	 * wildcard (prefix/substring/single-char match), but that's a Stalwart-only convention: IMAP
+	 * SEARCH itself has no wildcard syntax at all, so a classic Dovecot server (or anything else
+	 * on the other end of this shim) matches it as a LITERAL "*" character and finds nothing
+	 * (found live 2026-11-26 - every search on a plain-IMAP/shim account started failing once that
+	 * client-side suffix shipped). Stripped here instead of client-side: only the shim, which
+	 * already holds the live, authenticated connection, can tell which kind of server it's really
+	 * talking to (isStalwartServer()) - not derivable from how the account is configured, since a
+	 * classic-IMAP-configured account can still be Stalwart underneath, and mail.egroupware.org's
+	 * own Dovecot director only decides which backend it's actually proxying to AFTER login.
 	 *
 	 * @param \Horde_Imap_Client_Search_Query $query
 	 * @param string $key
 	 * @param mixed $value
 	 * @param bool $not
+	 * @param bool $isStalwart from isStalwartServer() - whether to leave a literal "*" alone
 	 */
-	public static function applyCondition(\Horde_Imap_Client_Search_Query $query, string $key, $value, bool $not) : void
+	public static function applyCondition(\Horde_Imap_Client_Search_Query $query, string $key, $value, bool $not, bool $isStalwart=false) : void
 	{
+		if (!$isStalwart && in_array($key, self::TEXT_SEARCH_KEYS, true))
+		{
+			$value = str_replace('*', '', (string)$value);
+		}
 		switch ($key)
 		{
 			case 'subject':
