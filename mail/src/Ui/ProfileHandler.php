@@ -97,20 +97,42 @@ class ProfileHandler
 					|| $imapServer->hasCapability('THREAD=REFERENCES')
 					|| $imapServer->hasCapability('THREAD=REFS'));
 				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
-				// account config only (no IMAP round-trip) when acc_folder_trash IS configured -
-				// good enough for MailJmap.deleteMessages()'s move-to-trash resolution and the
-				// "empty trash" fast path. ONLY when it's NOT configured (found live, help forum
-				// "26.9.20260928, Mail werden nicht gelöscht": a bare "Trash" guess here broke an
-				// account using Dovecot's own personal-namespace-prefix convention, eg.
-				// "INBOX/Trash" - admin_mail's own wizard auto-populates acc_folder_trash from a
-				// real detection at account-SETUP time, so this only ever hits a pre-existing/
-				// legacy account never run back through it) does this pay for
-				// Mail::getTrashFolder()'s own full special-use/namespace-prefix-aware detection
-				// (and possible folder auto-creation, same as the classic UI already did) -
-				// everyone else keeps the original, cheap, no-round-trip path unchanged.
-				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?:
-					($local ? self::resolveUnconfiguredTrashFolder((int)$resolvedID) : 'Trash');
-				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
+				// account config only (no extra round-trip beyond the translation below) when
+				// acc_folder_trash IS configured - good enough for MailJmap.deleteMessages()'s
+				// move-to-trash resolution and the "empty trash" fast path. ONLY when it's NOT
+				// configured (found live, help forum "26.9.20260928, Mail werden nicht gelöscht":
+				// a bare "Trash" guess here broke an account using Dovecot's own personal-
+				// namespace-prefix convention, eg. "INBOX/Trash" - admin_mail's own wizard
+				// auto-populates acc_folder_trash from a real detection at account-SETUP time, so
+				// this only ever hits a pre-existing/legacy account never run back through it)
+				// does this pay for Mail::getTrashFolder()'s own full special-use/namespace-
+				// prefix-aware detection (and possible folder auto-creation, same as the classic
+				// UI already did) - everyone else keeps the original, cheap, no-round-trip path
+				// unchanged.
+				//
+				// canonicalFolderPath() below: acc_folder_trash/_junk (both admin_mail::
+				// mailboxes()'s own select-options AND Mail::getTrashFolder()'s fallback) are
+				// stored/returned as the REAL raw IMAP mailbox name (the server's own delimiter,
+				// eg. "." - NOT necessarily "/"), but trashFolder/junkFolder's own documented
+				// contract (see JmapToken, mail/js/jmap.ts) is the EGroupware-canonical "/"-joined
+				// path MailJmap.mailboxId() resolves one segment at a time - a mismatch previously
+				// MASKED only because EGroupware's own hosted Dovecot (and most modern Dovecot
+				// defaults) already use "/" as the delimiter, making the missing translation a
+				// no-op there. Found live 2026-11-26, ticket #128701 (a real external IMAP account
+				// using Dovecot's classic "." delimiter, acc_folder_trash="INBOX.Trash"): deleting
+				// a message via the context menu, the trash toolbar icon, or any other
+				// deleteMessages()/moveAllMatching() path all failed "Folder 'INBOX.Trash' not
+				// found" - mailboxId() split that raw value on "/" into one bogus single segment
+				// instead of ["INBOX", "Trash"], which correctly matched no top-level mailbox.
+				// Real-JMAP (Stalwart) accounts are unaffected - admin_mail::jmapMailboxes() stores
+				// the JMAP mailbox's own bare `name` there, never a delimited raw IMAP name.
+				$bootstrap['trashFolder'] = $local
+					? self::canonicalFolderPath($imapServer, $imapServer->acc_folder_trash ?:
+						self::resolveUnconfiguredTrashFolder((int)$resolvedID))
+					: ($imapServer->acc_folder_trash ?: 'Trash');
+				$bootstrap['junkFolder'] = $local
+					? self::canonicalFolderPath($imapServer, $imapServer->acc_folder_junk)
+					: ($imapServer->acc_folder_junk ?: null);
 					// null -> client falls back to role='sent', same convention as junkFolder above.
 					// Found live (help forum "sent mail going to Send folder instead of the defined
 					// folder"): MailJmap.resolveComposeContext() always used role='sent' unconditionally,
@@ -190,6 +212,38 @@ class ProfileHandler
 			error_log(__METHOD__.'() failed to detect the real Trash folder for profile '.
 				$profileID.': '.$e->getMessage());
 			return 'Trash';
+		}
+	}
+
+	/**
+	 * Translate a local/shim account's raw configured folder name (acc_folder_trash/_junk, as
+	 * stored by admin_mail::mailboxes() or returned by Mail::getTrashFolder() - the server's OWN
+	 * real IMAP mailbox name, using WHATEVER delimiter that server reports, eg. "." - see
+	 * jmapBootstrap()'s own call-site docblock) to the EGroupware-canonical "/"-joined path
+	 * trashFolder/junkFolder's documented contract promises the client.
+	 *
+	 * Never throws - a connection hiccup degrades to the raw name unchanged, same as this always
+	 * behaved before this translation existed (still correct whenever the server's own delimiter
+	 * already is "/", the common case this masked the gap for).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imapServer local/shim account's own connection
+	 * @param string|null $rawName acc_folder_trash/_junk as configured/detected (real IMAP name),
+	 *  or null/'' if unconfigured
+	 * @return string|null null if $rawName is empty, else the canonical "/"-joined path
+	 */
+	private static function canonicalFolderPath(\Horde_Imap_Client_Socket $imapServer, ?string $rawName) : ?string
+	{
+		if (!$rawName)
+		{
+			return null;
+		}
+		try
+		{
+			return Mail\Jmap\Imap::canonicalPath($imapServer, $rawName);
+		}
+		catch (\Throwable $e)
+		{
+			return $rawName;
 		}
 	}
 
