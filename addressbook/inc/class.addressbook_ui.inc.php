@@ -2097,6 +2097,16 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
+	 * Column filters get_rows() searches by, which it sets itself from the standard filters: the
+	 * category from cat_id, owner and private from the addressbook in filter, list from the
+	 * distribution list in filter2, and account_id from the preference to hide accounts.
+	 *
+	 * They are only given to the search, and never part of the query: that goes back to the client
+	 * with the list, which would take them for filters of their own.
+	 */
+	const SEARCH_COL_FILTERS = ['cat_id', 'owner', 'private', 'list', 'account_id'];
+
+	/**
 	 * rows callback for index nextmatch
 	 *
 	 * @internal
@@ -2108,6 +2118,12 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
+		// self::SEARCH_COL_FILTERS are no filters the client can set: a copy it sends, eg. from a
+		// favorite saved with one, is ignored
+		if (is_array($query['col_filter'] ?? null))
+		{
+			$query['col_filter'] = array_diff_key($query['col_filter'], array_flip(self::SEARCH_COL_FILTERS));
+		}
 		$what = str_replace('addressbook.', '', $_GET['template'] ?? $query['main-template'] ?? 'index');
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
@@ -2214,43 +2230,28 @@ class addressbook_ui extends addressbook_bo
 		}
 		unset($old_state);
 
+		// column filters for the search only, see self::SEARCH_COL_FILTERS
+		$search_filter = [];
 		if ((string)$query['cat_id'] != '')
 		{
-			$query['col_filter']['cat_id'] = $query['cat_id'] ? $query['cat_id'] : null;
-		}
-		else
-		{
-			unset($query['col_filter']['cat_id']);
+			$search_filter['cat_id'] = $query['cat_id'] ? $query['cat_id'] : null;
 		}
 		if ((string)$query['filter'] !== '')	// not all addressbooks
 		{
-			$query['col_filter']['owner'] = (string) (int) $query['filter'];
+			$search_filter['owner'] = (string) (int) $query['filter'];
 
 			if ($this->private_addressbook)
 			{
-				$query['col_filter']['private'] = substr($query['filter'],-1) == 'p' ? 1 : 0;
+				$search_filter['private'] = substr($query['filter'],-1) == 'p' ? 1 : 0;
 			}
-		}
-		else
-		{
-			unset($query['col_filter']['owner']);
-			unset($query['col_filter']['private']);
 		}
 		if ((int)$query['filter2'])	// not no distribution list
 		{
-			$query['col_filter']['list'] = (string) (int) $query['filter2'];
-		}
-		else
-		{
-			unset($query['col_filter']['list']);
+			$search_filter['list'] = (string) (int) $query['filter2'];
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '1')
 		{
-			$query['col_filter']['account_id'] = null;
-		}
-		else
-		{
-			unset($query['col_filter']['account_id']);
+			$search_filter['account_id'] = null;
 		}
 
 		// all backends allow now at least to use groups as distribution lists
@@ -2260,7 +2261,12 @@ class addressbook_ui extends addressbook_bo
 		if (isset($this->grouped_views[(string) $query['grouped_view']]) && !$query['col_filter']['parent_id'])
 		{
 			$query['grouped_view_label'] = '';
-			$rows = $this->get_grouped_rows($query);
+			// the grouped views search by the same filters: they get a query holding them, of
+			// which everything but the column filters is taken back
+			$search = ['col_filter' => array_merge((array)$query['col_filter'], $search_filter)] + $query;
+			$rows = $this->get_grouped_rows($search);
+			unset($query['col_filter']['parent_id']);
+			$query = ['col_filter' => $query['col_filter']] + $search;
 		}
 		else	// contacts view
 		{
@@ -2340,12 +2346,12 @@ class addressbook_ui extends addressbook_bo
 				if (!in_array($query['order'], $no_letter_search) && substr($query['order'], 0, 1) == '#')
 				{
 					// custom field: carry name/value as their own validated parts, not a spliced string
-					$query['col_filter'][] = new Api\Db\CfLetterSearchFragment($GLOBALS['egw']->db, substr($query['order'], 1),
+					$search_filter[] = new Api\Db\CfLetterSearchFragment($GLOBALS['egw']->db, substr($query['order'], 1),
 						$query['searchletter'].'%');
 				}
 				else
 				{
-					$query['col_filter'][] = Api\Db\SqlFragment::raw((in_array($query['order'],$no_letter_search) ? 'org_name' : 'egw_addressbook.'.$query['order']).' '.
+					$search_filter[] = Api\Db\SqlFragment::raw((in_array($query['order'],$no_letter_search) ? 'org_name' : 'egw_addressbook.'.$query['order']).' '.
 						$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%'));
 				}
 			}
@@ -2377,7 +2383,7 @@ class addressbook_ui extends addressbook_bo
 				$criteria = (isset($query['search_type'])?$query['search_type'].':':'').$query['search'];
 			}
 			$rows = parent::search($criteria, $id_only, $order, $extracols, $wildcard,false, $op,
-				[(int)$query['start'], (int)$query['num_rows']], $query['col_filter']);
+				[(int)$query['start'], (int)$query['num_rows']], array_merge((array)$query['col_filter'], $search_filter));
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields
 			$available_distib_lists=$this->get_lists(Acl::READ);

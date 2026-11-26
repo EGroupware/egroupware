@@ -1613,6 +1613,14 @@ class AddressbookApp extends EgwApp
 		{
 			state.state.advanced_search = false;
 		}
+		// A favorite can hold column filters the server sets itself from the addressbook,
+		// distribution list and category: they are no filters of their own
+		if(state.state.col_filter && typeof state.state.col_filter === 'object' && !Array.isArray(state.state.col_filter))
+		{
+			const col_filter = {...state.state.col_filter};
+			['cat_id', 'owner', 'private', 'list', 'account_id'].forEach(name => delete col_filter[name]);
+			state = {...state, state: {...state.state, col_filter: col_filter}};
+		}
 		return super.setState(state);
 	}
 
