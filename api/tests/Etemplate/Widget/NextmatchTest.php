@@ -621,24 +621,96 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	}
 
 	/**
-	 * A generated filter-template is made from a template file, which for a mobile device is not the
-	 * one the rows are shown with: its filter-headers are read from that file, of the template
-	 * asked for or - if the file has none of that name - of all of it.
+	 * Fetch rows of a nextmatch of the test template, and return what was logged about its filters
+	 *
+	 * @param string $nm id of the nextmatch
+	 * @param array $filters filters the client sends
+	 * @return string lines logged about the filters
 	 */
-	public function testFilterHeadersAreReadFromATemplateFile()
+	private function enforcedFilters(string $nm, array $filters) : string
 	{
-		$this->templateRequest(array('filter_nm' => array('get_rows' => __CLASS__.'::mock_get_rows', 'num_rows' => 0)));
-		$method = new \ReflectionMethod(Nextmatch::class, 'filterHeadersOfFile');
-		$file = EGW_SERVER_ROOT.'/api/templates/test/nextmatch_test.xet';
-		$ids = static fn(array $headers) => array_map(static fn($widget) => $widget->type.'#'.$widget->id, $headers);
+		$exec_id = $this->templateRequest(array($nm => array('get_rows' => __CLASS__.'::mock_get_rows', 'num_rows' => 0)));
+		self::$mock_get_rows_params = null;
+		$log = tempnam(sys_get_temp_dir(), 'nm_report');
+		$old_log = ini_set('error_log', $log);
+		$GLOBALS['egw_info']['server']['nm_filter_validation'] = 'enforce';
+		try
+		{
+			Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), $filters, $nm);
+		}
+		finally
+		{
+			unset($GLOBALS['egw_info']['server']['nm_filter_validation']);
+			ini_set('error_log', (string)$old_log);
+			$lines = (string)file_get_contents($log);
+			unlink($log);
+		}
+		return $lines;
+	}
 
-		$expected = array('et2-nextmatch-header-filter#status', 'et2-nextmatch-header-custom#country', 'et2-nextmatch-header-entry#contact');
-		$this->assertSame($expected, $ids($method->invoke(null, $file, 'api.nextmatch_test.rows')));
-		$this->assertSame($expected, $ids($method->invoke(null, $file, 'api.nextmatch_test.no_such_template')));
-		$this->assertSame(array(), $method->invoke(null, $file.'.missing', 'api.nextmatch_test.rows'));
+	/**
+	 * A nextmatch without filter-template of its own is validated with the widgets of the template
+	 * generated for it, the very one the client shows: a widget for each filter-header of the columns,
+	 * and the standard filters with the widget they are given.
+	 */
+	public function testFiltersAreValidatedByTheGeneratedFilterTemplate()
+	{
+		$url = '/egroupware/api/filter-template.php/api/templates/test/nextmatch_test.xet?1&template=api.nextmatch_test.rows'.
+			'&filter=Filter&filter2=Lists&filter2_widget=et2-tree-dropdown&cat_id=Category';
+		$template = Nextmatch\FilterTemplate::widgets($url);
+		$this->assertNotNull($template, 'no template generated for '.$url);
+		// a template name with an underscore is not accepted as "template", so all of the file is used
+		$this->assertSame('api.filter', $template->id);
 
-		// reading the file must not replace the templates already loaded
-		$this->assertNotNull(Etemplate\Widget\Template::instance('api.nextmatch_test.rows', quiet: true));
+		$widgets = array();
+		$template->run(static function($cname, $expand, $widget) use (&$widgets)
+		{
+			if ($widget->id) $widgets[$widget->id] = $widget->type;
+		}, array('', array()));
+		foreach(array(
+			'filter'              => 'et2-select',
+			'filter2'             => 'tree-dropdown',
+			'cat_id'              => 'et2-select-cat',
+			'col_filter[status]'  => 'et2-select',
+			'col_filter[country]' => 'et2-select-country',
+			'col_filter[contact]' => 'et2-link-entry',
+		) as $id => $type)
+		{
+			$this->assertSame($type, $widgets[$id] ?? null, "widget for $id");
+		}
+		// generated for the call, not kept with the templates read from files
+		$this->assertFalse(Etemplate\Widget\Template::instance('api.filter', quiet: true));
+		$this->assertNull(Nextmatch\FilterTemplate::widgets('/egroupware/api/filter-template.php/api/templates/test/no_such_file.xet?1'));
+		$this->assertNull(Nextmatch\FilterTemplate::widgets('/egroupware/api/filter-template.php/api/templates/../../header.inc.xet'));
+
+		// the nextmatch uses them
+		$lines = $this->enforcedFilters('gen_nm', array('col_filter' => array('country' => 'DE', 'nowhere' => 'x')));
+		$this->assertSame(array('country' => 'DE'), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[nowhere\]="x": no widget validates it/', $lines);
+
+		$lines = $this->enforcedFilters('gen_nm', array('col_filter' => array('country' => 'not-a-country')));
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[country\]="not-a-country": rejected by et2-select-country/', $lines);
+	}
+
+	/**
+	 * An application with a filter-template of its own is validated with that one, however the
+	 * nextmatch gets to it: named by the nextmatch, or found by the name of the rows-template.
+	 */
+	public function testFiltersAreValidatedByTheFilterTemplateOfTheApplication()
+	{
+		// named by the filterTemplate attribute
+		$this->enforcedFilters('filter_nm', array('col_filter' => array('type' => 'note')));
+		$this->assertSame(array('type' => 'note'), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->enforcedFilters('filter_nm', array('col_filter' => array('type' => 'bogus')));
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+
+		// "api.nextmatch_conv.filter" for the rows-template "api.nextmatch_conv.rows"
+		$this->enforcedFilters('conv_nm', array('col_filter' => array('kind' => 'small')));
+		$this->assertSame(array('kind' => 'small'), self::$mock_get_rows_params['col_filter'] ?? null);
+		$lines = $this->enforcedFilters('conv_nm', array('col_filter' => array('kind' => 'huge')));
+		$this->assertSame(array(), self::$mock_get_rows_params['col_filter'] ?? null);
+		$this->assertMatchesRegularExpression('/dropped: .* col_filter\[kind\]="huge": rejected by et2-select/', $lines);
 	}
 
 	/**

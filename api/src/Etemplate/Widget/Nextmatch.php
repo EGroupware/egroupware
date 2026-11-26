@@ -2170,9 +2170,9 @@ class Nextmatch extends Etemplate\Widget
 	 * Widgets able to validate the filters of this nextmatch
 	 *
 	 * They come from the filter-template, from the widgets inside the nextmatch, which it shows
-	 * in its header or footer slot, and from the filter-headers of the rows-template. For a
-	 * filter-template generated from the rows-template, the widgets it would contain are built
-	 * here: one for each standard filter it shows, and the one each filter-header becomes in it.
+	 * in its header or footer slot, and from the filter-headers of the rows-template. The
+	 * filter-template is the one of the application, or the one generated from the rows-template
+	 * by Nextmatch\FilterTemplate: the very template the client shows the filters with.
 	 *
 	 * @param string $form_name full name of this nextmatch
 	 * @param array $content content as given to validate()
@@ -2225,32 +2225,15 @@ class Nextmatch extends Etemplate\Widget
 			}
 		};
 
-		if (is_string($resolved) && str_contains($resolved, '/api/filter-template.php'))
+		// A generated filter-template is the one the client shows: its widgets are the filters. It
+		// has a widget for each filter-header of the columns, made from the template file it names.
+		$generated = is_string($resolved) && str_contains($resolved, '/api/filter-template.php') ?
+			Nextmatch\FilterTemplate::widgets($resolved) : null;
+		if ($generated)
 		{
-			// generated: it shows the standard filters named in its url
-			parse_str((string)parse_url($resolved, PHP_URL_QUERY), $query);
-			foreach(self::STANDARD_FILTERS as $name)
-			{
-				if (isset($query[$name]))
-				{
-					// the widget the generator uses for the filter
-					$type = $name === 'cat_id' && empty($query['cat_is_select']) ? 'et2-select-cat' : 'et2-select';
-					if ($type === 'et2-select' && is_string($query[$name.'_widget'] ?? null) &&
-						preg_match('/^et2-[a-z-]+$/', $query[$name.'_widget']))
-					{
-						$type = $query[$name.'_widget'];
-					}
-					$candidates[$name][] = [self::factory($type, "<$type id=\"$name\"/>", $name), $form_name, $expand];
-				}
-			}
-			// with the filter it also shows the date-range of the application: "$app.$rest.dates"
-			if (isset($query['filter']) &&
-				preg_match('#/api/filter-template\.php/([^/]+)/templates/[^/]+/([^/?]+)\.xet#', $resolved, $matches) &&
-				($dates = Template::instance($matches[1].'.'.$matches[2].'.dates', quiet: true)))
-			{
-				$dates->run($collect, [$form_name, $expand]);
-			}
+			$generated->run($collect, [$form_name, $expand]);
 		}
+		// a filter-template of the application
 		elseif ($tpl)
 		{
 			$tpl->run($collect, [$form_name, $expand]);
@@ -2262,52 +2245,41 @@ class Nextmatch extends Etemplate\Widget
 			$child->run($collect, [$form_name, $expand]);
 		}
 
-		// filter-headers of the rows-template
+		// Filter-headers of the rows-template, where the filter-template is not generated from them:
+		// an application can filter by a column, without its own filter-template having a widget for it.
 		$rows_template = $content_value['template'] ?? $this->attrs['template'] ?? $this->attrs['options'] ?? null;
-		$headers = [];
-		if ($rows_template && is_string($rows_template) && ($tpl = Template::instance($rows_template, quiet: true)))
-		{
-			$headers = self::filterHeaders($tpl);
-		}
-		// A generated filter-template is made from the file named in its url, which is another one
-		// than the rows-template shown, eg. for a mobile device the one of the desktop: it offers
-		// the filter-headers of that file.
-		if (is_string($resolved) && is_string($rows_template) &&
-			preg_match('#/api/filter-template\.php(/[^/]+/templates/[^/]+/[^/?]+\.xet)#', $resolved, $matches))
-		{
-			$headers = array_merge($headers, self::filterHeadersOfFile(Template::rel2path($matches[1]), $rows_template));
-		}
-		if ($headers)
+		if (!$generated && $rows_template && is_string($rows_template) && ($rows = Template::instance($rows_template, quiet: true)))
 		{
 			$col_filter = self::form_name($form_name, 'col_filter');
-			foreach($headers as $widget)
+			foreach(self::filterHeaders($rows) as $header)
 			{
+				if (!$header->id) continue;
+
 				// the application can give a filter-header another type for the request
-				preg_match('/^(?:et2-)?nextmatch-(.+)$/', is_string($widget->attrs['type'] ?? null) &&
-					preg_match('/^(et2-)?nextmatch-[a-z-]+$/', $widget->attrs['type']) ? $widget->attrs['type'] : $widget->type, $matches);
-				if (in_array($matches[1], ['customfields', 'header-customfields']))
+				preg_match('/^(?:et2-)?nextmatch-(.+)$/', is_string($header->attrs['type'] ?? null) &&
+					preg_match('/^(et2-)?nextmatch-[a-z-]+$/', $header->attrs['type']) ? $header->attrs['type'] : $header->type, $matches);
+
+				// the widget the filter-header becomes in a generated filter-template
+				$attrs = array_filter($header->attrs, static fn($val, $attr) => is_scalar($val) &&
+					preg_match('/^[a-z_][a-z0-9_]*$/i', (string)$attr) &&
+					!($attr === 'type' && preg_match('/^(et2-)?nextmatch-/', (string)$val)), ARRAY_FILTER_USE_BOTH);
+				[$type, $attrs] = Nextmatch\FilterTemplate::headerWidget($matches[1], ['id' => $header->id]+$attrs);
+
+				// a plain filter-header is a selectbox itself, with the options it has in the template
+				if ($type === 'et2-select' && !in_array($matches[1], ['customfilter', 'header-custom', 'records-field']))
 				{
-					$candidates['col_filter[#]'] = [];
+					$candidates["col_filter[$header->id]"][] = [$header, $col_filter, $expand];
 					continue;
 				}
-				if (!$widget->id) continue;
-
-				if (($type = self::filterHeaderWidgetType($matches[1], $widget->attrs)))
+				$xml = "<$type";
+				foreach($attrs as $attr => $val)
 				{
-					$xml = "<$type";
-					foreach(['id' => $widget->id]+$widget->attrs as $attr => $val)
-					{
-						if (is_scalar($val) && !in_array($attr, ['type', 'widgetType', 'widget_type', 'options', 'class']) &&
-							preg_match('/^[a-z_][a-z0-9_]*$/i', $attr))
-						{
-							$xml .= ' '.$attr.'="'.htmlspecialchars((string)$val, ENT_XML1|ENT_QUOTES, 'UTF-8').'"';
-						}
-					}
-					$widget = self::factory($type, $xml.'/>', $widget->id);
-					// a type the application set for the filter-header's id is applied to this widget too
-					$widget->attrs['type'] = $type;
+					$xml .= ' '.$attr.'="'.htmlspecialchars((string)$val, ENT_XML1|ENT_QUOTES, 'UTF-8').'"';
 				}
-				$candidates["col_filter[$widget->id]"][] = [$widget, $col_filter, $expand];
+				$widget = self::factory($type, $xml.'/>', $attrs['id']);
+				// a type the application set for the filter-header's id is applied to this widget too
+				$widget->attrs['type'] = $type;
+				$collect($form_name, $expand, $widget);
 			}
 		}
 		return $candidates;
@@ -2335,90 +2307,6 @@ class Nextmatch extends Etemplate\Widget
 			$headers = array_merge($headers, self::filterHeaders($child));
 		}
 		return $headers;
-	}
-
-	/**
-	 * Filter-headers of a template in a template file
-	 *
-	 * Reads the file itself instead of using Template::instance(): that gives the template of the
-	 * current device, and would replace it by the one read here.
-	 *
-	 * @param string $path path of the file
-	 * @param string $template name of the template in the file, all of the file is used if it is not in it
-	 * @return Etemplate\Widget[] all widgets of a "(et2-)nextmatch-*" type, but plain and sort-headers
-	 */
-	protected static function filterHeadersOfFile(string $path, string $template) : array
-	{
-		$headers = [];
-		$reader = new \XMLReader();
-		if (!$path || !is_readable($path) || !@$reader->open($path))
-		{
-			return $headers;
-		}
-		// first the given template, if the file has none of that name everything in it
-		foreach([$template, null] as $only)
-		{
-			$inside = $only === null ? 0 : null;	// depth of the template we are in, null outside of it
-			while(@$reader->read())
-			{
-				if ($reader->nodeType === \XMLReader::END_ELEMENT)
-				{
-					if ($only !== null && $inside !== null && $reader->depth === $inside) $inside = null;
-					continue;
-				}
-				if ($reader->nodeType !== \XMLReader::ELEMENT) continue;
-
-				if ($only !== null && $inside === null)
-				{
-					if (in_array($reader->name, ['template', 'et2-template'], true) && $reader->getAttribute('id') === $only &&
-						!$reader->isEmptyElement)
-					{
-						$inside = $reader->depth;
-					}
-					continue;
-				}
-				if (preg_match('/^(?:et2-)?nextmatch-(.+)$/', $reader->name, $matches) &&
-					!in_array($matches[1], ['header', 'sortheader', 'columnselection']))
-				{
-					$headers[] = self::factory($reader->name, $reader->readOuterXml(), $reader->getAttribute('id'));
-				}
-			}
-			if ($headers) break;
-			$reader->close();
-			if (!@$reader->open($path)) break;
-		}
-		$reader->close();
-		return $headers;
-	}
-
-	/**
-	 * Type of the widget a filter-header of the rows-template stands for
-	 *
-	 * @param string $header type of the filter-header without its "(et2-)nextmatch-" prefix, eg. "header-custom"
-	 * @param array $attrs attributes of the filter-header
-	 * @return string|null type of the widget to validate with, or null to use the filter-header itself
-	 */
-	protected static function filterHeaderWidgetType(string $header, array $attrs) : ?string
-	{
-		switch($header)
-		{
-			case 'header-entry':
-				$type = 'link-entry';
-				break;
-			case 'accountfilter':
-			case 'header-account':
-				$type = 'select-account';
-				break;
-			case 'customfilter':
-			case 'header-custom':
-				// legacy "options" are "<type>[,<options>]"
-				[$type] = explode(',', (string)($attrs['widgetType'] ?? $attrs['widget_type'] ?? $attrs['options'] ?? '' ?:
-					$attrs['type'] ?? 'select'));
-				break;
-			default:
-				return null;
-		}
-		return str_starts_with($type, 'et2-') ? $type : 'et2-'.$type;
 	}
 
 	/**

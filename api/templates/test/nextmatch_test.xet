@@ -55,6 +55,28 @@
 			<option value="all">All</option>
 		</et2-select>
 	</et2-template>
+	<!-- a filter-template found by its name alone: the one of the rows-template "api.nextmatch_conv.rows" -->
+	<et2-template id="api.nextmatch_conv.rows" template="" lang="" group="0" version="17.1">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<et2-nextmatch-sortheader label="Title" id="title"/>
+				</row>
+				<row>
+					<et2-description id="${row}[title]"></et2-description>
+				</row>
+			</rows>
+		</grid>
+	</et2-template>
+	<et2-template id="api.nextmatch_conv.filter" template="" lang="" group="0" version="17.1">
+		<et2-select id="col_filter[kind]" label="Kind">
+			<option value="big">Big</option>
+			<option value="small">Small</option>
+		</et2-select>
+	</et2-template>
 	<et2-template id="api.nextmatch_test.filters" template="" lang="" group="0" version="17.1">
 		<et2-nextmatch id="filter_nm" lazy="true" template="api.nextmatch_test.rows" filterTemplate="api.nextmatch_test.filter">
 			<!-- filters slotted into the nextmatch itself: a reference to a template, and a widget -->
@@ -67,6 +89,10 @@
 	</et2-template>
 	<template id="api.nextmatch_test" template="" lang="" group="0" version="17.1">
 		<et2-template id="api.nextmatch_test.filters"/>
+		<!-- no filterTemplate: uses "api.nextmatch_conv.filter", which exists -->
+		<et2-nextmatch id="conv_nm" lazy="true" template="api.nextmatch_conv.rows"/>
+		<!-- filter-template generated from the rows-template in this file -->
+		<et2-nextmatch id="gen_nm" lazy="true" template="api.nextmatch_test.rows" filterTemplate="/egroupware/api/filter-template.php/api/templates/test/nextmatch_test.xet?1&amp;template=api.nextmatch_test.rows&amp;filter=Filter&amp;filter2=Lists&amp;filter2_widget=et2-tree-dropdown"/>
 		<historylog id="history"/>
 		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
 		<!-- bare reference tag, as a lazy-loaded tab-panel uses: NOT expanded while this template is parsed -->
