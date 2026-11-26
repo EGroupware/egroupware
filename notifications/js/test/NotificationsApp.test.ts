@@ -126,7 +126,8 @@ describe("sanitizeMessage()", () =>
 			'<form action="https://example.invalid/"><input name="password"><button>Login</button></form>' +
 			'<iframe src="https://example.invalid/"></iframe><svg><a href="https://example.invalid/">x</a></svg>after');
 
-		assert.equal(result, 'beforeafter');
+		// the text of a removed element is kept, unless it is no text of the message like the one of a <style>
+		assert.equal(result, 'beforeLoginafter');
 	});
 
 	it("removes event handlers", () =>
