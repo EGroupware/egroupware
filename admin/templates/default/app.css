@@ -258,3 +258,22 @@ td.token {
 	align-items: center;
 	row-gap: var(--sl-spacing-x-small);
 }
+/* Checkboxes side by side in the field column: more room between them than between label and field */
+.emailadmin_checkbox_row > et2-checkbox + et2-checkbox {
+	margin-inline-start: var(--sl-spacing-large);
+}
+/* The Aliases and Encryption tabs stack their rows, the other tabs are a grid: same space between rows */
+#admin-mailaccount et2-tab-panel [layout="stack"]::part(base) {
+	row-gap: var(--sl-spacing-small);
+}
+/* Encryption tab */
+#admin-mailaccount .emailadmin_section {
+	font-weight: bold;
+}
+/* An upload row only applies in one key state: without a stored key the p12 upload, with one the
+ * certificate import.  The server, and app.admin.smime_setKeyState() after a key is generated, make
+ * the upload that does not apply readonly, and a readonly et2-file renders nothing - so its row,
+ * label included, goes as well. */
+#admin-mailaccount .emailadmin_smime_upload:has(et2-file[readonly]) {
+	display: none;
+}

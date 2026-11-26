@@ -2039,9 +2039,11 @@ export class AdminApp extends EgwApp
 	 * ajax_smimeCreateKeypair() succeeded, without a full page reload.
 	 * Mirrors the $readonlys admin_mail::edit() sets server-side on load.
 	 *
-	 * smimeGenerate additionally disappears entirely once readonly, via its
-	 * hideOnReadonly="true" template attribute (Et2Button/ButtonMixin.ts) -
-	 * nothing special to do here, set_readonly() alone triggers that too.
+	 * The buttons disappear entirely once readonly, via their
+	 * hideOnReadonly="true" template attribute (Et2Button/ButtonMixin.ts), and
+	 * a readonly upload takes its whole row with it (admin app.css,
+	 * .emailadmin_smime_upload) - nothing special to do here, set_readonly()
+	 * alone triggers both.
 	 *
 	 * smime_import_cert is deliberately NOT touched here: it stays gated by
 	 * smime_certFileChanged() alone (whether a certificate file is actually
@@ -2060,7 +2062,7 @@ export class AdminApp extends EgwApp
 			else widget.readonly = readonly;
 		};
 		['smimeGenerate', 'smimeKeyUpload'].forEach(id => setReadonly(id, hasKey));
-		['smime_export_p12', 'smime_delete_p12', 'smimeCertUpload'].forEach(id => setReadonly(id, !hasKey));
+		['smime_export_p12', 'smime_delete_p12', 'smimeCertUpload', 'smimeIntermediateUpload'].forEach(id => setReadonly(id, !hasKey));
 	}
 
 	/**
