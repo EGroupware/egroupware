@@ -118,8 +118,11 @@ export interface NextmatchInterface
  */
 export interface NextmatchDataProviderHost
 {
-	/** Widget id, sent to the server as the form_name that resolves the row source. */
+	/** Widget id, sent to the server inside its namespaces as the form_name that resolves the row source. */
 	readonly id : string;
+
+	/** Namespaces the widget sits in; absent on the plain mocks the provider's tests use. */
+	getPath?() : string[];
 
 	/** Current filter state sent with every row request. */
 	readonly activeFilters : NextmatchActiveFilters;

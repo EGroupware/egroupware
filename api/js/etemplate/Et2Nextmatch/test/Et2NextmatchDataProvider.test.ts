@@ -1328,3 +1328,40 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	});
 
 });
+
+describe("Et2NextmatchDataProvider names the widget for the server", () =>
+{
+	/**
+	 * Contract under test:
+	 * - The server stores the settings of a nextmatch under its full name, the id inside the
+	 *   namespaces it sits in, so that is the name a row request has to carry.
+	 * - At the top of its template the name is the plain id.
+	 */
+	it("sends the full name with a row request", async() =>
+	{
+		const sent : string[] = [];
+		const host = createProviderHost({
+			id: "nm",
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataFetch: (_execId, _request, _filters, widgetId, callback) =>
+				{
+					sent.push(widgetId);
+					callback({total: 0, order: [], rows: {}});
+				},
+				dataRegisterUID: () => {}
+			})
+		});
+		let path : string[] = ["recurrence"];
+		host.getPath = () => path;
+		const provider = new Et2NextmatchDataProvider(host);
+
+		await provider.fetchPage(0, 10);
+		path = [];
+		await provider.fetchPage(10, 10);
+		path = ["tab", "2", "box"];
+		await provider.fetchPage(20, 10);
+
+		assert.deepEqual(sent, ["recurrence[nm]", "nm", "tab[2][box][nm]"]);
+	});
+});

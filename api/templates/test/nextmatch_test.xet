@@ -93,6 +93,10 @@
 		<et2-nextmatch id="conv_nm" lazy="true" template="api.nextmatch_conv.rows"/>
 		<!-- filter-template generated from the rows-template in this file -->
 		<et2-nextmatch id="gen_nm" lazy="true" template="api.nextmatch_test.rows" filterTemplate="/egroupware/api/filter-template.php/api/templates/test/nextmatch_test.xet?1&amp;template=api.nextmatch_test.rows&amp;filter=Filter&amp;filter2=Lists&amp;filter2_widget=et2-tree-dropdown"/>
+		<!-- inside a box with an id: its settings and its name are "box[boxed_nm]" -->
+		<et2-vbox id="box">
+			<et2-nextmatch id="boxed_nm" lazy="true" template="api.nextmatch_test.rows"/>
+		</et2-vbox>
 		<historylog id="history"/>
 		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
 		<!-- bare reference tag, as a lazy-loaded tab-panel uses: NOT expanded while this template is parsed -->

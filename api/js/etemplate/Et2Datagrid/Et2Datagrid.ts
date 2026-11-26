@@ -36,6 +36,7 @@ import {Et2DatagridSwipeController} from "./Et2DatagridSwipeController";
 import {Et2DatagridRowRenderer} from "./Et2DatagridRowRenderer";
 import {styleMap} from "lit/directives/style-map.js";
 import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
+import {et2_form_name} from "../et2_core_common";
 
 export interface Et2DatagridCustomfieldColumnState
 {
@@ -5644,7 +5645,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const owner = ((this.getRootNode() as ShadowRoot)?.host as any) || this;
 		const execId = owner.getInstanceManager?.()?.etemplate_exec_id;
-		const formName = owner.id || owner.getAttribute?.("id");
+		// full name of the owner: its id inside the namespaces it sits in, eg. "box[nm]"
+		const formName = et2_form_name(...(owner.getPath?.() ?? []), owner.id || owner.getAttribute?.("id") || "");
 		if(!execId || !formName)
 		{
 			return;

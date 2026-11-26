@@ -445,6 +445,43 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 			'a legitimate lettersearch order token must survive validation');
 	}
 
+	/**
+	 * A nextmatch inside a box with an id is requested with its full name, "box[boxed_nm]":
+	 * its settings are found under that name and its filters are validated by its widgets.
+	 * Under its id alone, or inside a namespace it does not sit in, there are no settings,
+	 * so no rows.
+	 */
+	public function testAjaxGetRowsResolvesNextmatchInsideANamespace()
+	{
+		$exec_id = $this->templateRequest(array('box' => array('boxed_nm' => array(
+			'get_rows' => __CLASS__.'::mock_get_rows',
+			'num_rows' => 0,
+		))));
+		self::$mock_get_rows_params = null;
+		$GLOBALS['egw_info']['server']['nm_filter_validation'] = 'enforce';
+		try
+		{
+			Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10),
+				array('col_filter' => array('status' => 'open', 'country' => 'not-a-country')), 'box[boxed_nm]');
+		}
+		finally
+		{
+			unset($GLOBALS['egw_info']['server']['nm_filter_validation']);
+		}
+		$this->assertSame(1, $this->responseData()['total'] ?? null,
+			'nextmatch inside a box did not resolve to its server-side get_rows');
+		$this->assertSame(array('status' => 'open'), self::$mock_get_rows_params['col_filter'] ?? null,
+			'filters of a nextmatch inside a box have to be validated by its widgets');
+
+		foreach(array('boxed_nm', 'other[boxed_nm]') as $form_name)
+		{
+			$this->ajax_response->initResponseArray();
+			self::$mock_get_rows_params = null;
+			Nextmatch::ajax_get_rows($exec_id, array('start' => 0, 'num_rows' => 10), array(), $form_name);
+			$this->assertNull(self::$mock_get_rows_params, "get_rows must not run for '$form_name'");
+		}
+	}
+
 	// --- filters are validated by the widgets of the nextmatch ---
 
 	/**

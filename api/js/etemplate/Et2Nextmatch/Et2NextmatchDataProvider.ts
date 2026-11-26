@@ -7,6 +7,7 @@ import {
 } from "../Et2Datagrid/Et2Datagrid.types";
 import type {ReactiveController} from "lit";
 import type {NextmatchDataProviderHost} from "./NextmatchInterfaces";
+import {et2_form_name} from "../et2_core_common";
 // IegwData is an ambient global interface (api/js/jsapi/egw_global.d.ts), not an export -
 // importing it by name was always a TS error, and it resolves without any import.
 
@@ -56,7 +57,9 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 	{
 		return {
 			execId: this.host.getInstanceManager?.()?.etemplate_exec_id || "",
-			widgetId: this.host.id || this.host.getAttribute("id") || "",
+			// full name of the widget: its id inside the namespaces it sits in, eg. "box[nm]",
+			// which is what the server stores its settings under
+			widgetId: et2_form_name(...(this.host.getPath?.() ?? []), this.host.id || this.host.getAttribute("id") || ""),
 			filters: this._currentFilters()
 		};
 	}

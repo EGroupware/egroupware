@@ -66,12 +66,12 @@ export function et2_evalBool(_val)
  * @param variable number of arguments to contact
  * @returns string
  */
-export function et2_form_name(_cname,_name)
+export function et2_form_name(..._names : string[])
 {
-	var parts = [];
-	for(var i=0; i < arguments.length; ++i)
+	var parts : string[] = [];
+	for(var i=0; i < _names.length; ++i)
 	{
-		var name = arguments[i];
+		var name = _names[i];
 		if (typeof name == 'string' && name.length > 0)	// et2_namespace("","test") === "test" === et2_namespace(null,"test")
 		{
 			parts = parts.concat(name.replace(/]/g,'').split('['));

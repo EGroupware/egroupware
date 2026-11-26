@@ -444,6 +444,43 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
+	 * Find the widget a request of the client names
+	 *
+	 * The client names the widget with the namespaces it sits in, eg. "box[nm]" for a nextmatch
+	 * "nm" inside a box "box": the same name its settings are stored under in the content of
+	 * the request.  The widget itself is found by its id, the last part of that name; the
+	 * namespaces only say where in the server-side content its settings are, so a name the
+	 * client made up finds no settings and no get_rows.
+	 *
+	 * @param Template $template template of the request
+	 * @param string $form_name full name of the widget, as sent by the client
+	 * @param string[] $types widget types to accept
+	 * @return Etemplate\Widget|null
+	 */
+	protected static function rowSourceWidget(Template $template, $form_name, array $types)
+	{
+		$ids = [$form_name];
+		if (preg_match('/\[([^\[\]]+)\]$/', (string)$form_name, $matches))
+		{
+			$ids[] = $matches[1];
+		}
+		foreach($ids as $id)
+		{
+			foreach($types as $type)
+			{
+				if (($widget = $template->getElementById($id, $type)))
+				{
+					return $widget;
+				}
+			}
+		}
+		// A tab added through a tabbox's extraTabs (eg. the hook-provided tabs of Preferences'
+		// "Security & Password" popup) is only attached to the template while it runs, so
+		// getElementById() can not see a nextmatch in it.
+		return self::getExtraTabsElementById($form_name, $types);
+	}
+
+	/**
 	 * Find a row-source widget in a tab added through a tabbox's extraTabs
 	 *
 	 * Such a tab is only attached to the template inside Tabbox::run(), so getElementById()
@@ -558,23 +595,8 @@ class Nextmatch extends Etemplate\Widget
 			// <et2-historylog> only in the copy served to the client, while Template::read()
 			// parses the raw file here - so either tag can be what this sees, depending on
 			// whether that template was hand-converted.
-			$widget = null;
-			$types = ['et2-nextmatch', 'nextmatch', 'et2-historylog', 'historylog'];
-			foreach($types as $type)
-			{
-				if (($widget = $template->getElementById($form_name, $type)))
-				{
-					break;
-				}
-			}
-			// A tab added through a tabbox's extraTabs (eg. the hook-provided tabs of Preferences'
-			// "Security & Password" popup) is only attached to the template while it runs, so
-			// getElementById() can not see a nextmatch in it.
-			if (!$widget)
-			{
-				$widget = self::getExtraTabsElementById($form_name, $types);
-			}
-			$template = $widget;
+			$template = self::rowSourceWidget($template, $form_name,
+				['et2-nextmatch', 'nextmatch', 'et2-historylog', 'historylog']);
 		}
 		else
 		{
@@ -582,11 +604,18 @@ class Nextmatch extends Etemplate\Widget
 		}
 		if ($template)
 		{
+			// the widget validates what it finds under its full name, so the filters go there and
+			// it is run in the namespace it sits in, eg. "box" for a $form_name of "box[nm]"
+			$cont = array();
+			$cont_filters =& self::get_array($cont, $form_name, true);
+			$cont_filters = $filters;
+			unset($cont_filters);
 			$expand = array(
-				'cont' => array($form_name => $filters),
+				'cont' => $cont,
 			);
+			$cname = $template->id === $form_name ? '' : preg_replace('/\[[^\[\]]*\]$/', '', $form_name);
 			$valid_filters = array();
-			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
+			$template->run('validate', array($cname, $expand, $cont, &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
 			// ?? []: a widget whose validate() is an allow-list (eg. HistoryLog) deliberately
 			// writes nothing when the client sent no permitted filter, rather than writing an
 			// empty/null entry - so the key is not guaranteed to exist.
@@ -2479,8 +2508,7 @@ class Nextmatch extends Etemplate\Widget
 		}
 		$template = Template::instance($request->template['name'], $request->template['template_set'],
 			$request->template['version'], $request->template['load_via']);
-		$widget = $template ? ($template->getElementById($form_name, 'et2-nextmatch') ??
-			$template->getElementById($form_name, 'nextmatch')) : null;
+		$widget = $template ? self::rowSourceWidget($template, $form_name, ['et2-nextmatch', 'nextmatch']) : null;
 		if (!$widget || empty($widget->attrs['template']))
 		{
 			return;
