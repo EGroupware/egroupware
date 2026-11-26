@@ -470,7 +470,7 @@ class Schema
 			$table_def['fd'][$sColumnName]['precision'] > $aColumnDef['precision'])
 		{
 			$this->m_odb->update($sTableName, array(
-				"$sColumnName=SUBSTRING($sColumnName FROM 1 FOR ".(int)$aColumnDef['precision'].')',
+				SqlFragment::raw("$sColumnName=SUBSTRING($sColumnName FROM 1 FOR ".(int)$aColumnDef['precision'].')'),
 			), "LENGTH($sColumnName) > ".(int)$aColumnDef['precision'], __LINE__, __FILE__);
 
 			if (($shortend = $this->m_odb->affected_rows()))

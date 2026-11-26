@@ -1804,7 +1804,7 @@ class Contacts extends Contacts\Storage
 			$options['filter'] = (array)$options['filter'];
 		}
 		// return only contacts with email set
-		$options['filter'][] = "contact_email ".$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE]." '%@%'";
+		$options['filter'][] = Db\SqlFragment::raw("contact_email ".$this->db->capabilities[Db::CAPABILITY_CASE_INSENSITIV_LIKE]." '%@%'");
 
 		// let link query know, to append email to list
 		$options['type'] = 'email';

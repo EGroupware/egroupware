@@ -66,6 +66,24 @@ class ContactsSqlFragmentTest extends LoggedInTest
 	}
 
 	/**
+	 * Searching for an email address (the recipient fields of mail use that) limits the contacts
+	 * to the ones having an email, a condition it builds as SQL itself.
+	 */
+	public function testLinkQueryEmailDoesNotThrow()
+	{
+		$email = 'fragment-'.uniqid().'@example.org';
+		$id = $this->saveContact(['email' => $email]);
+		$without = $this->saveContact(['n_given' => $email]);
+
+		$bo = new Api\Contacts();
+		$found = $bo->link_query_email($email);
+
+		$this->assertIsArray($found);
+		$this->assertArrayHasKey($id, $found, 'contact with the email is found');
+		$this->assertArrayNotHasKey($without, $found, 'contact without an email is not found');
+	}
+
+	/**
 	 * The duplicates view joins the contacts with themselves on the fields to compare, a condition
 	 * it builds as SQL itself: alone, and together with the filters of the list.
 	 */

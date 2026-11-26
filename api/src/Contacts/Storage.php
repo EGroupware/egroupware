@@ -1146,7 +1146,7 @@ class Storage
 		if (($do = array_intersect($type, array('contacts', 'accounts'))))
 		{
 			$filter = count($do) == 2 ? null :
-				array($do[0] == 'contacts' ? 'contact_owner != 0' : 'contact_owner = 0');
+				array(Api\Db\SqlFragment::raw($do[0] == 'contacts' ? 'contact_owner != 0' : 'contact_owner = 0'));
 
 			while (($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
 				array($start,$num),$filter)))
