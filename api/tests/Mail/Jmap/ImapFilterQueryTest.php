@@ -196,4 +196,85 @@ class ImapFilterQueryTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame([\Horde_Imap_Client::SORT_DATE], $sort);
 	}
+
+	/**
+	 * Regression test (found live 2026-11-26): MailJmap.prefixTerm() (mail/js/jmap.ts) appends a
+	 * "*" to many search words, a Stalwart-only full-text-search convention - IMAP SEARCH itself
+	 * has no wildcard syntax, so a classic (non-Stalwart) server matches it as a literal "*"
+	 * character and finds nothing. applyCondition() strips any "*" from the six free-text keys
+	 * unless told the real backend is Stalwart (isStalwart=true, the default is false/strip).
+	 */
+	public function testApplyConditionStripsAsteriskForANonStalwartServerByDefault()
+	{
+		$this->assertSame('SUBJECT beck', (string)Imap::filterToQuery(['subject' => 'beck*']));
+		$this->assertSame('TEXT beck', (string)Imap::filterToQuery(['text' => '*beck*']));
+	}
+
+	public function testApplyConditionKeepsAsteriskWhenToldTheServerIsStalwart()
+	{
+		$query = Imap::filterToQuery(['subject' => 'beck*'], false, true);
+
+		$this->assertSame('SUBJECT "beck*"', (string)$query);
+	}
+
+	public function testApplyConditionStripsAsteriskFromEveryTextSearchKey()
+	{
+		foreach (Imap::TEXT_SEARCH_KEYS as $key)
+		{
+			$query = Imap::filterToQuery([$key => 'beck*']);
+
+			$this->assertStringNotContainsString('*', (string)$query, $key);
+		}
+	}
+
+	public function testApplyConditionNeverStripsAsteriskFromNonTextKeys()
+	{
+		// minSize/maxSize etc. never carry a "*" in practice, but this guards the in_array() gate
+		// itself: a numeric value must pass through untouched, str_replace() must never be reached
+		$this->assertSame('LARGER 1000', (string)Imap::filterToQuery(['minSize' => 1000]));
+	}
+
+	public function testStrippingAppliesRecursivelyThroughAndOrConditions()
+	{
+		$filter = ['operator' => 'AND', 'conditions' => [['subject' => 'beck*'], ['from' => 'becker*']]];
+
+		$rendered = (string)Imap::filterToQuery($filter);
+
+		$this->assertStringNotContainsString('*', $rendered);
+		$this->assertStringContainsString('SUBJECT beck', $rendered);
+		$this->assertStringContainsString('FROM becker', $rendered);
+	}
+
+	public function testIsStalwartServerReturnsTrueOnlyForAnIdResponseNamedStalwart()
+	{
+		$fakeImap = new class extends \Horde_Imap_Client_Socket
+		{
+			public function __construct() {}
+			public function getID() { return ['name' => 'Stalwart', 'vendor' => 'Stalwart Labs LLC']; }
+		};
+
+		$this->assertTrue(Imap::isStalwartServer($fakeImap));
+	}
+
+	public function testIsStalwartServerReturnsFalseForAnyOtherIdResponse()
+	{
+		$fakeImap = new class extends \Horde_Imap_Client_Socket
+		{
+			public function __construct() {}
+			public function getID() { return ['name' => 'Dovecot']; }
+		};
+
+		$this->assertFalse(Imap::isStalwartServer($fakeImap));
+	}
+
+	public function testIsStalwartServerReturnsFalseWhenTheIdExtensionIsNotSupportedAtAll()
+	{
+		$fakeImap = new class extends \Horde_Imap_Client_Socket
+		{
+			public function __construct() {}
+			public function getID() { throw new \Horde_Imap_Client_Exception_NoSupportExtension('ID'); }
+		};
+
+		$this->assertFalse(Imap::isStalwartServer($fakeImap));
+	}
 }
