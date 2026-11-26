@@ -39,6 +39,12 @@ class SieveJmapScriptLookupHttp extends Http
 
 	public function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null, int $follow=3)
 	{
+		// getScript()'s own download GET - distinguish from installScript()'s upload POST, which
+		// this stand-in always answers with a fresh blobId below
+		if ($method === 'GET')
+		{
+			return '# downloaded '.$url;
+		}
 		return ['blobId' => 'NEW'];
 	}
 
@@ -100,6 +106,42 @@ class SieveJmapScriptLookupTest extends TestCase
 		$sieve->installScript('other', '# script', true);
 
 		$this->assertSame('other', $http->sets[0]['create']['A']['name']);
+	}
+
+	/**
+	 * Regression test (found live 2026-11-26, Nordenham): getScript() had the EXACT SAME
+	 * `[$script] = array_filter(...)` bug this file's own af05acf667 fix already addressed in
+	 * installScript()/removeScript() - this third, identical call site was missed. Since
+	 * array_filter() preserves original keys, `[$script] = ...` only ever looks at key 0, so any
+	 * script NOT first in the account's list (here "EGW18", at index 1) silently threw "not
+	 * found" - caught by retrieveRules()'s own "ignore not found script" catch, so getVacation()
+	 * always came back with an EMPTY vacation array. The admin vacation dialog then showed status
+	 * "Active" (the select's own default when no value binds) and a generic site-wide default
+	 * text, regardless of what was actually saved - the save itself (installScript(), already
+	 * fixed) was always correct.
+	 */
+	public function testGetScriptFindsAnExistingScriptWhichIsNotTheFirst()
+	{
+		$http = SieveJmapScriptLookupHttp::create();
+		$prop = new ReflectionProperty(ApiJmap::class, 'downloadUrl');
+		$prop->setValue($http, 'https://example.org/download/{accountId}/{name}/{blobId}/{type}');
+		$sieve = new SieveJmap($http, 'byl');
+
+		$content = $sieve->getScript('EGW18');
+
+		// EGW18's own blobId is 'B2' (see SieveJmapScriptLookupHttp::$scripts) - finding it at all
+		// (not throwing "not found") proves the non-first script was correctly located
+		$this->assertStringContainsString('/B2/', $content);
+	}
+
+	public function testGetScriptThrowsForATrulyMissingScript()
+	{
+		$http = SieveJmapScriptLookupHttp::create();
+		$sieve = new SieveJmap($http, 'byl');
+
+		$this->expectException(\Exception::class);
+		$this->expectExceptionMessage('does-not-exist');
+		$sieve->getScript('does-not-exist');
 	}
 
 	public function testRemoveDestroysTheScriptById()

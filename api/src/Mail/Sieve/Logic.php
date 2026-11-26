@@ -190,11 +190,21 @@ trait Logic
 		}
 		$script = new Script($_scriptName);
 
+		// reset before the call below, so a stale error from an earlier, unrelated call on this
+		// same connection is never misread as belonging to this one (see Sieve\Jmap::
+		// retrieveRules()'s own identical fix for the reasoning - this trait version is the
+		// ManageSieve-backed counterpart of that same method)
+		$this->error = null;
 		try {
 			$script->retrieveRules($this);
 		}
 		catch (\Exception $e) {
-			unset($e);	// ignore not found script exception
+			// NOT silently ignored any more - a genuine read failure here must never look
+			// indistinguishable from "nothing configured yet" to the admin; log it and surface it
+			// via $this->error, the same property the write-failure path already shows the admin
+			// (see Sieve\Jmap::retrieveRules()'s own identical fix, found live 2026-11-26)
+			_egw_log_exception($e);
+			$this->error = $e->getMessage();
 		}
 		$this->script =& $script->script;
 		$this->rules =& $script->rules;

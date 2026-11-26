@@ -98,7 +98,15 @@ class Script
 
 		// If the called script name is not exist then create it
 		// otherwise we might get error due to non existance script
-		if (!in_array($this->name, $connection->listScripts()))
+		// listScripts() returns [names[], activeName, fullList[]] - checking $this->name against the
+		// WHOLE 3-element return (as this used to) only ever loosely-matches element 1 (activeName),
+		// via PHP's loose in_array() comparison - so this condition actually meant "name !== the
+		// active script" rather than its stated intent "no script by this name exists at all".
+		// Found live 2026-11-26 while investigating a different, related bug (getScript()'s own
+		// array_filter()/list-destructure bug, see Jmap::getScript()) - didn't misfire for that bug's
+		// repro (the looked-up name there always WAS the active one), but is still a real, confirmed
+		// mismatch against every non-active script name.
+		if (!in_array($this->name, $connection->listScripts()[0]))
 		{
 			$this->updateScript($connection);
 		}
