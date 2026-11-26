@@ -2041,6 +2041,29 @@ class Ui
 		return [in_array($role, ['drafts', 'templates'], true), $role === 'drafts'];
 	}
 
+	/**
+	 * The compose.php "from" dispatch value for reopening a Drafts-or-Templates message -
+	 * factored out of displayMessage() so it's unit-testable without going through
+	 * Egw::redirect_link()'s own exit() (same reasoning as resolveJmapIsDraftOrTemplate()).
+	 *
+	 * 'composefromdraft' ONLY for a real Drafts message - compose.ts's bootstrapDraft() (the only
+	 * thing that dispatch value reaches) sets jmapDraftEmailId, which makes the FIRST save/send
+	 * afterward destroy the "original" (MailJmap.saveDraft()'s/sendNewEmail()'s own
+	 * existingDraftEmailId cleanup) - exactly right for a draft, but found live 2026-11-26
+	 * (Nordenham) to also fire for a Templates message when this was unconditional: opening a
+	 * template for editing silently destroyed the template itself on the next autosave/close.
+	 * 'composeasnew' (the toolbar's own "Compose as new" dispatch value, bootstrapComposeAsNew()
+	 * directly, no jmapDraftEmailId at all) already does exactly what reopening a template needs -
+	 * a verbatim copy to edit, with nothing wired up to ever delete the source.
+	 *
+	 * @param bool $isDraft from resolveJmapIsDraftOrTemplate() / the classic isDraftFolder() check
+	 * @return string 'composefromdraft' or 'composeasnew'
+	 */
+	public static function composeRedirectFrom(bool $isDraft) : string
+	{
+		return $isDraft ? 'composefromdraft' : 'composeasnew';
+	}
+
 	function displayMessage(?array $_requesteddata = null)
 	{
 		if (is_null($_requesteddata)) $_requesteddata = $_GET;
@@ -2093,13 +2116,17 @@ class Ui
 		if (!$preventRedirect && $isDraftOrTemplate)
 		{
 			// mail/compose.php (doc/ai/projects/mail-compose-jmap-migration.md, Step 10) instead of
-			// the classic mail_compose::compose() postback - compose.ts's own bootstrapDraft()
-			// takes over entirely client-side (Compose.php's own $jmapReplySkip already
-			// recognizes 'composefromdraft'), so there was nothing left for a classic full-page
-			// render to contribute here; $icServerID is already the row id's own profileID
-			// (Mail::splitRowID() above), same value MailApp.composeMessage()'s own client-side
-			// accId computation would derive from this same row id.
-			Egw::redirect_link('/mail/compose.php', ['from' => 'composefromdraft', 'id' => $rowID, 'acc_id' => $icServerID, 'mode' => '', 'smime_type' => '']);
+			// the classic mail_compose::compose() postback - compose.ts's own bootstrapDraft()/
+			// bootstrapComposeAsNew() takes over entirely client-side, so there was nothing left for
+			// a classic full-page render to contribute here; $icServerID is already the row id's own
+			// profileID (Mail::splitRowID() above), same value MailApp.composeMessage()'s own
+			// client-side accId computation would derive from this same row id. See
+			// composeRedirectFrom()'s own docblock for why this is NOT unconditionally
+			// 'composefromdraft'.
+			Egw::redirect_link('/mail/compose.php', [
+				'from' => self::composeRedirectFrom($isDraft),
+				'id' => $rowID, 'acc_id' => $icServerID, 'mode' => '', 'smime_type' => '',
+			]);
 		}
 
 		$content = [

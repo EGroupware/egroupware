@@ -121,4 +121,25 @@ class UiResolveJmapIsDraftOrTemplateTest extends Api\LoggedInTest
 		$this->assertFalse($isDraftOrTemplate);
 		$this->assertFalse($isDraft);
 	}
+
+	/**
+	 * Regression test (Nordenham, found live 2026-11-26): double-clicking a Templates-folder
+	 * message opened it for compose correctly, but closing (or autosaving) that compose window
+	 * DELETED the template, the same way it would replace a real draft - Ui::displayMessage()'s
+	 * redirect used 'composefromdraft' unconditionally for both Drafts and Templates, but only
+	 * compose.ts's bootstrapDraft() (reached via 'composefromdraft') wires up jmapDraftEmailId,
+	 * the thing that makes the next save/send destroy the "original". composeRedirectFrom() is
+	 * the one-line decision this bug lived in, factored out the same way
+	 * resolveJmapIsDraftOrTemplate() was.
+	 */
+	public function testComposeRedirectFromIsComposeFromDraftOnlyForARealDraft()
+	{
+		$this->assertSame('composefromdraft', Ui::composeRedirectFrom(true));
+	}
+
+	public function testComposeRedirectFromIsComposeAsNewForATemplateNeverComposeFromDraft()
+	{
+		$this->assertSame('composeasnew', Ui::composeRedirectFrom(false),
+			"a Templates message must never be routed through bootstrapDraft() - that's what wires up the delete-the-original behaviour");
+	}
 }
