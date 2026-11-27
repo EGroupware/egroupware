@@ -277,6 +277,142 @@ describe("MailJmap.moveMessages()/copyMessages() - cross-account via Email/copy"
 		assert.equal(captured.emailSet.length, 0, "a copy (not move) must never destroy the original");
 	});
 
+	/*
+	 * Stalwart refuses to copy a message which already exists in the destination account (same blob, in ANY
+	 * folder) with "alreadyExists" + the id of the existing copy: moving a shared mailbox's message to the own
+	 * Trash then never worked, once the message was already in the own account (copied to a project folder earlier).
+	 */
+	describe("Email/copy answers 'alreadyExists'", () =>
+	{
+		const alreadyExists = {created : null, notCreated : {c0 : {type : "alreadyExists", existingId : "x1"}}};
+
+		it("moveMessages() adds the target folder to the existing copy, keeps its other folders, then destroys the original", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const order : string[] = [];
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => alreadyExists,
+				emailGet : (args) => ({list : args.ids.map((id : string) => ({id, keywords : {}, mailboxIds : {"project" : true}}))}),
+				emailSet : (args) =>
+				{
+					order.push(args.destroy ? "destroy" : "patch");
+					return args.destroy ?
+						{destroyed : args.destroy, notDestroyed : {}} : {updated : {x1 : null}, notUpdated : {}};
+				},
+			});
+			primeToken(jmap, "1", client);
+
+			await jmap.moveMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+
+			const patch = captured.emailSet.find((args : any) => args.update);
+			assert.equal(patch.accountId, "o", "the existing copy lives in the DESTINATION account");
+			assert.deepEqual(Object.keys(patch.update), ["x1"]);
+			assert.deepEqual(Object.values(patch.update)[0], {["mailboxIds/mbx-" + JSON.stringify({name : "Archive", parentId : null})] : true},
+				"a mailboxIds/<id> patch ADDS the target folder and leaves the folder the user filed it in untouched");
+			assert.deepEqual(order, ["patch", "destroy"], "the original may only be destroyed AFTER the target folder was added");
+			assert.deepEqual(captured.emailSet.find((args : any) => args.destroy).destroy, ["e1"]);
+		});
+
+		it("moveMessages() needs no change when the existing copy is already in the target folder, and still destroys the original", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const targetId = "mbx-" + JSON.stringify({name : "Archive", parentId : null});
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => alreadyExists,
+				emailGet : (args) => ({list : args.ids.map((id : string) => ({id, keywords : {}, mailboxIds : {[targetId] : true}}))}),
+			});
+			primeToken(jmap, "1", client);
+
+			await jmap.moveMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+
+			assert.equal(captured.emailSet.filter((args : any) => args.update).length, 0, "already in the target folder: nothing to add");
+			assert.deepEqual(captured.emailSet.find((args : any) => args.destroy).destroy, ["e1"]);
+		});
+
+		it("moveMessages() does NOT destroy the original when the target folder could not be added to the existing copy", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => alreadyExists,
+				emailGet : (args) => ({list : args.ids.map((id : string) => ({id, keywords : {}, mailboxIds : {"project" : true}}))}),
+				emailSet : () => ({updated : null, notUpdated : {x1 : {type : "forbidden"}}}),
+			});
+			primeToken(jmap, "1", client);
+
+			let error : any = null;
+			try
+			{
+				await jmap.moveMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+			}
+			catch (e)
+			{
+				error = e;
+			}
+			assert.instanceOf(error, JmapUserError);
+			assert.equal(captured.emailSet.filter((args : any) => args.destroy).length, 0,
+				"never destroy the original, if the message did not reach the target folder - the message would be lost");
+		});
+
+		it("moveMessages() does NOT destroy the original when the existing copy has vanished meanwhile", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => alreadyExists,
+				emailGet : () => ({list : []}),
+			});
+			primeToken(jmap, "1", client);
+
+			let error : any = null;
+			try
+			{
+				await jmap.moveMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+			}
+			catch (e)
+			{
+				error = e;
+			}
+			assert.instanceOf(error, JmapUserError);
+			assert.equal(captured.emailSet.length, 0);
+		});
+
+		it("copyMessages() also adds the target folder to the existing copy, and never destroys the original", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => alreadyExists,
+				emailGet : (args) => ({list : args.ids.map((id : string) => ({id, keywords : {}, mailboxIds : {"project" : true}}))}),
+				emailSet : () => ({updated : {x1 : null}, notUpdated : {}}),
+			});
+			primeToken(jmap, "1", client);
+
+			await jmap.copyMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+
+			assert.equal(captured.emailSet.filter((args : any) => args.update).length, 1);
+			assert.equal(captured.emailSet.filter((args : any) => args.destroy).length, 0);
+		});
+
+		it("other Email/copy errors are still reported, as before", async() =>
+		{
+			const jmap = new MailJmap(createFakeApp());
+			const {client, captured} = createFakeClient(SHARED_SESSION, {
+				emailCopy : () => ({created : null, notCreated : {c0 : {type : "overQuota"}}}),
+			});
+			primeToken(jmap, "1", client);
+
+			let error : any = null;
+			try
+			{
+				await jmap.moveMessages([ref("1", "mbx-inbox", "e1")], "1", "user/teachers/Archive");
+			}
+			catch (e)
+			{
+				error = e;
+			}
+			assert.instanceOf(error, JmapUserError);
+			assert.equal(captured.emailSet.length, 0);
+		});
+	});
+
 	it("moving WITHIN the same shared account still uses the ordinary mailboxIds patch, not Email/copy", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

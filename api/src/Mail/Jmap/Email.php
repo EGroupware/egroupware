@@ -235,16 +235,55 @@ class Email extends Type
 			'accountId' => $this->jmap->accountId,
 			'create' => $create,
 		]);
-		if (($notCreated = $response['notCreated'] ?? []))
-		{
-			throw new Api\Exception('Email/copy failed: '.json_encode($notCreated));
-		}
 		$created = [];
 		foreach ($response['created'] ?? [] as $sourceId => $obj)
 		{
 			$created[$sourceId] = $obj['id'];
 		}
+		$notCreated = $response['notCreated'] ?? [];
+		// Stalwart (and RFC 8621) refuses to copy a message which already exists in the destination account
+		// (same blob, in ANY folder of it) with "alreadyExists" + the id of the existing copy. A move is copy
+		// + destroy-the-original, so ignoring that error would lose the message from where the user wants it,
+		// and failing it means the move/delete never works. The existing copy is therefore ADDED to the target
+		// mailbox (it may live in another folder, eg. the user copied the message to a project folder earlier
+		// and now deletes it, which moves it to the Trash too) before the caller destroys the original.
+		foreach ($notCreated as $sourceId => $error)
+		{
+			if (($error['type'] ?? null) === 'alreadyExists' && !empty($error['existingId']))
+			{
+				$this->emailEnsureInMailbox($error['existingId'], $targetMailboxId);
+				$created[$sourceId] = $error['existingId'];
+				unset($notCreated[$sourceId]);
+			}
+		}
+		if ($notCreated)
+		{
+			throw new Api\Exception('Email/copy failed: '.json_encode($notCreated));
+		}
 		return $created;
+	}
+
+	/**
+	 * Make sure an Email of THIS session's own account is (also) in the given mailbox, keeping every
+	 * mailbox and keyword it already has - emailCopy()'s answer to "alreadyExists".
+	 *
+	 * @param string $id Email id in this session's own account
+	 * @param string $mailboxId Mailbox id in this session's own account
+	 * @throws Api\Exception if the Email is gone or could not be added to the mailbox - the caller must then NOT
+	 *  destroy the original
+	 */
+	protected function emailEnsureInMailbox(string $id, string $mailboxId) : void
+	{
+		$email = $this->emailGet($id, ['mailboxIds'], false);
+		if (!empty($email['mailboxIds'][$mailboxId]))
+		{
+			return;	// the existing copy is already where the message is wanted
+		}
+		$response = $this->set(update: [$id => ['mailboxIds/'.$mailboxId => true]]);
+		if (!array_key_exists($id, $response['updated'] ?? []) || ($response['notUpdated'] ?? []))
+		{
+			throw new Api\Exception('Email/set could not add the existing copy to the target mailbox: '.json_encode($response['notUpdated'] ?? []));
+		}
 	}
 
 	/**

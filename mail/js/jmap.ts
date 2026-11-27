@@ -7664,11 +7664,57 @@ export class MailJmap
 		}));
 		if (!result.created?.c0)
 		{
+			// Stalwart (and RFC 8621) refuses to copy a message which already exists in the destination
+			// account (same blob, in ANY of its folders) with "alreadyExists" + the id of the existing
+			// copy. A move is copy + destroy-the-original, so ignoring the error would lose the message
+			// from where the user wants it, and failing it means the move/delete never works (eg. the
+			// user copied a shared mailbox's message into a project folder earlier and now deletes it,
+			// which moves it to the own Trash too). So the existing copy is ADDED to the target
+			// mailbox, keeping its other mailboxes and keywords, before the caller destroys the original.
+			const notCreated : any = result.notCreated?.c0;
+			if (notCreated?.type === 'alreadyExists' && notCreated.existingId)
+			{
+				return this.ensureEmailInMailbox(client, accountId, notCreated.existingId, mailboxId);
+			}
 			const error : any = new JmapUserError(describeSetError(result.notCreated) ?? this.egw.lang('Failed to copy message'));
 			error.problems = Object.values(result.notCreated ?? {});
 			throw error;
 		}
 		return result.created.c0.id;
+	}
+
+	/**
+	 * Make sure an existing email of `accountId` is (also) in `mailboxId`, keeping every mailbox and
+	 * keyword it already has - copyEmailCrossAccount()'s answer to "alreadyExists".
+	 *
+	 * @throws JmapUserError if the email is gone or could not be added to the mailbox - the caller
+	 *  must then NOT destroy the original
+	 * @return id of the email (the existing one)
+	 */
+	private async ensureEmailInMailbox(client : JamWebSocketClient, accountId : string, emailId : string, mailboxId : string) : Promise<string>
+	{
+		const [{emails}] = await client.requestMany((t) => ({
+			emails: t.Email.get({accountId, ids: [emailId], properties: ['id', 'mailboxIds']}),
+		}));
+		const existing : any = (emails.list || [])[0];
+		if (!existing)
+		{
+			throw new JmapUserError(this.egw.lang('Failed to copy message'));
+		}
+		if (existing.mailboxIds?.[mailboxId])
+		{
+			return emailId;	// the existing copy is already where the message is wanted
+		}
+		const [{result}] = await client.requestMany((t) => ({
+			result: t.Email.set({accountId, update: {[emailId]: {[`mailboxIds/${mailboxId}`]: true}}}),
+		}));
+		if (!result.updated || !(emailId in result.updated))
+		{
+			const error : any = new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to copy message'));
+			error.problems = Object.values(result.notUpdated ?? {});
+			throw error;
+		}
+		return emailId;
 	}
 
 	/** Batch-fetch {emailId: keywords} for copyEmailCrossAccount()'s own flag-preservation - empty map for an empty `ids`. */

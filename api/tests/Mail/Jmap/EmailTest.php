@@ -324,6 +324,94 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 		$email->emailMove(['e1'], 'INBOX/Trash');
 	}
 
+	// --- emailCopy(): cross-account copy, "alreadyExists" ---
+
+	/** a responder for emailCopy(): Email/copy answers $copy, Email/get the mailboxIds of the existing copy, Email/set $set */
+	private function copyResponder(array $copy, array $existingMailboxIds=[], array $set=['updated' => ['x1' => null]]) : callable
+	{
+		return fn($method, $args) => match($method) {
+			'Email/copy' => $copy,
+			'Email/get' => ['list' => [['id' => 'x1', 'mailboxIds' => $existingMailboxIds]]],
+			'Email/set' => $set,
+		};
+	}
+
+	private function callsOf(Base $session, string $method) : array
+	{
+		return array_values(array_filter($session->calls, static fn($call) => $call[0] === $method));
+	}
+
+	public function testEmailCopyReturnsTheNewIdsKeyedBySourceId()
+	{
+		$session = $this->fakeSession('own', $this->copyResponder(['created' => ['e1' => ['id' => 'n1']]]));
+
+		$this->assertSame(['e1' => 'n1'], (new Email($session))->emailCopy('shared', ['e1'], 'trash'));
+		$this->assertCount(0, $this->callsOf($session, 'Email/set'), 'a plain successful copy needs no Email/set');
+	}
+
+	public function testEmailCopyAlreadyExistsInTheTargetMailboxIsSuccessWithoutAnyChange()
+	{
+		$session = $this->fakeSession('own', $this->copyResponder(
+			['notCreated' => ['e1' => ['type' => 'alreadyExists', 'existingId' => 'x1']]], ['trash' => true]));
+
+		$this->assertSame(['e1' => 'x1'], (new Email($session))->emailCopy('shared', ['e1'], 'trash'),
+			'the existing copy is the result, so the caller may destroy the original');
+		$this->assertCount(0, $this->callsOf($session, 'Email/set'), 'already in the target mailbox: nothing to change');
+		$this->assertSame('own', $this->callsOf($session, 'Email/get')[0][1]['accountId'], 'existingId lives in the own (destination) account');
+	}
+
+	/**
+	 * the case which must NOT be swallowed: the user copied the message into another folder earlier (project folder),
+	 * and now deletes it from the shared mailbox - ignoring the error would destroy the original without the message
+	 * ever reaching the Trash
+	 */
+	public function testEmailCopyAlreadyExistsInAnotherFolderAddsTheTargetMailboxAndKeepsTheOldOne()
+	{
+		$session = $this->fakeSession('own', $this->copyResponder(
+			['notCreated' => ['e1' => ['type' => 'alreadyExists', 'existingId' => 'x1']]], ['project' => true]));
+
+		$this->assertSame(['e1' => 'x1'], (new Email($session))->emailCopy('shared', ['e1'], 'trash'));
+
+		$set = $this->callsOf($session, 'Email/set');
+		$this->assertCount(1, $set);
+		$this->assertSame('own', $set[0][1]['accountId']);
+		$this->assertSame(['x1' => ['mailboxIds/trash' => true]], $set[0][1]['update'],
+			'a mailboxIds/<id> patch ADDS the target and leaves the folder the user filed it in untouched');
+		$this->assertArrayNotHasKey('destroy', $set[0][1], 'emailCopy() itself never destroys anything');
+	}
+
+	public function testEmailCopyAlreadyExistsThrowsWhenTheTargetMailboxCouldNotBeAdded()
+	{
+		$session = $this->fakeSession('own', $this->copyResponder(
+			['notCreated' => ['e1' => ['type' => 'alreadyExists', 'existingId' => 'x1']]], ['project' => true],
+			['notUpdated' => ['x1' => ['type' => 'forbidden']]]));
+
+		$this->expectException(Api\Exception::class);
+		(new Email($session))->emailCopy('shared', ['e1'], 'trash');	// the caller never gets to emailDestroy() the original
+	}
+
+	public function testEmailCopyAlreadyExistsThrowsWhenTheExistingCopyIsGone()
+	{
+		$session = $this->fakeSession('own', fn($method) => match($method) {
+			'Email/copy' => ['notCreated' => ['e1' => ['type' => 'alreadyExists', 'existingId' => 'x1']]],
+			'Email/get' => ['list' => []],
+		});
+
+		$this->expectException(Api\Exception::class);
+		(new Email($session))->emailCopy('shared', ['e1'], 'trash');
+	}
+
+	public function testEmailCopyStillThrowsForOtherErrorsEvenIfOtherIdsWereResolved()
+	{
+		$session = $this->fakeSession('own', $this->copyResponder(['notCreated' => [
+			'e1' => ['type' => 'alreadyExists', 'existingId' => 'x1'],
+			'e2' => ['type' => 'forbidden'],
+		]], ['trash' => true]));
+
+		$this->expectException(Api\Exception::class);
+		(new Email($session))->emailCopy('shared', ['e1', 'e2'], 'trash');
+	}
+
 	// --- getStates() ---
 
 	public function testGetStatesBuildsTheChainedMailboxAndEmailStateQuery()
