@@ -99,6 +99,7 @@ admin password	admin	en	Admin password
 admin queue and history	admin	en	Admin queue and history
 admins	admin	en	Admins
 advanced options	admin	en	Advanced options
+after how many failed attempts should egroupware stop trying to reach the push server?	admin	en	After how many failed attempts should EGroupware stop trying to reach the push server?
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login an account should be blocked. Default = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	en	After how many unsuccessful attempts to login an IP should be blocked. Default = 15
 aliases	admin	en	Aliases

@@ -97,11 +97,13 @@ foreach(Api\Hooks::process('push-backends', [], true) as $backend_class)
 	if (method_exists($backend_class, 'failedAttempts'))
 	{
 		echo '  '.lang('failed attempts').'='.$backend_class::failedAttempts().
-			', '.lang('current backoff').'='.$backend_class::backoffTime()."s\n";
+			', '.lang('current backoff').'='.$backend_class::backoffTime().'s'.
+			(method_exists($backend_class, 'maxFailedAttempts') ?
+				', '.lang('max failed attempts').'='.$backend_class::maxFailedAttempts() : '')."\n";
 
-		if (defined($backend_class.'::MAX_FAILED_ATTEMPTS'))
+		if (method_exists($backend_class, 'maxFailedAttempts'))
 		{
-			$max_failed_attempts = constant($backend_class.'::MAX_FAILED_ATTEMPTS');
+			$max_failed_attempts = $backend_class::maxFailedAttempts();
 			if ($backend_class::failedAttempts() > $max_failed_attempts)
 			{
 				if (PHP_SAPI !== 'cli' && empty($_POST['reset']))

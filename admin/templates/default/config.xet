@@ -91,6 +91,13 @@
 						<option value="True">Yes</option>
 					</et2-select>
 				</row>
+				<row>
+					<et2-description  value="Push" span="all" class="subHeader"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="After how many failed attempts should EGroupware stop trying to reach the push server?" label="%s:"></et2-description>
+					<et2-number  id="newsettings[push_max_failed_attempts]" precision="0" placeholder="3"></et2-number>
+				</row>
 			</rows>
 		</grid>
 	</et2-template>

@@ -99,6 +99,7 @@ admin password	admin	de	Admin Passwort
 admin queue and history	admin	de	Admin Queue und Historie
 admins	admin	de	Admins
 advanced options	admin	de	Erweiterte Einstellungen
+after how many failed attempts should egroupware stop trying to reach the push server?	admin	de	Nach wie vielen fehlgeschlagenen Versuchen soll EGroupware aufhören, den Push-Server zu erreichen?
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
 aliases	admin	de	E-Mail-Alias
