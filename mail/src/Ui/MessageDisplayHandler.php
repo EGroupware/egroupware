@@ -590,9 +590,14 @@ class MessageDisplayHandler
 			}
 			else	// 'tnef'
 			{
+				// the TNEF part is not necessarily the top-level part itself (eg. multipart/mixed
+				// with a sibling text/plain fallback, see findTnefPart()'s own docblock) - resolve
+				// via ITS OWN partId, never $bodyStructure['partId'] (the surrounding container's,
+				// meaningless/wrong for a non-top-level match)
+				$tnefPart = JmapImap::findTnefPart($bodyStructure);
 				$body = $isStalwart ?
-					$icServer->resolveTnefJmap($emailID, $bodyStructure['partId'], $htmlOptions) :
-					JmapImap::resolveTnef((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
+					$icServer->resolveTnefJmap($emailID, $tnefPart['partId'], $htmlOptions) :
+					JmapImap::resolveTnef((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid, $tnefPart['partId'], $htmlOptions);
 			}
 
 			Api\Session::cache_control(true);
