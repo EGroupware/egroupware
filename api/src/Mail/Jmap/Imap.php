@@ -4813,7 +4813,7 @@ class Imap extends Jmap\Base
 		{
 			return 'smime';
 		}
-		if ($type === 'application/ms-tnef')
+		if ($type === 'application/ms-tnef' || self::findTnefPart($bodyStructure))
 		{
 			return 'tnef';
 		}
@@ -4829,6 +4829,41 @@ class Imap extends Jmap\Base
 	private static function hasInlineCalendarPart(array $structure) : bool
 	{
 		return self::findInlineCalendarPart($structure) !== null;
+	}
+
+	/**
+	 * Recursively find the first TNEF/winmail.dat body part in a JMAP bodyStructure - mirrors
+	 * mail/js/jmap.ts's MailJmap.isSpecialCase(), which already treats a winmail.dat ANYWHERE in
+	 * the part tree (not just top-level) as needing the JMAP-native TNEF resolver, by matching
+	 * either the content-type OR the attachment name (some senders mislabel the part, eg. as
+	 * application/octet-stream, but still name it "winmail.dat"). specialCaseType() only checked
+	 * the TOP-LEVEL type, so a very common real-world structure - multipart/mixed with a plain
+	 * text/plain fallback part ALONGSIDE the actual application/ms-tnef part (Outlook's usual
+	 * shape for a TNEF-rich message, not the rarer whole-message-is-TNEF case) - fell through as
+	 * null. For a classic/Dovecot account that null just lets the pre-existing classic IMAP path
+	 * render the sibling text/plain part fine; for a Stalwart account (no classic IMAP fallback
+	 * available) it instead reached get_load_email_data()'s dedicated "no classic fallback" guard
+	 * and hard-failed with "Could not load this message." (ticket #128271).
+	 *
+	 * @return array|null the matching sub-part - callers must resolve the TNEF data via THIS
+	 *  part's own 'partId', not the top-level bodyStructure's (which, for the nested/multipart
+	 *  case, is the surrounding container's id, not the TNEF part's)
+	 */
+	public static function findTnefPart(array $structure) : ?array
+	{
+		if (strtolower($structure['type'] ?? '') === 'application/ms-tnef' ||
+			strtolower($structure['name'] ?? '') === 'winmail.dat')
+		{
+			return $structure;
+		}
+		foreach ($structure['subParts'] ?? [] as $sub)
+		{
+			if (($found = self::findTnefPart($sub)))
+			{
+				return $found;
+			}
+		}
+		return null;
 	}
 
 	/**
