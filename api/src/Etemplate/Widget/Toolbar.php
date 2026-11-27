@@ -39,7 +39,7 @@ class Toolbar extends Etemplate\Widget
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
 			// get_rows must always come from server-side widget content, never the client
-			unset($valid['get_rows']);
+			if (is_array($valid)) unset($valid['get_rows']);
 		}
 	}
 

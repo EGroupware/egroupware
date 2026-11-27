@@ -68,4 +68,20 @@ class ToolbarValidateGetRowsTest extends LoggedInTest
 		$rows = array();
 		return 0;
 	}
+
+	public function testNonArrayToolbarContentDoesNotFatal()
+	{
+		// a toolbar submission is not always an array (eg. an empty string) - validate() must
+		// still go through cleanly instead of trying to unset a key on a non-array value
+		$content = [
+			'toolbar' => '',
+		];
+		$validated = [];
+
+		$widget = new Toolbar('<toolbar id="toolbar"/>');
+		$widget->validate('', [], $content, $validated);
+
+		$this->assertSame('', $validated['toolbar'] ?? null,
+			'a non-array toolbar submission must still validate through unchanged');
+	}
 }
