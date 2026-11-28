@@ -355,6 +355,24 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		this.requestUpdate();
 	}
 
+	/**
+	 * Back to the custom fields the template shows, as without any column preference
+	 *
+	 * Runs what connecting the header did, with nothing explicit set yet: the template's `fields`
+	 * attribute, or else what the modifications give.
+	 */
+	resetCustomfieldVisibility()
+	{
+		this.fields = {};
+		this._hasExplicitFields = false;
+		this._applyFieldsAttribute();
+		if(!this._syncCustomfieldsFromModifications())
+		{
+			this._recomputeVisibility();
+		}
+		this.requestUpdate();
+	}
+
 	render()
 	{
 		const fields = this.getCustomfieldSelectionItems().filter((field) => field.visible === true);

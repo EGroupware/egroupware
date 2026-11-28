@@ -7,6 +7,7 @@ import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "../Et2Datagrid/Et2Datagrid";
 import {
 	Et2DatagridColumn,
+	type Et2DatagridColumnResetDetail,
 	Et2DatagridDataProvider,
 	Et2DatagridExpandedRowContext,
 	Et2DatagridExpansionConfig,
@@ -875,6 +876,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		this.addEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.addEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
 		this.addEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
+		this.addEventListener("et2-column-selection-reset", this._handleColumnSelectionReset as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.addEventListener("keydown", this._handleActionShortcut as EventListener, true);
@@ -916,6 +918,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		this.removeEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.removeEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
 		this.removeEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
+		this.removeEventListener("et2-column-selection-reset", this._handleColumnSelectionReset as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.removeEventListener("keydown", this._handleActionShortcut as EventListener, true);
@@ -3094,33 +3097,53 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 			return columns;
 		}
 
-		let storedVisibility : any = null;
-		let storedSizes : any = null;
+		const legacy = this._legacyColumnPreferences(rowTemplateId, app);
+		if(!legacy)
+		{
+			return columns;
+		}
+
+		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, legacy.visibility, legacy.sizes);
+		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns, legacy.sizes);
+
+		return Et2Nextmatch._withoutCustomFields(nextColumns);
+	}
+
+	/**
+	 * The legacy column preferences (`nextmatch-<row_ID>` CSV, `nextmatch-<row_ID>-size`), as effective now
+	 *
+	 * @return null if there are none, or the visibility preference is not the legacy CSV
+	 */
+	private _legacyColumnPreferences(rowTemplateId : string, app : string) : { visibility : any, sizes : any } | null
+	{
+		const preferenceBase = `nextmatch-${rowTemplateId}`;
+		let visibility : any = null;
+		let sizes : any = null;
 		try
 		{
-			storedVisibility = this.egw().preference(preferenceBase, app);
-			storedSizes = this.egw().preference(`${preferenceBase}-size`, app);
+			visibility = this.egw().preference(preferenceBase, app);
+			sizes = this.egw().preference(`${preferenceBase}-size`, app);
 		}
 		catch(e)
 		{
-			return columns;
+			return null;
 		}
 
-		const hasLegacyVisibility = typeof storedVisibility === "string" &&
-			!storedVisibility.trim().startsWith("[") &&
-			!storedVisibility.trim().startsWith("{") &&
-			!!storedVisibility.trim();
-		const hasLegacySizes = (typeof storedSizes === "string" && !!storedSizes.trim()) ||
-			(!!storedSizes && typeof storedSizes === "object" && !!Object.keys(storedSizes).length);
-		if(!hasLegacyVisibility && !hasLegacySizes)
-		{
-			return columns;
-		}
+		const hasLegacyVisibility = typeof visibility === "string" &&
+			!visibility.trim().startsWith("[") &&
+			!visibility.trim().startsWith("{") &&
+			!!visibility.trim();
+		const hasLegacySizes = (typeof sizes === "string" && !!sizes.trim()) ||
+			(!!sizes && typeof sizes === "object" && !!Object.keys(sizes).length);
+		return hasLegacyVisibility || hasLegacySizes ? {visibility, sizes} : null;
+	}
 
-		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
-		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns, storedSizes);
-
-		return nextColumns.map((column) =>
+	/**
+	 * Datagrid columns don't carry the customFields the legacy preferences resolved, see Et2NextmatchResolvedColumn
+	 */
+	private static _withoutCustomFields(columns : Et2NextmatchResolvedColumn[]) : Et2DatagridColumn[]
+	{
+		return columns.map((column) =>
 		{
 			if(!column.customFields)
 			{
@@ -3764,7 +3787,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 	 */
 	private _persistLegacyColumnSelection(columns : Et2DatagridColumn[])
 	{
-		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader || this._templateData?.noHeader)
+		if(this._resettingColumns || this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader || this._templateData?.noHeader)
 		{
 			return;
 		}
@@ -3856,6 +3879,60 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput, N
 		}
 		this.requestUpdate();
 	};
+
+	/**
+	 * The user resets the columns to the default: the letter search, the autorefresh interval and the
+	 * legacy column preferences of this list go back to the default too. The user's legacy ones would
+	 * otherwise seed the old layout again on the next load (_applyLegacyNextmatchColumnPreferences()),
+	 * and a default that exists in the legacy format only is what the reset has to show.
+	 */
+	private _handleColumnSelectionReset = (event : CustomEvent<Et2DatagridColumnResetDetail>) =>
+	{
+		if(this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		const app = String(this.getInstanceManager()?.app || this.egw()?.app_name?.() || "").trim();
+		const rowTemplateId = String(this._templateData?.rowTemplateId || "").trim();
+		if(app && rowTemplateId)
+		{
+			event.detail.prefs.push({app, name: `nextmatch-${rowTemplateId}`}, {app, name: `nextmatch-${rowTemplateId}-size`});
+			// A default (group, admin) can still be in the legacy format only - the page load applies it then
+			event.detail.defaultColumns = (columns) =>
+			{
+				const legacy = this._legacyColumnPreferences(rowTemplateId, app);
+				return legacy ? Et2Nextmatch._withoutCustomFields(
+					applyLegacyNextmatchColumnPreferences(columns, legacy.visibility, legacy.sizes)) : columns;
+			};
+			// The reset columns are the default, not a choice of the user to store as their own legacy CSV
+			this._resettingColumns = true;
+		}
+		this._autoRefresh.resetPreference(event.detail);
+		if(this.lettersearch)
+		{
+			event.detail.prefs.push({app: this.egw().app_name(), name: this._lettersearchPreferenceKey});
+		}
+		event.detail.reloaded.then(() =>
+		{
+			this._resettingColumns = false;
+			if(!this.lettersearch)
+			{
+				return;
+			}
+			this._lettersearchVisible = !!this.egw().preference(this._lettersearchPreferenceKey, this.egw().app_name());
+			if(!this._lettersearchVisible && this._filters.searchletter)
+			{
+				this.applyFilters({searchletter: false});
+				return;
+			}
+			this.requestUpdate();
+		});
+	};
+
+	/**
+	 * Set while a reset to the default columns runs, see _handleColumnSelectionReset()
+	 */
+	private _resettingColumns : boolean = false;
 
 	private get _lettersearchPreferenceKey() : string
 	{

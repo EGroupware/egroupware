@@ -1037,3 +1037,6 @@ your settings have been updated	common	el	Οι ρυθμίσεις σας έχο�
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
 zoom	common	el	Εστίαση
+reset to default	common	el	Επαναφορά προεπιλογής
+show the columns of this list as by default again? your own column selection, order and widths get lost.	common	el	Να εμφανίζονται ξανά οι στήλες αυτής της λίστας όπως στην προεπιλογή; Η δική σας επιλογή, σειρά και πλάτος στηλών θα χαθούν.
+removes your own column selection, order and widths for this list and shows the default again. other users are not affected.	common	el	Καταργεί τη δική σας επιλογή, σειρά και πλάτος στηλών για αυτή τη λίστα και εμφανίζει ξανά την προεπιλογή. Οι άλλοι χρήστες δεν επηρεάζονται.

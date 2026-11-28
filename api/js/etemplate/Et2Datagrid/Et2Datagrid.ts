@@ -13,6 +13,7 @@ import {FlowLayout} from "@lit-labs/virtualizer/layouts/flow.js";
 import {grid} from "@lit-labs/virtualizer/layouts/grid.js";
 import {
 	Et2DatagridColumn,
+	type Et2DatagridColumnResetDetail,
 	Et2DatagridDataProvider,
 	Et2DatagridExpansionConfig,
 	Et2DatagridPageResult,
@@ -289,6 +290,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * avoiding a corrective layout during the same scroll gesture.
 	 */
 	private static readonly _embeddedScrollSettleDelayMs : number = 200;
+	/**
+	 * button_id of the column dialog's "Reset to default" button, see resetColumnPreferences()
+	 */
+	static readonly RESET_COLUMNS_BUTTON : number = 20;
 	private _virtualIndexes : number[] = [];
 	private _virtualIndexesCount : number = -1;
 	private _virtualItems : Et2DatagridVirtualItem[] = [];
@@ -5561,11 +5566,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			composed: true
 		}));
 
+		const canReset = !!this._columnPreferenceName() && !await this._columnsForced();
 		const dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
 			title: this.egw().lang("Select columns"),
 			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_column_selection.xet"),
-			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			buttons: [
+				{button_id: Et2Dialog.OK_BUTTON, label: this.egw().lang("ok"), id: "dialog[ok]", image: "check", default: true},
+				// nothing to reset without a column preference, or if the admin forced one
+				...(canReset ? [{
+					button_id: Et2Datagrid.RESET_COLUMNS_BUTTON,
+					label: this.egw().lang("Reset to default"),
+					id: "dialog[reset]",
+					image: "arrow-counterclockwise",
+					statustext: this.egw().lang("Removes your own column selection, order and widths for this list and shows the default again. Other users are not affected.")
+				}] : []),
+				{button_id: Et2Dialog.CANCEL_BUTTON, label: this.egw().lang("cancel"), id: "dialog[cancel]", image: "cancel", align: "right"}
+			],
 			isModal: true,
 			value: {
 				content: itemsDetail.content,
@@ -5580,6 +5597,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		});
 		document.body.appendChild(dialog);
 		const [buttonId, value] = await dialog.getComplete();
+		if(buttonId === Et2Datagrid.RESET_COLUMNS_BUTTON)
+		{
+			// the user's own layout is gone for good, so ask first
+			const [confirmed] = await Et2Dialog.show_dialog(null,
+				this.egw().lang("Show the columns of this list as by default again? Your own column selection, order and widths get lost."),
+				this.egw().lang("Reset to default"), null, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE,
+				undefined, this.egw()).getComplete();
+			if(confirmed === Et2Dialog.YES_BUTTON)
+			{
+				await this.resetColumnPreferences();
+			}
+			return;
+		}
 		if(buttonId !== Et2Dialog.OK_BUTTON)
 		{
 			return;
@@ -5620,6 +5650,134 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 		this._persistColumnPreferences();
 		this._maybeSaveColumnSelectionAsAdminDefault(applyDetail);
+	}
+
+	/**
+	 * Has the admin forced the columns of this list?
+	 *
+	 * Only the server knows: the preferences we have are the effective ones, without their level.
+	 * The row template's name is the one a legacy (CSV) column preference was forced under.
+	 */
+	private async _columnsForced() : Promise<boolean>
+	{
+		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
+		const rowTemplateId = this._columnPreferenceTemplateId();
+		const names = [this._columnPreferenceName(), rowTemplateId && `nextmatch-${rowTemplateId}`].filter(Boolean);
+		try
+		{
+			return !!await this.egw().request("EGroupware\\Api\\Framework::ajax_preference_forced", [app, names]);
+		}
+		catch(e)
+		{
+			return false;
+		}
+	}
+
+	/**
+	 * Give up the user's own column layout and show the default again
+	 *
+	 * Deletes only the user's own value of the column preference: the effective value then falls back,
+	 * server-side, to the group's, the admin's default or the forced one (Api\Preferences::delete()),
+	 * and if there is none of those, to the columns as the template has them.
+	 *
+	 * Listeners of the "et2-column-selection-reset" event add their own preferences of the same view
+	 * to `detail.prefs` (eg. Et2Nextmatch its letter search), and can wait for `detail.reloaded` to
+	 * read their now effective value.
+	 */
+	async resetColumnPreferences() : Promise<void>
+	{
+		const key = this._columnPreferenceName();
+		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
+		if(this._isColumnPersistenceDisabled() || !key || !app)
+		{
+			return;
+		}
+		let reloaded : () => void;
+		const detail : Et2DatagridColumnResetDetail = {
+			prefs: [{app, name: key}],
+			reloaded: new Promise<void>((resolve) => reloaded = resolve)
+		};
+		this.dispatchEvent(new CustomEvent("et2-column-selection-reset", {detail, bubbles: true, composed: true}));
+		try
+		{
+			await this._deleteOwnPreferences(detail.prefs);
+			this._resetColumnsToEffectivePreference(key, app, detail.defaultColumns);
+		}
+		catch(e)
+		{
+			// Whatever got deleted is deleted, the columns stay as they are until the next load
+			this.egw().message(String(e?.message || e), "error");
+		}
+		finally
+		{
+			reloaded();
+		}
+	}
+
+	/**
+	 * Delete the user's own value of the given preferences and load the now effective ones of their apps
+	 *
+	 * Not egw().set_preference(): it skips the request if the cached value is already empty, and only
+	 * drops the cached value, instead of giving us the group's or default one.
+	 */
+	private async _deleteOwnPreferences(prefs : { app : string, name : string }[]) : Promise<void>
+	{
+		const apps = new Set<string>();
+		// One after the other: each request rewrites the user's whole row of the app, so parallel ones
+		// would put back what the others deleted.
+		for(const {app, name} of prefs)
+		{
+			apps.add(app);
+			await this.egw().request("EGroupware\\Api\\Framework::ajax_set_preference", [app, name, ""]);
+		}
+		// The response calls egw.set_preferences() with the app's now effective preferences
+		await Promise.all([...apps].map((app) =>
+			this.egw().request("EGroupware\\Api\\Framework::ajax_get_preference", [app])));
+	}
+
+	/**
+	 * Show the columns as the effective column preference has them, with nothing left of the user's own
+	 *
+	 * @param defaultColumns see Et2DatagridColumnResetDetail.defaultColumns
+	 */
+	private _resetColumnsToEffectivePreference(key : string, app : string, defaultColumns? : Et2DatagridColumnResetDetail["defaultColumns"])
+	{
+		// Start from the template's columns: a column the default does not mention keeps its place,
+		// width and custom fields there, not the ones the user gave it
+		const source = this.templateData?.sourceColumns || this.templateData?.columns || [];
+		const sourceIndex = new Map<string, number>(source.map((column, index) => [String(column.key), index]));
+		const templateColumns = [...(this.columns || [])]
+			.sort((left, right) =>
+				(sourceIndex.get(String(left.key)) ?? Number.MAX_SAFE_INTEGER) -
+				(sourceIndex.get(String(right.key)) ?? Number.MAX_SAFE_INTEGER))
+			.map((column) =>
+			{
+				(column.header as any)?.resetCustomfieldVisibility?.();
+				const templateColumn = source[sourceIndex.get(String(column.key)) ?? -1];
+				return templateColumn ? {...column, width: templateColumn.width, hidden: !!templateColumn.hidden} : column;
+			});
+		if(!this.egw()?.preference?.(key, app) && defaultColumns)
+		{
+			// No column preference left: the default may be one a listener keeps in a form of its own
+			this.columns = defaultColumns(templateColumns);
+			this._loadedColumnPreferenceKey = key;
+			this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+				detail: {columns: this.columns},
+				bubbles: true,
+				composed: true
+			}));
+		}
+		else
+		{
+			// ... or apply the now effective preference over them
+			this.columns = templateColumns;
+			this._loadedColumnPreferenceKey = null;
+			this._loadColumnPreferencesIfNeeded();
+		}
+		this._rebuildCustomfieldColumnStateCache();
+		this._ensureTableColSizes();
+		this._applyColumnVisibilityToRenderedRows();
+		this.requestUpdate();
 	}
 
 	/**

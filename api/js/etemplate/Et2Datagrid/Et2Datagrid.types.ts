@@ -12,6 +12,22 @@ export interface Et2DatagridColumn
 	hidden? : boolean;
 }
 
+/**
+ * Detail of the "et2-column-selection-reset" event, see Et2Datagrid.resetColumnPreferences()
+ */
+export interface Et2DatagridColumnResetDetail
+{
+	/** preferences to delete from the user's own ones, listeners add the ones they keep for the same view */
+	prefs : { app : string, name : string }[];
+	/**
+	 * A listener knowing the default in a form of its own sets this: it gets the template's columns, when
+	 * no column preference is left (no group, default or forced one), and returns them as the default has them
+	 */
+	defaultColumns? : (columns : Et2DatagridColumn[]) => Et2DatagridColumn[];
+	/** resolves once the effective preferences are loaded and the columns are reset */
+	reloaded : Promise<void>;
+}
+
 export type Et2DatagridView = "row" | "tile";
 
 export interface Et2DatagridTileLayout

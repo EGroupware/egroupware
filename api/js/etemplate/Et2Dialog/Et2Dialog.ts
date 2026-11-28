@@ -37,7 +37,9 @@ export interface DialogButton
 	image? : string,
 	default? : boolean
 	align? : string,
-	disabled? : boolean
+	disabled? : boolean,
+	/** tooltip explaining what the button does */
+	statustext? : string
 }
 
 /**
@@ -913,6 +915,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
                             .image=${ifDefined(button.image)}
                             .noSubmit=${true}
                             ?disabled=${button.disabled}
+                            statustext=${ifDefined(button.statustext)}
                             variant=${isDefault ? "primary" : "default"}
                             align=${ifDefined(button.align)}>
                 </et2-button>

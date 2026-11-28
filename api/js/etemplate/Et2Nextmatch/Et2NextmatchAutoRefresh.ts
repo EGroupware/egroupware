@@ -282,6 +282,20 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 	}
 
 	/**
+	 * The user resets the list to the default view (`et2-column-selection-reset`): their own interval
+	 * goes too, and the timer restarts with the default one once the preferences are reloaded.
+	 */
+	resetPreference(detail : { prefs : { app : string, name : string }[], reloaded : Promise<void> }) : void
+	{
+		if(this.host.settings.disable_autorefresh)
+		{
+			return;
+		}
+		detail.prefs.push({app: this.host._getAppName(), name: this.preferenceKey});
+		detail.reloaded.then(() => this.restart());
+	}
+
+	/**
 	 * Persist a changed `autoRefresh` value from the column-selection dialog
 	 * result (the `et2-column-selection-apply` event's `values` object) and
 	 * restart the timer against it. Always stores the literal value, including

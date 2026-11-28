@@ -1892,6 +1892,21 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Is one of the given preferences forced by the admin, so a user can not have an own value of it
+	 *
+	 * @param string $app
+	 * @param string[] $names preference names
+	 */
+	public static function ajax_preference_forced($app, array $names)
+	{
+		$forced = $GLOBALS['egw']->preferences->forced[$app] ?? [];
+		Json\Response::get()->data((bool)array_filter($names, static function($name) use ($forced)
+		{
+			return is_string($name) && isset($forced[$name]) && $forced[$name] !== '';
+		}));
+	}
+
+	/**
 	 * Get Preferences of a certain application via ajax
 	 *
 	 * @param string $app
