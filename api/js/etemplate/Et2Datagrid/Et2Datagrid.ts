@@ -5566,14 +5566,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			composed: true
 		}));
 
+		const canReset = !!this._columnPreferenceName() && !await this._columnsForced();
 		const dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
 			title: this.egw().lang("Select columns"),
 			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_column_selection.xet"),
 			buttons: [
 				{button_id: Et2Dialog.OK_BUTTON, label: this.egw().lang("ok"), id: "dialog[ok]", image: "check", default: true},
-				// nothing to reset without a column preference
-				...(this._columnPreferenceName() ? [{
+				// nothing to reset without a column preference, or if the admin forced one
+				...(canReset ? [{
 					button_id: Et2Datagrid.RESET_COLUMNS_BUTTON,
 					label: this.egw().lang("Reset to default"),
 					id: "dialog[reset]",
@@ -5649,6 +5650,27 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 		this._persistColumnPreferences();
 		this._maybeSaveColumnSelectionAsAdminDefault(applyDetail);
+	}
+
+	/**
+	 * Has the admin forced the columns of this list?
+	 *
+	 * Only the server knows: the preferences we have are the effective ones, without their level.
+	 * The row template's name is the one a legacy (CSV) column preference was forced under.
+	 */
+	private async _columnsForced() : Promise<boolean>
+	{
+		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
+		const rowTemplateId = this._columnPreferenceTemplateId();
+		const names = [this._columnPreferenceName(), rowTemplateId && `nextmatch-${rowTemplateId}`].filter(Boolean);
+		try
+		{
+			return !!await this.egw().request("EGroupware\\Api\\Framework::ajax_preference_forced", [app, names]);
+		}
+		catch(e)
+		{
+			return false;
+		}
 	}
 
 	/**

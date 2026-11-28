@@ -225,4 +225,30 @@ describe("Et2Datagrid resetColumnPreferences()", () =>
 
 		assert.isEmpty(requests);
 	});
+
+	it("asks the server whether the columns are forced, so the button can be left out", async() =>
+	{
+		const el = createDatagrid();
+		const request = egw.request;
+		const asked : any[] = [];
+		let forced = true;
+		egw.request = async(menuaction : string, params : any[]) =>
+		{
+			asked.push([menuaction.split("::").pop(), ...params]);
+			return forced as any;
+		};
+		(window.egw as any).request = egw.request;
+		try
+		{
+			assert.isTrue(await (el as any)._columnsForced());
+			forced = false;
+			assert.isFalse(await (el as any)._columnsForced());
+		}
+		finally
+		{
+			egw.request = (window.egw as any).request = request;
+		}
+		// the grid's own preference, and the legacy one a column set may have been forced under
+		assert.deepEqual(asked[0], ["ajax_preference_forced", "addressbook", [KEY, "nextmatch-addressbook.index.rows"]]);
+	});
 });
