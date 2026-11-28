@@ -5577,7 +5577,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					button_id: Et2Datagrid.RESET_COLUMNS_BUTTON,
 					label: this.egw().lang("Reset to default"),
 					id: "dialog[reset]",
-					image: "arrow-counterclockwise"
+					image: "arrow-counterclockwise",
+					statustext: this.egw().lang("Removes your own column selection, order and widths for this list and shows the default again. Other users are not affected.")
 				}] : []),
 				{button_id: Et2Dialog.CANCEL_BUTTON, label: this.egw().lang("cancel"), id: "dialog[cancel]", image: "cancel", align: "right"}
 			],
